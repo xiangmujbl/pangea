@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>pangea</artifactId>
+        <groupId>com.jnj</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>pangea-view</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.jnj.adf</groupId>
+            <artifactId>adf-compute</artifactId>
+            <version>0.3.04-0.3-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <resources>
+                        <resource>
+                            <directory>${basedir}/src/main/resources/curation/</directory>
+                        </resource>
+                    </resources>
+                    <outputDirectory>../pangea-test/src/test/resources/xml/</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <jarName>${project.name}</jarName>
+                    <outputDirectory>../pangea-test/src/test/resources/jar/</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
