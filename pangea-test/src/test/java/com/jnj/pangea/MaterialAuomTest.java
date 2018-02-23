@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = {"src/test/resources/features/material_auom.feature"},
         tags = {"@pangea_test"},
-        glue = "com.jnj.pangea.sentence.PangeaSteps",
         plugin = {"pretty", "html:target/Destination"})
 public class MaterialAuomTest {
 
