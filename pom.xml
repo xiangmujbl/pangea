@@ -8,18 +8,10 @@
     <artifactId>pangea</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
         <module>pangea-test</module>
         <module>pangea-view</module>
     </modules>
 
-    <repositories>
-
-        <repository>
-            <id>eapnexus</id>
-            <name>EAPNexus release</name>
-            <url>https://eapnexus.jnj.com/nexus/content/repositories/releases/</url>
-        </repository>
-
-    </repositories>
 </project>
