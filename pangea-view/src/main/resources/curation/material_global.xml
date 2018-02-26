@@ -1,7 +1,6 @@
 <adf-curation>
-    <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v1" chunkSize="1000" chunkBytes="40096"
-              partitionPerServer="2" parallelism="2"
-              executionClassName="com.jnj.pangea.view.processor.MaterialGlobal">
+    <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v1" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.view.processor.MaterialGlobalProcess">
         <regions>
 
             <region path="/project_one/mara">
@@ -28,7 +27,7 @@
                 </columns>
             </region>
 
-            <region path="/ngems/local_golden_material_linkage">
+            <region path="/ngems/material_linkage">
                 <columns>
                     sourceSystem,localMaterialNumber,materialNumber
                 </columns>

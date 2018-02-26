@@ -1,4 +1,4 @@
-package com.jnj.pangea.view.processor.common;
+package com.jnj.pangea.view.common;
 
 import com.alibaba.fastjson.JSONObject;
 

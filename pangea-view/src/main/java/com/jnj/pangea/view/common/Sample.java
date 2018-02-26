@@ -1,4 +1,4 @@
-package com.jnj.pangea.view.processor.common;
+package com.jnj.pangea.view.common;
 
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.IEventProcessor;
@@ -6,7 +6,6 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
-import com.jnj.pangea.view.processor.common.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
