@@ -5,6 +5,7 @@ import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 
 public class PangeaSteps extends CommonSteps {
 
@@ -27,7 +28,18 @@ public class PangeaSteps extends CommonSteps {
 
         Given("^I compare the number of records between \"([^\"]*)\" and \"([^\"]*)\"$", (String compare1, String compare2) -> {
 
-            System.out.println(compare1 + " : " + compare2);
+            long count1 = 0;
+            String[] region1 = compare1.split(",");
+            for (String region : region1) {
+                count1 += adfService.onPath(region).count();
+            }
+
+            long count2 = 0;
+            String[] region2 = compare2.split(",");
+            for (String region : region2) {
+                count2 += adfService.onPath(region).count();
+            }
+            Assert.assertEquals(count1, count2);
         });
     }
 

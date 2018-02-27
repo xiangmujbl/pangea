@@ -11,7 +11,6 @@ import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.view.bo.MaterialGlobalBo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +45,8 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
             // rule J1
             materialGlobalBo.setLocalRefDescription(getFieldWithJ1(matnr));
 
-            materialGlobalBo.setLocalMaterialType(getStringField(rawDataMap, "matnr"));
-            materialGlobalBo.setBaseUom(getStringField(rawDataMap, "matnr"));
+            materialGlobalBo.setLocalMaterialType(getStringField(rawDataMap, "mtart"));
+            materialGlobalBo.setLocalBaseUnit(getStringField(rawDataMap, "meins"));
 
             // rule J2
             Map<String, Object> enrichMap = getFieldsWithJ2(matnr);
@@ -67,7 +66,7 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
             materialGlobalBo.setGlobalBusinessUnit(getStringField(enrichMap, "globalBusinessUnit"));
             materialGlobalBo.setProductFamily(getStringField(enrichMap, "productFamily"));
             materialGlobalBo.setLocalManufacturingTechnology("");
-            materialGlobalBo.setManufacturingTechnology(getStringField(enrichMap, "manufacturingTechnology"));
+            materialGlobalBo.setManufacturingTechnology(getStringField(enrichMap, "manufTechnology"));
 
             ViewResultItem viewRaw = ViewResultBuilder.newResultItem(materialGlobalBo.getKey(), materialGlobalBo.toMap());
             result.add(viewRaw);
@@ -106,11 +105,12 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
 
     private Map<String, Object> getFieldsWithJ2(String matnr) {
         String queryString = QueryHelper
-                .buildCriteria("matnr").is(matnr)
+                .buildCriteria("localMaterialNumber").is(matnr)
                 .and("sourceSystem").is(sourceSystem)
                 .toQueryString();
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(REGION_MATERIAL_LINKAGE, queryString);
-        if (null != result.getValue()) {
+
+        if (null != result && null != result.getValue()) {
             String materialNumber = result.getValue().get("materialNumber") + "";
             queryString = QueryHelper.buildCriteria("materialNumber").is(materialNumber).toQueryString();
 
@@ -119,6 +119,6 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
                 return result.getValue();
             }
         }
-        return new HashMap<>();
+        return null;
     }
 }
