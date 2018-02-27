@@ -48,6 +48,7 @@ public class PangeaSteps extends CommonSteps {
                 computingPartition = 1;
             }
             client = new ComputeClient();
+            client.connect(computingNode);
             client.submitTask(taskId, xml, drl, commandString, computingPartition);
 
             boolean done = false;
