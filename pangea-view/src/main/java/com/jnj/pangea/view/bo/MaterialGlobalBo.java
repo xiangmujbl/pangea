@@ -1,5 +1,7 @@
 package com.jnj.pangea.view.bo;
 
+import com.jnj.adf.client.api.remote.RawDataHelper;
+
 public class MaterialGlobalBo extends BaseBo {
 
     private String sourceSystem;
@@ -190,5 +192,13 @@ public class MaterialGlobalBo extends BaseBo {
 
     public void setManufacturingTechnology(String manufacturingTechnology) {
         this.manufacturingTechnology = manufacturingTechnology;
+    }
+
+    @Override
+    public String getKey() {
+        return RawDataHelper.getInstance()
+                .makeJsonObject("sourceSystem", this.sourceSystem)
+                .add("localMaterialNumber", this.localMaterialNumber)
+                .toJsonString();
     }
 }

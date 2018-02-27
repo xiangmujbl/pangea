@@ -20,4 +20,6 @@ public abstract class BaseBo {
         }
         return map;
     }
+
+    public abstract String getKey();
 }

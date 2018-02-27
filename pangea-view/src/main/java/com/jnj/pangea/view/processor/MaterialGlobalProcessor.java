@@ -9,10 +9,9 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.view.bo.MaterialGlobalBo;
-import com.jnj.pangea.view.common.Utils;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,16 +22,7 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
     private static String REGION_MATERIAL_LINKAGE = "/ngems/material_linkage";
     private static String REGION_GOLDEN_MATERIAL = "/ngems/golden_material";
 
-    private String sourceSystem = "";
-
-    @PostConstruct
-    private void initData() {
-        String queryString = QueryHelper.buildCriteria("sourceSystem").and("localSourceSystem").is("project_one").toQueryString();
-        Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(REGION_SOURCE_SYSTEM, queryString);
-        if (null != result) {
-            sourceSystem = result.getValue().get("sourceSystem") + "";
-        }
-    }
+    private String sourceSystem = null;
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
@@ -41,11 +31,13 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
         list.forEach(raw -> {
             RawDataValue rawValue = raw.getValue();
             Map<String, Object> rawDataMap = rawValue.toMap();
-            String key = Utils.generateKey(rawDataMap, "sourceSystem", "localMaterialNumber");
 
             MaterialGlobalBo materialGlobalBo = new MaterialGlobalBo();
 
             // rule T1
+            if (null == sourceSystem) {
+                sourceSystem = getFieldWithT1();
+            }
             materialGlobalBo.setSourceSystem(sourceSystem);
 
             String matnr = getStringField(rawDataMap, "matnr");
@@ -58,7 +50,7 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
             materialGlobalBo.setBaseUom(getStringField(rawDataMap, "matnr"));
 
             // rule J2
-            Map<String, Object> enrichMap = getFieldWithJ2(matnr);
+            Map<String, Object> enrichMap = getFieldsWithJ2(matnr);
 
             materialGlobalBo.setMaterialNumber(getStringField(enrichMap, "materialNumber"));
             materialGlobalBo.setRefDescription(getStringField(enrichMap, "materialDescription"));
@@ -77,10 +69,19 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
             materialGlobalBo.setLocalManufacturingTechnology("");
             materialGlobalBo.setManufacturingTechnology(getStringField(enrichMap, "manufacturingTechnology"));
 
-            ViewResultItem viewRaw = ViewResultBuilder.newResultItem(key, materialGlobalBo.toMap());
+            ViewResultItem viewRaw = ViewResultBuilder.newResultItem(materialGlobalBo.getKey(), materialGlobalBo.toMap());
             result.add(viewRaw);
         });
         return result;
+    }
+
+    private String getFieldWithT1() {
+        String queryString = QueryHelper.buildCriteria("localSourceSystem").is("project_one").toQueryString();
+        Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(REGION_SOURCE_SYSTEM, queryString);
+        if (null != result) {
+            return result.getValue().get("sourceSystem") + "";
+        }
+        return "";
     }
 
     private String getFieldWithJ1(String matnr) {
@@ -103,7 +104,7 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
         return "";
     }
 
-    private Map<String, Object> getFieldWithJ2(String matnr) {
+    private Map<String, Object> getFieldsWithJ2(String matnr) {
         String queryString = QueryHelper
                 .buildCriteria("matnr").is(matnr)
                 .and("sourceSystem").is(sourceSystem)
@@ -118,6 +119,6 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
                 return result.getValue();
             }
         }
-        return null;
+        return new HashMap<>();
     }
 }
