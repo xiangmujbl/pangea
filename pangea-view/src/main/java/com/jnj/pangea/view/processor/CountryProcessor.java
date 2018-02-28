@@ -31,18 +31,16 @@ public class CountryProcessor extends BaseProcessor implements IEventProcessor {
             String zSourceSystem = getStringField(rawDataMap, "zSourceSystem");
             countryBo.setSourceSystem(getFieldWithT1(zSourceSystem));
 
-            String localCountry = getStringField(rawDataMap, "localCountry");
+            String localCountry = getStringField(rawDataMap, "mdmCode");
             countryBo.setLocalCountry(localCountry);
 
-            String countryCode = getStringField(rawDataMap, "countryCode");
+            String countryCode = getStringField(rawDataMap, "zEntCodeIso3166Alpha2");
             countryBo.setCountryCode(countryCode);
 
             // rule T2
             String mdmName = "";
-            String zEntCodeIso3166Alpha2 = getStringField(rawDataMap, "zEntCodeIso3166Alpha2");
             String mdmCode = getStringField(rawDataMap, "mdmCode");
-
-            if (SOURCESYSTEM.equals(zSourceSystem) && mdmCode.equals(zEntCodeIso3166Alpha2)){
+            if (SOURCESYSTEM.equals(zSourceSystem) && mdmCode.equals(countryCode)){
 
                 mdmName = getStringField(rawDataMap, "mdmName");
                 countryBo.setCountryName(mdmName);
