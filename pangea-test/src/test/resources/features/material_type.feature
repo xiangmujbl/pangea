@@ -20,5 +20,3 @@ Feature: EDMMaterialType XREF - Curation
       | materialType | materialTypeName |
       | 0002         | Ontario PST      |
       | 0003         | PST              |
-
-    And I compare the number of records between "/ems/ems_f_mdm_material_types" and "/edm/material_type_v1,/edm/material_type_v1_failed"
