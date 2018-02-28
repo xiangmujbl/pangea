@@ -28,6 +28,6 @@ Feature: EDMCountry-Curation
     Then I check region data "/edm/country_v1" by keyFields "sourceSystem,localCountry"
       | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion |
       | CONS_LATAM   | *            | -           |               |                        |
-      | CONS_LATAM   | 00           | -           | All Countries |                        |
+      | CONS_LATAM   | 00           | -           |               |                        |
 
     And I compare the number of records between "/ems/ems_f_mdm_countries" and "/edm/country_v1,/edm/country_v1_failed"
