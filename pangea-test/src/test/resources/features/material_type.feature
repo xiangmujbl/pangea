@@ -7,12 +7,18 @@ Feature: EDMMaterialType XREF - Curation
     Given I import "/ems/ems_f_mdm_material_types" by keyFields "mdmCode,zSourceSystem"
       | mdmCode | zSourceSystem     | mdmName     |
       | &       | [CNS MFG - Italy] | Budget F.G. |
+      | 0001    | [MDD Mentor]      | HST         |
       | 0002    | [EMS]             | Ontario PST |
+      | 0003    | [EMS]             | PST         |
+    And I wait "/ems/ems_f_mdm_material_types" Async Queue complete
 
-    When I submit task with xml file "xml/material_global.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/material_type.xml" and execute file "jar/pangea-view.jar"
+
+    And wait 5000 millisecond
 
     Then I check region data "/edm/material_type_v1" by keyFields "materialType"
       | materialType | materialTypeName |
       | 0002         | Ontario PST      |
+      | 0003         | PST              |
 
     And I compare the number of records between "/ems/ems_f_mdm_material_types" and "/edm/material_type_v1,/edm/material_type_v1_failed"
