@@ -10,8 +10,9 @@ Feature: EDMSourceSystem
       | [EMS]                   | EMS                   | EMS          | EMS Ent            |
       | [MD DePuy Spine JDE XE] | Spine                 | MDDePuy      | MD DePuy Ent       |
       | [Consumer LATAM]        | Consumer Latam        | CON_LATAM    | Consumer Latam Ent |
+    And I wait "/ngems/source_system" Async Queue complete
 
-    When I submit task with xml file "xml/source_system.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm_source_system.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem       | localSourceSystemName | sourceSystem | sourceSystemName   |
