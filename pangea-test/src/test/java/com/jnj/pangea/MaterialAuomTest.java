@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/material_auom.feature"},
-        tags = {"@pangea_test"},
+        features = {"src/test/resources/features/edm/materialAUOM/EDMMaterialAUOM_Projectone.feature"},
+        tags = {"@EDMMaterialAUOM_projectOne"},
         plugin = {"pretty", "html:target/Destination"})
 public class MaterialAuomTest {
 
