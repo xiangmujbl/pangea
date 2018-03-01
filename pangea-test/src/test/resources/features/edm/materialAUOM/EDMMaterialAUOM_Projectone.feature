@@ -14,7 +14,7 @@ Feature: EDMMaterialAUOM-Curation
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
       | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
-      | \[EMS\]             | EMS                   | EMS          | EMS Ent            |
+      | [EMS]             | EMS                   | EMS          | EMS Ent            |
     And I wait "/edm/source_system_v1" Async Queue complete
 
     And I import "/edm/material_global" by keyFields "sourceSystem,localMaterialNumber"
@@ -32,3 +32,4 @@ Feature: EDMMaterialAUOM-Curation
 
     #And I compare the number of records between "/project_one/marm" and "/edm/material_auom_v1,/edm/material_auom_v1_failed"
 
+    And I delete the test data

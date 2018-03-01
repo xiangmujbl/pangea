@@ -52,8 +52,9 @@ Feature: MaterialGlobal-Data Model & Curation
       | CONS_LATAM   | 97570               | BOLAS DE ALGODAO J* 20X50 LV50 PG35. | FERT              | KI            | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FERT         | EA      |                  | 7891010931642 |                    | 116151 | 0006     | 500003   | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Toothbrushes            |
       | CONS_LATAM   | 97572               | REACH TOOTHBRUSH COMPACT SOFT T2P1   | FERT              | KI            |                |                                          |              |         |                  |               |                    |        |          |          |        |           |                    |               |                              |                         |
 
-    And I compare the number of records between "/project_one/mara" and "/edm/material_global_v1,/edm/material_global_v1_failed"
+#    And I compare the number of records between "/project_one/mara" and "/edm/material_global_v1,/edm/material_global_v1_failed"
 
+    And I delete the test data
 
 #  Scenario: Delta Load curation
 #

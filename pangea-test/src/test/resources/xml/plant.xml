@@ -4,7 +4,7 @@
               executionClassName="com.jnj.pangea.view.processor.PantProcessor">
         <regions>
 
-            <region path="/ems/ems_f_z_enterprise_plants">
+            <region path="/ems/ems_f_z_enterprise_plants ">
                 <columns>
                     zPlantSourceSystem,zPlant,zEntPlantNumber,zSite,zEntPlantType,zRegion
                 </columns>
@@ -13,8 +13,8 @@
                         <expression>localSourceSystem=/ems/ems_f_z_enterprise_plants.zPlantSourceSystem</expression>
                     </relation>
 
-                    <relation path="/project_one/t001w" isPrimaryKey="true">
-                        <expression>werks=/ems/ems_f_z_enterprise_plants.zPlant</expression>
+                    <relation path="/project_one/T001W" isPrimaryKey="false">
+                        <expression>WERKS=/ems/ems_f_z_enterprise_plants.zPlant</expression>
                     </relation>
 
                 </relations>
@@ -26,46 +26,21 @@
                 </columns>
             </region>
 
-            <region path="/project_one/t001">
+            <region path="/project_one/T001W">
                 <columns>
-                    waers,bukrs
+                    NAME1,LAND1,NODETYPE,WERKS
                 </columns>
             </region>
 
-            <region path="/project_one/t001k">
-                <columns>
-                    bwkey,bukrs
-                </columns>
-                <relations>
-                    <relation path="/project_one/too1w" isPrimaryKey="false">
-                        <expression>bwkey=/project_one/t001k.bwkey</expression>
-                    </relation>
-                    <relation path="/project_one/t001" isPrimaryKey="true">
-                        <expression>bukrs=/project_one/t001k.bukrs</expression>
-                    </relation>
-                </relations>
-            </region>
-
-            <region path="/project_one/t001w">
-                <columns>
-                    name1,land1,nodeType,bwkey,werks
-                </columns>
-            </region>
-
-            <region path="/edm/country_v1">
+            <region path="/ems/country_v1">
                 <columns>
                     countryCode,countryName,localCountry
                 </columns>
-                <relations>
-                    <relation path="/project_one/too1w" isPrimaryKey="false">
-                        <expression>land1=/edm/country_v1.localCountry</expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/edm/plant_v1">
                 <columns>
-                    sourceSystem,localPlant,localPlantName,plant,localPlanningRelevant,localCountry,country,site,localPlantType,plantType,localCurrency,region
+                    sourceSystem,localPlant,localPlantName,plant,localPlanningRelevant,localCountry,country,site,plantName,localPlantType,plantType,region
                 </columns>
             </region>
 

@@ -20,3 +20,5 @@ Feature: EDMMaterialType XREF - Curation
       | materialType | materialTypeName |
       | 0002         | Ontario PST      |
       | 0003         | PST              |
+
+    And I delete the test data

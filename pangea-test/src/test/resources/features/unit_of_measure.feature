@@ -24,8 +24,10 @@ Feature: EDMUnitOfMeasure-Curation
 
     Then I check region data "/edm/unit_of_measure_v1" by keyFields "sourceSystem,localUom"
       | sourceSystem | localUom | localUomName             | uom | uomName         | isocode | measure | factor | roundingDecimal |
-      | CONS_LATAM   | %0       | Per 1000                 | %O2   |  %LC, %label clm | -       | -       |        |                 |
-      | CONS_LATAM   | %LC      | %LC, Percent label claim | N/A |                  | -       | -       |        |                 |
+      | CONS_LATAM   | %0       | Per 1000                 | %O2 | %LC, %label clm | -       | -       |        |                 |
+      | CONS_LATAM   | %LC      | %LC, Percent label claim | N/A |                 | -       | -       |        |                 |
 
 
 #    And I compare the number of records between "/ems/ems_f_mdm_units" and "/edm/unit_of_measure_v1,/edm/unit_of_measure_v1_failed"
+
+    And I delete the test data

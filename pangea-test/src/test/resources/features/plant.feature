@@ -9,10 +9,10 @@ Feature: EDMPlant-Curation
     #  5. test get WAERS form T001 by joining T001K-BWKEY = T001W-BWKEY and T001K-BUKRS = t001-BUKRS ( rule J1 )
 
     Given I import "/ems/ems_f_z_enterprise_plants" by keyFields "zPlantSourceSystem,zPlant"
-      | zPlantSourceSystem | zPlant    | zEntPlantNumber | zSite | zEntPlantType | zRegion       |
-      | project_one        | AR01      | -               |   -   | All Countries |  edmPlant     |
-      | project_two        | AR02      | 00              |   *   | Miscellaneous |  gdmPlant     |
-      | [EMS]              | AR06      | 00              |   ET  | All Countries |  fase         |
+      | zPlantSourceSystem | zPlant | zEntPlantNumber | zSite | zEntPlantType | zRegion  |
+      | project_one        | AR01   | -               | -     | All Countries | edmPlant |
+      | project_two        | AR02   | 00              | *     | Miscellaneous | gdmPlant |
+      | [EMS]              | AR06   | 00              | ET    | All Countries | fase     |
   # And I wait "/ems/ems_f_z_enterprise_plants" Async Queue complete
     And wait 5000 millisecond
 
@@ -27,37 +27,37 @@ Feature: EDMPlant-Curation
 
 
     And I import "/project_one/t001" by keyFields "mandt,bukrs"
-      | mandt             | bukrs                 |      waers   |
-      | 110               | 0001                  |      BRL     |
-      | 120               | AU01                  |      ARS     |
-      | 122               | 7450                  |      AUD     |
+      | mandt | bukrs | waers |
+      | 110   | 0001  | BRL   |
+      | 120   | AU01  | ARS   |
+      | 122   | 7450  | AUD   |
   # And I wait "/project_one/t001" Async Queue complete
     And wait 5000 millisecond
 
 
     And I import "/project_one/t001k" by keyFields "bwkey,mandt"
-      |mandt        |   bwkey    | bukrs    |
-      | 110         |   AR01     | 0001     |
-      | 120         |   AR02     | AU01     |
-      | 122         |   AR06     | 0002     |
+      | mandt | bwkey | bukrs |
+      | 110   | AR01  | 0001  |
+      | 120   | AR02  | AU01  |
+      | 122   | AR06  | 0002  |
 
   # And I wait "/project_one/t001k" Async Queue complete
     And wait 5000 millisecond
 
 
     And I import "/project_one/t001w" by keyFields "mandt,werks"
-      | mandt         | werks         | name1        | land1       | nodetype | bwkey       |
-      | 110           | AR01          | Pilar Plant  | AR          |  AH      |  AR01       |
-      | 120           | AR02          | S & M Pilar  | AR          |  DC      |  AR02       |
-      | 122           | BR04          | João Pessoa  | BR          |          |  AR06       |
+      | mandt | werks | name1       | land1 | nodetype | bwkey |
+      | 110   | AR01  | Pilar Plant | AR    | AH       | AR01  |
+      | 120   | AR02  | S & M Pilar | AR    | DC       | AR02  |
+      | 122   | BR04  | João Pessoa | BR    |          | AR06  |
   # And I wait "/project_one/t001w" Async Queue complete
     And wait 5000 millisecond
 
 
     And I import "/edm/country_v1" by keyFields "localCountry,sourceSystem"
-      | localCountry      | sourceSystem  |countryCode   | countryName|
-      | AR                | CONS_LATAM    | 00           |            |
-      | BR                | EMS           | --           |            |
+      | localCountry | sourceSystem | countryCode | countryName |
+      | AR           | CONS_LATAM   | 00          |             |
+      | BR           | EMS          | --          |             |
   # And I wait "/edm/country_v1" Async Queue complete
     And wait 5000 millisecond
 
@@ -65,8 +65,10 @@ Feature: EDMPlant-Curation
     And wait 5000 millisecond
 
     Then I check region data "/edm/plant_v1" by keyFields "sourceSystem,localPlant"
-      | sourceSystem | localPlant | localPlantName |plant| localPlanningRelevant | localCountry | country |site|localPlantType |  plantType    |localCurrency| region    |
-      | CONS_LATAM   | AR01       | Pilar Plant    |  -  |                       | AR           | 00      |  - |   AH          | All Countries | BRL         | edmPlant  |
-      | CONS_LATAM   | AR02       | S & M Pilar    | 00  |                       | AR           | 00      |  * |   DC          | Miscellaneous | ARS         | gdmPlant  |
-      | EMS          | AR06       |                | 00  |                       |              |         | ET |               | All Countries |             | fase      |
+      | sourceSystem | localPlant | localPlantName | plant | localPlanningRelevant | localCountry | country | site | localPlantType | plantType     | localCurrency | region   |
+      | CONS_LATAM   | AR01       | Pilar Plant    | -     |                       | AR           | 00      | -    | AH             | All Countries | BRL           | edmPlant |
+      | CONS_LATAM   | AR02       | S & M Pilar    | 00    |                       | AR           | 00      | *    | DC             | Miscellaneous | ARS           | gdmPlant |
+      | EMS          | AR06       |                | 00    |                       |              |         | ET   |                | All Countries |               | fase     |
     And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/edm/plant_v1_failed"
+
+    And I delete the test data

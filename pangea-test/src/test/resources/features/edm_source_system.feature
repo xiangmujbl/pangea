@@ -20,3 +20,5 @@ Feature: EDMSourceSystem
       | [EMS]                   | EMS                   | EMS          | EMS Ent            |
       | [MD DePuy Spine JDE XE] | Spine                 | MDDePuy      | MD DePuy Ent       |
       | [Consumer LATAM]        | Consumer Latam        | CON_LATAM    | Consumer Latam Ent |
+
+    And I delete the test data
