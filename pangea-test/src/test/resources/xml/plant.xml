@@ -1,0 +1,74 @@
+<adf-curation>
+    <curation mainRegion="/ems/ems_f_z_enterprise_plants " viewRegion="/edm/plant_v1" chunkSize="1000" chunkBytes="40096"
+              partitionPerServer="2" parallelism="2"
+              executionClassName="com.jnj.pangea.view.processor.PantProcessor">
+        <regions>
+
+            <region path="/ems/ems_f_z_enterprise_plants">
+                <columns>
+                    zPlantSourceSystem,zPlant,zEntPlantNumber,zSite,zEntPlantType,zRegion
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="true">
+                        <expression>localSourceSystem=/ems/ems_f_z_enterprise_plants.zPlantSourceSystem</expression>
+                    </relation>
+
+                    <relation path="/project_one/t001w" isPrimaryKey="true">
+                        <expression>werks=/ems/ems_f_z_enterprise_plants.zPlant</expression>
+                    </relation>
+
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/project_one/t001">
+                <columns>
+                    waers,bukrs
+                </columns>
+            </region>
+
+            <region path="/project_one/t001k">
+                <columns>
+                    bwkey,bukrs
+                </columns>
+                <relations>
+                    <relation path="/project_one/too1w" isPrimaryKey="false">
+                        <expression>bwkey=/project_one/t001k.bwkey</expression>
+                    </relation>
+                    <relation path="/project_one/t001" isPrimaryKey="true">
+                        <expression>bukrs=/project_one/t001k.bukrs</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/t001w">
+                <columns>
+                    name1,land1,nodeType,bwkey,werks
+                </columns>
+            </region>
+
+            <region path="/edm/country_v1">
+                <columns>
+                    countryCode,countryName,localCountry
+                </columns>
+                <relations>
+                    <relation path="/project_one/too1w" isPrimaryKey="false">
+                        <expression>land1=/edm/country_v1.localCountry</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    sourceSystem,localPlant,localPlantName,plant,localPlanningRelevant,localCountry,country,site,localPlantType,plantType,localCurrency,region
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
