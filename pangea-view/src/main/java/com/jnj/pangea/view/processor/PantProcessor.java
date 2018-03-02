@@ -6,14 +6,16 @@ import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.view.bo.PlantBo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PantProcessor extends BaseProcessor  implements IEventProcessor {
+public class PantProcessor extends BaseProcessor implements IEventProcessor {
 
     private String REGION_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
     private String REGION_T001W = "/project_one/t001w";
@@ -25,10 +27,10 @@ public class PantProcessor extends BaseProcessor  implements IEventProcessor {
     public List<ViewResultItem> process(List<RawDataEvent> events) {
 
         List<ViewResultItem> result = new ArrayList<>();
-         events.stream().forEach(raw -> {
+        events.stream().forEach(raw -> {
             RawDataValue rawValue = raw.getValue();
             Map<String, Object> rawDataMap = rawValue.toMap();
-             PlantBo plantBo = new PlantBo();
+            PlantBo plantBo = new PlantBo();
 
             // rule T1
             String zPlantSourceSystem = getStringField(rawDataMap, "zPlantSourceSystem");
@@ -38,16 +40,18 @@ public class PantProcessor extends BaseProcessor  implements IEventProcessor {
             plantBo.setLocalPlant(localPlant);
 
             // rule T2
+            Map<String, Object> enrich = getFieldsWithT2(localPlant);
+
             String name1 = "name1";
-            plantBo.setLocalPlantName(getFieldWithT2(localPlant,name1));
+            plantBo.setLocalPlantName(getStringField(enrich, name1));
 
             // rule T3
             String land1 = "land1";
-            String LocalCountry = getFieldWithT2(localPlant,land1);
+            String LocalCountry = getStringField(enrich, land1);
             plantBo.setLocalCountry(LocalCountry);
 
 
-            String plant = getStringField(rawDataMap, "zEntPlantType");
+            String plant = getStringField(rawDataMap, "zEntPlantNumber");
             plantBo.setPlant(plant);
 
             plantBo.setLocalPlanningRelevant("");
@@ -58,21 +62,23 @@ public class PantProcessor extends BaseProcessor  implements IEventProcessor {
             String site = getStringField(rawDataMap, "zSite");
             plantBo.setSite(site);
 
-            String nodeType = "nodeType";
-            String localPlantType = getFieldWithT2(localPlant,nodeType);
+            String nodeType = "nodetype";
+            String localPlantType = getStringField(enrich, nodeType);
             plantBo.setLocalPlantType(localPlantType);
 
             String plantType = getStringField(rawDataMap, "zEntPlantType");
             plantBo.setPlantType(plantType);
 
-            // rule J1 TODO
+            // rule J1
             String bwKeyDate = "bwkey";
-            String bwKey = getFieldWithT2(localPlant,bwKeyDate);
+            String bwKey = getStringField(enrich, bwKeyDate);
+
             plantBo.setLocalCurrency(getFieldWithJ1(bwKey));
 
             String region = getStringField(rawDataMap, "zRegion");
             plantBo.setRegion(region);
 
+            LogUtil.getCoreLog().info("-----------newResultItem--------plantBo:" + plantBo.toMap());
             ViewResultItem viewRaw = ViewResultBuilder.newResultItem(plantBo.getKey(), plantBo.toMap());
             result.add(viewRaw);
         });
@@ -81,51 +87,61 @@ public class PantProcessor extends BaseProcessor  implements IEventProcessor {
     }
 
     private String getFieldWithT1(String zPlantSourceSystem) {
+        if (StringUtils.isEmpty(zPlantSourceSystem)) {
+            return "";
+        }
         String systemQueryString = QueryHelper.buildCriteria("localSourceSystem").is(zPlantSourceSystem).toQueryString();
         Map.Entry<String, Map<String, Object>> systemResult = AdfViewHelper.queryForMap(REGION_SOURCE_SYSTEM_V1, systemQueryString);
         if (null != systemResult) {
-            return systemResult.getValue().get("sourceSystem").toString().trim();
+            return systemResult.getValue().get("sourceSystem") + "";
         }
         return "";
     }
 
-    private String getFieldWithT2(String zPlant ,String too1w) {
+    private Map<String, Object> getFieldsWithT2(String zPlant) {
+        if (StringUtils.isEmpty(zPlant)) {
+            return null;
+        }
         String name1QueryString = QueryHelper.buildCriteria("werks").is(zPlant).toQueryString();
         Map.Entry<String, Map<String, Object>> T001wResult = AdfViewHelper.queryForMap(REGION_T001W, name1QueryString);
         if (null != T001wResult) {
-            if("name1".equals(too1w)){
-                return T001wResult.getValue().get("name1").toString().trim();
-            } else if ("land1".equals(too1w)) {
-                return T001wResult.getValue().get("land1").toString().trim();
-            } else if ("nodeType".equals(too1w)) {
-                return T001wResult.getValue().get("nodetype").toString().trim();
-            }else if ("bwkey".equals(too1w)) {
-                return T001wResult.getValue().get("bwkey").toString().trim();
-            }
+            return T001wResult.getValue();
         }
-        return "";
+        return null;
     }
 
     private String getFieldWithT4(String land1) {
+        if (StringUtils.isEmpty(land1)) {
+            return "";
+        }
         String localQueryString = QueryHelper.buildCriteria("localCountry").is(land1).toQueryString();
         Map.Entry<String, Map<String, Object>> localResult = AdfViewHelper.queryForMap(REGION_COUNTRY_V1, localQueryString);
         if (null != localResult) {
-            return localResult.getValue().get("sourceSystem").toString().trim();
+            return localResult.getValue().get("countryCode") + "";
         }
         return "";
     }
 
     private String getFieldWithJ1(String bwkey) {
+        if (StringUtils.isEmpty(bwkey)) {
+            return "";
+        }
+
         String QueryString = QueryHelper.buildCriteria("bwkey").is(bwkey).toQueryString();
+
         Map.Entry<String, Map<String, Object>> t001kResult = AdfViewHelper.queryForMap(REGION_T001K, QueryString);
+
         if (null != t001kResult && null != t001kResult.getValue()) {
 
-            String bukrs = t001kResult.getValue().get("bukrs").toString().trim();
+            String bukrs = t001kResult.getValue().get("bukrs") + "";
+            if (StringUtils.isEmpty(bukrs)) {
+                return "";
+            }
             QueryString = QueryHelper.buildCriteria("bukrs").is(bukrs).toQueryString();
             t001kResult = AdfViewHelper.queryForMap(REGION_T001, QueryString);
 
             if (null != t001kResult) {
-                return t001kResult.getValue().get("waers").toString().trim();
+                return t001kResult.getValue().get("waers") + "";
             }
         }
         return "";

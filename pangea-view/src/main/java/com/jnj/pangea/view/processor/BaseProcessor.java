@@ -8,6 +8,9 @@ public abstract class BaseProcessor {
         if (null == rawDataMap) {
             return "";
         }
-        return rawDataMap.get(key) + "";
+        if (rawDataMap.containsKey(key)) {
+            return rawDataMap.get(key) + "";
+        }
+        return "";
     }
 }
