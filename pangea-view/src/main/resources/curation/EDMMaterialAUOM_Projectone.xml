@@ -6,7 +6,7 @@
             <region path="/project_one/marm">
                 <columns>matnr,meinh,umrez,umren</columns>
                 <relations>
-                    <relation path="/edm/material_global" isPrimaryKey="false">
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
                         <expression>localMaterialNumber=/project_one/marm.matnr</expression>
                     </relation>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -14,7 +14,7 @@
                     </relation>
                 </relations>
             </region>
-            <region path="/edm/material_global">
+            <region path="/edm/material_global_v1">
                 <columns>sourceSystem,localMaterialNumber,materialNumber</columns>
             </region>
             <region path="/edm/source_system_v1">
