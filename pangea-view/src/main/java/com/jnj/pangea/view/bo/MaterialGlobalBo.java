@@ -25,6 +25,11 @@ public class MaterialGlobalBo extends BaseBo {
     private String productFamily;
     private String localManufacturingTechnology;
     private String manufacturingTechnology;
+    private String localMaterialGroup;
+    private String materialGroup;
+    private String flagForDeletion;
+    private String materialStatus;
+    private String division;
 
     public String getSourceSystem() {
         return sourceSystem;
@@ -192,6 +197,46 @@ public class MaterialGlobalBo extends BaseBo {
 
     public void setManufacturingTechnology(String manufacturingTechnology) {
         this.manufacturingTechnology = manufacturingTechnology;
+    }
+
+    public String getLocalMaterialGroup() {
+        return localMaterialGroup;
+    }
+
+    public void setLocalMaterialGroup(String localMaterialGroup) {
+        this.localMaterialGroup = localMaterialGroup;
+    }
+
+    public String getMaterialGroup() {
+        return materialGroup;
+    }
+
+    public void setMaterialGroup(String materialGroup) {
+        this.materialGroup = materialGroup;
+    }
+
+    public String getFlagForDeletion() {
+        return flagForDeletion;
+    }
+
+    public void setFlagForDeletion(String flagForDeletion) {
+        this.flagForDeletion = flagForDeletion;
+    }
+
+    public String getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public void setMaterialStatus(String materialStatus) {
+        this.materialStatus = materialStatus;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
     }
 
     @Override

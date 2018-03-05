@@ -68,6 +68,12 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
             materialGlobalBo.setLocalManufacturingTechnology("");
             materialGlobalBo.setManufacturingTechnology(getStringField(enrichMap, "manufTechnology"));
 
+            materialGlobalBo.setLocalMaterialGroup(getStringField(rawDataMap, "matkl"));
+            materialGlobalBo.setMaterialGroup(getStringField(rawDataMap, ""));
+            materialGlobalBo.setFlagForDeletion(getStringField(rawDataMap, "lvorm"));
+            materialGlobalBo.setMaterialStatus(getStringField(rawDataMap, "mstae"));
+            materialGlobalBo.setDivision(getStringField(rawDataMap, "spart"));
+
             ViewResultItem viewRaw = ViewResultBuilder.newResultItem(materialGlobalBo.getKey(), materialGlobalBo.toMap());
             result.add(viewRaw);
         });
