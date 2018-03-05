@@ -1,5 +1,7 @@
 package com.jnj.pangea.view.processor;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Map;
 
 public abstract class BaseProcessor {
@@ -9,7 +11,7 @@ public abstract class BaseProcessor {
             return "";
         }
         if (rawDataMap.containsKey(key)) {
-            return rawDataMap.get(key) + "";
+            return StringUtils.trim((String) rawDataMap.get(key)) ;
         }
         return "";
     }
