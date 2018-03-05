@@ -54,7 +54,9 @@ public class EDMCurrencyProcessor extends BaseProcessor implements IEventProcess
 
     private String getFieldWithT1(String zSourceSystem) {
         //filter
-
+        if(null==zSourceSystem||zSourceSystem.isEmpty()){
+            return "";
+        }
         String queryEnString = QueryHelper.buildCriteria("localSourceSystem").is(zSourceSystem).toQueryString();
         List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_SOURCE_SYSTEM, queryEnString);
 
@@ -67,7 +69,9 @@ public class EDMCurrencyProcessor extends BaseProcessor implements IEventProcess
     }
 
     private String getFieldWithT2(String zEntCodeIso4217Alpha) {
-
+        if(null==zEntCodeIso4217Alpha||zEntCodeIso4217Alpha.isEmpty()){
+            return "";
+        }
         String queryEnString = QueryHelper.buildCriteria("zSourceSystem").is("[EMS]").and("zCode").is(zEntCodeIso4217Alpha).toQueryString();
         List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_EMS_F_Z_CURRENCIES, queryEnString);
         for (Map.Entry<String, String> item : items) {
