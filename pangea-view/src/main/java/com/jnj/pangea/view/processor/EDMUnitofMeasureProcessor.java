@@ -60,26 +60,41 @@ public class EDMUnitofMeasureProcessor extends BaseProcessor implements IEventPr
 
     private String getFieldWithT1(String zSourceSystem) {
         //filter
-
+        if(null==zSourceSystem||zSourceSystem.isEmpty()){
+            return "";
+        }
         String queryEnString = QueryHelper.buildCriteria("localSourceSystem").is(zSourceSystem).toQueryString();
         List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_SOURCE_SYSTEM, queryEnString);
 
         for (Map.Entry<String, String> item : items) {
             Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
-            String sourceSystem = jsonObj.get("sourceSystem") + "";
-           return sourceSystem;
+//            String sourceSystem = jsonObj.get("sourceSystem") + "";
+
+            if(null!=jsonObj.get("sourceSystem")){
+                return jsonObj.get("sourceSystem") + "";
+            }else{
+                return "";
+            }
+//           return sourceSystem;
         }
         return "";
     }
 
     private String getFieldWithT2(String zEnterpriseCode) {
-
+        if(null==zEnterpriseCode||zEnterpriseCode.isEmpty()){
+            return "";
+        }
         String queryEnString = QueryHelper.buildCriteria("zSourceSystem").is("[EMS]").and("mdmSapCode").is(zEnterpriseCode).toQueryString();
         List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_EMS_F_MDM_UNITS, queryEnString);
         for (Map.Entry<String, String> item : items) {
             Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
-            String mdm_name = jsonObj.get("mdmName") + "";
-            return mdm_name;
+            if(null!=jsonObj.get("mdmName")){
+                return jsonObj.get("mdmName") + "";
+            }else{
+                return "";
+            }
+//            String mdm_name = jsonObj.get("mdmName") + "";
+//            return mdm_name;
         }
         return "";
     }
