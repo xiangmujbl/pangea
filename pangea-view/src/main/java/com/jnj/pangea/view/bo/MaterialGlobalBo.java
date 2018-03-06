@@ -107,8 +107,8 @@ public class MaterialGlobalBo extends BaseBo {
         return localDpParentCode;
     }
 
-    public void setLocalDpParentCode(String localDpParentCod) {
-        this.localDpParentCode = localDpParentCod;
+    public void setLocalDpParentCode(String localDpParentCode) {
+        this.localDpParentCode = localDpParentCode;
     }
 
     public String getParentCode() {
@@ -241,6 +241,7 @@ public class MaterialGlobalBo extends BaseBo {
 
     @Override
     public String getKey() {
+
         return RawDataHelper.getInstance()
                 .makeJsonObject("sourceSystem", this.sourceSystem)
                 .add("localMaterialNumber", this.localMaterialNumber)

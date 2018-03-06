@@ -25,7 +25,7 @@ public class EDMMaterialAUOMProjectoneProcessor extends BaseProcessor implements
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
-//        LogUtil.getCoreLog().info("========================start===================");
+        LogUtil.getCoreLog().info("========================start===================");
 
         CurationCache.dump();
 
@@ -35,13 +35,13 @@ public class EDMMaterialAUOMProjectoneProcessor extends BaseProcessor implements
             RawDataValue mainValue = mainRaw.getValue();
             String key = mainRaw.getKey();
 
-//            LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>key:{}",key);
+            LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>key:{}",key);
 
             EDMMaterialAUOMProjectoneBo EDMMaterialAUOMProjectoneBo = new EDMMaterialAUOMProjectoneBo();
 
             boolean flag = buildView(key,mainValue,EDMMaterialAUOMProjectoneBo);
 
-//            LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}",flag);
+            LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}",flag);
 
             if(flag){
                 ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(EDMMaterialAUOMProjectoneBo.getKey(), EDMMaterialAUOMProjectoneBo.toMap());
@@ -57,19 +57,19 @@ public class EDMMaterialAUOMProjectoneProcessor extends BaseProcessor implements
 
         boolean isOk = processSourceSystem(key,EDMMaterialAUOMProjectoneBo);
         if(!isOk){
-//            LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}",key,isOk);
+            LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}",key,isOk);
             return false;
         }
 
         isOk = processSystem(mainData,EDMMaterialAUOMProjectoneBo);
         if(!isOk){
-//            LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}",key,isOk);
+            LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}",key,isOk);
             return false;
         }
 
         isOk = processMaterialNumber(key, mainData, EDMMaterialAUOMProjectoneBo);
         if(!isOk){
-//            LogUtil.getCoreLog().warn(">>>key:{},processMaterialNumber of flag:{}",key,isOk);
+           LogUtil.getCoreLog().warn(">>>key:{},processMaterialNumber of flag:{}",key,isOk);
             return false;
         }
 
@@ -92,7 +92,7 @@ public class EDMMaterialAUOMProjectoneProcessor extends BaseProcessor implements
         }
 
         if(StringUtils.isEmpty(materialNumber)){
-//            LogUtil.getCoreLog().info(">>>query /edm/material_global_v1 is null, query condition:{}",queryString);
+            LogUtil.getCoreLog().info(">>>query /edm/material_global_v1 is null, query condition:{}",queryString);
             //@TODO write fail data to region or file, T1
             return false;
         }
@@ -116,7 +116,7 @@ public class EDMMaterialAUOMProjectoneProcessor extends BaseProcessor implements
         }
 
         if(StringUtils.isEmpty(sourceSystem)){
-//            LogUtil.getCoreLog().info(">>>query /edm/source_system_v1 data is null for project_one, query condition:{}",queryString);
+            LogUtil.getCoreLog().info(">>>query /edm/source_system_v1 data is null for project_one, query condition:{}",queryString);
             //@TODO write fail data to region or file, T1
             return false;
         }

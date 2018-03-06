@@ -22,10 +22,10 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
     private static String REGION_MATERIAL_LINKAGE = "/ngems/material_linkage";
     private static String REGION_GOLDEN_MATERIAL = "/ngems/golden_material";
 
-    private String sourceSystem = null;
-
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
+
+        String sourceSystem = getFieldWithT1();
 
         List<ViewResultItem> result = new ArrayList<>();
         list.forEach(raw -> {
@@ -34,10 +34,6 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
 
             MaterialGlobalBo materialGlobalBo = new MaterialGlobalBo();
 
-            // rule T1
-            if (null == sourceSystem) {
-                sourceSystem = getFieldWithT1();
-            }
             materialGlobalBo.setSourceSystem(sourceSystem);
 
             String matnr = getStringField(rawDataMap, "matnr");
@@ -50,7 +46,7 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
             materialGlobalBo.setLocalBaseUnit(getStringField(rawDataMap, "meins"));
 
             // rule J2
-            Map<String, Object> enrichMap = getFieldsWithJ2(matnr);
+            Map<String, Object> enrichMap = getFieldsWithJ2(matnr, sourceSystem);
 
             materialGlobalBo.setMaterialNumber(getStringField(enrichMap, "materialNumber"));
             materialGlobalBo.setRefDescription(getStringField(enrichMap, "materialDescription"));
@@ -95,24 +91,24 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
             return "";
         }
         String queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
-        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_MAKT, queryEnString);
+        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_MAKT, queryEnString, -1);
 
         for (Map.Entry<String, String> item : items) {
             Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
             String spras = jsonObj.get("spras") + "";
             String maktx = jsonObj.get("maktx") + "";
-            if ("EN".equals(spras)) {
+            if ("E".equals(spras)) {
                 return maktx;
-            } else if ("PT".equals(spras)) {
+            } else if ("P".equals(spras)) {
                 return maktx;
-            } else if ("ES".equals(spras)) {
+            } else if ("S".equals(spras)) {
                 return maktx;
             }
         }
         return "";
     }
 
-    private Map<String, Object> getFieldsWithJ2(String matnr) {
+    private Map<String, Object> getFieldsWithJ2(String matnr, String sourceSystem) {
         if (StringUtils.isEmpty(matnr)) {
             return null;
         }
@@ -126,9 +122,9 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(REGION_MATERIAL_LINKAGE, queryString);
 
         if (null != result && null != result.getValue()) {
+
             String materialNumber = result.getValue().get("materialNumber") + "";
             queryString = QueryHelper.buildCriteria("materialNumber").is(materialNumber).toQueryString();
-
             result = AdfViewHelper.queryForMap(REGION_GOLDEN_MATERIAL, queryString);
             if (null != result) {
                 return result.getValue();

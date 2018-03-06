@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v1" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v1" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.view.processor.MaterialGlobalProcessor">
         <regions>
 
@@ -9,12 +9,15 @@
                 </columns>
                 <relations>
                     <relation path="/project_one/makt" isPrimaryKey="false">
-                        <expression>matnr=/project_one/mara.matnr</expression>
+                        <expression></expression>
                     </relation>
                     <relation path="/ngems/material_linkage" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/project_one/mara.matnr</expression>
+                        <expression></expression>
                     </relation>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/ngems/golden_material" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                 </relations>
@@ -42,16 +45,11 @@
                 <columns>
                     sourceSystem,localMaterialNumber,materialNumber
                 </columns>
-                <relations>
-                    <relation path="/ngems/golden_material" isPrimaryKey="false">
-                        <expression>materialNumber=/ngems/material_linkage.materialNumber</expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUnit,materialNumber,refDescription,materialType,baseUom,localDpParentCod,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUnit,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division
                 </columns>
             </region>
 
