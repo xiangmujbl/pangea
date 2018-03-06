@@ -1,5 +1,6 @@
 package com.jnj.pangea.view.processor;
 
+import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.IEventProcessor;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class CountryProcessor extends BaseProcessor implements IEventProcessor {
 
     private String REGION_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
-    private static String SOURCESYSTEM = "[EMS]";
+    private String REGION_EMS_F_MDM_COUNTRIES = "/ems/ems_f_mdm_countries";
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
@@ -39,17 +40,9 @@ public class CountryProcessor extends BaseProcessor implements IEventProcessor {
             countryBo.setCountryCode(countryCode);
 
             // rule T2
-            String mdmName = "";
-            String mdmCode = getStringField(rawDataMap, "mdmCode");
-            if (SOURCESYSTEM.equals(zSourceSystem) && mdmCode.equals(countryCode)) {
-
-                mdmName = getStringField(rawDataMap, "mdmName");
-                countryBo.setCountryName(mdmName);
-
-            } else {
-
-                countryBo.setCountryName(mdmName);
-            }
+            String zEntCodeIso3166Alpha2 = getStringField(rawDataMap, "zEntCodeIso3166Alpha2");
+            String  mdmName = getFieldWithT2(zEntCodeIso3166Alpha2);
+            countryBo.setCountryName(mdmName);
 
             countryBo.setConsumerPlanningRegion("");
 
@@ -72,4 +65,19 @@ public class CountryProcessor extends BaseProcessor implements IEventProcessor {
         return "";
     }
 
+    private String getFieldWithT2(String zEntCodeIso3166Alpha2) {
+
+        if (null == zEntCodeIso3166Alpha2 || zEntCodeIso3166Alpha2.isEmpty()) {
+            return "";
+        }
+        String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
+                .is("[EMS]").and("mdmCode").is(zEntCodeIso3166Alpha2).toQueryString();
+        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_EMS_F_MDM_COUNTRIES, countryQueryString);
+
+        for (Map.Entry<String, String> item : items) {
+            Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
+            return jsonObj.get("mdmName") + "";
+        }
+        return "";
+    }
 }
