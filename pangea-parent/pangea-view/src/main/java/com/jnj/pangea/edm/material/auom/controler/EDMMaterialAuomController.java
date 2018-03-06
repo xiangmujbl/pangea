@@ -32,30 +32,39 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
 
         List<ViewResultItem> result = new ArrayList<>();
 
+
         list.forEach(mainRaw -> {
+
             RawDataValue mainValue = mainRaw.getValue();
             String key = mainRaw.getKey();
 
             Map map = mainValue.toMap();
 
-            //MarmEntry mainObject = new MarmEntry();
-            //PdxBeanUtils.convert2Bean(map, mainObject);
-            MarmEntry mainObject = (MarmEntry)BeanUtil.mapToObject(map, MarmEntry.class);
+            try {
+                //MarmEntry mainObject = new MarmEntry();
+                //PdxBeanUtils.convert2Bean(map, mainObject);
+                MarmEntry mainObject = (MarmEntry) BeanUtil.mapToObject(map, MarmEntry.class);
 
-            LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
+                LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
 
-            ResultObject resultObject = materialAuomService.buildView(key, mainObject, null);
+                ResultObject resultObject = materialAuomService.buildView(key, mainObject, null);
 
-            EDMMaterialAuomBo materialAuomBo = (EDMMaterialAuomBo)resultObject.getBaseBo();
+                EDMMaterialAuomBo materialAuomBo = (EDMMaterialAuomBo) resultObject.getBaseBo();
 
-            LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isFlag());
+                LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isFlag());
 
-            if (resultObject.isFlag()) {
-                ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(materialAuomBo.getKey(), materialAuomBo.toMap());
-                result.add(viewResultItem);
+                if (resultObject.isFlag()) {
+                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(materialAuomBo.getKey(), materialAuomBo.toMap());
+                    result.add(viewResultItem);
+                }
+
+            } catch (Exception e) {
+                LogUtil.getCoreLog().info("EDMMaterialAuomController Exception occured. key = {}.", key);
+                LogUtil.getCoreLog().info("EDMMaterialAuomController Exception:", e);
             }
 
         });
+
 
         //recycling object
         materialAuomService = null;
