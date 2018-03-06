@@ -90,8 +90,17 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
         if (StringUtils.isEmpty(matnr)) {
             return "";
         }
-        String queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
-        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_MAKT, queryEnString, -1);
+        List<Map.Entry<String, String>> items = null;
+
+        String queryEnString = "";
+
+        // TODO add ce support
+        if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
+            return "";
+        }
+
+        queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
+        items = AdfViewHelper.queryForList(REGION_MAKT, queryEnString, -1);
 
         for (Map.Entry<String, String> item : items) {
             Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();

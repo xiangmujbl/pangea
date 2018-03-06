@@ -8,8 +8,8 @@
                     matnr,mtart,meins
                 </columns>
                 <relations>
-                    <relation path="/project_one/makt" isPrimaryKey="false">
-                        <expression></expression>
+                    <relation path="/project_one/makt" isPrimaryKey="true">
+                        <expression>matnr=/project_one/makt.matnr</expression>
                     </relation>
                     <relation path="/ngems/material_linkage" isPrimaryKey="false">
                         <expression></expression>
