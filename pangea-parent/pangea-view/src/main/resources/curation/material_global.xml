@@ -1,0 +1,60 @@
+<adf-curation>
+    <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v1" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.view.processor.MaterialGlobalProcessor">
+        <regions>
+
+            <region path="/project_one/mara">
+                <columns>
+                    matnr,mtart,meins
+                </columns>
+                <relations>
+                    <relation path="/project_one/makt" isPrimaryKey="false">
+                        <expression>matnr=/project_one/mara.matnr</expression>
+                    </relation>
+                    <relation path="/ngems/material_linkage" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/project_one/mara.matnr</expression>
+                    </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/project_one/makt">
+                <columns>
+                    matnr,spras,maktx
+                </columns>
+            </region>
+
+            <region path="/ngems/golden_material">
+                <columns>
+                    materialNumber,materialDescription,franchise,materialType,baseUom,parentCode,brand,form,materialStatus,subBrand,manufTechnology,category,productFamily,globalBusinessUnit
+                </columns>
+            </region>
+
+            <region path="/ngems/material_linkage">
+                <columns>
+                    sourceSystem,localMaterialNumber,materialNumber
+                </columns>
+                <relations>
+                    <relation path="/ngems/golden_material" isPrimaryKey="false">
+                        <expression>materialNumber=/ngems/material_linkage.materialNumber</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUnit,materialNumber,refDescription,materialType,baseUom,localDpParentCod,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

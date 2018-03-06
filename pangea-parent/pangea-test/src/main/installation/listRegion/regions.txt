@@ -1,0 +1,4 @@
+#EDMMaterialAUOM_Projectone.xml
+/pangea/edm/material_auom_v1
+/edm/material_global
+/edm/source_system_v1
