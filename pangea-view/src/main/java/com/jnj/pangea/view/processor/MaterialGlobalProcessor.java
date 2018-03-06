@@ -9,6 +9,7 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.view.bo.MaterialGlobalBo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,9 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
     }
 
     private String getFieldWithJ1(String matnr) {
-
+        if (StringUtils.isEmpty(matnr)) {
+            return "";
+        }
         String queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
         List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(REGION_MAKT, queryEnString);
 
@@ -110,6 +113,12 @@ public class MaterialGlobalProcessor extends BaseProcessor implements IEventProc
     }
 
     private Map<String, Object> getFieldsWithJ2(String matnr) {
+        if (StringUtils.isEmpty(matnr)) {
+            return null;
+        }
+        if (StringUtils.isEmpty(sourceSystem)) {
+            return null;
+        }
         String queryString = QueryHelper
                 .buildCriteria("localMaterialNumber").is(matnr)
                 .and("sourceSystem").is(sourceSystem)

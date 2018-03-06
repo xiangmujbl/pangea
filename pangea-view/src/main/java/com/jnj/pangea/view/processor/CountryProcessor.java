@@ -8,6 +8,7 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.view.bo.CountryBo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class CountryProcessor extends BaseProcessor implements IEventProcessor {
 
     private String REGION_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
-    private static String SOURCESYSTEM="[EMS]";
+    private static String SOURCESYSTEM = "[EMS]";
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
@@ -40,12 +41,12 @@ public class CountryProcessor extends BaseProcessor implements IEventProcessor {
             // rule T2
             String mdmName = "";
             String mdmCode = getStringField(rawDataMap, "mdmCode");
-            if (SOURCESYSTEM.equals(zSourceSystem) && mdmCode.equals(countryCode)){
+            if (SOURCESYSTEM.equals(zSourceSystem) && mdmCode.equals(countryCode)) {
 
                 mdmName = getStringField(rawDataMap, "mdmName");
                 countryBo.setCountryName(mdmName);
 
-            }else{
+            } else {
 
                 countryBo.setCountryName(mdmName);
             }
@@ -60,6 +61,9 @@ public class CountryProcessor extends BaseProcessor implements IEventProcessor {
     }
 
     private String getFieldWithT1(String zSourceSystem) {
+        if (StringUtils.isEmpty(zSourceSystem)) {
+            return "";
+        }
         String systemQueryString = QueryHelper.buildCriteria("localSourceSystem").is(zSourceSystem).toQueryString();
         Map.Entry<String, Map<String, Object>> systemResult = AdfViewHelper.queryForMap(REGION_SOURCE_SYSTEM_V1, systemQueryString);
         if (null != systemResult) {

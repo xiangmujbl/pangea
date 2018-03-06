@@ -10,6 +10,7 @@ import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.view.bo.EDMMaterialPlantBo;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -68,6 +69,12 @@ public class EDMMaterialPlantProcessor extends BaseProcessor implements IEventPr
 
     private String getMaterialNumber(String sourceSystem,String matnr){
         String materialNumber="";
+        if (StringUtils.isEmpty(sourceSystem)) {
+            return "";
+        }
+        if (StringUtils.isEmpty(matnr)) {
+            return "";
+        }
         String queryString = QueryHelper.buildCriteria("sourceSystem").is(sourceSystem)
                 .and("localMaterialNumber").is(matnr).toQueryString();
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(REGION_MATERIAL_GLOBAL, queryString);
@@ -79,6 +86,12 @@ public class EDMMaterialPlantProcessor extends BaseProcessor implements IEventPr
 
     private String getPlant(String sourceSystem,String werks){
         String plant="";
+        if (StringUtils.isEmpty(sourceSystem)) {
+            return "";
+        }
+        if (StringUtils.isEmpty(werks)) {
+            return "";
+        }
         String queryString = QueryHelper.buildCriteria("localPlant").is(werks)
                 .and("sourceSystem").is(sourceSystem).toQueryString();
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(REGION_PLANT, queryString);
@@ -90,6 +103,12 @@ public class EDMMaterialPlantProcessor extends BaseProcessor implements IEventPr
 
     private String getPlantStatus(String sourceSystem,String mmsta){
         String plantStatus="";
+        if (StringUtils.isEmpty(sourceSystem)) {
+            return "";
+        }
+        if (StringUtils.isEmpty(mmsta)) {
+            return "";
+        }
         String queryString = QueryHelper.buildCriteria("localPlantStatus").is(mmsta)
                 .and("sourceSystem").is(sourceSystem).toQueryString();
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(REGION_CNS_MAT_PLANT_STAT, queryString);
