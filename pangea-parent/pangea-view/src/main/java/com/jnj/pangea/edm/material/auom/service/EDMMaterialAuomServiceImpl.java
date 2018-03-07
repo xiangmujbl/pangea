@@ -6,6 +6,7 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.Dao.ICommonDao;
 import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.edm.EDMMaterialGlobalV1Entry;
 import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
@@ -45,21 +46,21 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         boolean isOk = processSourceSystem(key, materialAuomBo);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}", key, isOk);
-            resultObject.setFlag(false);
+            resultObject.setFailData(new FailData());
             return resultObject;
         }
 
         isOk = processSystem(mainData, materialAuomBo);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}", key, isOk);
-            resultObject.setFlag(false);
+            resultObject.setFailData(new FailData());
             return resultObject;
         }
 
         isOk = processMaterialNumber(key, mainData, materialAuomBo);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processMaterialNumber of flag:{}", key, isOk);
-            resultObject.setFlag(false);
+            resultObject.setFailData(new FailData());
             return resultObject;
         }
 
@@ -75,7 +76,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         String sourceSystem = materialAuomBo.getSourceSystem();
         String queryString = QueryHelper.buildCriteria("localMaterialNumber").is(matnr).and("sourceSystem").is(sourceSystem).toQueryString();
 
-        List<Object> materialList = commonDao.queryForList(CommonRegionPath.REGION_MATERIAL_GLOBAL, queryString, EDMMaterialGlobalV1Entry.class);
+        List<Object> materialList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entry.class);
 
         String materialNumber = null;
         for (Object entry : materialList) {
@@ -84,7 +85,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         }
 
         if (StringUtils.isEmpty(materialNumber)) {
-            LogUtil.getCoreLog().info(">>>query {} is null, query condition.", CommonRegionPath.REGION_MATERIAL_GLOBAL);
+            LogUtil.getCoreLog().info(">>>query {} is null, query condition.", CommonRegionPath.EDM_MATERIAL_GLOBAL_V1);
             //@TODO write fail data to region or file, T1
             return false;
         }
@@ -98,7 +99,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
 
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is("project_one").toQueryString();
 
-        List<Object> sourceList = commonDao.queryForList(CommonRegionPath.REGION_SOURCE_SYSTEM, queryString, EDMSourceSystemV1Entry.class);
+        List<Object> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
 
         String sourceSystem = null;
         for (Object entry : sourceList) {
@@ -107,7 +108,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         }
 
         if (StringUtils.isEmpty(sourceSystem)) {
-            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.REGION_SOURCE_SYSTEM);
+            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
             //@TODO write fail data to region or file, T1
             return false;
         }

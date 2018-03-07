@@ -51,9 +51,9 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
 
                 EDMMaterialAuomBo materialAuomBo = (EDMMaterialAuomBo) resultObject.getBaseBo();
 
-                LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isFlag());
+                LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isSuccess());
 
-                if (resultObject.isFlag()) {
+                if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(materialAuomBo.getKey(), materialAuomBo.toMap());
                     result.add(viewResultItem);
                 }

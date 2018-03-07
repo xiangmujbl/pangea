@@ -1,6 +1,7 @@
 package com.jnj.pangea.util;
 
 import com.jnj.adf.grid.utils.LogUtil;
+import net.sf.cglib.beans.BeanMap;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -12,7 +13,13 @@ import java.util.Map;
  */
 public class BeanUtil {
 
-    public static Object mapToObject(Map<String, Object> map, Class<?> beanClass) {
+    public static <T> T mapToBean(Map<String, Object> map, T bean) {
+        BeanMap beanMap = BeanMap.create(bean);
+        beanMap.putAll(map);
+        return bean;
+    }
+
+    public static <T> Object mapToObject(Map<String, Object> map, Class<T> beanClass) {
         if (map == null)
             return null;
 
@@ -23,7 +30,7 @@ public class BeanUtil {
             Field[] fields = obj.getClass().getDeclaredFields();
             for (Field field : fields) {
                 int mod = field.getModifiers();
-                if(Modifier.isStatic(mod) || Modifier.isFinal(mod)){
+                if (Modifier.isStatic(mod) || Modifier.isFinal(mod)) {
                     continue;
                 }
 
@@ -32,17 +39,17 @@ public class BeanUtil {
             }
         } catch (InstantiationException e) {
             e.printStackTrace();
-            LogUtil.getCoreLog().error(">>>map to object InstantiationException info:{}",e);
+            LogUtil.getCoreLog().error(">>>map to object InstantiationException info:{}", e);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-            LogUtil.getCoreLog().error(">>>map to object IllegalAccessException info:{}",e);
+            LogUtil.getCoreLog().error(">>>map to object IllegalAccessException info:{}", e);
         }
 
         return obj;
     }
 
-    public static Map<String, Object> objectToMap(Object obj)  {
-        if(obj == null){
+    public static Map<String, Object> objectToMap(Object obj) {
+        if (obj == null) {
             return null;
         }
 
@@ -57,7 +64,7 @@ public class BeanUtil {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-            LogUtil.getCoreLog().error(">>>object to map IllegalAccessException info:{}",e);
+            LogUtil.getCoreLog().error(">>>object to map IllegalAccessException info:{}", e);
         }
 
         return map;

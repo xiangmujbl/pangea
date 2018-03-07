@@ -5,19 +5,14 @@ package com.jnj.pangea.common;
  */
 public class ResultObject {
 
-    //true write baseBo, false write failData
-    private boolean flag = true;
+    private boolean isSuccess = true;
 
     private BaseBo baseBo = null;
 
     private FailData failData = null;
 
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public boolean isSuccess() {
+        return isSuccess;
     }
 
     public BaseBo getBaseBo() {
@@ -26,6 +21,7 @@ public class ResultObject {
 
     public void setBaseBo(BaseBo baseBo) {
         this.baseBo = baseBo;
+        this.isSuccess = true;
     }
 
     public FailData getFailData() {
@@ -34,5 +30,6 @@ public class ResultObject {
 
     public void setFailData(FailData failData) {
         this.failData = failData;
+        this.isSuccess = false;
     }
 }

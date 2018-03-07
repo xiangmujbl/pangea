@@ -1,13 +1,7 @@
 package com.jnj.pangea.common;
 
-import java.util.Map;
+import com.jnj.adf.curation.logic.IEventProcessor;
 
-public abstract class BaseController {
+public abstract class BaseController implements IEventProcessor {
 
-    protected String getStringField(Map<String, Object> rawDataMap, String key) {
-        if (null == rawDataMap) {
-            return "";
-        }
-        return rawDataMap.get(key) + "";
-    }
 }

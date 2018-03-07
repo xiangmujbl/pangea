@@ -1,1 +1,0 @@
-job create --name Pangea_Dev_Edm_Material_Plant_v1 --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm_material_plant.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true' --deploy
