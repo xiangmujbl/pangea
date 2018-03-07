@@ -7,6 +7,17 @@ public class EMSFMdmCurrenciesEntity {
     private String zName;
     private String zIso4217Numeric;
 
+    @Override
+    public String toString() {
+        return "EMSFMdmCurrenciesEntity{" +
+                "zSourceSystem='" + zSourceSystem + '\'' +
+                ", zCode='" + zCode + '\'' +
+                ", zEntCodeIso4217Alpha='" + zEntCodeIso4217Alpha + '\'' +
+                ", zName='" + zName + '\'' +
+                ", zIso4217Numeric='" + zIso4217Numeric + '\'' +
+                '}';
+    }
+
     public String getzSourceSystem() {
         return zSourceSystem;
     }

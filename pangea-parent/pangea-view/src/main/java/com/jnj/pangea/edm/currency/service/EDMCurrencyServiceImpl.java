@@ -5,15 +5,11 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.CommonRegionPath;
-import com.jnj.pangea.common.Dao.ICommonDao;
-import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
-import com.jnj.pangea.common.entry.ems.EMSFMdmCountriesEntity;
 import com.jnj.pangea.common.entry.ems.EMSFMdmCurrenciesEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.country.bo.EDMCountryBo;
 import com.jnj.pangea.edm.currency.bo.EDMCurrencyBo;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +21,6 @@ import java.util.Map;
  */
 public class EDMCurrencyServiceImpl implements ICommonService {
 
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
     private static ICommonService instance;
 
@@ -60,12 +55,6 @@ public class EDMCurrencyServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        isOk = processT1(mainData, edmCurrencyBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
 
         isOk = processT2(key, mainData, edmCurrencyBo);
         if (!isOk) {
@@ -74,8 +63,8 @@ public class EDMCurrencyServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        //recycling object
-        commonDao = null;
+//        //recycling object
+//        commonDao = null;
 
         return resultObject;
     }
@@ -87,15 +76,22 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         return true;
     }
 
-    private final boolean processSourceSystem(String key, EMSFMdmCurrenciesEntity mainData, EDMCurrencyBo edmCurrencyBo) {
+    private  boolean processSourceSystem(String key, EMSFMdmCurrenciesEntity mainData, EDMCurrencyBo edmCurrencyBo) {
+        LogUtil.getCoreLog().info(">>>>>>>>>>>processSourceSystem>>>>>>>>>mainData:{}", mainData.toString());
 
+        if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
+            edmCurrencyBo.setSourceSystem("");
+            return true;
+        }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
+        LogUtil.getCoreLog().info(">>>>>>>>>>>processSourceSystem>>>>>>>>>queryString:{}", queryString);
 
         List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
 
         String sourceSystem = null;
         for (Object entry : sourceList) {
             EDMSourceSystemV1Entry sourceSystemV1Entry = (EDMSourceSystemV1Entry) entry;
+            LogUtil.getCoreLog().info(">>>>>>>>>>>sourceSystemV1Entry>>>>>>>>>sourceSystemV1Entry:{}", sourceSystemV1Entry.toString());
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }
 
@@ -110,28 +106,16 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         return true;
     }
 
-    private final boolean processT1(EMSFMdmCurrenciesEntity mainData, EDMCurrencyBo edmCurrencyBo) {
 
-        if (StringUtils.isEmpty(mainData.getzSourceSystem())) {
-            return true;
-        }
-        String systemQueryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
-        Map.Entry<String, Map<String, Object>> systemResult = AdfViewHelper.queryForMap(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, systemQueryString);
-        if (null != systemResult) {
-            String sourceSystem = systemResult.getValue().get("sourceSystem").toString().trim();
-            edmCurrencyBo.setSourceSystem(sourceSystem);
-        }
-        return true;
-    }
-
-    private final boolean processT2(String key, EMSFMdmCurrenciesEntity mainData, EDMCurrencyBo edmCurrencyBo) {
-
+    private  boolean processT2(String key, EMSFMdmCurrenciesEntity mainData, EDMCurrencyBo edmCurrencyBo) {
+        edmCurrencyBo.setCurrencyName("");
         if (null == mainData.getzEntCodeIso4217Alpha() || mainData.getzEntCodeIso4217Alpha().isEmpty()) {
-            return true;
+
+            return false;
         }
         String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
-                .is("[EMS]").and("mdmCode").is(mainData.getzEntCodeIso4217Alpha()).toQueryString();
-        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_MDM_CURRENCIES_CLONE, countryQueryString);
+                .is("[EMS]").and("zCode").is(mainData.getzEntCodeIso4217Alpha()).toQueryString();
+        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_Z_CURRENCIES_CLONE, countryQueryString);
 
         for (Map.Entry<String, String> item : items) {
             Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();

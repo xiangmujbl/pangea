@@ -25,7 +25,6 @@ import java.util.Map;
  */
 public class EDMUnitOfMeasureServiceImpl implements ICommonService {
 
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
     private static ICommonService instance;
 
@@ -68,8 +67,6 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        //recycling object
-        commonDao = null;
 
         return resultObject;
     }

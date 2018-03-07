@@ -13,21 +13,21 @@ Feature: EDMCurrency-Curation
       | [EMS]                        | AED   | AED                    | UAE Dirham       | 784              |
     And I wait "/ems/ems_f_z_currencies" Async Queue complete
 
-    And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
+    And I import "/pangea/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem     | localSourceSystemName       | sourceSystem | sourceSystemName   |
       | [MDD FASE]              | [MDD FASE]                  | CONS_LATAM   | Consumer Latam Ent |
       | [EMS]                   | EMS                           | EMS          | EMS Ent            |
       | [MD Synthes SAP Anspach]| [MD Synthes SAP Anspach] | CONS_LATAM   | Consumer Latam Ent |
-    And I wait "/edm/source_system_v1" Async Queue complete
+    And I wait "/pangea/edm/source_system_v1" Async Queue complete
 
     When I submit task with xml file "xml/currency.xml" and execute file "jar/pangea-view.jar"
 
     And wait 3000 millisecond
 
-    Then I check region data "/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
+    Then I check region data "/pangea/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
       | sourceSystem | localCurrency | currencyCode | currencyName | isoNumeric |
       | CONS_LATAM   | ADP            |  -             |                | -           |
       | CONS_LATAM   | AED            | AED            | UAE Dirham     | -        |
 
 
-#    And I compare the number of records between "/ems/ems_f_z_currencies" and "/edm/currency_v1,/edm/currency_v1_failed"
+#    And I compare the number of records between "/ems/ems_f_z_currencies" and "/pangea/edm/currency_v1,/pangeas/edm/currency_v1_failed"

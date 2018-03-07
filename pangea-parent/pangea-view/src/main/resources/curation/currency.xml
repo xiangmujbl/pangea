@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/ems/ems_f_z_currencies" viewRegion="/edm/currency_v1" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/ems/ems_f_z_currencies" viewRegion="/pangea/edm/currency_v1" chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.edm.currency.controller.EDMCurrencyController">
         <regions>
 
@@ -8,7 +8,7 @@
                     zSourceSystem,zCode,zEntCodeIso4217Alpha,zName,zIso4217Numeric
                 </columns>
                 <relations>
-                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                    <relation path="/pangea/edm/source_system_v1" isPrimaryKey="false">
                         <expression>localSourceSystem=/ems/ems_f_z_currencies.zSourceSystem</expression>
                     </relation>
                     <relation path="/ems/ems_f_z_currencies_clone" isPrimaryKey="false">
@@ -17,7 +17,7 @@
                 </relations>
             </region>
 
-            <region path="/edm/source_system_v1">
+            <region path="/pangea/edm/source_system_v1">
                 <columns>
                     localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
                 </columns>
@@ -31,7 +31,7 @@
             </region>
 
 
-            <region path="/edm/currency_v1">
+            <region path="/pangea/edm/currency_v1">
                 <columns>
                     sourceSystem,localCurrency,currencyCode,currencyName,isoNumeric
                 </columns>

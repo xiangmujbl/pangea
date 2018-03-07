@@ -14,7 +14,7 @@ Feature: EDMCountry-Curation
    # And I wait "/ems/ems_f_mdm_countries" Async Queue complete
     And wait 5000 millisecond
 
-    And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
+    And I import "/pangea/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
       | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
       | [EMS]             | EMS                   | EMS          | EMS Ent            |
@@ -25,9 +25,9 @@ Feature: EDMCountry-Curation
     When I submit task with xml file "xml/country.xml" and execute file "jar/pangea-view.jar"
     And wait 5000 millisecond
 
-    Then I check region data "/edm/country_v1" by keyFields "sourceSystem,localCountry"
+    Then I check region data "/pangea/edm/country_v1" by keyFields "sourceSystem,localCountry"
       | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion |
       | CONS_LATAM   | *            | -           |               |                        |
       | CONS_LATAM   | 00           | -           |               |                        |
 
-    And I compare the number of records between "/ems/ems_f_mdm_countries" and "/edm/country_v1,/edm/country_v1_failed"
+#    And I compare the number of records between "/ems/ems_f_mdm_countries" and "/pangea/edm/country_v1,/pangea/edm/country_v1_failed"

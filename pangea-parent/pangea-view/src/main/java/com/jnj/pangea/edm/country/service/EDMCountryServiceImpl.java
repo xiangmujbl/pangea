@@ -23,7 +23,6 @@ import java.util.Map;
  */
 public class EDMCountryServiceImpl implements ICommonService {
 
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
     private static ICommonService instance;
 
@@ -58,12 +57,6 @@ public class EDMCountryServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        isOk = processT1(mainData, edmCountryBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
 
         isOk = processT2(key, mainData, edmCountryBo);
         if (!isOk) {
@@ -72,19 +65,20 @@ public class EDMCountryServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        //recycling object
-        commonDao = null;
 
         return resultObject;
     }
 
-    private final boolean processSystem(EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
+    private  boolean processSystem(EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
         edmCountryBo.setLocalCountry(mainData.getMdmCode());
         edmCountryBo.setCountryCode(mainData.getzEntCodeIso3166Alpha2());
         return true;
     }
 
-    private final boolean processSourceSystem(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
+    private  boolean processSourceSystem(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
+        if (StringUtils.isEmpty(mainData.getzSourceSystem())) {
+            return false;
+        }
 
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
 
@@ -107,27 +101,17 @@ public class EDMCountryServiceImpl implements ICommonService {
         return true;
     }
 
-    private final boolean processT1(EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
 
-        if (StringUtils.isEmpty(mainData.getzSourceSystem())) {
-            return true;
-        }
-        String systemQueryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
-        Map.Entry<String, Map<String, Object>> systemResult = AdfViewHelper.queryForMap(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, systemQueryString);
-        if (null != systemResult) {
-            String sourceSystem = systemResult.getValue().get("sourceSystem").toString().trim();
-            edmCountryBo.setSourceSystem(sourceSystem);
-        }
-        return true;
-    }
 
-    private final boolean processT2(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
-
+    private  boolean processT2(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
+        LogUtil.getCoreLog().info("mainData:{}",mainData);
         if (null == mainData.getzEntCodeIso3166Alpha2() || mainData.getzEntCodeIso3166Alpha2().isEmpty()) {
             return true;
         }
+        LogUtil.getCoreLog().info("mainData.getzEntCodeIso3166Alpha2():{}",mainData.getzEntCodeIso3166Alpha2());
         String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
                 .is("[EMS]").and("mdmCode").is(mainData.getzEntCodeIso3166Alpha2()).toQueryString();
+        LogUtil.getCoreLog().info("countryQueryString:{}",countryQueryString);
         List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString);
 
         for (Map.Entry<String, String> item : items) {

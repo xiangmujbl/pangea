@@ -13,6 +13,7 @@ import com.jnj.pangea.common.entry.projectone.MarmEntry;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
 import com.jnj.pangea.edm.country.service.EDMCountryServiceImpl;
+import com.jnj.pangea.edm.currency.bo.EDMCurrencyBo;
 import com.jnj.pangea.edm.currency.service.EDMCurrencyServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -45,11 +46,11 @@ public class EDMCurrencyController extends BaseController implements IEventProce
                 //PdxBeanUtils.convert2Bean(map, mainObject);
                 EMSFMdmCurrenciesEntity mainObject = (EMSFMdmCurrenciesEntity) BeanUtil.mapToObject(map, EMSFMdmCurrenciesEntity.class);
 
-                LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
+                LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject.toString());
 
                 ResultObject resultObject = edmCurrencyyService.buildView(key, mainObject, null);
 
-                EDMCountryBo edmCountryBo = (EDMCountryBo) resultObject.getBaseBo();
+                EDMCurrencyBo edmCountryBo = (EDMCurrencyBo) resultObject.getBaseBo();
 
                 LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isSuccess());
 
