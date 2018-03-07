@@ -14,7 +14,7 @@ Feature: EDMSourceSystem
 
     When I submit task with xml file "xml/edm/EDMSourceSystem_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/edm/source_system_v1" by keyFields "localSourceSystem"
+    Then I check region data "/pangea/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem       | localSourceSystemName | sourceSystem | sourceSystemName   |
       | Project_One             | Project One           | CON_LATAM    | Consumer Latam Ent |
       | [EMS]                   | EMS                   | EMS          | EMS Ent            |

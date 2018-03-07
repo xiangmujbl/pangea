@@ -76,6 +76,8 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setGlobalDpParentCode("");
         materialGlobalBo.setLocalDpParentCode("");
 
+        resultObject.setBaseBo(materialGlobalBo);
+
         return resultObject;
     }
 
