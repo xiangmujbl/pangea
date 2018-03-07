@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/ems/ems_f_mdm_units" viewRegion="/edm/unit_of_measure_v1" chunkSize="1000" chunkBytes="4096"
-              executionClassName="com.jnj.pangea.view.processor.EDMUnitofMeasureProcessor">
+              executionClassName="com.jnj.pangea.edm.unit_of_measure.controller.EDMUnitOfMeasureController">
         <regions>
 
             <region path="/ems/ems_f_mdm_units">
