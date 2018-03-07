@@ -7,6 +7,9 @@ public interface CommonRegionPath {
     // -----region
     String EDM_SOURCE_SYSTEM_V1 = "/pangea/edm/source_system_v1";
     String EDM_MATERIAL_GLOBAL_V1 = "/pangea/edm/material_global_v1";
+    String PANGEA_EDM_PLANT_V1="/pangea/edm/plant_v1";
+    String PANGEA_EDM_MAT_PLANT_STAT_V1="/pangea/edm/mat_plant_stat_v1";
+
     String PROJECT_ONE_MAKT = "/project_one/makt";
     String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
     String NGEMS_GOLDEN_MATERIAL = "/ngems/golden_material";
@@ -18,6 +21,10 @@ public interface CommonRegionPath {
 
     // -----region attribute
     String LOCALSOURCESYSTEM="localSourceSystem";
+    String SOURCESYSTEM="sourceSystem";
+    String LOCALMATERIALNUMBER="localMaterialNumber";
+    String LOCALPLANT="localPlant";
+    String LOCALPLANTSTATUS="localPlantStatus";
 
     // -----region attribute value
     // localSourceSystem="project_one"
