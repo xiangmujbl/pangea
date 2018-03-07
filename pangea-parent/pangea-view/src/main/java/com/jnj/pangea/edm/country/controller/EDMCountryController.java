@@ -8,6 +8,7 @@ import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseController;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.entry.ems.EMSFMdmCountriesEntity;
 import com.jnj.pangea.common.entry.projectone.MarmEntry;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
@@ -41,7 +42,7 @@ public class EDMCountryController extends BaseController implements IEventProces
             try {
                 //MarmEntry mainObject = new MarmEntry();
                 //PdxBeanUtils.convert2Bean(map, mainObject);
-                MarmEntry mainObject = (MarmEntry) BeanUtil.mapToObject(map, MarmEntry.class);
+                EMSFMdmCountriesEntity mainObject = (EMSFMdmCountriesEntity) BeanUtil.mapToObject(map, EMSFMdmCountriesEntity.class);
 
                 LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
 

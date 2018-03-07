@@ -19,6 +19,9 @@ public interface CommonRegionPath {
     String EMS_F_MDM_CURRENCIES_CLONE = "/ems/ems_f_mdm_currencies";
     String EMS_F_MDM_CURRENCIES = "/ems/ems_f_mdm_currencies";
 
+    String EMS_F_MDM_UNITS_CLONE = "/ems/ems_f_mdm_units_clone";
+    String EMS_F_MDM_UNITS = "/ems/ems_f_mdm_units";
+
     String PROJECT_ONE_T001W = "/project_one/t001w";
     String PROJECT_ONE_T001K = "/project_one/t001k";
     String PROJECT_ONE_T001 = "/project_one/t001";
