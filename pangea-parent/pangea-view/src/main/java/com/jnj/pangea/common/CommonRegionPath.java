@@ -13,6 +13,9 @@ public interface CommonRegionPath {
     String EMS_F_MDM_COUNTRIES_CLONE = "/ems/ems_f_mdm_countries_clone";
     String EMS_F_MDM_COUNTRIES = "/ems/ems_f_mdm_countries";
 
+    String EMS_F_MDM_CURRENCIES_CLONE = "/ems/ems_f_mdm_currencies";
+    String EMS_F_MDM_CURRENCIES = "/ems/ems_f_mdm_currencies";
+
     // -----region attribute
     String LOCALSOURCESYSTEM="localSourceSystem";
 

@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/ems/ems_f_z_currencies" viewRegion="/edm/currency_v1" chunkSize="1000" chunkBytes="4096"
-              executionClassName="com.jnj.pangea.view.processor.EDMCurrencyProcessor">
+              executionClassName="com.jnj.pangea.edm.currency.controller.EDMCurrencyController">
         <regions>
 
             <region path="/ems/ems_f_z_currencies">
