@@ -6,6 +6,7 @@ import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.Dao.ICommonDao;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.List;
@@ -64,6 +65,11 @@ public class CommonDaoImpl implements ICommonDao {
             }
         }
         return entry;
+    }
+
+    @Override
+    public void saveFailData(FailData failData) {
+        // TODO save failData
     }
 
     private static <T> List<T> mapsToObjects(List<Map.Entry<String, String>> maps, Class<T> clazz) {

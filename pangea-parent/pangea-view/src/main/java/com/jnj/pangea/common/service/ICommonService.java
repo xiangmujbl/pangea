@@ -1,5 +1,7 @@
 package com.jnj.pangea.common.service;
 
+import com.jnj.pangea.common.Dao.ICommonDao;
+import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.ResultObject;
 
 /**
@@ -7,6 +9,7 @@ import com.jnj.pangea.common.ResultObject;
  */
 public interface ICommonService<M, V> {
 
+    ICommonDao commonDao = CommonDaoImpl.getInstance();
 
     /**
      * @param key

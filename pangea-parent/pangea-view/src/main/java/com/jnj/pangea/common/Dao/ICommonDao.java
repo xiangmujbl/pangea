@@ -1,5 +1,7 @@
 package com.jnj.pangea.common.Dao;
 
+import com.jnj.pangea.common.FailData;
+
 import java.util.List;
 
 /**
@@ -27,4 +29,5 @@ public interface ICommonDao {
 
     public <T> T queryForObject(String region, String queryString, Class<T> resultType);
 
+    public void saveFailData(FailData failData);
 }

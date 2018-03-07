@@ -4,13 +4,16 @@ import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.Dao.ICommonDao;
+import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class CommonController implements IEventProcessor {
+
+    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> events) {
@@ -21,11 +24,9 @@ public abstract class CommonController implements IEventProcessor {
             if (resultObject.isSuccess()) {
                 BaseBo baseBo = resultObject.getBaseBo();
 
-                LogUtil.getCoreLog().info("---------------{}", baseBo.toMap());
                 result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
             } else {
-                FailData failData = resultObject.getFailData();
-                // TODO write failed record
+                commonDao.saveFailData(resultObject.getFailData());
             }
         });
         return result;

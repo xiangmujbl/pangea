@@ -1,8 +1,6 @@
 package com.jnj.pangea.edm.material.global.material_global.service;
 
-import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.Dao.ICommonDao;
 import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
@@ -13,18 +11,14 @@ import com.jnj.pangea.common.entry.projectone.MaktEntity;
 import com.jnj.pangea.common.entry.projectone.MaraEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.global.material_global.bo.EDMMaterialGlobalBo;
-import com.jnj.pangea.util.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by XZhan290 on 2018/3/2.
  */
 public class EDMMaterialGlobalServiceImpl implements ICommonService {
-
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
     private static ICommonService instance;
 
@@ -86,10 +80,12 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
     }
 
     private String getFieldWithJ1(String matnr) {
+
         if (StringUtils.isEmpty(matnr)) {
             return "";
         }
-        List<Map.Entry<String, String>> items = null;
+
+        List<MaktEntity> items = null;
 
         String queryEnString = "";
 
@@ -99,14 +95,11 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         }
 
         queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
-        items = AdfViewHelper.queryForList(CommonRegionPath.PROJECT_ONE_MAKT, queryEnString, -1);
+        items = commonDao.queryForList(CommonRegionPath.PROJECT_ONE_MAKT, queryEnString, MaktEntity.class);
 
-        for (Map.Entry<String, String> item : items) {
-            Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
-
-            MaktEntity maktEntity = BeanUtil.mapToBean(jsonObj, new MaktEntity());
-            String spras = maktEntity.getSpras();
-            String maktx = maktEntity.getMaktx();
+        for (MaktEntity item : items) {
+            String spras = item.getSpras();
+            String maktx = item.getMaktx();
             if ("E".equals(spras)) {
                 return maktx;
             } else if ("P".equals(spras)) {
@@ -119,28 +112,25 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
     }
 
     private GoldenMaterialEntity getFieldsWithJ2(String matnr, String sourceSystem) {
+
         if (StringUtils.isEmpty(matnr)) {
             return null;
         }
         if (StringUtils.isEmpty(sourceSystem)) {
             return null;
         }
+
         String queryString = QueryHelper
                 .buildCriteria("localMaterialNumber").is(matnr)
                 .and("sourceSystem").is(sourceSystem)
                 .toQueryString();
-        Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(CommonRegionPath.NGEMS_MATERIAL_LINKAGE, queryString);
 
-        if (null != result && null != result.getValue()) {
+        MaterialLinkageEntity materialLinkageEntity = commonDao.queryForObject(CommonRegionPath.NGEMS_MATERIAL_LINKAGE, queryString, MaterialLinkageEntity.class);
+        if (null != materialLinkageEntity) {
 
-            MaterialLinkageEntity materialLinkageEntity = BeanUtil.mapToBean(result.getValue(), new MaterialLinkageEntity());
             String materialNumber = materialLinkageEntity.getMaterialNumber();
-
             queryString = QueryHelper.buildCriteria("materialNumber").is(materialNumber).toQueryString();
-            result = AdfViewHelper.queryForMap(CommonRegionPath.NGEMS_GOLDEN_MATERIAL, queryString);
-            if (null != result) {
-                return BeanUtil.mapToBean(result.getValue(), new GoldenMaterialEntity());
-            }
+            return commonDao.queryForObject(CommonRegionPath.NGEMS_GOLDEN_MATERIAL, queryString, GoldenMaterialEntity.class);
         }
         return null;
     }

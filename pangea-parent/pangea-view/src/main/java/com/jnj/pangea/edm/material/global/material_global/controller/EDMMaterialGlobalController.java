@@ -42,7 +42,7 @@ public class EDMMaterialGlobalController extends BaseController {
                 ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
                 result.add(viewRaw);
             } else {
-
+                commonDao.saveFailData(resultObject.getFailData());
             }
         });
         return result;
