@@ -6,6 +6,7 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.BaseController;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
@@ -37,10 +38,9 @@ public class EDMMaterialPlantController extends BaseController implements IEvent
 
                 ResultObject resultObject = materialPlantService.buildView(key, mainObject, null);
 
-                EDMMaterialPlantBo materialPlanteBo = (EDMMaterialPlantBo) resultObject.getBaseBo();
-
                 if (resultObject.isSuccess()) {
-                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(materialPlanteBo.getKey(), materialPlanteBo.toMap());
+                    BaseBo baseBo = (BaseBo) resultObject.getBaseBo();
+                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
                     result.add(viewResultItem);
                 }
 

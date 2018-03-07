@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/project_one/marc" viewRegion="/pangea/edm/material_plant_v1" chunkSize="1000" chunkBytes="4096"
-              executionClassName="com.jnj.pangea.view.processor.EDMMaterialPlantProcessor">
+              executionClassName="com.jnj.pangea.edm.material.plant.controller.EDMMaterialPlantController">
         <regions>
 
             <region path="/project_one/marc">

@@ -12,7 +12,7 @@ Feature: EDMMaterialType XREF - Curation
       | 0003    | [EMS]             | PST         |
     And I wait "/ems/ems_f_mdm_material_types" Async Queue complete
 
-    When I submit task with xml file "xml/edm/material/type/material_type.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/material/type/MaterialType_Ems.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/pangea/edm/material_type_v1" by keyFields "materialType"
       | materialType | materialTypeName |
