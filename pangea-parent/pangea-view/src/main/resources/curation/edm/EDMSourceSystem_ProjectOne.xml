@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/ngems/source_system" viewRegion="/edm/source_system_v1" chunkSize="1000" chunkBytes="4096"
-              executionClassName="com.jnj.pangea.edm.source_system.controller.EDMSourceSystemProcessor">
+              executionClassName="com.jnj.pangea.edm.source_system.controller.EDMSourceSystemController">
         <regions>
 
             <region path="/ngems/source_system">

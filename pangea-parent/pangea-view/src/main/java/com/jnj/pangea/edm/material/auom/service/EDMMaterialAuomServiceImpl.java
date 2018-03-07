@@ -1,7 +1,6 @@
 package com.jnj.pangea.edm.material.auom.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.Dao.ICommonDao;
@@ -76,7 +75,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         String sourceSystem = materialAuomBo.getSourceSystem();
         String queryString = QueryHelper.buildCriteria("localMaterialNumber").is(matnr).and("sourceSystem").is(sourceSystem).toQueryString();
 
-        List<Object> materialList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entry.class);
+        List<EDMMaterialGlobalV1Entry> materialList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entry.class);
 
         String materialNumber = null;
         for (Object entry : materialList) {
@@ -99,7 +98,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
 
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is("project_one").toQueryString();
 
-        List<Object> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
+        List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
 
         String sourceSystem = null;
         for (Object entry : sourceList) {

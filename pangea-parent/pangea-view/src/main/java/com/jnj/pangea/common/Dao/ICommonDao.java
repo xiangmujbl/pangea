@@ -9,18 +9,22 @@ public interface ICommonDao {
 
     /**
      * queryString content is key
+     *
      * @param region
      * @param queryString
      * @return
      */
-    public Object fetchByKey(String region, String queryString, Class<?> resultType);
+    public <T> T fetchByKey(String region, String queryString, Class<T> resultType);
 
     /**
      * queryString content is not key
+     *
      * @param region
      * @param queryString
      * @return
      */
-    public List<Object> queryForList(String region, String queryString, Class<?> resultType);
+    public <T> List<T> queryForList(String region, String queryString, Class<T> resultType);
+
+    public <T> T queryForObject(String region, String queryString, Class<T> resultType);
 
 }

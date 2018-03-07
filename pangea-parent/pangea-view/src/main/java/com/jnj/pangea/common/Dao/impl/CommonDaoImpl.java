@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.Dao.impl;
 
+import com.google.common.collect.Lists;
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.grid.utils.JsonUtils;
@@ -9,8 +10,6 @@ import com.jnj.pangea.util.BeanUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * Created by XZhan290 on 2018/3/5.
@@ -27,33 +26,63 @@ public class CommonDaoImpl implements ICommonDao {
     }
 
     @Override
-    public Object fetchByKey(String region, String queryString, Class<?> resultType) {
+    public <T> T fetchByKey(String region, String queryString, Class<T> clazz) {
 
-        Object entry = null;
-
-        RawDataValue sourceSystem = CurationRawDataHelper.getInstance().fetchByKey(region, queryString);
-
-        Map map = sourceSystem.toMap();
-
+        T entry = null;
+        RawDataValue rawDataValue = CurationRawDataHelper.getInstance().fetchByKey(region, queryString);
+        Map map = rawDataValue.toMap();
         if (map != null) {
-            entry = BeanUtil.mapToObject(map, resultType);
+            try {
+                entry = clazz.newInstance();
+                BeanUtil.mapToBean(map, entry);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
         return entry;
     }
 
     @Override
-    public List<Object> queryForList(String region, String queryString, Class<?> resultType) {
+    public <T> List<T> queryForList(String region, String queryString, Class<T> clazz) {
+
         List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, -1);
+        return mapsToObjects(sourceSystemList, clazz);
+    }
 
-        List<Object> list = new ArrayList<>();
-        sourceSystemList.forEach(entry->{
-            String value = entry.getValue();
-            Map valueMap = JsonUtils.jsonToObject(value, Map.class);
-            Object obj = BeanUtil.mapToObject(valueMap, resultType);
-            list.add(obj);
-        });
+    @Override
+    public <T> T queryForObject(String region, String queryString, Class<T> clazz) {
 
+        T entry = null;
+
+        Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(region, queryString);
+        if (null != result && null != result.getValue()) {
+            try {
+                entry = clazz.newInstance();
+                BeanUtil.mapToBean(result.getValue(), entry);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return entry;
+    }
+
+    private static <T> List<T> mapsToObjects(List<Map.Entry<String, String>> maps, Class<T> clazz) {
+
+        List<T> list = Lists.newArrayList();
+        if (maps != null && maps.size() > 0) {
+            Map map = null;
+            T bean = null;
+            for (Map.Entry<String, String> entry : maps) {
+                map = JsonUtils.jsonToObject(entry.getValue(), Map.class);
+                try {
+                    bean = clazz.newInstance();
+                    BeanUtil.mapToBean(map, bean);
+                    list.add(bean);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return list;
     }
 
