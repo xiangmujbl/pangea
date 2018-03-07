@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/ems/ems_f_mdm_countries" viewRegion="/edm/country_v1" chunkSize="1000" chunkBytes="40096"
               partitionPerServer="2" parallelism="2"
-              executionClassName="com.jnj.pangea.view.processor.CountryProcessor">
+              executionClassName="com.jnj.pangea.edm.country.controller.EDMCountryController">
         <regions>
 
             <region path="/ems/ems_f_mdm_countries">

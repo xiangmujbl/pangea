@@ -10,6 +10,8 @@ public interface CommonRegionPath {
     String PROJECT_ONE_MAKT = "/project_one/makt";
     String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
     String NGEMS_GOLDEN_MATERIAL = "/ngems/golden_material";
+    String EMS_F_MDM_COUNTRIES_CLONE = "/ems/ems_f_mdm_countries_clone";
+    String EMS_F_MDM_COUNTRIES = "/ems/ems_f_mdm_countries";
 
     // -----region attribute
     String LOCALSOURCESYSTEM="localSourceSystem";
