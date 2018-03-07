@@ -5,7 +5,7 @@
 
             <region path="/project_one/mara">
                 <columns>
-                    matnr,mtart,meins
+                    matnr,mtart,meins,matkl,lvorm,mstae,spart
                 </columns>
                 <relations>
                     <relation path="/project_one/makt" isPrimaryKey="true">
