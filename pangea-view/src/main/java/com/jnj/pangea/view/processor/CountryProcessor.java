@@ -18,7 +18,7 @@ import java.util.Map;
 public class CountryProcessor extends BaseProcessor implements IEventProcessor {
 
     private String REGION_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
-    private String REGION_EMS_F_MDM_COUNTRIES = "/ems/ems_f_mdm_countries";
+    private String REGION_EMS_F_MDM_COUNTRIES = "/ems/ems_f_mdm_countries_clone";
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
@@ -29,8 +29,12 @@ public class CountryProcessor extends BaseProcessor implements IEventProcessor {
             Map<String, Object> rawDataMap = rawValue.toMap();
             CountryBo countryBo = new CountryBo();
 
-            // rule T1
+
             String zSourceSystem = getStringField(rawDataMap, "zSourceSystem");
+            if("[EMS]".equals(zSourceSystem)){
+                return;
+            }
+            // rule T1
             countryBo.setSourceSystem(getFieldWithT1(zSourceSystem));
 
             String localCountry = getStringField(rawDataMap, "mdmCode");
