@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.grid.utils.JsonUtils;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.Dao.ICommonDao;
 import com.jnj.pangea.common.FailData;
@@ -45,7 +46,7 @@ public class CommonDaoImpl implements ICommonDao {
 
     @Override
     public <T> List<T> queryForList(String region, String queryString, Class<T> clazz) {
-
+        //LogUtil.getCoreLog().info("<<<<<<<queryForList>>>>>>>>>>region:{},queryString:{},Class:{}",region,queryString,clazz);
         List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, -1);
         return mapsToObjects(sourceSystemList, clazz);
     }

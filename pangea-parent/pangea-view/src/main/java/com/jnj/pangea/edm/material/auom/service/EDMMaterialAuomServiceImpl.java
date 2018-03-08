@@ -97,7 +97,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
     private final boolean processSourceSystem(String key, EDMMaterialAuomBo materialAuomBo) {
 
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is("project_one").toQueryString();
-
+        LogUtil.getCoreLog().info("<<<<<<processSourceSystem>>>>>>>>>queryString:{}",queryString);
         List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
 
         String sourceSystem = null;
