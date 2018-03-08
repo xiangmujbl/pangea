@@ -2,8 +2,6 @@ package com.jnj.pangea.edm.material.type.service;
 
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.CommonRegionPath;
-import com.jnj.pangea.common.Dao.ICommonDao;
-import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
@@ -12,8 +10,6 @@ import com.jnj.pangea.edm.material.type.bo.EDMMaterialTypeBo;
 import org.apache.commons.lang3.StringUtils;
 
 public class EDMMaterialTypeServiceImpl  implements ICommonService {
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
-
     private static ICommonService instance;
 
     public static ICommonService getInstance() {
@@ -43,9 +39,6 @@ public class EDMMaterialTypeServiceImpl  implements ICommonService {
             LogUtil.getCoreLog().warn(">>>key:{},z_source_system value is not '[EMS]' :{}", key, zSourceSystem);
             resultObject.setFailData(new FailData());
         }
-
-        //recycling object
-        commonDao = null;
 
         return resultObject;
     }

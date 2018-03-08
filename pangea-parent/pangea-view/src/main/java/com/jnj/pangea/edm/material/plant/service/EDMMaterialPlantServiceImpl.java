@@ -1,10 +1,7 @@
 package com.jnj.pangea.edm.material.plant.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.CommonRegionPath;
-import com.jnj.pangea.common.Dao.ICommonDao;
-import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.edm.EDMMatPlantStatV1Entry;
 import com.jnj.pangea.common.entry.edm.EDMMaterialGlobalV1Entry;
@@ -16,11 +13,9 @@ import com.jnj.pangea.edm.material.plant.bo.EDMMaterialPlantBo;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 
 
 public class EDMMaterialPlantServiceImpl  implements ICommonService {
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
     private static ICommonService instance;
 

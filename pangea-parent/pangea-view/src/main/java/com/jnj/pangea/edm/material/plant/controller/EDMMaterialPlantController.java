@@ -9,12 +9,9 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.BaseController;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
 import com.jnj.pangea.common.entry.projectone.MarcEntry;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.material.plant.bo.EDMMaterialPlantBo;
 import com.jnj.pangea.edm.material.plant.service.EDMMaterialPlantServiceImpl;
-import com.jnj.pangea.edm.material.type.bo.EDMMaterialTypeBo;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.ArrayList;
@@ -30,7 +27,6 @@ public class EDMMaterialPlantController extends BaseController implements IEvent
         list.forEach(mainRaw -> {
             RawDataValue mainValue = mainRaw.getValue();
             String key = mainRaw.getKey();
-
             Map map = mainValue.toMap();
 
             try {

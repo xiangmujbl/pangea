@@ -10,10 +10,7 @@ import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.BaseController;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
-import com.jnj.pangea.common.entry.projectone.MarmEntry;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.material.auom.bo.EDMMaterialAuomBo;
-import com.jnj.pangea.edm.material.type.bo.EDMMaterialTypeBo;
 import com.jnj.pangea.edm.material.type.service.EDMMaterialTypeServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -36,14 +33,7 @@ public class EDMMaterialTypeController  extends BaseController implements IEvent
 
             try {
                 EmsFMdmMaterialTypesEntry mainObject = (EmsFMdmMaterialTypesEntry) BeanUtil.mapToObject(map, EmsFMdmMaterialTypesEntry.class);
-
-                LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
-
                 ResultObject resultObject = materialTypeService.buildView(key, mainObject, null);
-
-
-
-                LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isSuccess());
 
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = (BaseBo) resultObject.getBaseBo();
