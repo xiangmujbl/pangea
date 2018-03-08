@@ -20,7 +20,7 @@ Feature: EDMCountry-Curation
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
     And I wait "/pangea/edm/source_system_v1" Async Queue complete
 
-    When I submit task with xml file "xml/country.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/country.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/pangea/edm/country_v1" by keyFields "sourceSystem,localCountry"
       | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion |

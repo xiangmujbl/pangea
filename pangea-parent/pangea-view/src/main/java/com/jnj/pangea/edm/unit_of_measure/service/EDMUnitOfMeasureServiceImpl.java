@@ -83,7 +83,14 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
     }
 
     private final boolean processSourceSystem(String key, EMSFMdmUnitsEntity mainData, EDMUnitOfMeasureBo edmUnitOfMeasureBo) {
-
+        if (CommonRegionPath.ZSOURCESYSTEM_EMS.equals(mainData.getzSourceSystem())) {
+            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
+            //@TODO write fail data to region or file, T1
+            return false;
+        }
+        if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
+            return true;
+        }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
 
         List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
@@ -94,11 +101,7 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }
 
-        if (StringUtils.isEmpty(sourceSystem)||CommonRegionPath.ZSOURCESYSTEM_EMS.equals(sourceSystem)) {
-            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
-            //@TODO write fail data to region or file, T1
-            return false;
-        }
+
 
         edmUnitOfMeasureBo.setSourceSystem(sourceSystem);
 

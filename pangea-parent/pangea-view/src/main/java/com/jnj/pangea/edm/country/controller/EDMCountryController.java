@@ -28,46 +28,26 @@ public class EDMCountryController extends BaseController implements IEventProces
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
-
         List<ViewResultItem> result = new ArrayList<>();
-
-
         list.forEach(mainRaw -> {
-
             RawDataValue mainValue = mainRaw.getValue();
             String key = mainRaw.getKey();
-
             Map map = mainValue.toMap();
-
             try {
-                //MarmEntry mainObject = new MarmEntry();
-                //PdxBeanUtils.convert2Bean(map, mainObject);
                 EMSFMdmCountriesEntity mainObject = (EMSFMdmCountriesEntity) BeanUtil.mapToObject(map, EMSFMdmCountriesEntity.class);
-
                 LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
-
                 ResultObject resultObject = edmCountryService.buildView(key, mainObject, null);
-
                 EDMCountryBo edmCountryBo = (EDMCountryBo) resultObject.getBaseBo();
-
                 LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isSuccess());
-
                 if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(edmCountryBo.getKey(), edmCountryBo.toMap());
                     result.add(viewResultItem);
                 }
-
             } catch (Exception e) {
                 LogUtil.getCoreLog().info("EDMCountryController Exception occured. key = {}.", key);
                 LogUtil.getCoreLog().info("EDMCountryController Exception:", e);
             }
-
         });
-
-
-        //recycling object
-        edmCountryService = null;
-
         return result;
     }
 

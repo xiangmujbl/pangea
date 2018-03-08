@@ -35,7 +35,7 @@ public class EDMCountryServiceImpl implements ICommonService {
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
-
+        LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>buildView key:{},o:{}", key,o);
         ResultObject resultObject = new ResultObject();
 
         EMSFMdmCountriesEntity mainData = (EMSFMdmCountriesEntity) o;
@@ -76,28 +76,22 @@ public class EDMCountryServiceImpl implements ICommonService {
     }
 
     private  boolean processSourceSystem(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
-        if (StringUtils.isEmpty(mainData.getzSourceSystem())) {
+        if (CommonRegionPath.ZSOURCESYSTEM_EMS.equals(mainData.getzSourceSystem())) {
+            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
+            //@TODO write fail data to region or file, T1
             return false;
         }
-
+        if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
+            return true;
+        }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
-
         List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
-
         String sourceSystem = null;
         for (Object entry : sourceList) {
             EDMSourceSystemV1Entry sourceSystemV1Entry = (EDMSourceSystemV1Entry) entry;
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }
-
-        if (StringUtils.isEmpty(sourceSystem)||CommonRegionPath.ZSOURCESYSTEM_EMS.equals(sourceSystem)) {
-            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
-            //@TODO write fail data to region or file, T1
-            return false;
-        }
-
         edmCountryBo.setSourceSystem(sourceSystem);
-
         return true;
     }
 

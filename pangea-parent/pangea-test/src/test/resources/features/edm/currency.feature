@@ -20,7 +20,7 @@ Feature: EDMCurrency-Curation
       | [MD Synthes SAP Anspach]| [MD Synthes SAP Anspach] | CONS_LATAM   | Consumer Latam Ent |
     And I wait "/pangea/edm/source_system_v1" Async Queue complete
 
-    When I submit task with xml file "xml/currency.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/currency.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/pangea/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
       | sourceSystem | localCurrency | currencyCode | currencyName | isoNumeric |

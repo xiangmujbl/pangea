@@ -50,8 +50,6 @@ public class EDMMaterialPlantController extends BaseController implements IEvent
             }
 
         });
-        //recycling object
-        materialPlantService = null;
 
         return result;
     }

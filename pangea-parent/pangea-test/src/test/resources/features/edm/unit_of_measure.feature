@@ -20,7 +20,7 @@ Feature: EDMUnitOfMeasure-Curation
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
     And I wait "/pangea/edm/source_system_v1" Async Queue complete
 
-    When I submit task with xml file "xml/unit_of_measure.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/unit_of_measure.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/pangea/edm/unit_of_measure_v1" by keyFields "sourceSystem,localUom"
       | sourceSystem | localUom | localUomName             | uom | uomName         | isocode | measure | factor | roundingDecimal |
