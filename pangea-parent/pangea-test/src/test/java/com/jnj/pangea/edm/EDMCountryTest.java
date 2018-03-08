@@ -11,5 +11,4 @@ import org.junit.runner.RunWith;
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "html:target/Destination"})
 public class EDMCountryTest {
-
 }

@@ -78,9 +78,12 @@ public class EDMCurrencyServiceImpl implements ICommonService {
 
     private  boolean processSourceSystem(String key, EMSFMdmCurrenciesEntity mainData, EDMCurrencyBo edmCurrencyBo) {
         LogUtil.getCoreLog().info(">>>>>>>>>>>processSourceSystem>>>>>>>>>mainData:{}", mainData.toString());
-
+        if (CommonRegionPath.ZSOURCESYSTEM_EMS.equals( mainData.getzSourceSystem())) {
+            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
+            //@TODO write fail data to region or file, T1
+            return false;
+        }
         if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
-            edmCurrencyBo.setSourceSystem("");
             return true;
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
@@ -95,11 +98,7 @@ public class EDMCurrencyServiceImpl implements ICommonService {
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }
 
-        if (StringUtils.isEmpty(sourceSystem)||CommonRegionPath.ZSOURCESYSTEM_EMS.equals(sourceSystem)) {
-            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
-            //@TODO write fail data to region or file, T1
-            return false;
-        }
+
 
         edmCurrencyBo.setSourceSystem(sourceSystem);
 
@@ -111,7 +110,7 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         edmCurrencyBo.setCurrencyName("");
         if (null == mainData.getzEntCodeIso4217Alpha() || mainData.getzEntCodeIso4217Alpha().isEmpty()) {
 
-            return false;
+            return true;
         }
         String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
                 .is("[EMS]").and("zCode").is(mainData.getzEntCodeIso4217Alpha()).toQueryString();
