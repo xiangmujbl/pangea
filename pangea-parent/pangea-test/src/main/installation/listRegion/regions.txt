@@ -1,7 +1,5 @@
-#EDMMaterialAUOM_Projectone.xml
+/project_one/marm
 /pangea/edm/material_auom_v1
-/edm/material_global
-/edm/source_system_v1
 
 /ngems/source_system
 /pangea/edm/source_system_v1
@@ -18,3 +16,18 @@
 /project_one/t001
 /pangea/edm/country_v1
 /pangea/edm/plant_v1
+
+/ems/ems_f_mdm_material_types
+/pangea/edm/material_type_v1
+
+/project_one/marc
+/pangea/edm/mat_plant_stat_v1
+/pangea/edm/material_plant_v1
+
+/ems/ems_f_mdm_countries
+
+/ems/ems_f_z_currencies
+/pangea/edm/currency_v1
+
+/ems/ems_f_mdm_units
+/pangea/edm/unit_of_measure_v1

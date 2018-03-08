@@ -1,9 +1,8 @@
 package com.jnj.pangea.edm.material.global.material_global.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.CommonRegionPath;
-import com.jnj.pangea.common.Dao.ICommonDao;
-import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.ngems.GoldenMaterialEntity;
 import com.jnj.pangea.common.entry.ngems.MaterialLinkageEntity;
@@ -89,14 +88,11 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
 
         List<MaktEntity> items = null;
 
-        String queryEnString = "";
+        String queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
 
-        // TODO add ce support
         if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
-            return "";
+            queryEnString = "matnr:\"" + AdfLuceneHelper.keyword(matnr) + "\"";
         }
-
-        queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
         items = commonDao.queryForList(CommonRegionPath.PROJECT_ONE_MAKT, queryEnString, MaktEntity.class);
 
         for (MaktEntity item : items) {
