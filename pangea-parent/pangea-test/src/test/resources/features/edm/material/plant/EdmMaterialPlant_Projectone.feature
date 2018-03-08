@@ -52,7 +52,7 @@ Feature: EDMMaterialPlant
       | EMS          | 10               | 106         |
     And I wait "/pangea/edm/mat_plant_stat_v1" Async Queue complete
 
-    When I submit task with xml file "xml/edm/material/plant/EdmMaterialPlant_Projectone.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/material/plant/EDMMaterialPlant_Projectone.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/pangea/edm/material_plant_v1" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | plant | localPlantStatus | plantStatus |
