@@ -57,8 +57,6 @@ public class EDMMaterialTypeController  extends BaseController implements IEvent
             }
 
         });
-        //recycling object
-        materialTypeService = null;
 
         return result;
 
