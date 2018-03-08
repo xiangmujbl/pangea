@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-510
 Feature: EDMMaterialPlant
 
   Scenario: Full Load curation

@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-491
 Feature: EDMUnitOfMeasure-Curation
 
   Scenario: Full Load curation
