@@ -1,4 +1,4 @@
-@EDMMaterialAUOM_projectOne @AEAZ-511
+@pangea_test @AEAZ-511
 Feature: EDMMaterialAUOM-Curation
 
   Scenario: Full Load curation
