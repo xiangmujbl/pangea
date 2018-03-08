@@ -27,5 +27,8 @@ Feature: EDMUnitOfMeasure-Curation
       | CONS_LATAM   | %0       | Per 1000                 | %O2   |  %LC, %label clm | -       | -       |        |                 |
       | CONS_LATAM   | %LC      | %LC, Percent label claim | N/A |                  | -       | -       |        |                 |
 
+    And I delete the test data
+
+    And I will remove all data with region "/pangea/edm/unit_of_measure_v1"
 
 #    And I compare the number of records between "/ems/ems_f_mdm_units" and "/pangea/edm/unit_of_measure_v1,/pangea/edm/unit_of_measure_v1_failed"

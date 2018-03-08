@@ -61,3 +61,5 @@ Feature: EDMPlant-Curation
 #    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/edm/plant_v1_failed"
 
     And I delete the test data
+
+    And I will remove all data with region "/pangea/edm/plant_v1"

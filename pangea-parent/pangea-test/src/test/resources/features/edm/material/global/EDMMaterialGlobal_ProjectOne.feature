@@ -56,6 +56,8 @@ Feature: MaterialGlobal-Data Model & Curation
 
     And I delete the test data
 
+    And I will remove all data with region "/pangea/edm/material_global_v1"
+
 #  Scenario: Delta Load curation
 #
 #    #  1.Test one of the relevant fields(mapped to the target) in MAKT is changed.

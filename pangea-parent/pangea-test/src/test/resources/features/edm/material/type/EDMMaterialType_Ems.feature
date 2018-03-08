@@ -20,3 +20,5 @@ Feature: EDMMaterialType XREF - Curation
       | 0003         | PST              |
 
     And I delete the test data
+
+    And I will remove all data with region "/pangea/edm/material_type_v1"

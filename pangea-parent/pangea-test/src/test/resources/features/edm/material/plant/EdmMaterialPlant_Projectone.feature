@@ -66,6 +66,8 @@ Feature: EDMMaterialPlant
 
     And I delete the test data
 
+    And I will remove all data with region "/pangea/edm/material_plant_v1"
+
 
 
 

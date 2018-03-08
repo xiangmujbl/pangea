@@ -22,12 +22,12 @@ Feature: EDMCurrency-Curation
 
     When I submit task with xml file "xml/currency.xml" and execute file "jar/pangea-view.jar"
 
-    And wait 3000 millisecond
-
     Then I check region data "/pangea/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
       | sourceSystem | localCurrency | currencyCode | currencyName | isoNumeric |
       | CONS_LATAM   | ADP            |  -             |                | -           |
       | CONS_LATAM   | AED            | AED            | UAE Dirham     | -        |
 
+    And I delete the test data
 
+    And I will remove all data with region "/pangea/edm/currency_v1"
 #    And I compare the number of records between "/ems/ems_f_z_currencies" and "/pangea/edm/currency_v1,/pangeas/edm/currency_v1_failed"
