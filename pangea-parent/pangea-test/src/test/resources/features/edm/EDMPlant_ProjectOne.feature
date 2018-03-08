@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-495
 Feature: EDMPlant-Curation
 
   Scenario: Full Load curation
@@ -58,7 +58,7 @@ Feature: EDMPlant-Curation
       | CONS_LATAM   | AR02       | S & M Pilar    | 00    |                       | AR           | 00      | *    | DC             | Miscellaneous | ARS           | gdmPlant |
       | EMS          | AR06       |                | 00    |                       |              |         | ET   |                | All Countries |               | fase     |
 
-#    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/edm/plant_v1_failed"
+    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/pangea/edm/plant_v1,/pangea/edm/plant_v1_failed"
 
     And I delete the test data
 

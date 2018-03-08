@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-494
 Feature: EDMMaterialType XREF - Curation
 
   Scenario: Full Load curation

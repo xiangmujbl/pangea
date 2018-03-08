@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-868
 Feature: EDMSourceSystem
   # test copy attributes from source system to target system
 
@@ -20,6 +20,8 @@ Feature: EDMSourceSystem
       | [EMS]                   | EMS                   | EMS          | EMS Ent            |
       | [MD DePuy Spine JDE XE] | Spine                 | MDDePuy      | MD DePuy Ent       |
       | [Consumer LATAM]        | Consumer Latam        | CON_LATAM    | Consumer Latam Ent |
+
+    And I compare the number of records between "/ngems/source_system" and "/pangea/edm/source_system_v1,/pangea/edm/source_system_v1_failed"
 
     And I delete the test data
 

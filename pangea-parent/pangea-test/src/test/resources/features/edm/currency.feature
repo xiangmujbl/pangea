@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-498
 Feature: EDMCurrency-Curation
 
   Scenario: Full Load curation

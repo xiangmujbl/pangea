@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-492
 Feature: EDMCountry-Curation
 
   Scenario: Full Load curation
