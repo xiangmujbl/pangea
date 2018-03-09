@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/ngems/source_system" viewRegion="/pangea/edm/source_system_v1" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/ngems/source_system" viewRegion="/edm/source_system_v1" chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.edm.source_system.controller.EDMSourceSystemController">
         <regions>
 
@@ -9,7 +9,7 @@
                 </columns>
             </region>
 
-            <region path="/pangea/edm/source_system_v1">
+            <region path="/edm/source_system_v1">
                 <columns>
                     localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
                 </columns>

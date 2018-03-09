@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/project_one/mara" viewRegion="/pangea/edm/material_global_v1" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v1" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.edm.material.global.material_global.controller.EDMMaterialGlobalController">
         <regions>
 
@@ -14,7 +14,7 @@
                     <relation path="/ngems/material_linkage" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/pangea/edm/source_system_v1" isPrimaryKey="false">
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/ngems/golden_material" isPrimaryKey="false">
@@ -23,7 +23,7 @@
                 </relations>
             </region>
 
-            <region path="/pangea/edm/source_system_v1">
+            <region path="/edm/source_system_v1">
                 <columns>
                     localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
                 </columns>
@@ -47,7 +47,7 @@
                 </columns>
             </region>
 
-            <region path="/pangea/edm/material_global_v1">
+            <region path="/edm/material_global_v1">
                 <columns>
                     sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUnit,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division
                 </columns>
