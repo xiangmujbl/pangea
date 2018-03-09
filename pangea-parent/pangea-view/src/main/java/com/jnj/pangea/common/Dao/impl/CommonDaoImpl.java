@@ -46,7 +46,7 @@ public class CommonDaoImpl implements ICommonDao {
 
     @Override
     public <T> List<T> queryForList(String region, String queryString, Class<T> clazz) {
-        //LogUtil.getCoreLog().info("<<<<<<<queryForList>>>>>>>>>>region:{},queryString:{},Class:{}",region,queryString,clazz);
+        LogUtil.getCoreLog().info("<<<<<<<queryForList>>>>>>>>>>region:{},queryString:{},Class:{}",region,queryString,clazz);
         List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, -1);
         return mapsToObjects(sourceSystemList, clazz);
     }

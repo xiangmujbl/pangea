@@ -42,31 +42,28 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         EDMMaterialAuomBo materialAuomBo = new EDMMaterialAuomBo();
         resultObject.setBaseBo(materialAuomBo);
 
-        boolean isOk = processSourceSystem(key, materialAuomBo);
+        boolean isOk = processSourceSystem(key, materialAuomBo,mainData,resultObject);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
             return resultObject;
         }
 
         isOk = processSystem(mainData, materialAuomBo);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
             return resultObject;
         }
 
-        isOk = processMaterialNumber(key, mainData, materialAuomBo);
+        isOk = processMaterialNumber(key, mainData, materialAuomBo,resultObject);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processMaterialNumber of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
             return resultObject;
         }
 
         return resultObject;
     }
 
-    private final boolean processMaterialNumber(String key, MarmEntry mainData, EDMMaterialAuomBo materialAuomBo) {
+    private final boolean processMaterialNumber(String key, MarmEntry mainData, EDMMaterialAuomBo materialAuomBo, ResultObject resultObject) {
 
         String matnr = mainData.getMatnr();
         String sourceSystem = materialAuomBo.getSourceSystem();
@@ -82,7 +79,8 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
 
         if (StringUtils.isEmpty(materialNumber)) {
             LogUtil.getCoreLog().info(">>>query {} is null, query condition.", CommonRegionPath.EDM_MATERIAL_GLOBAL_V1);
-            //@TODO write fail data to region or file, T1
+            FailData failData = writeFailDataToRegion(mainData, "J1");
+            resultObject.setFailData(failData);
             return false;
         }
 
@@ -91,7 +89,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         return true;
     }
 
-    private final boolean processSourceSystem(String key, EDMMaterialAuomBo materialAuomBo) {
+    private final boolean processSourceSystem(String key, EDMMaterialAuomBo materialAuomBo, MarmEntry mainData, ResultObject resultObject) {
 
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is("project_one").toQueryString();
         LogUtil.getCoreLog().info("<<<<<<processSourceSystem>>>>>>>>>queryString:{}",queryString);
@@ -105,7 +103,8 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
 
         if (StringUtils.isEmpty(sourceSystem)) {
             LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
-            //@TODO write fail data to region or file, T1
+            FailData failData = writeFailDataToRegion(mainData, "T1");
+            resultObject.setFailData(failData);
             return false;
         }
 
@@ -133,6 +132,17 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         materialAuomBo.setLocalDenominator(StringUtils.trim(localDenominator));
 
         return true;
+    }
+
+    private FailData writeFailDataToRegion(MarmEntry mainData, String ruleCode){
+        FailData failData = new FailData();
+        failData.setFunctionalArea("DP");
+        failData.setInterfaceID("EDMMaterialAuom");
+        failData.setErrorCode(ruleCode);
+        failData.setSourceSystem("project_one");
+        failData.setKey1(mainData.getMeinh());
+        failData.setKey2(mainData.getMatnr());
+        return failData;
     }
 
 }

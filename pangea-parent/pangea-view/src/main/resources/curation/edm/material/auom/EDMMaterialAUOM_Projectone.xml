@@ -1,26 +1,26 @@
 <adf-curation xmlns="http://www.jnj.com/adf-curation">
-    <curation mainRegion="/project_one/marm" viewRegion="/pangea/edm/material_auom_v1"
+    <curation mainRegion="/project_one/marm" viewRegion="/edm/material_auom_v1"
               chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.edm.material.auom.controler.EDMMaterialAuomController">
         <regions>
             <region path="/project_one/marm">
                 <columns>matnr,meinh,umrez,umren</columns>
                 <relations>
-                    <relation path="/pangea/edm/material_global_v1" isPrimaryKey="false">
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
                         <expression>localMaterialNumber=/project_one/marm.matnr</expression>
                     </relation>
-                    <relation path="/pangea/edm/source_system_v1" isPrimaryKey="false">
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                 </relations>
             </region>
-            <region path="/pangea/edm/material_global_v1">
+            <region path="/edm/material_global_v1">
                 <columns>sourceSystem,localMaterialNumber,materialNumber</columns>
             </region>
-            <region path="/pangea/edm/source_system_v1">
+            <region path="/edm/source_system_v1">
                 <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
-            <region path="/pangea/edm/material_auom_v1">
+            <region path="/edm/material_auom_v1">
                 <columns>sourceSystem,localMaterialNumber,localAuom,materialNumber,localNumerator,localDenominator,auom,numerator,denominator</columns>
             </region>
         </regions>

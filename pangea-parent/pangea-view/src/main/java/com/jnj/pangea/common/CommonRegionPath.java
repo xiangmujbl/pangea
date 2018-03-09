@@ -4,6 +4,8 @@ package com.jnj.pangea.common;
  * Created by XZhan290 on 2018/3/6.
  */
 public interface CommonRegionPath {
+    // ------fail region
+    String FAIL_DATA = "/pangea/fail_data";
     // -----region
     String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
     String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";

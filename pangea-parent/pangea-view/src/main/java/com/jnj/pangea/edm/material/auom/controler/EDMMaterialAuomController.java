@@ -7,9 +7,7 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.utils.PdxBeanUtils;
-import com.jnj.pangea.common.BaseBo;
-import com.jnj.pangea.common.BaseController;
-import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.*;
 import com.jnj.pangea.common.entry.projectone.MarmEntry;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.auom.bo.EDMMaterialAuomBo;
@@ -56,6 +54,13 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
                 if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(materialAuomBo.getKey(), materialAuomBo.toMap());
                     result.add(viewResultItem);
+                }else {
+                    if(resultObject.getFailData() != null){
+                        FailData failData = resultObject.getFailData();
+                        LogUtil.getCoreLog().info(">>>>failData:{} ,>>>>key:{}",failData.getKey(),key);
+                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        result.add(viewResultItem);
+                    }
                 }
 
             } catch (Exception e) {
