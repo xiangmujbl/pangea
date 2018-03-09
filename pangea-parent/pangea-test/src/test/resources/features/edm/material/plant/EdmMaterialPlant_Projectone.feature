@@ -64,9 +64,12 @@ Feature: EDMMaterialPlant
       | CONS_LATAM   | 0000000004          | BR06       |                |       | 09               | 105         |
       | CONS_LATAM   | 0000000004          | BR07       |                |       | 10               |             |
 
+    And I compare the number of records between "/project_one/marc" and "/edm/material_plant_v1,/pangea/edm_failed_data"
+
     And I delete the test data
 
     And I will remove all data with region "/edm/material_plant_v1"
+    And I will remove all data with region "/pangea/edm_failed_data"
 
 
 

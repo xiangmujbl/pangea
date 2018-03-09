@@ -8,6 +8,7 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.Dao.ICommonDao;
 import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.entry.projectone.MarmEntry;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.List;
@@ -71,6 +72,8 @@ public class CommonDaoImpl implements ICommonDao {
     @Override
     public void saveFailData(FailData failData) {
         // TODO save failData
+
+
     }
 
     private static <T> List<T> mapsToObjects(List<Map.Entry<String, String>> maps, Class<T> clazz) {
