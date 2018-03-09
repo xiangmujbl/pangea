@@ -105,14 +105,13 @@ public class EDMCountryServiceImpl implements ICommonService {
         LogUtil.getCoreLog().info("mainData.getzEntCodeIso3166Alpha2():{}",mainData.getzEntCodeIso3166Alpha2());
         String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
                 .is("[EMS]").and("mdmCode").is(mainData.getzEntCodeIso3166Alpha2()).toQueryString();
-        LogUtil.getCoreLog().info("countryQueryString:{}",countryQueryString);
-        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString);
-
-        for (Map.Entry<String, String> item : items) {
-            Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
-            String mdmName = jsonObj.get("mdmName").toString().trim();
-            edmCountryBo.setCountryName(mdmName);
+        List<EMSFMdmCountriesEntity> sourceList = commonDao.queryForList(CommonRegionPath.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString, EMSFMdmCountriesEntity.class);
+//        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString);
+        String mdmName = null;
+        for (EMSFMdmCountriesEntity item : sourceList) {
+            mdmName = item.getMdmName();
         }
+        edmCountryBo.setCountryName(mdmName);
         return true;
     }
 

@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/ems/ems_f_mdm_countries" viewRegion="/pangea/edm/country_v1" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/ems/ems_f_mdm_countries" viewRegion="/edm/country_v1" chunkSize="1000" chunkBytes="40096"
               partitionPerServer="2" parallelism="2"
               executionClassName="com.jnj.pangea.edm.country.controller.EDMCountryController">
         <regions>
@@ -9,7 +9,7 @@
                     zSourceSystem,mdmCode,zEntCodeIso3166Alpha2,mdmName
                 </columns>
                 <relations>
-                    <relation path="/pangea/edm/source_system_v1" isPrimaryKey="true">
+                    <relation path="/edm/source_system_v1" isPrimaryKey="true">
                         <expression>localSourceSystem=/ems/ems_f_mdm_countries.zSourceSystem</expression>
                     </relation>
                     <relation path="/ems/ems_f_mdm_countries_clone" isPrimaryKey="false">
@@ -18,7 +18,7 @@
                 </relations>
             </region>
 
-            <region path="/pangea/edm/source_system_v1">
+            <region path="/edm/source_system_v1">
                 <columns>
                     localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
                 </columns>
@@ -30,7 +30,7 @@
 
             </region>
 
-            <region path="/pangea/edm/country_v1">
+            <region path="/edm/country_v1">
                 <columns>
                     sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion
                 </columns>

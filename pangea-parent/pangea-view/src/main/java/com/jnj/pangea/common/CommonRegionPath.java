@@ -5,10 +5,10 @@ package com.jnj.pangea.common;
  */
 public interface CommonRegionPath {
     // -----region
-    String EDM_SOURCE_SYSTEM_V1 = "/pangea/edm/source_system_v1";
-    String EDM_MATERIAL_GLOBAL_V1 = "/pangea/edm/material_global_v1";
-    String PANGEA_EDM_PLANT_V1="/pangea/edm/plant_v1";
-    String PANGEA_EDM_MAT_PLANT_STAT_V1="/pangea/edm/mat_plant_stat_v1";
+    String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
+    String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
+    String PANGEA_EDM_PLANT_V1="/edm/plant_v1";
+    String PANGEA_EDM_MAT_PLANT_STAT_V1="/edm/mat_plant_stat_v1";
 
     String PROJECT_ONE_MAKT = "/project_one/makt";
     String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
@@ -25,7 +25,7 @@ public interface CommonRegionPath {
     String PROJECT_ONE_T001W = "/project_one/t001w";
     String PROJECT_ONE_T001K = "/project_one/t001k";
     String PROJECT_ONE_T001 = "/project_one/t001";
-    String EDM_COUNTRY_V1 = "/pangea/edm/country_v1";
+    String EDM_COUNTRY_V1 = "/edm/country_v1";
 
 
     // -----region attribute

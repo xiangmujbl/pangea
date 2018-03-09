@@ -110,19 +110,18 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
 
 
     private final boolean processT2(String key, EMSFMdmUnitsEntity mainData, EDMUnitOfMeasureBo edmUnitOfMeasureBo) {
-
         if (null == mainData.getzEnterpriseCode() || mainData.getzEnterpriseCode().isEmpty()) {
             return true;
         }
         String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
                 .is("[EMS]").and("mdmSapCode").is(mainData.getzEnterpriseCode()).toQueryString();
-        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_MDM_UNITS_CLONE, countryQueryString);
-
-        for (Map.Entry<String, String> item : items) {
-            Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
-            String mdmName = jsonObj.get("mdmName").toString().trim();
-            edmUnitOfMeasureBo.setUomName(mdmName);
+//        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_MDM_UNITS_CLONE, countryQueryString);
+        List<EMSFMdmUnitsEntity> sourceList = commonDao.queryForList(CommonRegionPath.EMS_F_MDM_UNITS_CLONE, countryQueryString, EMSFMdmUnitsEntity.class);
+        String mdmName = null;
+        for (EMSFMdmUnitsEntity entry : sourceList) {
+            mdmName = entry.getMdmName();
         }
+        edmUnitOfMeasureBo.setUomName(mdmName);
         return true;
     }
 

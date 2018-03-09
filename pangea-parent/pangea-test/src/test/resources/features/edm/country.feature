@@ -13,21 +13,21 @@ Feature: EDMCountry-Curation
       | [EMS]         | 00      | -                     | All Countries |
     And I wait "/ems/ems_f_mdm_countries" Async Queue complete
 
-    And I import "/pangea/edm/source_system_v1" by keyFields "localSourceSystem"
+    And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
       | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
       | [EMS]             | EMS                   | EMS          | EMS Ent            |
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
-    And I wait "/pangea/edm/source_system_v1" Async Queue complete
+    And I wait "/edm/source_system_v1" Async Queue complete
 
     When I submit task with xml file "xml/edm/country.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/pangea/edm/country_v1" by keyFields "sourceSystem,localCountry"
+    Then I check region data "/edm/country_v1" by keyFields "sourceSystem,localCountry"
       | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion |
       | CONS_LATAM   | *            | -           |               |                        |
       | CONS_LATAM   | 00           | -           |               |                        |
 
     And I delete the test data
 
-    And I will remove all data with region "/pangea/edm/country_v1"
-#    And I compare the number of records between "/ems/ems_f_mdm_countries" and "/pangea/edm/country_v1,/pangea/edm/country_v1_failed"
+    And I will remove all data with region "/edm/country_v1"
+#    And I compare the number of records between "/ems/ems_f_mdm_countries" and "/edm/country_v1,/edm/country_v1_failed"

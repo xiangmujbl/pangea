@@ -88,9 +88,7 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
         LogUtil.getCoreLog().info(">>>>>>>>>>>processSourceSystem>>>>>>>>>queryString:{}", queryString);
-
         List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
-
         String sourceSystem = null;
         for (Object entry : sourceList) {
             EDMSourceSystemV1Entry sourceSystemV1Entry = (EDMSourceSystemV1Entry) entry;
@@ -114,13 +112,15 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         }
         String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
                 .is("[EMS]").and("zCode").is(mainData.getzEntCodeIso4217Alpha()).toQueryString();
-        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_Z_CURRENCIES_CLONE, countryQueryString);
+//        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_Z_CURRENCIES_CLONE, countryQueryString);
 
-        for (Map.Entry<String, String> item : items) {
-            Map<String, Object> jsonObj = JsonObject.append(item.getValue()).toMap();
-            String zName = jsonObj.get("zName").toString().trim();
-            edmCurrencyBo.setCurrencyName(zName);
+        List<EMSFMdmCurrenciesEntity> sourceList = commonDao.queryForList(CommonRegionPath.EMS_F_Z_CURRENCIES_CLONE, countryQueryString, EMSFMdmCurrenciesEntity.class);
+        String zName = null;
+        for (EMSFMdmCurrenciesEntity entry : sourceList) {
+            LogUtil.getCoreLog().info(">>>>>>>>>>>zName>>>>>>>>>zName:{}", entry.toString());
+            zName = entry.getzName();
         }
+        edmCurrencyBo.setCurrencyName(zName);
         return true;
     }
 

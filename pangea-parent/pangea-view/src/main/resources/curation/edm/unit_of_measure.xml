@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/ems/ems_f_mdm_units" viewRegion="/pangea/edm/unit_of_measure_v1" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/ems/ems_f_mdm_units" viewRegion="/edm/unit_of_measure_v1" chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.edm.unit_of_measure.controller.EDMUnitOfMeasureController">
         <regions>
 
@@ -8,7 +8,7 @@
                     zSourceSystem,mdmSapCode,mdmName,zEnterpriseCode,mdmIsoCode,zUnitsDimension
                 </columns>
                 <relations>
-                    <relation path="/pangea/edm/source_system_v1" isPrimaryKey="false">
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression>localSourceSystem=/ems/ems_f_mdm_units.zSourceSystem</expression>
                     </relation>
                     <relation path="/ems/ems_f_mdm_units_clone" isPrimaryKey="false">
@@ -17,7 +17,7 @@
                 </relations>
             </region>
 
-            <region path="/pangea/edm/source_system_v1">
+            <region path="/edm/source_system_v1">
                 <columns>
                     localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
                 </columns>
@@ -31,7 +31,7 @@
             </region>
 
 
-            <region path="/pangea/edm/unit_of_measure_v1">
+            <region path="/edm/unit_of_measure_v1">
                 <columns>
                     sourceSystem,localUom,localUomName,uom,uomName,isocode,measure,factor,roundingDecimal
                 </columns>
