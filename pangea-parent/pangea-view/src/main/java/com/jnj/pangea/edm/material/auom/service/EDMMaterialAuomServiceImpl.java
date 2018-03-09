@@ -63,9 +63,6 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        //recycling object
-        commonDao = null;
-
         return resultObject;
     }
 

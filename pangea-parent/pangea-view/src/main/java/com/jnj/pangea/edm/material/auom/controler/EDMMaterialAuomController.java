@@ -66,9 +66,6 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
         });
 
 
-        //recycling object
-        materialAuomService = null;
-
         return result;
     }
 
