@@ -1,33 +1,33 @@
 /project_one/marm
-/pangea/edm/material_auom_v1
+/edm/material_auom_v1
 
 /ngems/source_system
-/pangea/edm/source_system_v1
+/edm/source_system_v1
 
 /project_one/mara
 /project_one/makt
 /ngems/golden_material
 /ngems/material_linkage
-/pangea/edm/material_global_v1
+/edm/material_global_v1
 
 /ems/ems_f_z_enterprise_plants
 /project_one/t001w
 /project_one/t001k
 /project_one/t001
-/pangea/edm/country_v1
-/pangea/edm/plant_v1
+/edm/country_v1
+/edm/plant_v1
 
 /ems/ems_f_mdm_material_types
-/pangea/edm/material_type_v1
+/edm/material_type_v1
 
 /project_one/marc
-/pangea/edm/mat_plant_stat_v1
-/pangea/edm/material_plant_v1
+/edm/mat_plant_stat_v1
+/edm/material_plant_v1
 
 /ems/ems_f_mdm_countries
 
 /ems/ems_f_z_currencies
-/pangea/edm/currency_v1
+/edm/currency_v1
 
 /ems/ems_f_mdm_units
-/pangea/edm/unit_of_measure_v1
+/edm/unit_of_measure_v1

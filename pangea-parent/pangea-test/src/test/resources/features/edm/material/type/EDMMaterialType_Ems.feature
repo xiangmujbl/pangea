@@ -14,11 +14,11 @@ Feature: EDMMaterialType XREF - Curation
 
     When I submit task with xml file "xml/edm/material/type/MaterialType_Ems.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/pangea/edm/material_type_v1" by keyFields "materialType"
+    Then I check region data "/edm/material_type_v1" by keyFields "materialType"
       | materialType | materialTypeName |
       | 0002         | Ontario PST      |
       | 0003         | PST              |
 
     And I delete the test data
 
-    And I will remove all data with region "/pangea/edm/material_type_v1"
+    And I will remove all data with region "/edm/material_type_v1"
