@@ -13,7 +13,7 @@ public class EDMMaterialAuomBo extends BaseBo {
         return RawDataHelper.getInstance()
                 .makeJsonObject("sourceSystem", this.sourceSystem)
                 .add("localMaterialNumber", this.localMaterialNumber)
-                .add("materialNumber", this.materialNumber)
+                .add("localAuom", this.localAuom)
                 .toJsonString();
     }
 
