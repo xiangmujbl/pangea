@@ -20,7 +20,7 @@ Feature: EDMProductFamily
 
     When I submit task with xml file "xml/edm/EDMProductFamily_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/pangea/edm/product_family_v1" by keyFields "productFamily"
+    Then I check region data "/edm/product_family_v1" by keyFields "productFamily"
       |productFamily	|productFamilyName|
       |AB	|Acuvue Bifocal|
       |AC	|Acuvue 2|
@@ -30,8 +30,8 @@ Feature: EDMProductFamily
       |AV	|Acuvue|
       |BA	|BAND-AID|
 
-    #And I compare the number of records between "/ngems/product_family_v1" and "/pangea/edm/product_family_v1,/pangea/edm/product_family_v1_failed"
+    #And I compare the number of records between "/ngems/product_family_v1" and "/edm/product_family_v1,/edm/product_family_v1_failed"
 
     And I delete the test data
 
-    And I will remove all data with region "/pangea/edm/product_family_v1"
+    And I will remove all data with region "/edm/product_family_v1"

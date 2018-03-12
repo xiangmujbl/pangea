@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/ngems/product_family_v1" viewRegion="/pangea/edm/product_family_v1" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/ngems/product_family_v1" viewRegion="/edm/product_family_v1" chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.edm.product_family.controller.EDMProductFamilyController">
         <regions>
 
@@ -9,7 +9,7 @@
                 </columns>
             </region>
 
-            <region path="/pangea/edm/product_family_v1">
+            <region path="/edm/product_family_v1">
                 <columns>
                     productFamily,productFamilyName
                 </columns>

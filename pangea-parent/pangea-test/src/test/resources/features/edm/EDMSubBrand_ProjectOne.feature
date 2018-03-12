@@ -20,7 +20,7 @@ Feature: EDMSubBrand
 
     When I submit task with xml file "xml/edm/EDMSubBrand_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/pangea/edm/sub_brand_v1" by keyFields "subBrand"
+    Then I check region data "/edm/sub_brand_v1" by keyFields "subBrand"
       |subBrand	|subBrandDescription|
       |1A	|OGX|
       |1A	|Neostrata|
@@ -30,8 +30,8 @@ Feature: EDMSubBrand
       |1N	|Baby Hair Care
       |1P	|Baby Lotion/Cream ex Soft|
 
-    #And I compare the number of records between "/ngems/sub_brand_v1" and "/pangea/edm/sub_brand_v1,/pangea/edm/sub_brand_v1_failed"
+    #And I compare the number of records between "/ngems/sub_brand_v1" and "/edm/sub_brand_v1,/edm/sub_brand_v1_failed"
 
     And I delete the test data
 
-    And I will remove all data with region "/pangea/edm/sub_brand_v1"
+    And I will remove all data with region "/edm/sub_brand_v1"

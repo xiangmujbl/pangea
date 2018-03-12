@@ -18,7 +18,7 @@ Feature: EDMCategory
 
     When I submit task with xml file "xml/edm/EDMCategory_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/pangea/edm/category_v1" by keyFields "category"
+    Then I check region data "/edm/category_v1" by keyFields "category"
       |category|	categoryName|
       |0003	|Body Care Wash|
       |0004	|Body Cleansing Bar Soap|
@@ -28,8 +28,8 @@ Feature: EDMCategory
       |0035	|Other Misc. Baby Care Products|
       |0037	|Baby Hair Care                |
 
-    #And I compare the number of records between "/ngems/category_v1" and "/pangea/edm/category_v1,/pangea/edm/category_v1_failed"
+    #And I compare the number of records between "/ngems/category_v1" and "/edm/category_v1,/edm/category_v1_failed"
 
     And I delete the test data
 
-    And I will remove all data with region "/pangea/edm/category_v1"
+    And I will remove all data with region "/edm/category_v1"
