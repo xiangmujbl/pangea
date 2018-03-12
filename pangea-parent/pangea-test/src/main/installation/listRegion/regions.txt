@@ -31,3 +31,27 @@
 
 /ems/ems_f_mdm_units
 /edm/unit_of_measure_v1
+
+/edm/brand_v1
+/ngems/brand_v1
+
+/edm/form_v1
+/ngems/form_v1
+
+/edm/franchise_v1
+/ngems/franchise_v1
+
+/edm/global_base_unit_v1
+/ngems/global_base_unit_v1
+
+/edm/mat_plant_stat_v1
+/project_one/t141
+
+/edm/product_family_v1
+/ngems/product_family_v1
+
+/edm/category_v1
+/ngems/category_v1
+
+/edm/sub_brand_v1
+/ngems/sub_brand_v1
