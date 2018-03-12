@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.category.controller;
 
+import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public class EDMCategoryController extends CommonController {
     @Override
-    public ResultObject process(Map<String, Object> rawMap) {
+    public ResultObject process(RawDataEvent raw) {
         LogUtil.getCoreLog().info("======================= EDMCategoryController start====");
         ResultObject resultObject = new ResultObject();
 
