@@ -1,15 +1,16 @@
-package com.jnj.pangea.edm.material.global.material_global.service;
+package com.jnj.pangea.edm.material.global.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.CommonRegionPath;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.ngems.GoldenMaterialEntity;
 import com.jnj.pangea.common.entry.ngems.MaterialLinkageEntity;
 import com.jnj.pangea.common.entry.projectone.MaktEntity;
 import com.jnj.pangea.common.entry.projectone.MaraEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.material.global.material_global.bo.EDMMaterialGlobalBo;
+import com.jnj.pangea.edm.material.global.bo.EDMMaterialGlobalBo;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -31,10 +32,16 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
+        ResultObject resultObject = new ResultObject();
+
         MaraEntity maraEntity = (MaraEntity) o;
         String sourceSystem = (String) o2;
 
-        ResultObject resultObject = new ResultObject();
+        FailData failData = checkT1(maraEntity, sourceSystem);
+        if (null != failData) {
+            resultObject.setFailData(failData);
+            return resultObject;
+        }
 
         EDMMaterialGlobalBo materialGlobalBo = new EDMMaterialGlobalBo();
 
@@ -131,6 +138,23 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
             return commonDao.queryForObject(CommonRegionPath.NGEMS_GOLDEN_MATERIAL, queryString, GoldenMaterialEntity.class);
         }
         return null;
+    }
+
+    private FailData checkT1(MaraEntity maraEntity, String sourceSystem) {
+        FailData failData = null;
+        if (StringUtils.isEmpty(sourceSystem)) {
+            failData = new FailData();
+            failData.setErrorCode("T1");
+            failData.setFunctionalArea("DP");
+            failData.setInterfaceID("EDMMaterialGlobal");
+            failData.setSourceSystem("project_one");
+            failData.setKey1(maraEntity.getMatnr());
+            failData.setKey2("");
+            failData.setKey3("");
+            failData.setKey4("");
+            failData.setKey5("");
+        }
+        return failData;
     }
 
 }

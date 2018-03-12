@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v1" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.edm.material.global.material_global.controller.EDMMaterialGlobalController">
+              executionClassName="com.jnj.pangea.edm.material.global.controller.EDMMaterialGlobalController">
         <regions>
 
             <region path="/project_one/mara">

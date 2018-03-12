@@ -1,4 +1,4 @@
-package com.jnj.pangea.edm.material.global.material_global.bo;
+package com.jnj.pangea.edm.material.global.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
