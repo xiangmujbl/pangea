@@ -1,19 +1,16 @@
-package com.jnj.pangea.edm.material.global.material_global.controller;
+package com.jnj.pangea.edm.material.global.controller;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.pangea.common.BaseBo;
-import com.jnj.pangea.common.BaseController;
-import com.jnj.pangea.common.CommonRegionPath;
+import com.jnj.pangea.common.*;
 import com.jnj.pangea.common.Dao.ICommonDao;
 import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
 import com.jnj.pangea.common.entry.projectone.MaraEntity;
-import com.jnj.pangea.edm.material.global.material_global.service.EDMMaterialGlobalServiceImpl;
+import com.jnj.pangea.edm.material.global.service.EDMMaterialGlobalServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.ArrayList;
@@ -23,6 +20,7 @@ public class EDMMaterialGlobalController extends BaseController {
 
     private EDMMaterialGlobalServiceImpl materialGlobalService = (EDMMaterialGlobalServiceImpl) EDMMaterialGlobalServiceImpl.getInstance();
     private ICommonDao commonDao = CommonDaoImpl.getInstance();
+
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
@@ -42,7 +40,11 @@ public class EDMMaterialGlobalController extends BaseController {
                 ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
                 result.add(viewRaw);
             } else {
-                commonDao.saveFailData(resultObject.getFailData());
+                if (resultObject.getFailData() != null) {
+                    FailData failData = resultObject.getFailData();
+                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
+                    result.add(viewResultItem);
+                }
             }
         });
         return result;

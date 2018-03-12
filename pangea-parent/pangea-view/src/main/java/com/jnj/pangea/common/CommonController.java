@@ -9,7 +9,6 @@ import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class CommonController implements IEventProcessor {
 
@@ -20,17 +19,19 @@ public abstract class CommonController implements IEventProcessor {
 
         List<ViewResultItem> result = new LinkedList<>();
         events.forEach(raw -> {
-            ResultObject resultObject = process(raw.getValue().toMap());
+            ResultObject resultObject = process(raw);
             if (resultObject.isSuccess()) {
                 BaseBo baseBo = resultObject.getBaseBo();
-
                 result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
             } else {
-                commonDao.saveFailData(resultObject.getFailData());
+                if (null != resultObject.getFailData()) {
+                    FailData failData = resultObject.getFailData();
+                    result.add(ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap()));
+                }
             }
         });
         return result;
     }
 
-    public abstract ResultObject process(Map<String, Object> rawMap);
+    public abstract ResultObject process(RawDataEvent raw);
 }

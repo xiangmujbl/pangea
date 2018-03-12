@@ -16,11 +16,11 @@ Feature: MaterialGlobal-Data Model & Curation
       | 97572 | FERT  | KI    | 01    |       | 08    | 10    |
     And I wait "/project_one/mara" Async Queue complete
 
-    And I import "/pangea/edm/source_system_v1" by keyFields "localSourceSystem"
+    And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
       | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
       | [EMS]             | EMS                   | EMS          | EMS Ent            |
-    And I wait "/pangea/edm/source_system_v1" Async Queue complete
+    And I wait "/edm/source_system_v1" Async Queue complete
 
     And I import "/project_one/makt" by keyFields "matnr,spras"
       | matnr | spras | maktx                                |
@@ -46,15 +46,19 @@ Feature: MaterialGlobal-Data Model & Curation
 
     When I submit task with xml file "xml/edm/material/global/EDMMaterialGlobal_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/pangea/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
+    Then I check region data "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localRefDescription                  | localMaterialType | localBaseUnit | materialNumber | refDescription                           | materialType | baseUom | localDpParentCod | parentCode    | globalDpParentCode | form   | category | subBrand | brand  | franchise | globalBusinessUnit | productFamily | localManufacturingTechnology | manufacturingTechnology | localMaterialGroup | materialGroup | flagForDeletion | materialStatus | division |
       | CONS_LATAM   | 97568               | JS COTTON BALLS 50 GRX20 T50P35      | FERT              | KI            | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FERT         | EA      |                  | 7891010931582 |                    | 116151 | 6        | 1V       | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Wipes                   | 01                 |               |                 | 08             | 10       |
       | CONS_LATAM   | 97570               | BOLAS DE ALGODAO J* 20X50 LV50 PG35. | FERT              | KI            | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FERT         | EA      |                  | 7891010931642 |                    | 116151 | 0006     | 500003   | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Toothbrushes            | 01                 |               |                 | 08             | 10       |
       | CONS_LATAM   | 97572               | REACH TOOTHBRUSH COMPACT SOFT T2P1   | FERT              | KI            |                |                                          |              |         |                  |               |                    |        |          |          |        |           |                    |               |                              |                         | 01                 |               |                 | 08             | 10       |
 
-    And I compare the number of records between "/project_one/mara" and "/pangea/edm/material_global_v1,/pangea/edm/material_global_v1_failed"
+    Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+
+    And I compare the number of records between "/project_one/mara" and "/edm/material_global_v1,/pangea/edm_failed_data"
 
     And I delete the test data
 
-    And I will remove all data with region "/pangea/edm/material_global_v1"
+    And I will remove all data with region "/edm/material_global_v1"
+    And I will remove all data with region "/pangea/edm_failed_data"
 

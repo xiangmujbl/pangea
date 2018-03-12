@@ -1,6 +1,7 @@
 package com.jnj.pangea.edm.material.plant.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.edm.EDMMatPlantStatV1Entry;
@@ -62,9 +63,14 @@ public class EDMMaterialPlantServiceImpl  implements ICommonService {
 
     private void getMaterialNumber(EDMMaterialPlantBo materialPlantBo){
         String materialNumber= null;
-        if (StringUtils.isNotBlank(materialPlantBo.getSourceSystem()) && StringUtils.isNotBlank(materialPlantBo.getLocalMaterialNumber())) {
+        String matnr=materialPlantBo.getLocalMaterialNumber();
+        if (StringUtils.isNotBlank(materialPlantBo.getSourceSystem()) && StringUtils.isNotBlank(matnr)) {
             String queryString = QueryHelper.buildCriteria(CommonRegionPath.SOURCESYSTEM).is(materialPlantBo.getSourceSystem())
-                    .and(CommonRegionPath.LOCALMATERIALNUMBER).is(materialPlantBo.getLocalMaterialNumber()).toQueryString();
+                    .and(CommonRegionPath.LOCALMATERIALNUMBER).is(matnr).toQueryString();
+
+            if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
+                queryString = CommonRegionPath.SOURCESYSTEM+":\""+ materialPlantBo.getSourceSystem() + "\" AND "+CommonRegionPath.LOCALMATERIALNUMBER+":\"" + AdfLuceneHelper.keyword(matnr) + "\"";
+            }
             List<EDMMaterialGlobalV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entry.class);
             for (EDMMaterialGlobalV1Entry entry : sourceList) {
                 materialNumber = entry.getMaterialNumber();

@@ -39,25 +39,18 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
             Map map = mainValue.toMap();
 
             try {
-                //MarmEntry mainObject = new MarmEntry();
-                //PdxBeanUtils.convert2Bean(map, mainObject);
                 MarmEntry mainObject = (MarmEntry) BeanUtil.mapToObject(map, MarmEntry.class);
-
-                LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
 
                 ResultObject resultObject = materialAuomService.buildView(key, mainObject, null);
 
-                EDMMaterialAuomBo materialAuomBo = (EDMMaterialAuomBo) resultObject.getBaseBo();
-
-                LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isSuccess());
-
                 if (resultObject.isSuccess()) {
-                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(materialAuomBo.getKey(), materialAuomBo.toMap());
+                    BaseBo baseBo = (BaseBo) resultObject.getBaseBo();
+                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
                     result.add(viewResultItem);
                 }else {
                     if(resultObject.getFailData() != null){
                         FailData failData = resultObject.getFailData();
-                        LogUtil.getCoreLog().info(">>>>failData:{} ,>>>>key:{}",failData.getKey(),key);
+//                        LogUtil.getCoreLog().info(">>>>failData:{} ,>>>>key:{}",failData.getKey(),key);
                         ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
                         result.add(viewResultItem);
                     }
@@ -69,8 +62,6 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
             }
 
         });
-
-
         return result;
     }
 

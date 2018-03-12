@@ -6,9 +6,7 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.BaseBo;
-import com.jnj.pangea.common.BaseController;
-import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.*;
 import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.type.service.EDMMaterialTypeServiceImpl;
@@ -39,6 +37,12 @@ public class EDMMaterialTypeController  extends BaseController implements IEvent
                     BaseBo baseBo = (BaseBo) resultObject.getBaseBo();
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
                     result.add(viewResultItem);
+                }else {
+                    if(resultObject.getFailData() != null){
+                        FailData failData = resultObject.getFailData();
+                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        result.add(viewResultItem);
+                    }
                 }
 
             } catch (Exception e) {
