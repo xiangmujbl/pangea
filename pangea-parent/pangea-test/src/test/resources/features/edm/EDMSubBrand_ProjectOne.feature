@@ -6,13 +6,10 @@ Feature: EDMSubBrand
 
     Given I import "/ngems/sub_brand_v1" by keyFields "subBrand"
       |subBrand	|subBrandDescription|
-      |1A	|OGX|
-      |1A	|Neostrata|
-      |1H	|Internal Sanitary Protection|
-      |1K	|Baby Bar Soaps|
-      |1L	|Baby Cologne|
-      |1N	|Baby Hair Care
-      |1P	|Baby Lotion/Cream ex Soft|
+      |101	|OGX|
+      |102	|Neostrata|
+      |103	|Internal Sanitary Protection|
+      |104	|Baby Bar Soaps|
 
 
 
@@ -22,15 +19,15 @@ Feature: EDMSubBrand
 
     Then I check region data "/edm/sub_brand_v1" by keyFields "subBrand"
       |subBrand	|subBrandDescription|
-      |1A	|OGX|
-      |1A	|Neostrata|
-      |1H	|Internal Sanitary Protection|
-      |1K	|Baby Bar Soaps|
-      |1L	|Baby Cologne|
-      |1N	|Baby Hair Care
-      |1P	|Baby Lotion/Cream ex Soft|
+      |101	|OGX|
+      |102	|Neostrata|
+      |103	|Internal Sanitary Protection|
+      |104	|Baby Bar Soaps|
 
-    #And I compare the number of records between "/ngems/sub_brand_v1" and "/edm/sub_brand_v1,/edm/sub_brand_v1_failed"
+    Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+
+    And I compare the number of records between "/ngems/sub_brand_v1" and "/edm/sub_brand_v1,/pangea/edm_failed_data"
 
     And I delete the test data
 

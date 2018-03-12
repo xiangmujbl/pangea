@@ -6,12 +6,12 @@ Feature: EDMBrand
 
     Given I import "/ngems/brand_v1" by keyFields "brand"
     |brand	|brandDescription|
-    |BRD001	|JOHNSONS ADULT|
-    |BRD002	|JOHNSONS BABY|
-    |BRD003	|RoC          |
-    |BRD004	|STAYFREE     |
-    |BRD005	|CLEAN CLEAR  |
-    |BRD006	|NEUTROGENA   |
+    |TD001	|JOHNSONS ADULT|
+    |TD002	|JOHNSONS BABY|
+    |TD003	|RoC          |
+    |TD004	|STAYFREE     |
+    |TD005	|CLEAN CLEAR  |
+    |TD006	|NEUTROGENA   |
 
 
     And I wait "/ngems/brand_v1" Async Queue complete
@@ -20,15 +20,17 @@ Feature: EDMBrand
 
     Then I check region data "/edm/brand_v1" by keyFields "brand"
       |brand	|brandDescription|
-      |BRD001	|JOHNSONS ADULT|
-      |BRD002	|JOHNSONS BABY|
-      |BRD003	|RoC          |
-      |BRD004	|STAYFREE     |
-      |BRD005	|CLEAN CLEAR  |
-      |BRD006	|NEUTROGENA   |
+      |TD001	|JOHNSONS ADULT|
+      |TD002	|JOHNSONS BABY|
+      |TD003	|RoC          |
 
-    #And I compare the number of records between "/ngems/brand_v1" and "/edm/brand_v1,/edm/brand_v1_failed"
+    Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+
+
+    And I compare the number of records between "/ngems/brand_v1" and "/edm/brand_v1,/pangea/edm_failed_data"
 
     And I delete the test data
 
     And I will remove all data with region "/edm/brand_v1"
+    And I will remove all data with region "/pangea/edm_failed_data"
