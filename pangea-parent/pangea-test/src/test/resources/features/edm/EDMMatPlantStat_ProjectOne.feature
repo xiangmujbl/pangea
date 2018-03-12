@@ -16,7 +16,6 @@ Feature: EDMBrand
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
       | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
-      | project_one       | EMS                   | EMS          | EMS Ent            |
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
     And I wait "/edm/source_system_v1" Async Queue complete
 
@@ -25,12 +24,16 @@ Feature: EDMBrand
     Then I check region data "/edm/mat_plant_stat_v1" by keyFields "sourceSystem,localPlantStatus"
       |sourceSystem	|localPlantStatus|plantStatus|
       |CONS_LATAM	|M001|                         |
-      |EMS	|M002|                                |
+      |CONS_LATAM	|M002|                         |
       |CONS_LATAM	|M003  |                       |
 
+    Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    #And I compare the number of records between "/ngems/mat_plant_stat_v1" and "/edm/mat_plant_stat_v1,/edm/mat_plant_stat_v1_failed"
+    And I compare the number of records between "/ngems/t141" and "/edm/mat_plant_stat_v1,/pangea/edm_failed_data"
+
 
     And I delete the test data
 
     And I will remove all data with region "/edm/mat_plant_stat_v1"
+    And I will remove all data with region "/pangea/edm_failed_data"
