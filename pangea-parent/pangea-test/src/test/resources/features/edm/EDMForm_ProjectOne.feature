@@ -6,13 +6,10 @@ Feature: EDMForm
 
     Given I import "/ngems/form_v1" by keyFields "formName"
       |formName	|formDescription|
-      |000225	|C&C ACNE|
-      |000227	|C&C CLEANSERS|
-      |000229	|C&C FACIAL MOISTURIZERS|
-      |000250	|SUNDOWN SUNCARE REGULAR|
-      |000252	|SUNDOWN SUNCARE FACIAL|
-      |000253	|SUNDOWN TANNER|
-      |000269	|AVEENO BODY WASH|
+      |101	|C&C ACNE|
+      |102	|C&C CLEANSERS|
+      |103	|C&C FACIAL MOISTURIZERS|
+      |104	|SUNDOWN SUNCARE REGULAR|
 
 
 
@@ -22,14 +19,10 @@ Feature: EDMForm
 
     Then I check region data "/edm/form_v1" by keyFields "formName"
       |formName	|formDescription|
-      |000225	|C&C ACNE|
-      |000227	|C&C CLEANSERS|
-      |000229	|C&C FACIAL MOISTURIZERS|
-      |000250	|SUNDOWN SUNCARE REGULAR|
-      |000252	|SUNDOWN SUNCARE FACIAL|
-      |000253	|SUNDOWN TANNER|
-      |000269	|AVEENO BODY WASH|
-
+      |101	|C&C ACNE|
+      |102	|C&C CLEANSERS|
+      |103	|C&C FACIAL MOISTURIZERS|
+      |104	|SUNDOWN SUNCARE REGULAR|
 
     Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

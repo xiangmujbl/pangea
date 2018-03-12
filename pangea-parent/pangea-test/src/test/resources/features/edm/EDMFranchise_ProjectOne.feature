@@ -6,11 +6,10 @@ Feature: EDMFranchise
 
     Given I import "/ngems/franchise_v1" by keyFields "franchise"
       |franchise	|franchiseDescription|
-      |FCH001	|BABY CARE|
-      |FCH002	|BEAUTY|
-      |FCH003	|ORAL & TOPICAL|
-      |FCH004	|OTC|
-      |FCH005	|WOMENS HEALTH|
+      |1001	|BABY CARE|
+      |1002	|BEAUTY|
+      |1003	|ORAL & TOPICAL|
+      |1004	|OTC|
 
 
     And I wait "/ngems/franchise_v1" Async Queue complete
@@ -19,11 +18,10 @@ Feature: EDMFranchise
 
     Then I check region data "/edm/franchise_v1" by keyFields "franchise"
       |franchise	|franchiseDescription|
-      |FCH001	|BABY CARE|
-      |FCH002	|BEAUTY|
-      |FCH003	|ORAL & TOPICAL|
-      |FCH004	|OTC|
-      |FCH005	|WOMENS HEALTH|
+      |1001	|BABY CARE|
+      |1002	|BEAUTY|
+      |1003	|ORAL & TOPICAL|
+      |1004	|OTC|
 
     Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

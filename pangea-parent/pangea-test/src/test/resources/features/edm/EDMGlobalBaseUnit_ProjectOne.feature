@@ -6,9 +6,9 @@ Feature: EDMGlobalBaseUnit
 
     Given I import "/ngems/global_base_unit_v1" by keyFields "gbu"
       |gbu	|gbuName|
-      |GFO001	|SKINCARE|
-      | GFO002	|CHC|
-      |GFO003	|OTC|
+      |1001	|SKINCARE|
+      |1002	|CHC|
+      |1003	|OTC|
 
 
 
@@ -18,9 +18,9 @@ Feature: EDMGlobalBaseUnit
 
     Then I check region data "/edm/global_base_unit_v1" by keyFields "gbu"
       |gbu	|gbuName|
-      |GFO001	|SKINCARE|
-      | GFO002	|CHC|
-      |GFO003	|OTC|
+      |1001	|SKINCARE|
+      | 1002	|CHC|
+      |1003	|OTC|
 
     Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

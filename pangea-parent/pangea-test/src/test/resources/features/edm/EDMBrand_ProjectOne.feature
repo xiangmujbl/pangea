@@ -9,9 +9,6 @@ Feature: EDMBrand
     |TD001	|JOHNSONS ADULT|
     |TD002	|JOHNSONS BABY|
     |TD003	|RoC          |
-    |TD004	|STAYFREE     |
-    |TD005	|CLEAN CLEAR  |
-    |TD006	|NEUTROGENA   |
 
 
     And I wait "/ngems/brand_v1" Async Queue complete

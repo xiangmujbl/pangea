@@ -38,7 +38,7 @@ public class EDMMaterialTypeServiceImpl  implements ICommonService {
         }else
         {
             LogUtil.getCoreLog().warn(">>>key:{},z_source_system value is not '[EMS]' :{}", key, zSourceSystem);
-            FailData failData = writeFailDataToRegion(mainData,"z_source_system value is not '[EMS]'");
+            FailData failData = writeFailDataToRegion(mainData,"z_source_system value is not EMS");
             resultObject.setFailData(failData);
         }
 

@@ -6,13 +6,10 @@ Feature: EDMCategory
 
     Given I import "/ngems/category_v1" by keyFields "category"
       |category|	categoryName|
-      |0003	|Body Care Wash|
-      |0004	|Body Cleansing Bar Soap|
-      |0006	|Body Care Moisturizing |
-      |0021 |Ultra Thin Pads        |
-      |0034	|Nursing Pads           |
-      |0035	|Other Misc. Baby Care Products|
-      |0037	|Baby Hair Care                |
+      |1001	|Body Care Wash|
+      |1002	|Body Cleansing Bar Soap|
+      |1003	|Body Care Moisturizing |
+      |1004 |Ultra Thin Pads        |
 
     And I wait "/ngems/category_v1" Async Queue complete
 
@@ -20,13 +17,10 @@ Feature: EDMCategory
 
     Then I check region data "/edm/category_v1" by keyFields "category"
       |category|	categoryName|
-      |0003	|Body Care Wash|
-      |0004	|Body Cleansing Bar Soap|
-      |0006	|Body Care Moisturizing |
-      |0021 |Ultra Thin Pads        |
-      |0034	|Nursing Pads           |
-      |0035	|Other Misc. Baby Care Products|
-      |0037	|Baby Hair Care                |
+      |1001	|Body Care Wash|
+      |1002	|Body Cleansing Bar Soap|
+      |1003	|Body Care Moisturizing |
+      |1004 |Ultra Thin Pads        |
 
     Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
