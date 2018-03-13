@@ -3,7 +3,7 @@ package com.jnj.pangea.edm.mat_plant_stat.service;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mat_plant_stat.Bo.EDMMatPlantStatBo;
 

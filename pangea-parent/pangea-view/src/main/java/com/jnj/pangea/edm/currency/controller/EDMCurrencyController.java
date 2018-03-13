@@ -10,7 +10,7 @@ import com.jnj.pangea.common.BaseController;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.ems.EMSFMdmCurrenciesEntity;
+import com.jnj.pangea.common.entity.ems.EMSFMdmCurrenciesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.currency.bo.EDMCurrencyBo;
 import com.jnj.pangea.edm.currency.service.EDMCurrencyServiceImpl;
@@ -26,6 +26,7 @@ import java.util.Map;
 public class EDMCurrencyController extends BaseController implements IEventProcessor {
 
     private ICommonService edmCurrencyyService = EDMCurrencyServiceImpl.getInstance();
+
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
         List<ViewResultItem> result = new ArrayList<>();
@@ -34,7 +35,7 @@ public class EDMCurrencyController extends BaseController implements IEventProce
             String key = mainRaw.getKey();
             Map map = mainValue.toMap();
             try {
-                EMSFMdmCurrenciesEntity mainObject = (EMSFMdmCurrenciesEntity) BeanUtil.mapToObject(map, EMSFMdmCurrenciesEntity.class);
+                EMSFMdmCurrenciesEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmCurrenciesEntity.class);
                 LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject.toString());
                 ResultObject resultObject = edmCurrencyyService.buildView(key, mainObject, null);
                 EDMCurrencyBo edmCountryBo = (EDMCurrencyBo) resultObject.getBaseBo();
@@ -42,13 +43,13 @@ public class EDMCurrencyController extends BaseController implements IEventProce
                 if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(edmCountryBo.getKey(), edmCountryBo.toMap());
                     result.add(viewResultItem);
-                }else{
-                    if(resultObject.getFailData() != null){
+                } else {
+                    if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        LogUtil.getCoreLog().info("failData :{}",failData.toString());
-                        LogUtil.getCoreLog().info("failData key:{}",failData.getKey());
-                        LogUtil.getCoreLog().info("failData map:{}",failData.toMap());
-                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        LogUtil.getCoreLog().info("failData :{}", failData.toString());
+                        LogUtil.getCoreLog().info("failData key:{}", failData.getKey());
+                        LogUtil.getCoreLog().info("failData map:{}", failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

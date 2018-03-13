@@ -4,8 +4,8 @@ import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.pangea.common.Dao.ICommonDao;
-import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
+import com.jnj.pangea.common.dao.ICommonDao;
+import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 
 import java.util.LinkedList;
 import java.util.List;

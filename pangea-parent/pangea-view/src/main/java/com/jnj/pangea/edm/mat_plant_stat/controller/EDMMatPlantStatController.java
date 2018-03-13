@@ -3,12 +3,10 @@ package com.jnj.pangea.edm.mat_plant_stat.controller;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.pangea.common.CommonController;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.projectone.T141Entity;
+import com.jnj.pangea.common.entity.projectone.T141Entity;
 import com.jnj.pangea.edm.mat_plant_stat.Bo.EDMMatPlantStatBo;
 import com.jnj.pangea.edm.mat_plant_stat.service.EDMMatPlantStatServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
-
-import java.util.Map;
 
 public class EDMMatPlantStatController extends CommonController {
 
@@ -18,7 +16,7 @@ public class EDMMatPlantStatController extends CommonController {
     public ResultObject process(RawDataEvent raw) {
         ResultObject resultObject = new ResultObject();
 
-        T141Entity t141Entity = BeanUtil.mapToBean(raw.getValue().toMap(),new T141Entity());
+        T141Entity t141Entity = BeanUtil.mapToBean(raw.getValue().toMap(),T141Entity.class);
         EDMMatPlantStatBo matPlantStatBo = new EDMMatPlantStatBo();
 
         matPlantStatService.getSourceSystem(matPlantStatBo);

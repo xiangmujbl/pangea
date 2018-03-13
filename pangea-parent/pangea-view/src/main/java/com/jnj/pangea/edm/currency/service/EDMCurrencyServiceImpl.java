@@ -5,8 +5,8 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entry.ems.EMSFMdmCurrenciesEntity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entity.ems.EMSFMdmCurrenciesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.currency.bo.EDMCurrencyBo;
 

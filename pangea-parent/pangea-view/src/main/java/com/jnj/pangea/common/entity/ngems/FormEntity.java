@@ -1,0 +1,25 @@
+package com.jnj.pangea.common.entity.ngems;
+
+import com.jnj.pangea.common.CommonEntity;
+
+public class FormEntity extends CommonEntity {
+    private String formName;
+    private String formDescription;
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    public String getFormDescription() {
+        return formDescription;
+    }
+
+    public void setFormDescription(String formDescription) {
+        this.formDescription = formDescription;
+    }
+
+}

@@ -1,0 +1,24 @@
+package com.jnj.pangea.common.entity.ngems;
+
+import com.jnj.pangea.common.CommonEntity;
+
+public class GlobalBaseUnitEntity extends CommonEntity {
+    private String gbu;
+    private String gbuName;
+
+    public String getGbu() {
+        return gbu;
+    }
+
+    public void setGbu(String gbu) {
+        this.gbu = gbu;
+    }
+
+    public String getGbuName() {
+        return gbuName;
+    }
+
+    public void setGbuName(String gbuName) {
+        this.gbuName = gbuName;
+    }
+}

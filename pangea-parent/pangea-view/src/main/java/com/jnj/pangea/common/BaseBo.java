@@ -6,15 +6,24 @@ import java.util.Map;
 
 public abstract class BaseBo {
 
+    private static Map<String, Field[]> fieldCache = new HashMap<>();
+
     public Map<String, Object> toMap() {
+
         Map<String, Object> map = new HashMap<>();
-        Class classes = this.getClass();
-        Field[] fields = classes.getDeclaredFields();
+        Class clazz = this.getClass();
+
+        Field[] fields = fieldCache.get(clazz.getName());
+        if (null == fields) {
+            fields = clazz.getDeclaredFields();
+            fieldCache.put(clazz.getName(), fields);
+        }
+
         for (Field field : fields) {
-            field.setAccessible(true);
             try {
+                field.setAccessible(true);
                 map.put(field.getName(), field.get(this));
-            } catch (IllegalArgumentException | IllegalAccessException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

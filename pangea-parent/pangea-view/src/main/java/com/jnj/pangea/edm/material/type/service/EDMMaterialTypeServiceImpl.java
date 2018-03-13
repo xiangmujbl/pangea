@@ -4,7 +4,7 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntity;
+import com.jnj.pangea.common.entity.ems.EmsFMdmMaterialTypesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.type.bo.EDMMaterialTypeBo;
 import org.apache.commons.lang3.StringUtils;

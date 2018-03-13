@@ -1,15 +1,12 @@
 package com.jnj.pangea.edm.category.controller;
 
 import com.jnj.adf.curation.logic.RawDataEvent;
-import com.jnj.adf.curation.logic.ViewResultBuilder;
-import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.CommonController;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.ngems.CategoryEntity;
+import com.jnj.pangea.common.entity.ngems.CategoryEntity;
 import com.jnj.pangea.edm.category.bo.EDMCategoryBo;
-
-import java.util.Map;
+import com.jnj.pangea.util.BeanUtil;
 
 public class EDMCategoryController extends CommonController {
     @Override
@@ -17,7 +14,7 @@ public class EDMCategoryController extends CommonController {
         LogUtil.getCoreLog().info("======================= EDMCategoryController start====");
         ResultObject resultObject = new ResultObject();
 
-        CategoryEntity categoryEntity = new CategoryEntity();
+        CategoryEntity categoryEntity = BeanUtil.mapToBean(raw.getValue().toMap(), CategoryEntity.class);
 
         EDMCategoryBo categoryBo = new EDMCategoryBo();
 
@@ -25,7 +22,7 @@ public class EDMCategoryController extends CommonController {
         categoryBo.setCategoryName(categoryEntity.getCategoryName());
 
         resultObject.setBaseBo(categoryBo);
-        LogUtil.getCoreLog().info("======================= categoryBo: {}====",categoryBo);
+        LogUtil.getCoreLog().info("======================= categoryBo: {}====", categoryBo);
 
         LogUtil.getCoreLog().info("======================= EDMCategoryController end====");
 

@@ -6,10 +6,10 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.pangea.common.*;
-import com.jnj.pangea.common.Dao.ICommonDao;
-import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entry.projectone.MaraEntity;
+import com.jnj.pangea.common.dao.ICommonDao;
+import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entity.projectone.MaraEntity;
 import com.jnj.pangea.edm.material.global.service.EDMMaterialGlobalServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -32,7 +32,7 @@ public class EDMMaterialGlobalController extends BaseController {
 
             RawDataValue rawValue = raw.getValue();
 
-            MaraEntity maraEntity = BeanUtil.mapToBean(rawValue.toMap(), new MaraEntity());
+            MaraEntity maraEntity = BeanUtil.mapToBean(rawValue.toMap(), MaraEntity.class);
 
             ResultObject resultObject = materialGlobalService.buildView(raw.getKey(), maraEntity, sourceSystem);
             if (resultObject.isSuccess()) {

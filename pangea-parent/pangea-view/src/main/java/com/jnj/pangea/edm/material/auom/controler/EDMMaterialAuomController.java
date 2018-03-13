@@ -7,7 +7,7 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.*;
-import com.jnj.pangea.common.entry.projectone.MarmEntity;
+import com.jnj.pangea.common.entity.projectone.MarmEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.auom.service.EDMMaterialAuomServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
@@ -37,7 +37,7 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
             Map map = mainValue.toMap();
 
             try {
-                MarmEntity mainObject = (MarmEntity) BeanUtil.mapToObject(map, MarmEntity.class);
+                MarmEntity mainObject = BeanUtil.mapToBean(map, MarmEntity.class);
 
                 ResultObject resultObject = materialAuomService.buildView(key, mainObject, null);
 
@@ -45,11 +45,11 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
                     BaseBo baseBo = (BaseBo) resultObject.getBaseBo();
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
                     result.add(viewResultItem);
-                }else {
-                    if(resultObject.getFailData() != null){
+                } else {
+                    if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
 //                        LogUtil.getCoreLog().info(">>>>failData:{} ,>>>>key:{}",failData.getKey(),key);
-                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

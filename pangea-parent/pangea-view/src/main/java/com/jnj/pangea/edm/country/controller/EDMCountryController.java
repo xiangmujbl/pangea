@@ -10,7 +10,7 @@ import com.jnj.pangea.common.BaseController;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.ems.EMSFMdmCountriesEntity;
+import com.jnj.pangea.common.entity.ems.EMSFMdmCountriesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
 import com.jnj.pangea.edm.country.service.EDMCountryServiceImpl;
@@ -35,7 +35,7 @@ public class EDMCountryController extends BaseController implements IEventProces
             String key = mainRaw.getKey();
             Map map = mainValue.toMap();
             try {
-                EMSFMdmCountriesEntity mainObject = (EMSFMdmCountriesEntity) BeanUtil.mapToObject(map, EMSFMdmCountriesEntity.class);
+                EMSFMdmCountriesEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmCountriesEntity.class);
                 LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
                 ResultObject resultObject = edmCountryService.buildView(key, mainObject, null);
                 EDMCountryBo edmCountryBo = (EDMCountryBo) resultObject.getBaseBo();
@@ -43,10 +43,10 @@ public class EDMCountryController extends BaseController implements IEventProces
                 if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(edmCountryBo.getKey(), edmCountryBo.toMap());
                     result.add(viewResultItem);
-                }else{
-                    if(resultObject.getFailData() != null){
+                } else {
+                    if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

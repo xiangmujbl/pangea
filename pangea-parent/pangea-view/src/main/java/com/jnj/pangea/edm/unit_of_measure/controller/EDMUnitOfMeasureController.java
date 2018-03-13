@@ -10,7 +10,7 @@ import com.jnj.pangea.common.BaseController;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.ems.EMSFMdmUnitsEntity;
+import com.jnj.pangea.common.entity.ems.EMSFMdmUnitsEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.unit_of_measure.bo.EDMUnitOfMeasureBo;
 import com.jnj.pangea.edm.unit_of_measure.service.EDMUnitOfMeasureServiceImpl;
@@ -35,7 +35,7 @@ public class EDMUnitOfMeasureController extends BaseController implements IEvent
             String key = mainRaw.getKey();
             Map map = mainValue.toMap();
             try {
-                EMSFMdmUnitsEntity mainObject = (EMSFMdmUnitsEntity) BeanUtil.mapToObject(map, EMSFMdmUnitsEntity.class);
+                EMSFMdmUnitsEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmUnitsEntity.class);
                 LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
                 ResultObject resultObject = edmUnitOfMeasureService.buildView(key, mainObject, null);
                 EDMUnitOfMeasureBo edmUnitOfMeasureBo = (EDMUnitOfMeasureBo) resultObject.getBaseBo();
@@ -43,10 +43,10 @@ public class EDMUnitOfMeasureController extends BaseController implements IEvent
                 if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(edmUnitOfMeasureBo.getKey(), edmUnitOfMeasureBo.toMap());
                     result.add(viewResultItem);
-                }else{
-                    if(resultObject.getFailData() != null){
+                } else {
+                    if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

@@ -7,7 +7,7 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.*;
-import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntity;
+import com.jnj.pangea.common.entity.ems.EmsFMdmMaterialTypesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.type.service.EDMMaterialTypeServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class EDMMaterialTypeController  extends BaseController implements IEventProcessor {
+public class EDMMaterialTypeController extends BaseController implements IEventProcessor {
     private ICommonService materialTypeService = EDMMaterialTypeServiceImpl.getInstance();
 
     @Override
@@ -30,17 +30,17 @@ public class EDMMaterialTypeController  extends BaseController implements IEvent
             Map map = mainValue.toMap();
 
             try {
-                EmsFMdmMaterialTypesEntity mainObject = (EmsFMdmMaterialTypesEntity) BeanUtil.mapToObject(map, EmsFMdmMaterialTypesEntity.class);
+                EmsFMdmMaterialTypesEntity mainObject = BeanUtil.mapToBean(map, EmsFMdmMaterialTypesEntity.class);
                 ResultObject resultObject = materialTypeService.buildView(key, mainObject, null);
 
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = (BaseBo) resultObject.getBaseBo();
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
                     result.add(viewResultItem);
-                }else {
-                    if(resultObject.getFailData() != null){
+                } else {
+                    if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }
