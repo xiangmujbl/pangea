@@ -2,12 +2,11 @@ package com.jnj.pangea.edm.material.auom.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.curation.indexer.AdfLuceneHelper;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.edm.EDMMaterialGlobalV1Entry;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
-import com.jnj.pangea.common.entry.projectone.MarmEntry;
+import com.jnj.pangea.common.entry.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entry.projectone.MarmEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.auom.bo.EDMMaterialAuomBo;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +32,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
 
-        MarmEntry mainData = (MarmEntry) o;
+        MarmEntity mainData = (MarmEntity) o;
 
         EDMMaterialAuomBo materialAuomBo = new EDMMaterialAuomBo();
         resultObject.setBaseBo(materialAuomBo);
@@ -56,8 +55,8 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
             if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
                 queryString = CommonRegionPath.SOURCESYSTEM+":\""+ materialAuomBo.getSourceSystem() + "\" AND "+CommonRegionPath.LOCALMATERIALNUMBER+":\"" + AdfLuceneHelper.keyword(matnr) + "\"";
             }
-            List<EDMMaterialGlobalV1Entry> materialList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entry.class);
-            for (EDMMaterialGlobalV1Entry entry : materialList) {
+            List<EDMMaterialGlobalV1Entity> materialList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+            for (EDMMaterialGlobalV1Entity entry : materialList) {
                 materialNumber = entry.getMaterialNumber();
             }
         }
@@ -67,10 +66,10 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
     private boolean processSourceSystem(EDMMaterialAuomBo materialAuomBo) {
 
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is("project_one").toQueryString();
-        List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
+        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
 
         String sourceSystem = null;
-        for (EDMSourceSystemV1Entry entry : sourceList) {
+        for (EDMSourceSystemV1Entity entry : sourceList) {
             sourceSystem = entry.getSourceSystem();
         }
         materialAuomBo.setSourceSystem(sourceSystem);
@@ -78,7 +77,7 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         return true;
     }
 
-    private boolean processSystem(MarmEntry mainData, EDMMaterialAuomBo materialAuomBo) {
+    private boolean processSystem(MarmEntity mainData, EDMMaterialAuomBo materialAuomBo) {
 
         //localMaterialNumber
         String matnr = mainData.getMatnr();

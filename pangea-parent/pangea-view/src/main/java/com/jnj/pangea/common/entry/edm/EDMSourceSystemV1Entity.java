@@ -3,7 +3,7 @@ package com.jnj.pangea.common.entry.edm;
 /**
  * Created by XZhan290 on 2018/3/5.
  */
-public class EDMSourceSystemV1Entry {
+public class EDMSourceSystemV1Entity {
 
     private String sourceSystem;
     private String sourceSystemName;

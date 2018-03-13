@@ -8,7 +8,7 @@ import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.pangea.common.*;
 import com.jnj.pangea.common.Dao.ICommonDao;
 import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
+import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entry.projectone.MaraEntity;
 import com.jnj.pangea.edm.material.global.service.EDMMaterialGlobalServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
@@ -54,7 +54,7 @@ public class EDMMaterialGlobalController extends BaseController {
 
         String queryString = QueryHelper.buildCriteria(CommonRegionPath.LOCALSOURCESYSTEM).is(CommonRegionPath.LOCALSOURCESYSTEM_PROJECT_ONE).toQueryString();
 
-        EDMSourceSystemV1Entry sourceSystems = commonDao.queryForObject(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
+        EDMSourceSystemV1Entity sourceSystems = commonDao.queryForObject(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
         if (null != sourceSystems) {
             return sourceSystems.getSourceSystem();
         }

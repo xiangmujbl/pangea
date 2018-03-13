@@ -3,7 +3,7 @@ package com.jnj.pangea.common.entry.projectone;
 /**
  * Created by XZhan290 on 2018/3/5.
  */
-public class MarmEntry {
+public class MarmEntity {
 
     private String matnr;
     private String meinh;

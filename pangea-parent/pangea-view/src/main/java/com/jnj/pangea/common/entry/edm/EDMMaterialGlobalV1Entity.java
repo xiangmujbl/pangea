@@ -3,7 +3,7 @@ package com.jnj.pangea.common.entry.edm;
 /**
  * Created by XZhan290 on 2018/3/5.
  */
-public class EDMMaterialGlobalV1Entry {
+public class EDMMaterialGlobalV1Entity {
 
     private String productFamily;
     private String franchise;

@@ -7,7 +7,7 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.*;
-import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
+import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.type.service.EDMMaterialTypeServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
@@ -30,7 +30,7 @@ public class EDMMaterialTypeController  extends BaseController implements IEvent
             Map map = mainValue.toMap();
 
             try {
-                EmsFMdmMaterialTypesEntry mainObject = (EmsFMdmMaterialTypesEntry) BeanUtil.mapToObject(map, EmsFMdmMaterialTypesEntry.class);
+                EmsFMdmMaterialTypesEntity mainObject = (EmsFMdmMaterialTypesEntity) BeanUtil.mapToObject(map, EmsFMdmMaterialTypesEntity.class);
                 ResultObject resultObject = materialTypeService.buildView(key, mainObject, null);
 
                 if (resultObject.isSuccess()) {

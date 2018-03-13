@@ -4,11 +4,11 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.edm.EDMMatPlantStatV1Entry;
-import com.jnj.pangea.common.entry.edm.EDMMaterialGlobalV1Entry;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
-import com.jnj.pangea.common.entry.edm.EDMPlantV1Entry;
-import com.jnj.pangea.common.entry.projectone.MarcEntry;
+import com.jnj.pangea.common.entry.edm.EDMMatPlantStatV1Entity;
+import com.jnj.pangea.common.entry.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entry.edm.EDMPlantV1Entity;
+import com.jnj.pangea.common.entry.projectone.MarcEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.plant.bo.EDMMaterialPlantBo;
 import org.apache.commons.lang.StringUtils;
@@ -30,7 +30,7 @@ public class EDMMaterialPlantServiceImpl  implements ICommonService {
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
-        MarcEntry mainData = (MarcEntry)o;
+        MarcEntity mainData = (MarcEntity)o;
 
         EDMMaterialPlantBo materialPlantBo = new EDMMaterialPlantBo();
         resultObject.setBaseBo(materialPlantBo);
@@ -53,9 +53,9 @@ public class EDMMaterialPlantServiceImpl  implements ICommonService {
     private void getSourceSystem(EDMMaterialPlantBo materialPlantBo) {
         String sourceSystem=null;
         String queryString = QueryHelper.buildCriteria(CommonRegionPath.LOCALSOURCESYSTEM).is(CommonRegionPath.LOCALSOURCESYSTEM_PROJECT_ONE).toQueryString();
-        List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
+        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
 
-        for (EDMSourceSystemV1Entry entry : sourceList) {
+        for (EDMSourceSystemV1Entity entry : sourceList) {
             sourceSystem = entry.getSourceSystem();
         }
         materialPlantBo.setSourceSystem(sourceSystem);
@@ -71,8 +71,8 @@ public class EDMMaterialPlantServiceImpl  implements ICommonService {
             if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
                 queryString = CommonRegionPath.SOURCESYSTEM+":\""+ materialPlantBo.getSourceSystem() + "\" AND "+CommonRegionPath.LOCALMATERIALNUMBER+":\"" + AdfLuceneHelper.keyword(matnr) + "\"";
             }
-            List<EDMMaterialGlobalV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entry.class);
-            for (EDMMaterialGlobalV1Entry entry : sourceList) {
+            List<EDMMaterialGlobalV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+            for (EDMMaterialGlobalV1Entity entry : sourceList) {
                 materialNumber = entry.getMaterialNumber();
             }
         }
@@ -85,8 +85,8 @@ public class EDMMaterialPlantServiceImpl  implements ICommonService {
             String queryString = QueryHelper.buildCriteria(CommonRegionPath.LOCALPLANT).is(materialPlantBo.getLocalPlant())
                     .and(CommonRegionPath.SOURCESYSTEM).is(materialPlantBo.getSourceSystem()).toQueryString();
 
-            List<EDMPlantV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.PANGEA_EDM_PLANT_V1, queryString, EDMPlantV1Entry.class);
-            for (EDMPlantV1Entry entry : sourceList) {
+            List<EDMPlantV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.PANGEA_EDM_PLANT_V1, queryString, EDMPlantV1Entity.class);
+            for (EDMPlantV1Entity entry : sourceList) {
                 plant = entry.getPlant();
             }
         }
@@ -99,8 +99,8 @@ public class EDMMaterialPlantServiceImpl  implements ICommonService {
             String queryString = QueryHelper.buildCriteria(CommonRegionPath.LOCALPLANTSTATUS).is(materialPlantBo.getLocalPlantStatus())
                     .and(CommonRegionPath.SOURCESYSTEM).is(materialPlantBo.getSourceSystem()).toQueryString();
 
-            List<EDMMatPlantStatV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.PANGEA_EDM_MAT_PLANT_STAT_V1, queryString, EDMMatPlantStatV1Entry.class);
-            for (EDMMatPlantStatV1Entry entry : sourceList) {
+            List<EDMMatPlantStatV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.PANGEA_EDM_MAT_PLANT_STAT_V1, queryString, EDMMatPlantStatV1Entity.class);
+            for (EDMMatPlantStatV1Entity entry : sourceList) {
                 plantStatus = entry.getPlantStatus();
             }
 

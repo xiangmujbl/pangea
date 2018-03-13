@@ -1,6 +1,6 @@
 package com.jnj.pangea.common.entry.projectone;
 
-public class MarcEntry {
+public class MarcEntity {
     private String matnr;
     private String werks;
     private String mmsta;

@@ -7,7 +7,7 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.*;
-import com.jnj.pangea.common.entry.projectone.MarcEntry;
+import com.jnj.pangea.common.entry.projectone.MarcEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.plant.service.EDMMaterialPlantServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
@@ -28,7 +28,7 @@ public class EDMMaterialPlantController extends BaseController implements IEvent
             Map map = mainValue.toMap();
 
             try {
-                MarcEntry mainObject = (MarcEntry) BeanUtil.mapToObject(map, MarcEntry.class);
+                MarcEntity mainObject = (MarcEntity) BeanUtil.mapToObject(map, MarcEntity.class);
 
                 ResultObject resultObject = materialPlantService.buildView(key, mainObject, null);
 

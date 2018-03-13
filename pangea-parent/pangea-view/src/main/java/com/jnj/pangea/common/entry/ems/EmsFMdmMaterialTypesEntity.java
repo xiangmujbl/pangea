@@ -1,6 +1,6 @@
 package com.jnj.pangea.common.entry.ems;
 
-public class EmsFMdmMaterialTypesEntry {
+public class EmsFMdmMaterialTypesEntity {
     private String mdmCode;
     private String mdmName;
     private String zSourceSystem;

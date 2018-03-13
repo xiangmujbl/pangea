@@ -1,6 +1,6 @@
 package com.jnj.pangea.common.entry.edm;
 
-public class EDMMatPlantStatV1Entry {
+public class EDMMatPlantStatV1Entity {
     private String sourceSystem;
     private String localPlantStatus;
     private String plantStatus;

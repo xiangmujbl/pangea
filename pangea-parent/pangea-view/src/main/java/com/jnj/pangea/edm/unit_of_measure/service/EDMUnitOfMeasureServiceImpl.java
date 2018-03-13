@@ -1,24 +1,16 @@
 package com.jnj.pangea.edm.unit_of_measure.service;
 
-import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.CommonRegionPath;
-import com.jnj.pangea.common.Dao.ICommonDao;
-import com.jnj.pangea.common.Dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
-import com.jnj.pangea.common.entry.ems.EMSFMdmCountriesEntity;
+import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entry.ems.EMSFMdmUnitsEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.country.bo.EDMCountryBo;
 import com.jnj.pangea.edm.unit_of_measure.bo.EDMUnitOfMeasureBo;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by JGUO57 on 2018/3/2.
@@ -78,11 +70,11 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
 
-        List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
+        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
 
         String sourceSystem = null;
         for (Object entry : sourceList) {
-            EDMSourceSystemV1Entry sourceSystemV1Entry = (EDMSourceSystemV1Entry) entry;
+            EDMSourceSystemV1Entity sourceSystemV1Entry = (EDMSourceSystemV1Entity) entry;
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }
         if(null == sourceSystem || sourceSystem.isEmpty()){

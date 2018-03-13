@@ -8,7 +8,6 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.Dao.ICommonDao;
 import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.entry.projectone.MarmEntry;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.List;

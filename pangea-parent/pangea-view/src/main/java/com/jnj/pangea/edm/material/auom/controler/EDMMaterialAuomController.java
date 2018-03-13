@@ -6,11 +6,9 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.adf.grid.utils.PdxBeanUtils;
 import com.jnj.pangea.common.*;
-import com.jnj.pangea.common.entry.projectone.MarmEntry;
+import com.jnj.pangea.common.entry.projectone.MarmEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.material.auom.bo.EDMMaterialAuomBo;
 import com.jnj.pangea.edm.material.auom.service.EDMMaterialAuomServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -39,7 +37,7 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
             Map map = mainValue.toMap();
 
             try {
-                MarmEntry mainObject = (MarmEntry) BeanUtil.mapToObject(map, MarmEntry.class);
+                MarmEntity mainObject = (MarmEntity) BeanUtil.mapToObject(map, MarmEntity.class);
 
                 ResultObject resultObject = materialAuomService.buildView(key, mainObject, null);
 

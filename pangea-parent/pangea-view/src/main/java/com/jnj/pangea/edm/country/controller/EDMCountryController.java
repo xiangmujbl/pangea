@@ -11,7 +11,6 @@ import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.ems.EMSFMdmCountriesEntity;
-import com.jnj.pangea.common.entry.projectone.MarmEntry;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
 import com.jnj.pangea.edm.country.service.EDMCountryServiceImpl;

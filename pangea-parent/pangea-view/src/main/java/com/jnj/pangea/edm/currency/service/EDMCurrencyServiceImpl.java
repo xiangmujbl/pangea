@@ -1,21 +1,16 @@
 package com.jnj.pangea.edm.currency.service;
 
-import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
+import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entry.ems.EMSFMdmCurrenciesEntity;
-import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.currency.bo.EDMCurrencyBo;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by JGUO57 on 2018/3/2.
@@ -72,10 +67,10 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
         LogUtil.getCoreLog().info(">>>>>>>>>>>processSourceSystem>>>>>>>>>queryString:{}", queryString);
-        List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
+        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
         String sourceSystem = null;
         for (Object entry : sourceList) {
-            EDMSourceSystemV1Entry sourceSystemV1Entry = (EDMSourceSystemV1Entry) entry;
+            EDMSourceSystemV1Entity sourceSystemV1Entry = (EDMSourceSystemV1Entity) entry;
             LogUtil.getCoreLog().info(">>>>>>>>>>>sourceSystemV1Entry>>>>>>>>>sourceSystemV1Entry:{}", sourceSystemV1Entry.toString());
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }

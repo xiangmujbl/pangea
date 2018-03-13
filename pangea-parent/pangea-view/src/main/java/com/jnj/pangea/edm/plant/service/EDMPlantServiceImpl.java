@@ -5,7 +5,7 @@ import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.edm.EDMCountryEntity;
-import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
+import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entry.ems.EMSFZEnterprisePlants;
 import com.jnj.pangea.common.entry.projectone.T001Entity;
 import com.jnj.pangea.common.entry.projectone.T001KEntity;
@@ -78,7 +78,7 @@ public class EDMPlantServiceImpl implements ICommonService {
             return "";
         }
         String systemQueryString = QueryHelper.buildCriteria("localSourceSystem").is(zPlantSourceSystem).toQueryString();
-        EDMSourceSystemV1Entry sourceSystemV1Entry = commonDao.queryForObject(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, systemQueryString, EDMSourceSystemV1Entry.class);
+        EDMSourceSystemV1Entity sourceSystemV1Entry = commonDao.queryForObject(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, systemQueryString, EDMSourceSystemV1Entity.class);
         if (null != sourceSystemV1Entry) {
             return sourceSystemV1Entry.getSourceSystem();
         }
