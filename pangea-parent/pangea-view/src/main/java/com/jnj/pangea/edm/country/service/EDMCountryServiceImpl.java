@@ -46,26 +46,12 @@ public class EDMCountryServiceImpl implements ICommonService {
         boolean isOk = processSourceSystem(key, mainData,edmCountryBo);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
+            writeFailDataToRegion(mainData,mainData.getzSourceSystem(),"z_source_system value is not [EMS] and rule T1",resultObject);
             return resultObject;
         }
 
-        isOk = processSystem(mainData, edmCountryBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
-
-
-        isOk = processT2(key, mainData, edmCountryBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processMaterialNumber of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
-
-
+        processSystem(mainData, edmCountryBo);
+        processT2(key, mainData, edmCountryBo);
         return resultObject;
     }
 
@@ -82,7 +68,7 @@ public class EDMCountryServiceImpl implements ICommonService {
             return false;
         }
         if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
-            return true;
+            return false;
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
         List<EDMSourceSystemV1Entry> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entry.class);
@@ -90,6 +76,9 @@ public class EDMCountryServiceImpl implements ICommonService {
         for (Object entry : sourceList) {
             EDMSourceSystemV1Entry sourceSystemV1Entry = (EDMSourceSystemV1Entry) entry;
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
+        }
+        if(null == sourceSystem || sourceSystem.isEmpty()){
+            return false;
         }
         edmCountryBo.setSourceSystem(sourceSystem);
         return true;
@@ -115,5 +104,19 @@ public class EDMCountryServiceImpl implements ICommonService {
         return true;
     }
 
+    private void writeFailDataToRegion(EMSFMdmCountriesEntity mainData, String sourceSystem,String ruleCode,ResultObject resultObject){
+        FailData failData = new FailData();
+        failData.setFunctionalArea("DP");
+        failData.setInterfaceID("EDMCountry");
+        failData.setErrorCode(ruleCode);
+        failData.setSourceSystem(sourceSystem);
+        failData.setKey1(mainData.getzSourceSystem());
+        failData.setKey2(mainData.getMdmCode());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
+        failData.setBusinessArea("");
+        resultObject.setFailData(failData);
+    }
 
 }

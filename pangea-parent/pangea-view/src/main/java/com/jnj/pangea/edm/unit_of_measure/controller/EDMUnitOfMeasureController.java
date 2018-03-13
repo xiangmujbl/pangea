@@ -7,6 +7,8 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseController;
+import com.jnj.pangea.common.CommonRegionPath;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.ems.EMSFMdmUnitsEntity;
 import com.jnj.pangea.common.entry.projectone.MarmEntry;
@@ -44,6 +46,12 @@ public class EDMUnitOfMeasureController extends BaseController implements IEvent
                 if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(edmUnitOfMeasureBo.getKey(), edmUnitOfMeasureBo.toMap());
                     result.add(viewResultItem);
+                }else{
+                    if(resultObject.getFailData() != null){
+                        FailData failData = resultObject.getFailData();
+                        ViewResultItem viewResultItem =ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA,failData.getKey(),failData.toMap());
+                        result.add(viewResultItem);
+                    }
                 }
             } catch (Exception e) {
                 LogUtil.getCoreLog().info("EDMCountryController Exception occured. key = {}.", key);

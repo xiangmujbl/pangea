@@ -48,26 +48,11 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         boolean isOk = processSourceSystem(key, mainData,edmUnitOfMeasureBo);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
+            writeFailDataToRegion(mainData,mainData.getzSourceSystem(),"z_source_system value is not [EMS] and rule T1",resultObject);
             return resultObject;
         }
-
-        isOk = processSystem(mainData, edmUnitOfMeasureBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
-
-
-        isOk = processT2(key, mainData, edmUnitOfMeasureBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processMaterialNumber of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
-
-
+        processSystem(mainData, edmUnitOfMeasureBo);
+        processT2(key, mainData, edmUnitOfMeasureBo);
         return resultObject;
     }
 
@@ -89,7 +74,7 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
             return false;
         }
         if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
-            return true;
+            return false;
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
 
@@ -100,9 +85,9 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
             EDMSourceSystemV1Entry sourceSystemV1Entry = (EDMSourceSystemV1Entry) entry;
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }
-
-
-
+        if(null == sourceSystem || sourceSystem.isEmpty()){
+            return false;
+        }
         edmUnitOfMeasureBo.setSourceSystem(sourceSystem);
 
         return true;
@@ -123,6 +108,21 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         }
         edmUnitOfMeasureBo.setUomName(mdmName);
         return true;
+    }
+
+    private void writeFailDataToRegion(EMSFMdmUnitsEntity mainData, String sourceSystem,String ruleCode,ResultObject resultObject){
+        FailData failData = new FailData();
+        failData.setFunctionalArea("DP");
+        failData.setInterfaceID("EDMUnitOfMeasure");
+        failData.setErrorCode(ruleCode);
+        failData.setSourceSystem(sourceSystem);
+        failData.setKey1(mainData.getzSourceSystem());
+        failData.setKey2(mainData.getMdmSapCode());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
+        failData.setBusinessArea("");
+        resultObject.setFailData(failData);
     }
 
 

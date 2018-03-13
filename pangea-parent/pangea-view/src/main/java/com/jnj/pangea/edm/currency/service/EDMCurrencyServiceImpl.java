@@ -9,6 +9,7 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entry.edm.EDMSourceSystemV1Entry;
 import com.jnj.pangea.common.entry.ems.EMSFMdmCurrenciesEntity;
+import com.jnj.pangea.common.entry.ems.EmsFMdmMaterialTypesEntry;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.currency.bo.EDMCurrencyBo;
 import org.apache.commons.lang3.StringUtils;
@@ -44,28 +45,11 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         boolean isOk = processSourceSystem(key, mainData,edmCurrencyBo);
         if (!isOk) {
             LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
+            writeFailDataToRegion(mainData,"z_source_system value is not [EMS] and rule T1",resultObject);
             return resultObject;
         }
-
-        isOk = processSystem(mainData, edmCurrencyBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processSystem of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
-
-
-        isOk = processT2(key, mainData, edmCurrencyBo);
-        if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processMaterialNumber of flag:{}", key, isOk);
-            resultObject.setFailData(new FailData());
-            return resultObject;
-        }
-
-//        //recycling object
-//        commonDao = null;
-
+        processSystem(mainData, edmCurrencyBo);
+        processT2(key, mainData, edmCurrencyBo);
         return resultObject;
     }
 
@@ -84,7 +68,7 @@ public class EDMCurrencyServiceImpl implements ICommonService {
             return false;
         }
         if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
-            return true;
+            return false;
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
         LogUtil.getCoreLog().info(">>>>>>>>>>>processSourceSystem>>>>>>>>>queryString:{}", queryString);
@@ -95,9 +79,9 @@ public class EDMCurrencyServiceImpl implements ICommonService {
             LogUtil.getCoreLog().info(">>>>>>>>>>>sourceSystemV1Entry>>>>>>>>>sourceSystemV1Entry:{}", sourceSystemV1Entry.toString());
             sourceSystem = sourceSystemV1Entry.getSourceSystem();
         }
-
-
-
+        if(null == sourceSystem || sourceSystem.isEmpty()){
+            return false;
+        }
         edmCurrencyBo.setSourceSystem(sourceSystem);
 
         return true;
@@ -122,6 +106,21 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         }
         edmCurrencyBo.setCurrencyName(zName);
         return true;
+    }
+
+    private void writeFailDataToRegion(EMSFMdmCurrenciesEntity mainData,String ruleCode,ResultObject resultObject){
+        FailData failData = new FailData();
+        failData.setFunctionalArea("DP");
+        failData.setInterfaceID("EDMCurrency");
+        failData.setErrorCode(ruleCode);
+        failData.setSourceSystem(mainData.getzSourceSystem());
+        failData.setKey1(mainData.getzSourceSystem());
+        failData.setKey2(mainData.getzCode());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
+        failData.setBusinessArea("");
+        resultObject.setFailData(failData);
     }
 
 
