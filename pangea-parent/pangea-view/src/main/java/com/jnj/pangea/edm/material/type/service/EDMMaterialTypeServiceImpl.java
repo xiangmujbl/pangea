@@ -37,14 +37,14 @@ public class EDMMaterialTypeServiceImpl  implements ICommonService {
         }else
         {
             LogUtil.getCoreLog().warn(">>>key:{},z_source_system value is not '[EMS]' :{}", key, zSourceSystem);
-            FailData failData = writeFailDataToRegion(mainData,"T1");
+            FailData failData = writeFailDataToRegion(mainData,"T1","z_source_system value is not [EMS]");
             resultObject.setFailData(failData);
         }
 
         return resultObject;
     }
 
-    private FailData writeFailDataToRegion(EmsFMdmMaterialTypesEntity mainData, String ruleCode){
+    private FailData writeFailDataToRegion(EmsFMdmMaterialTypesEntity mainData, String ruleCode,String errorValue){
         FailData failData = new FailData();
         failData.setFunctionalArea("DP");
         failData.setInterfaceID("EDMMaterialType");
@@ -53,6 +53,9 @@ public class EDMMaterialTypeServiceImpl  implements ICommonService {
         failData.setKey1(mainData.getzSourceSystem());
         failData.setKey2(mainData.getMdmCode());
         failData.setKey3(mainData.getMdmName());
+        failData.setKey4("");
+        failData.setKey5("");
+        failData.setErrorValue(errorValue);
         return failData;
     }
 }
