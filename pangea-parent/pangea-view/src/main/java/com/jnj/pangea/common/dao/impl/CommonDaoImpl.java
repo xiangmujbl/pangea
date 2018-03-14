@@ -33,7 +33,7 @@ public class CommonDaoImpl implements ICommonDao {
         Map map = rawDataValue.toMap();
         if (map != null) {
             try {
-                BeanUtil.mapToBean(map, clazz);
+                entry = (T) BeanUtil.mapToBean(map, clazz);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -55,7 +55,7 @@ public class CommonDaoImpl implements ICommonDao {
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(region, queryString);
         if (null != result && null != result.getValue()) {
             try {
-                BeanUtil.mapToBean(result.getValue(), clazz);
+                entry = (T) BeanUtil.mapToBean(result.getValue(), clazz);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -72,7 +72,7 @@ public class CommonDaoImpl implements ICommonDao {
             for (Map.Entry<String, String> entry : maps) {
                 map = JsonUtils.jsonToObject(entry.getValue(), Map.class);
                 try {
-                    BeanUtil.mapToBean(map, clazz);
+                    bean = (T) BeanUtil.mapToBean(map, clazz);
                     list.add(bean);
                 } catch (Exception e) {
                     e.printStackTrace();
