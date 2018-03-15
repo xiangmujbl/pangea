@@ -22,12 +22,12 @@ Feature: EDMGlobalBaseUnit
       | 1002	|CHC|
       |1003	|OTC|
 
-    Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/ngems/global_base_unit_v1" and "/edm/global_base_unit_v1,/pangea/edm_failed_data"
+    And I compare the number of records between "/ngems/global_base_unit_v1" and "/edm/global_base_unit_v1,/plan/edm_failed_data"
 
     And I delete the test data
 
     And I will remove all data with region "/edm/global_base_unit_v1"
-    And I will remove all data with region "/pangea/edm_failed_data"
+    And I will remove all data with region "/plan/edm_failed_data"

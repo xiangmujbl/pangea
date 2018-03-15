@@ -57,13 +57,13 @@ Feature: EDMPlant-Curation
       | CONS_LATAM   | AR01       | Pilar Plant    | -     |                       | AR           | 00      | -    | AH             | All Countries | BRL           | edmPlant |
       | CONS_LATAM   | AR02       | S & M Pilar    | 00    |                       | AR           | 00      | *    | DC             | Miscellaneous | ARS           | gdmPlant |
 
-    Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/plan/plan_v1_failed" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
       | DP             | EDMPlant    | T1        | project_one  |              | [EMS] | AR06 |      |      |      |            |
 
-    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/pangea/edm_failed_data"
+    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/plan/plan_v1_failed"
 
     And I delete the test data
 
     And I will remove all data with region "/edm/plant_v1"
-    And I will remove all data with region "/pangea/edm_failed_data"
+    And I will remove all data with region "/plan/plan_v1_failed"

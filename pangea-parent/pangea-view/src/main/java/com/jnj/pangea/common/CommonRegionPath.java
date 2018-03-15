@@ -5,7 +5,7 @@ package com.jnj.pangea.common;
  */
 public interface CommonRegionPath {
     // ------fail region
-    String FAIL_DATA = "/pangea/edm_failed_data";
+    String FAIL_DATA = "/plan/edm_failed_data";
     // -----region
     String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
     String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
