@@ -1,4 +1,4 @@
-@pangea_test @AEAZ-868
+@pangea_test @AEAZ-1276
 Feature: EDMForm
   # test copy attributes from source system to target system
 

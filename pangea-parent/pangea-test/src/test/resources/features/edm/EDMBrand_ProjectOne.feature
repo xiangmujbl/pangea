@@ -1,4 +1,4 @@
-@pangea_test @AEAZ-868
+@pangea_test @AEAZ-1273
 Feature: EDMBrand
   # test copy attributes from source system to target system
 

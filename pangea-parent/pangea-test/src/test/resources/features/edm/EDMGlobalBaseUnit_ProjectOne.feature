@@ -1,4 +1,4 @@
-@pangea_test @AEAZ-868
+@pangea_test @AEAZ-1277
 Feature: EDMGlobalBaseUnit
   # test copy attributes from source system to target system
 
