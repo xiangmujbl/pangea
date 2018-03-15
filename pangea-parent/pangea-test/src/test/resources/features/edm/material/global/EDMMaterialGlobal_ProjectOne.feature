@@ -25,8 +25,10 @@ Feature: MaterialGlobal-Data Model & Curation
     And I import "/project_one/makt" by keyFields "matnr,spras"
       | matnr | spras | maktx                                |
       | 97568 | E     | JS COTTON BALLS 50 GRX20 T50P35      |
+      | 97568 | P     | P_JS COTTON BALLS 50 GRX20 T50P35    |
+      | 97568 | S     | S_JS COTTON BALLS 50 GRX20 T50P35    |
       | 97570 | P     | BOLAS DE ALGODAO J* 20X50 LV50 PG35. |
-      | 97572 | E     | REACH TOOTHBRUSH COMPACT SOFT T2P1   |
+      | 97572 | S     | REACH TOOTHBRUSH COMPACT SOFT T2P1   |
     And I wait "/project_one/makt" Async Queue complete
 
     And I import "/ngems/golden_material" by keyFields "materialNumber"
@@ -47,10 +49,10 @@ Feature: MaterialGlobal-Data Model & Curation
     When I submit task with xml file "xml/edm/material/global/EDMMaterialGlobal_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
-      | sourceSystem | localMaterialNumber | localRefDescription                  | localMaterialType | localBaseUom  | materialNumber | refDescription                           | materialType | baseUom | localDpParentCod | parentCode    | globalDpParentCode | form   | category | subBrand | brand  | franchise | globalBusinessUnit | productFamily | localManufacturingTechnology | manufacturingTechnology | localMaterialGroup | materialGroup | flagForDeletion | materialStatus | division |
-      | CONS_LATAM   | 97568               | JS COTTON BALLS 50 GRX20 T50P35      | FERT              | KI            | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FERT         | EA      |                  | 7891010931582 |                    | 116151 | 6        | 1V       | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Wipes                   | 01                 |               |                 | 08             | 10       |
-      | CONS_LATAM   | 97570               | BOLAS DE ALGODAO J* 20X50 LV50 PG35. | FERT              | KI            | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FERT         | EA      |                  | 7891010931642 |                    | 116151 | 0006     | 500003   | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Toothbrushes            | 01                 |               |                 | 08             | 10       |
-      | CONS_LATAM   | 97572               | REACH TOOTHBRUSH COMPACT SOFT T2P1   | FERT              | KI            |                |                                          |              |         |                  |               |                    |        |          |          |        |           |                    |               |                              |                         | 01                 |               |                 | 08             | 10       |
+      | sourceSystem | localMaterialNumber | localRefDescription                  | localMaterialType | localBaseUom | materialNumber | refDescription                           | materialType | baseUom | localDpParentCod | parentCode    | globalDpParentCode | form   | category | subBrand | brand  | franchise | globalBusinessUnit | productFamily | localManufacturingTechnology | manufacturingTechnology | localMaterialGroup | materialGroup | flagForDeletion | materialStatus | division |
+      | CONS_LATAM   | 97568               | JS COTTON BALLS 50 GRX20 T50P35      | FERT              | KI           | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FERT         | EA      |                  | 7891010931582 |                    | 116151 | 6        | 1V       | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Wipes                   | 01                 |               |                 | 08             | 10       |
+      | CONS_LATAM   | 97570               | BOLAS DE ALGODAO J* 20X50 LV50 PG35. | FERT              | KI           | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FERT         | EA      |                  | 7891010931642 |                    | 116151 | 0006     | 500003   | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Toothbrushes            | 01                 |               |                 | 08             | 10       |
+      | CONS_LATAM   | 97572               | REACH TOOTHBRUSH COMPACT SOFT T2P1   | FERT              | KI           |                |                                          |              |         |                  |               |                    |        |          |          |        |           |                    |               |                              |                         | 01                 |               |                 | 08             | 10       |
 
     Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
