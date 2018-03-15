@@ -103,11 +103,22 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
     }
 
     private void writeFailDataToRegion(EMSFMdmUnitsEntity mainData, String sourceSystem,String ruleCode,ResultObject resultObject){
+//        FailData failData = new FailData();
+//        failData.setFunctionalArea("DP");
+//        failData.setInterfaceID("EDMUnitOfMeasure");
+//        failData.setErrorCode(ruleCode);
+//        failData.setSourceSystem(sourceSystem);
+//        failData.setKey1(mainData.getzSourceSystem());
+//        failData.setKey2(mainData.getMdmSapCode());
+//        failData.setKey3("");
+//        failData.setKey4("");
+//        failData.setKey5("");
+//        failData.setBusinessArea("");
         FailData failData = new FailData();
-        failData.setFunctionalArea("DP");
-        failData.setInterfaceID("EDMUnitOfMeasure");
+        failData.setFunctionalArea("");
+        failData.setInterfaceID("");
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem(sourceSystem);
+        failData.setSourceSystem("");
         failData.setKey1(mainData.getzSourceSystem());
         failData.setKey2(mainData.getMdmSapCode());
         failData.setKey3("");

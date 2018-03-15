@@ -4,19 +4,28 @@ import com.jnj.adf.cucumber.sentence.CommonSteps;
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PangeaSteps extends CommonSteps {
 
     private static String computingNode = "";
     private static Integer computingPartition = 1;
-
+    private Scenario scenario;
     static {
         computingNode = ADFConfigHelper.getProperty("computingNode");
         String partition = ADFConfigHelper.getProperty("computingPartition");
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
+    }
+    @Before
+    public void before(Scenario scenario){
+        this.scenario=scenario;
     }
 
     public PangeaSteps() {
@@ -44,6 +53,12 @@ public class PangeaSteps extends CommonSteps {
 
         And("^I will remove all data with region \"([^\"]*)\"$", (String region) -> {
             adfService.onPath(region).removeAll();
+        });
+
+        And("^I will print test report timestamp$", () -> {
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            scenario.write(sdf.format(date));
         });
     }
 

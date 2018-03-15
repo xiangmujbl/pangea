@@ -17,7 +17,9 @@ public interface CommonRegionPath {
     String NGEMS_GOLDEN_MATERIAL = "/ngems/golden_material";
     String EMS_F_MDM_COUNTRIES_CLONE = "/ems/ems_f_mdm_countries_clone";
     String EMS_F_MDM_COUNTRIES = "/ems/ems_f_mdm_countries";
-
+    String EMS_F_MDM_COUNTRIES_FAIL_DATA = "/plan/country_v1_failed_data";
+    String EMS_F_Z_CURRENCIES_FAIL_DATA = "/plan/currency_v1_failed_data";
+    String EMS_F_MDM_UNITS_FAIL_DATA = "/plan/unit_of_measure_v1_failed_data";
     String EMS_F_Z_CURRENCIES_CLONE = "/ems/ems_f_z_currencies_clone";
     String EMS_F_Z_CURRENCIES = "/ems/ems_f_z_currencies";
 

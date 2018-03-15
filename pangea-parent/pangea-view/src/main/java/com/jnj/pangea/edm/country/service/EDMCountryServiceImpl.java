@@ -45,6 +45,7 @@ public class EDMCountryServiceImpl implements ICommonService {
 
         processSystem(mainData, edmCountryBo);
         processT2(key, mainData, edmCountryBo);
+
         return resultObject;
     }
 
@@ -93,16 +94,28 @@ public class EDMCountryServiceImpl implements ICommonService {
         for (EMSFMdmCountriesEntity item : sourceList) {
             mdmName = item.getMdmName();
         }
+
         edmCountryBo.setCountryName(mdmName);
         return true;
     }
 
     private void writeFailDataToRegion(EMSFMdmCountriesEntity mainData, String sourceSystem,String ruleCode,ResultObject resultObject){
+//        FailData failData = new FailData();
+//        failData.setFunctionalArea("DP");
+//        failData.setInterfaceID("EDMCountry");
+//        failData.setErrorCode(ruleCode);
+//        failData.setSourceSystem(sourceSystem);
+//        failData.setKey1(mainData.getzSourceSystem());
+//        failData.setKey2(mainData.getMdmCode());
+//        failData.setKey3("");
+//        failData.setKey4("");
+//        failData.setKey5("");
+//        failData.setBusinessArea("");
         FailData failData = new FailData();
-        failData.setFunctionalArea("DP");
-        failData.setInterfaceID("EDMCountry");
+        failData.setFunctionalArea("");
+        failData.setInterfaceID("");
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem(sourceSystem);
+        failData.setSourceSystem("");
         failData.setKey1(mainData.getzSourceSystem());
         failData.setKey2(mainData.getMdmCode());
         failData.setKey3("");

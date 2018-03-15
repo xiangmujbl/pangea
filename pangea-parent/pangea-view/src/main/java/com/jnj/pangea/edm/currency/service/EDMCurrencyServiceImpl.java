@@ -104,11 +104,22 @@ public class EDMCurrencyServiceImpl implements ICommonService {
     }
 
     private void writeFailDataToRegion(EMSFMdmCurrenciesEntity mainData,String ruleCode,ResultObject resultObject){
+//        FailData failData = new FailData();
+//        failData.setFunctionalArea("DP");
+//        failData.setInterfaceID("EDMCurrency");
+//        failData.setErrorCode(ruleCode);
+//        failData.setSourceSystem(mainData.getzSourceSystem());
+//        failData.setKey1(mainData.getzSourceSystem());
+//        failData.setKey2(mainData.getzCode());
+//        failData.setKey3("");
+//        failData.setKey4("");
+//        failData.setKey5("");
+//        failData.setBusinessArea("");
         FailData failData = new FailData();
-        failData.setFunctionalArea("DP");
-        failData.setInterfaceID("EDMCurrency");
+        failData.setFunctionalArea("");
+        failData.setInterfaceID("");
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem(mainData.getzSourceSystem());
+        failData.setSourceSystem("");
         failData.setKey1(mainData.getzSourceSystem());
         failData.setKey2(mainData.getzCode());
         failData.setKey3("");
