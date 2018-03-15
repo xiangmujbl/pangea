@@ -9,7 +9,7 @@ public class EDMMaterialGlobalBo extends BaseBo {
     private String localMaterialNumber;
     private String localRefDescription;
     private String localMaterialType;
-    private String localBaseUnit;
+    private String localBaseUom;
     private String materialNumber;
     private String refDescription;
     private String materialType;
@@ -64,12 +64,12 @@ public class EDMMaterialGlobalBo extends BaseBo {
         this.localMaterialType = localMaterialType;
     }
 
-    public String getLocalBaseUnit() {
-        return localBaseUnit;
+    public String getLocalBaseUom() {
+        return localBaseUom;
     }
 
-    public void setLocalBaseUnit(String localBaseUnit) {
-        this.localBaseUnit = localBaseUnit;
+    public void setLocalBaseUom(String localBaseUom) {
+        this.localBaseUom = localBaseUom;
     }
 
     public String getMaterialNumber() {

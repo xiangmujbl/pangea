@@ -54,7 +54,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setLocalRefDescription(getFieldWithJ1(matnr));
 
         materialGlobalBo.setLocalMaterialType(maraEntity.getMtart());
-        materialGlobalBo.setLocalBaseUnit(maraEntity.getMeins());
+        materialGlobalBo.setLocalBaseUom(maraEntity.getMeins());
         materialGlobalBo.setLocalMaterialGroup(maraEntity.getMatkl());
         materialGlobalBo.setFlagForDeletion(maraEntity.getLvorm());
         materialGlobalBo.setMaterialStatus(maraEntity.getMstae());
