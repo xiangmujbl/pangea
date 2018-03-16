@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/ngems/sub_brand_v1" viewRegion="/edm/sub_brand_v1" chunkSize="1000" chunkBytes="4096"
-              executionClassName="com.jnj.pangea.edm.copy_mainregion.controller.CopyMainRegionToViewController">
+              executionClassName="com.jnj.pangea.common.controller.CopyController">
         <regions>
 
             <region path="/ngems/sub_brand_v1">

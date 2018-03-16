@@ -5,10 +5,10 @@ Feature: EDMBrand
   Scenario: Full Load curation
 
     Given I import "/ngems/brand_v1" by keyFields "brand"
-    |brand	|brandDescription|
-    |TD001	|JOHNSONS ADULT|
-    |TD002	|JOHNSONS BABY|
-    |TD003	|RoC          |
+      | brand | brandDescription |
+      | TD001 | JOHNSONS ADULT   |
+      | TD002 | JOHNSONS BABY    |
+      | TD003 | RoC              |
 
 
     And I wait "/ngems/brand_v1" Async Queue complete
@@ -16,10 +16,10 @@ Feature: EDMBrand
     When I submit task with xml file "xml/edm/EDMBrand_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/brand_v1" by keyFields "brand"
-      |brand	|brandDescription|
-      |TD001	|JOHNSONS ADULT|
-      |TD002	|JOHNSONS BABY|
-      |TD003	|RoC          |
+      | brand | brandDescription |
+      | TD001 | JOHNSONS ADULT   |
+      | TD002 | JOHNSONS BABY    |
+      | TD003 | RoC              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
