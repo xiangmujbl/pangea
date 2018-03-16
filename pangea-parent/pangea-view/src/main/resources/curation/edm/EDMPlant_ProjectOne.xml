@@ -66,7 +66,7 @@
 
             <region path="/edm/plant_v1">
                 <columns>
-                    sourceSystem,localPlant,localPlantName,plant,localPlanningRelevant,localCountry,country,site,plantName,localPlantType,plantType,localCurrency,region
+                    sourceSystem,localPlant,localPlantName,plant,localPlanningRelevant,localCountry,country,site,localPlantType,plantType,localCurrency,region
                 </columns>
             </region>
 
