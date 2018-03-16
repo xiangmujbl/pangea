@@ -27,21 +27,21 @@ Feature: EDMCurrency-Curation
       | CONS_LATAM   | ADP            |  -             |                | -           |
       | CONS_LATAM   | AED            | AED            | UAE Dirham     | -        |
 
-#    Then I check region data "/pangea/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-#      | functionalArea | interfaceID | errorCode                                        | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-#      |       DP         |   EDMCurrency| z_source_system value is not [EMS] and rule T1   |       [EMS]|               |  [EMS] |  AED|    |      |      |           |
-
-    Then I check region data "/plan/currency_v1_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode                                        | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-      |                |   | z_source_system value is not [EMS] and rule T1   |       |               |  [EMS] |  AED|    |      |      |           |
+      |       DP         |   EDMCurrency| z_source_system value is not [EMS] and rule T1   |       [EMS]|               |  [EMS] |  AED|    |      |      |           |
 
-    And I compare the number of records between "/ems/ems_f_z_currencies" and "/edm/currency_v1,/plan/currency_v1_failed_data"
+#    Then I check region data "/plan/currency_v1_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+#      | functionalArea | interfaceID | errorCode                                        | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+#      |                |   | z_source_system value is not [EMS] and rule T1   |       |               |  [EMS] |  AED|    |      |      |           |
+
+    And I compare the number of records between "/ems/ems_f_z_currencies" and "/edm/currency_v1,/plan/edm_failed_data"
 
     And I delete the test data
 
     And I will remove all data with region "/edm/currency_v1"
 
-    And I will remove all data with region "/plan/currency_v1_failed_data"
+    And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will print test report timestamp
+#    And I will print test report timestamp
 

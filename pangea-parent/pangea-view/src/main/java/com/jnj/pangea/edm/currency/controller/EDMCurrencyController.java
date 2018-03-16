@@ -49,7 +49,7 @@ public class EDMCurrencyController extends BaseController implements IEventProce
                         LogUtil.getCoreLog().info("failData :{}", failData.toString());
                         LogUtil.getCoreLog().info("failData key:{}", failData.getKey());
                         LogUtil.getCoreLog().info("failData map:{}", failData.toMap());
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.EMS_F_Z_CURRENCIES_FAIL_DATA, failData.getKey(), failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }
