@@ -12,7 +12,7 @@ import net.masterthought.cucumber.Reportable;
 public class GeneraRepot {
 	
 	public static void main(String[] arg){
-		createReport("EDMProductFamily","AEAZ-1275");
+		createReport("EDMBrand","AEAZ-1273");
 	}
     //AEAZ-1272 EDMSubBrand
     //AEAZ-1273 EDMBrand
@@ -24,11 +24,11 @@ public class GeneraRepot {
     //AEAZ-1275 EDMProductFamily
 	private static void createReport(String fileName,String fileNumber){
 
-        String filePath = "pangea/pangea-parent/pangea-test/src/test/resources/reports/html/";
+        String filePath = "pangea/pangea-parent/pangea-test/target/reports/html/";
         File reportOutputDirectory = new File(filePath);
         List<String> jsonFiles = new ArrayList<>();
 
-        String jsonPath = "pangea/pangea-parent/pangea-test/src/test/resources/reports/json/"+fileName+".json";
+        String jsonPath = "pangea/pangea-parent/pangea-test/target/reports/json/"+fileName+".json";
         jsonFiles.add(jsonPath);
 
         String buildNumber = "1";
