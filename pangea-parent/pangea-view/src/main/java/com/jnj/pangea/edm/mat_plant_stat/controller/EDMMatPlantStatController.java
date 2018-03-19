@@ -14,15 +14,16 @@ public class EDMMatPlantStatController extends CommonController {
 
     @Override
     public ResultObject process(RawDataEvent raw) {
-        ResultObject resultObject = new ResultObject();
-
-        T141Entity t141Entity = BeanUtil.mapToBean(raw.getValue().toMap(),T141Entity.class);
-        EDMMatPlantStatBo matPlantStatBo = new EDMMatPlantStatBo();
-
-        matPlantStatService.getSourceSystem(matPlantStatBo);
-        matPlantStatBo.setLocalPlantStatus(t141Entity.getMmsta());
-
-        resultObject.setBaseBo(matPlantStatBo);
-        return resultObject;
+//        ResultObject resultObject = new ResultObject();
+//
+//        T141Entity t141Entity = BeanUtil.mapToBean(raw.getValue().toMap(),T141Entity.class);
+//        EDMMatPlantStatBo matPlantStatBo = new EDMMatPlantStatBo();
+//
+//        matPlantStatService.getSourceSystem(matPlantStatBo);
+//        matPlantStatBo.setLocalPlantStatus(t141Entity.getMmsta());
+//
+//        resultObject.setBaseBo(matPlantStatBo);
+//        return resultObject;
+        return matPlantStatService.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), T141Entity.class), null);
     }
 }
