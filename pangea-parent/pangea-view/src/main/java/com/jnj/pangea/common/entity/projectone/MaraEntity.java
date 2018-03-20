@@ -1,6 +1,10 @@
 package com.jnj.pangea.common.entity.projectone;
 
-public class MaraEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class MaraEntity extends CommonEntity {
 
     private String matnr;
     private String mtart;
@@ -12,6 +16,21 @@ public class MaraEntity {
     private String xchpf;
     private String mhdrz;
     private String mhdhb;
+
+    public MaraEntity(Map<String, Object> map) {
+        super(map);
+        setMatnr((String) map.get("matnr"));
+        setMtart((String) map.get("mtart"));
+        setMeins((String) map.get("meins"));
+        setMatkl((String) map.get("matkl"));
+        setLvorm((String) map.get("lvorm"));
+        setMstae((String) map.get("mstae"));
+        setSpart((String) map.get("spart"));
+        setXchpf((String) map.get("xchpf"));
+        setMhdrz((String) map.get("mhdrz"));
+        setMhdhb((String) map.get("mhdhb"));
+    }
+
 
     public String getXchpf() {
         return xchpf;

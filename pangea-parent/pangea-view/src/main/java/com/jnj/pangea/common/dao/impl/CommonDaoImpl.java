@@ -1,14 +1,13 @@
 package com.jnj.pangea.common.dao.impl;
 
-import com.google.common.collect.Lists;
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
-import com.jnj.pangea.common.entity.CommonEntity;
 import com.jnj.pangea.common.dao.ICommonDao;
 import com.jnj.pangea.util.BeanUtil;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,24 +62,9 @@ public class CommonDaoImpl implements ICommonDao {
         return entry;
     }
 
-    @Override
-    public <T> T queryForEntity(String region, String queryString, Class<? extends CommonEntity> resultType) {
-        T entry = null;
-
-        Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(region, queryString);
-        if (null != result && null != result.getValue()) {
-            try {
-                entry = (T) resultType.getDeclaredConstructor(Map.class).newInstance(result.getValue());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return entry;
-    }
-
     private static <T> List<T> mapsToObjects(List<Map.Entry<String, String>> maps, Class<T> clazz) {
 
-        List<T> list = Lists.newArrayList();
+        List<T> list = new LinkedList<>();
         if (maps != null && maps.size() > 0) {
             Map map = null;
             T bean = null;

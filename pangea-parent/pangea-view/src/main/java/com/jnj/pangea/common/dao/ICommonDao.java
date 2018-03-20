@@ -28,6 +28,4 @@ public interface ICommonDao {
     public <T> List<T> queryForList(String region, String queryString, Class<T> resultType);
 
     public <T> T queryForObject(String region, String queryString, Class<T> resultType);
-
-    public <T> T queryForEntity(String region, String queryString, Class<? extends CommonEntity> resultType);
 }

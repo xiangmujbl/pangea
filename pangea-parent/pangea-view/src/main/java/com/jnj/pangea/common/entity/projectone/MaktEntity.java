@@ -1,10 +1,21 @@
 package com.jnj.pangea.common.entity.projectone;
 
-public class MaktEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class MaktEntity extends CommonEntity {
 
     private String matnr;
     private String spras;
     private String maktx;
+
+    public MaktEntity(Map<String, Object> map) {
+        super(map);
+        setMatnr((String) map.get("matnr"));
+        setSpras((String) map.get("spras"));
+        setMaktx((String) map.get("maktx"));
+    }
 
     public String getMatnr() {
         return matnr;

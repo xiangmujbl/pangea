@@ -1,6 +1,10 @@
 package com.jnj.pangea.common.entity.ngems;
 
-public class GoldenMaterialEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class GoldenMaterialEntity extends CommonEntity {
 
     private String materialNumber;
     private String materialDescription;
@@ -17,6 +21,25 @@ public class GoldenMaterialEntity {
     private String productFamily;
     private String globalBusinessUnit;
     private String primaryPlanningCode;
+
+    public GoldenMaterialEntity(Map<String, Object> map) {
+        super(map);
+        setMaterialNumber((String) map.get("materialNumber"));
+        setMaterialDescription((String) map.get("materialDescription"));
+        setFranchise((String) map.get("franchise"));
+        setMaterialType((String) map.get("materialType"));
+        setBaseUom((String) map.get("baseUom"));
+        setParentCode((String) map.get("parentCode"));
+        setBrand((String) map.get("brand"));
+        setForm((String) map.get("form"));
+        setMaterialStatus((String) map.get("materialStatus"));
+        setSubBrand((String) map.get("subBrand"));
+        setManufTechnology((String) map.get("manufTechnology"));
+        setCategory((String) map.get("category"));
+        setProductFamily((String) map.get("productFamily"));
+        setGlobalBusinessUnit((String) map.get("globalBusinessUnit"));
+        setPrimaryPlanningCode((String) map.get("primaryPlanningCode"));
+    }
 
     public String getPrimaryPlanningCode() {
         return primaryPlanningCode;

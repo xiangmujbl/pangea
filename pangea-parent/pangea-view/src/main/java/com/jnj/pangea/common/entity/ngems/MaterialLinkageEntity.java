@@ -1,10 +1,21 @@
 package com.jnj.pangea.common.entity.ngems;
 
-public class MaterialLinkageEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class MaterialLinkageEntity extends CommonEntity {
 
     private String sourceSystem;
     private String localMaterialNumber;
     private String materialNumber;
+
+    public MaterialLinkageEntity(Map<String, Object> map) {
+        super(map);
+        setSourceSystem((String) map.get("sourceSystem"));
+        setLocalMaterialNumber((String) map.get("localMaterialNumber"));
+        setMaterialNumber((String) map.get("materialNumber"));
+    }
 
     public String getSourceSystem() {
         return sourceSystem;

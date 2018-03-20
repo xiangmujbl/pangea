@@ -77,7 +77,7 @@ public interface IConstant {
         String EMS = "[EMS]";
         String EN = "E";
         String PT = "P";
-        String SP = "s";
+        String SP = "S";
     }
 
 }
