@@ -1,14 +1,11 @@
 package com.jnj.pangea.edm.material.global.controller;
 
-import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.pangea.common.*;
-import com.jnj.pangea.common.dao.ICommonDao;
-import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.projectone.MaraEntity;
 import com.jnj.pangea.edm.material.global.service.EDMMaterialGlobalServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
@@ -19,13 +16,13 @@ import java.util.List;
 public class EDMMaterialGlobalController extends BaseController {
 
     private EDMMaterialGlobalServiceImpl materialGlobalService = (EDMMaterialGlobalServiceImpl) EDMMaterialGlobalServiceImpl.getInstance();
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
-        String sourceSystem = getFieldWithT1();
+        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(CommonRegionPath.LOCALSOURCESYSTEM_PROJECT_ONE);
 
         List<ViewResultItem> result = new ArrayList<>();
         list.forEach(raw -> {
@@ -49,16 +46,4 @@ public class EDMMaterialGlobalController extends BaseController {
         });
         return result;
     }
-
-    private String getFieldWithT1() {
-
-        String queryString = QueryHelper.buildCriteria(CommonRegionPath.LOCALSOURCESYSTEM).is(CommonRegionPath.LOCALSOURCESYSTEM_PROJECT_ONE).toQueryString();
-
-        EDMSourceSystemV1Entity sourceSystems = commonDao.queryForObject(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
-        if (null != sourceSystems) {
-            return sourceSystems.getSourceSystem();
-        }
-        return "";
-    }
-
 }
