@@ -1,6 +1,10 @@
 package com.jnj.pangea.common.entity.projectone;
 
-public class MbewEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class MbewEntity extends CommonEntity{
     private String matnr;
     private String bwkey;
     private String lvorm;
@@ -8,6 +12,18 @@ public class MbewEntity {
     private String stprs;
     private String peinh;
     private String verpr;
+
+    public MbewEntity(Map<String, Object> map) {
+        super(map);
+        setMatnr((String)map.get("matnr"));
+        setBwkey((String)map.get("bwkey"));
+        setLvorm((String)map.get("lvorm"));
+        setVprsv((String)map.get("vprsv"));
+        setStprs((String)map.get("stprs"));
+        setPeinh((String)map.get("peinh"));
+        setVerpr((String)map.get("verpr"));
+
+    }
 
     public String getMatnr() {
         return matnr;

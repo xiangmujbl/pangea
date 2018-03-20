@@ -1,6 +1,10 @@
 package com.jnj.pangea.common.entity.edm;
 
-public class EDMPlantV1Entity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class EDMPlantV1Entity extends CommonEntity{
     private String sourceSystem;
     private String localPlant;
     private String localPlantName;
@@ -13,6 +17,23 @@ public class EDMPlantV1Entity {
     private String plantType;
     private String localCurrency;
     private String region;
+
+    public EDMPlantV1Entity(Map<String, Object> map) {
+        super(map);
+        setSourceSystem((String)map.get("sourceSystem"));
+        setLocalPlant((String)map.get("localPlant"));
+        setLocalPlantName((String)map.get("localPlantName"));
+        setPlant((String)map.get("plant"));
+        setLocalPlanningRelevant((String)map.get("localPlanningRelevant"));
+        setLocalCountry((String)map.get("localCountry"));
+        setCountry((String)map.get("country"));
+        setSite((String)map.get("site"));
+        setLocalPlantType((String)map.get("localPlantType"));
+        setPlantType((String)map.get("plantType"));
+        setLocalCurrency((String)map.get("localCurrency"));
+        setRegion((String)map.get("region"));
+
+    }
 
     public String getSourceSystem() {
         return sourceSystem;
