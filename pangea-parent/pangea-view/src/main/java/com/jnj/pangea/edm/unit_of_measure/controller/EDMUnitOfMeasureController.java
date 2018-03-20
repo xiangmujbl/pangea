@@ -6,8 +6,8 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.BaseController;
-import com.jnj.pangea.common.CommonRegionPath;
+import com.jnj.pangea.common.controller.BaseController;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.ems.EMSFMdmUnitsEntity;
@@ -36,17 +36,15 @@ public class EDMUnitOfMeasureController extends BaseController implements IEvent
             Map map = mainValue.toMap();
             try {
                 EMSFMdmUnitsEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmUnitsEntity.class);
-                LogUtil.getCoreLog().info(">>>>>>>>>>>start>>>>>>>>>mainObject:{}", mainObject);
                 ResultObject resultObject = edmUnitOfMeasureService.buildView(key, mainObject, null);
                 EDMUnitOfMeasureBo edmUnitOfMeasureBo = (EDMUnitOfMeasureBo) resultObject.getBaseBo();
-                LogUtil.getCoreLog().info(">>>>>>>>>>>result:{}", resultObject.isSuccess());
                 if (resultObject.isSuccess()) {
                     ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(edmUnitOfMeasureBo.getKey(), edmUnitOfMeasureBo.toMap());
                     result.add(viewResultItem);
                 } else {
                     if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

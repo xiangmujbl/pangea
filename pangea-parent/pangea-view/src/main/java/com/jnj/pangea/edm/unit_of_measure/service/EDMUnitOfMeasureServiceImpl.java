@@ -2,7 +2,7 @@ package com.jnj.pangea.edm.unit_of_measure.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.CommonRegionPath;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
@@ -39,7 +39,6 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
 
         boolean isOk = processSourceSystem(key, mainData,edmUnitOfMeasureBo);
         if (!isOk) {
-            LogUtil.getCoreLog().warn(">>>key:{},processSourceSystem of flag:{}", key, isOk);
             writeFailDataToRegion(mainData,mainData.getzSourceSystem(),"z_source_system value is not [EMS] and rule T1",resultObject);
             return resultObject;
         }
@@ -60,8 +59,7 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
     }
 
     private final boolean processSourceSystem(String key, EMSFMdmUnitsEntity mainData, EDMUnitOfMeasureBo edmUnitOfMeasureBo) {
-        if (CommonRegionPath.ZSOURCESYSTEM_EMS.equals(mainData.getzSourceSystem())) {
-            LogUtil.getCoreLog().info(">>>query {} data is null for project_one, query condition.", CommonRegionPath.EDM_SOURCE_SYSTEM_V1);
+        if (IConstant.VALUE.EMS.equals(mainData.getzSourceSystem())) {
             //@TODO write fail data to region or file, T1
             return false;
         }
@@ -70,7 +68,7 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         }
         String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
 
-        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
+        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
 
         String sourceSystem = null;
         for (Object entry : sourceList) {
@@ -92,8 +90,7 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         }
         String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
                 .is("[EMS]").and("mdmSapCode").is(mainData.getzEnterpriseCode()).toQueryString();
-//        List<Map.Entry<String, String>> items = AdfViewHelper.queryForList(CommonRegionPath.EMS_F_MDM_UNITS_CLONE, countryQueryString);
-        List<EMSFMdmUnitsEntity> sourceList = commonDao.queryForList(CommonRegionPath.EMS_F_MDM_UNITS_CLONE, countryQueryString, EMSFMdmUnitsEntity.class);
+        List<EMSFMdmUnitsEntity> sourceList = commonDao.queryForList(IConstant.REGION.EMS_F_MDM_UNITS_CLONE, countryQueryString, EMSFMdmUnitsEntity.class);
         String mdmName = null;
         for (EMSFMdmUnitsEntity entry : sourceList) {
             mdmName = entry.getMdmName();
@@ -114,17 +111,6 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         failData.setKey4("");
         failData.setKey5("");
         failData.setBusinessArea("");
-//        FailData failData = new FailData();
-//        failData.setFunctionalArea("");
-//        failData.setInterfaceID("");
-//        failData.setErrorCode(ruleCode);
-//        failData.setSourceSystem("");
-//        failData.setKey1(mainData.getzSourceSystem());
-//        failData.setKey2(mainData.getMdmSapCode());
-//        failData.setKey3("");
-//        failData.setKey4("");
-//        failData.setKey5("");
-//        failData.setBusinessArea("");
         resultObject.setFailData(failData);
     }
 

@@ -1,4 +1,4 @@
-package com.jnj.pangea.edm.mat_plant_stat.Bo;
+package com.jnj.pangea.edm.mat_plant_stat.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;

@@ -2,8 +2,8 @@ package com.jnj.pangea.edm.material.global.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.curation.indexer.AdfLuceneHelper;
-import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.ngems.GoldenMaterialEntity;
 import com.jnj.pangea.common.entity.ngems.MaterialLinkageEntity;
@@ -95,21 +95,21 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
 
         List<MaktEntity> items = null;
 
-        String queryEnString = QueryHelper.buildCriteria("matnr").is(matnr).toQueryString();
+        String queryEnString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_MAKT.MATNR).is(matnr).toQueryString();
 
         if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
-            queryEnString = "matnr:\"" + AdfLuceneHelper.keyword(matnr) + "\"";
+            queryEnString = IConstant.PROJECT_ONE_MAKT.MATNR + ":\"" + AdfLuceneHelper.keyword(matnr) + "\"";
         }
-        items = commonDao.queryForList(CommonRegionPath.PROJECT_ONE_MAKT, queryEnString, MaktEntity.class);
+        items = commonDao.queryForList(IConstant.REGION.PROJECT_ONE_MAKT, queryEnString, MaktEntity.class);
 
         for (MaktEntity item : items) {
             String spras = item.getSpras();
             String maktx = item.getMaktx();
-            if ("E".equals(spras)) {
+            if (IConstant.VALUE.EN.equals(spras)) {
                 return maktx;
-            } else if ("P".equals(spras)) {
+            } else if (IConstant.VALUE.PT.equals(spras)) {
                 return maktx;
-            } else if ("S".equals(spras)) {
+            } else if (IConstant.VALUE.SP.equals(spras)) {
                 return maktx;
             }
         }
@@ -126,16 +126,16 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         }
 
         String queryString = QueryHelper
-                .buildCriteria("localMaterialNumber").is(matnr)
-                .and("sourceSystem").is(sourceSystem)
+                .buildCriteria(IConstant.NGEMS_MATERIAL_LINKAGE.LOCAL_MATERIAL_NUMBER).is(matnr)
+                .and(IConstant.NGEMS_MATERIAL_LINKAGE.SOURCE_SYSTEM).is(sourceSystem)
                 .toQueryString();
 
-        MaterialLinkageEntity materialLinkageEntity = commonDao.queryForObject(CommonRegionPath.NGEMS_MATERIAL_LINKAGE, queryString, MaterialLinkageEntity.class);
+        MaterialLinkageEntity materialLinkageEntity = commonDao.queryForObject(IConstant.REGION.NGEMS_MATERIAL_LINKAGE, queryString, MaterialLinkageEntity.class);
         if (null != materialLinkageEntity) {
 
             String materialNumber = materialLinkageEntity.getMaterialNumber();
-            queryString = QueryHelper.buildCriteria("materialNumber").is(materialNumber).toQueryString();
-            return commonDao.queryForObject(CommonRegionPath.NGEMS_GOLDEN_MATERIAL, queryString, GoldenMaterialEntity.class);
+            queryString = QueryHelper.buildCriteria(IConstant.NGEMS_GOLDEN_MATERIAL.MATERIAL_NUMBER).is(materialNumber).toQueryString();
+            return commonDao.queryForObject(IConstant.REGION.NGEMS_GOLDEN_MATERIAL, queryString, GoldenMaterialEntity.class);
         }
         return null;
     }

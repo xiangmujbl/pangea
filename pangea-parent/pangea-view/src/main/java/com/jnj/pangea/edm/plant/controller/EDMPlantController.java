@@ -1,7 +1,7 @@
 package com.jnj.pangea.edm.plant.controller;
 
 import com.jnj.adf.curation.logic.RawDataEvent;
-import com.jnj.pangea.common.CommonController;
+import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
 import com.jnj.pangea.common.service.ICommonService;

@@ -1,6 +1,6 @@
 package com.jnj.pangea.common.entity.edm;
 
-import com.jnj.pangea.common.CommonEntity;
+import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 

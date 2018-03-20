@@ -1,7 +1,7 @@
 package com.jnj.pangea.edm.plant.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.CommonRegionPath;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
@@ -77,8 +77,8 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(zPlantSourceSystem)) {
             return "";
         }
-        String systemQueryString = QueryHelper.buildCriteria("localSourceSystem").is(zPlantSourceSystem).toQueryString();
-        EDMSourceSystemV1Entity sourceSystemV1Entry = commonDao.queryForObject(CommonRegionPath.EDM_SOURCE_SYSTEM_V1, systemQueryString, EDMSourceSystemV1Entity.class);
+        String systemQueryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(zPlantSourceSystem).toQueryString();
+        EDMSourceSystemV1Entity sourceSystemV1Entry = commonDao.queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, systemQueryString, EDMSourceSystemV1Entity.class);
         if (null != sourceSystemV1Entry) {
             return sourceSystemV1Entry.getSourceSystem();
         }
@@ -89,16 +89,16 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(zPlant)) {
             return null;
         }
-        String name1QueryString = QueryHelper.buildCriteria("werks").is(zPlant).toQueryString();
-        return commonDao.queryForObject(CommonRegionPath.PROJECT_ONE_T001W, name1QueryString, T001WEntity.class);
+        String name1QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001W.WERKS).is(zPlant).toQueryString();
+        return commonDao.queryForObject(IConstant.REGION.PROJECT_ONE_T001W, name1QueryString, T001WEntity.class);
     }
 
     private String getFieldWithT4(String land1) {
         if (StringUtils.isEmpty(land1)) {
             return "";
         }
-        String localQueryString = QueryHelper.buildCriteria("localCountry").is(land1).toQueryString();
-        EDMCountryEntity countryEntity = commonDao.queryForObject(CommonRegionPath.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+        String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
+        EDMCountryEntity countryEntity = commonDao.queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         if (null != countryEntity) {
             return countryEntity.getCountryCode();
         }
@@ -109,9 +109,9 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(bwkey)) {
             return "";
         }
-        String QueryString = QueryHelper.buildCriteria("bwkey").is(bwkey).toQueryString();
+        String QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001K.BWKEY).is(bwkey).toQueryString();
 
-        T001KEntity t001KEntity = commonDao.queryForObject(CommonRegionPath.PROJECT_ONE_T001K, QueryString, T001KEntity.class);
+        T001KEntity t001KEntity = commonDao.queryForObject(IConstant.REGION.PROJECT_ONE_T001K, QueryString, T001KEntity.class);
 
         if (null != t001KEntity) {
 
@@ -119,8 +119,8 @@ public class EDMPlantServiceImpl implements ICommonService {
             if (StringUtils.isEmpty(bukrs)) {
                 return "";
             }
-            QueryString = QueryHelper.buildCriteria("bukrs").is(bukrs).toQueryString();
-            T001Entity t001Entity = commonDao.queryForObject(CommonRegionPath.PROJECT_ONE_T001, QueryString, T001Entity.class);
+            QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001.BUKRS).is(bukrs).toQueryString();
+            T001Entity t001Entity = commonDao.queryForObject(IConstant.REGION.PROJECT_ONE_T001, QueryString, T001Entity.class);
 
             if (null != t001Entity) {
                 return t001Entity.getWaers();
@@ -131,7 +131,7 @@ public class EDMPlantServiceImpl implements ICommonService {
 
     private FailData checkT1(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
         FailData failData = null;
-        if (StringUtils.isEmpty(sourceSystem) || "[EMS]".equals(sourceSystem)) {
+        if (StringUtils.isEmpty(sourceSystem) || IConstant.VALUE.EMS.equals(sourceSystem)) {
             failData = new FailData();
             failData.setErrorCode("T1");
             failData.setFunctionalArea("DP");

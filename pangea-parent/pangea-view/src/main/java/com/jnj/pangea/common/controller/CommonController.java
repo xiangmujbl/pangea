@@ -1,16 +1,20 @@
-package com.jnj.pangea.common;
+package com.jnj.pangea.common.controller;
 
 import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
+import com.jnj.pangea.common.BaseBo;
+import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.ICommonDao;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class CommonController implements IEventProcessor {
+public abstract class CommonController extends BaseController {
 
     private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
@@ -26,7 +30,7 @@ public abstract class CommonController implements IEventProcessor {
             } else {
                 if (null != resultObject.getFailData()) {
                     FailData failData = resultObject.getFailData();
-                    result.add(ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap()));
+                    result.add(ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap()));
                 }
             }
         });

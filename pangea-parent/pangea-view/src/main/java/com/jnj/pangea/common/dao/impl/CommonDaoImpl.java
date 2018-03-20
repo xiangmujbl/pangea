@@ -5,7 +5,7 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
-import com.jnj.pangea.common.CommonEntity;
+import com.jnj.pangea.common.entity.CommonEntity;
 import com.jnj.pangea.common.dao.ICommonDao;
 import com.jnj.pangea.util.BeanUtil;
 

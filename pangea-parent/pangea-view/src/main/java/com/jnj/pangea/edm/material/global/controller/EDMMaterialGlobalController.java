@@ -5,6 +5,7 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.pangea.common.*;
+import com.jnj.pangea.common.controller.BaseController;
 import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.projectone.MaraEntity;
 import com.jnj.pangea.edm.material.global.service.EDMMaterialGlobalServiceImpl;
@@ -22,7 +23,7 @@ public class EDMMaterialGlobalController extends BaseController {
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
-        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(CommonRegionPath.LOCALSOURCESYSTEM_PROJECT_ONE);
+        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
 
         List<ViewResultItem> result = new ArrayList<>();
         list.forEach(raw -> {
@@ -39,7 +40,7 @@ public class EDMMaterialGlobalController extends BaseController {
             } else {
                 if (resultObject.getFailData() != null) {
                     FailData failData = resultObject.getFailData();
-                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(CommonRegionPath.FAIL_DATA, failData.getKey(), failData.toMap());
+                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
                     result.add(viewResultItem);
                 }
             }

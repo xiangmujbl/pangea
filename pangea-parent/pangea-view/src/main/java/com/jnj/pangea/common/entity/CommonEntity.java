@@ -1,4 +1,4 @@
-package com.jnj.pangea.common;
+package com.jnj.pangea.common.entity;
 
 import java.util.Map;
 

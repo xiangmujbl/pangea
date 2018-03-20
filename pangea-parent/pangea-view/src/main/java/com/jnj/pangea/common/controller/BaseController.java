@@ -1,4 +1,4 @@
-package com.jnj.pangea.common;
+package com.jnj.pangea.common.controller;
 
 import com.jnj.adf.curation.logic.IEventProcessor;
 

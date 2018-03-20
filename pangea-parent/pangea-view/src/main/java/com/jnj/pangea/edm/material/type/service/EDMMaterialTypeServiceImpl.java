@@ -1,15 +1,14 @@
 package com.jnj.pangea.edm.material.type.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.CommonRegionPath;
 import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.ems.EmsFMdmMaterialTypesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.type.bo.EDMMaterialTypeBo;
 import org.apache.commons.lang3.StringUtils;
 
-public class EDMMaterialTypeServiceImpl  implements ICommonService {
+public class EDMMaterialTypeServiceImpl implements ICommonService {
     private static ICommonService instance;
 
     public static ICommonService getInstance() {
@@ -27,24 +26,22 @@ public class EDMMaterialTypeServiceImpl  implements ICommonService {
         EDMMaterialTypeBo materialTypemBo = new EDMMaterialTypeBo();
         resultObject.setBaseBo(materialTypemBo);
 
-        String zSourceSystem= mainData.getzSourceSystem();
+        String zSourceSystem = mainData.getzSourceSystem();
         // z_source_system = [EMS]
-        if (CommonRegionPath.ZSOURCESYSTEM_EMS.equals(zSourceSystem)) {
-            String materialType=StringUtils.trim(mainData.getMdmCode());
+        if (IConstant.VALUE.EMS.equals(zSourceSystem)) {
+            String materialType = StringUtils.trim(mainData.getMdmCode());
             materialTypemBo.setMaterialType(materialType);
-            String materialTypeName=StringUtils.trim(mainData.getMdmName());
+            String materialTypeName = StringUtils.trim(mainData.getMdmName());
             materialTypemBo.setMaterialTypeName(materialTypeName);
-        }else
-        {
-            LogUtil.getCoreLog().warn(">>>key:{},z_source_system value is not '[EMS]' :{}", key, zSourceSystem);
-            FailData failData = writeFailDataToRegion(mainData,"T1","z_source_system value is not [EMS]");
+        } else {
+            FailData failData = writeFailDataToRegion(mainData, "T1", "z_source_system value is not [EMS]");
             resultObject.setFailData(failData);
         }
 
         return resultObject;
     }
 
-    private FailData writeFailDataToRegion(EmsFMdmMaterialTypesEntity mainData, String ruleCode,String errorValue){
+    private FailData writeFailDataToRegion(EmsFMdmMaterialTypesEntity mainData, String ruleCode, String errorValue) {
         FailData failData = new FailData();
         failData.setFunctionalArea("DP");
         failData.setInterfaceID("EDMMaterialType");
