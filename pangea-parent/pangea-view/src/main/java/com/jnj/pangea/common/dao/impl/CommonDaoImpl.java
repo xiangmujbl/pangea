@@ -5,6 +5,7 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
+import com.jnj.pangea.common.CommonEntity;
 import com.jnj.pangea.common.dao.ICommonDao;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -48,14 +49,28 @@ public class CommonDaoImpl implements ICommonDao {
     }
 
     @Override
-    public <T> T queryForObject(String region, String queryString, Class<T> clazz) {
-
+    public <T> T queryForObject(String region, String queryString, Class<T> resultType) {
         T entry = null;
 
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(region, queryString);
         if (null != result && null != result.getValue()) {
             try {
-                entry = (T) BeanUtil.mapToBean(result.getValue(), clazz);
+                entry = (T) BeanUtil.mapToBean(result.getValue(), resultType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return entry;
+    }
+
+    @Override
+    public <T> T queryForEntity(String region, String queryString, Class<? extends CommonEntity> resultType) {
+        T entry = null;
+
+        Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(region, queryString);
+        if (null != result && null != result.getValue()) {
+            try {
+                entry = (T) resultType.getDeclaredConstructor(Map.class).newInstance(result.getValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }

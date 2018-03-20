@@ -1,8 +1,7 @@
 package com.jnj.pangea.common.entity.ngems;
 
-import com.jnj.pangea.common.CommonEntity;
+public class GlobalBaseUnitEntity {
 
-public class GlobalBaseUnitEntity extends CommonEntity {
     private String gbu;
     private String gbuName;
 

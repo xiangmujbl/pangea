@@ -1,8 +1,7 @@
 package com.jnj.pangea.common.entity.ngems;
 
-import com.jnj.pangea.common.CommonEntity;
+public class FranchiseEntity {
 
-public class FranchiseEntity extends CommonEntity {
     private String franchise;
     private String franchiseDescription;
 

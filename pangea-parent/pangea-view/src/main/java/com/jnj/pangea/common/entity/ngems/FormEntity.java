@@ -1,8 +1,7 @@
 package com.jnj.pangea.common.entity.ngems;
 
-import com.jnj.pangea.common.CommonEntity;
+public class FormEntity {
 
-public class FormEntity extends CommonEntity {
     private String formName;
     private String formDescription;
 

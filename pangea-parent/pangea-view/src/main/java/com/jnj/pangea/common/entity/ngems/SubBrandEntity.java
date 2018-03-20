@@ -1,8 +1,7 @@
 package com.jnj.pangea.common.entity.ngems;
 
-import com.jnj.pangea.common.CommonEntity;
+public class SubBrandEntity {
 
-public class SubBrandEntity extends CommonEntity {
     private String subBrand;
     private String subBrandDescription;
 

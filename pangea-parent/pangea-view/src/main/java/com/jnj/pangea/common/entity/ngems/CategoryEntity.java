@@ -1,8 +1,7 @@
 package com.jnj.pangea.common.entity.ngems;
 
-import com.jnj.pangea.common.CommonEntity;
+public class CategoryEntity {
 
-public class CategoryEntity extends CommonEntity {
     private String category;
     private String categoryName;
 

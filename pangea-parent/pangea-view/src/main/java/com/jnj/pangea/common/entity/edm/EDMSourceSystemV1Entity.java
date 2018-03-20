@@ -1,14 +1,26 @@
 package com.jnj.pangea.common.entity.edm;
 
+import com.jnj.pangea.common.CommonEntity;
+
+import java.util.Map;
+
 /**
  * Created by XZhan290 on 2018/3/5.
  */
-public class EDMSourceSystemV1Entity {
+public class EDMSourceSystemV1Entity extends CommonEntity {
 
     private String sourceSystem;
     private String sourceSystemName;
     private String localSourceSystemName;
     private String localSourceSystem;
+
+    public EDMSourceSystemV1Entity(Map<String, Object> map) {
+        super(map);
+        setSourceSystem((String) map.get("sourceSystem"));
+        setSourceSystemName((String) map.get("sourceSystemName"));
+        setLocalSourceSystem((String) map.get("localSourceSystem"));
+        setLocalSourceSystemName((String) map.get("localSourceSystemName"));
+    }
 
     public String getSourceSystem() {
         return sourceSystem;

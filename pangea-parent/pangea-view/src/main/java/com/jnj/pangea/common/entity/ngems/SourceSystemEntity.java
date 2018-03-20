@@ -1,8 +1,6 @@
 package com.jnj.pangea.common.entity.ngems;
 
-import com.jnj.pangea.common.CommonEntity;
-
-public class SourceSystemEntity extends CommonEntity {
+public class SourceSystemEntity {
 
     private String localSourceSystem;
     private String localSourceSystemName;

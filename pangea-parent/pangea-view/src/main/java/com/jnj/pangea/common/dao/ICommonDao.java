@@ -1,6 +1,6 @@
 package com.jnj.pangea.common.dao;
 
-import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.CommonEntity;
 
 import java.util.List;
 
@@ -29,4 +29,5 @@ public interface ICommonDao {
 
     public <T> T queryForObject(String region, String queryString, Class<T> resultType);
 
+    public <T> T queryForEntity(String region, String queryString, Class<? extends CommonEntity> resultType);
 }

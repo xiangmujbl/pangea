@@ -1,8 +1,7 @@
 package com.jnj.pangea.common.entity.projectone;
 
-import com.jnj.pangea.common.CommonEntity;
+public class T141Entity {
 
-public class T141Entity extends CommonEntity {
     private String mmsta;
 
     public String getMmsta() {
