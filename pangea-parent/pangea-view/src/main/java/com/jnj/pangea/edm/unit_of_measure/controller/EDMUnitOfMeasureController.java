@@ -10,7 +10,7 @@ import com.jnj.pangea.common.controller.BaseController;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.ems.EMSFMdmUnitsEntity;
+import com.jnj.pangea.common.entity.ems.EMSFMdmUnitOfMeasureEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.unit_of_measure.bo.EDMUnitOfMeasureBo;
 import com.jnj.pangea.edm.unit_of_measure.service.EDMUnitOfMeasureServiceImpl;
@@ -35,7 +35,8 @@ public class EDMUnitOfMeasureController extends BaseController implements IEvent
             String key = mainRaw.getKey();
             Map map = mainValue.toMap();
             try {
-                EMSFMdmUnitsEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmUnitsEntity.class);
+                EMSFMdmUnitOfMeasureEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmUnitOfMeasureEntity.class);
+//                EMSFMdmUnitOfMeasureEntity mainObject =  EMSFMdmUnitOfMeasureEntity.class.getDeclaredConstructor(Map.class).newInstance(map);
                 ResultObject resultObject = edmUnitOfMeasureService.buildView(key, mainObject, null);
                 EDMUnitOfMeasureBo edmUnitOfMeasureBo = (EDMUnitOfMeasureBo) resultObject.getBaseBo();
                 if (resultObject.isSuccess()) {

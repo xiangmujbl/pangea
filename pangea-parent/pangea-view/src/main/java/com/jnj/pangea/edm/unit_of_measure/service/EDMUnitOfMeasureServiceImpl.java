@@ -1,12 +1,13 @@
 package com.jnj.pangea.edm.unit_of_measure.service;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.EMSFMdmUnitOfMeasureDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entity.ems.EMSFMdmUnitsEntity;
+import com.jnj.pangea.common.entity.ems.EMSFMdmUnitOfMeasureEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.unit_of_measure.bo.EDMUnitOfMeasureBo;
 
@@ -17,7 +18,8 @@ import java.util.List;
  */
 public class EDMUnitOfMeasureServiceImpl implements ICommonService {
 
-
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private EMSFMdmUnitOfMeasureDaoImpl emsfMdmUnitOfMeasureDao = EMSFMdmUnitOfMeasureDaoImpl.getInstance();
     private static ICommonService instance;
 
     public static ICommonService getInstance() {
@@ -32,22 +34,31 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
 
-        EMSFMdmUnitsEntity mainData = (EMSFMdmUnitsEntity) o;
+        EMSFMdmUnitOfMeasureEntity mainData = (EMSFMdmUnitOfMeasureEntity) o;
 
         EDMUnitOfMeasureBo edmUnitOfMeasureBo = new EDMUnitOfMeasureBo();
         resultObject.setBaseBo(edmUnitOfMeasureBo);
 
-        boolean isOk = processSourceSystem(key, mainData,edmUnitOfMeasureBo);
-        if (!isOk) {
-            writeFailDataToRegion(mainData,mainData.getzSourceSystem(),"z_source_system value is not [EMS] and rule T1",resultObject);
+        if (IConstant.VALUE.EMS.equals(mainData.getzSourceSystem())) {
+            writeFailDataToRegion(mainData,  "z_source_system value is not [EMS] and rule T1", resultObject);
             return resultObject;
+        }else{
+            String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(mainData.getzSourceSystem());
+            if(!sourceSystem.isEmpty()){
+                edmUnitOfMeasureBo.setSourceSystem(sourceSystem);
+            }else{
+                writeFailDataToRegion(mainData, "z_source_system value is not [EMS] and rule T1", resultObject);
+                return resultObject;
+            }
         }
+
         processSystem(mainData, edmUnitOfMeasureBo);
-        processT2(key, mainData, edmUnitOfMeasureBo);
+        String mdmName = emsfMdmUnitOfMeasureDao.getMdmNameWithzSourceSystemAndMdmSapCode("[EMS]",mainData.getzEnterpriseCode());
+        edmUnitOfMeasureBo.setUomName(mdmName);
         return resultObject;
     }
 
-    private final boolean processSystem(EMSFMdmUnitsEntity mainData, EDMUnitOfMeasureBo edmUnitOfMeasureBo) {
+    private final boolean processSystem(EMSFMdmUnitOfMeasureEntity mainData, EDMUnitOfMeasureBo edmUnitOfMeasureBo) {
         edmUnitOfMeasureBo.setLocalUom(mainData.getMdmSapCode());
         edmUnitOfMeasureBo.setLocalUomName(mainData.getMdmName());
         edmUnitOfMeasureBo.setUom(mainData.getzEnterpriseCode());
@@ -58,53 +69,12 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         return true;
     }
 
-    private final boolean processSourceSystem(String key, EMSFMdmUnitsEntity mainData, EDMUnitOfMeasureBo edmUnitOfMeasureBo) {
-        if (IConstant.VALUE.EMS.equals(mainData.getzSourceSystem())) {
-            //@TODO write fail data to region or file, T1
-            return false;
-        }
-        if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
-            return false;
-        }
-        String queryString = QueryHelper.buildCriteria("localSourceSystem").is(mainData.getzSourceSystem()).toQueryString();
-
-        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
-
-        String sourceSystem = null;
-        for (Object entry : sourceList) {
-            EDMSourceSystemV1Entity sourceSystemV1Entry = (EDMSourceSystemV1Entity) entry;
-            sourceSystem = sourceSystemV1Entry.getSourceSystem();
-        }
-        if(null == sourceSystem || sourceSystem.isEmpty()){
-            return false;
-        }
-        edmUnitOfMeasureBo.setSourceSystem(sourceSystem);
-
-        return true;
-    }
-
-
-    private final boolean processT2(String key, EMSFMdmUnitsEntity mainData, EDMUnitOfMeasureBo edmUnitOfMeasureBo) {
-        if (null == mainData.getzEnterpriseCode() || mainData.getzEnterpriseCode().isEmpty()) {
-            return true;
-        }
-        String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
-                .is("[EMS]").and("mdmSapCode").is(mainData.getzEnterpriseCode()).toQueryString();
-        List<EMSFMdmUnitsEntity> sourceList = commonDao.queryForList(IConstant.REGION.EMS_F_MDM_UNITS_CLONE, countryQueryString, EMSFMdmUnitsEntity.class);
-        String mdmName = null;
-        for (EMSFMdmUnitsEntity entry : sourceList) {
-            mdmName = entry.getMdmName();
-        }
-        edmUnitOfMeasureBo.setUomName(mdmName);
-        return true;
-    }
-
-    private void writeFailDataToRegion(EMSFMdmUnitsEntity mainData, String sourceSystem,String ruleCode,ResultObject resultObject){
+    private void writeFailDataToRegion(EMSFMdmUnitOfMeasureEntity mainData,  String ruleCode, ResultObject resultObject){
         FailData failData = new FailData();
         failData.setFunctionalArea("DP");
         failData.setInterfaceID("EDMUnitOfMeasure");
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem(sourceSystem);
+        failData.setSourceSystem(mainData.getzSourceSystem());
         failData.setKey1(mainData.getzSourceSystem());
         failData.setKey2(mainData.getMdmSapCode());
         failData.setKey3("");

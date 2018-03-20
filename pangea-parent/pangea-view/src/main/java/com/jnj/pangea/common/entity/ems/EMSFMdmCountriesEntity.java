@@ -1,10 +1,23 @@
 package com.jnj.pangea.common.entity.ems;
 
-public class EMSFMdmCountriesEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class EMSFMdmCountriesEntity  extends CommonEntity {
     private String zSourceSystem;
     private String mdmCode;
     private String zEntCodeIso3166Alpha2;
     private String mdmName;
+
+    public EMSFMdmCountriesEntity(Map<String, Object> map) {
+        super(map);
+        setzSourceSystem((String) map.get("zSourceSystem"));
+        setMdmCode((String) map.get("mdmCode"));
+        setMdmName((String) map.get("mdmName"));
+        setzEntCodeIso3166Alpha2((String) map.get("zEntCodeIso3166Alpha2"));
+    }
+
     public String getzSourceSystem() {
         return zSourceSystem;
     }

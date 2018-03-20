@@ -4,7 +4,8 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.EMSFMdmCountriesDaoImpl;
 import com.jnj.pangea.common.entity.ems.EMSFMdmCountriesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
@@ -18,7 +19,8 @@ public class EDMCountryServiceImpl implements ICommonService {
 
 
     private static ICommonService instance;
-
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private EMSFMdmCountriesDaoImpl emsfMdmCountriesDao = EMSFMdmCountriesDaoImpl.getInstance();
     public static ICommonService getInstance() {
         if (instance == null) {
             instance = new EDMCountryServiceImpl();
@@ -35,15 +37,23 @@ public class EDMCountryServiceImpl implements ICommonService {
         EDMCountryBo edmCountryBo = new EDMCountryBo();
         resultObject.setBaseBo(edmCountryBo);
 
-        boolean isOk = processSourceSystem(key, mainData, edmCountryBo);
-        if (!isOk) {
-            writeFailDataToRegion(mainData, mainData.getzSourceSystem(), "z_source_system value is not [EMS] and rule T1", resultObject);
+        if (IConstant.VALUE.EMS.equals(mainData.getzSourceSystem())) {
+            writeFailDataToRegion(mainData,  "z_source_system value is not [EMS] and rule T1", resultObject);
             return resultObject;
+        }else{
+            String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(mainData.getzSourceSystem());
+            if(!sourceSystem.isEmpty()){
+                edmCountryBo.setSourceSystem(sourceSystem);
+            }else{
+                writeFailDataToRegion(mainData,  "z_source_system value is not [EMS] and rule T1", resultObject);
+                return resultObject;
+            }
         }
 
         processSystem(mainData, edmCountryBo);
-        processT2(key, mainData, edmCountryBo);
-
+//        processT2(key, mainData, edmCountryBo);
+        String mdmName = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode("[EMS]",mainData.getzEntCodeIso3166Alpha2());
+        edmCountryBo.setCountryName(mdmName);
         return resultObject;
     }
 
@@ -53,51 +63,28 @@ public class EDMCountryServiceImpl implements ICommonService {
         return true;
     }
 
-    private boolean processSourceSystem(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
-        if (IConstant.VALUE.EMS.equals(mainData.getzSourceSystem())) {
-            //@TODO write fail data to region or file, T1
-            return false;
-        }
-        if (null == mainData.getzSourceSystem() || mainData.getzSourceSystem().isEmpty()) {
-            return false;
-        }
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(mainData.getzSourceSystem()).toQueryString();
-        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
-        String sourceSystem = null;
-        for (Object entry : sourceList) {
-            EDMSourceSystemV1Entity sourceSystemV1Entry = (EDMSourceSystemV1Entity) entry;
-            sourceSystem = sourceSystemV1Entry.getSourceSystem();
-        }
-        if (null == sourceSystem || sourceSystem.isEmpty()) {
-            return false;
-        }
-        edmCountryBo.setSourceSystem(sourceSystem);
-        return true;
-    }
+//    private boolean processT2(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
+//        if (null == mainData.getzEntCodeIso3166Alpha2() || mainData.getzEntCodeIso3166Alpha2().isEmpty()) {
+//            return true;
+//        }
+//        String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
+//                .is("[EMS]").and("mdmCode").is(mainData.getzEntCodeIso3166Alpha2()).toQueryString();
+//        List<EMSFMdmCountriesEntity> sourceList = commonDao.queryForList(IConstant.REGION.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString, EMSFMdmCountriesEntity.class);
+//        String mdmName = null;
+//        for (EMSFMdmCountriesEntity item : sourceList) {
+//            mdmName = item.getMdmName();
+//        }
+//
+//        edmCountryBo.setCountryName(mdmName);
+//        return true;
+//    }
 
-
-    private boolean processT2(String key, EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
-        if (null == mainData.getzEntCodeIso3166Alpha2() || mainData.getzEntCodeIso3166Alpha2().isEmpty()) {
-            return true;
-        }
-        String countryQueryString = QueryHelper.buildCriteria("zSourceSystem")
-                .is("[EMS]").and("mdmCode").is(mainData.getzEntCodeIso3166Alpha2()).toQueryString();
-        List<EMSFMdmCountriesEntity> sourceList = commonDao.queryForList(IConstant.REGION.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString, EMSFMdmCountriesEntity.class);
-        String mdmName = null;
-        for (EMSFMdmCountriesEntity item : sourceList) {
-            mdmName = item.getMdmName();
-        }
-
-        edmCountryBo.setCountryName(mdmName);
-        return true;
-    }
-
-    private void writeFailDataToRegion(EMSFMdmCountriesEntity mainData, String sourceSystem, String ruleCode, ResultObject resultObject) {
+    private void writeFailDataToRegion(EMSFMdmCountriesEntity mainData,  String ruleCode, ResultObject resultObject) {
         FailData failData = new FailData();
         failData.setFunctionalArea("DP");
         failData.setInterfaceID("EDMCountry");
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem(sourceSystem);
+        failData.setSourceSystem(mainData.getzSourceSystem());
         failData.setKey1(mainData.getzSourceSystem());
         failData.setKey2(mainData.getMdmCode());
         failData.setKey3("");
