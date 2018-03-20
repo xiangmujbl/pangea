@@ -1,12 +1,25 @@
 package com.jnj.pangea.common.entity.edm;
 
-public class EDMCountryEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class EDMCountryEntity extends CommonEntity {
 
     private String sourceSystem;
     private String localCountry;
     private String countryCode;
     private String countryName;
     private String consumerPlanningRegion;
+
+    public EDMCountryEntity(Map<String, Object> map) {
+        super(map);
+        setSourceSystem((String) map.get("sourceSystem"));
+        setLocalCountry((String) map.get("localCountry"));
+        setCountryCode((String) map.get("countryCode"));
+        setCountryName((String) map.get("countryName"));
+        setConsumerPlanningRegion((String) map.get("consumerPlanningRegion"));
+    }
 
     public String getSourceSystem() {
         return sourceSystem;
