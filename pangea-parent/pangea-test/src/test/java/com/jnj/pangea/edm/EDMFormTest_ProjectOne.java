@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/edm/EDMForm_ProjectOne.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/EDMForm.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-1276 EDMForm.json"})
 //        plugin = {"pretty", "html:target/Destination"})
 public class EDMFormTest_ProjectOne {
 
