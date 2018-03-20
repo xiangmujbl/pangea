@@ -1,8 +1,17 @@
 package com.jnj.pangea.common.entity.projectone;
 
-public class T141Entity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class T141Entity extends CommonEntity {
 
     private String mmsta;
+
+    public T141Entity(Map<String, Object> map) {
+        super(map);
+        setMmsta((String) map.get("mmsta"));
+    }
 
     public String getMmsta() {
         return mmsta;

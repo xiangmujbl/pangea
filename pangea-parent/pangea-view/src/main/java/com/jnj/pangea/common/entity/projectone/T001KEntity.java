@@ -1,10 +1,21 @@
 package com.jnj.pangea.common.entity.projectone;
 
-public class T001KEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class T001KEntity extends CommonEntity {
 
     private String mandt;
     private String bwkey;
     private String bukrs;
+
+    public T001KEntity(Map<String, Object> map) {
+        super(map);
+        setMandt((String) map.get("mandt"));
+        setBwkey((String) map.get("bwkey"));
+        setBukrs((String) map.get("bukrs"));
+    }
 
     public String getMandt() {
         return mandt;

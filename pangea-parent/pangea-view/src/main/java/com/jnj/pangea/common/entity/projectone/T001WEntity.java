@@ -1,12 +1,25 @@
 package com.jnj.pangea.common.entity.projectone;
 
-public class T001WEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class T001WEntity extends CommonEntity {
 
     private String name1;
     private String land1;
     private String nodetype;
     private String werks;
     private String bwkey;
+
+    public T001WEntity(Map<String, Object> map) {
+        super(map);
+        setName1((String) map.get("name1"));
+        setLand1((String) map.get("land1"));
+        setNodetype((String) map.get("nodetype"));
+        setWerks((String) map.get("werks"));
+        setBwkey((String) map.get("bwkey"));
+    }
 
     public String getName1() {
         return name1;

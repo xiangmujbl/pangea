@@ -1,6 +1,10 @@
 package com.jnj.pangea.common.entity.ems;
 
-public class EMSFZEnterprisePlants {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class EMSFZEnterprisePlants extends CommonEntity {
 
     private String zPlantSourceSystem;
     private String zPlant;
@@ -8,6 +12,16 @@ public class EMSFZEnterprisePlants {
     private String zSite;
     private String zEntPlantType;
     private String zRegion;
+
+    public EMSFZEnterprisePlants(Map<String, Object> map) {
+        super(map);
+        setzPlantSourceSystem((String) map.get("zPlantSourceSystem"));
+        setzPlant((String) map.get("zPlant"));
+        setzEntPlantNumber((String) map.get("zEntPlantNumber"));
+        setzSite((String) map.get("zSite"));
+        setzEntPlantType((String) map.get("zEntPlantType"));
+        setzRegion((String) map.get("zRegion"));
+    }
 
     public String getzPlantSourceSystem() {
         return zPlantSourceSystem;
