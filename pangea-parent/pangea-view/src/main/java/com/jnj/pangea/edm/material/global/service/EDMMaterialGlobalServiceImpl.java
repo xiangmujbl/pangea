@@ -61,6 +61,9 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setDivision(maraEntity.getSpart());
         materialGlobalBo.setMaterialGroup("");
 
+        materialGlobalBo.setBatchManageIndicator(maraEntity.getXchpf());
+        materialGlobalBo.setMinRemShelfLife(maraEntity.getMhdrz());
+        materialGlobalBo.setTotalShelfLife(maraEntity.getMhdhb());
         // rule J2
         GoldenMaterialEntity goldenMaterialEntity = getFieldsWithJ2(matnr, sourceSystem);
         if (null != goldenMaterialEntity) {
@@ -77,6 +80,8 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
             materialGlobalBo.setGlobalBusinessUnit(goldenMaterialEntity.getGlobalBusinessUnit());
             materialGlobalBo.setProductFamily(goldenMaterialEntity.getProductFamily());
             materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
+
+            materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
         }
         materialGlobalBo.setLocalManufacturingTechnology("");
         materialGlobalBo.setGlobalDpParentCode("");
