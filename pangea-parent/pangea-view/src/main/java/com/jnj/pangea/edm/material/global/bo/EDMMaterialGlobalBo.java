@@ -31,6 +31,42 @@ public class EDMMaterialGlobalBo extends BaseBo {
     private String flagForDeletion;
     private String materialStatus;
     private String division;
+    private String batchManageIndicator;
+    private String minRemShelfLife;
+    private String totalShelfLife;
+    private String primaryPlanningCode;
+
+    public String getBatchManageIndicator() {
+        return batchManageIndicator;
+    }
+
+    public void setBatchManageIndicator(String batchManageIndicator) {
+        this.batchManageIndicator = batchManageIndicator;
+    }
+
+    public String getMinRemShelfLife() {
+        return minRemShelfLife;
+    }
+
+    public void setMinRemShelfLife(String minRemShelfLife) {
+        this.minRemShelfLife = minRemShelfLife;
+    }
+
+    public String getTotalShelfLife() {
+        return totalShelfLife;
+    }
+
+    public void setTotalShelfLife(String totalShelfLife) {
+        this.totalShelfLife = totalShelfLife;
+    }
+
+    public String getPrimaryPlanningCode() {
+        return primaryPlanningCode;
+    }
+
+    public void setPrimaryPlanningCode(String primaryPlanningCode) {
+        this.primaryPlanningCode = primaryPlanningCode;
+    }
 
     public String getSourceSystem() {
         return sourceSystem;

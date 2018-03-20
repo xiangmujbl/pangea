@@ -9,6 +9,33 @@ public class MaraEntity {
     private String lvorm;
     private String mstae;
     private String spart;
+    private String xchpf;
+    private String mhdrz;
+    private String mhdhb;
+
+    public String getXchpf() {
+        return xchpf;
+    }
+
+    public void setXchpf(String xchpf) {
+        this.xchpf = xchpf;
+    }
+
+    public String getMhdrz() {
+        return mhdrz;
+    }
+
+    public void setMhdrz(String mhdrz) {
+        this.mhdrz = mhdrz;
+    }
+
+    public String getMhdhb() {
+        return mhdhb;
+    }
+
+    public void setMhdhb(String mhdhb) {
+        this.mhdhb = mhdhb;
+    }
 
     public String getMatnr() {
         return matnr;

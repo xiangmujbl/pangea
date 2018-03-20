@@ -5,7 +5,7 @@
 
             <region path="/project_one/mara">
                 <columns>
-                    matnr,mtart,meins,matkl,lvorm,mstae,spart
+                    matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf ,mhdrz ,mhdhb
                 </columns>
                 <relations>
                     <relation path="/project_one/makt" isPrimaryKey="true">
@@ -37,7 +37,7 @@
 
             <region path="/ngems/golden_material">
                 <columns>
-                    materialNumber,materialDescription,franchise,materialType,baseUom,parentCode,brand,form,materialStatus,subBrand,manufTechnology,category,productFamily,globalBusinessUnit
+                    materialNumber,materialDescription,franchise,materialType,baseUom,parentCode,brand,form,materialStatus,subBrand,manufTechnology,category,productFamily,globalBusinessUnit,primaryPlanningCode
                 </columns>
             </region>
 
@@ -49,7 +49,7 @@
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
                 </columns>
             </region>
 

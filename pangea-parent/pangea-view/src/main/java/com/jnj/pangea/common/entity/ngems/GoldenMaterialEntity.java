@@ -16,6 +16,15 @@ public class GoldenMaterialEntity {
     private String category;
     private String productFamily;
     private String globalBusinessUnit;
+    private String primaryPlanningCode;
+
+    public String getPrimaryPlanningCode() {
+        return primaryPlanningCode;
+    }
+
+    public void setPrimaryPlanningCode(String primaryPlanningCode) {
+        this.primaryPlanningCode = primaryPlanningCode;
+    }
 
     public String getMaterialNumber() {
         return materialNumber;
