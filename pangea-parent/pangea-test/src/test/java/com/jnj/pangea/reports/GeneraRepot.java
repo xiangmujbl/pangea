@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jnj.pangea.reports.FileToZip;
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 import net.masterthought.cucumber.Reportable;
@@ -12,17 +11,16 @@ import net.masterthought.cucumber.Reportable;
 public class GeneraRepot {
 	
 	public static void main(String[] arg){
-		createReport("EDMBrand","AEAZ-1273");
+	    String path = "pangea/pangea-parent/pangea-test/target/reports/json/";
+        File fileParent = new File(path);
+	    File[] fileList = fileParent.listFiles();
+        for (File file:fileList) {
+            String fileName = file.getName().substring(0,file.getName().lastIndexOf("."));
+            createReport(fileName);
+        }
 	}
-    //AEAZ-1272 EDMSubBrand
-    //AEAZ-1273 EDMBrand
-    //AEAZ-1271 EDMCategory
-    //AEAZ-1276 EDMForm
-    //AEAZ-1274 EDMFranchise
-    //AEAZ-1277 EDMGlobalBaseUnit
-    //AEAZ-1279 EDMMatPlantStat
-    //AEAZ-1275 EDMProductFamily
-	private static void createReport(String fileName,String fileNumber){
+
+	private static void createReport(String fileName){
 
         String filePath = "pangea/pangea-parent/pangea-test/target/reports/html/";
         File reportOutputDirectory = new File(filePath);
@@ -32,7 +30,7 @@ public class GeneraRepot {
         jsonFiles.add(jsonPath);
 
         String buildNumber = "1";
-        String projectName = fileNumber+" "+fileName;
+        String projectName = fileName;
         boolean runWithJenkins = false;
         boolean parallelTesting = false;
 
@@ -53,7 +51,7 @@ public class GeneraRepot {
 
         File oldFile = new File(filePath+"cucumber-html-reports");
 
-        String newFilePath = filePath+fileNumber+" "+fileName;
+        String newFilePath = filePath+fileName;
         File newFile = new File(newFilePath);
 
         boolean flag = oldFile.renameTo(newFile);
