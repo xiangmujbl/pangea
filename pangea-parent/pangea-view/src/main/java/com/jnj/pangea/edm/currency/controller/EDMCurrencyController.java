@@ -34,7 +34,9 @@ public class EDMCurrencyController extends BaseController implements IEventProce
             RawDataValue mainValue = mainRaw.getValue();
             String key = mainRaw.getKey();
             Map map = mainValue.toMap();
+            LogUtil.getCoreLog().info("map:{}",map);
             try {
+//                EMSFMdmCurrenciesEntity mainObject =  EMSFMdmCurrenciesEntity.class.getDeclaredConstructor(Map.class).newInstance(map);
                 EMSFMdmCurrenciesEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmCurrenciesEntity.class);
                 ResultObject resultObject = edmCurrencyyService.buildView(key, mainObject, null);
                 EDMCurrencyBo edmCountryBo = (EDMCurrencyBo) resultObject.getBaseBo();

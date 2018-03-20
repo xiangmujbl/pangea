@@ -36,6 +36,7 @@ public class EDMCountryController extends BaseController implements IEventProces
             Map map = mainValue.toMap();
             try {
                 EMSFMdmCountriesEntity mainObject = BeanUtil.mapToBean(map, EMSFMdmCountriesEntity.class);
+//                EMSFMdmCountriesEntity mainObject =  EMSFMdmCountriesEntity.class.getDeclaredConstructor(Map.class).newInstance(map);
                 ResultObject resultObject = edmCountryService.buildView(key, mainObject, null);
                 EDMCountryBo edmCountryBo = (EDMCountryBo) resultObject.getBaseBo();
                 if (resultObject.isSuccess()) {

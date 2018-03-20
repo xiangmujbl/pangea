@@ -43,5 +43,4 @@ Feature: EDMCurrency-Curation
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will print test report timestamp
 

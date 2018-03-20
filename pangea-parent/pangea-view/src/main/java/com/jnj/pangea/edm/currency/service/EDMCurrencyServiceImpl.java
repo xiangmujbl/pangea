@@ -5,6 +5,8 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.EMSFMdmCurrenciesDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.ems.EMSFMdmCurrenciesEntity;
 import com.jnj.pangea.common.service.ICommonService;
@@ -17,7 +19,8 @@ import java.util.List;
  */
 public class EDMCurrencyServiceImpl implements ICommonService {
 
-
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private EMSFMdmCurrenciesDaoImpl emsfMdmCurrenciesDao = EMSFMdmCurrenciesDaoImpl.getInstance();
     private static ICommonService instance;
 
     public static ICommonService getInstance() {
@@ -37,13 +40,24 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         EDMCurrencyBo edmCurrencyBo = new EDMCurrencyBo();
         resultObject.setBaseBo(edmCurrencyBo);
 
-        boolean isOk = processSourceSystem(key, mainData, edmCurrencyBo);
-        if (!isOk) {
-            writeFailDataToRegion(mainData, "z_source_system value is not [EMS] and rule T1", resultObject);
+        if (IConstant.VALUE.EMS.equals(mainData.getzSourceSystem())) {
+            writeFailDataToRegion(mainData,  "z_source_system value is not [EMS] and rule T1", resultObject);
             return resultObject;
+        }else{
+            String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(mainData.getzSourceSystem());
+            if(!sourceSystem.isEmpty()){
+                edmCurrencyBo.setSourceSystem(sourceSystem);
+            }else{
+                writeFailDataToRegion(mainData, "z_source_system value is not [EMS] and rule T1", resultObject);
+                return resultObject;
+            }
         }
+        LogUtil.getCoreLog().info("sourceSystem:{}",edmCurrencyBo.getSourceSystem());
+
         processSystem(mainData, edmCurrencyBo);
-        processT2(key, mainData, edmCurrencyBo);
+        String zName =  emsfMdmCurrenciesDao.getZnameWithzSourceSystemAndZcode("[EMS]",mainData.getzCode());
+        edmCurrencyBo.setCurrencyName(zName);
+//        processT2(key, mainData, edmCurrencyBo);
         return resultObject;
     }
 

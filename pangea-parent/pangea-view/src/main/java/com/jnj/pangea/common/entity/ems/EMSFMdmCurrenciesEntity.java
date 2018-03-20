@@ -1,11 +1,25 @@
 package com.jnj.pangea.common.entity.ems;
 
-public class EMSFMdmCurrenciesEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+//public class EMSFMdmCurrenciesEntity{
+ public class EMSFMdmCurrenciesEntity extends CommonEntity {
     private String zSourceSystem;
     private String zCode;
     private String zEntCodeIso4217Alpha;
     private String zName;
     private String zIso4217Numeric;
+
+    public EMSFMdmCurrenciesEntity(Map<String, Object> map) {
+        super(map);
+        setzSourceSystem((String) map.get("zSourceSystem"));
+        setzCode((String) map.get("zCode"));
+        setzEntCodeIso4217Alpha((String) map.get("zEntCodeIso4217Alpha"));
+        setzName((String) map.get("zName"));
+        setzIso4217Numeric((String) map.get("zIso4217Numeric"));
+    }
 
     @Override
     public String toString() {
