@@ -1,11 +1,11 @@
 package com.jnj.pangea.edm.material.global.service;
 
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMMaterialGlobalDaoImpl;
+import com.jnj.pangea.common.dao.impl.NgemsGoldenMaterialDaoImpl;
+import com.jnj.pangea.common.dao.impl.NgemsMaterialLinkageDaoImpl;
+import com.jnj.pangea.common.dao.impl.ProjectOneMaktDaoImpl;
 import com.jnj.pangea.common.entity.ngems.GoldenMaterialEntity;
 import com.jnj.pangea.common.entity.ngems.MaterialLinkageEntity;
 import com.jnj.pangea.common.entity.projectone.MaktEntity;
@@ -29,7 +29,9 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         }
         return instance;
     }
-    private EDMMaterialGlobalDaoImpl EDMMaterialGlobalDao=EDMMaterialGlobalDaoImpl.getInstance();
+    private ProjectOneMaktDaoImpl maktDao=ProjectOneMaktDaoImpl.getInstance();
+    private NgemsMaterialLinkageDaoImpl linkageDao=NgemsMaterialLinkageDaoImpl.getInstance();
+    private NgemsGoldenMaterialDaoImpl goldenMaterialDao=NgemsGoldenMaterialDaoImpl.getInstance();
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -52,7 +54,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setLocalMaterialNumber(matnr);
 
         // rule J1
-        materialGlobalBo.setLocalRefDescription(EDMMaterialGlobalDao.getFieldWithJ1(matnr).getMaktx());
+        materialGlobalBo.setLocalRefDescription(getFieldWithJ1(matnr));
 
         materialGlobalBo.setLocalMaterialType(maraEntity.getMtart());
         materialGlobalBo.setLocalBaseUom(maraEntity.getMeins());
@@ -66,7 +68,8 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setMinRemShelfLife(maraEntity.getMhdrz());
         materialGlobalBo.setTotalShelfLife(maraEntity.getMhdhb());
         // rule J2
-        GoldenMaterialEntity goldenMaterialEntity = EDMMaterialGlobalDao.getFieldsWithJ2(matnr, sourceSystem);
+        GoldenMaterialEntity goldenMaterialEntity = goldenMaterialDao.getEntityWithMaterialNumber(getFieldWithJ2(matnr,sourceSystem));
+
         if (null != goldenMaterialEntity) {
             materialGlobalBo.setMaterialNumber(goldenMaterialEntity.getMaterialNumber());
             materialGlobalBo.setRefDescription(goldenMaterialEntity.getMaterialDescription());
@@ -110,4 +113,28 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         return failData;
     }
 
+    public String getFieldWithJ1(String matnr){
+        List<MaktEntity> maktEntities = maktDao.getEntityWithMatnr(matnr);
+        for (MaktEntity item:maktEntities) {
+            String spras = item.getSpras();
+            String maktx = item.getMaktx();
+            if (IConstant.VALUE.EN.equals(spras)) {
+                return maktx;
+            } else if (IConstant.VALUE.PT.equals(spras)) {
+                return maktx;
+            } else if (IConstant.VALUE.SP.equals(spras)) {
+                return maktx;
+            }
+        }
+        return "";
+    }
+
+    public String getFieldWithJ2(String matnr,String sourceSystem){
+        MaterialLinkageEntity linkageEntity = linkageDao.getEntityWithLocalMaterialNumberAndSourceSystem(matnr, sourceSystem);
+        String materialNumber="";
+        if (null!=linkageEntity){
+            materialNumber = linkageEntity.getMaterialNumber();
+        }
+        return materialNumber;
+    }
 }
