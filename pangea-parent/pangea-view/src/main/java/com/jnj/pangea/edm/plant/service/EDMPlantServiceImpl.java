@@ -1,9 +1,9 @@
 package com.jnj.pangea.edm.plant.service;
 
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.*;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
@@ -24,6 +24,12 @@ public class EDMPlantServiceImpl implements ICommonService {
         }
         return instance;
     }
+
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private ProjectOneT001WDaoImpl t001WDao = ProjectOneT001WDaoImpl.getInstance();
+    private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
+    private ProjectOneT001KDaoImpl t001KDao = ProjectOneT001KDaoImpl.getInstance();
+    private ProjectOneT001DaoImpl t001Dao = ProjectOneT001DaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -74,11 +80,11 @@ public class EDMPlantServiceImpl implements ICommonService {
     }
 
     private String getFieldWithT1(String zPlantSourceSystem) {
+
         if (StringUtils.isEmpty(zPlantSourceSystem)) {
             return "";
         }
-        String systemQueryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(zPlantSourceSystem).toQueryString();
-        EDMSourceSystemV1Entity sourceSystemV1Entry = commonDao.queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, systemQueryString, EDMSourceSystemV1Entity.class);
+        EDMSourceSystemV1Entity sourceSystemV1Entry = sourceSystemV1Dao.getEntityWithLocalSourceSystem(zPlantSourceSystem);
         if (null != sourceSystemV1Entry) {
             return sourceSystemV1Entry.getSourceSystem();
         }
@@ -86,19 +92,19 @@ public class EDMPlantServiceImpl implements ICommonService {
     }
 
     private T001WEntity getFieldsWithT2(String zPlant) {
+
         if (StringUtils.isEmpty(zPlant)) {
             return null;
         }
-        String name1QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001W.WERKS).is(zPlant).toQueryString();
-        return commonDao.queryForObject(IConstant.REGION.PROJECT_ONE_T001W, name1QueryString, T001WEntity.class);
+        return t001WDao.getEntityWithZPlant(zPlant);
     }
 
     private String getFieldWithT4(String land1) {
+
         if (StringUtils.isEmpty(land1)) {
             return "";
         }
-        String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        EDMCountryEntity countryEntity = commonDao.queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLand1(land1);
         if (null != countryEntity) {
             return countryEntity.getCountryCode();
         }
@@ -106,22 +112,19 @@ public class EDMPlantServiceImpl implements ICommonService {
     }
 
     private String getFieldWithJ1(String bwkey) {
+
         if (StringUtils.isEmpty(bwkey)) {
             return "";
         }
-        String QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001K.BWKEY).is(bwkey).toQueryString();
-
-        T001KEntity t001KEntity = commonDao.queryForObject(IConstant.REGION.PROJECT_ONE_T001K, QueryString, T001KEntity.class);
-
+        T001KEntity t001KEntity = t001KDao.getEntityWithBwkey(bwkey);
         if (null != t001KEntity) {
 
             String bukrs = t001KEntity.getBukrs();
             if (StringUtils.isEmpty(bukrs)) {
                 return "";
             }
-            QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001.BUKRS).is(bukrs).toQueryString();
-            T001Entity t001Entity = commonDao.queryForObject(IConstant.REGION.PROJECT_ONE_T001, QueryString, T001Entity.class);
 
+            T001Entity t001Entity = t001Dao.getEntityWithBukrs(bukrs);
             if (null != t001Entity) {
                 return t001Entity.getWaers();
             }

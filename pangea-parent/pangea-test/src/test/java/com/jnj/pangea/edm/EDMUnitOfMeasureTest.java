@@ -6,10 +6,10 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/edm/unit_of_measure.feature"},
+        features = {"src/test/resources/features/edm/EDMUnitOfMeasure.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "html:target/Destination"})
-public class UnitOfMeasureTest {
+public class EDMUnitOfMeasureTest {
 
 }
