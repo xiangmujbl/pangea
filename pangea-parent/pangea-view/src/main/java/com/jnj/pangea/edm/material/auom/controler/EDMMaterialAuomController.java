@@ -31,46 +31,5 @@ public class EDMMaterialAuomController extends CommonController {
 
     }
 
-    @Override
-    public List<ViewResultItem> process(List<RawDataEvent> list) {
-
-        List<ViewResultItem> result = new ArrayList<>();
-
-
-        list.forEach(mainRaw -> {
-
-            RawDataValue mainValue = mainRaw.getValue();
-            String key = mainRaw.getKey();
-
-            Map map = mainValue.toMap();
-
-            try {
-                MarmEntity mainObject = BeanUtil.mapToBean(map, MarmEntity.class);
-
-                ResultObject resultObject = materialAuomService.buildView(key, mainObject, null);
-
-                if (resultObject.isSuccess()) {
-                    BaseBo baseBo = (BaseBo) resultObject.getBaseBo();
-                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
-                    result.add(viewResultItem);
-                } else {
-                    if (resultObject.getFailData() != null) {
-                        FailData failData = resultObject.getFailData();
-//                        LogUtil.getCoreLog().info(">>>>failData:{} ,>>>>key:{}",failData.getKey(),key);
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
-                        result.add(viewResultItem);
-                    }
-                }
-
-            } catch (Exception e) {
-                LogUtil.getCoreLog().info("EDMMaterialAuomController Exception occured. key = {}.", key);
-                LogUtil.getCoreLog().info("EDMMaterialAuomController Exception:", e);
-            }
-
-        });
-        return result;
-    }
-
-
 
 }
