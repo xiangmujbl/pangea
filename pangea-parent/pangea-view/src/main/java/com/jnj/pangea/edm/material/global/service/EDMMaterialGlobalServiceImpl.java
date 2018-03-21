@@ -5,6 +5,7 @@ import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.EDMMaterialGlobalDaoImpl;
 import com.jnj.pangea.common.entity.ngems.GoldenMaterialEntity;
 import com.jnj.pangea.common.entity.ngems.MaterialLinkageEntity;
 import com.jnj.pangea.common.entity.projectone.MaktEntity;
@@ -28,7 +29,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         }
         return instance;
     }
-
+    private EDMMaterialGlobalDaoImpl EDMMaterialGlobalDao=EDMMaterialGlobalDaoImpl.getInstance();
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -51,7 +52,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setLocalMaterialNumber(matnr);
 
         // rule J1
-        materialGlobalBo.setLocalRefDescription(getFieldWithJ1(matnr));
+        materialGlobalBo.setLocalRefDescription(EDMMaterialGlobalDao.getFieldWithJ1(matnr).getMaktx());
 
         materialGlobalBo.setLocalMaterialType(maraEntity.getMtart());
         materialGlobalBo.setLocalBaseUom(maraEntity.getMeins());
@@ -65,7 +66,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setMinRemShelfLife(maraEntity.getMhdrz());
         materialGlobalBo.setTotalShelfLife(maraEntity.getMhdhb());
         // rule J2
-        GoldenMaterialEntity goldenMaterialEntity = getFieldsWithJ2(matnr, sourceSystem);
+        GoldenMaterialEntity goldenMaterialEntity = EDMMaterialGlobalDao.getFieldsWithJ2(matnr, sourceSystem);
         if (null != goldenMaterialEntity) {
             materialGlobalBo.setMaterialNumber(goldenMaterialEntity.getMaterialNumber());
             materialGlobalBo.setRefDescription(goldenMaterialEntity.getMaterialDescription());
@@ -90,59 +91,6 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         resultObject.setBaseBo(materialGlobalBo);
 
         return resultObject;
-    }
-
-    private String getFieldWithJ1(String matnr) {
-
-        if (StringUtils.isEmpty(matnr)) {
-            return "";
-        }
-
-        List<MaktEntity> items = null;
-
-        String queryEnString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_MAKT.MATNR).is(matnr).toQueryString();
-
-        if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
-            queryEnString = IConstant.PROJECT_ONE_MAKT.MATNR + ":\"" + AdfLuceneHelper.keyword(matnr) + "\"";
-        }
-        items = commonDao.queryForList(IConstant.REGION.PROJECT_ONE_MAKT, queryEnString, MaktEntity.class);
-
-        for (MaktEntity item : items) {
-            String spras = item.getSpras();
-            String maktx = item.getMaktx();
-            if (IConstant.VALUE.EN.equals(spras)) {
-                return maktx;
-            } else if (IConstant.VALUE.PT.equals(spras)) {
-                return maktx;
-            } else if (IConstant.VALUE.SP.equals(spras)) {
-                return maktx;
-            }
-        }
-        return "";
-    }
-
-    private GoldenMaterialEntity getFieldsWithJ2(String matnr, String sourceSystem) {
-
-        if (StringUtils.isEmpty(matnr)) {
-            return null;
-        }
-        if (StringUtils.isEmpty(sourceSystem)) {
-            return null;
-        }
-
-        String queryString = QueryHelper
-                .buildCriteria(IConstant.NGEMS_MATERIAL_LINKAGE.LOCAL_MATERIAL_NUMBER).is(matnr)
-                .and(IConstant.NGEMS_MATERIAL_LINKAGE.SOURCE_SYSTEM).is(sourceSystem)
-                .toQueryString();
-
-        MaterialLinkageEntity materialLinkageEntity = commonDao.queryForObject(IConstant.REGION.NGEMS_MATERIAL_LINKAGE, queryString, MaterialLinkageEntity.class);
-        if (null != materialLinkageEntity) {
-
-            String materialNumber = materialLinkageEntity.getMaterialNumber();
-            queryString = QueryHelper.buildCriteria(IConstant.NGEMS_GOLDEN_MATERIAL.MATERIAL_NUMBER).is(materialNumber).toQueryString();
-            return commonDao.queryForObject(IConstant.REGION.NGEMS_GOLDEN_MATERIAL, queryString, GoldenMaterialEntity.class);
-        }
-        return null;
     }
 
     private FailData checkT1(MaraEntity maraEntity, String sourceSystem) {

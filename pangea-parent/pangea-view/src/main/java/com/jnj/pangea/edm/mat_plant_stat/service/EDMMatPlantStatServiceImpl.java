@@ -3,6 +3,7 @@ package com.jnj.pangea.edm.mat_plant_stat.service;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.EDMMatPlantStatDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.projectone.T141Entity;
 import com.jnj.pangea.common.service.ICommonService;
@@ -18,7 +19,7 @@ public class EDMMatPlantStatServiceImpl implements ICommonService {
         }
         return instance;
     }
-
+    private EDMMatPlantStatDaoImpl EDMMatPlantStatDao=EDMMatPlantStatDaoImpl.getInstance();
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -29,7 +30,7 @@ public class EDMMatPlantStatServiceImpl implements ICommonService {
         EDMMatPlantStatBo matPlantStatBo = new EDMMatPlantStatBo();
 
         // rule T1
-        matPlantStatBo.setSourceSystem(getFieldWithT1());
+        matPlantStatBo.setSourceSystem(EDMMatPlantStatDao.getFieldWithT1().getSourceSystem());
 
         matPlantStatBo.setLocalPlantStatus(t141Entity.getMmsta());
 
@@ -38,12 +39,4 @@ public class EDMMatPlantStatServiceImpl implements ICommonService {
         return resultObject;
     }
 
-    private String getFieldWithT1() {
-        String systemQueryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(IConstant.VALUE.PROJECT_ONE).toQueryString();
-        EDMSourceSystemV1Entity sourceSystemV1Entry = commonDao.queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, systemQueryString, EDMSourceSystemV1Entity.class);
-        if (null != sourceSystemV1Entry) {
-            return sourceSystemV1Entry.getSourceSystem();
-        }
-        return "";
-    }
 }
