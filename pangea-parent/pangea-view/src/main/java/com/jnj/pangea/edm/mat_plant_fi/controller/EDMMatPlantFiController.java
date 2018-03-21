@@ -9,7 +9,7 @@ import com.jnj.pangea.util.BeanUtil;
 
 public class EDMMatPlantFiController extends CommonController {
 
-    EDMMatPlantFiServiceImpl matPlantFiService = new EDMMatPlantFiServiceImpl();
+    EDMMatPlantFiServiceImpl matPlantFiService = EDMMatPlantFiServiceImpl.getInstance();
 
     @Override
     public ResultObject process(RawDataEvent raw) {

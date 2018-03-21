@@ -9,9 +9,18 @@ import com.jnj.pangea.edm.mat_plant_fi.bo.EDMMatPlantFiBo;
 
 public class EDMMatPlantFiServiceImpl implements ICommonService {
 
-    EDMSourceSystemV1DaoImpl sourceSystemV1Dao = new EDMSourceSystemV1DaoImpl();
+    private static EDMMatPlantFiServiceImpl instance;
 
-    EDMPlantV1DaoImpl plantV1Dao = new EDMPlantV1DaoImpl();
+    public static EDMMatPlantFiServiceImpl getInstance() {
+        if (instance == null) {
+            instance = new EDMMatPlantFiServiceImpl();
+        }
+        return instance;
+    }
+
+    EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+
+    EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {

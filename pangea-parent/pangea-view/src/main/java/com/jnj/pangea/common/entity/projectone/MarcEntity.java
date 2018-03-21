@@ -1,9 +1,20 @@
 package com.jnj.pangea.common.entity.projectone;
 
-public class MarcEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class MarcEntity extends CommonEntity {
     private String matnr;
     private String werks;
     private String mmsta;
+
+    public MarcEntity(Map<String, Object> map) {
+        super(map);
+        setMatnr((String)map.get("matnr"));
+        setWerks((String)map.get("werks"));
+        setMmsta((String)map.get("mmsta"));
+    }
 
     public String getMatnr() {
         return matnr;
