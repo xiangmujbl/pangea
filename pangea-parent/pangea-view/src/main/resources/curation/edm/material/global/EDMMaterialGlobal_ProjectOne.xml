@@ -5,19 +5,16 @@
 
             <region path="/project_one/mara">
                 <columns>
-                    matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf ,mhdrz ,mhdhb
+                    matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf,mhdrz,mhdhb
                 </columns>
                 <relations>
                     <relation path="/project_one/makt" isPrimaryKey="true">
-                        <expression>matnr=/project_one/makt.matnr</expression>
+                        <expression>matnr=/project_one/mara.matnr</expression>
                     </relation>
                     <relation path="/ngems/material_linkage" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>localMaterialNumber=/project_one/mara.matnr</expression>
                     </relation>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                    <relation path="/ngems/golden_material" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                 </relations>
@@ -45,6 +42,11 @@
                 <columns>
                     sourceSystem,localMaterialNumber,materialNumber
                 </columns>
+                <relations>
+                    <relation path="/ngems/golden_material" isPrimaryKey="false">
+                        <expression>materialNumber=/ngems/material_linkage.materialNumber</expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/edm/material_global_v1">

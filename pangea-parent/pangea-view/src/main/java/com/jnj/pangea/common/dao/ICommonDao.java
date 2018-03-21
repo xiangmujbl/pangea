@@ -16,7 +16,7 @@ public interface ICommonDao {
      * @param queryString
      * @return
      */
-    public <T> T fetchByKey(String region, String queryString, Class<T> resultType);
+    public <T> T fetchByKey(String region, String queryString, Class<? extends CommonEntity> resultType);
 
     /**
      * queryString content is not key
@@ -25,7 +25,7 @@ public interface ICommonDao {
      * @param queryString
      * @return
      */
-    public <T> List<T> queryForList(String region, String queryString, Class<T> resultType);
+    public <T> List<T> queryForList(String region, String queryString, Class<? extends CommonEntity> resultType);
 
-    public <T> T queryForObject(String region, String queryString, Class<T> resultType);
+    public <T> T queryForObject(String region, String queryString, Class<? extends CommonEntity> resultType);
 }

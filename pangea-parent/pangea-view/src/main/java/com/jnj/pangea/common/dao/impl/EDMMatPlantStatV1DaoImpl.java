@@ -14,9 +14,9 @@ public class EDMMatPlantStatV1DaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMMatPlantStatV1Entity getPlantStatusWithLocalPlantStatusAndSourceSystem(String sourceSystem,String mmsta){
+    public EDMMatPlantStatV1Entity getPlantStatusWithLocalPlantStatusAndSourceSystem(String sourceSystem, String mmsta) {
         String queryString = QueryHelper.buildCriteria(IConstant.SOURCESYSTEM).is(sourceSystem).and(IConstant.EDM_MAT_PLANT_STAT.LOCAL_PLANT_STATUS).is(mmsta).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_MAT_PLANT_STAT_V1,queryString,EDMMatPlantStatV1Entity.class);
+        return queryForObject(IConstant.REGION.EDM_MAT_PLANT_STAT_V1, queryString, EDMMatPlantStatV1Entity.class);
     }
 
 }

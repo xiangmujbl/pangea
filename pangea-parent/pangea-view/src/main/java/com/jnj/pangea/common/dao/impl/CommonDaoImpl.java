@@ -5,6 +5,7 @@ import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.dao.ICommonDao;
+import com.jnj.pangea.common.entity.CommonEntity;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.LinkedList;
@@ -26,7 +27,7 @@ public class CommonDaoImpl implements ICommonDao {
     }
 
     @Override
-    public <T> T fetchByKey(String region, String queryString, Class<T> clazz) {
+    public <T> T fetchByKey(String region, String queryString, Class<? extends CommonEntity> clazz) {
 
         T entry = null;
         RawDataValue rawDataValue = CurationRawDataHelper.getInstance().fetchByKey(region, queryString);
@@ -42,13 +43,13 @@ public class CommonDaoImpl implements ICommonDao {
     }
 
     @Override
-    public <T> List<T> queryForList(String region, String queryString, Class<T> clazz) {
+    public <T> List<T> queryForList(String region, String queryString, Class<? extends CommonEntity> clazz) {
         List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, -1);
         return mapsToObjects(sourceSystemList, clazz);
     }
 
     @Override
-    public <T> T queryForObject(String region, String queryString, Class<T> resultType) {
+    public <T> T queryForObject(String region, String queryString, Class<? extends CommonEntity> resultType) {
         T entry = null;
 
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(region, queryString);
@@ -62,7 +63,7 @@ public class CommonDaoImpl implements ICommonDao {
         return entry;
     }
 
-    private static <T> List<T> mapsToObjects(List<Map.Entry<String, String>> maps, Class<T> clazz) {
+    private static <T> List<T> mapsToObjects(List<Map.Entry<String, String>> maps, Class<? extends CommonEntity> clazz) {
 
         List<T> list = new LinkedList<>();
         if (maps != null && maps.size() > 0) {
