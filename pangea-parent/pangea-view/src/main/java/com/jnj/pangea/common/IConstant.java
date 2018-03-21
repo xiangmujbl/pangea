@@ -17,14 +17,8 @@ public interface IConstant {
         String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
         String NGEMS_GOLDEN_MATERIAL = "/ngems/golden_material";
         String EMS_F_MDM_COUNTRIES_CLONE = "/ems/ems_f_mdm_countries_clone";
-        String EMS_F_MDM_COUNTRIES = "/ems/ems_f_mdm_countries";
-        String EMS_F_MDM_COUNTRIES_FAIL_DATA = "/plan/country_v1_failed_data";
-        String EMS_F_Z_CURRENCIES_FAIL_DATA = "/plan/currency_v1_failed_data";
-        String EMS_F_MDM_UNITS_FAIL_DATA = "/plan/unit_of_measure_v1_failed_data";
         String EMS_F_Z_CURRENCIES_CLONE = "/ems/ems_f_z_currencies_clone";
-        String EMS_F_Z_CURRENCIES = "/ems/ems_f_z_currencies";
         String EMS_F_MDM_UNITS_CLONE = "/ems/ems_f_mdm_units_clone";
-        String EMS_F_MDM_UNITS = "/ems/ems_f_mdm_units";
         String PROJECT_ONE_T001W = "/project_one/t001w";
         String PROJECT_ONE_T001K = "/project_one/t001k";
         String PROJECT_ONE_T001 = "/project_one/t001";
@@ -80,4 +74,18 @@ public interface IConstant {
         String SP = "S";
     }
 
+    interface EMS_F_MDM_UNITS {
+        String ZSOURCESYSTEM = "zSourceSystem";
+        String MDMSAPCODE = "mdmSapCode";
+    }
+
+    interface EMS_F_MDM_COUNTRIES {
+        String ZSOURCESYSTEM = "zSourceSystem";
+        String MDMCODE = "mdmCode";
+    }
+
+    interface EMS_F_Z_CURRENCIES {
+        String ZSOURCESYSTEM = "zSourceSystem";
+        String ZCODE = "zCode";
+    }
 }

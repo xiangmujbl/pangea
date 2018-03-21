@@ -53,8 +53,11 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
         }
 
         processSystem(mainData, edmUnitOfMeasureBo);
-        String mdmName = emsfMdmUnitOfMeasureDao.getMdmNameWithzSourceSystemAndMdmSapCode("[EMS]",mainData.getzEnterpriseCode());
-        edmUnitOfMeasureBo.setUomName(mdmName);
+        EMSFMdmUnitOfMeasureEntity emsfMdmUnitOfMeasureEntity = emsfMdmUnitOfMeasureDao.getMdmNameWithzSourceSystemAndMdmSapCode(IConstant.VALUE.EMS,mainData.getzEnterpriseCode());
+        if(emsfMdmUnitOfMeasureEntity!=null){
+            edmUnitOfMeasureBo.setUomName(emsfMdmUnitOfMeasureEntity.getMdmName());
+        }
+
         return resultObject;
     }
 

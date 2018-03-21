@@ -52,8 +52,10 @@ public class EDMCountryServiceImpl implements ICommonService {
 
         processSystem(mainData, edmCountryBo);
 //        processT2(key, mainData, edmCountryBo);
-        String mdmName = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode("[EMS]",mainData.getzEntCodeIso3166Alpha2());
-        edmCountryBo.setCountryName(mdmName);
+        EMSFMdmCountriesEntity emsfMdmCountriesEntity = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode(IConstant.VALUE.EMS,mainData.getzEntCodeIso3166Alpha2());
+        if(emsfMdmCountriesEntity!=null){
+            edmCountryBo.setCountryName(emsfMdmCountriesEntity.getMdmName());
+        }
         return resultObject;
     }
 
