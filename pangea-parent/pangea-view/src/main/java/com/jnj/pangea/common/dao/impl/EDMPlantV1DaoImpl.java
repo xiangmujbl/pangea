@@ -14,15 +14,10 @@ public class EDMPlantV1DaoImpl extends CommonDaoImpl{
         return instance;
     }
 
-    public String getPlantWithSourceSystemAndLocalPlant(String sourceSystem,String bwkey) {
+    public EDMPlantV1Entity getPlantWithSourceSystemAndLocalPlant(String sourceSystem,String bwkey) {
 
         String queryString = QueryHelper.buildCriteria(IConstant.SOURCESYSTEM).is(sourceSystem).and(IConstant.LOCALPLANT).is(bwkey).toQueryString();
-        EDMPlantV1Entity plantV1Enntity = queryForObject(IConstant.REGION.EDM_PLANT_V1,queryString,EDMPlantV1Entity.class);
-
-        if (null != plantV1Enntity){
-            return plantV1Enntity.getPlant();
-        }
-        return "";
+        return queryForObject(IConstant.REGION.EDM_PLANT_V1,queryString,EDMPlantV1Entity.class);
     }
 
 }

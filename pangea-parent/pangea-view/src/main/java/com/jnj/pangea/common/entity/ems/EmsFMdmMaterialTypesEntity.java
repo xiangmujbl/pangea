@@ -1,9 +1,20 @@
 package com.jnj.pangea.common.entity.ems;
 
-public class EmsFMdmMaterialTypesEntity {
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
+public class EmsFMdmMaterialTypesEntity extends CommonEntity {
     private String mdmCode;
     private String mdmName;
     private String zSourceSystem;
+
+    public EmsFMdmMaterialTypesEntity(Map<String, Object> map) {
+        super(map);
+        setMdmCode((String) map.get("mdmCode"));
+        setMdmName((String) map.get("mdmName"));
+        setzSourceSystem((String) map.get("zSourceSystem"));
+    }
 
     public String getMdmCode() {
         return mdmCode;

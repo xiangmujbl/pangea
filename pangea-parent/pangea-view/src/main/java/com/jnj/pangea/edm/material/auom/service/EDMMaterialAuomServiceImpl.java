@@ -4,6 +4,8 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.EDMMaterialGlobalDaoImpl;
+import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.projectone.MarmEntity;
@@ -18,84 +20,51 @@ import java.util.List;
  */
 public class EDMMaterialAuomServiceImpl implements ICommonService {
 
-    private static ICommonService instance;
+    private static EDMMaterialAuomServiceImpl instance;
 
-    public static ICommonService getInstance() {
+    public static EDMMaterialAuomServiceImpl getInstance() {
         if (instance == null) {
             instance = new EDMMaterialAuomServiceImpl();
         }
         return instance;
     }
+    EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    EDMMaterialGlobalDaoImpl materialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
 
-        MarmEntity mainData = (MarmEntity) o;
+        MarmEntity marmEntity = (MarmEntity) o;
 
         EDMMaterialAuomBo materialAuomBo = new EDMMaterialAuomBo();
-        resultObject.setBaseBo(materialAuomBo);
 
-        processSystem(mainData, materialAuomBo);
-        processSourceSystem(materialAuomBo);
-
-        processMaterialNumber(materialAuomBo);
-
-        return resultObject;
-    }
-
-    private void processMaterialNumber(EDMMaterialAuomBo materialAuomBo){
-        String materialNumber= null;
-        String matnr = materialAuomBo.getLocalMaterialNumber();
-        if (StringUtils.isNotBlank(materialAuomBo.getSourceSystem()) && StringUtils.isNotBlank(matnr)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.SOURCESYSTEM).is(materialAuomBo.getSourceSystem())
-                    .and(IConstant.LOCALMATERIALNUMBER).is(matnr).toQueryString();
-
-            if (matnr.contains(">") || matnr.contains("<") || matnr.contains("=")) {
-                queryString = IConstant.SOURCESYSTEM+":\""+ materialAuomBo.getSourceSystem() + "\" AND "+ IConstant.LOCALMATERIALNUMBER+":\"" + AdfLuceneHelper.keyword(matnr) + "\"";
-            }
-            List<EDMMaterialGlobalV1Entity> materialList = commonDao.queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
-            for (EDMMaterialGlobalV1Entity entry : materialList) {
-                materialNumber = entry.getMaterialNumber();
-            }
-        }
-        materialAuomBo.setMaterialNumber(materialNumber);
-    }
-
-    private boolean processSourceSystem(EDMMaterialAuomBo materialAuomBo) {
-
-        String queryString = QueryHelper.buildCriteria("localSourceSystem").is("project_one").toQueryString();
-        List<EDMSourceSystemV1Entity> sourceList = commonDao.queryForList(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
-
-        String sourceSystem = null;
-        for (EDMSourceSystemV1Entity entry : sourceList) {
-            sourceSystem = entry.getSourceSystem();
-        }
+        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithProjectOne().getSourceSystem();
         materialAuomBo.setSourceSystem(sourceSystem);
 
-        return true;
-    }
-
-    private boolean processSystem(MarmEntity mainData, EDMMaterialAuomBo materialAuomBo) {
-
         //localMaterialNumber
-        String matnr = mainData.getMatnr();
+        String matnr = marmEntity.getMatnr();
         materialAuomBo.setLocalMaterialNumber(StringUtils.trim(matnr));
 
         //localAuom
-        String localAuom = mainData.getMeinh();
+        String localAuom = marmEntity.getMeinh();
         materialAuomBo.setLocalAuom(StringUtils.trim(localAuom));
 
         //localNumerator
-        String localNumerator = mainData.getUmrez();
+        String localNumerator = marmEntity.getUmrez();
         materialAuomBo.setLocalNumerator(StringUtils.trim(localNumerator));
 
         //localDenominator
-        String localDenominator = mainData.getUmren();
+        String localDenominator = marmEntity.getUmren();
         materialAuomBo.setLocalDenominator(StringUtils.trim(localDenominator));
 
-        return true;
+        String materialNumber = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystem,matnr).getMaterialNumber();
+        materialAuomBo.setMaterialNumber(materialNumber);
+
+        resultObject.setBaseBo(materialAuomBo);
+
+        return resultObject;
     }
 
 }
