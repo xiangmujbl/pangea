@@ -29,7 +29,7 @@ public class EDMMatPlantFiServiceImpl implements ICommonService {
         MbewEntity mbewEntity = (MbewEntity) o;
 
         EDMMatPlantFiBo matPlantFiBo = new EDMMatPlantFiBo();
-        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithProjectOne();
+        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithProjectOne().getSourceSystem();
         matPlantFiBo.setSourceSystem(sourceSystem);
 
         matPlantFiBo.setLocalMaterialNumber(mbewEntity.getMatnr());
@@ -38,7 +38,7 @@ public class EDMMatPlantFiServiceImpl implements ICommonService {
         matPlantFiBo.setLocalPlant(bwkey);
         matPlantFiBo.setLocalDeleIndicator(mbewEntity.getLvorm());
 
-        String plant = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(sourceSystem,bwkey);
+        String plant = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(sourceSystem,bwkey).getPlant();
         matPlantFiBo.setPlant(plant);
 
         matPlantFiBo.setPriceControl(mbewEntity.getVprsv());

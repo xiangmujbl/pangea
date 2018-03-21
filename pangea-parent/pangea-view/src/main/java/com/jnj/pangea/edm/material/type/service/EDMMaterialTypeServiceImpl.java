@@ -3,40 +3,39 @@ package com.jnj.pangea.edm.material.type.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.EMSFMdmMaterialTypesDaoImpl;
 import com.jnj.pangea.common.entity.ems.EmsFMdmMaterialTypesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.type.bo.EDMMaterialTypeBo;
 import org.apache.commons.lang3.StringUtils;
 
 public class EDMMaterialTypeServiceImpl implements ICommonService {
-    private static ICommonService instance;
+    private static EDMMaterialTypeServiceImpl instance;
 
-    public static ICommonService getInstance() {
+    public static EDMMaterialTypeServiceImpl getInstance() {
         if (instance == null) {
             instance = new EDMMaterialTypeServiceImpl();
         }
         return instance;
     }
-
+    EMSFMdmMaterialTypesDaoImpl emsfMdmMaterialTypesDao = EMSFMdmMaterialTypesDaoImpl.getInstance();
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
-        EmsFMdmMaterialTypesEntity mainData = (EmsFMdmMaterialTypesEntity) o;
+        EmsFMdmMaterialTypesEntity fMdmMaterialTypesEntity = (EmsFMdmMaterialTypesEntity) o;
 
         EDMMaterialTypeBo materialTypemBo = new EDMMaterialTypeBo();
-        resultObject.setBaseBo(materialTypemBo);
 
-        String zSourceSystem = mainData.getzSourceSystem();
-        // z_source_system = [EMS]
-        if (IConstant.VALUE.EMS.equals(zSourceSystem)) {
-            String materialType = StringUtils.trim(mainData.getMdmCode());
-            materialTypemBo.setMaterialType(materialType);
-            String materialTypeName = StringUtils.trim(mainData.getMdmName());
-            materialTypemBo.setMaterialTypeName(materialTypeName);
+        String zSourceSystem = fMdmMaterialTypesEntity.getzSourceSystem();
+        if (null != emsfMdmMaterialTypesDao.getMaterialTypeWithEMS(zSourceSystem).getMdmCode()){
+            materialTypemBo.setMaterialType(emsfMdmMaterialTypesDao.getMaterialTypeWithEMS(zSourceSystem).getMdmCode());
+            materialTypemBo.setMaterialTypeName(fMdmMaterialTypesEntity.getMdmName());
         } else {
-            FailData failData = writeFailDataToRegion(mainData, "T1", "z_source_system value is not [EMS]");
+            FailData failData = writeFailDataToRegion(fMdmMaterialTypesEntity, "T1", "z_source_system value is not [EMS]");
             resultObject.setFailData(failData);
         }
+        resultObject.setBaseBo(materialTypemBo);
 
         return resultObject;
     }

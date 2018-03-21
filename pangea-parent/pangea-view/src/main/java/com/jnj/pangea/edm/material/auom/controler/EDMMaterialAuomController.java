@@ -8,6 +8,7 @@ import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.*;
 import com.jnj.pangea.common.controller.BaseController;
+import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.projectone.MarmEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.auom.service.EDMMaterialAuomServiceImpl;
@@ -20,9 +21,15 @@ import java.util.Map;
 /**
  * Created by XZhan290 on 2018/2/27.
  */
-public class EDMMaterialAuomController extends BaseController implements IEventProcessor {
+public class EDMMaterialAuomController extends CommonController {
 
-    private ICommonService materialAuomService = EDMMaterialAuomServiceImpl.getInstance();
+    private EDMMaterialAuomServiceImpl materialAuomService = EDMMaterialAuomServiceImpl.getInstance();
+
+    @Override
+    public ResultObject process(RawDataEvent raw) {
+        return materialAuomService.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), MarmEntity.class), null);
+
+    }
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
@@ -63,5 +70,7 @@ public class EDMMaterialAuomController extends BaseController implements IEventP
         });
         return result;
     }
+
+
 
 }

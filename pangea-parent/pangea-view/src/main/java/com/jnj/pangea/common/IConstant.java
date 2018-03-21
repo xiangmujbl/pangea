@@ -88,4 +88,7 @@ public interface IConstant {
         String ZSOURCESYSTEM = "zSourceSystem";
         String ZCODE = "zCode";
     }
+    interface EDM_MAT_PLANT_STAT {
+        String LOCAL_PLANT_STATUS = "localPlantStatus";
+    }
 }

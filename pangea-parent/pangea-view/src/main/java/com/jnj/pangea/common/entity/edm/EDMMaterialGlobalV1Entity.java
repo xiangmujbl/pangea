@@ -1,9 +1,13 @@
 package com.jnj.pangea.common.entity.edm;
 
+import com.jnj.pangea.common.entity.CommonEntity;
+
+import java.util.Map;
+
 /**
  * Created by XZhan290 on 2018/3/5.
  */
-public class EDMMaterialGlobalV1Entity {
+public class EDMMaterialGlobalV1Entity extends CommonEntity{
 
     private String productFamily;
     private String franchise;
@@ -26,6 +30,33 @@ public class EDMMaterialGlobalV1Entity {
     private String globalBusinessUnit;
     private String category;
     private String brand;
+
+    public EDMMaterialGlobalV1Entity(Map<String, Object> map) {
+        super(map);
+        setProductFamily((String)map.get("productFamily"));
+        setFranchise((String)map.get("franchise"));
+        setManufacturingTechnology((String)map.get("manufacturingTechnology"));
+        setSourceSystem((String)map.get("sourceSystem"));
+        setMaterialType((String)map.get("materialType"));
+        setLocalMaterialType((String)map.get("localMaterialType"));
+        setBaseUom((String)map.get("baseUom"));
+        setLocalMaterialNumber((String)map.get("localMaterialNumber"));
+        setLocalBaseUnit((String)map.get("localBaseUnit"));
+        setForm((String)map.get("form"));
+        setLocalManufacturingTechnology((String)map.get("localManufacturingTechnology"));
+        setMaterialNumber((String)map.get("materialNumber"));
+        setLocalDpParentCod((String)map.get("localDpParentCod"));
+        setParentCode((String)map.get("parentCode"));
+        setRefDescription((String)map.get("refDescription"));
+        setSubBrand((String)map.get("subBrand"));
+        setLocalRefDescription((String)map.get("localRefDescription"));
+        setGlobalDpParentCode((String)map.get("globalDpParentCode"));
+        setGlobalBusinessUnit((String)map.get("globalBusinessUnit"));
+        setCategory((String)map.get("category"));
+        setBrand((String)map.get("brand"));
+
+
+    }
 
     public String getProductFamily() {
         return productFamily;

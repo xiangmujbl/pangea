@@ -3,6 +3,7 @@ package com.jnj.pangea.common.dao.impl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.curation.indexer.AdfLuceneHelper;
 import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.ngems.GoldenMaterialEntity;
 import com.jnj.pangea.common.entity.ngems.MaterialLinkageEntity;
 import com.jnj.pangea.common.entity.projectone.MaktEntity;
@@ -20,6 +21,13 @@ public class EDMMaterialGlobalDaoImpl extends CommonDaoImpl {
         }
         return instance;
     }
+
+    public EDMMaterialGlobalV1Entity getMaterialNumberWithLocalMaterialNumberAndSourceSystem(String sourceSystem, String matnr) {
+        String queryString = QueryHelper.buildCriteria(IConstant.SOURCESYSTEM).is(sourceSystem).and(IConstant.LOCALMATERIALNUMBER).is(matnr).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1,queryString,EDMMaterialGlobalV1Entity.class);
+
+    }
+
     public MaktEntity getFieldWithJ1(String matnr) {
 
         if (StringUtils.isEmpty(matnr)) {
