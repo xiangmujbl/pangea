@@ -17,8 +17,8 @@ public class EMSFMdmCurrenciesDaoImpl extends CommonDaoImpl {
     }
 
     public EMSFMdmCurrenciesEntity getZnameWithzSourceSystemAndZcode(String zSourceSystem,String zCode) {
-        String countryQueryString = QueryHelper.buildCriteria(IConstant.EMS_F_Z_CURRENCIES.ZSOURCESYSTEM)
-                .is(zSourceSystem).and(IConstant.EMS_F_Z_CURRENCIES.ZCODE).is(zCode).toQueryString();
+        String countryQueryString = QueryHelper.buildCriteria(IConstant.EMS_F_Z_CURRENCIES.Z_SOURCE_SYSTEM)
+                .is(zSourceSystem).and(IConstant.EMS_F_Z_CURRENCIES.Z_CODE).is(zCode).toQueryString();
         EMSFMdmCurrenciesEntity emsfMdmCountriesEntity = queryForObject(IConstant.REGION.EMS_F_Z_CURRENCIES_CLONE, countryQueryString, EMSFMdmCurrenciesEntity.class);
         return emsfMdmCountriesEntity;
     }

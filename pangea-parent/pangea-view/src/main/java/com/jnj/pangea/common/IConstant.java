@@ -23,13 +23,9 @@ public interface IConstant {
         String PROJECT_ONE_T001K = "/project_one/t001k";
         String PROJECT_ONE_T001 = "/project_one/t001";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
-        String EMS_F_MDM_MATERIAL_TYPES= "/ems/ems_f_mdm_material_types";
+        String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
     }
 
-    // -----region attribute
-    interface COMMON_ATTRIBUTE {
-        String SOURCESYSTEM = "sourceSystem";
-    }
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
     }
@@ -63,7 +59,35 @@ public interface IConstant {
         String MATERIAL_NUMBER = "materialNumber";
     }
 
-    String SOURCESYSTEM = "sourceSystem";
+    interface EMS_F_MDM_UNITS {
+        String Z_SOURCE_SYSTEM = "zSourceSystem";
+        String MDM_SAP_CODE = "mdmSapCode";
+    }
+
+    interface EMS_F_MDM_COUNTRIES {
+        String Z_SOURCE_SYSTEM = "zSourceSystem";
+        String MDM_CODE = "mdmCode";
+    }
+
+    interface EMS_F_Z_CURRENCIES {
+        String Z_SOURCE_SYSTEM = "zSourceSystem";
+        String Z_CODE = "zCode";
+    }
+
+    interface EDM_MAT_PLANT_STAT {
+        String LOCAL_PLANT_STATUS = "localPlantStatus";
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
+
+    interface EDM_MATERIAL_GLOBAL_V1 {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
+
+    interface EDM_PLANT_V1 {
+        String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
 
     // -----region attribute value
     interface VALUE {
@@ -73,29 +97,5 @@ public interface IConstant {
         String EN = "E";
         String PT = "P";
         String SP = "S";
-    }
-
-    interface EMS_F_MDM_UNITS {
-        String ZSOURCESYSTEM = "zSourceSystem";
-        String MDMSAPCODE = "mdmSapCode";
-    }
-
-    interface EMS_F_MDM_COUNTRIES {
-        String ZSOURCESYSTEM = "zSourceSystem";
-        String MDMCODE = "mdmCode";
-    }
-
-    interface EMS_F_Z_CURRENCIES {
-        String ZSOURCESYSTEM = "zSourceSystem";
-        String ZCODE = "zCode";
-    }
-    interface EDM_MAT_PLANT_STAT {
-        String LOCAL_PLANT_STATUS = "localPlantStatus";
-    }
-    interface EDM_MATERIAL_GLOBAL_V1 {
-        String LOCALMATERIALNUMBER = "localMaterialNumber";
-    }
-    interface EDM_PLANT_V1 {
-        String LOCALPLANT = "localPlant";
     }
 }
