@@ -7,6 +7,7 @@
 /project_one/marc
 /project_one/t141
 /project_one/mbew
+/project_one/t460a
 
 /ngems/source_system
 /ngems/golden_material
@@ -59,6 +60,8 @@
 /plan/cns_prod_country_aff
 /plan/cns_so_type_incl
 /plan/cons_time_dep_xchange
+/plan/cns_spl_proc_typ
+
 
 
 

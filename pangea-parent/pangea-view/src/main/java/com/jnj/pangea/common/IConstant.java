@@ -22,6 +22,7 @@ public interface IConstant {
         String PROJECT_ONE_T001W = "/project_one/t001w";
         String PROJECT_ONE_T001K = "/project_one/t001k";
         String PROJECT_ONE_T001 = "/project_one/t001";
+        String PROJECT_ONE_T460T = "/project_one/t460t";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES= "/ems/ems_f_mdm_material_types";
     }
@@ -48,6 +49,11 @@ public interface IConstant {
 
     interface PROJECT_ONE_T001 {
         String BUKRS = "bukrs";
+    }
+
+    interface PROJECT_ONE_T460T {
+        String SOBSL = "sobsl";
+        String SPRAS="spras";
     }
 
     interface PROJECT_ONE_MAKT {
