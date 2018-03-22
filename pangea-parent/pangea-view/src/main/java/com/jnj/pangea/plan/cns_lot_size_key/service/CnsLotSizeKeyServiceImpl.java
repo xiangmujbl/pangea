@@ -37,7 +37,7 @@ public class CnsLotSizeKeyServiceImpl implements ICommonService {
         }
 
         String disls = t439Entity.getDisls();
-        cnsLotSizeKeyBo.setSourceSystem(disls);
+        cnsLotSizeKeyBo.setLocalLotSizeKey(disls);
 
         T439TEntity t439TEntity = t439TDao.getEntityWithDislsAndSpras(disls);
         if (null != t439TEntity){

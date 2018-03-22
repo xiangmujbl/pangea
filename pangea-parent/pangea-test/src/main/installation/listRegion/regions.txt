@@ -8,6 +8,10 @@
 /project_one/t141
 /project_one/mbew
 /project_one/t460a
+/project_one/t439
+/project_one/t439t
+/project_one/t461p
+/project_one/t461x
 
 /ngems/source_system
 /ngems/golden_material
@@ -61,6 +65,8 @@
 /plan/cns_so_type_incl
 /plan/cons_time_dep_xchange
 /plan/cns_spl_proc_typ
+/plan/cns_lot_size_key
+/plan/cns_plng_strat_grp
 
 
 

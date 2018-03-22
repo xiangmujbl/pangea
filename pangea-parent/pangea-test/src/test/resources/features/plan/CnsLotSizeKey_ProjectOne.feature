@@ -3,10 +3,11 @@ Feature: CnsLotSizeKey
 
     Scenario: Full Load curation
 
-        Given I import "/project_one/t439" by keyFields ""
-            |  disls             |
-            |000000000000000016  |
-            |000000000000000029  |
+        Given I import "/project_one/t439" by keyFields "disls"
+            |disls|
+            | AN  |
+            | AM  |
+            | AP  |
 
         And I wait "/project_one/t439" Async Queue complete
 
@@ -16,18 +17,20 @@ Feature: CnsLotSizeKey
             | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
         And I wait "/edm/source_system_v1" Async Queue complete
 
-        And I import "/project_one/t439t" by keyFields ""
+        And I import "/project_one/t439t" by keyFields "disls"
             | loslt|disls|spras |
-            |      |     |      |
-            |      |     |      |
+            |  00  | AN  |  E   |
+            |  01  | AM  |  E   |
+            |  02  | AP  |  E   |
         And I wait "/project_one/t439t" Async Queue complete
 
         When I submit task with xml file "xml/plan/CnsLotSizeKey_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
-        Then I check region data "/plan/cns_lot_size_key" by keyFields "sourceSystem,localLotSizeKey,localLotSizeKeyDescription"
+        Then I check region data "/plan/cns_lot_size_key" by keyFields "sourceSystem,localLotSizeKey"
             |sourceSystem|localLotSizeKey|localLotSizeKeyDescription|lotSizeKey|lotSizeKeyDescription|
-            |            |               |                          |          |                     |
-            |            |               |                          |          |                     |
+            | CONS_LATAM |  AN           | 00                       |          |                     |
+            | CONS_LATAM |  AM           | 01                       |          |                     |
+            | CONS_LATAM |  AP           | 02                       |          |                     |
 
         Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
             | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

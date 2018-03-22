@@ -26,6 +26,7 @@ public interface IConstant {
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES= "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
+        String PROJECT_ONE_T461X = "/project_one/t461x";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -59,6 +60,10 @@ public interface IConstant {
 
     interface PROJECT_ONE_T439T {
         String DISLS = "disls";
+        String SPRAS = "spras";
+    }
+    interface PROJECT_ONE_T461X {
+        String STRGR = "strgr";
         String SPRAS = "spras";
     }
 
