@@ -25,6 +25,7 @@ public interface IConstant {
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES= "/ems/ems_f_mdm_material_types";
+        String PROJECT_ONE_T439T = "/project_one/t439t";
     }
 
     // -----region attribute
@@ -58,6 +59,10 @@ public interface IConstant {
 
     interface PROJECT_ONE_MAKT {
         String MATNR = "matnr";
+    }
+    interface PROJECT_ONE_T439T {
+        String DISLS = "disls";
+        String SPRAS = "spras";
     }
 
     interface NGEMS_MATERIAL_LINKAGE {
