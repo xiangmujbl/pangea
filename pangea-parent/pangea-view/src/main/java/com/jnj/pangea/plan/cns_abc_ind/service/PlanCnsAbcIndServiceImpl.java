@@ -41,8 +41,11 @@ public class PlanCnsAbcIndServiceImpl implements ICommonService {
         TmabctEntity tmabctEntity = tmabctDao.getEntityWithMaabc(maabc);
         if (null != tmabctEntity) {
             planCnsAbcIndBo.setLocalIndicatorDescription(tmabctEntity.getTmabc());
+        }else{
+            planCnsAbcIndBo.setLocalIndicatorDescription("");
         }
-
+        planCnsAbcIndBo.setIndicator("");
+        planCnsAbcIndBo.setIndicatorDecription("");
         resultObject.setBaseBo(planCnsAbcIndBo);
 
         return resultObject;
