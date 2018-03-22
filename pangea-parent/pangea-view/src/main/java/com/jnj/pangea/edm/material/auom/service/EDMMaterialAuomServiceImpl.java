@@ -8,6 +8,7 @@ import com.jnj.pangea.common.dao.impl.EDMMaterialGlobalDaoImpl;
 import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entity.ngems.SourceSystemEntity;
 import com.jnj.pangea.common.entity.projectone.MarmEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.auom.bo.EDMMaterialAuomBo;
@@ -40,8 +41,12 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
 
         EDMMaterialAuomBo materialAuomBo = new EDMMaterialAuomBo();
 
-        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithProjectOne().getSourceSystem();
-        materialAuomBo.setSourceSystem(sourceSystem);
+        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
+        String sourceSystem = null;
+        if (null != sourceSystemV1Entity){
+            sourceSystem = sourceSystemV1Entity.getSourceSystem();
+            materialAuomBo.setSourceSystem(sourceSystem);
+        }
 
         //localMaterialNumber
         String matnr = marmEntity.getMatnr();

@@ -43,9 +43,12 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
 
         EDMMaterialPlantBo materialPlantBo = new EDMMaterialPlantBo();
 
-        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithProjectOne().getSourceSystem();
-        materialPlantBo.setSourceSystem(sourceSystem);
-
+        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
+        String sourceSystem = null;
+        if (null != sourceSystemV1Entity){
+            sourceSystem = sourceSystemV1Entity.getSourceSystem();
+            materialPlantBo.setSourceSystem(sourceSystem);
+        }
         String matnr = marcEntity.getMatnr();
         materialPlantBo.setLocalMaterialNumber(matnr);
         String werks = marcEntity.getWerks();
