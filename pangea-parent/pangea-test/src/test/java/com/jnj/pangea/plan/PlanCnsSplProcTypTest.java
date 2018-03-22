@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/plan/PlanCnsSplProcTyp.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/PlanCnsSplProcTyp.json"})
+        plugin = {"pretty", "json:target/reports/json/@AEAZ-1482 PlanCnsSplProcTyp.json"})
         //plugin = {"pretty", "html:target/Destination"})
 public class PlanCnsSplProcTypTest {
 

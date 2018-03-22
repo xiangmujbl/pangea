@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test@AEAZ-1482
 Feature: PlanCnsSplProcTyp-Curation
 
   Scenario: Full Load curation
