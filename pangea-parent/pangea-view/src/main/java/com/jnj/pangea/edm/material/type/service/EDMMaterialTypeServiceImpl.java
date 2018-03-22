@@ -19,7 +19,7 @@ public class EDMMaterialTypeServiceImpl implements ICommonService {
         }
         return instance;
     }
-    EMSFMdmMaterialTypesDaoImpl emsfMdmMaterialTypesDao = EMSFMdmMaterialTypesDaoImpl.getInstance();
+
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
@@ -28,15 +28,14 @@ public class EDMMaterialTypeServiceImpl implements ICommonService {
         EDMMaterialTypeBo materialTypemBo = new EDMMaterialTypeBo();
 
         String zSourceSystem = fMdmMaterialTypesEntity.getzSourceSystem();
-        if (IConstant.VALUE.EMS == zSourceSystem){
+        if (IConstant.VALUE.EMS.equals(zSourceSystem)){
             materialTypemBo.setMaterialType(fMdmMaterialTypesEntity.getMdmCode());
             materialTypemBo.setMaterialTypeName(fMdmMaterialTypesEntity.getMdmName());
+            resultObject.setBaseBo(materialTypemBo);
         } else {
             FailData failData = writeFailDataToRegion(fMdmMaterialTypesEntity, "T1", "z_source_system value is not [EMS]");
             resultObject.setFailData(failData);
         }
-        resultObject.setBaseBo(materialTypemBo);
-
         return resultObject;
     }
 

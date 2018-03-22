@@ -26,8 +26,6 @@ Feature: EDMMaterialType XREF - Curation
 
     And I compare the number of records between "/ems/ems_f_mdm_material_types" and "/edm/material_type_v1,/plan/edm_failed_data"
 
-    And I will print test report timestamp
-
     And I delete the test data
 
     And I will remove all data with region "/edm/material_type_v1"
