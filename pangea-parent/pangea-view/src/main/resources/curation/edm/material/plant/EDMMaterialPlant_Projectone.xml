@@ -5,7 +5,9 @@
 
             <region path="/project_one/marc">
                 <columns>
-                    matnr,werks,mmsta
+                    matnr,werks,mmsta,beskz,bstfe,bstma,bstmi,bstrf,disls,dismm,dispo,dzeit,eisbe,eislo,fevor,frtme,
+                    insmk,kausf,kzkri,maabc,mabst,mtvfp,plifz,sbdkz,shflg,shzet,sobsl,strgr,vint1,vint2,vrmod,webaz,
+                    xchpf,fxhor
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -49,7 +51,14 @@
 
             <region path="/edm/material_plant_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,materialNumber,plant,localPlantStatus,plantStatus
+                    sourceSystem,localMaterialNumber,localPlant,localDeletionFlagPlant,materialNumber,plant,localPlantStatus,plantStatus,
+                    localProcurementType,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,
+                    localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,
+                    localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,
+                    localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,
+                    localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,
+                    localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,
+                    localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap
                 </columns>
             </region>
 
