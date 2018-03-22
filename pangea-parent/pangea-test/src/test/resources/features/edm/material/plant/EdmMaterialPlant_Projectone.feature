@@ -69,7 +69,7 @@ Feature: EDMMaterialPlant
 
     And I compare the number of records between "/project_one/marc" and "/edm/material_plant_v1,/plan/edm_failed_data"
 
-    #And I delete the test data
+    And I delete the test data
 
     And I will remove all data with region "/edm/material_plant_v1"
     And I will remove all data with region "/pangea/edm_failed_data"
