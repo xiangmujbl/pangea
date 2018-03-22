@@ -20,11 +20,6 @@
 
 	<gfe:replicated-region id="hotdeploy">
 		<gfe:replicated-region name="rawDataFilterTestResult" statistics="true" />
-		<gfe:replicated-region name="testListener" statistics="true" shortcut="REPLICATE">
-			<gfe:cache-listener>
-				<bean class="com.jnj.common.ListenerTest" />
-			</gfe:cache-listener>
-		</gfe:replicated-region>
 	</gfe:replicated-region>
 
 	<adf-grid:replicated-region id="project_one">
