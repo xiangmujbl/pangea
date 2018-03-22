@@ -3,7 +3,7 @@ package com.jnj.pangea.plan.cns_plng_strat_grp.bo;
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class CnsPlngStratGrpBo extends BaseBo{
+public class PlanCnsPlngStratGrpBo extends BaseBo{
     private String sourceSystem;
     private String localPlanStratGrp;
     private String localPlanStratGrpDesc;

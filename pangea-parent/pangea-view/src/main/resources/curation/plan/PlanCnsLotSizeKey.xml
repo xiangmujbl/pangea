@@ -1,19 +1,19 @@
 <adf-curation>
-    <curation mainRegion="/project_one/t461p" viewRegion="/plan/cns_plng_strat_grp" chunkSize="1000" chunkBytes="4096"
-              executionClassName="com.jnj.pangea.plan.cns_plng_strat_grp.controller.CnsPlngStratGrpController">
+    <curation mainRegion="/project_one/t439" viewRegion="/plan/cns_lot_size_key" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.plan.cns_lot_size_key.controller.PlanCnsLotSizeKeyController">
         <regions>
 
-            <region path="/project_one/t461p">
+            <region path="/project_one/t439">
                 <columns>
-                    strgr
+                    disls
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="true">
                         <expression></expression>
                     </relation>
 
-                    <relation path="/project_one/t461x" isPrimaryKey="false">
-                        <expression>strgr=/project_one/t461p.strgr</expression>
+                    <relation path="/project_one/t439t" isPrimaryKey="false">
+                        <expression>disls=/project_one/t439.disls</expression>
                     </relation>
                 </relations>
             </region>
@@ -24,15 +24,15 @@
                 </columns>
             </region>
 
-            <region path="/project_one/t461x">
+            <region path="/project_one/t439t">
                 <columns>
-                    strgr,text40,spras
+                    loslt,disls,spras
                 </columns>
             </region>
 
-            <region path="/plan/cns_plng_strat_grp">
+            <region path="/plan/cns_lot_size_key">
                 <columns>
-                    sourceSystem,localPlanStratGrp,localPlanStratGrpDesc,planStratGrp,planStratGrpDesc
+                    sourceSystem,localLotSizeKey,localLotSizeKeyDescription,lotSizeKey,lotSizeKeyDescription
                 </columns>
             </region>
 

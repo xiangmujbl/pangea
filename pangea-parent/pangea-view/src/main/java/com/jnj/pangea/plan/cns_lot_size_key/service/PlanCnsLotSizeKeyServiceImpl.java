@@ -1,20 +1,21 @@
 package com.jnj.pangea.plan.cns_lot_size_key.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.ProjectOneT439TDaoImpl;
 import com.jnj.pangea.common.entity.projectone.T439Entity;
 import com.jnj.pangea.common.entity.projectone.T439TEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.plan.cns_lot_size_key.bo.CnsLotSizeKeyBo;
+import com.jnj.pangea.plan.cns_lot_size_key.bo.PlanCnsLotSizeKeyBo;
 
-public class CnsLotSizeKeyServiceImpl implements ICommonService {
+public class PlanCnsLotSizeKeyServiceImpl implements ICommonService {
 
-    private static CnsLotSizeKeyServiceImpl instance;
+    private static PlanCnsLotSizeKeyServiceImpl instance;
 
-    public static CnsLotSizeKeyServiceImpl getInstance() {
+    public static PlanCnsLotSizeKeyServiceImpl getInstance() {
         if (instance == null) {
-            instance = new CnsLotSizeKeyServiceImpl();
+            instance = new PlanCnsLotSizeKeyServiceImpl();
         }
         return instance;
     }
@@ -28,7 +29,7 @@ public class CnsLotSizeKeyServiceImpl implements ICommonService {
 
         T439Entity t439Entity = (T439Entity) o;
 
-        CnsLotSizeKeyBo cnsLotSizeKeyBo = new CnsLotSizeKeyBo();
+        PlanCnsLotSizeKeyBo cnsLotSizeKeyBo = new PlanCnsLotSizeKeyBo();
 
         String sourceSystem = null;
         if(null != sourceSystemV1Dao.getSourceSystemWithProjectOne()) {

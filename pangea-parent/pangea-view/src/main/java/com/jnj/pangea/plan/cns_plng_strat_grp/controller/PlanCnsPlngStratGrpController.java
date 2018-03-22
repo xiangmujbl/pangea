@@ -4,12 +4,12 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.projectone.T461PEntity;
-import com.jnj.pangea.plan.cns_plng_strat_grp.service.CnsPlngStratGrpServiceImpl;
+import com.jnj.pangea.plan.cns_plng_strat_grp.service.PlanCnsPlngStratGrpServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
-public class CnsPlngStratGrpController extends CommonController {
+public class PlanCnsPlngStratGrpController extends CommonController {
 
-    CnsPlngStratGrpServiceImpl cnsPlngStratGrpService = CnsPlngStratGrpServiceImpl.getInstance();
+    PlanCnsPlngStratGrpServiceImpl cnsPlngStratGrpService = PlanCnsPlngStratGrpServiceImpl.getInstance();
 
     @Override
     public ResultObject process(RawDataEvent raw) {

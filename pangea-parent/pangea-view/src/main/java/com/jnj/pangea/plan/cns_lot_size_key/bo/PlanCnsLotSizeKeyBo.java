@@ -3,7 +3,7 @@ package com.jnj.pangea.plan.cns_lot_size_key.bo;
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class CnsLotSizeKeyBo extends BaseBo{
+public class PlanCnsLotSizeKeyBo extends BaseBo{
 
     private String sourceSystem;
     private String localLotSizeKey;

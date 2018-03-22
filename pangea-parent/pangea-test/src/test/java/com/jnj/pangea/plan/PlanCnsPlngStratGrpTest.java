@@ -6,10 +6,10 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/plan/CnsLotSizeKey_ProjectOne.feature"},
+        features = {"src/test/resources/features/plan/PlanCnsPlngStratGrp.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "json:target/reports/json/CnsLotSizeKey.json"})
-public class CnsLotSizeKeyTest_ProjectOne {
+public class PlanCnsPlngStratGrpTest {
 
 }

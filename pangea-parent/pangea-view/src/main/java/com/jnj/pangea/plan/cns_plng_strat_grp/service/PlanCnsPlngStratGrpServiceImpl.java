@@ -6,15 +6,15 @@ import com.jnj.pangea.common.dao.impl.ProjectOneT461XDaoImpl;
 import com.jnj.pangea.common.entity.projectone.T461PEntity;
 import com.jnj.pangea.common.entity.projectone.T461XEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.plan.cns_plng_strat_grp.bo.CnsPlngStratGrpBo;
+import com.jnj.pangea.plan.cns_plng_strat_grp.bo.PlanCnsPlngStratGrpBo;
 
-public class CnsPlngStratGrpServiceImpl implements ICommonService {
+public class PlanCnsPlngStratGrpServiceImpl implements ICommonService {
 
-    private static CnsPlngStratGrpServiceImpl instance;
+    private static PlanCnsPlngStratGrpServiceImpl instance;
 
-    public static CnsPlngStratGrpServiceImpl getInstance() {
+    public static PlanCnsPlngStratGrpServiceImpl getInstance() {
         if (instance == null) {
-            instance = new CnsPlngStratGrpServiceImpl();
+            instance = new PlanCnsPlngStratGrpServiceImpl();
         }
         return instance;
     }
@@ -29,23 +29,23 @@ public class CnsPlngStratGrpServiceImpl implements ICommonService {
 
         T461PEntity t461PEntity = (T461PEntity) o;
 
-        CnsPlngStratGrpBo cnsPlngStratGrpBo = new CnsPlngStratGrpBo();
+        PlanCnsPlngStratGrpBo planCnsPlngStratGrpBo = new PlanCnsPlngStratGrpBo();
 
         String sourceSystem = null;
         if(null != sourceSystemV1Dao.getSourceSystemWithProjectOne()) {
             sourceSystem = sourceSystemV1Dao.getSourceSystemWithProjectOne().getSourceSystem();
-            cnsPlngStratGrpBo.setSourceSystem(sourceSystem);
+            planCnsPlngStratGrpBo.setSourceSystem(sourceSystem);
         }
 
         String strgr = t461PEntity.getStrgr();
-        cnsPlngStratGrpBo.setLocalPlanStratGrp(strgr);
+        planCnsPlngStratGrpBo.setLocalPlanStratGrp(strgr);
 
         T461XEntity t461XEntity = t461XDao.getEntityWithStrgrAndSpras(strgr);
         if (null != t461XEntity){
-            cnsPlngStratGrpBo.setLocalPlanStratGrpDesc(t461XEntity.getText40());
+            planCnsPlngStratGrpBo.setLocalPlanStratGrpDesc(t461XEntity.getText40());
         }
 
-        resultObject.setBaseBo(cnsPlngStratGrpBo);
+        resultObject.setBaseBo(planCnsPlngStratGrpBo);
         return resultObject;
     }
 }
