@@ -12,6 +12,8 @@
 /project_one/t439t
 /project_one/t461p
 /project_one/t461x
+/project_one/tmabc
+/project_one/tmabct
 
 /ngems/source_system
 /ngems/golden_material
@@ -67,6 +69,7 @@
 /plan/cns_spl_proc_typ
 /plan/cns_lot_size_key
 /plan/cns_plng_strat_grp
+/plan/cns_abc_ind
 
 
 

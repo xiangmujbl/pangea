@@ -33,6 +33,11 @@ public interface IConstant {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
     }
 
+    interface project_one_tmabct{
+        String MAABC = "maabc";
+        String SPARS = "spars";
+    }
+
     interface PROJECT_ONE_T001W {
         String WERKS = "werks";
     }
