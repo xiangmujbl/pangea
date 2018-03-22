@@ -27,6 +27,7 @@ public interface IConstant {
         String EMS_F_MDM_MATERIAL_TYPES= "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
         String PROJECT_ONE_T461X = "/project_one/t461x";
+        String PROJECT_ONE_TMABCT="/project_one/tmabct";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
