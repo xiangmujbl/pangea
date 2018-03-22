@@ -1,4 +1,4 @@
-@pangea_test @AEAZ-1279
+@pangea_test @CnsLotSizeKeyNumber
 Feature: CnsLotSizeKey
 
     Scenario: Full Load curation

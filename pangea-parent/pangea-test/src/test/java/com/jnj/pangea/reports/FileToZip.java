@@ -23,18 +23,18 @@ public class FileToZip {
 
 
     private static void zip(ZipOutputStream zos, File file, String path) throws IOException {
-        // 首先判断是文件，还是文件夹，文件直接写入目录进入点，文件夹则遍历
+
         if (file.isDirectory()) {
-            ZipEntry entry = new ZipEntry(path + File.separator);// 文件夹的目录进入点必须以名称分隔符结尾
+            ZipEntry entry = new ZipEntry(path + File.separator);
             zos.putNextEntry(entry);
             File[] files = file.listFiles();
             for (File x : files) {
                 zip(zos, x, path + File.separator + x.getName());
             }
         } else {
-            FileInputStream fis = new FileInputStream(file);// 目录进入点的名字是文件在压缩文件中的路径
+            FileInputStream fis = new FileInputStream(file);
             ZipEntry entry = new ZipEntry(path);
-            zos.putNextEntry(entry);// 建立一个目录进入点
+            zos.putNextEntry(entry);
 
             int len = 0;
             byte[] buf = new byte[1024];
@@ -43,7 +43,7 @@ public class FileToZip {
             }
             zos.flush();
             fis.close();
-            zos.closeEntry();// 关闭当前目录进入点，将输入流移动下一个目录进入点
+            zos.closeEntry();
         }
     }
 
