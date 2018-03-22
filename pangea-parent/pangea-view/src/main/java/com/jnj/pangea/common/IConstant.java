@@ -23,9 +23,13 @@ public interface IConstant {
         String PROJECT_ONE_T001K = "/project_one/t001k";
         String PROJECT_ONE_T001 = "/project_one/t001";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
+        String EMS_F_MDM_MATERIAL_TYPES= "/ems/ems_f_mdm_material_types";
     }
 
     // -----region attribute
+    interface COMMON_ATTRIBUTE {
+        String SOURCESYSTEM = "sourceSystem";
+    }
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
     }
@@ -60,9 +64,6 @@ public interface IConstant {
     }
 
     String SOURCESYSTEM = "sourceSystem";
-    String LOCALMATERIALNUMBER = "localMaterialNumber";
-    String LOCALPLANT = "localPlant";
-    String LOCALPLANTSTATUS = "localPlantStatus";
 
     // -----region attribute value
     interface VALUE {
@@ -90,5 +91,11 @@ public interface IConstant {
     }
     interface EDM_MAT_PLANT_STAT {
         String LOCAL_PLANT_STATUS = "localPlantStatus";
+    }
+    interface EDM_MATERIAL_GLOBAL_V1 {
+        String LOCALMATERIALNUMBER = "localMaterialNumber";
+    }
+    interface EDM_PLANT_V1 {
+        String LOCALPLANT = "localPlant";
     }
 }

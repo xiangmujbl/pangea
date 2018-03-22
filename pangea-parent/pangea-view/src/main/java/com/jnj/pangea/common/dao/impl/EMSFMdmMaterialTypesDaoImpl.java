@@ -14,9 +14,4 @@ public class EMSFMdmMaterialTypesDaoImpl extends CommonDaoImpl{
         return instance;
     }
 
-    public EmsFMdmMaterialTypesEntity getMaterialTypeWithEMS(String zSourceSystem) {
-
-        String queryString = QueryHelper.buildCriteria(IConstant.VALUE.EMS).is(zSourceSystem).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_PLANT_V1,queryString,EmsFMdmMaterialTypesEntity.class);
-    }
 }

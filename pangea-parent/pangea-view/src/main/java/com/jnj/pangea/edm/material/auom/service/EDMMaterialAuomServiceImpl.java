@@ -59,8 +59,12 @@ public class EDMMaterialAuomServiceImpl implements ICommonService {
         String localDenominator = marmEntity.getUmren();
         materialAuomBo.setLocalDenominator(StringUtils.trim(localDenominator));
 
-        String materialNumber = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystem,matnr).getMaterialNumber();
-        materialAuomBo.setMaterialNumber(materialNumber);
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystem,matnr);
+        if (null != materialGlobalV1Entity){
+            String materialNumber = materialGlobalV1Entity.getMaterialNumber();
+            materialAuomBo.setMaterialNumber(materialNumber);
+
+        }
 
         resultObject.setBaseBo(materialAuomBo);
 

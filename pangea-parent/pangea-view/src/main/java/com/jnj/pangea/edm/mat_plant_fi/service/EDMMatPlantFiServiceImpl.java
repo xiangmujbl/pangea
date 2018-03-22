@@ -48,12 +48,11 @@ public class EDMMatPlantFiServiceImpl implements ICommonService {
             matPlantFiBo.setLocalStandardPrice(mbewEntity.getStprs());
             matPlantFiBo.setLocalPriceUnit(mbewEntity.getPeinh());
             matPlantFiBo.setLocalMvp(mbewEntity.getVerpr());
+            resultObject.setBaseBo(matPlantFiBo);
         }else{
             FailData failData = writeFailDataToRegion(mbewEntity, "T1", "Unable to find the Source System");
             resultObject.setFailData(failData);
         }
-
-        resultObject.setBaseBo(matPlantFiBo);
 
         return resultObject;
     }

@@ -51,17 +51,26 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         String werks = marcEntity.getWerks();
         materialPlantBo.setLocalPlant(werks);
 
-        String materialNumber = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystem,matnr).getMaterialNumber();
-        materialPlantBo.setMaterialNumber(materialNumber);
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystem,matnr);
+        if (null != materialGlobalV1Entity){
+            String materialNumber = materialGlobalV1Entity.getMaterialNumber();
+            materialPlantBo.setMaterialNumber(materialNumber);
+        }
 
-        String plant = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(sourceSystem,werks).getPlant();
-        materialPlantBo.setPlant(plant);
+        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(sourceSystem,werks);
+        if (null != plantV1Entity){
+            String plant = plantV1Entity.getPlant();
+            materialPlantBo.setPlant(plant);
+        }
 
         String mmsta = marcEntity.getMmsta();
         materialPlantBo.setLocalPlantStatus(mmsta);
 
-        String plantStatus = matPlantStatV1Dao.getPlantStatusWithLocalPlantStatusAndSourceSystem(sourceSystem,mmsta).getPlantStatus();
-        materialPlantBo.setPlantStatus(plantStatus);
+        EDMMatPlantStatV1Entity matPlantStatV1Entity = matPlantStatV1Dao.getPlantStatusWithLocalPlantStatusAndSourceSystem(sourceSystem,mmsta);
+        if (null != matPlantStatV1Entity){
+            String plantStatus = matPlantStatV1Entity.getPlantStatus();
+            materialPlantBo.setPlantStatus(plantStatus);
+        }
 
         resultObject.setBaseBo(materialPlantBo);
 

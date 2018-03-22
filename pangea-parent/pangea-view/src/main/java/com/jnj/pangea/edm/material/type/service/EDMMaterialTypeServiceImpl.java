@@ -28,8 +28,8 @@ public class EDMMaterialTypeServiceImpl implements ICommonService {
         EDMMaterialTypeBo materialTypemBo = new EDMMaterialTypeBo();
 
         String zSourceSystem = fMdmMaterialTypesEntity.getzSourceSystem();
-        if (null != emsfMdmMaterialTypesDao.getMaterialTypeWithEMS(zSourceSystem)){
-            materialTypemBo.setMaterialType(emsfMdmMaterialTypesDao.getMaterialTypeWithEMS(zSourceSystem).getMdmCode());
+        if (IConstant.VALUE.EMS == zSourceSystem){
+            materialTypemBo.setMaterialType(fMdmMaterialTypesEntity.getMdmCode());
             materialTypemBo.setMaterialTypeName(fMdmMaterialTypesEntity.getMdmName());
         } else {
             FailData failData = writeFailDataToRegion(fMdmMaterialTypesEntity, "T1", "z_source_system value is not [EMS]");
