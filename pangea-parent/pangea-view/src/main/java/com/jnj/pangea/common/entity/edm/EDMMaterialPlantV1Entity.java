@@ -9,12 +9,32 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localMaterialNumber;
     private String localPlant;
     private String materialNumber;
+    private String localDeletionFlagPlant;
+    private String localMrpType;
 
     public EDMMaterialPlantV1Entity(Map<String, Object> map) {
         super(map);
         setLocalMaterialNumber((String)map.get("localMaterialNumber"));
         setLocalPlant((String)map.get("localPlant"));
         setMaterialNumber((String)map.get("materialNumber"));
+        setLocalDeletionFlagPlant((String)map.get("localDeletionFlagPlant"));
+        setLocalMrpType((String)map.get("localMrpType"));
+    }
+
+    public String getLocalDeletionFlagPlant() {
+        return localDeletionFlagPlant;
+    }
+
+    public void setLocalDeletionFlagPlant(String localDeletionFlagPlant) {
+        this.localDeletionFlagPlant = localDeletionFlagPlant;
+    }
+
+    public String getLocalMrpType() {
+        return localMrpType;
+    }
+
+    public void setLocalMrpType(String localMrpType) {
+        this.localMrpType = localMrpType;
     }
 
     public String getLocalMaterialNumber() {

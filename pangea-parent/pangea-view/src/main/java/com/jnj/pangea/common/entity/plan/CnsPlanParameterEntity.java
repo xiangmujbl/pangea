@@ -11,7 +11,7 @@ public class CnsPlanParameterEntity extends CommonEntity {
     private String attribute;
     private String parameter;
     private String inclExcl;
-
+    private String parameterValue;
     public CnsPlanParameterEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("sourceSystem"));
@@ -19,6 +19,15 @@ public class CnsPlanParameterEntity extends CommonEntity {
         setAttribute((String) map.get("attribute"));
         setParameter((String) map.get("parameter"));
         setInclExcl((String) map.get("inclExcl"));
+        setParameterValue((String)map.get("parameterValue"));
+    }
+
+    public String getParameterValue() {
+        return parameterValue;
+    }
+
+    public void setParameterValue(String parameterValue) {
+        this.parameterValue = parameterValue;
     }
 
     public String getSourceSystem() {

@@ -4,6 +4,7 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.*;
+import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
@@ -30,7 +31,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
     private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
     private ProjectOneT001KDaoImpl t001KDao = ProjectOneT001KDaoImpl.getInstance();
     private ProjectOneT001DaoImpl t001Dao = ProjectOneT001DaoImpl.getInstance();
-
+    private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -55,6 +56,65 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         }
         return "";
     }
+
+    private String getFieldWithT3(String localMaterialNumber) {
+        EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+        if (null != entityWithLocalMaterialNumber) {
+            return entityWithLocalMaterialNumber.getLocalDpParentCode();
+        }
+        return "";
+    }
+
+    private void getFieldWithT7(PangeaCnsMaterialPlanStatusBo materialPlanStatusBo) {
+        if (null != materialPlanStatusBo) {
+            if (materialPlanStatusBo.getDpRelevant().equals(IConstant.VALUE.X)) {
+                materialPlanStatusBo.setActive(IConstant.VALUE.X);
+            } else if (materialPlanStatusBo.getNoPlanRelevant().equals(IConstant.VALUE.X)) {
+                materialPlanStatusBo.setActive(IConstant.VALUE.X);
+            } else if (materialPlanStatusBo.getSpRelevant().equals(IConstant.VALUE.X)) {
+                materialPlanStatusBo.setActive(IConstant.VALUE.X);
+            } else {
+                materialPlanStatusBo.setActive("");
+            }
+        } else {
+            materialPlanStatusBo.setActive("");
+        }
+    }
+
+    private EDMMaterialPlantV1Entity checkWithF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity, String attribute) {
+        if (null == materialPlantV1Entity) {
+            return null;
+        }
+        EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalPlant());
+        if (null == entityWithLocalMaterialNumber) {
+            return null;
+        }
+        List<CnsPlanParameterEntity> cpp = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT);
+        if (null == cpp || cpp.size() == 0) {
+            return null;
+        }
+
+        for (CnsPlanParameterEntity cnsPlanParameterEntity : cpp) {
+            if (materialPlantV1Entity.getLocalDeletionFlagPlant().equals(cnsPlanParameterEntity.getParameterValue())) {
+                break;
+            } else {
+                return null;
+            }
+        }
+        List<CnsPlanParameterEntity> cpp2 = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT, IConstant.VALUE.I);
+        if (null == cpp2 || cpp2.size() == 0) {
+            return null;
+        }
+
+        for (CnsPlanParameterEntity cnsPlanParameterEntity : cpp2) {
+            if (materialPlantV1Entity.getLocalMrpType().equals(cnsPlanParameterEntity.getParameterValue())) {
+                return materialPlantV1Entity;
+            }
+        }
+
+        return null;
+    }
+
 
 //    "Get  material_global_v1 where
 //    localMaterialType IN ParameterValues with below extraction (  /plan/cns_plan_parameter-sourceSystem = 'CONS_LATAM'

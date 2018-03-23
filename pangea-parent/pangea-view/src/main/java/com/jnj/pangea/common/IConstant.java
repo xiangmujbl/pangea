@@ -120,7 +120,6 @@ public interface IConstant {
         String PARAMETER = "parameter";
         String INCL_EXCL = "inclExcl";
     }
-
     // -----region attribute value
     interface VALUE {
 
@@ -133,6 +132,10 @@ public interface IConstant {
         String CNS_MATERIAL_PLAN_STATUS = "cns_material_plan_status";
         String DP_RELEVANT = "DPRelevant";
         String SP_RELEVANT = "SPRelevant";
+        String PLANT="Plant";
+        String MRP_TYPE="MRPType";
+        String I="I";
         String MATERIAL_TYPE = "MaterialType";
+        String X="X";
     }
 }
