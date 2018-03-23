@@ -69,12 +69,14 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         materialPlanStatusBo.setLocalPlant(materialPlantV1Entity.getLocalPlant());
         materialPlanStatusBo.setMaterialNumber(materialPlantV1Entity.getMaterialNumber());
 
-        //T3
-        String localParentCode = getFieldWithT3(localMaterialNumber);
-        materialPlanStatusBo.setLocalParentCode(localParentCode);
-
-        //T4
-        materialPlanStatusBo.setPpc(getFieldWithT4(localMaterialNumber));
+        //T3 T4
+        String localParentCode = "";
+        EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+        if (null != entityWithLocalMaterialNumber) {
+            localParentCode = entityWithLocalMaterialNumber.getLocalDpParentCode();
+            materialPlanStatusBo.setLocalParentCode(localParentCode);
+            materialPlanStatusBo.setPpc(entityWithLocalMaterialNumber.getPrimaryPlanningCode());
+        }
 
         //T7
         getFieldWithT7(materialPlanStatusBo);
@@ -126,11 +128,11 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
     private void getFieldWithT7(PangeaCnsMaterialPlanStatusBo materialPlanStatusBo) {
         if (null != materialPlanStatusBo) {
-            if (materialPlanStatusBo.getDpRelevant().equals(IConstant.VALUE.X)) {
+            if (IConstant.VALUE.X.equals(materialPlanStatusBo.getDpRelevant())) {
                 materialPlanStatusBo.setActive(IConstant.VALUE.X);
-            } else if (materialPlanStatusBo.getNoPlanRelevant().equals(IConstant.VALUE.X)) {
+            } else if (IConstant.VALUE.X.equals(materialPlanStatusBo.getNoPlanRelevant())) {
                 materialPlanStatusBo.setActive(IConstant.VALUE.X);
-            } else if (materialPlanStatusBo.getSpRelevant().equals(IConstant.VALUE.X)) {
+            } else if (IConstant.VALUE.X.equals(materialPlanStatusBo.getSpRelevant())) {
                 materialPlanStatusBo.setActive(IConstant.VALUE.X);
             } else {
                 materialPlanStatusBo.setActive("");
