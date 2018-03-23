@@ -24,7 +24,7 @@ Feature: CnsPlngStratGrp
             | EA   | 06   |  E   |
         And I wait "/project_one/t461x" Async Queue complete
 
-        When I submit task with xml file "xml/plan/CnsPlngStratGrp_ProjectOne.xml" and execute file "jar/pangea-view.jar"
+        When I submit task with xml file "xml/plan/PlanCnsPlngStratGrp.xml" and execute file "jar/pangea-view.jar"
 
         Then I check region data "/plan/cns_plng_strat_grp" by keyFields "sourceSystem,localPlanStratGrp,localPlanStratGrpDesc"
             |sourceSystem|localPlanStratGrp|localPlanStratGrpDesc|planStratGrp|planStratGrpDesc|
