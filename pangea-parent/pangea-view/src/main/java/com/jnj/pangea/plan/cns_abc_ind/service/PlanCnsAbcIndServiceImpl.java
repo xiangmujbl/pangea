@@ -10,9 +10,9 @@ import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_abc_ind.bo.PlanCnsAbcIndBo;
 
 public class PlanCnsAbcIndServiceImpl implements ICommonService {
-    private static ICommonService instance;
+    private static PlanCnsAbcIndServiceImpl instance;
 
-    public static ICommonService getInstance() {
+    public static PlanCnsAbcIndServiceImpl getInstance() {
         if (instance == null) {
             instance = new PlanCnsAbcIndServiceImpl();
         }
