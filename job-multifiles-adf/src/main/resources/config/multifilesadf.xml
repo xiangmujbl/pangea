@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:adf="http://www.springframework.org/schema/jnj/adf"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jnj/adf  http://www.springframework.org/schema/jnj/adf/spring-adf.xsd">
+	<adf:annotation-driven property-generator="propertyGenerator" />
+	<bean id="propertyGenerator" class="com.jnj.adf.config.support.DefaultBeanPropertyGenerator">
+		<property name="values">
+			<map>
+				<entry key="naming.server" value="${namingServer}" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="taskPool"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="${corePoolSize}" />
+		<property name="maxPoolSize" value="${maxPoolSize}" />
+	</bean>
+
+	<bean id="archiveListener" class="com.jnj.adf.springxd.multifilesadf.ArchiveFileListener"
+		scope="step">
+		<property name="archiveFolder" value="file:///${archiveFolder:#{null}}" />
+	</bean>
+	<bean id="jobListener" class="com.jnj.adf.springxd.job.listener.DataLoadFileJobListener">
+		<property name="gridName" value="${grid}" />
+		<property name="username" value="${grid_username}" />
+		<property name="password" value="${grid_password}" />
+		<property name="keys" value="${keys:#{null}}" />
+		<property name="namingServer" value="${namingServer}" />
+		<property name="locators" value="${locators}" />
+		<property name="path" value="${path}" />
+		<property name="reportLocation" value="${reportLocation}" />
+		<property name="cdcMode" value="${cdcMode}" />
+		<property name="deltaData" value="${deltaData}" />
+		<property name="reportFlg" value="${reportFlg}" />
+		<property name="trimKey" value="${trimKey}" />
+		<property name="cleanData" value="${cleanData}" />
+		<property name="randomSize" value="${randomSize}" />
+		<property name="grid" value="${grid}" />
+		<property name="titlePageContent" value="${titlePageContent}" />
+		<property name="writeGrid" value="${writeGrid}" />
+	</bean>
+	
+	<bean id="writeListener" class="com.jnj.adf.springxd.job.listener.DataLoadWriteListener" scope="step">
+		<property name="checkDataSize" value="${checkDataSize}" />
+		<property name="path" value="${path}" />
+		<property name="reportFlg" value="${reportFlg}" />
+	</bean>
+
+	<batch:job id="adf_import_job">
+		<batch:step id="step">
+			<batch:partition step="step1" partitioner="partitioner">
+				<batch:handler task-executor="taskPool" />
+			</batch:partition>
+		</batch:step>
+		<batch:listeners>
+			<batch:listener ref="jobListener" />
+		</batch:listeners>
+	</batch:job>
+
+	<bean id="partitioner"
+		class="com.jnj.adf.springxd.multifilesadf.CustomMultiResourcePartitioner"
+		scope="step">
+		<property name="path" value="${path}" />
+		<property name="resources" value="file:///${filePathPattern}" />
+		<property name="columns" value="${columns}" />
+		<property name="skipColumns" value="${skipColumns:#{null}}" />
+		<property name="notParseColumn" value="${notParseColumn}" />
+	</bean>
+
+	<batch:step id="step1">
+		<batch:tasklet transaction-manager="transactionManager">
+			<batch:chunk reader="flatFileItemReader" writer="compositeWriter"
+				commit-interval="${commitInterval}">
+				<batch:skip-policy>
+					<bean
+						class="com.jnj.adf.springxd.job.batch.ParserErrorSkipPolicy">
+						<property name="enable" value="false" />
+					</bean>
+				</batch:skip-policy>
+			</batch:chunk>
+			<batch:listeners>
+				<batch:listener ref="archiveListener" />
+				<batch:listener ref="writeListener" />
+			</batch:listeners>
+		</batch:tasklet>
+	</batch:step>
+	
+	<bean id="compositeWriter"
+		class="org.springframework.batch.item.support.CompositeItemWriter">
+		<property name="delegates">
+			<list>
+				<bean class="com.jnj.adf.springxd.job.writer.MultiParquetItemWriter" scope="step">
+					<property name="resource" value="file:///${resourcePath}" />
+					<property name="regionName" value="#{stepExecutionContext[path]}"/>
+			        <property name="delegate" ref="parquetItemWriter"/>
+			        <property name="itemCountLimitPerResource" value="${itemCountLimitPerResource}"/>
+			        <property name="resourceSuffixCreator" ref="parquetSuffix"/>
+			        <property name="writeParquet" value="${writeParquet}"/>
+				</bean>
+				<ref bean="adf_import_writer" />
+			</list>
+		</property>
+	</bean>
+	<bean id="parquetSuffix" class="com.jnj.adf.springxd.job.writer.ParquetResourceSuffixCreator" scope="step">
+		<property name="regionName" value="#{stepExecutionContext[filename]}"/>
+	</bean>
+	<bean id="parquetItemWriter"
+        class="com.jnj.adf.springxd.job.writer.ADFParquetWriter" scope="step">
+        <property name="regionName" value="#{stepExecutionContext[path]}"/>
+        <property name="columnNames"
+			value="#{stepExecutionContext[columnNames]}"></property>
+		<property name="writeS3" value="${writeS3}"/>
+		<property name="awsAccessKeyId" value="${awsAccessKeyId}"/>
+		<property name="awsSecretAccessKey" value="${awsSecretAccessKey}"/>
+		<property name="s3Region" value="${s3Region}"/>
+		<property name="deltaLoad" value="${deltaLoad}"/>
+		<property name="envName" value="${envName}"/>
+    </bean>
+    
+	<bean id="flatFileItemReader" class="com.jnj.adf.springxd.multifilesadf.CSVFileItemReader"
+		scope="step">
+		<property name="resource" value="#{stepExecutionContext[fileName]}" />
+		<property name="columns" value="${columns}" />
+		<property name="skipColumns" value="${skipColumns:#{null}}" />
+		<property name="linesToSkip" value="${linesToSkip}" />
+		<property name="maxItemCount" value="${maxItemCount}" />
+		<property name="encoding" value="${encoding}" />
+		<property name="quote" value="${quote}" />
+		<property name="delimiterChar" value="${delimiterChar}" />
+		<property name="notParseColumn" value="${notParseColumn}" />
+	</bean>
+
+	<bean id="adf_import_writer" class="com.jnj.adf.springxd.job.writer.JsonItemDataWriter"
+		scope="step">
+		<property name="grid" value="${grid}" />
+		<property name="path" value="${path}" />
+		<property name="temporal" value="${temporal}" />
+		<property name="cdcMode" value="${cdcMode}" />
+		<property name="keys" value="${keys:#{null}}" />
+		<property name="namingServer" value="${namingServer}" />
+		<property name="locators" value="${locators}" />
+		<property name="username" value="${grid_username}" />
+		<property name="password" value="${grid_password}" />
+		<property name="trimKey" value="${trimKey}" />
+		<property name="keyAddUUID" value="${keyAddUUID}" />
+		<property name="writeGrid" value="${writeGrid}" />
+		<property name="fullLoad" value="${fullLoad}" />
+		<property name="clientPut" value="${clientPut}" />
+		<property name="notParseColumn" value="${notParseColumn}" />
+	</bean>
+</beans>

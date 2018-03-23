@@ -14,6 +14,7 @@
 /project_one/t461x
 /project_one/tmabc
 /project_one/tmabct
+/project_one/t460t
 
 /ngems/source_system
 /ngems/golden_material
@@ -50,6 +51,7 @@
 /edm/product_family_v1
 /edm/category_v1
 /edm/sub_brand_v1
+/edm/mat_plant_fi_v1
 
 /plan/edm_failed_data
 /plan/cns_cert_key
@@ -77,6 +79,7 @@
 /plan/cns_plng_strat_grp
 /plan/cns_abc_ind
 /plan/cns_material_incl
+/plan/cns_plant_attr
 
 /pangea/cns_material_plan_status
 
