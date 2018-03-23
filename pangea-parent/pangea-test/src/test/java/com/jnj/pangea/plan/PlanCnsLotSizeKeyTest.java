@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/plan/PlanCnsLotSizeKey.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/@AEAZ-1485 PlanCnsLotSizeKey.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-1485 PlanCnsLotSizeKey.json"})
 public class PlanCnsLotSizeKeyTest {
 
 }

@@ -11,7 +11,7 @@
                     <relation path="/project_one/t460t" isPrimaryKey="false">
                         <expression>sobsl=/project_one/t460t.sobsl</expression>
                     </relation>
-                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                    <relation path="/edm/source_system_v1" isPrimaryKey="true">
                         <expression></expression>
                     </relation>
                 </relations>

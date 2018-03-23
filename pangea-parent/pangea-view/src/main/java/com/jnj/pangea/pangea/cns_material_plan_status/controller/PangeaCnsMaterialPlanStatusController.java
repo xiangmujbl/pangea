@@ -10,7 +10,7 @@ import com.jnj.pangea.util.BeanUtil;
 
 public class PangeaCnsMaterialPlanStatusController extends CommonController {
 
-    private ICommonService pangeaCnsMaterialPlanStatusService = PangeaCnsMaterialPlanStatusServiceImpl.getInstance();
+    private PangeaCnsMaterialPlanStatusServiceImpl pangeaCnsMaterialPlanStatusService = PangeaCnsMaterialPlanStatusServiceImpl.getInstance();
 
     @Override
     public ResultObject process(RawDataEvent raw) {

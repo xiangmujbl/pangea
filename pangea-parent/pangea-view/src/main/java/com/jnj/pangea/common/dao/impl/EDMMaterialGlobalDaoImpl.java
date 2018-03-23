@@ -31,4 +31,9 @@ public class EDMMaterialGlobalDaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1,queryString,EDMMaterialGlobalV1Entity.class);
     }
+
+    public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialType(String parameterValue) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_TYPE).is(parameterValue).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1,queryString,EDMMaterialGlobalV1Entity.class);
+    }
 }

@@ -29,6 +29,7 @@ public interface IConstant {
         String PROJECT_ONE_T461X = "/project_one/t461x";
         String PROJECT_ONE_TMABCT="/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER="/plan/cns_plan_parameter";
+        String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -106,6 +107,7 @@ public interface IConstant {
     interface EDM_MATERIAL_GLOBAL_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_TYPE = "localMaterialType";
     }
 
     interface EDM_PLANT_V1 {
@@ -119,6 +121,10 @@ public interface IConstant {
         String ATTRIBUTE = "attribute";
         String PARAMETER = "parameter";
         String INCL_EXCL = "inclExcl";
+    }
+    interface CNS_MATERIAL_INCL{
+        String LOCAL_MATERIAL_NUMBER= "localMaterialNumber";
+        String PLANNING_TYPE = "planningType";
     }
     // -----region attribute value
     interface VALUE {
@@ -137,5 +143,6 @@ public interface IConstant {
         String I="I";
         String MATERIAL_TYPE = "MaterialType";
         String X="X";
+        String NP = "NP";
     }
 }

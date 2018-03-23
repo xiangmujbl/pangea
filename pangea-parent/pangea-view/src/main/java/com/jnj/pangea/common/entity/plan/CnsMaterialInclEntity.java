@@ -4,12 +4,12 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class CnsMaterialIncl extends CommonEntity {
+public class CnsMaterialInclEntity extends CommonEntity {
 
     private String localMaterialNumber;
     private String planningType;
 
-    public CnsMaterialIncl(Map<String, Object> map) {
+    public CnsMaterialInclEntity(Map<String, Object> map) {
         super(map);
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
         setPlanningType((String) map.get("planningType"));

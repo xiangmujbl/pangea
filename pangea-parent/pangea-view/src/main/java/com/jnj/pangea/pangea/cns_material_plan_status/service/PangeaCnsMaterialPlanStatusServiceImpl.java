@@ -8,11 +8,13 @@ import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
+import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.common.entity.plan.CnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.pangea.cns_material_plan_status.bo.PangeaCnsMaterialPlanStatusBo;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
@@ -32,6 +34,9 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
     private ProjectOneT001KDaoImpl t001KDao = ProjectOneT001KDaoImpl.getInstance();
     private ProjectOneT001DaoImpl t001Dao = ProjectOneT001DaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
+    private EDMMaterialGlobalDaoImpl materialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
+    private PlanCnsMaterialInclDaoImpl materialInclDao = PlanCnsMaterialInclDaoImpl.getInstance();
+
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -44,6 +49,43 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         // T1
         materialPlanStatusBo.setSourceSystem(getFieldWithT1());
 
+        //T2
+        String localMaterialNumber = materialPlantV1Entity.getLocalMaterialNumber();
+        //F1
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = checkWithF1();
+        if (null != materialGlobalV1Entity){
+            //F2
+            if (null != checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.DP_RELEVANT)){
+                materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
+                materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
+                materialPlanStatusBo.setSpRelevant("");
+            }else if (null != checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.SP_RELEVANT)){
+                materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
+                materialPlanStatusBo.setDpRelevant("");
+                materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
+            }
+        }
+
+        materialPlanStatusBo.setLocalPlant(materialPlantV1Entity.getLocalPlant());
+        materialPlanStatusBo.setMaterialNumber(materialPlantV1Entity.getMaterialNumber());
+
+        //T3
+        String localParentCode = getFieldWithT3(localMaterialNumber);
+        materialPlanStatusBo.setLocalParentCode(localParentCode);
+
+        //T4
+        materialPlanStatusBo.setPpc(getFieldWithT4(localMaterialNumber));
+
+        //T7
+        getFieldWithT7(materialPlanStatusBo);
+
+        //T5
+        if (!"".equals(localParentCode)){
+            materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
+        }
+
+        //T6
+        materialPlanStatusBo.setNoPlanRelevant(getFieldWithT6(localMaterialNumber));
 
         resultObject.setBaseBo(materialPlanStatusBo);
         return resultObject;
@@ -65,6 +107,23 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         return "";
     }
 
+    private String getFieldWithT4(String localMaterialNumber) {
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+        if (null != materialGlobalV1Entity){
+            return materialGlobalV1Entity.getPrimaryPlanningCode();
+        }
+        return "";
+    }
+
+    private String getFieldWithT6(String localMaterialNumber) {
+        CnsMaterialInclEntity materialInclEntity = materialInclDao.getCnsMaterialInclEntityWithLocalMaterialNumberAndPlanningType();
+        if (null != materialInclEntity){
+            return IConstant.VALUE.X;
+        }
+        return "";
+    }
+
+
     private void getFieldWithT7(PangeaCnsMaterialPlanStatusBo materialPlanStatusBo) {
         if (null != materialPlanStatusBo) {
             if (materialPlanStatusBo.getDpRelevant().equals(IConstant.VALUE.X)) {
@@ -81,12 +140,30 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         }
     }
 
-    private EDMMaterialPlantV1Entity checkWithF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity, String attribute) {
+    private EDMMaterialGlobalV1Entity checkWithF1(){
+        List<CnsPlanParameterEntity> planParameterEntities = new ArrayList<CnsPlanParameterEntity>();
+        List<CnsPlanParameterEntity> t1DpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
+        planParameterEntities.addAll(t1DpList);
+
+        List<CnsPlanParameterEntity> t1SpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.SP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
+        planParameterEntities.addAll(t1SpList);
+
+        for (CnsPlanParameterEntity planParameterEntity:planParameterEntities) {
+            EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialType(planParameterEntity.getParameterValue());
+            if (null != materialGlobalV1Entity){
+                return materialGlobalV1Entity;
+            }
+        }
+        return null;
+    }
+
+    private EDMMaterialPlantV1Entity checkWithF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity,EDMMaterialGlobalV1Entity materialGlobalV1Entity, String attribute) {
         if (null == materialPlantV1Entity) {
             return null;
         }
-        EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalPlant());
-        if (null == entityWithLocalMaterialNumber) {
+        if (null == materialGlobalV1Entity) {
             return null;
         }
         List<CnsPlanParameterEntity> cpp = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT);
@@ -114,42 +191,6 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
         return null;
     }
-
-
-//    "Get  material_global_v1 where
-//    localMaterialType IN ParameterValues with below extraction (  /plan/cns_plan_parameter-sourceSystem = 'CONS_LATAM'
-//                                                                  /plan/cns_plan_parameter-dataObject = 'cns_material_plan_status')
-//                                                                  /plan/cns_plan_parameter-attribute IN 'DPRelevant' AND 'SPRelevant')
-//                                                                  /plan/cns_plan_parameter-parameter = 'MaterialType') AND
-//    flagForDeletion <> 'X'
-//    If no records found, skip entry"
-
-//    "Check material_plant_v1 where localPlant = material_global_v1-localMaterialNumber werks IN ParameterValues with below extraction
-//            (        /plan/cns_plan_parameter-sourceSystem = 'CONS_LATAM'
-//                    /plan/cns_plan_parameter-dataObject = 'cns_material_plan_status')
-//                    /plan/cns_plan_parameter-attribute = 'SPRelevant')
-//                    /plan/cns_plan_parameter-parameter = 'Plant') AND
-//    localMRPType IN (/plan/cns_plan_parameter-sourceSystem = 'CONS_LATAM'
-//                    /plan/cns_plan_parameter-dataObject = 'cns_material_plan_status'
-//                    /plan/cns_plan_parameter-attribute = 'SPRelevant'
-//                    /plan/cns_plan_parameter-parameter = 'MRPType'
-//                    /plan/cns_plan_parameter-inclExcl = 'I')
-//    If return holds good, set X, Else leave Blank"
-
-//    Get material_global_v1-localDpParentCode where material_global_v1-localMaterialNumber = material_plant_v1-localMaterialNumber
-
-
-    private boolean checkWithT123() {
-
-        List<CnsPlanParameterEntity> t1DpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
-                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
-        List<CnsPlanParameterEntity> t1SpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
-                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.SP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
-
-
-        return true;
-    }
-
 
     private FailData checkT1(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
         FailData failData = null;
