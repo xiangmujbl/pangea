@@ -71,6 +71,8 @@
 /plan/cns_plng_strat_grp
 /plan/cns_abc_ind
 
+/plan/edm_failed_data
+
 
 
 

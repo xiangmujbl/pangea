@@ -90,4 +90,8 @@
 		<adf-grid:partitioned-region name="sub_brand_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 	</adf-grid:replicated-region>
 
+	<adf-grid:replicated-region id="plan">
+		<adf-grid:partitioned-region name="edm_failed_data" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+	</adf-grid:replicated-region>
+
 </beans>
