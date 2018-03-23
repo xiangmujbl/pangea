@@ -2,13 +2,13 @@
 Feature: PlanCnsAbcInd
 
   Scenario: Full Load curation
-    And I will remove all data with region "/plan/cns_abc_ind"
+#    And I will remove all data with region "/plan/cns_abc_ind"
     Given I import "/project_one/tmabc" by keyFields "maabc"
       | maabc |
-      |10001  |
-      |10002  |
-      |10003  |
-      |10004  |
+      | 10001 |
+      | 10002 |
+      | 10003 |
+      | 10004 |
 
     And I wait "/project_one/tmabc" Async Queue complete
 
@@ -19,20 +19,20 @@ Feature: PlanCnsAbcInd
     And I wait "/edm/source_system_v1" Async Queue complete
 
     And I import "/project_one/tmabct" by keyFields "tmabc"
-     |tmabc|maabc|spars|
-     |2001 |10001|E    |
-     |2002 |10002|E    |
-     |2003 |10003|S    |
+      | tmabc | maabc | spars |
+      | 2001  | 10001 | E     |
+      | 2002  | 10002 | E     |
+      | 2003  | 10003 | S     |
     And I wait "/project_one/tmabct" Async Queue complete
 
     When I submit task with xml file "xml/plan/PlanCnsAbcInd_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/plan/cns_abc_ind" by keyFields "sourceSystem,sourceSystem,localIndicator,localIndicatorDescription,indicator,indicatorDecription"
-      | sourceSystem |localIndicator|localIndicatorDescription|indicator|indicatorDecription|
-      | CONS_LATAM   | 10001        |2001                     |         |                   |
-      | CONS_LATAM   | 10002        |2002                     |         |                   |
-      | CONS_LATAM   | 10003        |                         |         |                   |
-      | CONS_LATAM   | 10004        |                         |         |                   |
+      | sourceSystem | localIndicator | localIndicatorDescription | indicator | indicatorDecription |
+      | CONS_LATAM   | 10001          | 2001                      |           |                     |
+      | CONS_LATAM   | 10002          | 2002                      |           |                     |
+      | CONS_LATAM   | 10003          |                           |           |                     |
+      | CONS_LATAM   | 10004          |                           |           |                     |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -41,9 +41,3 @@ Feature: PlanCnsAbcInd
 
     And I delete the test data
     And I will remove all data with region "/plan/cns_abc_ind"
-      And I delete data from "/plan/cns_abc_ind" by keyFields "sourceSystem,sourceSystem,localIndicator,localIndicatorDescription,indicator,indicatorDecription"
-      | sourceSystem |localIndicator|localIndicatorDescription|indicator|indicatorDecription|
-      | CONS_LATAM   | 10001        |2001                     |         |                   |
-      | CONS_LATAM   | 10002        |2002                     |         |                   |
-      | CONS_LATAM   | 10003        |                         |         |                   |
-      | CONS_LATAM   | 10004        |                         |         |                   |

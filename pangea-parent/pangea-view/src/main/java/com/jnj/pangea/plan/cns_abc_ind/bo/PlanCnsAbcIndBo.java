@@ -54,7 +54,7 @@ public class PlanCnsAbcIndBo extends BaseBo {
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("sourceSystem", this.sourceSystem)
-                .add("localCountry", this.localIndicator)
+                .add("localIndicator", this.localIndicator)
                 .add("localIndicatorDescription",this.localIndicatorDescription)
                 .add("indicator",this.indicator)
                 .add("indicatorDecription",this.indicatorDecription)

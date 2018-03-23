@@ -28,6 +28,7 @@ public interface IConstant {
         String PROJECT_ONE_T439T = "/project_one/t439t";
         String PROJECT_ONE_T461X = "/project_one/t461x";
         String PROJECT_ONE_TMABCT="/project_one/tmabct";
+        String PLAN_CNS_PLAN_PARAMETER="/plan/cns_plan_parameter";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -112,6 +113,14 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
+    interface CNS_PLAN_PARAMETER {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String DATA_OBJECT = "dataObject";
+        String ATTRIBUTE = "attribute";
+        String PARAMETER = "parameter";
+        String INCL_EXCL = "inclExcl";
+    }
+
     // -----region attribute value
     interface VALUE {
 
@@ -120,5 +129,10 @@ public interface IConstant {
         String EN = "E";
         String PT = "P";
         String SP = "S";
+        String CONS_LATAM = "CONS_LATAM";
+        String CNS_MATERIAL_PLAN_STATUS = "cns_material_plan_status";
+        String DP_RELEVANT = "DPRelevant";
+        String SP_RELEVANT = "SPRelevant";
+        String MATERIAL_TYPE = "MaterialType";
     }
 }
