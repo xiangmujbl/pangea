@@ -3,12 +3,9 @@ package com.jnj.pangea.edm.material.type.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.EMSFMdmMaterialTypesDaoImpl;
 import com.jnj.pangea.common.entity.ems.EmsFMdmMaterialTypesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.type.bo.EDMMaterialTypeBo;
-import org.apache.commons.lang3.StringUtils;
 
 public class EDMMaterialTypeServiceImpl implements ICommonService {
     private static EDMMaterialTypeServiceImpl instance;

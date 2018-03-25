@@ -1,10 +1,10 @@
 package com.jnj.pangea.plan.cns_plng_strat_grp.service;
 
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.ProjectOneT461XDaoImpl;
-import com.jnj.pangea.common.entity.projectone.T461PEntity;
-import com.jnj.pangea.common.entity.projectone.T461XEntity;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT461XDaoImpl;
+import com.jnj.pangea.common.entity.project_one.T461PEntity;
+import com.jnj.pangea.common.entity.project_one.T461XEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_plng_strat_grp.bo.PlanCnsPlngStratGrpBo;
 

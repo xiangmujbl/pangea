@@ -2,15 +2,12 @@ package com.jnj.pangea.plan.cns_spl_proc_typ.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.ProjectOneT460TDaoImpl;
-import com.jnj.pangea.common.entity.projectone.T460AEntity;
-import com.jnj.pangea.common.entity.projectone.T460TEntity;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT460TDaoImpl;
+import com.jnj.pangea.common.entity.project_one.T460AEntity;
+import com.jnj.pangea.common.entity.project_one.T460TEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.mat_plant_fi.service.EDMMatPlantFiServiceImpl;
 import com.jnj.pangea.plan.cns_spl_proc_typ.bo.PlanCnsSplProcTypBo;
-
-import java.util.List;
 
 public class PlanCnsSplProcTypServiceImpl implements ICommonService{
     private static PlanCnsSplProcTypServiceImpl instance;

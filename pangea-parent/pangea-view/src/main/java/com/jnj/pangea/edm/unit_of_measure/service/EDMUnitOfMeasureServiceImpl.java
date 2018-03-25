@@ -1,17 +1,13 @@
 package com.jnj.pangea.edm.unit_of_measure.service;
 
-import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.EMSFMdmUnitOfMeasureDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.ems.EMSFMdmUnitOfMeasureDaoImpl;
 import com.jnj.pangea.common.entity.ems.EMSFMdmUnitOfMeasureEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.unit_of_measure.bo.EDMUnitOfMeasureBo;
-
-import java.util.List;
 
 /**
  * Created by JGUO57 on 2018/3/2.

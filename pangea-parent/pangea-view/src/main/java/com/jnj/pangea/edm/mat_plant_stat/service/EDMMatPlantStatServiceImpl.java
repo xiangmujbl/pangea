@@ -2,8 +2,8 @@ package com.jnj.pangea.edm.mat_plant_stat.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.entity.projectone.T141Entity;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.entity.project_one.T141Entity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mat_plant_stat.bo.EDMMatPlantStatBo;
 

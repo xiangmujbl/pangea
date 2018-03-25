@@ -2,10 +2,10 @@ package com.jnj.pangea.plan.cns_abc_ind.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.ProjectOneTmabctDaoImpl;
-import com.jnj.pangea.common.entity.projectone.TmabcEntity;
-import com.jnj.pangea.common.entity.projectone.TmabctEntity;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneTmabctDaoImpl;
+import com.jnj.pangea.common.entity.project_one.TmabcEntity;
+import com.jnj.pangea.common.entity.project_one.TmabctEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_abc_ind.bo.PlanCnsAbcIndBo;
 

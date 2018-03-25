@@ -1,16 +1,13 @@
 package com.jnj.pangea.edm.country.service;
 
-import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.EMSFMdmCountriesDaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.ems.EMSFMdmCountriesDaoImpl;
 import com.jnj.pangea.common.entity.ems.EMSFMdmCountriesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
-
-import java.util.List;
 
 /**
  * Created by JGUO57 on 2018/3/2.

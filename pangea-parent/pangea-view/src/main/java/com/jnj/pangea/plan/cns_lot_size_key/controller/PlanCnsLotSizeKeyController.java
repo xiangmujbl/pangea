@@ -3,7 +3,7 @@ package com.jnj.pangea.plan.cns_lot_size_key.controller;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.CommonController;
-import com.jnj.pangea.common.entity.projectone.T439Entity;
+import com.jnj.pangea.common.entity.project_one.T439Entity;
 import com.jnj.pangea.plan.cns_lot_size_key.service.PlanCnsLotSizeKeyServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 

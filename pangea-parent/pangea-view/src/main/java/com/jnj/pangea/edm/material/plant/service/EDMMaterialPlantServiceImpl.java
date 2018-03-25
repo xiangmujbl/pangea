@@ -1,24 +1,16 @@
 package com.jnj.pangea.edm.material.plant.service;
 
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.curation.indexer.AdfLuceneHelper;
-import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMMatPlantStatV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.EDMMaterialGlobalDaoImpl;
-import com.jnj.pangea.common.dao.impl.EDMPlantV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMMatPlantStatV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMatPlantStatV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entity.projectone.MarcEntity;
+import com.jnj.pangea.common.entity.project_one.MarcEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.plant.bo.EDMMaterialPlantBo;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.List;
 
 
 public class EDMMaterialPlantServiceImpl implements ICommonService {

@@ -1,20 +1,14 @@
 package com.jnj.pangea.edm.material.auom.service;
 
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.curation.indexer.AdfLuceneHelper;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMMaterialGlobalDaoImpl;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entity.ngems.SourceSystemEntity;
-import com.jnj.pangea.common.entity.projectone.MarmEntity;
+import com.jnj.pangea.common.entity.project_one.MarmEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material.auom.bo.EDMMaterialAuomBo;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.List;
 
 /**
  * Created by XZhan290 on 2018/3/2.

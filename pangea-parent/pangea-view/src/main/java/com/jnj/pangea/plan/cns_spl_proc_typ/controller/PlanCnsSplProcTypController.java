@@ -3,7 +3,7 @@ package com.jnj.pangea.plan.cns_spl_proc_typ.controller;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.CommonController;
-import com.jnj.pangea.common.entity.projectone.T460AEntity;
+import com.jnj.pangea.common.entity.project_one.T460AEntity;
 import com.jnj.pangea.plan.cns_spl_proc_typ.service.PlanCnsSplProcTypServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 

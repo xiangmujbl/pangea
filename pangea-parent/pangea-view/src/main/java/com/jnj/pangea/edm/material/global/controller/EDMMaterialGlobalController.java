@@ -6,8 +6,8 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.pangea.common.*;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.entity.projectone.MaraEntity;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.entity.project_one.MaraEntity;
 import com.jnj.pangea.edm.material.global.service.EDMMaterialGlobalServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 

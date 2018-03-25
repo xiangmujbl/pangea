@@ -2,9 +2,9 @@ package com.jnj.pangea.edm.mat_plant_fi.service;
 
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.EDMPlantV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.entity.projectone.MbewEntity;
+import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.entity.project_one.MbewEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mat_plant_fi.bo.EDMMatPlantFiBo;
 

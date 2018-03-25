@@ -3,7 +3,7 @@ package com.jnj.pangea.edm.mat_plant_stat.controller;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.projectone.T141Entity;
+import com.jnj.pangea.common.entity.project_one.T141Entity;
 import com.jnj.pangea.edm.mat_plant_stat.service.EDMMatPlantStatServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
