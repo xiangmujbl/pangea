@@ -4,7 +4,6 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
-import com.jnj.pangea.pangea.cns_material_plan_status.bo.CnsMaterialInclBo;
 
 import java.util.List;
 

@@ -9,11 +9,7 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
-import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
-import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.pangea.cns_material_plan_status.bo.CnsMaterialInclBo;
 import com.jnj.pangea.pangea.cns_material_plan_status.bo.PangeaCnsMaterialPlanStatusBo;
 import com.jnj.pangea.pangea.cns_material_plan_status.service.PangeaCnsMaterialPlanStatusServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
@@ -43,16 +39,11 @@ public class PangeaCnsMaterialPlanStatusController extends BaseController {
         });
 
         List<PangeaCnsMaterialPlanStatusBo> materialPlanStatusBoList = getMaterialInclBo();
-        LogUtil.getCoreLog().error("cnsMaterialInclBoList.size():"+materialPlanStatusBoList.size());
 
         for (PangeaCnsMaterialPlanStatusBo materialPlanStatusBo:materialPlanStatusBoList) {
-            LogUtil.getCoreLog().error(materialPlanStatusBo.getSourceSystem());
-            LogUtil.getCoreLog().error(materialPlanStatusBo.getLocalMaterialNumber());
-            LogUtil.getCoreLog().error(materialPlanStatusBo.getLocalPlant());
             BaseBo baseBo = materialPlanStatusBo;
             result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
         }
-        LogUtil.getCoreLog().error("result.toString():"+result.toString());
         return result;
     }
 

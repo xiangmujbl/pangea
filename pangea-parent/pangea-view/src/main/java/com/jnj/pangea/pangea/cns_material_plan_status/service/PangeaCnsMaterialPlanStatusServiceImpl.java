@@ -17,7 +17,6 @@ import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.common.entity.plan.CnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.pangea.cns_material_plan_status.bo.CnsMaterialInclBo;
 import com.jnj.pangea.pangea.cns_material_plan_status.bo.PangeaCnsMaterialPlanStatusBo;
 import org.apache.commons.lang3.StringUtils;
 
@@ -190,7 +189,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
     }
 
-    private FailData checkT1(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
+    private FailData checkT2(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
         FailData failData = null;
         if (StringUtils.isEmpty(sourceSystem) || IConstant.VALUE.EMS.equals(sourceSystem)) {
             failData = new FailData();
