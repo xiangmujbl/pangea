@@ -60,12 +60,12 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         //F1
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = checkWithF1();
         if (null != materialGlobalV1Entity){
-            //F2
-            if (null != checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.DP_RELEVANT)){
+            //F2 F3
+            if (checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.DP_RELEVANT)){
                 materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
                 materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
                 materialPlanStatusBo.setSpRelevant("");
-            }else if (null != checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.SP_RELEVANT)){
+            }else if (checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.SP_RELEVANT)){
                 materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
                 materialPlanStatusBo.setDpRelevant("");
                 materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
@@ -107,22 +107,6 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         return "";
     }
 
-    private String getFieldWithT3(String localMaterialNumber) {
-        EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
-        if (null != entityWithLocalMaterialNumber) {
-            return entityWithLocalMaterialNumber.getLocalDpParentCode();
-        }
-        return "";
-    }
-
-    private String getFieldWithT4(String localMaterialNumber) {
-        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
-        if (null != materialGlobalV1Entity){
-            return materialGlobalV1Entity.getPrimaryPlanningCode();
-        }
-        return "";
-    }
-
     private String getFieldWithT6(String localMaterialNumber) {
         CnsMaterialInclEntity materialInclEntity = materialInclDao.getCnsMaterialInclEntityWithLocalMaterialNumberAndPlanningType();
         if (null != materialInclEntity){
@@ -130,7 +114,6 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         }
         return "";
     }
-
 
     private void getFieldWithT7(PangeaCnsMaterialPlanStatusBo materialPlanStatusBo) {
         if (null != materialPlanStatusBo) {
@@ -149,7 +132,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
     }
 
     private EDMMaterialGlobalV1Entity checkWithF1(){
-        List<CnsPlanParameterEntity> planParameterEntities = new ArrayList<CnsPlanParameterEntity>();
+        List<CnsPlanParameterEntity> planParameterEntities = new ArrayList<>();
         List<CnsPlanParameterEntity> t1DpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
                 IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
         planParameterEntities.addAll(t1DpList);
@@ -167,37 +150,42 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         return null;
     }
 
-    private EDMMaterialPlantV1Entity checkWithF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity,EDMMaterialGlobalV1Entity materialGlobalV1Entity, String attribute) {
+    private Boolean checkWithF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity,EDMMaterialGlobalV1Entity materialGlobalV1Entity,String attribute){
+
         if (null == materialPlantV1Entity) {
             return null;
         }
         if (null == materialGlobalV1Entity) {
             return null;
         }
-        List<CnsPlanParameterEntity> cpp = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT);
-        if (null == cpp || cpp.size() == 0) {
-            return null;
-        }
 
-        for (CnsPlanParameterEntity cnsPlanParameterEntity : cpp) {
-            if (materialPlantV1Entity.getLocalDeletionFlagPlant().equals(cnsPlanParameterEntity.getParameterValue())) {
-                break;
-            } else {
-                return null;
-            }
-        }
-        List<CnsPlanParameterEntity> cpp2 = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT, IConstant.VALUE.I);
-        if (null == cpp2 || cpp2.size() == 0) {
-            return null;
-        }
+        Boolean lpFlag = materialPlantV1Entity.getLocalPlant().equals(materialGlobalV1Entity.getLocalMaterialNumber());
 
-        for (CnsPlanParameterEntity cnsPlanParameterEntity : cpp2) {
-            if (materialPlantV1Entity.getLocalMrpType().equals(cnsPlanParameterEntity.getParameterValue())) {
-                return materialPlantV1Entity;
+        List<CnsPlanParameterEntity> ldList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT);
+
+        Boolean ldFlag = false;
+        for (CnsPlanParameterEntity planParameterEntity: ldList) {
+            if (materialPlantV1Entity.getLocalDeletionFlagPlant().equals(planParameterEntity.getParameterValue())){
+                ldFlag = true;
             }
         }
 
-        return null;
+        Boolean lmFlag = false;
+        List<CnsPlanParameterEntity> lmList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.MRP_TYPE, IConstant.VALUE.I);
+
+        for (CnsPlanParameterEntity planParameterEntity:lmList) {
+            if (materialPlantV1Entity.getLocalMrpType().equals(planParameterEntity.getParameterValue())){
+                lmFlag = true;
+            }
+        }
+
+        if (lpFlag && ldFlag && lmFlag){
+            return true;
+        }
+        return false;
+
     }
 
     private FailData checkT1(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
