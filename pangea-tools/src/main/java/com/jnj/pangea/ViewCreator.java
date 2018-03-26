@@ -149,8 +149,8 @@ public class ViewCreator {
         new File(controllerPath).mkdirs();
         String controllerFileName = this.fullName + "Controller.java";
         extraParam = new HashMap<>();
-        extraParam.put("mainEntitySystem", curationMetadata.getViewRegion().getSystem());
-        extraParam.put("mainEntityName", curationMetadata.getViewRegion().getName());
+        extraParam.put("mainEntitySystem", curationMetadata.getMainRegion().getSystem());
+        extraParam.put("mainEntityName", curationMetadata.getMainRegion().getName());
         generateFileWithFtl(controllerPath, controllerFileName, "curation_controller.ftl", extraParam);
         // service
         String servicePath = basePath + "service";

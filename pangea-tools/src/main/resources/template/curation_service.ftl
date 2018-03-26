@@ -30,10 +30,10 @@ public class ${fullName}ServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         ${mainEntityName?cap_first}Entity ${mainEntityName}Entity = (${mainEntityName?cap_first}Entity) o;
 
-        ${fullName}Bo ${fullName?uncap_first}Bo = new ${fullName}Bo();
+        ${fullName}Bo ${name?uncap_first}Bo = new ${fullName}Bo();
         // TODO add logic
 
-        resultObject.setBaseBo(${fullName?uncap_first}Bo);
+        resultObject.setBaseBo(${name?uncap_first}Bo);
         return resultObject;
     }
 }

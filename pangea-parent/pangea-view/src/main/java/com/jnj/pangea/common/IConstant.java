@@ -148,5 +148,6 @@ public interface IConstant {
         String X = "X";
         String NP = "NP";
         String Y = "Y";
+        String YES = "YES";
     }
 }

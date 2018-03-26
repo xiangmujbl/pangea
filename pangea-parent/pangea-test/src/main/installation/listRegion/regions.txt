@@ -86,3 +86,14 @@
 /system/test_main_entity
 /system/test_entity
 /system/test_view
+
+
+/omp/product_type
+
+
+
+
+
+
+
+
