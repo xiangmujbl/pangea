@@ -89,19 +89,19 @@ public class ViewCreator {
 
     public void generateTestJavaFile() {
         String path = TEST_DIR + this.system + "/";
-        String fileName = this.name + ".java";
+        String fileName = this.fullName + ".java";
         generateFileWithFtl(path, fileName, "test_java.ftl", null);
     }
 
     public void generateTestFeatureFile() {
         String path = FEATURE_DIR + this.system + "/";
-        String fileName = this.name + ".feature";
+        String fileName = this.fullName + ".feature";
         generateFileWithFtl(path, fileName, "test_feature.ftl", null);
     }
 
     public void generateCurationXMLFile() {
         String path = XML_DIR + this.system + "/";
-        String fileName = this.name + ".xml";
+        String fileName = this.fullName + ".xml";
         generateFileWithFtl(path, fileName, "curation_xml.ftl", null);
         appendNewRegionPath();
     }
