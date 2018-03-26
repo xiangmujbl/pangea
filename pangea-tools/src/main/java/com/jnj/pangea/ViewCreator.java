@@ -41,6 +41,7 @@ public class ViewCreator {
     private String jira; // AEAZ-123
 
     private boolean forceOverride = false;
+    private String xmlPath;
     private Map<String, Object> param;
 
     private CurationMetadata curationMetadata;
@@ -103,12 +104,13 @@ public class ViewCreator {
         String path = XML_DIR + this.system + "/";
         String fileName = this.fullName + ".xml";
         generateFileWithFtl(path, fileName, "curation_xml.ftl", null);
+        xmlPath = path + fileName;
         appendNewRegionPath();
     }
 
     public void generateCurationCodeFile() {
 
-        curationMetadata = getCurationMetadata(XML_DIR + this.system + "/" + this.name + ".xml");
+        curationMetadata = getCurationMetadata(xmlPath);
         if (null == curationMetadata) {
             return;
         }
@@ -160,7 +162,7 @@ public class ViewCreator {
 
     public void appendNewRegionPath() {
 
-        curationMetadata = getCurationMetadata(XML_DIR + this.system + "/" + this.name + ".xml");
+        curationMetadata = getCurationMetadata(xmlPath);
         if (null == curationMetadata) {
             return;
         }

@@ -6,9 +6,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/${system}/${name}.feature"},
+        features = {"src/test/resources/features/${system}/${fullName}.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/${jira} ${name}.json"})
+        plugin = {"pretty", "json:target/reports/json/${jira} ${fullName}.json"})
 public class ${fullName} {
 }
