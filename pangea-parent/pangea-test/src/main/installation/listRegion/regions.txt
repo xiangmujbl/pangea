@@ -83,17 +83,7 @@
 
 /pangea/cns_material_plan_status
 
-/system/test_main_entity
-/system/test_entity
-/system/test_view
-
-
 /omp/product_type
-
-
-
-
-
-
-
+/plan/cns_location_type
+/omp/location_type
 

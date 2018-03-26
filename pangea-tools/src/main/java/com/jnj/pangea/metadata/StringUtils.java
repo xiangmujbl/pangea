@@ -1,5 +1,10 @@
 package com.jnj.pangea.metadata;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static com.jnj.pangea.GenerateTool.ABBR;
+
 public class StringUtils {
 
     public static boolean isEmpty(String str) {
@@ -27,5 +32,13 @@ public class StringUtils {
             }
         }
         return sb.toString();
+    }
+
+    public static String getFullName(String system, String name) {
+
+        if (ABBR.contains(system.toUpperCase())) {
+            system = system.toUpperCase();
+        }
+        return capFirst(system) + capFirst(transformToCamelCase(name));
     }
 }

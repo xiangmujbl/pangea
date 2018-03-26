@@ -1,30 +1,30 @@
-package com.jnj.pangea.common.entity.${entitySystem};
+package com.jnj.pangea.common.entity.${entity.system};
 
 import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class ${entityName?cap_first}Entity extends CommonEntity {
+public class ${entity.fullName}Entity extends CommonEntity {
 
-<#list entityFields as field>
+<#list entity.fields as field>
     private String ${field};
 </#list>
 
-    public ${entityName?cap_first}Entity(Map<String, Object> map) {
+    public ${entity.fullName}Entity(Map<String, Object> map) {
         super(map);
 
-    <#list entityFields as field>
+    <#list entity.fields as field>
         set${field?cap_first}((String) map.get("${field}"));
     </#list>
     }
 
-<#list entityFields as field>
+<#list entity.fields as field>
     public String get${field?cap_first}() {
-        return ${field};
+        return this.${field};
     }
 
     public void set${field?cap_first}(String ${field?uncap_first}) {
-        ${field} = ${field?uncap_first};
+        this.${field} = ${field?uncap_first};
     }
 
 </#list>

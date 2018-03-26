@@ -14,6 +14,12 @@
                 </relations>
             </region>
 
+            <region path="/${system}/${_name}">
+                <columns>
+
+                </columns>
+            </region>
+
         </regions>
     </curation>
 </adf-curation>
