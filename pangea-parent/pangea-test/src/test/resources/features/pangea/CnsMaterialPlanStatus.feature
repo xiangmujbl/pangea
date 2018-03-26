@@ -5,8 +5,8 @@ Feature: CnsMaterialPlanStatus
 
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
       | localMaterialNumber | localPlant | materialNumber |localDeletionFlagPlant|localMrpType|localMaterialType|
-      | 000000000000000001  | BR02       | 9862           |  PV                  | PV         |  F1             |
-      | 000000000000000002  | BR02       | 9864           |  PV                  | PV         |  F2             |
+      | BR01                | BR01       | 9862           |  PV                  | PV         |  F1             |
+      | BR02                | BR01       | 9864           |  PV                  | PV         |  F2             |
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -17,23 +17,25 @@ Feature: CnsMaterialPlanStatus
 
     And I import "/edm/material_global_v1" by keyFields "localMaterialNumber"
       | localMaterialType | localMaterialNumber | localDpParentCode|primaryPlanningCode|
-      |         PV        | 000000000000000001  |    G3a           |       G4a         |
-      |         PV        | 000000000000000002  |    G3b           |       G4b         |
+      |         PV5       | BR01                |    G3a           |       G4a         |
+      |         PV6       | BR02                |    G3b           |       G4b         |
     And I wait "/edm/material_global_v1" Async Queue complete
 
-    And I import "/plan/cns_plan_parameter" by keyFields "attribute,dataObject,parameter,sourceSystem"
-      | sourceSystem | dataObject | attribute | parameter | inclExcl |parameterValue|
-      | CONS_LATAM   |cns_material_plan_status| DPRelevant|Plant| I | PV     |
-      | CONS_LATAM   |cns_material_plan_status| SPRelevant|Plant| I | PV     |
-      | CONS_LATAM   |cns_material_plan_status| DPRelevant|MRPType| I | PV     |
-      | CONS_LATAM   |cns_material_plan_status| DPRelevant|MRPType| I | PV     |
+    And I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter"
+      | sourceSystem | dataObject             | attribute | parameter  | inclExcl |parameterValue|
+      | CONS_LATAM   |cns_material_plan_status| DPRelevant|  Plant     | I        | BR01         |
+      | CONS_LATAM   |cns_material_plan_status| SPRelevant|  Plant     | I        | BR01         |
+      | CONS_LATAM   |cns_material_plan_status| DPRelevant| MRPType    | I        | PV           |
+      | CONS_LATAM   |cns_material_plan_status| SPRelevant| MRPType    | I        | PV           |
+      | CONS_LATAM   |cns_material_plan_status| DPRelevant|MaterialType| I        | PV5          |
+      | CONS_LATAM   |cns_material_plan_status| SPRelevant|MaterialType| I        | PV6          |
 
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     And I import "/plan/cns_material_incl" by keyFields "localMaterialNumber"
       | localMaterialNumber | planningType |
-      | NP                  |NP            |
-      | NQ                  |NP            |
+      | NP                  |  NP          |
+      | NQ                  |  NP          |
 
     And I wait "/plan/cns_material_incl" Async Queue complete
 
@@ -41,8 +43,8 @@ Feature: CnsMaterialPlanStatus
 
     Then I check region data "/pangea/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
-      |  CONS_LATAM  |000000000000000001   |     BR02   |   9862         |   G3a           | G4a |  X     |   X        |            |              |        X       |
-      |  CONS_LATAM  |000000000000000002   | BR02       |  9864          |   G3b           |  G4a|  X     |   X        |            |              |        X       |
+      |  CONS_LATAM  |  BR01               |     BR01   |   9862         |   G3a           | G4a |  X     |   X        |            |       X      |        X       |
+      |  CONS_LATAM  |  BR02               |     BR01   |   9864         |   G3b           | G4b |  X     |   X        |            |       X      |        X       |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
