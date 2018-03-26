@@ -1,4 +1,4 @@
 @pangea_test @${jira}
-Feature: ${jira} ${name}-Curation
+Feature: ${jira} ${fullName}-Curation
 
   Scenario: Full Load curation
