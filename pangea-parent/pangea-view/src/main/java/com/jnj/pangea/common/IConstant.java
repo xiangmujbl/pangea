@@ -24,11 +24,11 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
-        String EMS_F_MDM_MATERIAL_TYPES= "/ems/ems_f_mdm_material_types";
+        String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
         String PROJECT_ONE_T461X = "/project_one/t461x";
-        String PROJECT_ONE_TMABCT="/project_one/tmabct";
-        String PLAN_CNS_PLAN_PARAMETER="/plan/cns_plan_parameter";
+        String PROJECT_ONE_TMABCT = "/project_one/tmabct";
+        String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
     }
 
@@ -36,7 +36,7 @@ public interface IConstant {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
     }
 
-    interface project_one_tmabct{
+    interface project_one_tmabct {
         String MAABC = "maabc";
         String SPARS = "spars";
     }
@@ -59,7 +59,7 @@ public interface IConstant {
 
     interface PROJECT_ONE_T460T {
         String SOBSL = "sobsl";
-        String SPRAS="spras";
+        String SPRAS = "spras";
     }
 
     interface PROJECT_ONE_MAKT {
@@ -70,6 +70,7 @@ public interface IConstant {
         String DISLS = "disls";
         String SPRAS = "spras";
     }
+
     interface PROJECT_ONE_T461X {
         String STRGR = "strgr";
         String SPRAS = "spras";
@@ -122,10 +123,12 @@ public interface IConstant {
         String PARAMETER = "parameter";
         String INCL_EXCL = "inclExcl";
     }
-    interface CNS_MATERIAL_INCL{
-        String LOCAL_MATERIAL_NUMBER= "localMaterialNumber";
+
+    interface CNS_MATERIAL_INCL {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String PLANNING_TYPE = "planningType";
     }
+
     // -----region attribute value
     interface VALUE {
 
@@ -138,11 +141,12 @@ public interface IConstant {
         String CNS_MATERIAL_PLAN_STATUS = "cns_material_plan_status";
         String DP_RELEVANT = "DPRelevant";
         String SP_RELEVANT = "SPRelevant";
-        String PLANT="Plant";
-        String MRP_TYPE="MRPType";
-        String I="I";
+        String PLANT = "Plant";
+        String MRP_TYPE = "MRPType";
+        String I = "I";
         String MATERIAL_TYPE = "MaterialType";
-        String X="X";
+        String X = "X";
         String NP = "NP";
+        String Y = "Y";
     }
 }

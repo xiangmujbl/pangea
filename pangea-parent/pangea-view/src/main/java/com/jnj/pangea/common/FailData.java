@@ -10,6 +10,74 @@ import java.util.Date;
  */
 public class FailData extends BaseBo {
 
+    public FailData() {
+    }
+
+    public FailData(String functionalArea, String interfaceID, String errorCode, String errorValue, String sourceSystem, String key1) {
+        this.functionalArea = functionalArea;
+        this.interfaceID = interfaceID;
+        this.errorCode = errorCode;
+        this.errorValue = errorValue;
+        this.sourceSystem = sourceSystem;
+        this.key1 = key1;
+        this.key2 = "";
+        this.key3 = "";
+        this.key4 = "";
+        this.key5 = "";
+    }
+
+    public FailData(String functionalArea, String interfaceID, String errorCode, String errorValue, String sourceSystem, String key1, String key2) {
+        this.functionalArea = functionalArea;
+        this.interfaceID = interfaceID;
+        this.errorCode = errorCode;
+        this.errorValue = errorValue;
+        this.sourceSystem = sourceSystem;
+        this.key1 = key1;
+        this.key2 = key2;
+        this.key3 = "";
+        this.key4 = "";
+        this.key5 = "";
+    }
+
+    public FailData(String functionalArea, String interfaceID, String errorCode, String errorValue, String sourceSystem, String key1, String key2, String key3) {
+        this.functionalArea = functionalArea;
+        this.interfaceID = interfaceID;
+        this.errorCode = errorCode;
+        this.errorValue = errorValue;
+        this.sourceSystem = sourceSystem;
+        this.key1 = key1;
+        this.key2 = key2;
+        this.key3 = key3;
+        this.key4 = "";
+        this.key5 = "";
+    }
+
+    public FailData(String functionalArea, String interfaceID, String errorCode, String errorValue, String sourceSystem, String key1, String key2, String key3, String key4) {
+        this.functionalArea = functionalArea;
+        this.interfaceID = interfaceID;
+        this.errorCode = errorCode;
+        this.errorValue = errorValue;
+        this.sourceSystem = sourceSystem;
+        this.key1 = key1;
+        this.key2 = key2;
+        this.key3 = key3;
+        this.key4 = key4;
+        this.key5 = "";
+    }
+
+    public FailData(String functionalArea, String interfaceID, String errorCode, String errorValue, String sourceSystem, String key1, String key2, String key3, String key4, String key5) {
+        this.functionalArea = functionalArea;
+        this.interfaceID = interfaceID;
+        this.errorCode = errorCode;
+        this.errorValue = errorValue;
+        this.sourceSystem = sourceSystem;
+        this.key1 = key1;
+        this.key2 = key2;
+        this.key3 = key3;
+        this.key4 = key4;
+        this.key5 = key5;
+    }
+
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
