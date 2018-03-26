@@ -17,6 +17,7 @@ import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.common.entity.plan.CnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
+import com.jnj.pangea.pangea.cns_material_plan_status.bo.CnsMaterialInclBo;
 import com.jnj.pangea.pangea.cns_material_plan_status.bo.PangeaCnsMaterialPlanStatusBo;
 import org.apache.commons.lang3.StringUtils;
 
@@ -206,4 +207,19 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         return failData;
     }
 
+    public List<PangeaCnsMaterialPlanStatusBo> getMaterialInclBo() {
+        List<PangeaCnsMaterialPlanStatusBo> materialPlanStatusBoList = new ArrayList<>();
+
+        List<CnsMaterialInclEntity> materialInclEntityList = materialInclDao.getAllEntity();
+
+        for (CnsMaterialInclEntity materialInclEntity:materialInclEntityList) {
+
+            PangeaCnsMaterialPlanStatusBo materialPlanStatusBo = new PangeaCnsMaterialPlanStatusBo();
+            materialPlanStatusBo.setSourceSystem(materialInclEntity.getSourceSystem());
+            materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber());
+            materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant());
+            materialPlanStatusBoList.add(materialPlanStatusBo);
+        }
+        return materialPlanStatusBoList;
+    }
 }

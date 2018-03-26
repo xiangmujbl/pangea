@@ -46,7 +46,7 @@
 
             <region path="/plan/cns_material_incl">
                 <columns>
-                    localMaterialNumber,planningType
+                    sourceSystem,localMaterialNumber,planningType,localPlant
                 </columns>
             </region>
 

@@ -6,13 +6,17 @@ import java.util.Map;
 
 public class CnsMaterialInclEntity extends CommonEntity {
 
+    private String sourceSystem;
     private String localMaterialNumber;
     private String planningType;
+    private String localPlant;
 
     public CnsMaterialInclEntity(Map<String, Object> map) {
         super(map);
+        setSourceSystem((String) map.get("sourceSystem"));
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
         setPlanningType((String) map.get("planningType"));
+        setLocalPlant((String) map.get("localPlant"));
     }
 
     public String getLocalMaterialNumber() {
@@ -29,5 +33,21 @@ public class CnsMaterialInclEntity extends CommonEntity {
 
     public void setPlanningType(String planningType) {
         this.planningType = planningType;
+    }
+
+    public String getLocalPlant() {
+        return localPlant;
+    }
+
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
+    }
+
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
     }
 }
