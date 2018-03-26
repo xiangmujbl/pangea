@@ -63,16 +63,17 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
             //F2 F3
             if (checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.DP_RELEVANT)){
                 materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
+                materialPlanStatusBo.setLocalPlant(materialPlantV1Entity.getLocalPlant());
                 materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
                 materialPlanStatusBo.setSpRelevant("");
             }else if (checkWithF2AndF3(materialPlantV1Entity,materialGlobalV1Entity,IConstant.VALUE.SP_RELEVANT)){
                 materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
+                materialPlanStatusBo.setLocalPlant(materialPlantV1Entity.getLocalPlant());
                 materialPlanStatusBo.setDpRelevant("");
                 materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
             }
         }
 
-        materialPlanStatusBo.setLocalPlant(materialPlantV1Entity.getLocalPlant());
         materialPlanStatusBo.setMaterialNumber(materialPlantV1Entity.getMaterialNumber());
 
         //T3 T4
@@ -166,7 +167,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
         Boolean ldFlag = false;
         for (CnsPlanParameterEntity planParameterEntity: ldList) {
-            if (materialPlantV1Entity.getLocalDeletionFlagPlant().equals(planParameterEntity.getParameterValue())){
+            if (materialPlantV1Entity.getLocalPlant().equals(planParameterEntity.getParameterValue())){
                 ldFlag = true;
             }
         }

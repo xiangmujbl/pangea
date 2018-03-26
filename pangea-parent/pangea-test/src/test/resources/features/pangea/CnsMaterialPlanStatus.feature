@@ -23,8 +23,8 @@ Feature: CnsMaterialPlanStatus
 
     And I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter"
       | sourceSystem | dataObject             | attribute | parameter  | inclExcl |parameterValue|
-      | CONS_LATAM   |cns_material_plan_status| DPRelevant|  Plant     | I        | PV           |
-      | CONS_LATAM   |cns_material_plan_status| SPRelevant|  Plant     | I        | PV           |
+      | CONS_LATAM   |cns_material_plan_status| DPRelevant|  Plant     | I        | BR01         |
+      | CONS_LATAM   |cns_material_plan_status| SPRelevant|  Plant     | I        | BR01         |
       | CONS_LATAM   |cns_material_plan_status| DPRelevant| MRPType    | I        | PV           |
       | CONS_LATAM   |cns_material_plan_status| SPRelevant| MRPType    | I        | PV           |
       | CONS_LATAM   |cns_material_plan_status| DPRelevant|MaterialType| I        | PV5          |
