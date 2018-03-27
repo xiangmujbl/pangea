@@ -30,6 +30,10 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
+        String PROJECT_ONE_VBEP="/project_one/vbep";
+        String PROJECT_ONE_VBAP="/project_one/vbap";
+        String PROJECT_ONE_VBPA="/project_one/vbpa";
+        String PROJECT_ONE_VBKD="/project_one/vbkd";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -74,6 +78,24 @@ public interface IConstant {
     interface PROJECT_ONE_T461X {
         String STRGR = "strgr";
         String SPRAS = "spras";
+    }
+    interface PROJECT_ONE_VBAP {
+       String VBELN="vbeln";
+    }
+    interface PROJECT_ONE_VBEP {
+        String VBELN="vbeln";
+        String POSNR="posnr";
+    }
+
+    interface PROJECT_ONE_VBPA {
+        String VBELN="vbeln";
+        String POSNR="posnr";
+        String PARVW="parvw";
+    }
+    interface PROJECT_ONE_VBKD {
+        String VBELN="vbeln";
+        String POSNR="posnr";
+        String PARVW="parvw";
     }
 
     interface NGEMS_MATERIAL_LINKAGE {
@@ -149,5 +171,6 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
+        String WE="WE";
     }
 }
