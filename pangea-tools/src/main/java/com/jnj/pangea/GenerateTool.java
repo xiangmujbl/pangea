@@ -22,5 +22,6 @@ public class GenerateTool {
         viewCreator.generateService();
 
         viewCreator.appendNewRegionPath();
+        viewCreator.generateRegionGridXML();
     }
 }

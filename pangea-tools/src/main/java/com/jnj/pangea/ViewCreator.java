@@ -33,6 +33,7 @@ public class ViewCreator {
     private static final String PROCESSOR_DIR = "pangea-parent/pangea-view/src/main/java/com/jnj/pangea/";
 
     private static final String REGIONS_TXT = "pangea-parent/pangea-test/src/main/installation/listRegion/regions.txt";
+    private static final String REGIONS_XML = "pangea-parent/pangea-test/src/test/resources/grid-server.xml";
 
     private String system; // edm
     private String name; // TestView
@@ -211,6 +212,15 @@ public class ViewCreator {
                     e.printStackTrace();
                 }
             });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generateRegionGridXML() {
+
+        try {
+            BuildGridServerXml.build(REGIONS_TXT, REGIONS_XML);
         } catch (Exception e) {
             e.printStackTrace();
         }

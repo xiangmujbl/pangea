@@ -1,4 +1,4 @@
-package com.jnj.pangea.reports;
+package com.jnj.pangea;
 
 import java.io.*;
 import java.util.HashMap;
@@ -7,39 +7,41 @@ import java.util.Map;
 import java.util.Set;
 
 public class BuildGridServerXml {
+
     public static void main(String[] args) throws Exception {
-        build("C:\\work\\workspace\\pangea\\pangea-parent\\pangea-test\\src\\main\\installation\\listRegion\\regions.txt","C:\\work\\workspace\\pangea\\pangea-parent\\pangea-test\\src\\test\\resources\\grid-server.xml");
+        build("C:\\work\\workspace\\pangea\\pangea-parent\\pangea-test\\src\\main\\installation\\listRegion\\regions.txt", "C:\\work\\workspace\\pangea\\pangea-parent\\pangea-test\\src\\test\\resources\\grid-server.xml");
     }
-    public static void build(String  sourceFile,String targetFile) throws Exception {
-        BufferedReader reader=new BufferedReader(new FileReader(new File(sourceFile)));
-        Map<String,Set<String>> map=new HashMap<String,Set<String>>();
+
+    public static void build(String sourceFile, String targetFile) throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(new File(sourceFile)));
+        Map<String, Set<String>> map = new HashMap<String, Set<String>>();
         Set<String> set;
         String line = null;
-        String[] split=new String[1024];
-        while ((line=reader.readLine())!=null){
+        String[] split = new String[1024];
+        while ((line = reader.readLine()) != null) {
             //System.out.println(line);
-            if ("".equals(line)){
+            if ("".equals(line)) {
                 continue;
             }
             split = line.split("/");
-            if (map.size()==0){
-                set=new HashSet();
+            if (map.size() == 0) {
+                set = new HashSet();
                 set.add(split[2]);
-                map.put(split[1],set);
+                map.put(split[1], set);
                 continue;
             }
-            if (map.containsKey(split[1])){
-                Set<String> set1= map.get(split[1]);
+            if (map.containsKey(split[1])) {
+                Set<String> set1 = map.get(split[1]);
                 set1.add(split[2]);
-            }else{
-                set=new HashSet();
+            } else {
+                set = new HashSet();
                 set.add(split[2]);
-                map.put(split[1],set);
+                map.put(split[1], set);
             }
         }
         reader.close();
-        BufferedWriter writer=new BufferedWriter(new FileWriter(new File(targetFile)));
-        StringBuilder sb=new StringBuilder();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File(targetFile)));
+        StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<beans xmlns=\"http://www.springframework.org/schema/beans\"\n" +
                 "\t   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:context=\"http://www.springframework.org/schema/context\"\n" +
@@ -64,15 +66,15 @@ public class BuildGridServerXml {
                 "\t\t<gfe:replicated-region name=\"rawDataFilterTestResult\" statistics=\"true\" />\n" +
                 "\t</gfe:replicated-region>");
         Set<Map.Entry<String, Set<String>>> entrySet = map.entrySet();
-        for ( Map.Entry<String, Set<String>> entry:entrySet){
+        for (Map.Entry<String, Set<String>> entry : entrySet) {
             sb.append("\n\r");
             sb.append("\t");
-            sb.append("<adf-grid:replicated-region id=\""+entry.getKey()+"\">");
+            sb.append("<adf-grid:replicated-region id=\"" + entry.getKey() + "\">");
             Set<String> valueSet = entry.getValue();
             sb.append("\n\r");
-            for (String value:valueSet){
+            for (String value : valueSet) {
                 sb.append("\t\t");
-                sb.append("<adf-grid:partitioned-region name=\""+value+"\" enable-temporal=\"false\" enable-lucene=\"true\" persistent=\"${persistent.enable}\" disk-store-ref=\"samplePerist\" />");
+                sb.append("<adf-grid:partitioned-region name=\"" + value + "\" enable-temporal=\"false\" enable-lucene=\"true\" persistent=\"${persistent.enable}\" disk-store-ref=\"samplePerist\" />");
                 sb.append("\n\r");
             }
             sb.append("\t");
