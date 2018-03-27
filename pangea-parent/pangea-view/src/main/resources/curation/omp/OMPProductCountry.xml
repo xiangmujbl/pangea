@@ -5,7 +5,7 @@
 
             <region path="/plan/cns_prod_country_aff">
                 <columns>
-                    sourceSystem,localMaterialNumber,country,productClassification,productStatus,dpSegmentation,dpPlanner,rootSize,countryGroup
+                    sourceSystem,dpParentCode,country,productClassification,productStatus,dpSegmentation,dpPlanner,rootSize,countryGroup
                 </columns>
                 <relations>
                     country_v1-localCountry = cns_prod_country_aff-country

@@ -28,10 +28,10 @@ public class GDMProductCountryServiceImpl implements ICommonService {
 
         GDMProductCountryBo productCountryBo = new GDMProductCountryBo();
 
-        String dpPanner = prodCountryAffEntity.getDpPlanner();
+        String dpParentCode = prodCountryAffEntity.getDpParentCode();
         String country = prodCountryAffEntity.getCountry();
-        if (null != dpPanner && null != country){
-            String uniqueId = prodCountryAffEntity.getLocalMaterialNumber() + prodCountryAffEntity.getCountry();
+        if (null != dpParentCode && null != country){
+            String uniqueId = prodCountryAffEntity.getDpParentCode() + prodCountryAffEntity.getCountry();
             productCountryBo.setUniqueId(uniqueId);
             productCountryBo.setActiveFcterp(IConstant.VALUE.YES);
             productCountryBo.setCountryGroup(prodCountryAffEntity.getCountryGroup());
@@ -40,10 +40,10 @@ public class GDMProductCountryServiceImpl implements ICommonService {
             if (null != countryEntity){
                 productCountryBo.setCountryId(countryEntity.getCountryCode());
             }
-            productCountryBo.setDpPlannerId(dpPanner);
+            productCountryBo.setDpPlannerId(prodCountryAffEntity.getDpPlanner());
             productCountryBo.setDpSegmentation(prodCountryAffEntity.getDpSegmentation());
             productCountryBo.setProductClassification(prodCountryAffEntity.getProductClassification());
-            productCountryBo.setProductId(prodCountryAffEntity.getLocalMaterialNumber());
+            productCountryBo.setProductId(dpParentCode);
             productCountryBo.setProductStatus(prodCountryAffEntity.getProductStatus());
             productCountryBo.setRootSize(prodCountryAffEntity.getRootSize());
             productCountryBo.setSegmentation(prodCountryAffEntity.getDpSegmentation());

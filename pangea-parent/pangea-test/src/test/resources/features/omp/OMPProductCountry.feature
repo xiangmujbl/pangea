@@ -3,11 +3,11 @@ Feature: OMPProductCountry
 
   Scenario: Full Load curation
 
-    Given I import "/plan/cns_prod_country_aff" by keyFields "country,dpPlanner,localMaterialNumber"
-      | sourceSystem | localMaterialNumber | country | productClassification | productStatus | dpSegmentation | dpPlanner | rootSize | countryGroup |
-      | CONS_LATAM   | 78910105796160024   | BR      | REGULAR               | Active        |                | DP003     |          | NTG LIMPEGA  |
-      | CONS_LATAM   | 78910100373520048   | BR      | REGULAR               | Active        |                | DP003     |          | NTG LIMPEGA  |
-      | CONS_LATAM   | 35746611035250006   | BR      | REGULAR               | Active        |                | DP003     |          | NTG LIMPEGA  |
+    Given I import "/plan/cns_prod_country_aff" by keyFields "country,dpParentCode"
+      | sourceSystem | dpParentCode      | country | productClassification | productStatus | dpSegmentation | dpPlanner | rootSize | countryGroup |
+      | CONS_LATAM   | 78910105796160024 | BR      | REGULAR               | Active        |                | DP003     |          | NTG LIMPEGA  |
+      | CONS_LATAM   | 78910100373520048 | BR      | REGULAR               | Active        |                | DP003     |          | NTG LIMPEGA  |
+      | CONS_LATAM   | 35746611035250006 | BR      | REGULAR               | Active        |                | DP003     |          | NTG LIMPEGA  |
 
     And I wait "/plan/cns_prod_country_aff" Async Queue complete
 

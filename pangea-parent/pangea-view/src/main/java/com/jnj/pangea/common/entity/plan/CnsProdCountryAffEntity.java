@@ -7,7 +7,7 @@ import java.util.Map;
 public class CnsProdCountryAffEntity extends CommonEntity {
 
     private String sourceSystem;
-    private String localMaterialNumber;
+    private String dpParentCode;
     private String country;
     private String productClassification;
     private String productStatus;
@@ -19,7 +19,7 @@ public class CnsProdCountryAffEntity extends CommonEntity {
     public CnsProdCountryAffEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("countryGroup"));
-        setLocalMaterialNumber((String) map.get("localMaterialNumber"));
+        setDpParentCode((String) map.get("dpParentCode"));
         setCountry((String) map.get("country"));
         setProductClassification((String) map.get("productClassification"));
         setProductStatus((String) map.get("productStatus"));
@@ -77,12 +77,12 @@ public class CnsProdCountryAffEntity extends CommonEntity {
         this.productClassification = productClassification;
     }
 
-    public String getLocalMaterialNumber() {
-        return localMaterialNumber;
+    public String getDpParentCode() {
+        return dpParentCode;
     }
 
-    public void setLocalMaterialNumber(String localMaterialNumber) {
-        this.localMaterialNumber = localMaterialNumber;
+    public void setDpParentCode(String dpParentCode) {
+        this.dpParentCode = dpParentCode;
     }
 
     public String getProductStatus() {
