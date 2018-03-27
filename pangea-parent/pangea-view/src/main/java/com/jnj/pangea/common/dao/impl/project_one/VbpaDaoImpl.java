@@ -24,7 +24,7 @@ public class VbpaDaoImpl extends CommonDaoImpl {
     }
 
     public VbpaEntity getEntityWithPosnrAndParvwAndVbeln(String vbeln,String posnr, String parvw) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).is(posnr).and(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).toQueryString();
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).isNull().and(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).toQueryString();
         return queryForObject(IConstant.REGION.PROJECT_ONE_VBPA, queryString, VbpaEntity.class);
     }
 }

@@ -4,7 +4,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class BatchMasterV1Entity extends CommonEntity {
+public class EDMBatchMasterV1Entity extends CommonEntity {
 
     private String sourceSystem;
     private String localMaterialNumber;
@@ -13,7 +13,7 @@ public class BatchMasterV1Entity extends CommonEntity {
     private String localShelfLifeExpiration;
     private String localDateofManufacture;
 
-    public BatchMasterV1Entity(Map<String, Object> map) {
+    public EDMBatchMasterV1Entity(Map<String, Object> map) {
         super(map);
 
         setSourceSystem((String) map.get("sourceSystem"));

@@ -108,7 +108,7 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(land1)) {
             return "";
         }
-        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLand1(land1);
+        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountry(land1);
         if (null != countryEntity) {
             return countryEntity.getCountryCode();
         }

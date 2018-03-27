@@ -70,6 +70,7 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         if (null == vbapEntity){
             FailData  failData = new FailData();
             failData.setErrorCode("J1");
+            failData.setErrorValue("No Sales Item Found");
             failData.setFunctionalArea("DP");
             failData.setInterfaceID("EDMSalesOrder");
             failData.setSourceSystem("project_one");
@@ -101,6 +102,7 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
         //rule J2
         VbepEntity vbepEntity = getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
+        LogUtil.getCoreLog().info("LocalOrderDate的value"+vbapEntity.getPosnr());
         if (null == vbapEntity){
             FailData  failData = new FailData();
             failData.setErrorCode("J2");
@@ -117,7 +119,6 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         }
         salesOrderBo.setScheduleLineItem(vbepEntity.getEtenr());
         salesOrderBo.setLocalScheduleLineDate(vbepEntity.getEdatu());
-        LogUtil.getCoreLog().info("ScheduleLineDate的value"+vbepEntity.getEdatu());
         salesOrderBo.setLocalSchLineQty(vbepEntity.getWmeng());
         salesOrderBo.setLocalSchLineConfimQty(vbepEntity.getBmeng());
 

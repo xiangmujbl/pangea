@@ -29,23 +29,19 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
         Mch1Entity mch1Entity = (Mch1Entity) o;
-        LogUtil.getCoreLog().info("mch1Entity:{}",mch1Entity.toString());
         EDMBatchMasterBo eDMBatchMasterBo = new EDMBatchMasterBo();
 
         // TODO add logic
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
         eDMBatchMasterBo.setSourceSystem(edmSourceSystemV1Entity.getSourceSystem());
         processSystem(mch1Entity,eDMBatchMasterBo);
-        LogUtil.getCoreLog().info("getMatnr:{},getSourceSystem:{}",mch1Entity.getMatnr(),edmSourceSystemV1Entity.getSourceSystem());
-        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(mch1Entity.getMatnr(),edmSourceSystemV1Entity.getSourceSystem());
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(edmSourceSystemV1Entity.getSourceSystem(),mch1Entity.getMatnr());
 
         if(materialGlobalV1Entity!=null){
-            LogUtil.getCoreLog().info("materialGlobalV1Entity:{}",materialGlobalV1Entity.toString());
             eDMBatchMasterBo.setMaterialNumber(materialGlobalV1Entity.getMaterialNumber());
         }else{
             eDMBatchMasterBo.setMaterialNumber("");
         }
-        LogUtil.getCoreLog().info("eDMBatchMasterBo:{}",eDMBatchMasterBo.toString());
         resultObject.setBaseBo(eDMBatchMasterBo);
         return resultObject;
     }

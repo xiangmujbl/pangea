@@ -24,7 +24,7 @@ public class VbkdDaoImpl extends CommonDaoImpl {
     }
 
     public VbkdEntity getEntityWithPosnrAndVbeln(String vbeln, String posnr) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBKD.POSNR).is(posnr).toQueryString();
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBKD.POSNR).isNull().toQueryString();
         return queryForObject(IConstant.REGION.PROJECT_ONE_VBKD, queryString, VbkdEntity.class);
     }
 }

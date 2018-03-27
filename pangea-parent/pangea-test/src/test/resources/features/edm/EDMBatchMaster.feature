@@ -46,4 +46,10 @@ Feature: AEAZ-123 EDMBatchMaster-Curation
 
     And I will remove all data with region "/plan/edm_failed_data"
 
+#     And I will remove all data with region "/project_one/mch1"
+#
+#      And I will remove all data with region "/edm/source_system_v1"
+#
+#       And I will remove all data with region "/edm/material_global_v1"
+
 
