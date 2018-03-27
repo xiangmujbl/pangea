@@ -17,7 +17,7 @@ public class EDMCountryV1DaoImpl extends CommonDaoImpl {
     }
 
 
-    public EDMCountryEntity getEntityWithLand1(String land1) {
+    public EDMCountryEntity getEntityWithLocalCountry(String land1) {
 
         String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
         return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);

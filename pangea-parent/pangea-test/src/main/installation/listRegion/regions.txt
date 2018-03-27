@@ -80,12 +80,14 @@
 /plan/cns_abc_ind
 /plan/cns_material_incl
 /plan/cns_plant_attr
+/plan/cns_prod_country_aff
 
 /pangea/cns_material_plan_status
 
 /omp/product_type
 /plan/cns_loc_type
 /omp/location_type
+/omp/product_country
 
 
 
