@@ -7,7 +7,7 @@
                 <columns>
                     matnr,werks,mmsta,beskz,bstfe,bstma,bstmi,bstrf,disls,dismm,dispo,dzeit,eisbe,eislo,fevor,frtme,
                     insmk,kausf,kzkri,maabc,mabst,mtvfp,plifz,sbdkz,shflg,shzet,sobsl,strgr,vint1,vint2,vrmod,webaz,
-                    xchpf,fxhor
+                    xchpf,fxhor,basmg
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -58,7 +58,7 @@
                     localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,
                     localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,
                     localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,
-                    localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap
+                    localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity
                 </columns>
             </region>
 

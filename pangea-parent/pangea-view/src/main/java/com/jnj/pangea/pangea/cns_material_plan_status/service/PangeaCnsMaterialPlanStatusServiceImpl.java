@@ -217,6 +217,9 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
             materialPlanStatusBo.setSourceSystem(materialInclEntity.getSourceSystem());
             materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber());
             materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant());
+            if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
+                materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
+            }
             materialPlanStatusBoList.add(materialPlanStatusBo);
         }
         return materialPlanStatusBoList;

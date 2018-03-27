@@ -1,0 +1,39 @@
+<adf-curation>
+    <curation mainRegion="/project_one/mch1" viewRegion="/edm/batch_master_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.batch_master.controller.EDMBatchMasterController">
+        <regions>
+
+            <region path="/project_one/mch1">
+                <columns>
+                    matnr,charg,vfdat,hsdat
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,materialNumber,sourceSystem
+                </columns>
+            </region>
+            <region path="/edm/batch_master_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,materialNumber,localBatchNumber,localShelfLifeExpiration,localDateofManufacture
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
