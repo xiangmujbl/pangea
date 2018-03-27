@@ -1,0 +1,77 @@
+<adf-curation>
+    <curation mainRegion="/project_one/vbak" viewRegion="/edm/sales_order_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.sales_order.controller.EDMSalesOrderController">
+        <regions>
+
+            <region path="/project_one/vbak">
+                <columns>
+                    vbeln,erdat,audat,guebg,gueen,vbtyp,auart,augru,lifsk,faksk,vkorg,vtweg,spart,vkgrp,vkbur,vdatu,bstnk,kunnr,aedat,kalsm
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/vbap" isPrimaryKey="false">
+                        <expression>vbeln=/project_one/vbak.vbeln</expression>
+                    </relation>
+                    <relation path="/project_one/vbep" isPrimaryKey="false">
+                        <expression>vbeln=/project_one/vbak.vbeln</expression>
+                    </relation>
+                    <relation path="/project_one/vbpa" isPrimaryKey="false">
+                        <expression>vbeln=/project_one/vbak.vbeln</expression>
+                    </relation>
+                    <relation path="/project_one/vbkd" isPrimaryKey="false">
+                        <expression>vbeln=/project_one/vbak.vbeln</expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>
+                  localSourceSystem,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/project_one/vbap">
+                <columns>
+                    vbeln,posnr,matnr,werks,pstyv,lfrel,fkrel,abgru,kwmeng,vrkme,umvkz,umvkn,faksp,netwr,waerk,lgort,vstel,route
+                </columns>
+                <relations>
+                    <relation path="/project_one/vbep" isPrimaryKey="false">
+                        <expression>posnr=/project_one/vbap.posnr</expression>
+                    </relation>
+                    <relation path="/project_one/vbpa" isPrimaryKey="false">
+                        <expression>posnr=/project_one/vbap.posnr</expression>
+                    </relation>
+                    <relation path="/project_one/vbkd" isPrimaryKey="false">
+                        <expression>posnr=/project_one/vbap.posnr</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/vbep">
+                <columns>
+                    vbeln,posnr,etenr,edatu,wmeng,bmeng
+                </columns>
+            </region>
+
+            <region path="/project_one/vbpa">
+                <columns>
+                   vbeln,posnr,parvw,kunnr
+                </columns>
+            </region>
+
+            <region path="/project_one/vbkd">
+                <columns>
+                    vbeln,posnr,inco1,inco2,,kdgrp
+                </columns>
+            </region>
+
+            <region path="/edm/sales_order_v1">
+                <columns>
+                    sourceSystem,salesOrderNo,salesOrderItem,scheduleLineItem,localOrderCreateDt,localOrderDate,localValidFromDt,localValidToDt,localDocumentCateg,localOrderType,localOrderReason,localDeliveryBlock,localBillingBlock,localSalesOrg,localDistrChannel,localDivision,localSalesGroup,localSalesOffice,localRequestedDate,localCustomerPO,localSoldToParty,localShipToParty,localChangeDt,localMaterialNumber,localPlant,localItemCategory,localItemDlvRlvnt,localItemBillRlvnt,localRejReason,salesOrderQty,localSalesUnit,localNumtoBase,localDentoBase,localBillingBlockItem,localSDItemValue,localSDItemCurrency,localStorageLocation,localShippingPoint,localRoute,localScheduleLineDate,localSchLineQty,localSchLineConfimQty,localCustomerGroup,localPricingProcedure,localIncoTerms1,localIncoTerms2
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
