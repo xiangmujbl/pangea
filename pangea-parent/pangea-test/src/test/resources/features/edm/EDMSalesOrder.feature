@@ -25,7 +25,7 @@ Feature: AEAZ-493 EDMSalesOrder-Curation
     And I import "/project_one/vbep" by keyFields "posnr,vbeln,etenr"
       | vbeln      | posnr  | etenr | edatu    | wmeng   | bmeng |
       | 0000001250 |        | 0001  | 20001005 | 110.000 | 0.000 |
-      | 0000001979 | 000002 | 0001  | 20001005 | 110.000 | 0.000 |
+      | 0000001979 | 000001 | 0001  | 20001005 | 110.000 | 0.000 |
     And I wait "/project_one/vbep" Async Queue complete
 
     And I import "/project_one/vbpa" by keyFields "posnr,vbeln,parvw"
