@@ -127,6 +127,7 @@
 		<adf-grid:partitioned-region name="cns_abc_ind" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="cns_material_incl" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="cns_prod_country_aff" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 	</adf-grid:replicated-region>
 
@@ -136,6 +137,7 @@
 
 	<adf-grid:replicated-region id="omp">
 		<adf-grid:partitioned-region name="product_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="product_country" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 	</adf-grid:replicated-region>
 
 </beans>
