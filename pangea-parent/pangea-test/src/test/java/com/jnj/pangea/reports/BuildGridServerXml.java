@@ -17,7 +17,7 @@ public class BuildGridServerXml {
         String line = null;
         String[] split=new String[1024];
         while ((line=reader.readLine())!=null){
-            System.out.println(line);
+            //System.out.println(line);
             if ("".equals(line)){
                 continue;
             }

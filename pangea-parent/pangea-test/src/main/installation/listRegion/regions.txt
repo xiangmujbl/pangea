@@ -87,3 +87,11 @@
 /plan/cns_location_type
 /omp/location_type
 
+
+
+/project_one/vbak
+/project_one/vbap
+/project_one/vbep
+/project_one/vbpa
+/project_one/vbkd
+/edm/sales_order_v1
