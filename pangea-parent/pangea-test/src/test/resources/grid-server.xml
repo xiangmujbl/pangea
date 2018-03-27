@@ -43,7 +43,8 @@
 
 		<adf-grid:partitioned-region name="tmabct" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="t460t" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
-
+		<adf-grid:partitioned-region name="eord" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="mch1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 	</adf-grid:replicated-region>
 
 	<adf-grid:replicated-region id="ngems">
@@ -92,7 +93,8 @@
 		<adf-grid:partitioned-region name="category_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="sub_brand_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="mat_plant_fi_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
-
+		<adf-grid:partitioned-region name="batch_master_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="source_list_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 	</adf-grid:replicated-region>
 
 	<adf-grid:replicated-region id="plan">
