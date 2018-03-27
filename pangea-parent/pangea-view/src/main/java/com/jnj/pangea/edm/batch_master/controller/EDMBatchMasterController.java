@@ -4,7 +4,6 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.CommonController;
-import com.jnj.pangea.common.entity.edm.BatchMasterV1Entity;
 import com.jnj.pangea.common.entity.project_one.Mch1Entity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.batch_master.service.EDMBatchMasterServiceImpl;
@@ -16,7 +15,6 @@ public class EDMBatchMasterController extends CommonController {
 
     @Override
     public ResultObject process(RawDataEvent raw) {
-        LogUtil.getCoreLog().info("raw:{}",raw.getValue());
         return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), Mch1Entity.class), null);
     }
 }
