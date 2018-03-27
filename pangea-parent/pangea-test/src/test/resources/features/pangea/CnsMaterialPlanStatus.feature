@@ -1,5 +1,5 @@
-@pangea_test
-Feature: CnsMaterialPlanStatus
+@pangea_test @AEAZ-1692
+Feature: CnsMaterialPlanStatus-AEAZ-1692
 
   Scenario: Full Load curation
 
@@ -45,8 +45,8 @@ Feature: CnsMaterialPlanStatus
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
       | CONS_LATAM   | BR01                | BR01       | 9862           | G3a             | G4a | X      | X          |            | X            | X              |
       | CONS_LATAM   | BR02                | BR01       | 9864           | G3b             | G4b | X      | X          |            | X            | X              |
-      | CONS_LATAM   | NP                  | BR03       |                |                 |     |        |            |            |              |                |
-      | CONS_LATAM   | NQ                  | BR04       |                |                 |     |        |            |            |              |                |
+      | CONS_LATAM   | NP                  | BR03       |                |                 |     |        |            |            |              | X              |
+      | CONS_LATAM   | NQ                  | BR04       |                |                 |     |        |            |            |              | X              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
