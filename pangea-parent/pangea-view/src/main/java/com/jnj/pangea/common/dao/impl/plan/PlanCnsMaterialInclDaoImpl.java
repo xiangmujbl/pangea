@@ -5,6 +5,8 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 
+import java.util.List;
+
 public class PlanCnsMaterialInclDaoImpl extends CommonDaoImpl {
     private static PlanCnsMaterialInclDaoImpl instance;
 
@@ -20,5 +22,10 @@ public class PlanCnsMaterialInclDaoImpl extends CommonDaoImpl {
                 .and(IConstant.CNS_MATERIAL_INCL.PLANNING_TYPE).is(IConstant.VALUE.NP).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_INCL,queryString,CnsMaterialInclEntity.class);
 
+    }
+
+    public List<CnsMaterialInclEntity> getAllEntity() {
+        String queryString = QueryHelper.buildCriteria().toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_MATERIAL_INCL,queryString,CnsMaterialInclEntity.class);
     }
 }

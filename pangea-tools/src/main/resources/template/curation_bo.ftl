@@ -19,11 +19,11 @@ public class ${fullName}Bo extends BaseBo {
 
 <#list boFields as field>
     public String get${field?cap_first}() {
-        return ${field};
+        return this.${field};
     }
 
     public void set${field?cap_first}(String ${field?uncap_first}) {
-        ${field} = ${field?uncap_first};
+        this.${field} = ${field?uncap_first};
     }
 
 </#list>

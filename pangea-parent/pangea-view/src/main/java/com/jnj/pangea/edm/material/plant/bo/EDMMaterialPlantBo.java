@@ -46,6 +46,7 @@ public class EDMMaterialPlantBo  extends BaseBo
     private String localPlanningTimeFence;
     private String localPosttoinspstk;
     private String localComponentScrap;
+    private String localBaseQuantity;
 
     public String getLocalDeletionFlagPlant() {
         return localDeletionFlagPlant;
@@ -379,4 +380,12 @@ public class EDMMaterialPlantBo  extends BaseBo
     public String getLocalProcurementType() { return localProcurementType; }
 
     public void setLocalProcurementType(String localProcurementType) { this.localProcurementType = localProcurementType; }
+
+    public String getLocalBaseQuantity() {
+        return localBaseQuantity;
+    }
+
+    public void setLocalBaseQuantity(String localBaseQuantity) {
+        this.localBaseQuantity = localBaseQuantity;
+    }
 }

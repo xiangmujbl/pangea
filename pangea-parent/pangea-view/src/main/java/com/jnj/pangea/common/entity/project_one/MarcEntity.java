@@ -39,6 +39,7 @@ public class MarcEntity extends CommonEntity {
     private String webaz;
     private String xchpf;
     private String fxhor;
+    private String basmg;
 
     public MarcEntity(Map<String, Object> map) {
         super(map);
@@ -76,6 +77,7 @@ public class MarcEntity extends CommonEntity {
         setWebaz((String)map.get("webaz"));
         setXchpf((String)map.get("xchpf"));
         setFxhor((String)map.get("fxhor"));
+        setBasmg((String)map.get("basmg"));
 
     }
 
@@ -347,4 +349,12 @@ public class MarcEntity extends CommonEntity {
     public String getBeskz() { return beskz; }
 
     public void setBeskz(String beskz) { this.beskz = beskz; }
+
+    public String getBasmg() {
+        return basmg;
+    }
+
+    public void setBasmg(String basmg) {
+        this.basmg = basmg;
+    }
 }

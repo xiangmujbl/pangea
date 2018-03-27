@@ -189,7 +189,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
     }
 
-    private FailData checkT1(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
+    private FailData checkT2(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
         FailData failData = null;
         if (StringUtils.isEmpty(sourceSystem) || IConstant.VALUE.EMS.equals(sourceSystem)) {
             failData = new FailData();
@@ -206,4 +206,22 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         return failData;
     }
 
+    public List<PangeaCnsMaterialPlanStatusBo> getMaterialInclBo() {
+        List<PangeaCnsMaterialPlanStatusBo> materialPlanStatusBoList = new ArrayList<>();
+
+        List<CnsMaterialInclEntity> materialInclEntityList = materialInclDao.getAllEntity();
+
+        for (CnsMaterialInclEntity materialInclEntity:materialInclEntityList) {
+
+            PangeaCnsMaterialPlanStatusBo materialPlanStatusBo = new PangeaCnsMaterialPlanStatusBo();
+            materialPlanStatusBo.setSourceSystem(materialInclEntity.getSourceSystem());
+            materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber());
+            materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant());
+            if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
+                materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
+            }
+            materialPlanStatusBoList.add(materialPlanStatusBo);
+        }
+        return materialPlanStatusBoList;
+    }
 }

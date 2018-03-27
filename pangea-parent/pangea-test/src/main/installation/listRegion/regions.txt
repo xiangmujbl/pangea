@@ -83,6 +83,7 @@
 
 /pangea/cns_material_plan_status
 
-
-
+/omp/product_type
+/plan/cns_location_type
+/omp/location_type
 

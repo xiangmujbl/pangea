@@ -41,7 +41,6 @@ public class ViewCreator {
     private String jira; // AEAZ-123
 
     private boolean forceOverride = false;
-    private String xmlPath;
     private Map<String, Object> param;
 
     private CurationMetadata curationMetadata;
@@ -51,20 +50,9 @@ public class ViewCreator {
     public ViewCreator(String system, String _name, String jira, boolean forceOverride) {
 
         this.system = system;
-        this.name = transformToCamelCase(_name);
+        this.name = capFirst(transformToCamelCase(_name));
         this._name = _name;
-        this.fullName = capFirst(system) + name;
-        this.jira = jira;
-        this.forceOverride = forceOverride;
-        init();
-    }
-
-    public ViewCreator(String system, String name, String _name, String fullName, String jira, boolean forceOverride) {
-
-        this.system = system;
-        this.name = name;
-        this._name = _name;
-        this.fullName = fullName;
+        this.fullName = StringUtils.getFullName(system, name);
         this.jira = jira;
         this.forceOverride = forceOverride;
         init();
@@ -94,93 +82,135 @@ public class ViewCreator {
         generateFileWithFtl(path, fileName, "test_java.ftl", null);
     }
 
-    public void generateTestFeatureFile() {
-        String path = FEATURE_DIR + this.system + "/";
-        String fileName = this.fullName + ".feature";
-        generateFileWithFtl(path, fileName, "test_feature.ftl", null);
-    }
-
     public void generateCurationXMLFile() {
         String path = XML_DIR + this.system + "/";
         String fileName = this.fullName + ".xml";
         generateFileWithFtl(path, fileName, "curation_xml.ftl", null);
-        xmlPath = path + fileName;
-        appendNewRegionPath();
-    }
 
-    public void generateCurationCodeFile() {
-
-        curationMetadata = getCurationMetadata(xmlPath);
+        curationMetadata = getCurationMetadata(path + fileName);
         if (null == curationMetadata) {
             return;
         }
-        String basePath = PROCESSOR_DIR + this.system + "/" + this._name + "/";
+        appendNewRegionPath();
+    }
 
-        // bo
-        String boPath = basePath + "bo";
-        new File(boPath).mkdirs();
+    public void generateBo() {
+
+        String boPath = PROCESSOR_DIR + this.system + "/" + this._name + "/" + "bo";
         String boFileName = this.fullName + "Bo.java";
+
         Map<String, Object> extraParam = new HashMap<>();
         extraParam.put("boFields", curationMetadata.getViewRegion().getColumns());
         generateFileWithFtl(boPath, boFileName, "curation_bo.ftl", extraParam);
-        // entity & dao
+    }
+
+    public void generateEntityAndDao() {
+
+        String mainPath = curationMetadata.getMainRegion().getPath();
+        String viewPath = curationMetadata.getViewRegion().getPath();
+        curationMetadata.getRegions().forEach(region -> {
+            if (!region.getPath().equals(viewPath)) {
+
+                String _entityPath = PROCESSOR_DIR + "common" + "/entity/" + region.getSystem() + "/";
+                String _daoPath = PROCESSOR_DIR + "common" + "/dao/impl/" + region.getSystem() + "/";
+
+                Map<String, Object> extraParam = new HashMap<>();
+                extraParam.put("entity", new HashMap<String, Object>() {{
+                    put("system", region.getSystem());
+                    put("fields", region.getColumns());
+                    put("fullName", region.getFullName());
+                }});
+
+                generateFileWithFtl(_entityPath, region.getFullName() + "Entity.java", "curation_entity.ftl", extraParam);
+                if (!region.getPath().equals(mainPath)) {
+                    generateFileWithFtl(_daoPath, region.getFullName() + "DaoImpl.java", "curation_dao.ftl", extraParam);
+                }
+            }
+        });
+    }
+
+    public void generateController() {
+
+        String controllerPath = PROCESSOR_DIR + this.system + "/" + this._name + "/" + "controller";
+        String controllerFileName = this.fullName + "Controller.java";
+
+        Map<String, Object> extraParam = new HashMap<>();
+        extraParam.put("main", new HashMap<String, Object>() {{
+            put("system", curationMetadata.getMainRegion().getSystem());
+            put("name", curationMetadata.getMainRegion().getName());
+            put("fullName", curationMetadata.getMainRegion().getFullName());
+        }});
+
+        generateFileWithFtl(controllerPath, controllerFileName, "curation_controller.ftl", extraParam);
+    }
+
+    public void generateService() {
+
+        String servicePath = PROCESSOR_DIR + this.system + "/" + this._name + "/" + "service";
+        String serviceFileName = this.fullName + "ServiceImpl.java";
+
+        Map<String, Object> extraParam = new HashMap<>();
         List<Map<String, String>> entities = new ArrayList<>();
         curationMetadata.getRegions().forEach(region -> {
-
-            String _entityPath = PROCESSOR_DIR + "common" + "/entity/" + region.getSystem() + "/";
-            new File(_entityPath).mkdirs();
-            Map<String, Object> extra = new HashMap<>();
-            extra.put("entitySystem", region.getSystem());
-            extra.put("entityName", region.getName());
-            extra.put("entityFields", region.getColumns());
-            generateFileWithFtl(_entityPath, capFirst(region.getName()) + "Entity.java", "curation_entity.ftl", extra);
-
-            String _daoPath = PROCESSOR_DIR + "common" + "/dao/impl/" + region.getSystem() + "/";
-            new File(_daoPath).mkdirs();
-            generateFileWithFtl(_daoPath, capFirst(region.getName()) + "DaoImpl.java", "curation_dao.ftl", extra);
-
-            entities.add(new HashMap<String, String>() {{
-                put("system", region.getSystem());
-                put("name", region.getName());
-            }});
+            if (!region.getPath().equals(curationMetadata.getViewRegion().getPath())) {
+                entities.add(new HashMap<String, String>() {{
+                    put("system", region.getSystem());
+                    put("name", region.getName());
+                    put("fullName", region.getFullName());
+                }});
+            }
         });
-        // controller
-        String controllerPath = basePath + "controller";
-        new File(controllerPath).mkdirs();
-        String controllerFileName = this.fullName + "Controller.java";
-        extraParam = new HashMap<>();
-        extraParam.put("mainEntitySystem", curationMetadata.getViewRegion().getSystem());
-        extraParam.put("mainEntityName", curationMetadata.getViewRegion().getName());
-        generateFileWithFtl(controllerPath, controllerFileName, "curation_controller.ftl", extraParam);
-        // service
-        String servicePath = basePath + "service";
-        new File(servicePath).mkdirs();
-        String serviceFileName = this.fullName + "ServiceImpl.java";
         extraParam.put("entities", entities);
+        extraParam.put("main", new HashMap<String, Object>() {{
+            put("name", curationMetadata.getMainRegion().getName());
+            put("fullName", curationMetadata.getMainRegion().getFullName());
+        }});
+
         generateFileWithFtl(servicePath, serviceFileName, "curation_service.ftl", extraParam);
+    }
+
+    public void generateFeature() {
+
+        String path = FEATURE_DIR + this.system + "/";
+        String fileName = this.fullName + ".feature";
+
+        Map<String, Object> extraParam = new HashMap<>();
+        List<Map<String, Object>> entities = new ArrayList<>();
+        curationMetadata.getRegions().forEach(region -> {
+            if (!region.getPath().equals(curationMetadata.getViewRegion().getPath())) {
+                entities.add(new HashMap<String, Object>() {{
+                    put("path", region.getPath());
+                    put("fields", region.getColumns());
+                }});
+            }
+        });
+        extraParam.put("entities", entities);
+        extraParam.put("main", new HashMap<String, Object>() {{
+            put("path", curationMetadata.getMainRegion().getPath());
+        }});
+        extraParam.put("view", new HashMap<String, Object>() {{
+            put("path", curationMetadata.getViewRegion().getPath());
+            put("fields", curationMetadata.getViewRegion().getColumns());
+        }});
+
+        generateFileWithFtl(path, fileName, "test_feature.ftl", extraParam);
     }
 
     public void appendNewRegionPath() {
 
-        curationMetadata = getCurationMetadata(xmlPath);
-        if (null == curationMetadata) {
-            return;
-        }
-
         Path path = Paths.get(REGIONS_TXT);
         try {
             List<String> lines = Files.readAllLines(path);
-            Files.write(path, "\r\n\n".getBytes(), StandardOpenOption.APPEND);
+            Files.write(path, "\n".getBytes(), StandardOpenOption.APPEND);
             curationMetadata.getRegions().forEach(region -> {
                 try {
                     if (!lines.contains(region.getPath())) {
-                        Files.write(path, (region.getPath() + "\r\n").getBytes(), StandardOpenOption.APPEND);
+                        Files.write(path, (region.getPath() + "\n").getBytes(), StandardOpenOption.APPEND);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
-            System.out.println(lines);
         } catch (Exception e) {
             e.printStackTrace();
         }
