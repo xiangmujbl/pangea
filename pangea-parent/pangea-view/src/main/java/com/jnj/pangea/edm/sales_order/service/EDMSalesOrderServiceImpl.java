@@ -1,6 +1,5 @@
 package com.jnj.pangea.edm.sales_order.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -44,9 +43,7 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
         salesOrderBo.setSalesOrderNo(vbakEntity.getVbeln());
         salesOrderBo.setLocalOrderCreateDt(vbakEntity.getErdat());
-        LogUtil.getCoreLog().info("LocalOrderCreateDt的value"+vbakEntity.getErdat());
         salesOrderBo.setLocalOrderDate(vbakEntity.getAudat());
-        LogUtil.getCoreLog().info("LocalOrderDate的value"+vbakEntity.getAudat());
         salesOrderBo.setLocalValidFromDt(vbakEntity.getGuebg());
         salesOrderBo.setLocalValidToDt(vbakEntity.getGueen());
         salesOrderBo.setLocalDocumentCateg(vbakEntity.getVbtyp());
@@ -102,7 +99,6 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
         //rule J2
         VbepEntity vbepEntity = getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
-        LogUtil.getCoreLog().info("LocalOrderDate的value"+vbapEntity.getPosnr());
         if (null == vbapEntity){
             FailData  failData = new FailData();
             failData.setErrorCode("J2");
