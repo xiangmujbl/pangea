@@ -1,4 +1,4 @@
-package com.jnj.pangea.pangea.cns_material_plan_status.service;
+package com.jnj.pangea.plan.cns_material_plan_status.service;
 
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
@@ -16,18 +16,18 @@ import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.common.entity.plan.CnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.pangea.cns_material_plan_status.bo.PangeaCnsMaterialPlanStatusBo;
+import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
+public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
-    private static PangeaCnsMaterialPlanStatusServiceImpl instance;
+    private static PlanCnsMaterialPlanStatusServiceImpl instance;
 
-    public static PangeaCnsMaterialPlanStatusServiceImpl getInstance() {
+    public static PlanCnsMaterialPlanStatusServiceImpl getInstance() {
         if (instance == null) {
-            instance = new PangeaCnsMaterialPlanStatusServiceImpl();
+            instance = new PlanCnsMaterialPlanStatusServiceImpl();
         }
         return instance;
     }
@@ -48,7 +48,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
         EDMMaterialPlantV1Entity materialPlantV1Entity = (EDMMaterialPlantV1Entity) o;
 
-        PangeaCnsMaterialPlanStatusBo materialPlanStatusBo = new PangeaCnsMaterialPlanStatusBo();
+        PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
 
         // T1
         materialPlanStatusBo.setSourceSystem(getFieldWithT1());
@@ -126,7 +126,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         return "";
     }
 
-    private void getFieldWithT7(PangeaCnsMaterialPlanStatusBo materialPlanStatusBo) {
+    private void getFieldWithT7(PlanCnsMaterialPlanStatusBo materialPlanStatusBo) {
         if (null != materialPlanStatusBo) {
             if (IConstant.VALUE.X.equals(materialPlanStatusBo.getDpRelevant())) {
                 materialPlanStatusBo.setActive(IConstant.VALUE.X);
@@ -227,14 +227,14 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         return failData;
     }
 
-    public List<PangeaCnsMaterialPlanStatusBo> getMaterialInclBo() {
-        List<PangeaCnsMaterialPlanStatusBo> materialPlanStatusBoList = new ArrayList<>();
+    public List<PlanCnsMaterialPlanStatusBo> getMaterialInclBo() {
+        List<PlanCnsMaterialPlanStatusBo> materialPlanStatusBoList = new ArrayList<>();
 
         List<CnsMaterialInclEntity> materialInclEntityList = materialInclDao.getAllEntity();
 
         for (CnsMaterialInclEntity materialInclEntity:materialInclEntityList) {
 
-            PangeaCnsMaterialPlanStatusBo materialPlanStatusBo = new PangeaCnsMaterialPlanStatusBo();
+            PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
             materialPlanStatusBo.setSourceSystem(materialInclEntity.getSourceSystem());
             materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber());
             materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant());

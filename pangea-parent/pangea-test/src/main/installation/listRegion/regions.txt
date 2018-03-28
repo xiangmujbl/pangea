@@ -87,7 +87,7 @@
 /plan/cns_plant_attr
 /plan/cns_prod_country_aff
 
-/pangea/cns_material_plan_status
+/plan/cns_material_plan_status
 
 /omp/product_type
 /plan/cns_loc_type

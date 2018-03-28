@@ -1,9 +1,9 @@
-package com.jnj.pangea.pangea.cns_material_plan_status.bo;
+package com.jnj.pangea.plan.cns_material_plan_status.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class PangeaCnsMaterialPlanStatusBo extends BaseBo {
+public class PlanCnsMaterialPlanStatusBo extends BaseBo {
 
     private String sourceSystem;
     private String localMaterialNumber;
