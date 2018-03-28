@@ -102,6 +102,7 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         if (null == vbapEntity){
             FailData  failData = new FailData();
             failData.setErrorCode("J2");
+            failData.setErrorValue("No Schedule lines Found");
             failData.setFunctionalArea("DP");
             failData.setInterfaceID("EDMSalesOrder");
             failData.setSourceSystem("project_one");
