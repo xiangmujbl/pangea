@@ -1,8 +1,8 @@
 <adf-curation>
-    <curation mainRegion="/edm/material_plant_v1" viewRegion="/pangea/cns_material_plan_status" chunkSize="1000"
+    <curation mainRegion="/edm/material_plant_v1" viewRegion="/plan/cns_material_plan_status" chunkSize="1000"
               chunkBytes="40096"
               partitionPerServer="2" parallelism="2"
-              executionClassName="com.jnj.pangea.pangea.cns_material_plan_status.controller.PangeaCnsMaterialPlanStatusController">
+              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatusController">
         <regions>
 
             <region path="/edm/material_plant_v1">
@@ -50,7 +50,7 @@
                 </columns>
             </region>
 
-            <region path="/pangea/cns_material_plan_status">
+            <region path="/plan/cns_material_plan_status">
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
                 </columns>

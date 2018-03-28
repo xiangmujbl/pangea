@@ -39,9 +39,9 @@ Feature: CnsMaterialPlanStatus-AEAZ-1692
 
     And I wait "/plan/cns_material_incl" Async Queue complete
 
-    When I submit task with xml file "xml/pangea/CnsMaterialPlanStatus.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/plan/CnsMaterialPlanStatus.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/pangea/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+    Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
       | CONS_LATAM   | BR01                | BR01       | 9862           | G3a             | G4a | X      | X          |            | X            | X              |
       | CONS_LATAM   | BR02                | BR01       | 9864           | G3b             | G4b | X      | X          |            | X            | X              |
@@ -51,9 +51,9 @@ Feature: CnsMaterialPlanStatus-AEAZ-1692
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/edm/material_plant_v1,/plan/cns_material_incl" and "/pangea/cns_material_plan_status,/plan/edm_failed_data"
+    And I compare the number of records between "/edm/material_plant_v1,/plan/cns_material_incl" and "/plan/cns_material_plan_status,/plan/edm_failed_data"
 
     And I delete the test data
 
-    And I will remove all data with region "/pangea/cns_material_plan_status"
+    And I will remove all data with region "/plan/cns_material_plan_status"
     And I will remove all data with region "/plan/edm_failed_data"

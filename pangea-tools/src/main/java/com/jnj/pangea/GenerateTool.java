@@ -9,7 +9,7 @@ public class GenerateTool {
 
     public static void main(String[] args) {
 
-        ViewCreator viewCreator = new ViewCreator("omp", "location_type", "AEAZ-123", true);
+      ViewCreator viewCreator = new ViewCreator("omp", "lot_size_key", "", false);
 
         // first step
         viewCreator.generateTestJavaFile();
