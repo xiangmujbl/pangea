@@ -64,8 +64,8 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
         //rule J1
         VbapEntity vbapEntity = getFieldWithJ1(vbakEntity.getVbeln());
-        if (null == vbapEntity){
-            FailData  failData = new FailData();
+        if (null == vbapEntity) {
+            FailData failData = new FailData();
             failData.setErrorCode("J1");
             failData.setErrorValue("No Sales Item Found");
             failData.setFunctionalArea("DP");
@@ -77,7 +77,7 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
             failData.setKey4("");
             failData.setKey5("");
             resultObject.setFailData(failData);
-            return  resultObject;
+            return resultObject;
         }
         salesOrderBo.setSalesOrderItem(vbapEntity.getPosnr());
         salesOrderBo.setLocalMaterialNumber(vbapEntity.getMatnr());
@@ -99,8 +99,8 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
         //rule J2
         VbepEntity vbepEntity = getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
-        if (null == vbapEntity){
-            FailData  failData = new FailData();
+        if (null == vbapEntity) {
+            FailData failData = new FailData();
             failData.setErrorCode("J2");
             failData.setErrorValue("No Schedule lines Found");
             failData.setFunctionalArea("DP");
@@ -112,7 +112,7 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
             failData.setKey4("");
             failData.setKey5("");
             resultObject.setFailData(failData);
-            return  resultObject;
+            return resultObject;
         }
         salesOrderBo.setScheduleLineItem(vbepEntity.getEtenr());
         salesOrderBo.setLocalScheduleLineDate(vbepEntity.getEdatu());
@@ -121,11 +121,11 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
 
         //rule J3
-        VbpaEntity vbpaEntity=getFieldWithJ3(vbakEntity.getVbeln(),"",IConstant.VALUE.WE);
+        VbpaEntity vbpaEntity = getFieldWithJ3(vbakEntity.getVbeln(), "", IConstant.VALUE.WE);
         salesOrderBo.setLocalShipToParty(vbpaEntity.getKunnr());
 
         //rule J4
-        VbkdEntity vbkdEntity=getFieldWithJ4(vbakEntity.getVbeln(),"");
+        VbkdEntity vbkdEntity = getFieldWithJ4(vbakEntity.getVbeln(), "");
         salesOrderBo.setLocalIncoTerms1(vbkdEntity.getInco1());
         salesOrderBo.setLocalIncoTerms2(vbkdEntity.getInco2());
         salesOrderBo.setLocalCustomerGroup(vbkdEntity.getKdgrp());
@@ -133,9 +133,10 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         resultObject.setBaseBo(salesOrderBo);
         return resultObject;
     }
+
     //J4
     private VbkdEntity getFieldWithJ4(String vbeln, String posnr) {
-        VbkdEntity entity = vbkdDao.getEntityWithPosnrAndVbeln(vbeln,posnr);
+        VbkdEntity entity = vbkdDao.getEntityWithPosnrAndVbeln(vbeln, posnr);
         if (null != entity) {
             return entity;
         }
@@ -144,8 +145,8 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
     }
 
     //J3
-    private VbpaEntity getFieldWithJ3(String vbeln,String posnr, String parvw) {
-        VbpaEntity entity = vbpaDao.getEntityWithPosnrAndParvwAndVbeln(vbeln,posnr, parvw);
+    private VbpaEntity getFieldWithJ3(String vbeln, String posnr, String parvw) {
+        VbpaEntity entity = vbpaDao.getEntityWithPosnrAndParvwAndVbeln(vbeln, posnr, parvw);
         if (null != entity) {
             return entity;
         }
@@ -159,8 +160,9 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         if (null != entity) {
             return entity;
         }
-        return null ;
+        return null;
     }
+
     //J1
     private VbapEntity getFieldWithJ1(String vbeln) {
         VbapEntity entity = vbapDao.getEntityWithVbeln(vbeln);
