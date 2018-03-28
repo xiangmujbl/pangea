@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-123
-Feature: AEAZ-123 EDMBatchMaster-Curation
+@pangea_test
+Feature: EDMBatchMaster-Curation
 
   Scenario: Full Load curation
 

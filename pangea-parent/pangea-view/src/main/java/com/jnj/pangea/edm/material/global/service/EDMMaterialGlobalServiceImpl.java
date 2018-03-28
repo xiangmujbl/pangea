@@ -29,9 +29,11 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         }
         return instance;
     }
-    private ProjectOneMaktDaoImpl maktDao=ProjectOneMaktDaoImpl.getInstance();
-    private NgemsMaterialLinkageDaoImpl linkageDao=NgemsMaterialLinkageDaoImpl.getInstance();
-    private NgemsGoldenMaterialDaoImpl goldenMaterialDao=NgemsGoldenMaterialDaoImpl.getInstance();
+
+    private ProjectOneMaktDaoImpl maktDao = ProjectOneMaktDaoImpl.getInstance();
+    private NgemsMaterialLinkageDaoImpl linkageDao = NgemsMaterialLinkageDaoImpl.getInstance();
+    private NgemsGoldenMaterialDaoImpl goldenMaterialDao = NgemsGoldenMaterialDaoImpl.getInstance();
+
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -68,24 +70,25 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setMinRemShelfLife(maraEntity.getMhdrz());
         materialGlobalBo.setTotalShelfLife(maraEntity.getMhdhb());
         // rule J2
-        GoldenMaterialEntity goldenMaterialEntity = goldenMaterialDao.getEntityWithMaterialNumber(getFieldWithJ2(matnr,sourceSystem));
-
-        if (null != goldenMaterialEntity) {
-            materialGlobalBo.setMaterialNumber(goldenMaterialEntity.getMaterialNumber());
-            materialGlobalBo.setRefDescription(goldenMaterialEntity.getMaterialDescription());
-            materialGlobalBo.setMaterialType(goldenMaterialEntity.getMaterialType());
-            materialGlobalBo.setBaseUom(goldenMaterialEntity.getBaseUom());
-            materialGlobalBo.setParentCode(goldenMaterialEntity.getParentCode());
-            materialGlobalBo.setForm(goldenMaterialEntity.getForm());
-            materialGlobalBo.setCategory(goldenMaterialEntity.getCategory());
-            materialGlobalBo.setSubBrand(goldenMaterialEntity.getSubBrand());
-            materialGlobalBo.setBrand(goldenMaterialEntity.getBrand());
-            materialGlobalBo.setFranchise(goldenMaterialEntity.getFranchise());
-            materialGlobalBo.setGlobalBusinessUnit(goldenMaterialEntity.getGlobalBusinessUnit());
-            materialGlobalBo.setProductFamily(goldenMaterialEntity.getProductFamily());
-            materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
-
-            materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
+        String materialNumber = getFieldWithJ2(matnr, sourceSystem);
+        if (StringUtils.isNotEmpty(materialNumber)) {
+            GoldenMaterialEntity goldenMaterialEntity = goldenMaterialDao.getEntityWithMaterialNumber(materialNumber);
+            if (null != goldenMaterialEntity) {
+                materialGlobalBo.setMaterialNumber(goldenMaterialEntity.getMaterialNumber());
+                materialGlobalBo.setRefDescription(goldenMaterialEntity.getMaterialDescription());
+                materialGlobalBo.setMaterialType(goldenMaterialEntity.getMaterialType());
+                materialGlobalBo.setBaseUom(goldenMaterialEntity.getBaseUom());
+                materialGlobalBo.setParentCode(goldenMaterialEntity.getParentCode());
+                materialGlobalBo.setForm(goldenMaterialEntity.getForm());
+                materialGlobalBo.setCategory(goldenMaterialEntity.getCategory());
+                materialGlobalBo.setSubBrand(goldenMaterialEntity.getSubBrand());
+                materialGlobalBo.setBrand(goldenMaterialEntity.getBrand());
+                materialGlobalBo.setFranchise(goldenMaterialEntity.getFranchise());
+                materialGlobalBo.setGlobalBusinessUnit(goldenMaterialEntity.getGlobalBusinessUnit());
+                materialGlobalBo.setProductFamily(goldenMaterialEntity.getProductFamily());
+                materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
+                materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
+            }
         }
         materialGlobalBo.setLocalManufacturingTechnology("");
         materialGlobalBo.setGlobalDpParentCode("");
@@ -113,9 +116,9 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         return failData;
     }
 
-    public String getFieldWithJ1(String matnr){
+    public String getFieldWithJ1(String matnr) {
         List<MaktEntity> maktEntities = maktDao.getEntityWithMatnr(matnr);
-        for (MaktEntity item:maktEntities) {
+        for (MaktEntity item : maktEntities) {
             String spras = item.getSpras();
             String maktx = item.getMaktx();
             if (IConstant.VALUE.EN.equals(spras)) {
@@ -129,10 +132,10 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         return "";
     }
 
-    public String getFieldWithJ2(String matnr,String sourceSystem){
+    public String getFieldWithJ2(String matnr, String sourceSystem) {
         MaterialLinkageEntity linkageEntity = linkageDao.getEntityWithLocalMaterialNumberAndSourceSystem(matnr, sourceSystem);
-        String materialNumber="";
-        if (null!=linkageEntity){
+        String materialNumber = "";
+        if (null != linkageEntity) {
             materialNumber = linkageEntity.getMaterialNumber();
         }
         return materialNumber;

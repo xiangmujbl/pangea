@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-123
-Feature: AEAZ-123 EDMSourceList-Curation
+@pangea_test
+Feature: EDMSourceList-Curation
 
   Scenario: Full Load curation
 
