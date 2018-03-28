@@ -13,12 +13,10 @@ import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001KDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.common.entity.plan.CnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.pangea.cns_material_plan_status.bo.PangeaCnsMaterialPlanStatusBo;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +69,20 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
                 materialPlanStatusBo.setLocalPlant(materialPlantV1Entity.getLocalPlant());
                 materialPlanStatusBo.setDpRelevant("");
                 materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
+            }else {
+                FailData failData = checkF2AndF3(materialPlantV1Entity);
+                if (null != failData) {
+                    resultObject.setFailData(failData);
+                    return resultObject;
+                }
+            }
+        }else{
+            FailData failData = checkF1(materialPlantV1Entity);
+            if (null != failData) {
+                resultObject.setFailData(failData);
+                return resultObject;
             }
         }
-
         materialPlanStatusBo.setMaterialNumber(materialPlantV1Entity.getMaterialNumber());
 
         //T3 T4
@@ -97,6 +106,7 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
         materialPlanStatusBo.setNoPlanRelevant(getFieldWithT6(localMaterialNumber));
 
         resultObject.setBaseBo(materialPlanStatusBo);
+
         return resultObject;
     }
 
@@ -189,20 +199,31 @@ public class PangeaCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
     }
 
-    private FailData checkT2(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
-        FailData failData = null;
-        if (StringUtils.isEmpty(sourceSystem) || IConstant.VALUE.EMS.equals(sourceSystem)) {
-            failData = new FailData();
-            failData.setErrorCode("T1");
-            failData.setFunctionalArea("DP");
-            failData.setInterfaceID("EDMPlant");
-            failData.setSourceSystem("project_one");
-            failData.setKey1(enterprisePlants.getzPlantSourceSystem());
-            failData.setKey2(enterprisePlants.getzPlant());
-            failData.setKey3("");
-            failData.setKey4("");
-            failData.setKey5("");
-        }
+    private FailData checkF1(EDMMaterialPlantV1Entity materialPlantV1Entity) {
+        FailData failData = new FailData();
+        failData.setErrorCode("F1");
+        failData.setFunctionalArea("DP");
+        failData.setInterfaceID("PangeaCnsMaterialPlanStatus");
+        failData.setSourceSystem(IConstant.VALUE.PROJECT_ONE);
+        failData.setKey1(materialPlantV1Entity.getLocalPlant());
+        failData.setKey2(materialPlantV1Entity.getLocalMaterialNumber());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
+        return failData;
+    }
+
+    private FailData checkF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity) {
+        FailData failData = new FailData();
+        failData.setErrorCode("F2,F3");
+        failData.setFunctionalArea("DP");
+        failData.setInterfaceID("PangeaCnsMaterialPlanStatus");
+        failData.setSourceSystem(IConstant.VALUE.PROJECT_ONE);
+        failData.setKey1(materialPlantV1Entity.getLocalPlant());
+        failData.setKey2(materialPlantV1Entity.getLocalMaterialNumber());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
         return failData;
     }
 
