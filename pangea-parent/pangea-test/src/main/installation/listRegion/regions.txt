@@ -94,8 +94,6 @@
 /omp/location_type
 /omp/product_country
 
-
-
 /project_one/vbak
 /project_one/vbap
 /project_one/vbep
@@ -103,6 +101,7 @@
 /project_one/vbkd
 /edm/sales_order_v1
 
-
+/omp/gdm_country
+/omp/gdm_cluster
 /ems/customer_group
 
