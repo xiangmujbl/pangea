@@ -1,0 +1,26 @@
+<adf-curation>
+    <curation mainRegion="/plan/cns_lot_size_key" viewRegion="/omp/lot_size_key" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.lot_size_key.controller.OMPLotSizeKeyController">
+        <regions>
+
+            <region path="/plan/cns_lot_size_key">
+                <columns>
+                    lotSizeKey,comments,lotSizeKeyDescription,period,quantity
+                </columns>
+            </region>
+
+            <region path="/omp/lot_size_key">
+                <columns>
+                    lotSizeKey,
+                    activeOprerp,
+                    activeSoperp,
+                    comments,
+                    descRiption,
+                    period,
+                    quantity
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

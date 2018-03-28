@@ -105,3 +105,8 @@
 /omp/gdm_cluster
 /ems/customer_group
 
+
+/omp/lot_size_key
+
+
+
