@@ -172,5 +172,6 @@ public interface IConstant {
         String Y = "Y";
         String YES = "YES";
         String WE="WE";
+        String LA_="LA_";
     }
 }

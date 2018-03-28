@@ -31,7 +31,7 @@ public class GDMProductCountryServiceImpl implements ICommonService {
         String dpParentCode = prodCountryAffEntity.getDpParentCode();
         String country = prodCountryAffEntity.getCountry();
         if (null != dpParentCode && null != country){
-            String uniqueId = prodCountryAffEntity.getDpParentCode() + prodCountryAffEntity.getCountry();
+            String uniqueId = IConstant.VALUE.LA_ + prodCountryAffEntity.getDpParentCode() + prodCountryAffEntity.getCountry();
             productCountryBo.setUniqueId(uniqueId);
             productCountryBo.setActiveFcterp(IConstant.VALUE.YES);
             productCountryBo.setCountryGroup(prodCountryAffEntity.getCountryGroup());

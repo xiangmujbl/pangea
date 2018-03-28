@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPProductCountry
+@pangea_test @AEAZ-1613
+Feature: OMPProductCountry-AEAZ-1613
 
   Scenario: Full Load curation
 
@@ -21,10 +21,10 @@ Feature: OMPProductCountry
     When I submit task with xml file "xml/omp/OMPProductCountry.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/product_country" by keyFields "uniqueId"
-      | uniqueId            | activeFcterp | countryGroup | countryId | dpPlannerId | dpSegmentation | productClassification | productId         | productStatus | rootSize | segmentation |
-      | 78910105796160024BR | YES          | NTG LIMPEGA  | BR        | DP003       |                | REGULAR               | 78910105796160024 | Active        |          |              |
-      | 78910100373520048BR | YES          | NTG LIMPEGA  | BR        | DP003       |                | REGULAR               | 78910100373520048 | Active        |          |              |
-      | 35746611035250006BR | YES          | NTG LIMPEGA  | BR        | DP003       |                | REGULAR               | 35746611035250006 | Active        |          |              |
+      | uniqueId               | activeFcterp | countryGroup | countryId | dpPlannerId | dpSegmentation | productClassification | productId         | productStatus | rootSize | segmentation |
+      | LA_78910105796160024BR | YES          | NTG LIMPEGA  | BR        | DP003       |                | REGULAR               | 78910105796160024 | Active        |          |              |
+      | LA_78910100373520048BR | YES          | NTG LIMPEGA  | BR        | DP003       |                | REGULAR               | 78910100373520048 | Active        |          |              |
+      | LA_35746611035250006BR | YES          | NTG LIMPEGA  | BR        | DP003       |                | REGULAR               | 35746611035250006 | Active        |          |              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

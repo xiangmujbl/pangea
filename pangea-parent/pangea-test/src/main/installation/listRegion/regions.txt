@@ -102,3 +102,7 @@
 /project_one/vbpa
 /project_one/vbkd
 /edm/sales_order_v1
+
+
+/ems/customer_group
+
