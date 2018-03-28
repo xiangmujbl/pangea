@@ -39,7 +39,7 @@ Feature: CnsMaterialPlanStatus-AEAZ-1692
 
     And I wait "/plan/cns_material_incl" Async Queue complete
 
-    When I submit task with xml file "xml/plan/CnsMaterialPlanStatus.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
