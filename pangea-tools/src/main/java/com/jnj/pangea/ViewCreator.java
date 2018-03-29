@@ -278,6 +278,9 @@ public class ViewCreator {
                 Element region = (Element) e;
                 String path = region.attributeValue("path");
                 String[] columns = region.element("columns").getTextTrim().split(",");
+                for (int i=0;i<columns.length;i++){
+                   columns[i]=columns[i].trim();
+                }
                 RegionMetadata regionMetadata = new RegionMetadata(path, columns);
                 regionList.add(regionMetadata);
                 if (path.equals(mainRegion)) {

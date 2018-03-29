@@ -190,5 +190,6 @@ public interface IConstant {
         String PGA = "PGA";
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
+        String USD="USD";
     }
 }
