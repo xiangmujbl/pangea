@@ -32,8 +32,19 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
     private String localDpParentCode;
     private String primaryPlanningCode;
 
+    private String localBaseUom;
+
+    public String getLocalBaseUom() {
+        return localBaseUom;
+    }
+
+    public void setLocalBaseUom(String localBaseUom) {
+        this.localBaseUom = localBaseUom;
+    }
+
     public EDMMaterialGlobalV1Entity(Map<String, Object> map) {
         super(map);
+        setLocalBaseUom((String) map.get("localBaseUom"));
         setProductFamily((String) map.get("productFamily"));
         setFranchise((String) map.get("franchise"));
         setManufacturingTechnology((String) map.get("manufacturingTechnology"));
