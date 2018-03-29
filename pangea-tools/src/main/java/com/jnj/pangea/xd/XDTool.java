@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
  */
 public class XDTool {
 
-    private static String USER_NAME = "kding5";
-    private static String PASSWORD = "Dk202120414";
+    private static String USER_NAME = "";
+    private static String PASSWORD = "";
     private static String HOST = "awsamenva1175.jnj.com";
 
     public static void main(String[] args) {
