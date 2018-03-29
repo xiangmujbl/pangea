@@ -1,9 +1,6 @@
-package com.jnj.pangea.metadata;
+package com.jnj.pangea.generator.metadata;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static com.jnj.pangea.GenerateTool.ABBR;
+import static com.jnj.pangea.generator.GenerateTool.ABBR;
 
 public class StringUtils {
 
