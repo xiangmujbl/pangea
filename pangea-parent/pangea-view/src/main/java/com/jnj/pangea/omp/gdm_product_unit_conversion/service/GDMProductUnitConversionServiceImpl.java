@@ -6,11 +6,8 @@ import com.jnj.pangea.common.dao.impl.edm.EDMMaterialAuomDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialAuomV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
-import com.jnj.pangea.common.entity.project_one.Mch1Entity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.batch_master.bo.EDMBatchMasterBo;
 import com.jnj.pangea.omp.gdm_product_unit_conversion.bo.GDMProductUnitConversionBo;
 import org.apache.commons.lang.StringUtils;
 
@@ -42,7 +39,7 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
 
         processSystem(edmMaterialGlobalV1Entity,gdmProductUnitConversionBo);
         CnsPlanUnitEntity cnsPlanUnitEntity =  planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(edmMaterialGlobalV1Entity.getLocalBaseUom());
-        StringBuffer sb = new StringBuffer(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
+        StringBuilder sb = new StringBuilder(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
         if(cnsPlanUnitEntity!=null){
             sb.append(cnsPlanUnitEntity.getUnit());
             if( !StringUtils.isEmpty(cnsPlanUnitEntity.getUnit())){
