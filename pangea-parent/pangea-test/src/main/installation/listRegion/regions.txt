@@ -113,3 +113,19 @@
 
 /omp/gdm_location_detail
 
+
+/omp/gdm_location_type
+
+
+/plan/cns_plan_unit
+/omp/gdm_unit
+
+
+/omp/gdm_location
+
+
+
+
+/plan/cns_pln_spl_loc
+/omp/gdm_location_xref
+

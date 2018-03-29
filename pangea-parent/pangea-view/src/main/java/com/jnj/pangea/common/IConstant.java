@@ -34,6 +34,8 @@ public interface IConstant {
         String PROJECT_ONE_VBAP="/project_one/vbap";
         String PROJECT_ONE_VBPA="/project_one/vbpa";
         String PROJECT_ONE_VBKD="/project_one/vbkd";
+        String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
+        String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -127,10 +129,22 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
+    interface CNS_PLAN_UNIT {
+        String LOCAL_UOM = "localUom";
+    }
+
+
+
     interface EDM_MATERIAL_GLOBAL_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_TYPE = "localMaterialType";
+        String LOCAL_BASE_UOM = "localBaseUom";
+    }
+
+    interface EDM_MATERIAL_AUOM_V1 {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_AUOM = "localAuom";
     }
 
     interface EDM_PLANT_V1 {
@@ -176,5 +190,6 @@ public interface IConstant {
         String PGA = "PGA";
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
+        String USD="USD";
     }
 }

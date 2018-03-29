@@ -4,7 +4,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class CnsPlanParameterEntity extends CommonEntity {
+public class PlanCnsPlanParameterEntity extends CommonEntity {
 
     private String sourceSystem;
     private String dataObject;
@@ -12,7 +12,7 @@ public class CnsPlanParameterEntity extends CommonEntity {
     private String parameter;
     private String inclExcl;
     private String parameterValue;
-    public CnsPlanParameterEntity(Map<String, Object> map) {
+    public PlanCnsPlanParameterEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("sourceSystem"));
         setDataObject((String) map.get("dataObject"));

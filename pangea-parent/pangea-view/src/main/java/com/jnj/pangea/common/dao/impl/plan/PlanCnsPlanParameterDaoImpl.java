@@ -3,7 +3,7 @@ package com.jnj.pangea.common.dao.impl.plan;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.entity.plan.CnsPlanParameterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 
 import java.util.List;
 
@@ -18,20 +18,20 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<CnsPlanParameterEntity> getEntitiesWithConditions(String sourceSystem, String dataObject, String attribute, String parameter) {
+    public List<PlanCnsPlanParameterEntity> getEntitiesWithConditions(String sourceSystem, String dataObject, String attribute, String parameter) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
                 .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject)
                 .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute)
                 .and(IConstant.CNS_PLAN_PARAMETER.PARAMETER).is(parameter).toQueryString();
-        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, CnsPlanParameterEntity.class);
+        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
 
-    public List<CnsPlanParameterEntity> getEntitiesWithConditions(String sourceSystem, String dataObject, String attribute, String parameter, String inclExcl) {
+    public List<PlanCnsPlanParameterEntity> getEntitiesWithConditions(String sourceSystem, String dataObject, String attribute, String parameter, String inclExcl) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
                 .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject)
                 .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute)
                 .and(IConstant.CNS_PLAN_PARAMETER.PARAMETER).is(parameter)
                 .and(IConstant.CNS_PLAN_PARAMETER.INCL_EXCL).is(inclExcl).toQueryString();
-        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, CnsPlanParameterEntity.class);
+        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
 }

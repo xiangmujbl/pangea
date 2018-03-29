@@ -6,20 +6,28 @@ import java.util.Map;
 
 public class PlanCnsPlanUnitEntity extends CommonEntity {
 
+    private String sourceSystem;
     private String localUom;
     private String localUomName;
     private String plantFlag;
-    private String sourceSystem;
     private String unit;
 
     public PlanCnsPlanUnitEntity(Map<String, Object> map) {
         super(map);
 
+        setSourceSystem((String) map.get("sourceSystem"));
         setLocalUom((String) map.get("localUom"));
         setLocalUomName((String) map.get("localUomName"));
         setPlantFlag((String) map.get("plantFlag"));
-        setSourceSystem((String) map.get("sourceSystem"));
         setUnit((String) map.get("unit"));
+    }
+
+    public String getSourceSystem() {
+        return this.sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
     }
 
     public String getLocalUom() {
@@ -44,14 +52,6 @@ public class PlanCnsPlanUnitEntity extends CommonEntity {
 
     public void setPlantFlag(String plantFlag) {
         this.plantFlag = plantFlag;
-    }
-
-    public String getSourceSystem() {
-        return this.sourceSystem;
-    }
-
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
     }
 
     public String getUnit() {

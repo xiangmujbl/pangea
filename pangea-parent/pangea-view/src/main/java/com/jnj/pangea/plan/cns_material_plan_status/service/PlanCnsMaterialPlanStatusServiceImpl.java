@@ -14,7 +14,7 @@ import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
-import com.jnj.pangea.common.entity.plan.CnsPlanParameterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
 
@@ -143,16 +143,16 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
     }
 
     private EDMMaterialGlobalV1Entity checkWithF1(){
-        List<CnsPlanParameterEntity> planParameterEntities = new ArrayList<>();
-        List<CnsPlanParameterEntity> t1DpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+        List<PlanCnsPlanParameterEntity> planParameterEntities = new ArrayList<>();
+        List<PlanCnsPlanParameterEntity> t1DpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
                 IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
         planParameterEntities.addAll(t1DpList);
 
-        List<CnsPlanParameterEntity> t1SpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+        List<PlanCnsPlanParameterEntity> t1SpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
                 IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.SP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
         planParameterEntities.addAll(t1SpList);
 
-        for (CnsPlanParameterEntity planParameterEntity:planParameterEntities) {
+        for (PlanCnsPlanParameterEntity planParameterEntity:planParameterEntities) {
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialType(planParameterEntity.getParameterValue());
             if (null != materialGlobalV1Entity){
                 return materialGlobalV1Entity;
@@ -172,21 +172,21 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
         Boolean lpFlag = materialPlantV1Entity.getLocalPlant().equals(materialGlobalV1Entity.getLocalMaterialNumber());
 
-        List<CnsPlanParameterEntity> ldList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+        List<PlanCnsPlanParameterEntity> ldList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
                 IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT);
 
         Boolean ldFlag = false;
-        for (CnsPlanParameterEntity planParameterEntity: ldList) {
+        for (PlanCnsPlanParameterEntity planParameterEntity: ldList) {
             if (materialPlantV1Entity.getLocalPlant().equals(planParameterEntity.getParameterValue())){
                 ldFlag = true;
             }
         }
 
         Boolean lmFlag = false;
-        List<CnsPlanParameterEntity> lmList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
+        List<PlanCnsPlanParameterEntity> lmList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
                 IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.MRP_TYPE, IConstant.VALUE.I);
 
-        for (CnsPlanParameterEntity planParameterEntity:lmList) {
+        for (PlanCnsPlanParameterEntity planParameterEntity:lmList) {
             if (materialPlantV1Entity.getLocalMrpType().equals(planParameterEntity.getParameterValue())){
                 lmFlag = true;
             }

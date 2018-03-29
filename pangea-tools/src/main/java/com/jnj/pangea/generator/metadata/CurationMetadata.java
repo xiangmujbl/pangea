@@ -1,4 +1,4 @@
-package com.jnj.pangea.metadata;
+package com.jnj.pangea.generator.metadata;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.jnj.pangea;
+package com.jnj.pangea.generator;
 
-import com.jnj.pangea.metadata.CurationMetadata;
-import com.jnj.pangea.metadata.RegionMetadata;
-import com.jnj.pangea.metadata.StringUtils;
+import com.jnj.pangea.generator.metadata.CurationMetadata;
+import com.jnj.pangea.generator.metadata.RegionMetadata;
+import com.jnj.pangea.generator.metadata.StringUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.dom4j.Document;
@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jnj.pangea.metadata.StringUtils.capFirst;
-import static com.jnj.pangea.metadata.StringUtils.transformToCamelCase;
+import static com.jnj.pangea.generator.metadata.StringUtils.capFirst;
+import static com.jnj.pangea.generator.metadata.StringUtils.transformToCamelCase;
 
 public class ViewCreator {
 
@@ -278,6 +278,9 @@ public class ViewCreator {
                 Element region = (Element) e;
                 String path = region.attributeValue("path");
                 String[] columns = region.element("columns").getTextTrim().split(",");
+                for (int i=0;i<columns.length;i++){
+                   columns[i]=columns[i].trim();
+                }
                 RegionMetadata regionMetadata = new RegionMetadata(path, columns);
                 regionList.add(regionMetadata);
                 if (path.equals(mainRegion)) {
