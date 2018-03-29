@@ -1,4 +1,4 @@
-package com.jnj.pangea;
+package com.jnj.pangea.generator;
 
 import java.util.Arrays;
 import java.util.List;

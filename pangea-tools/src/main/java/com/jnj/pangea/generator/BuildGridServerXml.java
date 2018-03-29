@@ -1,4 +1,4 @@
-package com.jnj.pangea;
+package com.jnj.pangea.generator;
 
 import java.io.*;
 import java.util.HashMap;
