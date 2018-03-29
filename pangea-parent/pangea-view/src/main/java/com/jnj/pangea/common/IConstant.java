@@ -173,5 +173,8 @@ public interface IConstant {
         String YES = "YES";
         String WE="WE";
         String LA_="LA_";
+        String PGA = "PGA";
+        String UNDERLINE = "_";
+        String BACK_SLANT = "/";
     }
 }
