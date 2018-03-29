@@ -113,3 +113,6 @@
 
 /omp/gdm_location_detail
 
+
+/omp/gdm_location_type
+
