@@ -110,3 +110,6 @@
 /plan/cns_plan_unit
 /omp/product
 
+
+/omp/gdm_location_detail
+
