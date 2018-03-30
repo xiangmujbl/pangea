@@ -26,7 +26,7 @@ Feature:  OMPGdmLocationDetail-Curation
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/plan/cns_plant_attr,/plan/cns_plant_attr,/plan/cns_plant_attr,/plan/cns_plant_attr" and "/omp/gdm_location_detail,/plan/edm_failed_data"
+    #And I compare the number of records between "/plan/cns_plant_attr,/plan/cns_plant_attr,/plan/cns_plant_attr,/plan/cns_plant_attr" and "/omp/gdm_location_detail,/plan/edm_failed_data"
 
     And I delete the test data
 
