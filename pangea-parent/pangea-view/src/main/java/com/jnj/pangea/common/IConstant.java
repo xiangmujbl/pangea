@@ -199,5 +199,6 @@ public interface IConstant {
         String BACK_SLANT = "/";
         String USD="USD";
         String PANGEA = "Pangea";
+        String LINE="-";
     }
 }
