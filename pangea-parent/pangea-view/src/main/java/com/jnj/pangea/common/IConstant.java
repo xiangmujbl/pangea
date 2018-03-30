@@ -36,6 +36,7 @@ public interface IConstant {
         String PROJECT_ONE_VBKD="/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
+        String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -165,6 +166,12 @@ public interface IConstant {
         String PLANNING_TYPE = "planningType";
     }
 
+    interface CNS_PROD_LOC_ATTRIB {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
+
     // -----region attribute value
     interface VALUE {
 
@@ -191,5 +198,6 @@ public interface IConstant {
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
         String USD="USD";
+        String PANGEA = "Pangea";
     }
 }
