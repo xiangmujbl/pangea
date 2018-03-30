@@ -33,7 +33,7 @@
 
             <region path="/edm/country_v1">
                 <columns>
-                    sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion
+                    sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion,consumerPlannRegDesc
                 </columns>
             </region>
 

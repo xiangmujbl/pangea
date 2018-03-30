@@ -10,6 +10,15 @@ public class EDMCountryBo extends BaseBo {
     private String countryCode;
     private String countryName;
     private String consumerPlanningRegion;
+    private String consumerPlannRegDesc;
+
+    public String getConsumerPlannRegDesc() {
+        return consumerPlannRegDesc;
+    }
+
+    public void setConsumerPlannRegDesc(String consumerPlannRegDesc) {
+        this.consumerPlannRegDesc = consumerPlannRegDesc;
+    }
 
     public String getSourceSystem() {
         return sourceSystem;

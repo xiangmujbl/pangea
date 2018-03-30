@@ -7,6 +7,7 @@ import com.jnj.pangea.common.dao.impl.ems.EMSFMdmCountriesDaoImpl;
 import com.jnj.pangea.common.entity.ems.EMSFMdmCountriesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by JGUO57 on 2018/3/2.
@@ -34,14 +35,23 @@ public class EDMCountryServiceImpl implements ICommonService {
         EDMCountryBo edmCountryBo = new EDMCountryBo();
         resultObject.setBaseBo(edmCountryBo);
 
-        String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(mainData.getzSourceSystem());
-        edmCountryBo.setSourceSystem(sourceSystem);
-
+        String zSourceSystem = mainData.getzSourceSystem();
+        if (StringUtils.isNotEmpty(zSourceSystem)) {
+            String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(zSourceSystem);
+            edmCountryBo.setSourceSystem(sourceSystem);
+        } else {
+            resultObject.setFailData(null);
+            return resultObject;
+        }
 
         processSystem(mainData, edmCountryBo);
-        EMSFMdmCountriesEntity emsfMdmCountriesEntity = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode(IConstant.VALUE.EMS, mainData.getzEntCodeIso3166Alpha2());
-        if (emsfMdmCountriesEntity != null) {
-            edmCountryBo.setCountryName(emsfMdmCountriesEntity.getMdmName());
+
+        String zEntCodeIso3166Alpha2 = mainData.getzEntCodeIso3166Alpha2();
+        if (StringUtils.isNotEmpty(zEntCodeIso3166Alpha2)) {
+            EMSFMdmCountriesEntity emsfMdmCountriesEntity = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode(IConstant.VALUE.EMS, mainData.getzEntCodeIso3166Alpha2());
+            if (emsfMdmCountriesEntity != null) {
+                edmCountryBo.setCountryName(emsfMdmCountriesEntity.getMdmName());
+            }
         }
         return resultObject;
     }
