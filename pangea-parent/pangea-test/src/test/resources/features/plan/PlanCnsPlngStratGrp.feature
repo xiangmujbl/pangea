@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1483
-Feature: CnsPlngStratGrp
+Feature: CnsPlngStratGrp AEAZ-1483
 
     Scenario: Full Load curation
 
