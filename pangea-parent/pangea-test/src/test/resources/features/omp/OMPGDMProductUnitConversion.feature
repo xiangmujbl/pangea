@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPGdmProductUnitConversion-Curation
+@pangea_test @AEAZ-1815
+Feature: OMPGdmProductUnitConversion AEAZ-1815
 
   Scenario: Full Load curation
 

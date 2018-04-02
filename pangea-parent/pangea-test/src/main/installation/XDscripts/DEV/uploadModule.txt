@@ -1,3 +1,4 @@
 module upload --file /apps/adf/pangea/modules/job-multi-files-adf-0.2.1.M4.jar --name eads-multifiles-adf-20180312 --type job
+module upload --file /apps/adf/pangea/modules/job-csv-adf-0.3.04.jar --name csv-adf --type job
 
 module upload --file /apps/adf/pangea/modules/app-compute-trigger-0.0.1.jar --name triggerCeModule --type job

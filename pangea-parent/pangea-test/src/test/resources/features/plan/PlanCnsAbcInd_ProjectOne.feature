@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1481
-Feature: PlanCnsAbcInd
+Feature: PlanCnsAbcInd AEAZ-1481
 
   Scenario: Full Load curation
     And I will remove all data with region "/plan/edm_failed_data"

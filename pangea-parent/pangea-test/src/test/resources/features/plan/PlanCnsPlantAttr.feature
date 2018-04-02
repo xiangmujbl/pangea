@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1480
-Feature: PlanCnsPlantAttr-Curation
+Feature: PlanCnsPlantAttr AEAZ-1480
 
   Scenario: Full Load curation
     # 1. test the filter localPlanningRelevant='Y'

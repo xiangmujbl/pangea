@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1482
-Feature: PlanCnsSplProcTyp-Curation
+Feature: PlanCnsSplProcTyp AEAZ-1482
 
   Scenario: Full Load curation
     #  1. test get sourceSystem from source_system_v1 and overwrite the value in this field (rule T1)
