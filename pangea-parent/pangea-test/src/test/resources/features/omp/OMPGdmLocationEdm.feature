@@ -29,5 +29,5 @@ Feature: OMPGdmLocationEdm-Curation
 
     And I will remove all data with region "/omp/gdm_location"
 
-    And I will remove all data with region "/edm/plant_v1"
+    And I will remove all data with region "/edm/edm_failed_data"
 

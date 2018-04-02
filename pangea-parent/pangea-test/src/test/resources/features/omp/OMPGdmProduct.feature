@@ -106,5 +106,5 @@ Feature:  OMPGdmProduct-Curation
 
     And I will remove all data with region "/omp/product"
 
-    And I will remove all data with region "/edm/material_global_v1"
+    And I will remove all data with region "/plan/edm_failed_data"
 

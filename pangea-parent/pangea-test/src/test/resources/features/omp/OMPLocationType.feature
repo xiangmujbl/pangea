@@ -23,5 +23,5 @@ Feature: OMPLocationType-Curation
 
     And I will remove all data with region "/omp/location_type"
 
-    And I will remove all data with region "/plan/cns_location_type"
+    And I will remove all data with region "/plan/edm_failed_data"
 

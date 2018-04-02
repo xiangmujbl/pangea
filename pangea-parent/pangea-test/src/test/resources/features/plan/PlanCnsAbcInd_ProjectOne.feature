@@ -48,3 +48,4 @@ Feature: PlanCnsAbcInd AEAZ-1481
       | CONS_LATAM   | 10004        |  -                       |   -      |     -              |
 
     And I will remove all data with region "/plan/cns_abc_ind"
+    And I will remove all data with region "/plan/edm_failed_data"

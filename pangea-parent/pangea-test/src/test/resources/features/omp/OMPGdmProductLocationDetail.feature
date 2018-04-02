@@ -35,5 +35,5 @@ Feature:  OMPGdmProductLocationDetail-Curation
 
     And I will remove all data with region "/omp/gdm_product_location_detail"
 
-    And I will remove all data with region "/plan/cns_material_plan_status"
+    And I will remove all data with region "/plan/edm_failed_data"
 

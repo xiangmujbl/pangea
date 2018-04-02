@@ -23,5 +23,5 @@ Feature: ${fullName} ${jira}
 
     And I will remove all data with region "${view.path}"
 
-    And I will remove all data with region "${main.path}"
+    And I will remove all data with region "/plan/edm_failed_data"
 

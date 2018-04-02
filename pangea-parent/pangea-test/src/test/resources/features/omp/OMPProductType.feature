@@ -25,4 +25,4 @@ Feature: OMPProductType-Curation
 
     And I will remove all data with region "/omp/product_type"
 
-    And I will remove all data with region "/edm/material_type_v1"
+    And I will remove all data with region "/plan/edm_failed_data"
