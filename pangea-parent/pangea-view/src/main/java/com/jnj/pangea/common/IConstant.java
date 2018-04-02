@@ -37,6 +37,14 @@ public interface IConstant {
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
         String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
+        String PLAN_CNS_MATERIAL_PLAN_STATUS ="/plan/cns_material_plan_status";
+        String EDM_PRODUCT_FAMILY_V1 = "/edm/product_family_v1";
+        String EDM_FORM_V1 = "/edm/form_v1";
+        String EDM_CATEGORY_V1 = "/edm/category_v1";
+        String EDM_SUB_BRAND_V1 = "/edm/sub_brand_v1";
+        String EDM_BRAND_V1 = "/edm/brand_v1";
+        String EDM_FRANCHISE_V1 = "/edm/franchise_v1";
+        String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_base_unit_v1";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -132,6 +140,7 @@ public interface IConstant {
 
     interface CNS_PLAN_UNIT {
         String LOCAL_UOM = "localUom";
+        String PLAN_FLAG = "planFlag";
     }
 
 
@@ -172,6 +181,34 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
     }
 
+    interface CNS_MATERIAL_PLAN_STATUS{
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
+
+    interface EDM_PRODUCT_FAMILY_V1{
+        String PRODUCT_FAMILY = "productFamily";
+    }
+    interface EDM_FORM_V1{
+        String FORM = "formName";
+    }
+    interface EDM_CATEGORY_V1{
+        String CATEGORY = "category";
+    }
+    interface EDM_SUB_BRAND_V1{
+        String SUB_BRAND = "subBrand";
+    }
+    interface EDM_BRAND_V1{
+        String BRAND = "brand";
+    }interface EDM_FRANCHISE_V1{
+        String FRANCHISE = "franchise";
+    }
+    interface EDM_GLOBAL_BASE_UNIT_V1{
+        String GBU = "gbu";
+    }
+
+
     // -----region attribute value
     interface VALUE {
 
@@ -200,5 +237,8 @@ public interface IConstant {
         String USD="USD";
         String PANGEA = "Pangea";
         String LINE="-";
+        String DPSP = "DPSP";
+        String DP = "DP";
+        String SP1 = "SP";
     }
 }
