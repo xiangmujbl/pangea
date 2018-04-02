@@ -110,9 +110,10 @@
 /plan/cns_pln_spl_loc
 /omp/gdm_location_xref
 
-
 /plan/cns_prod_loc_attrib
 /omp/gdm_product_location_detail
 
+/omp/gdm_product_unit_conversion
+/plan/cns_lot_size_key
 
 

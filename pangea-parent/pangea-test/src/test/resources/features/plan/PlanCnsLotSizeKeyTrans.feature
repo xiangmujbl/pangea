@@ -24,7 +24,7 @@ Feature: CnsLotSizeKey AEAZ-1485
             |  02  | AP  |  E   |
         And I wait "/project_one/t439t" Async Queue complete
 
-        When I submit task with xml file "xml/plan/PlanCnsLotSizeKey.xml" and execute file "jar/pangea-view.jar"
+        When I submit task with xml file "xml/plan/PlanCnsLotSizeKeyTrans.xml" and execute file "jar/pangea-view.jar"
 
         Then I check region data "/plan/cns_lot_size_key_trans" by keyFields "sourceSystem,localLotSizeKey"
             |sourceSystem|localLotSizeKey|localLotSizeKeyDescription|lotSizeKey|lotSizeKeyDescription|
