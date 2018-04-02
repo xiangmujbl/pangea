@@ -191,5 +191,6 @@ public interface IConstant {
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
         String USD="USD";
+        String STR_ONE="001";
     }
 }
