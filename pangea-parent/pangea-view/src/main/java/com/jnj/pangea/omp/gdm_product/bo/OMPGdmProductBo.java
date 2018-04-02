@@ -42,7 +42,7 @@ public class OMPGdmProductBo extends BaseBo {
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("", "")
+                .makeJsonObject("productId", this.productId)
                 .toJsonString();
     }
 

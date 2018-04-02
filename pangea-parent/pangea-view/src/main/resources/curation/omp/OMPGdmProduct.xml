@@ -1,13 +1,16 @@
 <adf-curation>
     <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/product" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.product.controller.OMPProductController">
+              executionClassName="com.jnj.pangea.omp.gdm_product.controller.OMPGdmProductController">
         <regions>
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    localDPParentCode,primaryPlanningCode,refDescription,refDescription,materialGroup,productFamily,form ,category,subBrand,brand,franchise,globalBusinessUnit,refDescription,localManufacturingTechnology
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
                 </columns>
                 <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
+                    </relation>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>
                             localMaterialNumber=/edm/material_global_v1.localMaterialNumber,
@@ -40,6 +43,12 @@
                     </relation>
                 </relations>
 
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
             </region>
             <region path="/plan/cns_material_plan_status">
                 <columns>
@@ -83,7 +92,7 @@
             </region>
             <region path="/plan/cns_plan_unit">
                 <columns>
-                    sourceSystem,localUom,localUomName,plantFlag,unit
+                    sourceSystem,localUom,localUomName,planFlag,unit
                 </columns>
             </region>
 
