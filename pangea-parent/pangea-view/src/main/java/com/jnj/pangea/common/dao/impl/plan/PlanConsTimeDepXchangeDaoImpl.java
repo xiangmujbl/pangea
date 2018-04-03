@@ -20,7 +20,7 @@ public class PlanConsTimeDepXchangeDaoImpl extends CommonDaoImpl {
 
 
     public List<PlanConsTimeDepXchangeEntity> getEntityListWithUnitId(String localCurrency) {
-        String queryString = QueryHelper.buildCriteria(IConstant.Plan_Cons_Time_Dep_Xchange.UNITID).is(localCurrency).toQueryString();
-        return queryForList(IConstant.REGION.Plan_Cons_Time_Dep_Xchange, queryString, PlanCnsPlanParameterEntity.class);
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CONS_TIME_DEP_XCHANGE.UNIT_ID).is(localCurrency).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CONS_TIME_DEP_XCHANGE, queryString, PlanCnsPlanParameterEntity.class);
     }
 }

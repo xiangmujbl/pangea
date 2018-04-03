@@ -7,6 +7,8 @@
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
                 </columns>
+                <filter>spRelevant:X OR noPlanRelevant:X</filter>
+
                 <relations>
                     <relation path="/plan/cns_prod_loc_attrib" isPrimaryKey="false">
                         <expression>

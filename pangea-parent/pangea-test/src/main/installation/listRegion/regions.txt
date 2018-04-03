@@ -109,24 +109,15 @@
 /omp/gdm_location
 /plan/cns_pln_spl_loc
 /omp/gdm_location_xref
-
 /plan/cns_prod_loc_attrib
 /omp/gdm_product_location_detail
-
 /omp/gdm_product_unit_conversion
 /plan/cns_lot_size_key
-
-
-<<<<<<< Updated upstream
-=======
+/project_one/t439a
 /plan/cns_pln_spl_loc
 /omp/gdm_location_xref
-
-
 /edm/material_plant_fin_v1
 /plan/cns_prod_loc_attrib
 /plan/cns_lot_size_key_trans
 /plan/cns_con_mode
 /omp/gdm_product_location
-
->>>>>>> Stashed changes

@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPLocationType-Curation
+@pangea_test @AEAZ-1763
+Feature: OMPLocationType AEAZ-1763
 
   Scenario: Full Load curation
 

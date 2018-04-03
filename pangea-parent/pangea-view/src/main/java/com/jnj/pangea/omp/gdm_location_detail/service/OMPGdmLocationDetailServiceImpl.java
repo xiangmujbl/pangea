@@ -24,7 +24,6 @@ public class OMPGdmLocationDetailServiceImpl {
         List<ResultObject> resultObjectList = new LinkedList<>();
         PlanCnsPlantAttrEntity cnsPlantAttrEntity = (PlanCnsPlantAttrEntity) o;
 
-        // TODO add logic
         String name1 = cnsPlantAttrEntity.getLocationAttribute1Desc();
         String name2 = cnsPlantAttrEntity.getLocationAttribute2Desc();
         String name3 = cnsPlantAttrEntity.getLocationAttribute3Desc();
@@ -36,21 +35,21 @@ public class OMPGdmLocationDetailServiceImpl {
         String value4 = cnsPlantAttrEntity.getLocationAttribute4Value();
         String name = "";
         String value = "";
-        for (int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
 
             ResultObject resultObject = new ResultObject();
             OMPGdmLocationDetailBo gdmLocationDetailBo = new OMPGdmLocationDetailBo();
 
-            if (i == 0){
+            if (i == 0) {
                 name = name1;
                 value = value1;
-            }else if (i == 1){
+            } else if (i == 1) {
                 name = name2;
                 value = value2;
-            }else if (i==2){
+            } else if (i == 2) {
                 name = name3;
                 value = value3;
-            }else if (i==3){
+            } else if (i == 3) {
                 name = name4;
                 value = value4;
             }
@@ -59,18 +58,18 @@ public class OMPGdmLocationDetailServiceImpl {
             gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.YES);
 
             String CLASS = "";
-            if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())){
+            if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())) {
                 CLASS = IConstant.VALUE.PGA;
                 gdmLocationDetailBo.setCLASS(CLASS);
             }
 
-            String locationid = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
+            String locationid = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
             gdmLocationDetailBo.setLocationid(locationid);
 
             gdmLocationDetailBo.setName(name);
             gdmLocationDetailBo.setValue(value);
 
-            String locationDetailId = locationid+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
+            String locationDetailId = locationid + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + name + IConstant.VALUE.BACK_SLANT + value;
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
 
             resultObject.setBaseBo(gdmLocationDetailBo);

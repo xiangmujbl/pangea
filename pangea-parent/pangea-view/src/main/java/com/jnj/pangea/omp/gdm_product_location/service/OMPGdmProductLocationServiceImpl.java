@@ -68,10 +68,10 @@ public class OMPGdmProductLocationServiceImpl {
         List<OMPGdmProductLocationBo> boList = getFieldWithJ1(materialPlantV1Entity, edmMaterialGlobalV1Entity, planStatusEntity, edmSourceSystemV1Entity);
         if (boList == null) {
             FailData failData = new FailData();
-            failData.setErrorCode("J1");
-            failData.setFunctionalArea("SP");
-            failData.setInterfaceID("OMPGdmProductLocation");
-            failData.setSourceSystem("omp");
+            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
+            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
+            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_PRODUCT_LOCATION);
+            failData.setSourceSystem("");
             failData.setKey1(edmMaterialGlobalV1Entity.getSourceSystem());
             failData.setKey2(edmMaterialGlobalV1Entity.getLocalMaterialNumber());
             failData.setKey3("");

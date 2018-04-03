@@ -42,7 +42,6 @@
 
 		<adf-grid:partitioned-region name="gdm_location_xref" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
-
 		<adf-grid:partitioned-region name="gdm_product_location_detail" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="gdm_location_detail" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
@@ -51,17 +50,9 @@
 
 		<adf-grid:partitioned-region name="gdm_country" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
-		<adf-grid:partitioned-region name="gdm_product_unit_conversion" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
-
-
-		<adf-grid:partitioned-region name="gdm_location_detail" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
-
-		<adf-grid:partitioned-region name="product_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
-
-		<adf-grid:partitioned-region name="gdm_country" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
-
 		<adf-grid:partitioned-region name="gdm_product_location" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
->>>>>>> Stashed changes
+
+		<adf-grid:partitioned-region name="gdm_product_unit_conversion" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 	</adf-grid:replicated-region>
 
@@ -174,16 +165,30 @@
 
 		<adf-grid:partitioned-region name="cns_lot_size_key" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
-		<adf-grid:partitioned-region name="cns_lot_size_key_trans" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
-
 	</adf-grid:replicated-region>
 
 
 	<adf-grid:replicated-region id="project_one">
 
-		<adf-grid:partitioned-region name="vbep" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="t439a" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="t460t" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="t001" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="makt" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="t141" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="t439" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="tmabct" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="t460a" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="tmabc" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="vbep" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="vbak" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 

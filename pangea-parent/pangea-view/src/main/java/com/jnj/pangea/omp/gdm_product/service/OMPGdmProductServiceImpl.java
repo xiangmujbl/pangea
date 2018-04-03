@@ -42,7 +42,6 @@ public class OMPGdmProductServiceImpl {
         List<ResultObject> resultObjects = new LinkedList<>();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
 
-        // TODO add logic
         String primaryPlanningCode = materialGlobalV1Entity.getPrimaryPlanningCode();
         String localDPParentCode = materialGlobalV1Entity.getLocalDpParentCode();
         String sourceSystem = materialGlobalV1Entity.getSourceSystem();
@@ -64,7 +63,7 @@ public class OMPGdmProductServiceImpl {
 
                 if (null == primaryPlanningCode || null == localDPParentCode){
                     ResultObject resultObject = new ResultObject();
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "J1", "Unable to find DPParentCode or PrimaryPlanningCode");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode or PrimaryPlanningCode");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -89,7 +88,7 @@ public class OMPGdmProductServiceImpl {
                     IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
                 if (null == primaryPlanningCode){
                     ResultObject resultObject = new ResultObject();
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "J1", "primaryPlanningCode is not available for SPRelevant mateial");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "primaryPlanningCode is not available for SPRelevant mateial");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -106,7 +105,7 @@ public class OMPGdmProductServiceImpl {
             } else if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
                 if (null == localDPParentCode){
                     ResultObject resultObject = new ResultObject();
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "J1", "Unable to find DPParentCode");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -147,7 +146,7 @@ public class OMPGdmProductServiceImpl {
                         productBo.setPlanningHierarchy2Desc(formV1Entity.getFormDescription());
                     }
                 }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E3", "There is no Form assigned for product");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E3, "There is no Form assigned for product");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -161,7 +160,7 @@ public class OMPGdmProductServiceImpl {
                         productBo.setPlanningHierarchy3Desc(categoryV1Entity.getCategoryName());
                     }
                 }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E4", "There is no Category assigned for product");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E4, "There is no Category assigned for product");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -175,7 +174,7 @@ public class OMPGdmProductServiceImpl {
                         productBo.setPlanningHierarchy4Desc(subBrandV1Entity.getSubBrandDescription());
                     }
                 }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E5", "There is no subBrand assigned for product");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E5, "There is no subBrand assigned for product");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -189,7 +188,7 @@ public class OMPGdmProductServiceImpl {
                         productBo.setPlanningHierarchy5Desc(brandV1Entity.getBrandDescription());
                     }
                 }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E6", "There is no brand assigned for product");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E6, "There is no brand assigned for product");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -203,7 +202,7 @@ public class OMPGdmProductServiceImpl {
                         productBo.setPlanningHierarchy6Desc(franchiseV1Entity.getFranchiseDescription());
                     }
                 }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E7", "There is no franchise assigned for product");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E7, "There is no franchise assigned for product");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -217,7 +216,7 @@ public class OMPGdmProductServiceImpl {
                         productBo.setPlanningHierarchy7Desc(globalBaseUnitV1Entity.getGbuName());
                     }
                 }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E8", "There is no globalBusinessUnit assigned for product");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E8, "There is no globalBusinessUnit assigned for product");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -232,13 +231,13 @@ public class OMPGdmProductServiceImpl {
                     if (null != planUnitEntity){
                         productBo.setUnitId(planUnitEntity.getUnit());
                     }else{
-                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E9", "No Plannable Enterprise UOM has been assigned to the local Unit");
+                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E9, "No Plannable Enterprise UOM has been assigned to the local Unit");
                         resultObject.setFailData(failData);
                         resultObjects.add(resultObject);
                         return resultObjects;
                     }
                 }else{
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, "E9", "No Plannable Enterprise UOM has been assigned to the local Unit");
+                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E9, "No Plannable Enterprise UOM has been assigned to the local Unit");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
                     return resultObjects;
@@ -323,8 +322,8 @@ public class OMPGdmProductServiceImpl {
 
     private FailData writeFailDataToRegion(EDMMaterialGlobalV1Entity materialGlobalV1Entity, String ruleCode, String errorValue) {
         FailData failData = new FailData();
-        failData.setFunctionalArea("SP");
-        failData.setInterfaceID("OMPGdmProduct");
+        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
+        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_PRODUCT);
         failData.setErrorCode(ruleCode);
         failData.setSourceSystem(materialGlobalV1Entity.getSourceSystem());
         failData.setKey1(materialGlobalV1Entity.getLocalMaterialNumber());

@@ -1,5 +1,5 @@
-@pangea_test
-Feature:  OMPLotSizeKey-Curation
+@pangea_test @AEAZ-1907
+Feature:  OMPLotSizeKey AEAZ-1907
 
   Scenario: Full Load curation
 

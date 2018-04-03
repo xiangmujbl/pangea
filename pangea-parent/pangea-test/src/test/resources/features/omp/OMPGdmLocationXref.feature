@@ -1,5 +1,5 @@
-@pangea_test
-Feature:  OMPGdmLocationXref-Curation
+@pangea_test @AEAZ-1765
+Feature:  OMPGdmLocationXref AEAZ-1765
 
   Scenario: Full Load curation
 

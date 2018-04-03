@@ -30,14 +30,14 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
-        String PROJECT_ONE_VBEP="/project_one/vbep";
-        String PROJECT_ONE_VBAP="/project_one/vbap";
-        String PROJECT_ONE_VBPA="/project_one/vbpa";
-        String PROJECT_ONE_VBKD="/project_one/vbkd";
+        String PROJECT_ONE_VBEP = "/project_one/vbep";
+        String PROJECT_ONE_VBAP = "/project_one/vbap";
+        String PROJECT_ONE_VBPA = "/project_one/vbpa";
+        String PROJECT_ONE_VBKD = "/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
-        String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
-        String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
-        String PLAN_CNS_MATERIAL_PLAN_STATUS ="/plan/cns_material_plan_status";
+        String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
+        String PLAN_CNS_PROD_LOC_ATTRIB = "/plan/cns_prod_loc_attrib";
+        String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String EDM_PRODUCT_FAMILY_V1 = "/edm/product_family_v1";
         String EDM_FORM_V1 = "/edm/form_v1";
         String EDM_CATEGORY_V1 = "/edm/category_v1";
@@ -45,35 +45,41 @@ public interface IConstant {
         String EDM_BRAND_V1 = "/edm/brand_v1";
         String EDM_FRANCHISE_V1 = "/edm/franchise_v1";
         String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_base_unit_v1";
-        String EDM_MATERIAL_PLANT_FIN_V1="/edm/material_plant_fin_v1";
-        String Plan_Cons_Time_Dep_Xchange="/plan/cons_time_dep_xchange";
-        String PLAN_CNS_PROC_TYP="/plan/cns_proc_type";
-        String PLAN_CNS_ABC_IND="/plan/cns_abc_ind";
-        String PLAN_CNS_SPL_PROC_TYP="/plan/cns_spl_proc_typ";
-        String PLAN_CNS_PLNG_STRAT_GRP="/plan/cns_plng_strat_grp";
-        String PLAN_CNS_CON_MODE="/plan/cns_con_mode";
-        String PLAN_CNS_LOT_SIZE_KEY_TRANS="/plan/cns_lot_size_key_trans";
-        String CNS_MATERIAL_PLAN_STATUS="/plan/cns_material_plan_status";
+        String EDM_MATERIAL_PLANT_FIN_V1 = "/edm/material_plant_fin_v1";
+        String PLAN_CONS_TIME_DEP_XCHANGE = "/plan/cons_time_dep_xchange";
+        String PLAN_CNS_PROC_TYP = "/plan/cns_proc_type";
+        String PLAN_CNS_ABC_IND = "/plan/cns_abc_ind";
+        String PLAN_CNS_SPL_PROC_TYP = "/plan/cns_spl_proc_typ";
+        String PLAN_CNS_PLNG_STRAT_GRP = "/plan/cns_plng_strat_grp";
+        String PLAN_CNS_CON_MODE = "/plan/cns_con_mode";
+        String PLAN_CNS_LOT_SIZE_KEY_TRANS = "/plan/cns_lot_size_key_trans";
+        String CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
+        String PROJECT_ONE_T439A = "/project_one/t439a";
+        String PROJECT_ONE_T439T_CLONE = "/project_one/t439t_clone";
     }
 
     interface PLAN_CNS_LOT_SIZE_KEY_TRANS {
         String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_LOT_SIZE_KEY="localLotSizeKey";
+        String LOCAL_LOT_SIZE_KEY = "localLotSizeKey";
     }
 
     interface PLAN_CNS_CON_MODE {
         String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_CONSUMPTION_MODE="localConsumptionMode";
+        String LOCAL_CONSUMPTION_MODE = "localConsumptionMode";
     }
 
     interface PLAN_CNS_PLNG_STRAT_GRP {
         String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_PLAN_STRAT_GRP="localPlanStratGrp";
+        String LOCAL_PLAN_STRAT_GRP = "localPlanStratGrp";
+    }
+
+    interface PROJECT_ONE_T439A {
+        String DISLS = "disls";
     }
 
     interface PLAN_CNS_SPL_PROC_TYP {
-      String LOCAL_SPL_PROC_TYPE="localSplProcType";
-      String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_SPL_PROC_TYPE = "localSplProcType";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface PLAN_CNS_PROD_LOC_ATTRIB {
@@ -83,19 +89,19 @@ public interface IConstant {
 
     interface PLAN_CNS_ABC_IND {
         String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_ABC_INDICATOR="localAbcIndicator";
+        String LOCAL_ABC_INDICATOR = "localAbcIndicator";
     }
 
     interface PLAN_CNS_PROC_TYP {
         String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_PROCUREMENT_TYPE="localProcurementType";
+        String LOCAL_PROCUREMENT_TYPE = "localProcurementType";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
     }
 
-    interface project_one_tmabct {
+    interface PROJECT_ONE_TMABCT {
         String MAABC = "maabc";
         String SPARS = "spars";
     }
@@ -134,23 +140,26 @@ public interface IConstant {
         String STRGR = "strgr";
         String SPRAS = "spras";
     }
+
     interface PROJECT_ONE_VBAP {
-       String VBELN="vbeln";
+        String VBELN = "vbeln";
     }
+
     interface PROJECT_ONE_VBEP {
-        String VBELN="vbeln";
-        String POSNR="posnr";
+        String VBELN = "vbeln";
+        String POSNR = "posnr";
     }
 
     interface PROJECT_ONE_VBPA {
-        String VBELN="vbeln";
-        String POSNR="posnr";
-        String PARVW="parvw";
+        String VBELN = "vbeln";
+        String POSNR = "posnr";
+        String PARVW = "parvw";
     }
+
     interface PROJECT_ONE_VBKD {
-        String VBELN="vbeln";
-        String POSNR="posnr";
-        String PARVW="parvw";
+        String VBELN = "vbeln";
+        String POSNR = "posnr";
+        String PARVW = "parvw";
     }
 
     interface NGEMS_MATERIAL_LINKAGE {
@@ -188,7 +197,6 @@ public interface IConstant {
     }
 
 
-
     interface EDM_MATERIAL_GLOBAL_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
@@ -219,10 +227,9 @@ public interface IConstant {
         String PLANNING_TYPE = "planningType";
     }
 
-
     interface CNS_PROD_LOC_ATTRIB {
         String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_MATERIAL_NUMBER="localMaterialNumber";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
     }
 
@@ -237,30 +244,37 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
     }
 
-    interface EDM_PRODUCT_FAMILY_V1{
+    interface EDM_PRODUCT_FAMILY_V1 {
         String PRODUCT_FAMILY = "productFamily";
     }
-    interface EDM_FORM_V1{
+
+    interface EDM_FORM_V1 {
         String FORM = "formName";
     }
-    interface EDM_CATEGORY_V1{
+
+    interface EDM_CATEGORY_V1 {
         String CATEGORY = "category";
     }
-    interface EDM_SUB_BRAND_V1{
+
+    interface EDM_SUB_BRAND_V1 {
         String SUB_BRAND = "subBrand";
     }
-    interface EDM_BRAND_V1{
+
+    interface EDM_BRAND_V1 {
         String BRAND = "brand";
-    }interface EDM_FRANCHISE_V1{
+    }
+
+    interface EDM_FRANCHISE_V1 {
         String FRANCHISE = "franchise";
     }
-    interface EDM_GLOBAL_BASE_UNIT_V1{
+
+    interface EDM_GLOBAL_BASE_UNIT_V1 {
         String GBU = "gbu";
     }
 
 
-    interface Plan_Cons_Time_Dep_Xchange {
-        String UNITID="UnitId";
+    interface PLAN_CONS_TIME_DEP_XCHANGE {
+        String UNIT_ID = "UnitId";
     }
 
 
@@ -284,19 +298,58 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
-        String WE="WE";
-        String LA_="LA_";
+        String WE = "WE";
+        String LA_ = "LA_";
         String PGA = "PGA";
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
-        String USD="USD";
+        String USD = "USD";
         String PANGEA = "Pangea";
-        String LINE="-";
+        String LINE = "-";
         String DPSP = "DPSP";
         String DP = "DP";
         String SP1 = "SP";
-        String V="V";
-        String S="S";
+        String V = "V";
+        String S = "S";
+        String SPRAS_EN = "EN";
 
+    }
+
+    interface FAILED {
+
+        interface FUNCTIONAL_AREA {
+
+            String DP = "DP";
+            String SP = "SP";
+        }
+
+        interface INTERFACE_ID {
+
+            String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
+            String OMP_GDM_PRODUCT = "OMPGdmProduct";
+            String OMP_GDM_PRODUCT_LOCATION = "OMPGdmProductLocation";
+            String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
+            String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
+        }
+
+        interface ERROR_CODE {
+
+            String T1 = "T1";
+
+            String C1 = "C1";
+
+            String J1 = "J1";
+            String J2 = "J2";
+            String J3 = "J3";
+            String J4 = "J4";
+
+            String E3 = "E3";
+            String E4 = "E4";
+            String E5 = "E5";
+            String E6 = "E6";
+            String E7 = "E7";
+            String E8 = "E8";
+            String E9 = "E9";
+        }
     }
 }
