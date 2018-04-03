@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPGdmUnitCurrency-Curation
+@pangea_test @AEAZ-1980
+Feature: OMPGdmUnitCurrency AEAZ-1980
 
   Scenario: Full Load curation
     #  1. get atrributes from currency_v1 (rule E1)

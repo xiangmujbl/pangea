@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPProductType-Curation
+@pangea_test @AEAZ-1981
+Feature: OMPProductType AEAZ-1981
 
   Scenario: Full Load curation
 

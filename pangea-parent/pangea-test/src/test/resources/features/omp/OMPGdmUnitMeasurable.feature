@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPGdmUnitMeasurable-Curation
+@pangea_test @AEAZ-1980
+Feature: OMPGdmUnitMeasurable AEAZ-1980
 
   Scenario: Full Load curation
     #  1. test get unit from cns_plan_unit (rule T1)
