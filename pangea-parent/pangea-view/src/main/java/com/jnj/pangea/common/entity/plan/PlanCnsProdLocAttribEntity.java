@@ -37,7 +37,7 @@ public class PlanCnsProdLocAttribEntity extends CommonEntity {
     }
 
     public String getSourceSystem() {
-        return this.sourceSystem;
+        return sourceSystem;
     }
 
     public void setSourceSystem(String sourceSystem) {
@@ -45,7 +45,7 @@ public class PlanCnsProdLocAttribEntity extends CommonEntity {
     }
 
     public String getLocalMaterialNumber() {
-        return this.localMaterialNumber;
+        return localMaterialNumber;
     }
 
     public void setLocalMaterialNumber(String localMaterialNumber) {
@@ -53,7 +53,7 @@ public class PlanCnsProdLocAttribEntity extends CommonEntity {
     }
 
     public String getLocalPlant() {
-        return this.localPlant;
+        return localPlant;
     }
 
     public void setLocalPlant(String localPlant) {
@@ -61,63 +61,63 @@ public class PlanCnsProdLocAttribEntity extends CommonEntity {
     }
 
     public String getSchdAttrbName1() {
-        return this.SchdAttrbName1;
+        return SchdAttrbName1;
     }
 
     public void setSchdAttrbName1(String schdAttrbName1) {
-        this.SchdAttrbName1 = schdAttrbName1;
+        SchdAttrbName1 = schdAttrbName1;
     }
 
     public String getSchAttrbDesc1() {
-        return this.SchAttrbDesc1;
+        return SchAttrbDesc1;
     }
 
     public void setSchAttrbDesc1(String schAttrbDesc1) {
-        this.SchAttrbDesc1 = schAttrbDesc1;
+        SchAttrbDesc1 = schAttrbDesc1;
     }
 
     public String getSchdAttrbName2() {
-        return this.SchdAttrbName2;
+        return SchdAttrbName2;
     }
 
     public void setSchdAttrbName2(String schdAttrbName2) {
-        this.SchdAttrbName2 = schdAttrbName2;
+        SchdAttrbName2 = schdAttrbName2;
     }
 
     public String getSchAttrbDesc2() {
-        return this.SchAttrbDesc2;
+        return SchAttrbDesc2;
     }
 
     public void setSchAttrbDesc2(String schAttrbDesc2) {
-        this.SchAttrbDesc2 = schAttrbDesc2;
+        SchAttrbDesc2 = schAttrbDesc2;
     }
 
     public String getSchdAttrbName3() {
-        return this.SchdAttrbName3;
+        return SchdAttrbName3;
     }
 
     public void setSchdAttrbName3(String schdAttrbName3) {
-        this.SchdAttrbName3 = schdAttrbName3;
+        SchdAttrbName3 = schdAttrbName3;
     }
 
     public String getSchAttrbDesc3() {
-        return this.SchAttrbDesc3;
+        return SchAttrbDesc3;
     }
 
     public void setSchAttrbDesc3(String schAttrbDesc3) {
-        this.SchAttrbDesc3 = schAttrbDesc3;
+        SchAttrbDesc3 = schAttrbDesc3;
     }
 
     public String getSupplyGroup() {
-        return this.SupplyGroup;
+        return SupplyGroup;
     }
 
     public void setSupplyGroup(String supplyGroup) {
-        this.SupplyGroup = supplyGroup;
+        SupplyGroup = supplyGroup;
     }
 
     public String getMinShelfLife() {
-        return this.minShelfLife;
+        return minShelfLife;
     }
 
     public void setMinShelfLife(String minShelfLife) {
@@ -125,11 +125,10 @@ public class PlanCnsProdLocAttribEntity extends CommonEntity {
     }
 
     public String getMinMinshelfLife() {
-        return this.minMinshelfLife;
+        return minMinshelfLife;
     }
 
     public void setMinMinshelfLife(String minMinshelfLife) {
         this.minMinshelfLife = minMinshelfLife;
     }
-
 }

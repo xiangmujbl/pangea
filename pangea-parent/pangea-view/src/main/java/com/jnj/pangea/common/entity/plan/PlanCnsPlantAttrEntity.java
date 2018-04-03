@@ -26,7 +26,6 @@ public class PlanCnsPlantAttrEntity extends CommonEntity {
 
     public PlanCnsPlantAttrEntity(Map<String, Object> map) {
         super(map);
-
         setSourceSystem((String) map.get("sourceSystem"));
         setLocalPlant((String) map.get("localPlant"));
         setLocalPlantName((String) map.get("localPlantName"));

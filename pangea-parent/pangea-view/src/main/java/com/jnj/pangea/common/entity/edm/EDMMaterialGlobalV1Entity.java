@@ -32,6 +32,24 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
     private String localDpParentCode;
     private String primaryPlanningCode;
     private String materialGroup;
+    private String minRemShelfLife;
+    private String totalShelfLife;
+
+    public String getTotalShelfLife() {
+        return totalShelfLife;
+    }
+
+    public void setTotalShelfLife(String totalShelfLife) {
+        this.totalShelfLife = totalShelfLife;
+    }
+
+    public String getMinRemShelfLife() {
+        return minRemShelfLife;
+    }
+
+    public void setMinRemShelfLife(String minRemShelfLife) {
+        this.minRemShelfLife = minRemShelfLife;
+    }
 
     private String localBaseUom;
 
@@ -69,6 +87,8 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
         setLocalDpParentCode((String) map.get("localDpParentCode"));
         setPrimaryPlanningCode((String) map.get("primaryPlanningCode"));
         setMaterialGroup((String) map.get("materialGroup"));
+        setMinRemShelfLife((String)map.get("minRemShelfLife"));
+        setTotalShelfLife((String)map.get("totalShelfLife"));
     }
 
     public String getLocalDpParentCode() {

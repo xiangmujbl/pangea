@@ -45,6 +45,50 @@ public interface IConstant {
         String EDM_BRAND_V1 = "/edm/brand_v1";
         String EDM_FRANCHISE_V1 = "/edm/franchise_v1";
         String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_base_unit_v1";
+        String EDM_MATERIAL_PLANT_FIN_V1="/edm/material_plant_fin_v1";
+        String Plan_Cons_Time_Dep_Xchange="/plan/cons_time_dep_xchange";
+        String PLAN_CNS_PROC_TYP="/plan/cns_proc_type";
+        String PLAN_CNS_ABC_IND="/plan/cns_abc_ind";
+        String PLAN_CNS_SPL_PROC_TYP="/plan/cns_spl_proc_typ";
+        String PLAN_CNS_PLNG_STRAT_GRP="/plan/cns_plng_strat_grp";
+        String PLAN_CNS_CON_MODE="/plan/cns_con_mode";
+        String PLAN_CNS_LOT_SIZE_KEY_TRANS="/plan/cns_lot_size_key_trans";
+        String CNS_MATERIAL_PLAN_STATUS="/plan/cns_material_plan_status";
+    }
+
+    interface PLAN_CNS_LOT_SIZE_KEY_TRANS {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_LOT_SIZE_KEY="localLotSizeKey";
+    }
+
+    interface PLAN_CNS_CON_MODE {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_CONSUMPTION_MODE="localConsumptionMode";
+    }
+
+    interface PLAN_CNS_PLNG_STRAT_GRP {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLAN_STRAT_GRP="localPlanStratGrp";
+    }
+
+    interface PLAN_CNS_SPL_PROC_TYP {
+      String LOCAL_SPL_PROC_TYPE="localSplProcType";
+      String SOURCE_SYSTEM = "sourceSystem";
+    }
+
+    interface PLAN_CNS_PROD_LOC_ATTRIB {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
+
+    interface PLAN_CNS_ABC_IND {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_ABC_INDICATOR="localAbcIndicator";
+    }
+
+    interface PLAN_CNS_PROC_TYP {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PROCUREMENT_TYPE="localProcurementType";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -175,14 +219,20 @@ public interface IConstant {
         String PLANNING_TYPE = "planningType";
     }
 
+
     interface CNS_PROD_LOC_ATTRIB {
         String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_NUMBER="localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
+
+    interface CNS_MATERIAL_PLAN_STATUS {
+
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
     }
 
-    interface CNS_MATERIAL_PLAN_STATUS{
-        String SOURCE_SYSTEM = "sourceSystem";
+    interface EDM_MATERIAL_PLANT_FIN_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
     }
@@ -206,6 +256,11 @@ public interface IConstant {
     }
     interface EDM_GLOBAL_BASE_UNIT_V1{
         String GBU = "gbu";
+    }
+
+
+    interface Plan_Cons_Time_Dep_Xchange {
+        String UNITID="UnitId";
     }
 
 
@@ -240,5 +295,8 @@ public interface IConstant {
         String DPSP = "DPSP";
         String DP = "DP";
         String SP1 = "SP";
+        String V="V";
+        String S="S";
+
     }
 }
