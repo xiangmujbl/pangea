@@ -19,7 +19,6 @@ import com.jnj.pangea.common.entity.edm.EDMFranchiseV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMFranchiseV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMGlobalBaseUnitV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBaseUnitV1DaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_product.bo.OMPGdmProductBo;

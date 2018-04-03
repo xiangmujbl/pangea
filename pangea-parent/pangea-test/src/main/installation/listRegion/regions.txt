@@ -132,3 +132,9 @@
 /plan/cns_prod_loc_attrib
 /omp/gdm_product_location_detail
 
+
+/omp/gdm_unit_evol
+
+
+/omp/gdm_fpb
+
