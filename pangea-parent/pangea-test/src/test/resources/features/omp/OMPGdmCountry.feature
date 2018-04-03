@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1614
-Feature: AEAZ-1614 OMPGdmCountry-Curation
+Feature: OMPGdmCountry AEAZ-1614
 
   Scenario: Full Load curation
 
@@ -22,5 +22,5 @@ Feature: AEAZ-1614 OMPGdmCountry-Curation
 
     And I will remove all data with region "/omp/gdm_country"
 
-    And I will remove all data with region "/edm/country_v1"
+    And I will remove all data with region "/plan/edm_failed_data"
 

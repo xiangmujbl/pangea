@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-493
-Feature: AEAZ-493 EDMSalesOrder-Curation
+Feature: EDMSalesOrder AEAZ-493
 
   Scenario: Full Load curation
 

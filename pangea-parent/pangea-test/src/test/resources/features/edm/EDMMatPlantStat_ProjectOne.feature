@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1279
-Feature: EDMMatPlantStat
+Feature: EDMMatPlantStat AEAZ-1279
 
   Scenario: Full Load curation
 

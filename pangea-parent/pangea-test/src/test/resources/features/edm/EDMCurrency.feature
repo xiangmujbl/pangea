@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-498
-Feature: EDMCurrency-Curation
+Feature: EDMCurrency AEAZ-498
 
   Scenario: Full Load curation
     #  1. test filter zSourceSystem <> '[EMS]'

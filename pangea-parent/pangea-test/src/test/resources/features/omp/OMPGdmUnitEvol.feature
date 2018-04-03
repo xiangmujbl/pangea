@@ -1,5 +1,5 @@
 @pangea_test
-Feature:  OMPGdmUnitEvol-Curation
+Feature: OMPGdmUnitEvol-Curation
 
   Scenario: Full Load curation
   #  1. make sure of data construction (Rule:C1)

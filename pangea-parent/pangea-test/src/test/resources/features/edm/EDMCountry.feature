@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-492
-Feature: EDMCountry-Curation
+Feature: EDMCountry AEAZ-492
 
   Scenario: Full Load curation
     #  1. test get sourceSystem from source_system_v1 and overwrite the value in this field (rule T1)

@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-494
-Feature: EDMMaterialType XREF - Curation
+Feature: EDMMaterialType AEAZ-494
 
   Scenario: Full Load curation
     #  1. test get attributes from ems_f_mdm_material_types where zSourceSystem = [EMS] (rule T1)

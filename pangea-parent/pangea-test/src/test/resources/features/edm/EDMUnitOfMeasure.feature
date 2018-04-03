@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-491
-Feature: EDMUnitOfMeasure-Curation
+Feature: EDMUnitOfMeasure AEAZ-491
 
   Scenario: Full Load curation
     #  1. test filter zSourceSystem <> '[EMS]'

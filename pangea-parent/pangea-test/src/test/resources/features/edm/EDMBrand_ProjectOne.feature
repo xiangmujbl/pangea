@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1273
-Feature: EDMBrand
+Feature: EDMBrand AEAZ-1273
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation

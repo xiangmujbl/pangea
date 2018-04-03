@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1613
-Feature: AEAZ-1613 OMPGdmCluster-Curation
+Feature: OMPGdmCluster AEAZ-1613
 
   Scenario: Full Load curation
 
@@ -23,5 +23,5 @@ Feature: AEAZ-1613 OMPGdmCluster-Curation
 
     And I will remove all data with region "/omp/gdm_cluster"
 
-    And I will remove all data with region "/plan/cns_clusters"
+    And I will remove all data with region "/plan/edm_failed_data"
 

@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-509
-Feature: MaterialGlobal-Data Model & Curation
+@pangea_test @AEAZ-509 @AEAZ-1432
+Feature: MaterialGlobal-Data AEAZ-509 AEAZ-1432
 
   Scenario: Full Load curation
     #  1.test all field values. Enter valid value for fields in source and verify the same value exist in target

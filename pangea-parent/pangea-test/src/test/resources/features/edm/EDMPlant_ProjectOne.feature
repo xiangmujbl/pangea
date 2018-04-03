@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-495
-Feature: EDMPlant-Curation
+Feature: EDMPlant AEAZ-495
 
   Scenario: Full Load curation
     #  1. test get sourceSystem from source_system_v1 (rule T1)

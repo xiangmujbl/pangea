@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1692
-Feature: CnsMaterialPlanStatus-AEAZ-1692
+Feature: CnsMaterialPlanStatus AEAZ-1692
 
   Scenario: Full Load curation
 
