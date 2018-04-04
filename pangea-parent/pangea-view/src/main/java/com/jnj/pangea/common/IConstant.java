@@ -176,9 +176,11 @@ public interface IConstant {
 
     interface PLAN_CNS_FIN_PLAN_VAL {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
     }
     interface PLAN_CNS_FIN_PLAN_QTY {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
     }
     interface EDM_CURRENCY_V1 {
         String LOCAL_CURRENCY = "localCurrency";

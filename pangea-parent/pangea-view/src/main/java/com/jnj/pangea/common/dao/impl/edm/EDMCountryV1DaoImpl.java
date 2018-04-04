@@ -18,8 +18,10 @@ public class EDMCountryV1DaoImpl extends CommonDaoImpl {
 
 
     public EDMCountryV1Entity getEntityWithLocalCountry(String land1) {
-
-        String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryV1Entity.class);
+        if (null != land1 && !"".equals(land1)) {
+            String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
+            return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryV1Entity.class);
+        }
+        return null;
     }
 }

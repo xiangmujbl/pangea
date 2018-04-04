@@ -5,7 +5,7 @@
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localDPParentCode,localBaseUom
+                    sourceSystem,localMaterialNumber,localDpParentCode,localBaseUom
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -28,7 +28,7 @@
 
             <region path="/plan/cns_fin_plan_qty">
                 <columns>
-                    localMaterialNumber,country,currency,unitId,quantity
+                    localMaterialNumber,identifier,country,currency,unitId,quantity
                 </columns>
                 <relations>
                     <relation path="/edm/country_v1" isPrimaryKey="false">
@@ -51,7 +51,7 @@
 
             <region path="/plan/cns_fin_plan_val">
                 <columns>
-                    localMaterialNumber,value
+                    localMaterialNumber,identifier,value
                 </columns>
             </region>
 

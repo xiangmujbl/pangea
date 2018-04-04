@@ -43,46 +43,43 @@ public class OMPGdmFpbServiceImpl implements ICommonService {
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
 
         OMPGdmFpbBo gdmFpbBo = new OMPGdmFpbBo();
-        // TODO add logic
 
         String sourceSystem = materialGlobalV1Entity.getSourceSystem();
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(sourceSystem);
 
         String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
-        if (IConstant.VALUE.FPB.equals(localMaterialNumber)){
-            PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
-            PlanCnsFinPlanValEntity finPlanValEntity = cnsFinPlanValDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+        PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithConditions(localMaterialNumber);
+        PlanCnsFinPlanValEntity finPlanValEntity = cnsFinPlanValDao.getEntityWithConditions(localMaterialNumber);
 
-            String productId = sourceSystemV1Entity.getSourceSystem()+IConstant.VALUE.UNDERLINE+materialGlobalV1Entity.getLocalDpParentCode();
+        String productId = sourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode();
+        gdmFpbBo.setProductId(productId);
+        String sequeceNumber = "";
+        String fpbId = productId +sequeceNumber;
+        gdmFpbBo.setFpbId(fpbId);
 
-            String sequeceNumber = "";
-            String fpbId = productId+sequeceNumber;
-            gdmFpbBo.setFpbId(fpbId);
+        if (null != finPlanValEntity) {
+            gdmFpbBo.setValue(finPlanValEntity.getValue());
+        }
 
-            if (null != finPlanValEntity){
-                gdmFpbBo.setValue(finPlanValEntity.getValue());
+        if (null != finPlanQtyEntity) {
+            String country = finPlanQtyEntity.getCountry();
+            EDMCountryV1Entity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
+            if (null != countryV1Entity) {
+                gdmFpbBo.setCountryId(countryV1Entity.getCountryCode());
             }
 
-            if (null != finPlanQtyEntity){
-                String country = finPlanQtyEntity.getCountry();
-                EDMCountryV1Entity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
-                if (null != countryV1Entity){
-                    gdmFpbBo.setCountryId(countryV1Entity.getCountryCode());
-                }
+            String currency = finPlanQtyEntity.getCurrency();
+            EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
+            if (null != currencyV1Entity) {
+                gdmFpbBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
+            }
 
-                String currency = finPlanQtyEntity.getCurrency();
-                EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
-                if (null != currencyV1Entity){
-                    gdmFpbBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
-                }
-
-                String unitId = finPlanQtyEntity.getUnitId();
-                if (null != unitId && unitId.equals(materialGlobalV1Entity.getLocalBaseUom())){
-                    EDMMaterialAuomV1Entity materialAuomV1Entity = materialAuomV1Dao.getEntityWithConditions(localMaterialNumber,unitId);
-                    if (null != materialAuomV1Entity){
-                        String volume = Integer.parseInt(finPlanQtyEntity.getQuantity()) * (Integer.parseInt(materialAuomV1Entity.getLocalNumerator())/Integer.parseInt(materialAuomV1Entity.getLocalDenominator())) + "";
-                        gdmFpbBo.setVolume(volume);
-                    }
+            String unitId = finPlanQtyEntity.getUnitId();
+            if (null != unitId && unitId.equals(materialGlobalV1Entity.getLocalBaseUom())) {
+                EDMMaterialAuomV1Entity materialAuomV1Entity = materialAuomV1Dao.getEntityWithConditions(localMaterialNumber, unitId);
+                if (null != materialAuomV1Entity) {
+                    String volume = Integer.parseInt(finPlanQtyEntity.getQuantity()) * (Integer.parseInt(materialAuomV1Entity.getLocalNumerator()) / Integer.parseInt(materialAuomV1Entity.getLocalDenominator())) + "";
+                    gdmFpbBo.setVolume(volume);
                 }
             }
         }

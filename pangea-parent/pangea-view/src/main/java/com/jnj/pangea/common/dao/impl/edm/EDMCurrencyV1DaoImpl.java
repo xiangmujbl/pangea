@@ -24,7 +24,10 @@ public class EDMCurrencyV1DaoImpl extends CommonDaoImpl {
     }
 
     public EDMCurrencyV1Entity getEntityWithLocalCurrency(String currency) {
-        String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_CURRENCY_V1.LOCAL_CURRENCY).is(currency).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_CURRENCY_V1, localQueryString, EDMCurrencyV1Entity.class);
+        if (null != currency && !"".equals(currency)) {
+            String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_CURRENCY_V1.LOCAL_CURRENCY).is(currency).toQueryString();
+            return queryForObject(IConstant.REGION.EDM_CURRENCY_V1, localQueryString, EDMCurrencyV1Entity.class);
+        }
+        return null;
     }
 }
