@@ -36,6 +36,9 @@ public interface IConstant {
         String PROJECT_ONE_VBKD = "/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
+        String EDM_CURRENCY_V1 = "/edm/currency_v1";
+        String PLAN_CNS_CUST_CHANNEL = "/plan/cns_cust_channel";
+        String PLAN_CNS_DP_PRICE_ClONE = "/plan/cns_dp_price_clone";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -142,6 +145,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_TYPE = "localMaterialType";
         String LOCAL_BASE_UOM = "localBaseUom";
+        String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
 
     interface EDM_MATERIAL_AUOM_V1 {
@@ -165,6 +169,18 @@ public interface IConstant {
     interface CNS_MATERIAL_INCL {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String PLANNING_TYPE = "planningType";
+    }
+
+    interface EDM_CURRENCY {
+        String LOCAL_CURRENCY = "localCurrency";
+    }
+
+    interface PLAN_CNS_CUST_CHANNEL {
+        String CHANNEL = "channel";
+    }
+
+    interface PLAN_CNS_DP_PRICE {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
 
     // -----region attribute value
@@ -194,43 +210,5 @@ public interface IConstant {
         String BACK_SLANT = "/";
         String USD = "USD";
         String STR_ONE = "001";
-    }
-
-    interface FAILED {
-
-        interface FUNCTIONAL_AREA {
-
-            String DP = "DP";
-            String SP = "SP";
-        }
-
-        interface INTERFACE_ID {
-
-            String EDM_COUNTRY = "EDMCountry";
-            String GDM_UNIT_EVOL = "GDMUnitEvol";
-            String EDM_SALES_ORDER = "EDMSalesOrder";
-            String OMP_GDM_CLUSTER = "OMPGdmCluster";
-
-        }
-
-        interface ERROR_CODE {
-
-            String T1 = "T1";
-
-            String C1 = "C1";
-
-            String J1 = "J1";
-            String J2 = "J2";
-            String J3 = "J3";
-            String J4 = "J4";
-
-            String E3 = "E3";
-            String E4 = "E4";
-            String E5 = "E5";
-            String E6 = "E6";
-            String E7 = "E7";
-            String E8 = "E8";
-            String E9 = "E9";
-        }
     }
 }

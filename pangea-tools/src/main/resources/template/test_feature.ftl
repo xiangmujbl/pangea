@@ -7,6 +7,7 @@ Feature: ${fullName} ${jira}
     Given I import "${entity.path}" by keyFields ""
       |<#list entity.fields as field> ${field} |</#list>
     And I wait "${entity.path}" Async Queue complete
+
 </#list>
 
     When I submit task with xml file "xml/${system}/${fullName}.xml" and execute file "jar/pangea-view.jar"
