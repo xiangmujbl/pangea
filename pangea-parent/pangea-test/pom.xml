@@ -14,7 +14,7 @@
 
     <properties>
         <adf.version>0.3.04</adf.version>
-        <adf.compute.version>0.3.04-0.3-0124</adf.compute.version>
+        <adf.compute.version>0.3.04-0.4</adf.compute.version>
     </properties>
 
     <dependencies>
