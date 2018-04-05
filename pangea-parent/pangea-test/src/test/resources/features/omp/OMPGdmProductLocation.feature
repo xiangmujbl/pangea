@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1979
-Feature: OMPGdmProductLocation-Curation AEAZ-1979
+Feature: OMPGdmProductLocation AEAZ-1979
 
   Scenario: Full Load curation
 
@@ -91,5 +91,5 @@ Feature: OMPGdmProductLocation-Curation AEAZ-1979
 
     And I will remove all data with region "/omp/gdm_product_location"
 
-    And I will remove all data with region "/edm/material_plant_v1"
+    And I will remove all data with region "/plan/edm_failed_data"
 

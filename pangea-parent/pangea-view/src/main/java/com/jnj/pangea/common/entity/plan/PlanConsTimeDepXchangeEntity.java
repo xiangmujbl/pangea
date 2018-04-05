@@ -11,6 +11,15 @@ public class PlanConsTimeDepXchangeEntity extends CommonEntity {
     private String factor;
     private String uniqueId;
     private String startEff;
+    private String exchangeRate;
+
+    public String getExchangeRate() {
+        return exchangeRate;
+    }
+
+    public void setExchangeRate(String exchangeRate) {
+        this.exchangeRate = exchangeRate;
+    }
 
     public String getPreference() {
         return preference;
@@ -68,5 +77,6 @@ public class PlanConsTimeDepXchangeEntity extends CommonEntity {
         setFactor((String)map.get("factor"));
         setUniqueId((String)map.get("uniqueId"));
         setStartEff((String)map.get("startEff"));
+        setExchangeRate((String)map.get("exchangeRate"));
     }
 }

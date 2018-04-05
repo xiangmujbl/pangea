@@ -60,6 +60,23 @@ public class OMPGdmProductLocationBo extends BaseBo {
     private String vrmod;
     private String webaz;
     private String xchpf;
+    private String productValue;
+
+    public String getlABEL() {
+        return lABEL;
+    }
+
+    public void setlABEL(String lABEL) {
+        this.lABEL = lABEL;
+    }
+
+    public String getProductValue() {
+        return productValue;
+    }
+
+    public void setProductValue(String productValue) {
+        this.productValue = productValue;
+    }
 
     @Override
     public String getKey() {
