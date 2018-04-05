@@ -77,9 +77,9 @@ public class OMPGdmProductServiceImpl {
                         gdmProductBo.setProductId(sourceSystemSS+IConstant.VALUE.UNDERLINE+localDPParentCode);
                     }
                     gdmProductBo.setActive(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveFcterp(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveOprerp(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveSoperp(IConstant.VALUE.YES);
+                    gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
+                    gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
+                    gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
 
                     productBos.add(gdmProductBo);
                 }
@@ -97,8 +97,8 @@ public class OMPGdmProductServiceImpl {
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                 gdmProductBo.setProductId(primaryPlanningCode);
                 gdmProductBo.setActive(IConstant.VALUE.YES);
-                gdmProductBo.setActiveOprerp(IConstant.VALUE.YES);
-                gdmProductBo.setActiveSoperp(IConstant.VALUE.YES);
+                gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
+                gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
 
                 productBos.add(gdmProductBo);
 
@@ -114,8 +114,8 @@ public class OMPGdmProductServiceImpl {
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                 gdmProductBo.setProductId(sourceSystemSS+IConstant.VALUE.UNDERLINE+localDPParentCode);
                 gdmProductBo.setActive(IConstant.VALUE.YES);
-                gdmProductBo.setActiveFcterp(IConstant.VALUE.YES);
-                gdmProductBo.setActiveSoperp(IConstant.VALUE.YES);
+                gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
+                gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
                 productBos.add(gdmProductBo);
             }
 
@@ -289,9 +289,9 @@ public class OMPGdmProductServiceImpl {
                     gdmProductBo.setProductId(localDPParentCode);
                 }
                 gdmProductBo.setActive(IConstant.VALUE.YES);
-                gdmProductBo.setActiveFcterp(IConstant.VALUE.YES);
-                gdmProductBo.setActiveOprerp(IConstant.VALUE.YES);
-                gdmProductBo.setActiveSoperp(IConstant.VALUE.YES);
+                gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
+                gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
+                gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
 
                 productBos.add(gdmProductBo);
             }
@@ -302,8 +302,8 @@ public class OMPGdmProductServiceImpl {
             OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
             gdmProductBo.setProductId(primaryPlanningCode);
             gdmProductBo.setActive(IConstant.VALUE.YES);
-            gdmProductBo.setActiveOprerp(IConstant.VALUE.YES);
-            gdmProductBo.setActiveSoperp(IConstant.VALUE.YES);
+            gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
+            gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
 
             productBos.add(gdmProductBo);
 
@@ -312,8 +312,8 @@ public class OMPGdmProductServiceImpl {
             OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
             gdmProductBo.setProductId(localDPParentCode);
             gdmProductBo.setActive(IConstant.VALUE.YES);
-            gdmProductBo.setActiveFcterp(IConstant.VALUE.YES);
-            gdmProductBo.setActiveSoperp(IConstant.VALUE.YES);
+            gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
+            gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
             productBos.add(gdmProductBo);
         }
 

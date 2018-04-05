@@ -32,7 +32,7 @@ public class OMPGdmUnitCurrencyServiceImpl implements ICommonService {
             gdmUnitCurrencyBo.setActiveOPRERP(IConstant.VALUE.YES);
             gdmUnitCurrencyBo.setActiveSOPERP(IConstant.VALUE.YES);
             gdmUnitCurrencyBo.setFactor("");
-            gdmUnitCurrencyBo.setISOCode(currencyV1Entity.getIsoNumeric());
+            gdmUnitCurrencyBo.setIsoCode(currencyV1Entity.getIsoNumeric());
             gdmUnitCurrencyBo.setMeasure("");
             gdmUnitCurrencyBo.setPrecision("");
             gdmUnitCurrencyBo.setLongDescription(currencyV1Entity.getCurrencyName());

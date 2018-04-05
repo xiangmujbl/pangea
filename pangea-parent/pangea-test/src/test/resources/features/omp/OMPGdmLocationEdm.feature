@@ -17,7 +17,7 @@ Feature: OMPGdmLocationEdm AEAZ-1765
     When I submit task with xml file "xml/omp/OMPGdmLocationEdm.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/gdm_location" by keyFields "locationId"
-      | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerid | label       | locationTypeId | regionId | vendorid |
+      | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerId | label       | locationTypeId | regionId | vendorId |
       | CONS_LATAM_AR01 | YES    | YES          | YES          |              | 00        | AR         |            | Pilar Plant | AH             | edmPlant |          |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"

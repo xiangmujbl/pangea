@@ -15,7 +15,7 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
     When I submit task with xml file "xml/omp/OMPGdmUnitCurrency.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/gdm_unit" by keyFields "unitId"
-      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | iSOCode | longDescription | measure | precision | shortDescription |
+      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure | precision | shortDescription |
       | USD    | YES    | YES          | YES          | YES          |        | -       | US Dollar       |         |           | US Dollar        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"

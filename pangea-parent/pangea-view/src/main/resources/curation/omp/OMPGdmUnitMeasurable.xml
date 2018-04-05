@@ -22,7 +22,7 @@
 
             <region path="/omp/gdm_unit">
                 <columns>
-                    unitId,active,activeFCTERP,activeOPRERP,activeSOPERP,factor,iSOCode,longDescription,measure,precision,shortDescription
+                    unitId,active,activeFCTERP,activeOPRERP,activeSOPERP,factor,isoCode,longDescription,measure,precision,shortDescription
                 </columns>
             </region>
 

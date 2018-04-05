@@ -54,8 +54,8 @@ public class OMPGdmLocationDetailServiceImpl {
                 value = value4;
             }
 
-            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
-            gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.YES);
+            gdmLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
+            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.YES);
 
             String CLASS = "";
             if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())) {
@@ -64,7 +64,7 @@ public class OMPGdmLocationDetailServiceImpl {
             }
 
             String locationid = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
-            gdmLocationDetailBo.setLocationid(locationid);
+            gdmLocationDetailBo.setLocationId(locationid);
 
             gdmLocationDetailBo.setName(name);
             gdmLocationDetailBo.setValue(value);
