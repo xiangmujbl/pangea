@@ -21,10 +21,8 @@ Feature: EDMMaterialType AEAZ-494
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1                | key2        | key3            | key4 | key5 | errorValue |
-      |DP              |EDMMaterialType|T1       |EMS           |              |[CNS MFG - Italy]    |&              |Budget F.G.    |        |      |z_source_system value is not [EMS]            |
-      |DP              |EDMMaterialType|T1       |EMS           |              |[MDD Mentor]         |0001           |HST            |       |      |z_source_system value is not [EMS]            |
 
-    And I compare the number of records between "/ems/ems_f_mdm_material_types" and "/edm/material_type_v1,/plan/edm_failed_data"
+#    And I compare the number of records between "/ems/ems_f_mdm_material_types" and "/edm/material_type_v1,/plan/edm_failed_data"
 
     And I delete the test data
 

@@ -1,7 +1,5 @@
 package com.jnj.pangea.edm.plant.service;
 
-import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -46,12 +44,6 @@ public class EDMPlantServiceImpl implements ICommonService {
 
         // rule T1
         String zPlantSourceSystem = enterprisePlants.getzPlantSourceSystem();
-
-        FailData failData = checkT1(enterprisePlants, zPlantSourceSystem);
-        if (null != failData) {
-            resultObject.setFailData(failData);
-            return resultObject;
-        }
 
         plantBo.setSourceSystem(getFieldWithT1(zPlantSourceSystem));
 
@@ -134,23 +126,6 @@ public class EDMPlantServiceImpl implements ICommonService {
             }
         }
         return "";
-    }
-
-    private FailData checkT1(EMSFZEnterprisePlants enterprisePlants, String sourceSystem) {
-        FailData failData = null;
-        if (StringUtils.isEmpty(sourceSystem) || IConstant.VALUE.EMS.equals(sourceSystem)) {
-            failData = new FailData();
-            failData.setErrorCode("T1");
-            failData.setFunctionalArea("DP");
-            failData.setInterfaceID("EDMPlant");
-            failData.setSourceSystem("project_one");
-            failData.setKey1(enterprisePlants.getzPlantSourceSystem());
-            failData.setKey2(enterprisePlants.getzPlant());
-            failData.setKey3("");
-            failData.setKey4("");
-            failData.setKey5("");
-        }
-        return failData;
     }
 
 }

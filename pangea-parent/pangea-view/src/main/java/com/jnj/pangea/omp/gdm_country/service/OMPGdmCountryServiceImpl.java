@@ -17,7 +17,6 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
         return instance;
     }
 
-
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -25,14 +24,14 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
         EDMCountryV1Entity countryV1Entity = (EDMCountryV1Entity) o;
 
         OMPGdmCountryBo gdmCountryBo = new OMPGdmCountryBo();
-        if (null !=countryV1Entity){
-            gdmCountryBo.setCountryID(countryV1Entity.getCountryCode());
+        if (null != countryV1Entity) {
+            gdmCountryBo.setCountryId(countryV1Entity.getCountryCode());
             gdmCountryBo.setCountryDescription(countryV1Entity.getCountryName());
         }
         gdmCountryBo.setActiveFCTERP(IConstant.VALUE.YES);
         gdmCountryBo.setActiveOPRERP(IConstant.VALUE.YES);
         gdmCountryBo.setActiveSOPERP(IConstant.VALUE.YES);
-        gdmCountryBo.setMRC("");
+        gdmCountryBo.setMrc("");
         resultObject.setBaseBo(gdmCountryBo);
         return resultObject;
     }

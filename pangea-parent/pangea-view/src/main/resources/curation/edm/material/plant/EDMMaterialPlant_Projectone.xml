@@ -52,13 +52,13 @@
             <region path="/edm/material_plant_v1">
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,localDeletionFlagPlant,materialNumber,plant,localPlantStatus,plantStatus,
-                    localProcurementType,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,
-                    localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,
-                    localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,
-                    localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,
-                    localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,
+                    localProcurementType,localFixedLotSize,localMaximumLotSize,localMinimumLotSize,localRoundingValueForPoq,
+                    localLotSize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,
+                    localProductionSupervisor,localProductionUnit,localPostToInspectionStock,localComponentScrapInPercent,
+                    localCriticalPart,localAbcIndicator,localMaximumStockLevel,localCheckingGroupForAvailabilityCheck,localPlannedDeliveryTimeInDays,
+                    localDependentRequirements,localSafetyTimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,
                     localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,
-                    localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity
+                    localBatchManagementRequirementIndicator,localPlanningTimeFence,localPostToInspStk,localComponentScrap,localBaseQuantity
                 </columns>
             </region>
 

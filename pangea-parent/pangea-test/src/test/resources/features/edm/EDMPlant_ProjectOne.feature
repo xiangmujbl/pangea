@@ -59,9 +59,8 @@ Feature: EDMPlant AEAZ-495
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
-      | DP             | EDMPlant    | T1        | project_one  |              | [EMS] | AR06 |      |      |      |            |
 
-    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/plan/edm_failed_data"
+#    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/plan/edm_failed_data"
 
     And I delete the test data
 

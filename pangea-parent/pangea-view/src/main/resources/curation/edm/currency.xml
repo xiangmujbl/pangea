@@ -7,6 +7,7 @@
                 <columns>
                     zSourceSystem,zCode,zEntCodeIso4217Alpha,zName,zIso4217Numeric
                 </columns>
+                <filter>(*:* -zSourceSystem:\[EMS\])</filter>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression>localSourceSystem=/ems/ems_f_z_currencies.zSourceSystem</expression>

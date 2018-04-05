@@ -7,6 +7,7 @@
                 <columns>
                     zSourceSystem,mdmSapCode,mdmName,zEnterpriseCode,mdmIsoCode,zUnitsDimension
                 </columns>
+                <filter>(*:* -zSourceSystem:\[EMS\])</filter>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression>localSourceSystem=/ems/ems_f_mdm_units.zSourceSystem</expression>
@@ -33,7 +34,7 @@
 
             <region path="/edm/unit_of_measure_v1">
                 <columns>
-                    sourceSystem,localUom,localUomName,uom,uomName,isocode,measure,factor,roundingDecimal
+                    sourceSystem,localUom,localUomName,uom,uomName,isoCode,measure,factor,roundingDecimal
                 </columns>
             </region>
 

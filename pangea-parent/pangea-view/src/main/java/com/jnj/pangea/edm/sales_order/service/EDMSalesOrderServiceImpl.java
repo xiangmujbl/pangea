@@ -66,11 +66,11 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         VbapEntity vbapEntity = getFieldWithJ1(vbakEntity.getVbeln());
         if (null == vbapEntity) {
             FailData failData = new FailData();
-            failData.setErrorCode("J1");
+            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
             failData.setErrorValue("No Sales Item Found");
-            failData.setFunctionalArea("DP");
-            failData.setInterfaceID("EDMSalesOrder");
-            failData.setSourceSystem("project_one");
+            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.EDM_SALES_ORDER);
+            failData.setSourceSystem("");
             failData.setKey1(vbakEntity.getVbeln());
             failData.setKey2("");
             failData.setKey3("");
@@ -101,11 +101,11 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         VbepEntity vbepEntity = getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
         if (null == vbapEntity) {
             FailData failData = new FailData();
-            failData.setErrorCode("J2");
+            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J2);
             failData.setErrorValue("No Schedule lines Found");
-            failData.setFunctionalArea("DP");
-            failData.setInterfaceID("EDMSalesOrder");
-            failData.setSourceSystem("project_one");
+            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.EDM_SALES_ORDER);
+            failData.setSourceSystem("");
             failData.setKey1(vbakEntity.getVbeln());
             failData.setKey2("");
             failData.setKey3("");

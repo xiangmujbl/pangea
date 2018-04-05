@@ -12,7 +12,7 @@ public class PlanConsTimeDepXchangeEntity extends CommonEntity {
     private String effectiveEndDate;
     private String effectiveStartDate;
     private String exchangeRate;
-    private String Preference;
+    private String preference;
 
     public PlanConsTimeDepXchangeEntity(Map<String, Object> map) {
         super(map);
@@ -23,7 +23,7 @@ public class PlanConsTimeDepXchangeEntity extends CommonEntity {
         setEffectiveEndDate((String) map.get("effectiveEndDate"));
         setEffectiveStartDate((String) map.get("effectiveStartDate"));
         setExchangeRate((String) map.get("exchangeRate"));
-        setPreference((String) map.get("Preference"));
+        setPreference((String) map.get("preference"));
     }
 
     public String getUniqueId() {
@@ -75,11 +75,10 @@ public class PlanConsTimeDepXchangeEntity extends CommonEntity {
     }
 
     public String getPreference() {
-        return this.Preference;
+        return preference;
     }
 
     public void setPreference(String preference) {
-        this.Preference = preference;
+        this.preference = preference;
     }
-
 }

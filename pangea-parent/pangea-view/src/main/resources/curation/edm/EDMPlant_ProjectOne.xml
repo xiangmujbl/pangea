@@ -8,6 +8,8 @@
                 <columns>
                     zPlantSourceSystem,zPlant,zEntPlantNumber,zSite,zEntPlantType,zRegion
                 </columns>
+                <filter>(*:* -zPlantSourceSystem:\[EMS\])</filter>
+
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="true">
                         <expression>localSourceSystem=/ems/ems_f_z_enterprise_plants.zPlantSourceSystem</expression>

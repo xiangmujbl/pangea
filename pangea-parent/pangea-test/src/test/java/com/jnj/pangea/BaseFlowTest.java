@@ -1,4 +1,4 @@
-package com.jnj.pangea.edm;
+package com.jnj.pangea;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;

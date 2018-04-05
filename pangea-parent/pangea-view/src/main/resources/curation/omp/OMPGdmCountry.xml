@@ -11,12 +11,12 @@
 
             <region path="/omp/gdm_country">
                 <columns>
-                    countryID,
+                    countryId,
                     activeFCTERP,
                     activeOPRERP,
                     activeSOPERP,
                     countryDescription,
-                    MRC
+                    mrc
                 </columns>
             </region>
 

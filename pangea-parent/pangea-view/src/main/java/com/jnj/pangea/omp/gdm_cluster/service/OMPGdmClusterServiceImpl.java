@@ -26,13 +26,13 @@ public class OMPGdmClusterServiceImpl implements ICommonService {
         PlanCnsClustersEntity cnsClustersEntity = (PlanCnsClustersEntity) o;
 
         OMPGdmClusterBo gdmClusterBo = new OMPGdmClusterBo();
-        if (null==cnsClustersEntity || "".equals(cnsClustersEntity.getCluster())||"".equals(cnsClustersEntity.getCountryId())||"".equals(cnsClustersEntity.getSubCluster())){
+        if (null == cnsClustersEntity || "".equals(cnsClustersEntity.getCluster()) || "".equals(cnsClustersEntity.getCountryId()) || "".equals(cnsClustersEntity.getSubCluster())) {
             FailData failData = new FailData();
-            failData.setErrorCode("C1");
+            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.C1);
             failData.setErrorValue("All Key fields not Exist");
-            failData.setFunctionalArea("DP");
-            failData.setInterfaceID("OMPGdmCluster");
-            failData.setSourceSystem("omp");
+            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CLUSTER);
+            failData.setSourceSystem("");
             failData.setKey1(cnsClustersEntity.getCluster());
             failData.setKey2(cnsClustersEntity.getCountryId());
             failData.setKey3(cnsClustersEntity.getSubCluster());
@@ -41,7 +41,7 @@ public class OMPGdmClusterServiceImpl implements ICommonService {
             resultObject.setFailData(failData);
             return resultObject;
         }
-        gdmClusterBo.setClusterId(cnsClustersEntity.getCountryId()+cnsClustersEntity.getCluster()+cnsClustersEntity.getSubCluster());
+        gdmClusterBo.setClusterId(cnsClustersEntity.getCountryId() + cnsClustersEntity.getCluster() + cnsClustersEntity.getSubCluster());
         gdmClusterBo.setActiveFCTERP(IConstant.VALUE.YES);
         gdmClusterBo.setClusterDescription(cnsClustersEntity.getCluster());
         gdmClusterBo.setClusterNr(cnsClustersEntity.getCluster());

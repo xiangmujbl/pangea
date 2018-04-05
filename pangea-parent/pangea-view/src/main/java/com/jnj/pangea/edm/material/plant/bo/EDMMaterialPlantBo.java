@@ -14,11 +14,11 @@ public class EDMMaterialPlantBo  extends BaseBo
     private String localPlantStatus;
     private String plantStatus;
     private String localProcurementType;
-    private String localFixedlotsize;
+    private String localFixedLotSize;
     private String localMaximumLotSize;
     private String localMinimumLotSize;
-    private String localRoundingvalueForPoq;
-    private String localLotsize;
+    private String localRoundingValueForPoq;
+    private String localLotSize;
     private String localMrpType;
     private String localMrpController;
     private String localInHouseProcessingTime;
@@ -26,15 +26,15 @@ public class EDMMaterialPlantBo  extends BaseBo
     private String localMinimumSafetyStock;
     private String localProductionSupervisor;
     private String localProductionUnit;
-    private String localPosttoInspectionStock;
+    private String localPostToInspectionStock;
     private String localComponentScrapInPercent;
-    private String localCriticalpart;
+    private String localCriticalPart;
     private String localAbcIndicator;
-    private String localMaximumStocklevel;
-    private String localCheckingGroupforAvailabilityCheck;
+    private String localMaximumStockLevel;
+    private String localCheckingGroupForAvailabilityCheck;
     private String localPlannedDeliveryTimeInDays;
     private String localDependentRequirements;
-    private String localSafetytimeIndicator;
+    private String localSafetyTimeIndicator;
     private String localSafetyTime;
     private String localSpecialProcurementType;
     private String localPlanningStrategyGroup;
@@ -42,22 +42,90 @@ public class EDMMaterialPlantBo  extends BaseBo
     private String localConsumptionPeriodForward;
     private String localConsumptionMode;
     private String localGoodsReceiptProcessingTimeInDays;
-    private String localBatchManagementRequirmentIndicator;
+    private String localBatchManagementRequirementIndicator;
     private String localPlanningTimeFence;
-    private String localPosttoinspstk;
+    private String localPostToInspStk;
     private String localComponentScrap;
     private String localBaseQuantity;
+
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
+    }
+
+    public String getLocalMaterialNumber() {
+        return localMaterialNumber;
+    }
+
+    public void setLocalMaterialNumber(String localMaterialNumber) {
+        this.localMaterialNumber = localMaterialNumber;
+    }
+
+    public String getLocalPlant() {
+        return localPlant;
+    }
+
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
+    }
 
     public String getLocalDeletionFlagPlant() {
         return localDeletionFlagPlant;
     }
 
-    public String getLocalFixedlotsize() {
-        return localFixedlotsize;
+    public void setLocalDeletionFlagPlant(String localDeletionFlagPlant) {
+        this.localDeletionFlagPlant = localDeletionFlagPlant;
     }
 
-    public void setLocalFixedlotsize(String localFixedlotsize) {
-        this.localFixedlotsize = localFixedlotsize;
+    public String getMaterialNumber() {
+        return materialNumber;
+    }
+
+    public void setMaterialNumber(String materialNumber) {
+        this.materialNumber = materialNumber;
+    }
+
+    public String getPlant() {
+        return plant;
+    }
+
+    public void setPlant(String plant) {
+        this.plant = plant;
+    }
+
+    public String getLocalPlantStatus() {
+        return localPlantStatus;
+    }
+
+    public void setLocalPlantStatus(String localPlantStatus) {
+        this.localPlantStatus = localPlantStatus;
+    }
+
+    public String getPlantStatus() {
+        return plantStatus;
+    }
+
+    public void setPlantStatus(String plantStatus) {
+        this.plantStatus = plantStatus;
+    }
+
+    public String getLocalProcurementType() {
+        return localProcurementType;
+    }
+
+    public void setLocalProcurementType(String localProcurementType) {
+        this.localProcurementType = localProcurementType;
+    }
+
+    public String getLocalFixedLotSize() {
+        return localFixedLotSize;
+    }
+
+    public void setLocalFixedLotSize(String localFixedLotSize) {
+        this.localFixedLotSize = localFixedLotSize;
     }
 
     public String getLocalMaximumLotSize() {
@@ -76,20 +144,20 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localMinimumLotSize = localMinimumLotSize;
     }
 
-    public String getLocalRoundingvalueForPoq() {
-        return localRoundingvalueForPoq;
+    public String getLocalRoundingValueForPoq() {
+        return localRoundingValueForPoq;
     }
 
-    public void setLocalRoundingvalueForPoq(String localRoundingvalueForPoq) {
-        this.localRoundingvalueForPoq = localRoundingvalueForPoq;
+    public void setLocalRoundingValueForPoq(String localRoundingValueForPoq) {
+        this.localRoundingValueForPoq = localRoundingValueForPoq;
     }
 
-    public String getLocalLotsize() {
-        return localLotsize;
+    public String getLocalLotSize() {
+        return localLotSize;
     }
 
-    public void setLocalLotsize(String localLotsize) {
-        this.localLotsize = localLotsize;
+    public void setLocalLotSize(String localLotSize) {
+        this.localLotSize = localLotSize;
     }
 
     public String getLocalMrpType() {
@@ -148,12 +216,12 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localProductionUnit = localProductionUnit;
     }
 
-    public String getLocalPosttoInspectionStock() {
-        return localPosttoInspectionStock;
+    public String getLocalPostToInspectionStock() {
+        return localPostToInspectionStock;
     }
 
-    public void setLocalPosttoInspectionStock(String localPosttoInspectionStock) {
-        this.localPosttoInspectionStock = localPosttoInspectionStock;
+    public void setLocalPostToInspectionStock(String localPostToInspectionStock) {
+        this.localPostToInspectionStock = localPostToInspectionStock;
     }
 
     public String getLocalComponentScrapInPercent() {
@@ -164,12 +232,12 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localComponentScrapInPercent = localComponentScrapInPercent;
     }
 
-    public String getLocalCriticalpart() {
-        return localCriticalpart;
+    public String getLocalCriticalPart() {
+        return localCriticalPart;
     }
 
-    public void setLocalCriticalpart(String localCriticalpart) {
-        this.localCriticalpart = localCriticalpart;
+    public void setLocalCriticalPart(String localCriticalPart) {
+        this.localCriticalPart = localCriticalPart;
     }
 
     public String getLocalAbcIndicator() {
@@ -180,20 +248,20 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localAbcIndicator = localAbcIndicator;
     }
 
-    public String getLocalMaximumStocklevel() {
-        return localMaximumStocklevel;
+    public String getLocalMaximumStockLevel() {
+        return localMaximumStockLevel;
     }
 
-    public void setLocalMaximumStocklevel(String localMaximumStocklevel) {
-        this.localMaximumStocklevel = localMaximumStocklevel;
+    public void setLocalMaximumStockLevel(String localMaximumStockLevel) {
+        this.localMaximumStockLevel = localMaximumStockLevel;
     }
 
-    public String getLocalCheckingGroupforAvailabilityCheck() {
-        return localCheckingGroupforAvailabilityCheck;
+    public String getLocalCheckingGroupForAvailabilityCheck() {
+        return localCheckingGroupForAvailabilityCheck;
     }
 
-    public void setLocalCheckingGroupforAvailabilityCheck(String localCheckingGroupforAvailabilityCheck) {
-        this.localCheckingGroupforAvailabilityCheck = localCheckingGroupforAvailabilityCheck;
+    public void setLocalCheckingGroupForAvailabilityCheck(String localCheckingGroupForAvailabilityCheck) {
+        this.localCheckingGroupForAvailabilityCheck = localCheckingGroupForAvailabilityCheck;
     }
 
     public String getLocalPlannedDeliveryTimeInDays() {
@@ -212,12 +280,12 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localDependentRequirements = localDependentRequirements;
     }
 
-    public String getLocalSafetytimeIndicator() {
-        return localSafetytimeIndicator;
+    public String getLocalSafetyTimeIndicator() {
+        return localSafetyTimeIndicator;
     }
 
-    public void setLocalSafetytimeIndicator(String localSafetytimeIndicator) {
-        this.localSafetytimeIndicator = localSafetytimeIndicator;
+    public void setLocalSafetyTimeIndicator(String localSafetyTimeIndicator) {
+        this.localSafetyTimeIndicator = localSafetyTimeIndicator;
     }
 
     public String getLocalSafetyTime() {
@@ -276,12 +344,12 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localGoodsReceiptProcessingTimeInDays = localGoodsReceiptProcessingTimeInDays;
     }
 
-    public String getLocalBatchManagementRequirmentIndicator() {
-        return localBatchManagementRequirmentIndicator;
+    public String getLocalBatchManagementRequirementIndicator() {
+        return localBatchManagementRequirementIndicator;
     }
 
-    public void setLocalBatchManagementRequirmentIndicator(String localBatchManagementRequirmentIndicator) {
-        this.localBatchManagementRequirmentIndicator = localBatchManagementRequirmentIndicator;
+    public void setLocalBatchManagementRequirementIndicator(String localBatchManagementRequirementIndicator) {
+        this.localBatchManagementRequirementIndicator = localBatchManagementRequirementIndicator;
     }
 
     public String getLocalPlanningTimeFence() {
@@ -292,12 +360,12 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localPlanningTimeFence = localPlanningTimeFence;
     }
 
-    public String getLocalPosttoinspstk() {
-        return localPosttoinspstk;
+    public String getLocalPostToInspStk() {
+        return localPostToInspStk;
     }
 
-    public void setLocalPosttoinspstk(String localPosttoinspstk) {
-        this.localPosttoinspstk = localPosttoinspstk;
+    public void setLocalPostToInspStk(String localPostToInspStk) {
+        this.localPostToInspStk = localPostToInspStk;
     }
 
     public String getLocalComponentScrap() {
@@ -308,8 +376,12 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localComponentScrap = localComponentScrap;
     }
 
-    public void setLocalDeletionFlagPlant(String localDeletionFlagPlant) {
-        this.localDeletionFlagPlant = localDeletionFlagPlant;
+    public String getLocalBaseQuantity() {
+        return localBaseQuantity;
+    }
+
+    public void setLocalBaseQuantity(String localBaseQuantity) {
+        this.localBaseQuantity = localBaseQuantity;
     }
 
     @Override
@@ -319,73 +391,5 @@ public class EDMMaterialPlantBo  extends BaseBo
                 .add("localMaterialNumber", this.localMaterialNumber)
                 .add("localPlant", this.localPlant)
                 .toJsonString();
-    }
-
-    public String getSourceSystem() {
-        return sourceSystem;
-    }
-
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
-    }
-
-    public String getLocalMaterialNumber() {
-        return localMaterialNumber;
-    }
-
-    public void setLocalMaterialNumber(String localMaterialNumber) {
-        this.localMaterialNumber = localMaterialNumber;
-    }
-
-    public String getLocalPlant() {
-        return localPlant;
-    }
-
-    public void setLocalPlant(String localPlant) {
-        this.localPlant = localPlant;
-    }
-
-    public String getMaterialNumber() {
-        return materialNumber;
-    }
-
-    public void setMaterialNumber(String materialNumber) {
-        this.materialNumber = materialNumber;
-    }
-
-    public String getPlant() {
-        return plant;
-    }
-
-    public void setPlant(String plant) {
-        this.plant = plant;
-    }
-
-    public String getLocalPlantStatus() {
-        return localPlantStatus;
-    }
-
-    public void setLocalPlantStatus(String localPlantStatus) {
-        this.localPlantStatus = localPlantStatus;
-    }
-
-    public String getPlantStatus() {
-        return plantStatus;
-    }
-
-    public void setPlantStatus(String plantStatus) {
-        this.plantStatus = plantStatus;
-    }
-
-    public String getLocalProcurementType() { return localProcurementType; }
-
-    public void setLocalProcurementType(String localProcurementType) { this.localProcurementType = localProcurementType; }
-
-    public String getLocalBaseQuantity() {
-        return localBaseQuantity;
-    }
-
-    public void setLocalBaseQuantity(String localBaseQuantity) {
-        this.localBaseQuantity = localBaseQuantity;
     }
 }

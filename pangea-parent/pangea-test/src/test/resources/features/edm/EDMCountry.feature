@@ -23,21 +23,19 @@ Feature: EDMCountry AEAZ-492
     When I submit task with xml file "xml/edm/country.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/country_v1" by keyFields "sourceSystem,localCountry"
-      | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion |
-      | CONS_LATAM   | *            | -           |               |                        |
-      | CONS_LATAM   | 00           | -           |               |                        |
+      | sourceSystem | localCountry | countryCode | countryName | consumerPlanningRegion |
+      | CONS_LATAM   | *            | -           |             |                        |
+      | CONS_LATAM   | 00           | -           |             |                        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode                                        | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-      |       DP         |   EDMCountry| z_source_system value is not [EMS] and rule T1  |       [EMS]  |             |  [EMS] |    *  |      |      |      |            |
-      |       DP         |   EDMCountry| z_source_system value is not [EMS] and rule T1  |       [EMS]  |             |  [EMS] |    00  |      |      |      |            |
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
 #    Then I check region data "/plan/country_v1_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
 #      | functionalArea | interfaceID | errorCode                                        | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 #      |                 |              | z_source_system value is not [EMS] and rule T1|             |             |  [EMS] |    *  |      |      |      |            |
 #      |                 |              | z_source_system value is not [EMS] and rule T1|             |             |  [EMS] |    00  |      |      |      |            |
 
-    And I compare the number of records between "/ems/ems_f_mdm_countries" and "/edm/country_v1,/plan/edm_failed_data"
+#    And I compare the number of records between "/ems/ems_f_mdm_countries" and "/edm/country_v1,/plan/edm_failed_data"
 
     And I delete the test data
 

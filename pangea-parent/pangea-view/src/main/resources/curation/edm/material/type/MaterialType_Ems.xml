@@ -7,6 +7,7 @@
                 <columns>
                     mdmCode,mdmName,zSourceSystem
                 </columns>
+                <filter>zSourceSystem:\[EMS\]</filter>
             </region>
 
             <region path="/edm/material_type_v1">

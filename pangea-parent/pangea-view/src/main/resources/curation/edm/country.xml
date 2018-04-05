@@ -8,6 +8,7 @@
                 <columns>
                     zSourceSystem,mdmCode,zEntCodeIso3166Alpha2,mdmName
                 </columns>
+                <filter>(*:* -zSourceSystem:\[EMS\])</filter>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="true">
                         <expression>localSourceSystem=/ems/ems_f_mdm_countries.zSourceSystem</expression>
