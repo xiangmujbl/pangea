@@ -1,6 +1,8 @@
 
 job create --name Pangea_Dev_Trigger_Plan_cns_abc_ind --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsAbcInd_ProjectOne.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
+job create --name Pangea_Dev_Trigger_Plan_cns_lot_size_key --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsLotSizeKey.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
 job create --name Pangea_Dev_Trigger_Plan_cns_lot_size_key_trans --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsLotSizeKeyTrans.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_Dev_Trigger_Plan_cns_plant_attr --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsPlantAttr.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
@@ -9,4 +11,22 @@ job create --name Pangea_Dev_Trigger_Plan_cns_plng_strat_grp --definition 'trigg
 
 job create --name Pangea_Dev_Trigger_Plan_cns_spl_proc_typ --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsSplProcTyp.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
+job create --name Pangea_Dev_Trigger_Omp_gdm_product --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProduct.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
 job create --name Pangea_Dev_Trigger_Omp_gdm_product_unit_conversion --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProductUnitConversion.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_gdm_unit_currency --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmUnitCurrency.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_gdm_unit_measure --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmUnitMeasurable.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_gdm_location_xref --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLocationXref.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_gdm_location_edm --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLocationEdm.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_location_type --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPLocationType.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_gdm_product_location --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProductLocation.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_product_type --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPProductType.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Dev_Trigger_Omp_lot_size_key --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPLotSizeKey.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
