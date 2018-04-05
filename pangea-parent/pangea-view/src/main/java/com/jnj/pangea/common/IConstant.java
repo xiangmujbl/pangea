@@ -29,6 +29,7 @@ public interface IConstant {
         String PROJECT_ONE_T461X = "/project_one/t461x";
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
+        String PLAN_CNS_MATERIAL_PLAN_STATUS="/plan/cns_material_plan_status";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
         String PROJECT_ONE_VBEP="/project_one/vbep";
         String PROJECT_ONE_VBAP="/project_one/vbap";
@@ -36,6 +37,10 @@ public interface IConstant {
         String PROJECT_ONE_VBKD="/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
+    }
+
+    interface PLAN_CNS_MATERIAL_PLAN_STATUS {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -191,5 +196,6 @@ public interface IConstant {
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
         String USD="USD";
+        String LATAM_SKU="LATAM_SKU";
     }
 }

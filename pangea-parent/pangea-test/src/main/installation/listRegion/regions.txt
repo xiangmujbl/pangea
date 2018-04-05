@@ -129,3 +129,6 @@
 /plan/cns_pln_spl_loc
 /omp/gdm_location_xref
 
+
+/omp/product_detail
+
