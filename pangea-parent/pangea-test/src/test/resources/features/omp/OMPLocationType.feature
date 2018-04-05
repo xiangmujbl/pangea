@@ -11,7 +11,7 @@ Feature: OMPLocationType AEAZ-1763
     When I submit task with xml file "xml/omp/OMPLocationType.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/location_type" by keyFields "locationTypeId"
-      | locationTypeId | activeFctErp | activeOprErp | activeSopErp | label                        |
+      | locationTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label                        |
       | CO01           | YES          | YES          | YES          | Internal Manufacturing Plant |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"

@@ -11,7 +11,7 @@
 
             <region path="/omp/product_type">
                 <columns>
-                    productTypeId,activeFctErp,activeOprErp,activeSopErp,label
+                    productTypeId,activeFCTERP,activeOPRERP,activeSOPERP,label
                 </columns>
             </region>
 

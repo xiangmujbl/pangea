@@ -30,7 +30,7 @@
 
             <region path="/plan/cns_abc_ind">
                 <columns>
-                    sourceSystem,localIndicator,localIndicatorDescription,indicator,indicatorDecription
+                    sourceSystem,localIndicator,localIndicatorDescription,indicator,indicatorDescription
                 </columns>
             </region>
 
