@@ -5,6 +5,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
+import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsProdCountryAffEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_country.bo.GDMProductCountryBo;
@@ -36,7 +37,7 @@ public class GDMProductCountryServiceImpl implements ICommonService {
             productCountryBo.setActiveFcterp(IConstant.VALUE.YES);
             productCountryBo.setCountryGroup(prodCountryAffEntity.getCountryGroup());
 
-            EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountry(country);
+            EDMCountryV1Entity countryEntity = countryV1Dao.getEntityWithLocalCountry(country);
             if (null != countryEntity){
                 productCountryBo.setCountryId(countryEntity.getCountryCode());
             }

@@ -36,6 +36,11 @@ Feature:  OMPGdmProduct-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmProduct.xml" and execute file "jar/pangea-view.jar"
 
+    Then A file is found on sink application with name "gdmProduct.tsv"
+
+    Then I check data for filename "gdmProduct.tsv" by keyFields ""
+      | productId | active | activeFcterp | activeOprerp | activeSoperp | color | description | groes | isroot | issku | label | matkl | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | prdha | shortDescription | sourceLocationId | subFranchise | technology | unitId |
+
     Then I check region data "/omp/product" by keyFields ""
       | productId | active | activeFcterp | activeOprerp | activeSoperp | color | description | groes | isroot | issku | label | matkl | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | prdha | shortDescription | sourceLocationId | subFranchise | technology | unitId |
 
@@ -49,4 +54,6 @@ Feature:  OMPGdmProduct-Curation
     And I will remove all data with region "/omp/product"
 
     And I will remove all data with region "/edm/material_global_v1"
+
+    And I will remove the test file on sink application "gdmProduct.tsv"
 
