@@ -4,24 +4,30 @@ import com.jnj.adf.cucumber.sentence.CommonSteps;
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
+import cucumber.api.DataTable;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
+import org.springframework.http.*;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class PangeaSteps extends CommonSteps {
 
     private static String computingNode = "";
     private static Integer computingPartition = 1;
+    private static String mboxSink = "";
 
     static {
         computingNode = ADFConfigHelper.getProperty("computingNode");
         String partition = ADFConfigHelper.getProperty("computingPartition");
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
+        mboxSink = ADFConfigHelper.getProperty("mboxSink");
     }
 
     public PangeaSteps() {
@@ -50,6 +56,73 @@ public class PangeaSteps extends CommonSteps {
         And("^I will remove all data with region \"([^\"]*)\"$", (String region) -> {
             adfService.onPath(region).removeAll();
         });
+
+
+        Then("^A file is found on sink application with name \"([^\"]*)\"$", (String fileName) -> {
+            retrieveFile(fileName);
+        });
+
+        And("^I check file data for filename \"([^\"]*)\" by keyFields \"([^\"]*)\"$", (String fileName, String keyFields, DataTable table) -> {
+            File file = retrieveFile(fileName);
+            this.checkFileData(table.raw(), keyFields.split(","), file);
+        });
+
+        And("^I will remove the test file on sink application \"([^\"]*)\"$", (fileName) -> {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.delete("http://" + mboxSink + "/api/file/" + fileName);
+        });
+    }
+
+    private File retrieveFile(String fileName) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new ByteArrayHttpMessageConverter());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        ResponseEntity<byte[]> response = restTemplate.exchange("http://" + mboxSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
+
+        File file = new File("tmp.tsv");
+        FileOutputStream output = null;
+        if(response.getStatusCode().equals(HttpStatus.OK))
+        {
+            try {
+                output = new FileOutputStream(file);
+                IOUtils.write(response.getBody(), output);
+            } catch(Exception e) {
+
+            }
+        }
+
+        Assert.assertTrue(file.exists());
+        Assert.assertTrue(file.length() > 0);
+
+        return file;
+    }
+
+    private void checkFileData(List<List<String>> list, String[] keyFields, File file) {
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String line = bufferedReader.readLine();
+            int count = 1;
+            // check headers
+
+            while (bufferedReader.readLine() != null) {
+                line = bufferedReader.readLine();
+                // check record
+                List<String> fileList = Arrays.asList(line.split("\t"));
+                Assert.assertEquals(fileList.size(), list.get(count).size());
+                Assert.assertTrue(list.get(count).containsAll(fileList));
+
+                count++;
+            }
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void submitComputeTask(String xml, String drl) {
