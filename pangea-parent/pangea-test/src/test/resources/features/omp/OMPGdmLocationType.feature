@@ -14,14 +14,8 @@ Feature:  OMPGdmLocationType-Curation
 
     Then A file is found on sink application with name "gdmLocationType.tsv"
 
-    And I check file data for filename "gdmLocationType.tsv" by keyFields "locationTypeId"
+    And I check file data for filename "gdmLocationType.tsv" by keyFields "locationTypeId,activeFctErp,activeOprErp,activeSopErp,label"
       | locationTypeId | activeFctErp | activeOprErp | activeSopErp | label                        |
-      | 10             | YES          | YES          | YES          | Copacker                     |
-      | 20             | YES          | YES          | YES          | Subcon                       |
-      | 30             | YES          | YES          | YES          | Internal Manufacturing Plant |
-
-    Then I check region data "/omp/gdm_location_type" by keyFields "locationTypeId"
-      | locationTypeId | activeFprerp | activeOprerp | activeSoperp | label                        |
       | 10             | YES          | YES          | YES          | Copacker                     |
       | 20             | YES          | YES          | YES          | Subcon                       |
       | 30             | YES          | YES          | YES          | Internal Manufacturing Plant |
@@ -32,8 +26,6 @@ Feature:  OMPGdmLocationType-Curation
     And I compare the number of records between "/plan/cns_loc_type" and "/omp/gdm_location_type,/plan/edm_failed_data"
 
     And I delete the test data
-
-    And I will remove all data with region "/omp/gdm_location_type"
 
     And I will remove all data with region "/plan/cns_loc_type"
 
