@@ -16,10 +16,10 @@ public class ProjectOneT439TDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public T439TEntity getEntityWithDislsAndSpras(String disls) {
+    public T439TEntity getEntityWithDislsAndSpras(String disls, String spras) {
         String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T439T.DISLS).is(disls)
-                .and(IConstant.PROJECT_ONE_T439T.SPRAS).is(IConstant.VALUE.EN).toQueryString();
-        return queryForObject(IConstant.REGION.PROJECT_ONE_T439T, queryString, T439TEntity.class);
+                .and(IConstant.PROJECT_ONE_T439T.SPRAS).is(spras).toQueryString();
+        return queryForObject(IConstant.REGION.PROJECT_ONE_T439T_CLONE, queryString, T439TEntity.class);
     }
 
     public T439TEntity getEntityWithSpras() {

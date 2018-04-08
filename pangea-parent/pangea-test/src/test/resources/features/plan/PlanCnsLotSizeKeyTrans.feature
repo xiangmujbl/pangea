@@ -2,14 +2,17 @@
 Feature: CnsLotSizeKey AEAZ-1485
 
   Scenario: Full Load curation
+    # 1. get sourceSystem from source_system_v1 with rule T1
+    # 2. get loslt from t439t where spras = 'E' (T2)
 
-    Given I import "/project_one/t439" by keyFields "disls"
-      | disls |
-      | AN    |
-      | AM    |
-      | AP    |
-
-    And I wait "/project_one/t439" Async Queue complete
+    And I import "/project_one/t439t" by keyFields "disls,spras"
+      | loslt         | disls | spras |
+      | Description_E | AN    | E     |
+      | Description_P | AN    | P     |
+      | Description_E | AM    | E     |
+      | Description_S | AM    | S     |
+      | Description_E | AP    | E     |
+    And I wait "/project_one/t439t" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
@@ -17,25 +20,18 @@ Feature: CnsLotSizeKey AEAZ-1485
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
     And I wait "/edm/source_system_v1" Async Queue complete
 
-    And I import "/project_one/t439t" by keyFields "disls"
-      | loslt | disls | spras |
-      | 00    | AN    | E     |
-      | 01    | AM    | E     |
-      | 02    | AP    | E     |
-    And I wait "/project_one/t439t" Async Queue complete
-
     When I submit task with xml file "xml/plan/PlanCnsLotSizeKeyTrans.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/plan/cns_lot_size_key_trans" by keyFields "sourceSystem,localLotSizeKey"
       | sourceSystem | localLotSizeKey | localLotSizeKeyDescription | lotSizeKey | lotSizeKeyDescription |
-      | CONS_LATAM   | AN              | 00                         |            |                       |
-      | CONS_LATAM   | AM              | 01                         |            |                       |
-      | CONS_LATAM   | AP              | 02                         |            |                       |
+      | CONS_LATAM   | AN              | Description_E              |            |                       |
+      | CONS_LATAM   | AM              | Description_E              |            |                       |
+      | CONS_LATAM   | AP              | Description_E              |            |                       |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/project_one/t439" and "/plan/cns_lot_size_key_trans,/plan/edm_failed_data"
+#    And I compare the number of records between "/project_one/t439t" and "/plan/cns_lot_size_key_trans,/plan/edm_failed_data"
 
     And I delete the test data
 
