@@ -99,7 +99,7 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
         //rule J2
         VbepEntity vbepEntity = getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
-        if (null == vbapEntity) {
+        if (null == vbepEntity) {
             FailData failData = new FailData();
             failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J2);
             failData.setErrorValue("No Schedule lines Found");
