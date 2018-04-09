@@ -75,6 +75,7 @@ Feature: EDMSalesOrder AEAZ-493
       | DP             | EDMSalesOrder | J2        |              |              | 0000001980 |      |      |      |      | No Schedule lines Found |
       | DP             | EDMSalesOrder | J2        |              |              | 0000001981 |      |      |      |      | No Schedule lines Found |
       | DP             | EDMSalesOrder | J2        |              |              | 0000001982 |      |      |      |      | No Schedule lines Found |
+      | DP             | EDMSalesOrder | J2        |              |              | 0000001989 |      |      |      |      | No Schedule lines Found |
 
 
     And I compare the number of records between "/project_one/vbak" and "/edm/sales_order_v1,/plan/edm_failed_data"
