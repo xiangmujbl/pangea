@@ -19,9 +19,6 @@ import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_fpb.bo.OMPGdmFpbBo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class OMPGdmFpbServiceImpl implements ICommonService {
 
     private static OMPGdmFpbServiceImpl instance;
@@ -45,7 +42,6 @@ public class OMPGdmFpbServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
-        Map<String, Object> extraParam  = (HashMap) o2;
 
         OMPGdmFpbBo gdmFpbBo = new OMPGdmFpbBo();
 
@@ -59,16 +55,8 @@ public class OMPGdmFpbServiceImpl implements ICommonService {
         String productId = sourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode();
         gdmFpbBo.setProductId(productId);
 
-//        String extraParamKey = productId;
-        if(extraParam.containsKey(productId)){
-            String extraParamValue = String.format("%03d",Integer.parseInt(extraParam.get(productId).toString()) + 1);
-            extraParam.put(productId,extraParamValue);
-        } else {
-            extraParam.put(productId,"1");
-        }
-
         String sequeceNumber = "";
-        String fpbId = productId +extraParam.get(productId);
+        String fpbId = productId +sequeceNumber;
         gdmFpbBo.setFpbId(fpbId);
 
         if (null != finPlanValEntity) {
