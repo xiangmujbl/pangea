@@ -1,0 +1,20 @@
+<adf-curation>
+    <curation mainRegion="/plan/cns_cert_key" viewRegion="/omp/certainity" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.certainity.controller.OMPCertainityController">
+        <regions>
+
+            <region path="/plan/cns_cert_key">
+                <columns>
+                    certainityKey,certainityKeyDesc
+                </columns>
+            </region>
+
+            <region path="/omp/certainity">
+                <columns>
+                    certaintyId,activeFCTERP,activeOPRERP,activeSOPERP,label
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

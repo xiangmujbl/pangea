@@ -9,7 +9,7 @@ public class GenerateTool {
 
     public static void main(String[] args) {
 
-      ViewCreator viewCreator = new ViewCreator("omp", "gdm_product_location", "", false);
+      ViewCreator viewCreator = new ViewCreator("omp", "certainity", "", false);
 
         // first step
         viewCreator.generateTestJavaFile();
