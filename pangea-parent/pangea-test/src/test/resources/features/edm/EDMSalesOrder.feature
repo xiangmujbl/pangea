@@ -20,6 +20,8 @@ Feature: EDMSalesOrder AEAZ-493
       | 0000001250 | 20001005 | 20001005 | 00000000 | 00000000 | I     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
       | 0000001979 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
       | 0000001980 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
+      | 0000001981 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
+      | 0000001982 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
 
     And I wait "/project_one/vbak" Async Queue complete
 
@@ -28,16 +30,17 @@ Feature: EDMSalesOrder AEAZ-493
       | 0000001250 |        | 000000000000005911 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
       | 0000001946 | 000001 | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
       | 0000001980 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
+      | 0000001981 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
+      | 0000001982 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
 
     And I wait "/project_one/vbap" Async Queue complete
 
     And I import "/project_one/vbep" by keyFields "posnr,vbeln,etenr"
       | vbeln      | posnr  | etenr | edatu    | wmeng   | bmeng |
       | 0000001250 |        | 0001  | 20001005 | 110.000 | 0.000 |
-      | 0000001979 | 000001 | 0001  | 20001005 | 110.000 | 0.000 |
-      | 0000001977 | 000001 | 0001  | 20001005 | 110.000 | 0.000 |
       | 0000001980 | 000001 | 0001  | 20001005 | 110.000 | 0.000 |
-      | 0000001981 |        | 0001  | 20001005 | 110.000 | 0.000 |
+      | 0000001983 |        | 0001  | 20001005 | 110.000 | 0.000 |
+      | 0000001979 | 000001 | 0001  | 20001005 | 110.000 | 0.000 |
 
 
     And I wait "/project_one/vbep" Async Queue complete
@@ -66,6 +69,8 @@ Feature: EDMSalesOrder AEAZ-493
       | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1       | key2 | key3 | key4 | key5 | errorValue          |
       | DP             | EDMSalesOrder | J1        |              |              | 0000001979 |      |      |      |      | No Sales Item Found |
       | DP             | EDMSalesOrder | J2        |              |              | 0000001980 |      |      |      |      | No Schedule lines Found |
+      | DP             | EDMSalesOrder | J2        |              |              | 0000001981 |      |      |      |      | No Schedule lines Found |
+      | DP             | EDMSalesOrder | J2        |              |              | 0000001982 |      |      |      |      | No Schedule lines Found |
 
 
     And I compare the number of records between "/project_one/vbak" and "/edm/sales_order_v1,/plan/edm_failed_data"
