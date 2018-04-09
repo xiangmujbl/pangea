@@ -52,6 +52,17 @@ public class OMPProductDetailServiceImpl implements ICommonService {
     }
 
     private void getFieldWithT1(EDMMaterialGlobalV1Entity materialGlobalV1Entity,PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity, EDMSourceSystemV1Entity edmSourceSystemV1Entity, OMPProductDetailBo productDetailBo) {
+        if (IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getDpRelevant())){
+            productDetailBo.setProductDetailId(edmSourceSystemV1Entity.getLocalSourceSystem()+"_"+materialGlobalV1Entity.getLocalDpParentCode()+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.PGA+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.LATAM_SKU);
+            productDetailBo.setName(IConstant.VALUE.LATAM_SKU);
+            productDetailBo.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
+            productDetailBo.setProductId(edmSourceSystemV1Entity.getSourceSystem()+"_"+materialGlobalV1Entity.getPrimaryPlanningCode());
+            return;
+        }
         productDetailBo.setProductDetailId(materialGlobalV1Entity.getPrimaryPlanningCode()+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.PGA+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.LATAM_SKU);
+        productDetailBo.setName(IConstant.VALUE.LATAM_SKU);
+        productDetailBo.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
+        productDetailBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+
     }
 }
