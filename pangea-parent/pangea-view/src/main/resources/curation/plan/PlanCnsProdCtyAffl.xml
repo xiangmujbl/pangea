@@ -1,0 +1,51 @@
+<adf-curation>
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/plan/cns_prod_cty_affl" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.plan.cns_prod_cty_affl.controller.PlanCnsProdCtyAfflController">
+        <regions>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localMaterialType
+                </columns>
+                <relations>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+                    </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,dpRelevant
+                </columns>
+                <relations>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression>localPlant=/plan/cns_material_plan_status.localPlant</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    sourceSystem,localPlant,country
+                </columns>
+            </region>
+
+            <region path="/plan/cns_prod_cty_affl">
+                <columns>
+                    sourceSystem,dpParentCode,country,prodClassification,ovrProdClass,prodStatus,ovrProdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

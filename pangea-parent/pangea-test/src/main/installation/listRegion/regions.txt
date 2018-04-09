@@ -138,3 +138,6 @@
 
 /omp/gdm_fpb
 
+
+/plan/cns_prod_cty_affl
+
