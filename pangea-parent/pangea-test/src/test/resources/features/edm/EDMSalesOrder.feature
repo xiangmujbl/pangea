@@ -61,8 +61,8 @@ Feature: EDMSalesOrder AEAZ-493
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1       | key2 | key3 | key4 | key5 | errorValue          |
-      | DP             | EDMSalesOrder | J1        | project_one  |              | 0000001979 |      |      |      |      | No Sales Item Found |
-      | DP             | EDMSalesOrder | J2        | project_one  |              | 0000001980 |      |      |      |      | No Schedule lines Found |
+      | DP             | EDMSalesOrder | J1        |              |              | 0000001979 |      |      |      |      | No Sales Item Found |
+      | DP             | EDMSalesOrder | J2        |              |              | 0000001980 |      |      |      |      | No Schedule lines Found |
 
 
     And I compare the number of records between "/project_one/vbak" and "/edm/sales_order_v1,/plan/edm_failed_data"
