@@ -22,10 +22,6 @@ Feature: OMPGdmLocationEdm-Curation
       | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerid | label       | locationTypeId | regionId | vendorid |
       | CONS_LATAM_AR01 | YES    | YES          | YES          |              | 00        | AR         |            | Pilar Plant | AH             | edmPlant |          |
 
-    Then I check region data "/omp/gdm_location" by keyFields "locationId"
-      | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerid | label       | locationTypeId | regionId | vendorid |
-      | CONS_LATAM_AR01 | YES    | YES          | YES          |              | 00        | AR         |            | Pilar Plant | AH             | edmPlant |          |
-
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
