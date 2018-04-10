@@ -56,6 +56,11 @@ public interface IConstant {
         String CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PROJECT_ONE_T439A = "/project_one/t439a";
         String PROJECT_ONE_T439T_CLONE = "/project_one/t439t_clone";
+        String PROJECT_ONE_PLAF = "/project_one/plaf";
+        String PROJECT_ONE_PLAF_CLONE = "/project_one/plaf_clone";
+        String PROJECT_ONE_EINE = "/project_one/eine";
+        String PROJECT_ONE_MCHA = "/project_one/mcha";
+        String PROJECT_ONE_MCHB = "/project_one/mchb";
     }
 
     interface PLAN_CNS_LOT_SIZE_KEY_TRANS {
@@ -277,6 +282,24 @@ public interface IConstant {
         String UNIT_ID = "UnitId";
     }
 
+    interface PROJECT_ONE_PLAF {
+        String PLNUM = "plnum";
+        String PLSCN = "plscn";
+    }
+
+    interface PROJECT_ONE_EINE {
+        String INFNR = "infnr";
+    }
+
+    interface PROJECT_ONE_MCHA {
+        String MATNR = "matnr";
+        String CHARG = "charg";
+    }
+
+    interface PROJECT_ONE_MCHB {
+        String CHARG = "charg";
+    }
+
 
     // -----region attribute value
     interface VALUE {
@@ -312,6 +335,9 @@ public interface IConstant {
         String V = "V";
         String S = "S";
         String SPRAS_EN = "EN";
+        String PLSCN = "000";
+        String YYYYMMDD = "yyyyMMdd";
+        String DD_MM_YYYY = "dd/MM/yyyy";
 
     }
 
