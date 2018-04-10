@@ -86,12 +86,16 @@ public class PangeaSteps extends CommonSteps {
         FileOutputStream output = null;
         if(response.getStatusCode().equals(HttpStatus.OK))
         {
-            try {
-                output = new FileOutputStream(file);
-                IOUtils.write(response.getBody(), output);
-            } catch(Exception e) {
 
-            }
+                try (FileOutputStream fileOutputStream = output = new FileOutputStream(file)) {
+                    IOUtils.write(response.getBody(), output);
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+
         }
 
         Assert.assertTrue(file.exists());
@@ -103,19 +107,20 @@ public class PangeaSteps extends CommonSteps {
     private void checkFileData(List<List<String>> list, String[] keyFields, File file) {
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String line = bufferedReader.readLine();
-            int count = 1;
-            // check headers
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+                String line = bufferedReader.readLine();
+                int count = 1;
+                // check headers
 
-            while (bufferedReader.readLine() != null) {
-                line = bufferedReader.readLine();
-                // check record
-                List<String> fileList = Arrays.asList(line.split("\t"));
-                Assert.assertEquals(fileList.size(), list.get(count).size());
-                Assert.assertTrue(list.get(count).containsAll(fileList));
+                while (line != null) {
+                    line = bufferedReader.readLine();
+                    // check record
+                    List<String> fileList = Arrays.asList(line.split("\t"));
+                    Assert.assertEquals(fileList.size(), list.get(count).size());
+                    Assert.assertTrue(list.get(count).containsAll(fileList));
 
-                count++;
+                    count++;
+                }
             }
 
         } catch (FileNotFoundException ex) {
