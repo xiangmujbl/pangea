@@ -330,6 +330,7 @@ public interface IConstant {
             String OMP_GDM_PRODUCT_LOCATION = "OMPGdmProductLocation";
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
+            String OMP_GDM_BATCH="OMPGdmBatch";
         }
 
         interface ERROR_CODE {
@@ -350,6 +351,8 @@ public interface IConstant {
             String E7 = "E7";
             String E8 = "E8";
             String E9 = "E9";
+
+            String N2 = "N2";
         }
     }
 }
