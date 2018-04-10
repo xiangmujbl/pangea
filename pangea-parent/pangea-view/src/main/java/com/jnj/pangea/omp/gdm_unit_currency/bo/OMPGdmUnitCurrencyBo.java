@@ -11,7 +11,7 @@ public class OMPGdmUnitCurrencyBo extends BaseBo {
     private String activeOPRERP;
     private String activeSOPERP;
     private String factor;
-    private String iSOCode;
+    private String isoCode;
     private String longDescription;
     private String measure;
     private String precision;
@@ -72,12 +72,12 @@ public class OMPGdmUnitCurrencyBo extends BaseBo {
         this.factor = factor;
     }
 
-    public String getISOCode() {
-        return this.iSOCode;
+    public String getIsoCode() {
+        return this.isoCode;
     }
 
-    public void setISOCode(String iSOCode) {
-        this.iSOCode = iSOCode;
+    public void setIsoCode(String isoCode) {
+        this.isoCode = isoCode;
     }
 
     public String getLongDescription() {

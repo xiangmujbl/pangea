@@ -29,11 +29,11 @@
                     activeSOPERP,
                     countryId,
                     currencyId,
-                    customerid,
+                    customerId,
                     label,
                     locationTypeId,
                     regionId,
-                    vendorid
+                    vendorId
                 </columns>
             </region>
 

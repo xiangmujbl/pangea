@@ -13,7 +13,7 @@ Feature:  OMPGdmLocationDetail-Curation
     When I submit task with xml file "xml/omp/OMPGdmLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/gdm_location_detail" by keyFields "locationDetailId"
-      | locationDetailId                     | activeOprerp | activeSoperp | CLASS | comments | description | locationid      | name     | unit | value   |
+      | locationDetailId                     | activeOPRERP | activeSOPERP | CLASS | comments | description | locationId      | name     | unit | value   |
       | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | YES          | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1  |      | VALUE1  |
       | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | YES          | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2  |      | VALUE2  |
       | CONS_LATAM_BR12/PGA/ATTRIB3/VALUE3   | YES          | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB3  |      | VALUE3  |

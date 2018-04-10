@@ -1,5 +1,5 @@
-@pangea_test
-Feature:  OMPGdmProduct-Curation
+@pangea_test @AEAZ-1765
+Feature:  OMPGdmProduct AEAZ-1765
 
   Scenario: Full Load curation
 
@@ -93,7 +93,7 @@ Feature:  OMPGdmProduct-Curation
     When I submit task with xml file "xml/omp/OMPGdmProduct.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/product" by keyFields "productId"
-      | productId           | active | activeFcterp | activeOprerp | activeSoperp | color | description                              | groes | isroot | issku | label                                    | matkl | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc  | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | prdha | shortDescription                         | sourceLocationId | subFranchise | technology | unitId |
+      | productId           | active | activeFCTERP | activeOPRERP | activeSOPERP | color | description                              | groes | isroot | issku | label                                    | matkl | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc  | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | prdha | shortDescription                         | sourceLocationId | subFranchise | technology | unitId |
       | [CONS_LATAM]_LDPC02 | YES    | YES          | YES          | YES          |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |       |        |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
       | 1234                | YES    | YES          | YES          | YES          |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |       |        |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
 

@@ -117,8 +117,6 @@
 /plan/cns_lot_size_key
 
 
-<<<<<<< Updated upstream
-=======
 /plan/cns_pln_spl_loc
 /omp/gdm_location_xref
 
@@ -129,7 +127,7 @@
 /plan/cns_con_mode
 /omp/gdm_product_location
 
->>>>>>> Stashed changes
+
 
 /omp/certainity
 

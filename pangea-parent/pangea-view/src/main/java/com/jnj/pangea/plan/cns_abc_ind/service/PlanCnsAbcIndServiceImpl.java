@@ -45,7 +45,7 @@ public class PlanCnsAbcIndServiceImpl implements ICommonService {
             planCnsAbcIndBo.setLocalIndicatorDescription("");
         }
         planCnsAbcIndBo.setIndicator("");
-        planCnsAbcIndBo.setIndicatorDecription("");
+        planCnsAbcIndBo.setIndicatorDescription("");
         resultObject.setBaseBo(planCnsAbcIndBo);
 
         return resultObject;

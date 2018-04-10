@@ -45,12 +45,12 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
 
         //rules C3
         if (cnsPlnSplLocEntity.getVendorCustomer().equals("C")){
-            gdmLocationXrefBo.setCustomerid(cnsPlnSplLocEntity.getLocalNumber());
+            gdmLocationXrefBo.setCustomerId(cnsPlnSplLocEntity.getLocalNumber());
         }
 
         //rules C4
         if (cnsPlnSplLocEntity.getVendorCustomer().equals("V")){
-            gdmLocationXrefBo.setVendorid(cnsPlnSplLocEntity.getLocalNumber());
+            gdmLocationXrefBo.setVendorId(cnsPlnSplLocEntity.getLocalNumber());
         }
 
         //rules D1

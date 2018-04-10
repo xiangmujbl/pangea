@@ -20,10 +20,10 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localConsumptionMode;
     private String localLotSize;
     private String localBaseQuantity;
-    private String localFixedlotsize;
+    private String localFixedLotSize;
     private String localMaximumLotSize;
     private String localMinimumLotSize;
-    private String localRoundingvalueforpurchaseorderquantity;
+    private String localRoundingValueForPoq;
     private String localMRPController;
     private String localInHouseProcessingTime;
     private String localSafetyStock;
@@ -31,21 +31,21 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localProductionSupervisor;
     private String localPlanningTimeFence;
     private String localProductionUnit;
-    private String localPosttoInspectionStock;
-    private String localComponentscrapinpercent;
-    private String localCriticalpart;
-    private String localPlannedDeliveryTimeinDays;
-    private String localMaximumstocklevel;
+    private String localPostToInspectionStock;
+    private String localComponentScrapInPercent;
+    private String localCriticalPart;
+    private String localPlannedDeliveryTimeInDays;
+    private String localMaximumStockLevel;
     private String localPlantStatus;
-    private String localCheckingGroupforAvailabilityCheck;
+    private String localCheckingGroupForAvailabilityCheck;
     private String localInstalledReplenishmentLotSize;
-    private String localDependentrequirements;
-    private String localSafetytimeindicator;
-    private String localSafetytime;
-    private String localConsumptionperiodBackward;
-    private String localConsumptionperiodForward;
-    private String localGoodsReceiptProcessingTimeinDays;
-    private String localBatchmanagementrequirmentindicator;
+    private String localDependentRequirements;
+    private String localSafetyTimeIndicator;
+    private String localSafetyTime;
+    private String localConsumptionPeriodBackward;
+    private String localConsumptionPeriodForward;
+    private String localGoodsReceiptProcessingTimeInDays;
+    private String localBatchManagementRequirementIndicator;
 
     public String getSourceSystem() {
         return sourceSystem;
@@ -111,12 +111,12 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localBaseQuantity = localBaseQuantity;
     }
 
-    public String getLocalFixedlotsize() {
-        return localFixedlotsize;
+    public String getLocalFixedLotSize() {
+        return localFixedLotSize;
     }
 
-    public void setLocalFixedlotsize(String localFixedlotsize) {
-        this.localFixedlotsize = localFixedlotsize;
+    public void setLocalFixedLotSize(String localFixedLotSize) {
+        this.localFixedLotSize = localFixedLotSize;
     }
 
     public String getLocalMaximumLotSize() {
@@ -135,12 +135,12 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localMinimumLotSize = localMinimumLotSize;
     }
 
-    public String getLocalRoundingvalueforpurchaseorderquantity() {
-        return localRoundingvalueforpurchaseorderquantity;
+    public String getLocalRoundingValueForPoq() {
+        return localRoundingValueForPoq;
     }
 
-    public void setLocalRoundingvalueforpurchaseorderquantity(String localRoundingvalueforpurchaseorderquantity) {
-        this.localRoundingvalueforpurchaseorderquantity = localRoundingvalueforpurchaseorderquantity;
+    public void setLocalRoundingValueForPoq(String localRoundingValueForPoq) {
+        this.localRoundingValueForPoq = localRoundingValueForPoq;
     }
 
     public String getLocalMRPController() {
@@ -199,44 +199,44 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localProductionUnit = localProductionUnit;
     }
 
-    public String getLocalPosttoInspectionStock() {
-        return localPosttoInspectionStock;
+    public String getLocalPostToInspectionStock() {
+        return localPostToInspectionStock;
     }
 
-    public void setLocalPosttoInspectionStock(String localPosttoInspectionStock) {
-        this.localPosttoInspectionStock = localPosttoInspectionStock;
+    public void setLocalPostToInspectionStock(String localPostToInspectionStock) {
+        this.localPostToInspectionStock = localPostToInspectionStock;
     }
 
-    public String getLocalComponentscrapinpercent() {
-        return localComponentscrapinpercent;
+    public String getLocalComponentScrapInPercent() {
+        return localComponentScrapInPercent;
     }
 
-    public void setLocalComponentscrapinpercent(String localComponentscrapinpercent) {
-        this.localComponentscrapinpercent = localComponentscrapinpercent;
+    public void setLocalComponentScrapInPercent(String localComponentScrapInPercent) {
+        this.localComponentScrapInPercent = localComponentScrapInPercent;
     }
 
-    public String getLocalCriticalpart() {
-        return localCriticalpart;
+    public String getLocalCriticalPart() {
+        return localCriticalPart;
     }
 
-    public void setLocalCriticalpart(String localCriticalpart) {
-        this.localCriticalpart = localCriticalpart;
+    public void setLocalCriticalPart(String localCriticalPart) {
+        this.localCriticalPart = localCriticalPart;
     }
 
-    public String getLocalPlannedDeliveryTimeinDays() {
-        return localPlannedDeliveryTimeinDays;
+    public String getLocalPlannedDeliveryTimeInDays() {
+        return localPlannedDeliveryTimeInDays;
     }
 
-    public void setLocalPlannedDeliveryTimeinDays(String localPlannedDeliveryTimeinDays) {
-        this.localPlannedDeliveryTimeinDays = localPlannedDeliveryTimeinDays;
+    public void setLocalPlannedDeliveryTimeInDays(String localPlannedDeliveryTimeInDays) {
+        this.localPlannedDeliveryTimeInDays = localPlannedDeliveryTimeInDays;
     }
 
-    public String getLocalMaximumstocklevel() {
-        return localMaximumstocklevel;
+    public String getLocalMaximumStockLevel() {
+        return localMaximumStockLevel;
     }
 
-    public void setLocalMaximumstocklevel(String localMaximumstocklevel) {
-        this.localMaximumstocklevel = localMaximumstocklevel;
+    public void setLocalMaximumStockLevel(String localMaximumStockLevel) {
+        this.localMaximumStockLevel = localMaximumStockLevel;
     }
 
     public String getLocalPlantStatus() {
@@ -247,12 +247,12 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localPlantStatus = localPlantStatus;
     }
 
-    public String getLocalCheckingGroupforAvailabilityCheck() {
-        return localCheckingGroupforAvailabilityCheck;
+    public String getLocalCheckingGroupForAvailabilityCheck() {
+        return localCheckingGroupForAvailabilityCheck;
     }
 
-    public void setLocalCheckingGroupforAvailabilityCheck(String localCheckingGroupforAvailabilityCheck) {
-        this.localCheckingGroupforAvailabilityCheck = localCheckingGroupforAvailabilityCheck;
+    public void setLocalCheckingGroupForAvailabilityCheck(String localCheckingGroupForAvailabilityCheck) {
+        this.localCheckingGroupForAvailabilityCheck = localCheckingGroupForAvailabilityCheck;
     }
 
     public String getLocalInstalledReplenishmentLotSize() {
@@ -263,60 +263,60 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localInstalledReplenishmentLotSize = localInstalledReplenishmentLotSize;
     }
 
-    public String getLocalDependentrequirements() {
-        return localDependentrequirements;
+    public String getLocalDependentRequirements() {
+        return localDependentRequirements;
     }
 
-    public void setLocalDependentrequirements(String localDependentrequirements) {
-        this.localDependentrequirements = localDependentrequirements;
+    public void setLocalDependentRequirements(String localDependentRequirements) {
+        this.localDependentRequirements = localDependentRequirements;
     }
 
-    public String getLocalSafetytimeindicator() {
-        return localSafetytimeindicator;
+    public String getLocalSafetyTimeIndicator() {
+        return localSafetyTimeIndicator;
     }
 
-    public void setLocalSafetytimeindicator(String localSafetytimeindicator) {
-        this.localSafetytimeindicator = localSafetytimeindicator;
+    public void setLocalSafetyTimeIndicator(String localSafetyTimeIndicator) {
+        this.localSafetyTimeIndicator = localSafetyTimeIndicator;
     }
 
-    public String getLocalSafetytime() {
-        return localSafetytime;
+    public String getLocalSafetyTime() {
+        return localSafetyTime;
     }
 
-    public void setLocalSafetytime(String localSafetytime) {
-        this.localSafetytime = localSafetytime;
+    public void setLocalSafetyTime(String localSafetyTime) {
+        this.localSafetyTime = localSafetyTime;
     }
 
-    public String getLocalConsumptionperiodBackward() {
-        return localConsumptionperiodBackward;
+    public String getLocalConsumptionPeriodBackward() {
+        return localConsumptionPeriodBackward;
     }
 
-    public void setLocalConsumptionperiodBackward(String localConsumptionperiodBackward) {
-        this.localConsumptionperiodBackward = localConsumptionperiodBackward;
+    public void setLocalConsumptionPeriodBackward(String localConsumptionPeriodBackward) {
+        this.localConsumptionPeriodBackward = localConsumptionPeriodBackward;
     }
 
-    public String getLocalConsumptionperiodForward() {
-        return localConsumptionperiodForward;
+    public String getLocalConsumptionPeriodForward() {
+        return localConsumptionPeriodForward;
     }
 
-    public void setLocalConsumptionperiodForward(String localConsumptionperiodForward) {
-        this.localConsumptionperiodForward = localConsumptionperiodForward;
+    public void setLocalConsumptionPeriodForward(String localConsumptionPeriodForward) {
+        this.localConsumptionPeriodForward = localConsumptionPeriodForward;
     }
 
-    public String getLocalGoodsReceiptProcessingTimeinDays() {
-        return localGoodsReceiptProcessingTimeinDays;
+    public String getLocalGoodsReceiptProcessingTimeInDays() {
+        return localGoodsReceiptProcessingTimeInDays;
     }
 
-    public void setLocalGoodsReceiptProcessingTimeinDays(String localGoodsReceiptProcessingTimeinDays) {
-        this.localGoodsReceiptProcessingTimeinDays = localGoodsReceiptProcessingTimeinDays;
+    public void setLocalGoodsReceiptProcessingTimeInDays(String localGoodsReceiptProcessingTimeInDays) {
+        this.localGoodsReceiptProcessingTimeInDays = localGoodsReceiptProcessingTimeInDays;
     }
 
-    public String getLocalBatchmanagementrequirmentindicator() {
-        return localBatchmanagementrequirmentindicator;
+    public String getLocalBatchManagementRequirementIndicator() {
+        return localBatchManagementRequirementIndicator;
     }
 
-    public void setLocalBatchmanagementrequirmentindicator(String localBatchmanagementrequirmentindicator) {
-        this.localBatchmanagementrequirmentindicator = localBatchmanagementrequirmentindicator;
+    public void setLocalBatchManagementRequirementIndicator(String localBatchManagementRequirementIndicator) {
+        this.localBatchManagementRequirementIndicator = localBatchManagementRequirementIndicator;
     }
 
     public EDMMaterialPlantV1Entity(Map<String, Object> map) {
@@ -335,10 +335,10 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         setLocalConsumptionMode((String) map.get("localConsumptionMode"));
         setLocalLotSize((String) map.get("localLotSize"));
         setLocalBaseQuantity((String) map.get("localBaseQuantity"));
-        setLocalFixedlotsize((String) map.get("localFixedlotsize"));
+        setLocalFixedLotSize((String) map.get("localFixedLotSize"));
         setLocalMaximumLotSize((String) map.get("localMaximumLotSize"));
         setLocalMinimumLotSize((String) map.get("localMinimumLotSize"));
-        setLocalRoundingvalueforpurchaseorderquantity((String) map.get("localRoundingvalueforpurchaseorderquantity"));
+        setLocalRoundingValueForPoq((String) map.get("localRoundingValueForPoq"));
         setLocalMRPController((String) map.get("localMRPController"));
         setLocalInHouseProcessingTime((String) map.get("localInHouseProcessingTime"));
         setLocalSafetyStock((String) map.get("localSafetyStock"));
@@ -346,21 +346,21 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         setLocalProductionSupervisor((String) map.get("localProductionSupervisor"));
         setLocalPlanningTimeFence((String) map.get("localPlanningTimeFence"));
         setLocalProductionUnit((String) map.get("localProductionUnit"));
-        setLocalPosttoInspectionStock((String) map.get("localPosttoInspectionStock"));
-        setLocalComponentscrapinpercent((String) map.get("localComponentscrapinpercent"));
-        setLocalCriticalpart((String) map.get("localCriticalpart"));
-        setLocalPlannedDeliveryTimeinDays((String) map.get("localPlannedDeliveryTimeinDays"));
-        setLocalMaximumstocklevel((String) map.get("localMaximumstocklevel"));
+        setLocalPostToInspectionStock((String) map.get("localPostToInspectionStock"));
+        setLocalComponentScrapInPercent((String) map.get("localComponentScrapInPercent"));
+        setLocalCriticalPart((String) map.get("localCriticalPart"));
+        setLocalPlannedDeliveryTimeInDays((String) map.get("localPlannedDeliveryTimeInDays"));
+        setLocalMaximumStockLevel((String) map.get("localMaximumStockLevel"));
         setLocalPlantStatus((String) map.get("localPlantStatus"));
-        setLocalCheckingGroupforAvailabilityCheck((String) map.get("localCheckingGroupforAvailabilityCheck"));
+        setLocalCheckingGroupForAvailabilityCheck((String) map.get("localCheckingGroupForAvailabilityCheck"));
         setLocalInstalledReplenishmentLotSize((String) map.get("localInstalledReplenishmentLotSize"));
-        setLocalDependentrequirements((String) map.get("localDependentrequirements"));
-        setLocalSafetytimeindicator((String) map.get("localSafetytimeindicator"));
-        setLocalSafetytime((String) map.get("localSafetytime"));
-        setLocalConsumptionperiodBackward((String) map.get("localConsumptionperiodBackward"));
-        setLocalConsumptionperiodForward((String) map.get("localConsumptionperiodForward"));
-        setLocalGoodsReceiptProcessingTimeinDays((String) map.get("localGoodsReceiptProcessingTimeinDays"));
-        setLocalBatchmanagementrequirmentindicator((String) map.get("localBatchmanagementrequirmentindicator"));
+        setLocalDependentRequirements((String) map.get("localDependentRequirements"));
+        setLocalSafetyTimeIndicator((String) map.get("localSafetyTimeIndicator"));
+        setLocalSafetyTime((String) map.get("localSafetyTime"));
+        setLocalConsumptionPeriodBackward((String) map.get("localConsumptionPeriodBackward"));
+        setLocalConsumptionPeriodForward((String) map.get("localConsumptionPeriodForward"));
+        setLocalGoodsReceiptProcessingTimeInDays((String) map.get("localGoodsReceiptProcessingTimeInDays"));
+        setLocalBatchManagementRequirementIndicator((String) map.get("localBatchManagementRequirementIndicator"));
     }
 
     public String getLocalDeletionFlagPlant() {

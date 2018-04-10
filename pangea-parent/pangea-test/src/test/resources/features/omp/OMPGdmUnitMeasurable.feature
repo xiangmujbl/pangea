@@ -21,12 +21,12 @@ Feature: OMPGdmUnitMeasurable AEAZ-1980
     When I submit task with xml file "xml/omp/OMPGdmUnitMeasurable.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/gdm_unit" by keyFields "unitId"
-      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | iSOCode | longDescription | measure | precision | shortDescription |
+      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure | precision | shortDescription |
       | EA     | YES    | YES          | YES          | YES          |        | EA      | -               | -       |           | -                |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode |functionalArea | interfaceID       | key1 | key2      | key3 | key4 | key5 | errorValue                              | sourceSystem |
-      | T1        |SP             | GdmUnitMeasurable | %0   | CON_LATAM |      |      |      | Enterprise UOM is missing for local UOM | omp          |
+      | errorCode | functionalArea | interfaceID       | key1 | key2      | key3 | key4 | key5 | errorValue                              | sourceSystem |
+      | T1        | SP             | GdmUnitMeasurable | %0   | CON_LATAM |      |      |      | Enterprise UOM is missing for local UOM |              |
 
     And I compare the number of records between "/edm/unit_of_measure_v1" and "/omp/gdm_unit,/plan/edm_failed_data"
 

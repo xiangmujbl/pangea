@@ -12,7 +12,7 @@ Feature: OMPProductType AEAZ-1981
     When I submit task with xml file "xml/omp/OMPProductType.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/product_type" by keyFields "productTypeId"
-      | productTypeId | activeFctErp | activeOprErp | activeSopErp | label            |
+      | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
       | DIEN          | YES          | YES          | YES          | Service          |
       | FERT          | YES          | YES          | YES          | Finished Product |
 

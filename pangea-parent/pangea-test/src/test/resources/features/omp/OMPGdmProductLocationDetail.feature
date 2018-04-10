@@ -9,7 +9,7 @@ Feature:  OMPGdmProductLocationDetail-Curation
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
     Given I import "/plan/cns_prod_loc_attrib" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-      | sourceSystem | localMaterialNumber | localPlant | SchdAttrbName1 | SchAttrbDesc1 | SchdAttrbName2 | SchAttrbDesc2 | SchdAttrbName3 | SchAttrbDesc3 | SupplyGroup | minShelfLife | minMinshelfLife |
+      | sourceSystem | localMaterialNumber | localPlant | schdAttrbName1 | schAttrbDesc1 | schdAttrbName2 | schAttrbDesc2 | schdAttrbName3 | schAttrbDesc3 | supplyGroup | minShelfLife | minMinShelfLife |
       | CONS_LATAM   | LT9999              | BR19       | ATTRB1         | VALUE1        | ATTRB2         | VALUE2        |                |               |             |              |                 |
 
     And I wait "/plan/cns_prod_loc_attrib" Async Queue complete
@@ -22,7 +22,7 @@ Feature:  OMPGdmProductLocationDetail-Curation
     When I submit task with xml file "xml/omp/OMPGdmProductLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/gdm_product_location_detail" by keyFields "productLocationDetailId"
-      | productLocationDetailId           | activeOprerp | activeSoperp | CLASS | comments | description | name   | productLocationId      | unit | value  |
+      | productLocationDetailId           | activeOPRERP | activeSOPERP | CLASS | comments | description | name   | productLocationId      | unit | value  |
       | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 |              |              | PGA   |          | Pangea      | ATTRB1 | EM9999-CONS_LATAM_BR19 |      | VALUE1 |
       | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 |              |              | PGA   |          | Pangea      | ATTRB2 | EM9999-CONS_LATAM_BR19 |      | VALUE2 |
 

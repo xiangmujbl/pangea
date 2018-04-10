@@ -1,19 +1,18 @@
 <adf-curation>
-    <curation mainRegion="/project_one/t439" viewRegion="/plan/cns_lot_size_key_trans" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/project_one/t439t" viewRegion="/plan/cns_lot_size_key_trans" chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.plan.cns_lot_size_key_trans.controller.PlanCnsLotSizeKeyTransController">
         <regions>
 
-            <region path="/project_one/t439">
+            <region path="/project_one/t439t">
                 <columns>
-                    disls
+                    loslt,disls,spras
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="true">
                         <expression></expression>
                     </relation>
-
-                    <relation path="/project_one/t439t" isPrimaryKey="false">
-                        <expression>disls=/project_one/t439.disls</expression>
+                    <relation path="/project_one/t439t" alias="/project_one/t439t_clone" isPrimaryKey="true">
+                        <expression></expression>
                     </relation>
                 </relations>
             </region>
@@ -24,7 +23,7 @@
                 </columns>
             </region>
 
-            <region path="/project_one/t439t">
+            <region path="/project_one/t439t" alias="/project_one/t439t_clone">
                 <columns>
                     loslt,disls,spras
                 </columns>

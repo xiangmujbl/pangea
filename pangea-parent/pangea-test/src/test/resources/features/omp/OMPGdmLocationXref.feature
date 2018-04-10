@@ -1,24 +1,24 @@
-@pangea_test
-Feature:  OMPGdmLocationXref-Curation
+@pangea_test @AEAZ-1765
+Feature:  OMPGdmLocationXref AEAZ-1765
 
   Scenario: Full Load curation
 
     Given I import "/plan/cns_pln_spl_loc" by keyFields "sourceSystem,vendorCustomer,localNumber,localName"
       | sourceSystem | vendorCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion |
-      |BtB           |V          |   234500    |US            |USD            |Silgan     |Silgan234500   |NJ           |
+      | BtB          | V              | 234500      | US           | USD           | Silgan    | Silgan234500  | NJ          |
 
     And I wait "/plan/cns_pln_spl_loc" Async Queue complete
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem"
-      | parameterValue | sourceSystem | dataObject | attribute | parameter |
-      |234500          |CONS_LATAM    |cns_material_plan_status|DPRelevant|Plant|
+      | parameterValue | sourceSystem | dataObject               | attribute  | parameter |
+      | 234500         | CONS_LATAM   | cns_material_plan_status | DPRelevant | Plant     |
 
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmLocationXref.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/gdm_location" by keyFields "locationId"
-      | locationId |  active |  activeFCTERP |  activeOPRERP |  activeSOPERP |  countryId |  currencyId |  customerid |  label |  locationTypeId |  regionId |  vendorid |
-      |BtB_V_234500|YES |YES            |YES            |            |US          |USD          |                  |   Silgan   |Silgan234500 |NJ         |234500     |
+      | locationId   | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerId | label  | locationTypeId | regionId | vendorId |
+      | BtB_V_234500 | YES    | YES          | YES          |              | US        | USD        |            | Silgan | Silgan234500   | NJ       | 234500   |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

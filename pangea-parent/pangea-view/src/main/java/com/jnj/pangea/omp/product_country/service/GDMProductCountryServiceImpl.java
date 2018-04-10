@@ -30,14 +30,14 @@ public class GDMProductCountryServiceImpl implements ICommonService {
 
         String dpParentCode = prodCountryAffEntity.getDpParentCode();
         String country = prodCountryAffEntity.getCountry();
-        if (null != dpParentCode && null != country){
+        if (null != dpParentCode && null != country) {
             String uniqueId = IConstant.VALUE.LA_ + prodCountryAffEntity.getDpParentCode() + prodCountryAffEntity.getCountry();
             productCountryBo.setUniqueId(uniqueId);
             productCountryBo.setActiveFcterp(IConstant.VALUE.YES);
             productCountryBo.setCountryGroup(prodCountryAffEntity.getCountryGroup());
 
             EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountry(country);
-            if (null != countryEntity){
+            if (null != countryEntity) {
                 productCountryBo.setCountryId(countryEntity.getCountryCode());
             }
             productCountryBo.setDpPlannerId(prodCountryAffEntity.getDpPlanner());
@@ -49,8 +49,8 @@ public class GDMProductCountryServiceImpl implements ICommonService {
             productCountryBo.setSegmentation(prodCountryAffEntity.getDpSegmentation());
 
             resultObject.setBaseBo(productCountryBo);
-        }else {
-            FailData failData = writeFailDataToRegion(prodCountryAffEntity, "C1", "All Key fields not Exist");
+        } else {
+            FailData failData = writeFailDataToRegion(prodCountryAffEntity, IConstant.FAILED.ERROR_CODE.C1, "All Key fields not Exist");
             resultObject.setFailData(failData);
         }
 
@@ -59,10 +59,10 @@ public class GDMProductCountryServiceImpl implements ICommonService {
 
     private FailData writeFailDataToRegion(CnsProdCountryAffEntity prodCountryAffEntity, String ruleCode, String errorValue) {
         FailData failData = new FailData();
-        failData.setFunctionalArea("DP");
-        failData.setInterfaceID("GDMProductCountry");
+        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
+        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_PRODUCT_COUNTRY);
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem("CONS_LATAM");
+        failData.setSourceSystem("");
         failData.setKey1(prodCountryAffEntity.getDpPlanner());
         failData.setKey2(prodCountryAffEntity.getCountry());
         failData.setKey3("");

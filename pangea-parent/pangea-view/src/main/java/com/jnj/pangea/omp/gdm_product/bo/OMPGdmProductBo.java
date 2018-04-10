@@ -7,9 +7,9 @@ public class OMPGdmProductBo extends BaseBo {
 
     private String productId;
     private String active;
-    private String activeFcterp;
-    private String activeOprerp;
-    private String activeSoperp;
+    private String activeFCTERP;
+    private String activeOPRERP;
+    private String activeSOPERP;
     private String color;
     private String description;
     private String groes;
@@ -38,7 +38,6 @@ public class OMPGdmProductBo extends BaseBo {
     private String technology;
     private String unitId;
 
-    // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
@@ -62,28 +61,28 @@ public class OMPGdmProductBo extends BaseBo {
         this.active = active;
     }
 
-    public String getActiveFcterp() {
-        return this.activeFcterp;
+    public String getActiveFCTERP() {
+        return activeFCTERP;
     }
 
-    public void setActiveFcterp(String activeFcterp) {
-        this.activeFcterp = activeFcterp;
+    public void setActiveFCTERP(String activeFCTERP) {
+        this.activeFCTERP = activeFCTERP;
     }
 
-    public String getActiveOprerp() {
-        return this.activeOprerp;
+    public String getActiveOPRERP() {
+        return activeOPRERP;
     }
 
-    public void setActiveOprerp(String activeOprerp) {
-        this.activeOprerp = activeOprerp;
+    public void setActiveOPRERP(String activeOPRERP) {
+        this.activeOPRERP = activeOPRERP;
     }
 
-    public String getActiveSoperp() {
-        return this.activeSoperp;
+    public String getActiveSOPERP() {
+        return activeSOPERP;
     }
 
-    public void setActiveSoperp(String activeSoperp) {
-        this.activeSoperp = activeSoperp;
+    public void setActiveSOPERP(String activeSOPERP) {
+        this.activeSOPERP = activeSOPERP;
     }
 
     public String getColor() {
