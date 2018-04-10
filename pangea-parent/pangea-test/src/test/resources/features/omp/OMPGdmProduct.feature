@@ -1,4 +1,4 @@
-@pangea_test @
+@pangea_test
 Feature:  OMPGdmProduct-Curation
 
   Scenario: Full Load curation
