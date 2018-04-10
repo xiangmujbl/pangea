@@ -124,3 +124,9 @@
 
 /omp/gdm_batch
 
+
+
+
+/project_one/mcha
+/project_one/mchb
+
