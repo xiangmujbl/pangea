@@ -53,20 +53,32 @@ public class OMPGdmProductLocationServiceImpl {
         if (materialPlantV1Entity == null) {
             return resultObjectList;
         }
-        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
+        String localMaterialNumber = materialPlantV1Entity.getLocalMaterialNumber();
+        if ("".equals(localMaterialNumber)){
+            return resultObjectList;
+        }
+        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
         if (edmMaterialGlobalV1Entity == null) {
             return resultObjectList;
         }
-        EDMSourceSystemV1Entity edmSourceSystemV1Entity = systemV1Dao.getEntityWithLocalSourceSystem(edmMaterialGlobalV1Entity.getSourceSystem());
+        String sourceSystem = edmMaterialGlobalV1Entity.getSourceSystem();
+        if ("".equals(sourceSystem)){
+            return resultObjectList;
+        }
+        EDMSourceSystemV1Entity edmSourceSystemV1Entity = systemV1Dao.getEntityWithLocalSourceSystem(sourceSystem);
         if (edmSourceSystemV1Entity == null) {
             return resultObjectList;
         }
-        PlanCnsMaterialPlanStatusEntity planStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
+        String localPlant = materialPlantV1Entity.getLocalPlant();
+        if ("".equals(localPlant)){
+            return resultObjectList;
+        }
+        PlanCnsMaterialPlanStatusEntity planStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(localMaterialNumber, localPlant);
         if (planStatusEntity == null) {
             return resultObjectList;
         }
         List<OMPGdmProductLocationBo> boList = getFieldWithJ1(edmMaterialGlobalV1Entity, planStatusEntity, edmSourceSystemV1Entity);
-        if (boList == null) {
+        if (boList == null||boList.size()==0){
             FailData failData = new FailData();
             failData.setErrorCode("J1");
             failData.setErrorValue("Unable to find DPParentCode");
@@ -126,7 +138,7 @@ public class OMPGdmProductLocationServiceImpl {
             //rules E4
             PlanCnsProdLocAttribEntity attribEntity = getFieldWithE4(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
             if (attribEntity==null){
-                return null;
+                return new ArrayList<ResultObject>();
             }
             if (attribEntity != null) {
                 bo.setMinmrsl(attribEntity.getMinMinShelfLife());
@@ -210,12 +222,12 @@ public class OMPGdmProductLocationServiceImpl {
     public List<OMPGdmProductLocationBo> getFieldWithJ1( EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity planStatusEntity, EDMSourceSystemV1Entity edmSourceSystemV1Entity) {
         List<OMPGdmProductLocationBo> boList = new ArrayList<OMPGdmProductLocationBo>();
         if (edmMaterialGlobalV1Entity == null) {
-            return null;
+            return new ArrayList<OMPGdmProductLocationBo>();
         }
 
         if (IConstant.VALUE.X.equals(planStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(planStatusEntity.getNoPlanRelevant())) {
             if (edmMaterialGlobalV1Entity.getPrimaryPlanningCode() == null || "".equals(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
-                return null;
+                return new ArrayList<OMPGdmProductLocationBo>();
             }
             OMPGdmProductLocationBo ompGdmProductLocationBo = new OMPGdmProductLocationBo();
             ompGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
@@ -225,7 +237,7 @@ public class OMPGdmProductLocationServiceImpl {
 
         if (IConstant.VALUE.X.equals(planStatusEntity.getDpRelevant())) {
             if (edmMaterialGlobalV1Entity.getLocalDpParentCode() == null || "".equals(edmMaterialGlobalV1Entity.getLocalDpParentCode())) {
-                return null;
+                return new ArrayList<OMPGdmProductLocationBo>();
             }
             OMPGdmProductLocationBo ompGdmProductLocationBo = new OMPGdmProductLocationBo();
             ompGdmProductLocationBo.setProductId(edmSourceSystemV1Entity.getSourceSystem() + "_" + edmMaterialGlobalV1Entity.getLocalDpParentCode());
@@ -247,9 +259,15 @@ public class OMPGdmProductLocationServiceImpl {
             return null;
         }
         EDMPlantV1Entity edmPlantV1Entity = plantV1Dao.getEntityWithLocalPlant(materialPlantV1Entity.getLocalPlant());
+        if (edmPlantV1Entity==null){
+            return null;
+        }
         if (IConstant.VALUE.V.equals(edmMaterialPlantFinV1Entity.getPriceControl())) {
             if (!IConstant.VALUE.USD.equals(edmPlantV1Entity.getLocalCurrency())) {
                 List<PlanConsTimeDepXchangeEntity> entities = planConsTimeDepXchangeDao.getEntityListWithUnitId(edmPlantV1Entity.getLocalCurrency());
+                if (entities==null||entities.size()==0){
+                    return null;
+                }
                 for (PlanConsTimeDepXchangeEntity entity : entities) {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
                     try {
@@ -272,6 +290,9 @@ public class OMPGdmProductLocationServiceImpl {
         if (IConstant.VALUE.S.equals(edmMaterialPlantFinV1Entity.getPriceControl())) {
             if (!IConstant.VALUE.USD.equals(edmPlantV1Entity.getLocalCurrency())) {
                 List<PlanConsTimeDepXchangeEntity> entities = planConsTimeDepXchangeDao.getEntityListWithUnitId(edmPlantV1Entity.getLocalCurrency());
+                if (entities==null||entities.size()==0){
+                    return null;
+                }
                 for (PlanConsTimeDepXchangeEntity entity : entities) {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
                     try {
@@ -299,6 +320,9 @@ public class OMPGdmProductLocationServiceImpl {
      * rules E1
      */
     public PlanCnsProcTypeEntity getFieldWithE1(String localProcurementType, String sourceSystem) {
+       if ("".equals(localProcurementType)||"".equals(sourceSystem)){
+           return null;
+       }
         PlanCnsProcTypeEntity entity = cnsProcTypeDao.getEntityWithLocalProcurementTypeAndsourceSystem(localProcurementType, sourceSystem);
         return entity;
     }
@@ -307,6 +331,9 @@ public class OMPGdmProductLocationServiceImpl {
      * rules E2
      */
     private PlanCnsAbcIndEntity getFieldWithE2(String localAbcIndicator, String sourceSystem) {
+        if ("".equals(localAbcIndicator)||"".equals(sourceSystem)){
+            return null;
+        }
         PlanCnsAbcIndEntity abcIndEntity = cnsAbcIndDao.getEntityWithLocalIndicatorAndsourceSystem(localAbcIndicator, sourceSystem);
         return abcIndEntity;
     }
@@ -318,6 +345,9 @@ public class OMPGdmProductLocationServiceImpl {
      * @param localPlant
      */
     private PlanCnsProdLocAttribEntity getFieldWithE4(String localMaterialNumber, String localPlant) {
+        if ("".equals(localMaterialNumber)||"".equals(localPlant)){
+            return null;
+        }
         PlanCnsProdLocAttribEntity attribEntity = cnsProdLocAttribDao.getEntityWithLocalMaterialNumberAndLocalPlant(localMaterialNumber, localPlant);
         return attribEntity;
     }
@@ -329,6 +359,9 @@ public class OMPGdmProductLocationServiceImpl {
      * @param sourceSystem
      */
     private PlanCnsSplProcTypEntity getFieldWithE6(String localSpecialProcurementType, String sourceSystem) {
+        if ("".equals(localSpecialProcurementType)||"".equals(sourceSystem)){
+            return null;
+        }
         PlanCnsSplProcTypEntity procTypEntity = cnsSplProcTypDao.getEntityWithLocalSpecialProcurementTypeAndSourceSystem(localSpecialProcurementType, sourceSystem);
         return procTypEntity;
     }
@@ -340,6 +373,9 @@ public class OMPGdmProductLocationServiceImpl {
      * @param sourceSystem
      */
     private PlanCnsPlngStratGrpEntity getFieldWithE7(String localPlanningStrategyGroup, String sourceSystem) {
+        if ("".equals(localPlanningStrategyGroup)||"".equals(sourceSystem)){
+            return null;
+        }
         PlanCnsPlngStratGrpEntity stratGrpEntity = cnsPlngStratGrpDao.getEntityWithLocalPlanStratGrpAndSourceSystem(localPlanningStrategyGroup, sourceSystem);
         return stratGrpEntity;
     }
@@ -351,6 +387,9 @@ public class OMPGdmProductLocationServiceImpl {
      * @param sourceSystem
      */
     private PlanCnsConModeEntity getFieldWithE8(String localConsumptionMode, String sourceSystem) {
+        if ("".equals(localConsumptionMode)||"".equals(sourceSystem)){
+            return null;
+        }
         PlanCnsConModeEntity modeEntity = cnsConModeDao.getEntityWithLocalConsumptionModeAndSourceSystem(localConsumptionMode, sourceSystem);
         return modeEntity;
     }
@@ -362,6 +401,9 @@ public class OMPGdmProductLocationServiceImpl {
      * @param sourceSystem
      */
     private PlanCnsLotSizeKeyTransEntity getFieldWithE9(String localLotSize, String sourceSystem) {
+        if ("".equals(localLotSize)||"".equals(sourceSystem)){
+            return null;
+        }
         PlanCnsLotSizeKeyTransEntity planCnsLotSizeKeyTransEntity = cnsLotSizeKeyTransDao.getEntityWithLocalLotSizeKeyAndSourceSystem(localLotSize, sourceSystem);
         return planCnsLotSizeKeyTransEntity;
     }

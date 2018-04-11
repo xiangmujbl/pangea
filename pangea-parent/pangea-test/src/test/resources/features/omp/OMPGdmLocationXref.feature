@@ -1,7 +1,8 @@
-@pangea_test @AEAZ-1765
-Feature:  OMPGdmLocationXref AEAZ-1765
+@pangea_test @AEAZ-1764
+Feature:  OMPGdmLocationXref AEAZ-1764
 
   Scenario: Full Load curation
+    # 1. get atrributes from cns_plan_parameter(rules C2)
 
     Given I import "/plan/cns_pln_spl_loc" by keyFields "sourceSystem,vendorCustomer,localNumber,localName"
       | sourceSystem | vendorCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion |

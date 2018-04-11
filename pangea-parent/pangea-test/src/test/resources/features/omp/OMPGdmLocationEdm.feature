@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-1765
-Feature: OMPGdmLocationEdm AEAZ-1765
+@pangea_test @AEAZ-1764
+Feature: OMPGdmLocationEdm AEAZ-1764
 
   Scenario: Full Load curation
 
