@@ -30,7 +30,7 @@ public class OMPProductDetailServiceImpl implements ICommonService {
     @Override
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
-        ResultObject resultObject = new ResultObject();
+        List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
 
         List<OMPProductDetailBo> BoList = new ArrayList<OMPProductDetailBo>();
@@ -51,8 +51,8 @@ public class OMPProductDetailServiceImpl implements ICommonService {
         //rules T1
         getFieldWithT1(materialGlobalV1Entity,cnsMaterialPlanStatusEntity,edmSourceSystemV1Entity,BoList);
 
-        resultObject.setBaseBo();
-        return resultObject;
+
+        return resultObjectList;
     }
 
     private void getFieldWithT1(EDMMaterialGlobalV1Entity materialGlobalV1Entity,PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity, EDMSourceSystemV1Entity edmSourceSystemV1Entity, List<OMPProductDetailBo> boList) {
