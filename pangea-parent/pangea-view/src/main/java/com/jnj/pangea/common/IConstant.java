@@ -30,12 +30,12 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
-        String PROJECT_ONE_VBEP = "/project_one/vbep";
-        String PROJECT_ONE_VBAP = "/project_one/vbap";
-        String PROJECT_ONE_VBPA = "/project_one/vbpa";
-        String PROJECT_ONE_VBKD = "/project_one/vbkd";
+        String PROJECT_ONE_VBEP="/project_one/vbep";
+        String PROJECT_ONE_VBAP="/project_one/vbap";
+        String PROJECT_ONE_VBPA="/project_one/vbpa";
+        String PROJECT_ONE_VBKD="/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
-        String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
+        String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -81,26 +81,23 @@ public interface IConstant {
         String STRGR = "strgr";
         String SPRAS = "spras";
     }
-
     interface PROJECT_ONE_VBAP {
-        String VBELN = "vbeln";
+       String VBELN="vbeln";
     }
-
     interface PROJECT_ONE_VBEP {
-        String VBELN = "vbeln";
-        String POSNR = "posnr";
+        String VBELN="vbeln";
+        String POSNR="posnr";
     }
 
     interface PROJECT_ONE_VBPA {
-        String VBELN = "vbeln";
-        String POSNR = "posnr";
-        String PARVW = "parvw";
+        String VBELN="vbeln";
+        String POSNR="posnr";
+        String PARVW="parvw";
     }
-
     interface PROJECT_ONE_VBKD {
-        String VBELN = "vbeln";
-        String POSNR = "posnr";
-        String PARVW = "parvw";
+        String VBELN="vbeln";
+        String POSNR="posnr";
+        String PARVW="parvw";
     }
 
     interface NGEMS_MATERIAL_LINKAGE {
@@ -135,6 +132,7 @@ public interface IConstant {
     interface CNS_PLAN_UNIT {
         String LOCAL_UOM = "localUom";
     }
+
 
 
     interface EDM_MATERIAL_GLOBAL_V1 {
@@ -187,8 +185,8 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
-        String WE = "WE";
-        String LA_ = "LA_";
+        String WE="WE";
+        String LA_="LA_";
         String PGA = "PGA";
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
@@ -232,5 +230,7 @@ public interface IConstant {
             String E8 = "E8";
             String E9 = "E9";
         }
+        String USD="USD";
+        String LATAM_SKU="LATAM_SKU";
     }
 }

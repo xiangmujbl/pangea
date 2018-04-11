@@ -1,0 +1,43 @@
+<adf-curation>
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/product_detail" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.product_detail.controller.OMPProductDetailController">
+        <regions>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,primaryPlanningCode,localDpParentCode,sourceSystem,localManufacturingTechnology
+                </columns>
+                <relations>
+
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+                    </relation>
+
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
+                    </relation>
+
+                </relations>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    localMaterialNumber,spRelevant,dpRelevant,npRelevant
+                </columns>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/omp/product_detail">
+                <columns>
+                    productDetailId,activeFCTERP,activeOPRERP,activeSOPERP,CLASS,comments,description,name,productId,unit,value
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
