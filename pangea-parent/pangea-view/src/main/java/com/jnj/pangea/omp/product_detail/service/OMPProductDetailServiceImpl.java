@@ -10,6 +10,9 @@ import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_detail.bo.OMPProductDetailBo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OMPProductDetailServiceImpl implements ICommonService {
 
     private static OMPProductDetailServiceImpl instance;
@@ -25,44 +28,49 @@ public class OMPProductDetailServiceImpl implements ICommonService {
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
     @Override
-    public ResultObject buildView(String key, Object o, Object o2) {
+    public List<ResultObject> buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
 
-        OMPProductDetailBo productDetailBo = new OMPProductDetailBo();
+        List<OMPProductDetailBo> BoList = new ArrayList<OMPProductDetailBo>();
+
         if (materialGlobalV1Entity==null){
-            return  resultObject;
+            return  new ArrayList<ResultObject>();
         }
          //rules J1
         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumber(materialGlobalV1Entity.getLocalMaterialNumber());
         if (cnsMaterialPlanStatusEntity==null){
-            return  resultObject;
+            return  new ArrayList<ResultObject>();
         }
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(materialGlobalV1Entity.getSourceSystem());
         if (edmSourceSystemV1Entity==null){
-            return  resultObject;
+            return  new ArrayList<ResultObject>();
         }
 
         //rules T1
-        getFieldWithT1(materialGlobalV1Entity,cnsMaterialPlanStatusEntity,edmSourceSystemV1Entity,productDetailBo);
+        getFieldWithT1(materialGlobalV1Entity,cnsMaterialPlanStatusEntity,edmSourceSystemV1Entity,BoList);
 
-        resultObject.setBaseBo(productDetailBo);
+        resultObject.setBaseBo();
         return resultObject;
     }
 
-    private void getFieldWithT1(EDMMaterialGlobalV1Entity materialGlobalV1Entity,PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity, EDMSourceSystemV1Entity edmSourceSystemV1Entity, OMPProductDetailBo productDetailBo) {
-        if (IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getDpRelevant())){
-            productDetailBo.setProductDetailId(edmSourceSystemV1Entity.getLocalSourceSystem()+"_"+materialGlobalV1Entity.getLocalDpParentCode()+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.PGA+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.LATAM_SKU);
+    private void getFieldWithT1(EDMMaterialGlobalV1Entity materialGlobalV1Entity,PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity, EDMSourceSystemV1Entity edmSourceSystemV1Entity, List<OMPProductDetailBo> boList) {
+            OMPProductDetailBo productDetailBo=new OMPProductDetailBo();
+            productDetailBo.setProductDetailId(materialGlobalV1Entity.getPrimaryPlanningCode()+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.PGA+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.LATAM_SKU);
             productDetailBo.setName(IConstant.VALUE.LATAM_SKU);
             productDetailBo.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
-            productDetailBo.setProductId(edmSourceSystemV1Entity.getSourceSystem()+"_"+materialGlobalV1Entity.getPrimaryPlanningCode());
-            return;
+            productDetailBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+            boList.add(productDetailBo);
+        if (IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getDpRelevant())){
+            OMPProductDetailBo productDetailBo1=new OMPProductDetailBo();
+            productDetailBo1.setProductDetailId(edmSourceSystemV1Entity.getLocalSourceSystem()+"_"+materialGlobalV1Entity.getLocalDpParentCode()+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.PGA+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.LATAM_SKU);
+            productDetailBo1.setName(IConstant.VALUE.LATAM_SKU);
+            productDetailBo1.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
+            productDetailBo1.setProductId(edmSourceSystemV1Entity.getSourceSystem()+"_"+materialGlobalV1Entity.getPrimaryPlanningCode());
+            boList.add(productDetailBo1);
         }
-        productDetailBo.setProductDetailId(materialGlobalV1Entity.getPrimaryPlanningCode()+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.PGA+IConstant.VALUE.BACK_SLANT+IConstant.VALUE.LATAM_SKU);
-        productDetailBo.setName(IConstant.VALUE.LATAM_SKU);
-        productDetailBo.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
-        productDetailBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+
 
     }
 }

@@ -192,6 +192,7 @@ public interface IConstant {
         String BACK_SLANT = "/";
         String USD = "USD";
         String STR_ONE = "001";
+        String LATAM_SKU="LATAM_SKU";
     }
 
     interface FAILED {
@@ -230,7 +231,6 @@ public interface IConstant {
             String E8 = "E8";
             String E9 = "E9";
         }
-        String USD="USD";
-        String LATAM_SKU="LATAM_SKU";
+
     }
 }
