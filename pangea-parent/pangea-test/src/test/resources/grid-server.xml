@@ -58,6 +58,8 @@
 
 		<adf-grid:partitioned-region name="certainity" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
+		<adf-grid:partitioned-region name="process_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
 	</adf-grid:replicated-region>
 
 
