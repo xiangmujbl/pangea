@@ -24,6 +24,7 @@ public class OMPCertainityServiceImpl implements ICommonService {
         PlanCnsCertKeyEntity cnsCertKeyEntity = (PlanCnsCertKeyEntity) o;
 
         OMPCertainityBo certainityBo = new OMPCertainityBo();
+
         if (cnsCertKeyEntity==null){
             return resultObject;
         }
@@ -33,6 +34,7 @@ public class OMPCertainityServiceImpl implements ICommonService {
         certainityBo.setActiveFCTERP(IConstant.VALUE.YES);
         certainityBo.setActiveOPRERP(IConstant.VALUE.YES);
         certainityBo.setActiveSOPERP(IConstant.VALUE.YES);
+
         resultObject.setBaseBo(certainityBo);
         return resultObject;
     }

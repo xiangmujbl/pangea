@@ -11,7 +11,6 @@ public class PlanCnsCertKeyEntity extends CommonEntity {
 
     public PlanCnsCertKeyEntity(Map<String, Object> map) {
         super(map);
-
         setCertainityKey((String) map.get("certainityKey"));
         setCertainityKeyDesc((String) map.get("certainityKeyDesc"));
     }
