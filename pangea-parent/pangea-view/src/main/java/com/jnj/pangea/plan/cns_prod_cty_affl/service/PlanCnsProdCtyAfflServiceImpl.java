@@ -50,9 +50,14 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
 
             String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
 
-            PlanCnsMaterialPlanStatusEntity materialPlanStatusEntityC1 = cnsMaterialPlanStatusDao.getEntityWithDpRelevant();
+            LogUtil.getCoreLog().info("localMaterialNumber:"+localMaterialNumber);
+            PlanCnsMaterialPlanStatusEntity materialPlanStatusEntityC1 = cnsMaterialPlanStatusDao.getEntityWithDpRelevantAndLocalMaterialnumber(localMaterialNumber);
+
             if (null != materialPlanStatusEntityC1) {
                 String localParentCode = materialPlanStatusEntityC1.getLocalParentCode();
+                LogUtil.getCoreLog().info("materialPlanStatusEntityC1:"+materialPlanStatusEntityC1.toString());
+                LogUtil.getCoreLog().info("localParentCode:"+localParentCode);
+                LogUtil.getCoreLog().info("!prodCtyAfflEntityMap.containsKey(localParentCode):"+!prodCtyAfflEntityMap.containsKey(localParentCode));
                 if (!prodCtyAfflEntityMap.containsKey(localParentCode)) {
                     cnsProdCtyAfflBo.setDpParentCode(localParentCode);
                 }

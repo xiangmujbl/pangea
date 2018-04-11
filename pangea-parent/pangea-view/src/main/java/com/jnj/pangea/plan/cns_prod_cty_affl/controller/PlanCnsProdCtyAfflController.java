@@ -19,7 +19,7 @@ public class PlanCnsProdCtyAfflController extends CommonController {
     private ICommonService service = PlanCnsProdCtyAfflServiceImpl.getInstance();
     private PlanCnsProdCtyAfflDaoImpl prodCtyAfflDao = PlanCnsProdCtyAfflDaoImpl.getInstance();
 
-    private Map<String, Object> prodCtyAfflEntityMap = getProdCtyAfflEntityMap();
+    private Map<String, Object> prodCtyAfflEntityMap = new HashMap<>();
 
     @Override
     public ResultObject process(RawDataEvent raw) {
