@@ -145,3 +145,7 @@
 /project_one/eine
 /edm/purchasing_info_record_v1_latam
 
+
+/plan/cns_process_type
+/omp/process_type
+
