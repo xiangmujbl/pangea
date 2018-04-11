@@ -1,0 +1,104 @@
+<adf-curation>
+    <curation mainRegion="/edm/sales_order_v1" viewRegion="/omp/gdm_sales_history" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_sales_history.controller.OMPGdmSalesHistoryController">
+        <regions>
+
+            <region path="/edm/sales_order_v1">
+                <columns>
+                    sourceSystem,salesOrderNo,salesOrderItem,localSalesOrg,localShipToParty,localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localitemCategory,localSdItemCurrency,localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute
+                </columns>
+                <relations>
+                    <relation path="/plan/cns_cust_excl" isPrimaryKey="false">
+                        <expression>
+                            salesOrg=/edm/sales_order_V1.localSalesOrg,
+                            customerShipTo=/edm/sales_order_V1.localShipToParty
+                        </expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cns_cust_excl">
+                <columns>
+                    salesOrg,customerShipTo
+                </columns>
+            </region>
+
+            <region path="/plan/cns_plan_parameter">
+                <columns>
+                    sourceSystem,dataObject,attribute,parameter,inclusionExclusion,parameterValues
+                </columns>
+            </region>
+
+            <region path="/plan/cns_so_type_incl">
+                <columns>
+                    salesOrg,orderType,country
+                </columns>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    localPlant,country
+                </columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    localPlant,localMaterialNumber,dpParent
+                </columns>
+            </region>
+
+            <region path="/plan/cns_certainty_determine">
+                <columns>
+                    certaintyKey,salesOrg,orderType,itemCategory
+                </columns>
+            </region>
+
+            <region path="/edm/currency_v1">
+                <columns>
+                    currencyCode,localCurrency
+                </columns>
+            </region>
+
+            <region path="/plan/cns_dem_grp_asgn">
+                <columns>
+                    demandGroup,customerId,salesOrganization
+                </columns>
+            </region>
+            <region path="/project_one/knvh">
+                <columns>
+                    kunnr,vkorg,datbi,hkunnr
+                </columns>
+            </region>
+            <region path="/project_one/tvro">
+                <columns>
+                    trazt,route
+                </columns>
+            </region>
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,primaryPlanningCode,localBasesunit
+                </columns>
+            </region>
+            <region path="/plan/cns_ord_rej">
+                <columns>
+                    salesOrg,rejCd
+                </columns>
+            </region>
+            <region path="/plan/cns_plan_unit">
+                <columns>
+                    unit,localUom
+                </columns>
+            </region>
+
+            <region path="/omp/gdm_sales_history">
+                <columns>
+                    salesHistoryId,activeFCTERP,certaintyId,conversionFactorXx,currencyId,customerId,demandStreamId,dueDate,forecastItemId,fromDueDate,locationId,orderReason,orderStatus,orderSubType,orderType,productId,quantity,salesUnit,unitId,validValueXx
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
