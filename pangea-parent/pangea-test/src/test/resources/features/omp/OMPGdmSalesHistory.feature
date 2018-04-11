@@ -33,10 +33,10 @@ Feature:  OMPGdmSalesHistory-Curation
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/cns_certainty_determine" by keyFields "certaintyKey"
+    Given I import "/plan/cns_cert_deter" by keyFields "salesOrg"
       | certaintyKey | salesOrg | orderType | itemCategory |
 
-    And I wait "/plan/cns_certainty_determine" Async Queue complete
+    And I wait "/plan/cns_cert_deter" Async Queue complete
 
     Given I import "/edm/currency_v1" by keyFields "localCurrency"
       | currencyCode | localCurrency |
@@ -75,7 +75,7 @@ Feature:  OMPGdmSalesHistory-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmSalesHistory.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_sales_history" by keyFields ""
+    Then I check region data "/omp/gdm_sales_history" by keyFields "salesHistoryId,activeFCTERP"
       | salesHistoryId | activeFCTERP | certaintyId | conversionFactorXx | currencyId | customerId | demandStreamId | dueDate | forecastItemId | fromDueDate | locationId | orderReason | orderStatus | orderSubType | orderType | productId | quantity | salesUnit | unitId | validValueXx |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
