@@ -45,7 +45,7 @@ public interface IConstant {
         String EDM_BRAND_V1 = "/edm/brand_v1";
         String EDM_FRANCHISE_V1 = "/edm/franchise_v1";
         String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_base_unit_v1";
-        String EDM_MATERIAL_PLANT_FIN_V1 = "/edm/material_plant_fin_v1";
+        String EDM_MAT_PLANT_FI_V1 = "/edm/mat_plant_fi_v1";
         String PLAN_CONS_TIME_DEP_XCHANGE = "/plan/cons_time_dep_xchange";
         String PLAN_CNS_PROC_TYP = "/plan/cns_proc_type";
         String PLAN_CNS_ABC_IND = "/plan/cns_abc_ind";
@@ -244,7 +244,7 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
     }
 
-    interface EDM_MATERIAL_PLANT_FIN_V1 {
+    interface EDM_MAT_PLANT_FI_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
     }

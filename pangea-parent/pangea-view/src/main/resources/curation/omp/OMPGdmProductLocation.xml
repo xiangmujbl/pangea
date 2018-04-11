@@ -53,7 +53,7 @@
                         <expression></expression>
                     </relation>
 
-                    <relation path="/edm/material_plant_fin_v1" isPrimaryKey="false">
+                    <relation path="/edm/mat_plant_fi_v1" isPrimaryKey="false">
                         <expression>localMaterialNumber=/edm/material_plant_v1.localMaterialNumber</expression>
                     </relation>
 
@@ -113,7 +113,7 @@
                 </columns>
             </region>
 
-            <region path="/edm/material_plant_fin_v1">
+            <region path="/edm/mat_plant_fi_v1">
                 <columns>
                     localMaterialNumber,
                     localPlant,
