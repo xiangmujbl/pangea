@@ -1,7 +1,7 @@
-@pangea_test
+@pangea_test @AEAZ-2376
 Feature:  OMPGdmLocationDetail-Curation
 
-  Scenario: Full Load curation
+  Scenario: Full Load curation AEAZ-2376
 
     Given I import "/plan/cns_plant_attr" by keyFields "sourceSystem,localPlant"
       | sourceSystem | localPlant | localPlantName | localPlantType | plant | plantType | localPlanningRelevant | planLocTypeId | planLocTypeDesc | locationAttribute1Desc | locationAttribute1Value | locationAttribute2Desc | locationAttribute2Value | locationAttribute3Desc | locationAttribute3Value | locationAttribute4Desc | locationAttribute4Value |

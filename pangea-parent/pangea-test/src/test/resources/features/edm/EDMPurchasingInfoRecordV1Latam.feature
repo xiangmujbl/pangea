@@ -1,7 +1,7 @@
-@pangea_test
+@pangea_test @AEAZ-2371
 Feature: EDMPurchasingInfoRecordV1Latam 
 
-  Scenario: Full Load curation
+  Scenario: Full Load curation AEAZ-2371
     # 1. Get sourceSystem from source_system_v1 (T1)
     # 2. Get record from EINE where EINA-INFNR = EINE-INFNR (N1)
 
