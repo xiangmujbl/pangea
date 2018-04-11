@@ -20,10 +20,8 @@ node ('ADFSlaveLarge'){
 		
 		stage('checkout source') {
 			echo    '====stage 1:scm poll stage===='
-			git branch: 'development', credentialsId: 'd5d57beb-8a91-4ac4-b76b-b00b94456372', url: 'https://sourcecode.jnj.com/scm/itx-aci/pangea.git'    	
-			prjVersionNo = sh (returnStdout: true, script: 'awk -v RS="</*version>" \'NR==2{printf "%s",$0}\' ${WORKSPACE}/pangea-parent/pom.xml')
-
-			//checkout scm
+			//git branch: 'development', credentialsId: 'd5d57beb-8a91-4ac4-b76b-b00b94456372', url: 'https://sourcecode.jnj.com/scm/itx-aci/pangea.git'    	
+			checkout scm
 			prjVersionNo = sh (returnStdout: true, script: 'awk -v RS="</*version>" \'NR==2{printf "%s",$0}\' ${WORKSPACE}/pangea-parent/pom.xml')
 	        snapOrRels = getSnapOrRels(prjVersionNo)
 		    _cfg = getJenkinsConfigurationId ()
