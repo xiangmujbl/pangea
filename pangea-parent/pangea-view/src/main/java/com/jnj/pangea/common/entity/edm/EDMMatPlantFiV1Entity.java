@@ -4,7 +4,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class EDMMaterialPlantFinV1Entity extends CommonEntity {
+public class EDMMatPlantFiV1Entity extends CommonEntity {
 
     private String localMaterialNumber;
     private String localPlant;
@@ -15,7 +15,7 @@ public class EDMMaterialPlantFinV1Entity extends CommonEntity {
     private String localPriceControlIndicator;
     private String localMvp;
 
-    public EDMMaterialPlantFinV1Entity(Map<String, Object> map) {
+    public EDMMatPlantFiV1Entity(Map<String, Object> map) {
         super(map);
 
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));

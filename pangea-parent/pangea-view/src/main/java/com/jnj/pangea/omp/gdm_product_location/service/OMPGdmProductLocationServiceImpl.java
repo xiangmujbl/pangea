@@ -4,8 +4,8 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.edm.EDMMatPlantFiV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.edm.EDMMaterialPlantFinV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.*;
@@ -33,7 +33,7 @@ public class OMPGdmProductLocationServiceImpl {
 
     private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private EDMSourceSystemV1DaoImpl systemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
-    private EDMMaterialPlantFinV1DaoImpl materialPlantFinV1Dao = EDMMaterialPlantFinV1DaoImpl.getInstance();
+    private EDMMatPlantFiV1DaoImpl matPlantFinV1Dao = EDMMatPlantFiV1DaoImpl.getInstance();
     private PlanCnsSplProcTypDaoImpl cnsSplProcTypDao = PlanCnsSplProcTypDaoImpl.getInstance();
     private PlanCnsProdLocAttribDaoImpl cnsProdLocAttribDao = PlanCnsProdLocAttribDaoImpl.getInstance();
     private PlanCnsProcTypeDaoImpl cnsProcTypeDao = PlanCnsProcTypeDaoImpl.getInstance();
@@ -98,17 +98,17 @@ public class OMPGdmProductLocationServiceImpl {
 
 
         //rules J2
-        EDMMaterialPlantFinV1Entity edmMaterialPlantFinV1Entity = getFieldWithJ2(materialPlantV1Entity);
-        if (edmMaterialPlantFinV1Entity == null) {
+        EDMMatPlantFiV1Entity matPlantFiV1Entity = getFieldWithJ2(materialPlantV1Entity);
+        if (matPlantFiV1Entity == null) {
             return resultObjectList;
         }
         for (OMPGdmProductLocationBo bo : boList) {
-            bo.setCost(edmMaterialPlantFinV1Entity.getLocalStandardPrice());
-            bo.setProductValue(edmMaterialPlantFinV1Entity.getLocalStandardPrice());
-            bo.setStprs(edmMaterialPlantFinV1Entity.getLocalStandardPrice());
-            bo.setVerpr(edmMaterialPlantFinV1Entity.getLocalMovingAverage());
-            bo.setVprsv(edmMaterialPlantFinV1Entity.getLocalPriceControlIndicator());
-            bo.setPeinh(edmMaterialPlantFinV1Entity.getLocalPriceUnit());
+            bo.setCost(matPlantFiV1Entity.getLocalStandardPrice());
+            bo.setProductValue(matPlantFiV1Entity.getLocalStandardPrice());
+            bo.setStprs(matPlantFiV1Entity.getLocalStandardPrice());
+            bo.setVerpr(matPlantFiV1Entity.getLocalMovingAverage());
+            bo.setVprsv(matPlantFiV1Entity.getLocalPriceControlIndicator());
+            bo.setPeinh(matPlantFiV1Entity.getLocalPriceUnit());
 
             //rules C1
             bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant());
@@ -253,8 +253,8 @@ public class OMPGdmProductLocationServiceImpl {
      * @param materialPlantV1Entity
      * @return
      */
-    public EDMMaterialPlantFinV1Entity getFieldWithJ2(EDMMaterialPlantV1Entity materialPlantV1Entity) {
-        EDMMaterialPlantFinV1Entity edmMaterialPlantFinV1Entity = materialPlantFinV1Dao.getEntityWithLocalMaterialNumberAndLocalPlant(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
+    public EDMMatPlantFiV1Entity getFieldWithJ2(EDMMaterialPlantV1Entity materialPlantV1Entity) {
+        EDMMatPlantFiV1Entity edmMaterialPlantFinV1Entity = matPlantFinV1Dao.getEntityWithLocalMaterialNumberAndLocalPlant(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
         if (edmMaterialPlantFinV1Entity == null) {
             return null;
         }

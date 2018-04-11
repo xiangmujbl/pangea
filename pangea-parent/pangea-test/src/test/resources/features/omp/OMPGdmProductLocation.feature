@@ -47,13 +47,13 @@ Feature: OMPGdmProductLocation-Curation AEAZ-1979
       | [Consumer LATAM] | 000000000000000004  | 180             | JS COTTON BALLS 50 GRX20 T50P35 | FERT              | 1825           | z                   |                   |
     And I wait "/edm/material_global_v1" Async Queue complete
 
-    Given I import "/edm/material_plant_fin_v1" by keyFields "localMaterialNumber"
+    Given I import "/edm/mat_plant_fi_v1" by keyFields "localMaterialNumber"
       | localMaterialNumber | localPlant | priceControl | localStandardPrice | localPriceUnit | localMovingAverage | localPriceControlIndicator | localMvp |
       | 000000000000000001  | BR02       | v            | 300                |                |                    |                            | 300      |
       | 000000000000000002  | BR02       | v            | 300                |                |                    |                            | 300      |
       | 000000000000000003  | BR02       | v            | 300                |                |                    |                            | 300      |
       | 000000000000000004  | BR02       | v            | 300                |                |                    |                            | 300      |
-    And I wait "/edm/material_plant_fin_v1" Async Queue complete
+    And I wait "/edm/mat_plant_fi_v1" Async Queue complete
 
     Given I import "/plan/cns_spl_proc_typ" by keyFields "sourceSystem"
       | specialProcurementType | splProcType | localSplProcType | sourceSystem     |
