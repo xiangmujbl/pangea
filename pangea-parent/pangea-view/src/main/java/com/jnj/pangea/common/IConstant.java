@@ -283,7 +283,7 @@ public interface IConstant {
     }
 
     interface PROJECT_ONE_PLAF {
-        String PLNUM = "plnum";
+        String PLWRK = "plwrk";
         String PLSCN = "plscn";
     }
 

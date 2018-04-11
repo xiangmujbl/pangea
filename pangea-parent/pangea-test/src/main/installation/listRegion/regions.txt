@@ -130,3 +130,13 @@
 /project_one/mcha
 /project_one/mchb
 
+
+/project_one/plaf
+/project_one/plaf
+/edm/planned_order_v1_latam
+
+
+/project_one/eina
+/project_one/eine
+/edm/purchasing_info_record_v1_latam
+

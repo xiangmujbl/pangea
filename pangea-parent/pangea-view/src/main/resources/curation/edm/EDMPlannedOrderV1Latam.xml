@@ -1,0 +1,60 @@
+<adf-curation>
+    <curation mainRegion="/project_one/plaf" viewRegion="/edm/planned_order_v1_latam" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.planned_order_v1_latam.controller.EDMPlannedOrderV1LatamController">
+        <regions>
+
+            <region path="/project_one/plaf">
+                <columns>
+                    plnum,plwrk,pwwrk,matnr,meins,beskz,sobes,numvr,paart,gsmng,avmng,bdmng,psttr,pstti,pedtr,pedti,webaz,auffx,lgort,verid,terst,tered,dispo,plscn
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression>plant=/project_one/plaf.plwrk</expression>
+                    </relation>
+                        <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/project_one/plaf.matnr</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    localPlant,plant
+                </columns>
+                <relations>
+                    <relation path="/project_one/plaf_clone" isPrimaryKey="false">
+                        <expression>plant=/project_one/plaf_clone.plwrk</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,materialNumber
+                </columns>
+            </region>
+
+            <region path="/project_one/plaf" alias="/project_one/plaf_clone">
+                <columns>
+                    plnum,plwrk,pwwrk,matnr,meins,beskz,sobes,numvr,paart,gsmng,avmng,bdmng,psttr,pstti,pedtr,pedti,webaz,auffx,lgort,verid,terst,tered,dispo,plscn
+                </columns>
+            </region>
+
+            <region path="/edm/planned_order_v1_latam">
+                <columns>
+                    sourceSystem,mfgPlannedOrderId,localPlant,plant,localproductionPlant,localMaterialNumber,materialNumber,localUom,localProcurementType,localSplProcType,localPrdVersion,localPrdOrdType,plannedOrdQty,localScrapQty,requirementQty,orderstrtDate,ordStrtTime,ordFinishDate,ordEndTime,grProcessDays,ordFirmInd,localStorageLoc,localDocVersion,prdStartDate,prdFinishDate,mrpController,localPlanningScenario
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

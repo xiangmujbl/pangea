@@ -105,6 +105,7 @@
 		<adf-grid:partitioned-region name="t141" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="t439" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="tmabct" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="plaf" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="t460a" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="tmabc" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="vbep" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
@@ -120,9 +121,11 @@
 		<adf-grid:partitioned-region name="vbkd" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="eord" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="mbew" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="eine" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="t439t" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="marc" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="t001k" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="eina" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="marm" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="mcha" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 	</adf-grid:replicated-region>
@@ -140,6 +143,8 @@
 		<adf-grid:partitioned-region name="batch_master_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="source_list_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="product_family_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="purchasing_info_record_v1_latam" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="planned_order_v1_latam" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="category_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="material_plant_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="franchise_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
