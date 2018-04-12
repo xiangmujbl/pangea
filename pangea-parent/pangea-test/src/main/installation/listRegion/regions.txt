@@ -138,14 +138,22 @@
 
 /project_one/plaf
 /project_one/plaf
-/edm/planned_order_v1_latam
+/edm/planned_order_v1
 
 
 /project_one/eina
 /project_one/eine
-/edm/purchasing_info_record_v1_latam
+/edm/purchasing_info_record_v1
 
 
 /plan/cns_process_type
 /omp/process_type
+
+
+
+
+
+
+
+
 

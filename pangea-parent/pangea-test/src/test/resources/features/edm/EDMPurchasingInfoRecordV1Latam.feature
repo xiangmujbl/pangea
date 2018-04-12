@@ -26,18 +26,18 @@ Feature: EDMPurchasingInfoRecordV1Latam
 
     When I submit task with xml file "xml/edm/EDMPurchasingInfoRecordV1Latam.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/edm/purchasing_info_record_v1_latam" by keyFields "sourceSystem,localPurchasingInfoRec,localvendor,localPurchasingOrg,infotype,localPlanPlant"
+    Then I check region data "/edm/purchasing_info_record_v1" by keyFields "sourceSystem,localPurchasingInfoRec,localvendor,localPurchasingOrg,infotype,localPlanPlant"
       | sourceSystem   | localPurchasingInfoRec | localvendor | localPurchasingOrg | infotype | localPlanPlant | localMaterialNumber | localBaseUnit | localMaterialGroup | localPurchOrgDataFlagDeletion | localGeneralDataFlagDeletion | localCreatedOnEine | localCreatedOnEina | localCreatedByEine | localCreatedByEina | localPurchasingGroup | localInfoShortText | localCurrencyKey | localMinimumQty | localStandardQty | localPlDelivTime | localVendorMatNo | localNumerator | localDenominator | localOrderUnit | localManufacturer | localTaxCode | localConfirmationControlKey | localPrDateCat | localIncoterms | localIncoterms2 | localProductionVersion | localMaxQuantity | localRndingProfile | localNCMCode |
       | Consumer LATAM | 7100002730             | 0000000028  | AR00               | 0        | AR01           | 000000000000001905  | KI            |                    |                               |                              | 20150323           | 20000830           | JLISBETH           | BASISBTC           | A16                  |                    | USD              | 0.100           | 0.100            | 30               | 1905-1           | 1              | 1                | KI             |                   | GA           |                             |                | EXW            | EX-FABRICA      |                        | 0.000            |                    |              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/project_one/eina" and "/edm/purchasing_info_record_v1_latam,/plan/edm_failed_data"
+    And I compare the number of records between "/project_one/eina" and "/edm/purchasing_info_record_v1,/plan/edm_failed_data"
 
     And I delete the test data
 
-    And I will remove all data with region "/edm/purchasing_info_record_v1_latam"
+    And I will remove all data with region "/edm/purchasing_info_record_v1"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
