@@ -1,9 +1,9 @@
-package com.jnj.pangea.edm.purchasing_info_record_v1_latam.bo;
+package com.jnj.pangea.edm.purchasing_info_record.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class EDMPurchasingInfoRecordV1LatamBo extends BaseBo {
+public class EDMPurchasingInfoRecordBo extends BaseBo {
 
     private String sourceSystem;
     private String localPurchasingInfoRec;

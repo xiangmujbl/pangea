@@ -1,4 +1,4 @@
-package com.jnj.pangea.edm.planned_order_v1_latam.bo;
+package com.jnj.pangea.edm.planned_order.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;

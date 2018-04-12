@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-2371
-Feature: EDMPurchasingInfoRecordV1Latam 
+Feature: EDMPurchasingInfoRecord
 
   Scenario: Full Load curation AEAZ-2371
     # 1. Get sourceSystem from source_system_v1 (T1)
@@ -24,7 +24,7 @@ Feature: EDMPurchasingInfoRecordV1Latam
 
     And I wait "/project_one/eine" Async Queue complete
 
-    When I submit task with xml file "xml/edm/EDMPurchasingInfoRecordV1Latam.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/EDMPurchasingInfoRecord.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/purchasing_info_record_v1" by keyFields "sourceSystem,localPurchasingInfoRec,localvendor,localPurchasingOrg,infotype,localPlanPlant"
       | sourceSystem   | localPurchasingInfoRec | localvendor | localPurchasingOrg | infotype | localPlanPlant | localMaterialNumber | localBaseUnit | localMaterialGroup | localPurchOrgDataFlagDeletion | localGeneralDataFlagDeletion | localCreatedOnEine | localCreatedOnEina | localCreatedByEine | localCreatedByEina | localPurchasingGroup | localInfoShortText | localCurrencyKey | localMinimumQty | localStandardQty | localPlDelivTime | localVendorMatNo | localNumerator | localDenominator | localOrderUnit | localManufacturer | localTaxCode | localConfirmationControlKey | localPrDateCat | localIncoterms | localIncoterms2 | localProductionVersion | localMaxQuantity | localRndingProfile | localNCMCode |

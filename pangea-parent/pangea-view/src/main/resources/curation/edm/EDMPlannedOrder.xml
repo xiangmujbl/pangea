@@ -1,6 +1,6 @@
 <adf-curation>
-    <curation mainRegion="/project_one/plaf" viewRegion="/edm/planned_order_v1_latam" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.edm.planned_order_v1_latam.controller.EDMPlannedOrderV1LatamController">
+    <curation mainRegion="/project_one/plaf" viewRegion="/edm/planned_order_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.planned_order.controller.EDMPlannedOrderController">
         <regions>
 
             <region path="/project_one/plaf">
@@ -49,7 +49,7 @@
                 </columns>
             </region>
 
-            <region path="/edm/planned_order_v1_latam">
+            <region path="/edm/planned_order_v1">
                 <columns>
                     sourceSystem,mfgPlannedOrderId,localPlant,plant,localproductionPlant,localMaterialNumber,materialNumber,localUom,localProcurementType,localSplProcType,localPrdVersion,localPrdOrdType,plannedOrdQty,localScrapQty,requirementQty,orderstrtDate,ordStrtTime,ordFinishDate,ordEndTime,grProcessDays,ordFirmInd,localStorageLoc,localDocVersion,prdStartDate,prdFinishDate,mrpController,localPlanningScenario
                 </columns>

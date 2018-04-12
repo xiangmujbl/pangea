@@ -1,6 +1,5 @@
-package com.jnj.pangea.edm.purchasing_info_record_v1_latam.service;
+package com.jnj.pangea.edm.purchasing_info_record.service;
 
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -8,16 +7,16 @@ import com.jnj.pangea.common.dao.impl.project_one.ProjectOneEineDaoImpl;
 import com.jnj.pangea.common.entity.project_one.EinaEntity;
 import com.jnj.pangea.common.entity.project_one.EineEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.purchasing_info_record_v1_latam.bo.EDMPurchasingInfoRecordV1LatamBo;
+import com.jnj.pangea.edm.purchasing_info_record.bo.EDMPurchasingInfoRecordBo;
 import org.apache.commons.lang.StringUtils;
 
-public class EDMPurchasingInfoRecordV1LatamServiceImpl implements ICommonService {
+public class EDMPurchasingInfoRecordServiceImpl implements ICommonService {
 
-    private static EDMPurchasingInfoRecordV1LatamServiceImpl instance;
+    private static EDMPurchasingInfoRecordServiceImpl instance;
 
-    public static EDMPurchasingInfoRecordV1LatamServiceImpl getInstance() {
+    public static EDMPurchasingInfoRecordServiceImpl getInstance() {
         if (instance == null) {
-            instance = new EDMPurchasingInfoRecordV1LatamServiceImpl();
+            instance = new EDMPurchasingInfoRecordServiceImpl();
         }
         return instance;
     }
@@ -31,7 +30,7 @@ public class EDMPurchasingInfoRecordV1LatamServiceImpl implements ICommonService
         ResultObject resultObject = new ResultObject();
         EinaEntity einaEntity = (EinaEntity) o;
 
-        EDMPurchasingInfoRecordV1LatamBo purchasingInfoRecordV1LatamBo = new EDMPurchasingInfoRecordV1LatamBo();
+        EDMPurchasingInfoRecordBo purchasingInfoRecordV1LatamBo = new EDMPurchasingInfoRecordBo();
 
         // T1
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();

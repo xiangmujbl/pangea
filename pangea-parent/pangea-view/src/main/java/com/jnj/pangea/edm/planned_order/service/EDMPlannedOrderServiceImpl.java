@@ -1,6 +1,5 @@
-package com.jnj.pangea.edm.planned_order_v1_latam.service;
+package com.jnj.pangea.edm.planned_order.service;
 
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOnePlafDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
@@ -11,18 +10,16 @@ import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.entity.project_one.PlafEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.planned_order_v1_latam.bo.EDMPlannedOrderV1LatamBo;
+import com.jnj.pangea.edm.planned_order.bo.EDMPlannedOrderV1LatamBo;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.List;
+public class EDMPlannedOrderServiceImpl implements ICommonService {
 
-public class EDMPlannedOrderV1LatamServiceImpl implements ICommonService {
+    private static EDMPlannedOrderServiceImpl instance;
 
-    private static EDMPlannedOrderV1LatamServiceImpl instance;
-
-    public static EDMPlannedOrderV1LatamServiceImpl getInstance() {
+    public static EDMPlannedOrderServiceImpl getInstance() {
         if (instance == null) {
-            instance = new EDMPlannedOrderV1LatamServiceImpl();
+            instance = new EDMPlannedOrderServiceImpl();
         }
         return instance;
     }
