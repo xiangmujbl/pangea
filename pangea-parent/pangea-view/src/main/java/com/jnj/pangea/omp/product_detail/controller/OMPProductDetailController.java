@@ -11,6 +11,7 @@ import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
 import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.project_one.MaraEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_detail.service.OMPProductDetailServiceImpl;
@@ -33,18 +34,22 @@ public class OMPProductDetailController extends BaseController {
 
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = BeanUtil.mapToBean(rawValue.toMap(), EDMMaterialGlobalV1Entity.class);
 
-            List<> resultObject = service.buildView(raw.getKey(), materialGlobalV1Entity, null);
-            if (resultObject.isSuccess()) {
-                BaseBo baseBo = resultObject.getBaseBo();
-                ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
-                result.add(viewRaw);
-            } else {
-                if (resultObject.getFailData() != null) {
-                    FailData failData = resultObject.getFailData();
-                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
-                    result.add(viewResultItem);
+            List<ResultObject> resultObjectList = service.buildView(raw.getKey(), materialGlobalV1Entity, null);
+
+            for (ResultObject resultObject:resultObjectList) {
+                if (resultObject.isSuccess()) {
+                    BaseBo baseBo = resultObject.getBaseBo();
+                    ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
+                    result.add(viewRaw);
+                } else {
+                    if (resultObject.getFailData() != null) {
+                        FailData failData = resultObject.getFailData();
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
+                        result.add(viewResultItem);
+                    }
                 }
             }
+
         });
         return result;
     }
