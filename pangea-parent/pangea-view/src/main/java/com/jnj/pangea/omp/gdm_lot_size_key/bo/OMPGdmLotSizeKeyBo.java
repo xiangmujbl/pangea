@@ -9,7 +9,7 @@ public class OMPGdmLotSizeKeyBo extends BaseBo {
     private String  activeOprerp;
     private String  activeSoperp;
     private String  comments;
-    private String  descRiption;
+    private String  description;
     private String  period;
     private String  quantity;
 
@@ -52,12 +52,12 @@ public class OMPGdmLotSizeKeyBo extends BaseBo {
         this.comments = comments;
     }
 
-    public String getDescRiption() {
-        return descRiption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescRiption(String descRiption) {
-        this.descRiption = descRiption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPeriod() {
