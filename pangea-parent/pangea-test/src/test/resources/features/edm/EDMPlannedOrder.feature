@@ -2,9 +2,12 @@
 Feature: EDMPlannedOrder
 
   Scenario: Full Load curation AEAZ-2370
-  # 1. Get Plant from Plant_V1 (N1)(plnum:0000267326)
-  # 2. Get localMaterialNumber from material_global_v1 (N2)(plnum:0000267326)
-  # 3. Get plscn from plaf where plscn = 000 (N3)(plnum:0000267327)
+  # 1. Get Plant from Plant_V1 where plant_v1-plant = plaf-plwrk (N1)(plnum:0000267326)
+  # 2. Get materialNumber from material_global_v1 where material_global_v1-localMaterialNumber = plaf-matnr (N2)(plnum:0000267326)
+  # 3. Get plscn from plaf where plscn = 000 (N3)(plnum:0000267326)
+  # 4. Get Plant from Plant_V1 where plant_v1-plant <> plaf-plwrk (N1)(plnum:0000267327)
+  # 5. Get localMaterialNumber from material_global_v1 where material_global_v1-localMaterialNumber <> plaf-matnr (N2)(plnum:0000267327)
+  # 6. Get plscn from plaf where plscn <> 000 (N3)(plnum:0000267327)
 
     Given I import "/project_one/plaf" by keyFields "plnum"
       | plnum      | plwrk | pwwrk | matnr              | meins | beskz | sobes | numvr | paart | gsmng | avmng | bdmng | psttr    | pstti  | pedtr    | pedti  | webaz | auffx | lgort | verid | terst    | tered    | dispo | plscn |
