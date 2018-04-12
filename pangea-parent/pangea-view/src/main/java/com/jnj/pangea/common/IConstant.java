@@ -42,6 +42,11 @@ public interface IConstant {
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
+        String PLAN_CNS_CERT_DETER="/plan/cns_cert_deter";
+        String PLAN_CNS_DEM_GRP_ASGN="/plan/cns_dem_grp_asgn";
+        String PROJECT_ONE_KNVH="/project_one/knvh";
+        String PROJECT_ONE_TVRO="/project_one/tvro";
+        String PLAN_CNS_ORD_REJ="/plan/cns_ord_rej";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -195,6 +200,27 @@ public interface IConstant {
     interface PLAN_CNS_PROD_CTY_AFFL{
         String SOURCE_SYSTEM = "sourceSystem";
     }
+    interface PLAN_CNS_CERT_DETER{
+        String SALES_ORG = "salesOrg";
+        String ORDER_TYPE = "orderType";
+        String ITEM_CATEGORY = "itemCategory";
+    }
+    interface PLAN_CNS_DEM_GRP_ASGN{
+        String CUSTOMER_ID = "customerId";
+        String SALES_ORGANIZATION = "salesOrganization";
+    }
+    interface PROJECT_ONE_KNVH{
+        String KUNNR = "kunnr";
+        String VKORG = "vkorg";
+        String DATBI = "datbi";
+    }
+    interface PROJECT_ONE_TVRO{
+        String ROUTE="route";
+    }
+    interface PLAN_CNS_ORD_REJ{
+        String SALES_ORG="salesOrg";
+        String REJ_CD="rejCd";
+    }
 
     // -----region attribute value
     interface VALUE {
@@ -228,5 +254,7 @@ public interface IConstant {
         String SAMPLE = "SAMPLE";
         String REGULAR = "REGULAR";
         String ACTIVE = "ACTIVE";
+        String BASE = "BASE";
+        String ZERO = "0";
     }
 }

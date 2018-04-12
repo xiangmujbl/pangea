@@ -4,7 +4,7 @@ Feature:  OMPGdmSalesHistory-Curation
   Scenario: Full Load curation
 
     Given I import "/edm/sales_order_v1" by keyFields "sourceSystem,salesOrderNo,salesOrderItem"
-      | sourceSystem | salesOrderNo | salesOrderItem | localSalesOrg | localShipToParty | localOrderCreateDt | localOrderType | localPlant | localMaterialNumber | localitemCategory | localSdItemCurrency | localRequestedDate | localRejReason | salesOrderQty | localNumtoBase | localDentoBase | localRoute |
+      | sourceSystem | salesOrderNo | salesOrderItem | localSalesOrg | localShipToParty | localOrderCreateDt | localOrderType | localPlant | localMaterialNumber | localItemCategory | localSdItemCurrency | localRequestedDate | localRejReason | salesOrderQty | localNumtoBase | localDentoBase | localRoute |
 
     And I wait "/edm/sales_order_v1" Async Queue complete
 
