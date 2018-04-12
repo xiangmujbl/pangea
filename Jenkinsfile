@@ -26,6 +26,7 @@ node ('ADFSlaveLarge'){
 	        snapOrRels = getSnapOrRels(prjVersionNo)
 		    _cfg = getJenkinsConfigurationId ()
 			echo " _cfg ***** = ${_cfg}"
+			getTargetJira()
 		}
 	
 		stage('build source') {
@@ -204,6 +205,41 @@ def updateJiraComment(Boolean uploadReport,String jobName,String snapOrRels,Stri
 			}
 		}
 	}
+}
+
+def Map getTargetJira(){
+    echo "enter into getTargetJira() "
+	def commitList =[]
+    commitList = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='yesterday' ").trim()
+	echo "commitList is  '${commitList}' "
+	def jiraMap = [:]
+	def commitContext
+	def commitArray 
+	def commitMsg
+	def matcher
+	
+	for (int j = 0; j < commitList.size(); ++j) {
+	    
+	    commitContext = "${commitList[j]}"
+        echo "commitContext${j}  '${commitContext}'"
+	
+		commitArray = commitContext.split(" |,")
+		
+		for (int i = 0; i < commitArray.size(); ++i) { 
+			commitMsg = "${commitArray[i]}".trim()
+			matcher = commitMsg ==~ /[A-Za-z]{1,}-\d{4}/
+			if(matcher){		
+				jiraMap.put("${commitArray[i]}","${commitArray[i]}")
+			}
+		}
+	}
+	
+	for (String key : jiraMap.keySet()) {
+      echo "key=   '${key}' "
+
+    }
+
+	return jiraMap
 }
 
 
