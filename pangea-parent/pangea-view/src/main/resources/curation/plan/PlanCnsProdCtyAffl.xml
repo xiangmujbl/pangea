@@ -19,7 +19,7 @@
 
             <region path="/plan/cns_material_plan_status">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,dpRelevant
+                    sourceSystem,localMaterialNumber,localPlant,dpRelevant,localParentCode
                 </columns>
                 <relations>
                     <relation path="/edm/plant_v1" isPrimaryKey="false">

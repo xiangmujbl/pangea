@@ -1,5 +1,5 @@
-@pangea_test
-Feature:  PlanCnsProdCtyAffl-Curation
+@pangea_test @AEAZ-2531
+Feature: AEAZ-2531 PlanCnsProdCtyAffl-Curation
 
   Scenario: Full Load curation
     #1.get sourceSystem from source_system_v1 (rule T1)
@@ -9,14 +9,6 @@ Feature:  PlanCnsProdCtyAffl-Curation
     #5.get ovrProdClass by rule C2
     #6.get prodStatus by rule T4
     #7.get ovrProdStat by rule C3
-
-    And I will remove all data with region "/plan/cns_prod_cty_affl"
-
-    And I will remove all data with region "/edm/material_global_v1"
-    And I will remove all data with region "/plan/edm_failed_data"
-    And I will remove all data with region "/plan/cns_material_plan_status"
-    And I will remove all data with region "/edm/source_system_v1"
-    And I will remove all data with region "/edm/plant_v1"
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localMaterialType |
@@ -40,13 +32,6 @@ Feature:  PlanCnsProdCtyAffl-Curation
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
     And I wait "/edm/source_system_v1" Async Queue complete
 
-#    And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
-#      | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
-#      | Project_One       | Project One           | CON_LATAM    | Consumer Latam Ent |
-#      | [Consumer LATAM]  | Consumer Latam        | CON_LATAM    | Consumer Latam Ent |
-#      | [EMS]             | EMS                   | EMS          | EMS Ent            |
-#    And I wait "/edm/source_system_v1" Async Queue complete
-
     Given I import "/edm/plant_v1" by keyFields "sourceSystem,localPlant"
       | sourceSystem | localPlant | country |
       | project_one  | BR12       | BR      |
@@ -58,20 +43,19 @@ Feature:  PlanCnsProdCtyAffl-Curation
 
     Then I check region data "/plan/cns_prod_cty_affl" by keyFields "sourceSystem,dpParentCode,country"
       | sourceSystem | dpParentCode      | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
+      | CONS_LATAM   | 7320133000740000  | BR      | REGULAR            | REGULAR      | ACTIVE     | ACTIVE      |                |             |          |            |
+      | CONS_LATAM   | 975760150         | BR      | SAMPLE             | SAMPLE       | ACTIVE     | ACTIVE      |                |             |          |            |
+      | CONS_LATAM   | 78910106115210000 | BR      | REGULAR            | REGULAR      | ACTIVE     | ACTIVE      |                |             |          |            |
 
-      | sourceSystem | dpParentCode      | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
-      | CONS_LATAM   | 7320133000740000  | BR      | REGULAR            | SAMPLE       | ACTIVE     | INACTIVE    |                | DP003       |          | NEOSTRATA  |
-      | CONS_LATAM   | 975760150         | BR      | SAMPLE             |              | ACTIVE     |             |                | DP003       |          | NEOSTRATA  |
-      | CONS_LATAM   | 78910106115210000 | BR      | REGULAR            |              | ACTIVE     |             |                | DP003       |          | NEUTROGENA |
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-#    And I compare the number of records between "/edm/material_global_v1" and "/plan/cns_prod_cty_affl,/plan/edm_failed_data"
+    And I compare the number of records between "/edm/material_global_v1" and "/plan/cns_prod_cty_affl,/plan/edm_failed_data"
 
-#    And I delete the test data
-#
-#    And I will remove all data with region "/plan/cns_prod_cty_affl"
-#
-#    And I will remove all data with region "/edm/material_global_v1"
-#    And I will remove all data with region "/plan/edm_failed_data"
+    And I delete the test data
+
+    And I will remove all data with region "/plan/cns_prod_cty_affl"
+
+    And I will remove all data with region "/edm/material_global_v1"
+    And I will remove all data with region "/plan/edm_failed_data"
 
