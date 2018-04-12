@@ -2,8 +2,10 @@
 Feature: EDMPurchasingInfoRecord
 
   Scenario: Full Load curation AEAZ-2371
-    # 1. Get sourceSystem from source_system_v1 (T1)
+    # 1. Get sourceSystem from source_system_v1 where localSourceSystem="project_one"(T1)
     # 2. Get record from EINE where EINA-INFNR = EINE-INFNR (N1)
+    # 3. Get sourceSystem from source_system_v1 where localSourceSystem<>"project_one"(T1)
+    # 4. Get record from EINE where EINA-INFNR <> EINE-INFNR (N1)
 
     Given I import "/project_one/eina" by keyFields "infnr"
       | infnr      | lifnr      | matnr              | lmein | matkl | loekz | erdat    | ernam    | txz01 | idnlf  | umrez | umren | meins | mfrnr |
@@ -21,6 +23,7 @@ Feature: EDMPurchasingInfoRecord
     Given I import "/project_one/eine" by keyFields "infnr"
       | infnr      | ekorg | esokz | loekz | werks | erdat    | ernam    | ekgrp | waers | minbm | norbm | aplfz | mwskz | bstae | meprf | inco1 | inco2      | verid | bstma | rdprf | j1bnbm |
       | 7100002730 | AR00  | 0     |       | AR01  | 20150323 | JLISBETH | A16   | USD   | 0.100 | 0.100 | 30    | GA    |       |       | EXW   | EX-FABRICA |       | 0.000 |       |        |
+      | 7100002797 | AR00  | 0     |       | AR03  | 20070329 | RLEITAO  | A17   | USD   | 0.000 | 1.000 | 16    | I0    |       |       |       |            |       | 0.000 |       |        |
 
     And I wait "/project_one/eine" Async Queue complete
 
