@@ -21,7 +21,7 @@ import java.util.List;
 
 public class OMPProductDetailController extends BaseController {
 
-    private ICommonService service = OMPProductDetailServiceImpl.getInstance();
+    private OMPProductDetailServiceImpl service = OMPProductDetailServiceImpl.getInstance();
 
 
     @Override
@@ -33,7 +33,7 @@ public class OMPProductDetailController extends BaseController {
 
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = BeanUtil.mapToBean(rawValue.toMap(), EDMMaterialGlobalV1Entity.class);
 
-            ResultObject resultObject = service.buildView(raw.getKey(), materialGlobalV1Entity, null);
+            List<> resultObject = service.buildView(raw.getKey(), materialGlobalV1Entity, null);
             if (resultObject.isSuccess()) {
                 BaseBo baseBo = resultObject.getBaseBo();
                 ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());

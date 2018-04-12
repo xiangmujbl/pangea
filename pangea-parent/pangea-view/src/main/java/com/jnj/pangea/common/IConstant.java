@@ -36,6 +36,7 @@ public interface IConstant {
         String PROJECT_ONE_VBKD="/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
+        String PLAN_CNS_MATERIAL_PLAN_STATUS="/plan/cns_material_plan_status";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -105,6 +106,10 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
+    interface PLAN_CNS_MATERIAL_PLAN_STATUS {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+    }
+
     interface NGEMS_GOLDEN_MATERIAL {
         String MATERIAL_NUMBER = "materialNumber";
     }
@@ -167,7 +172,6 @@ public interface IConstant {
 
     // -----region attribute value
     interface VALUE {
-
         String PROJECT_ONE = "project_one";
         String EMS = "[EMS]";
         String EN = "E";
@@ -193,6 +197,10 @@ public interface IConstant {
         String USD = "USD";
         String STR_ONE = "001";
         String LATAM_SKU="LATAM_SKU";
+        String LATAM_ROOT="LATAM_ROOT";
+        String LATAM_TECH="LATAM_TECH";
+        String NO="NO";
+        String PANGEA="pangea";
     }
 
     interface FAILED {

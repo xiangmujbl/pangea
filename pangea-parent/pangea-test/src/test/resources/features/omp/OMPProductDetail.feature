@@ -1,19 +1,27 @@
-@pangea_test @
+@pangea_test
 Feature:  OMPProductDetail-Curation
 
   Scenario: Full Load curation
 
+  #1.test get attributes from cns_material_plan_status and source_system_v1(rule J1,T1,T2,T3,T4,T5)
+
     Given I import "/edm/material_global_v1" by keyFields ""
       | localMaterialNumber | primaryPlanningCode | localDpParentCode | sourceSystem | localManufacturingTechnology |
+      | 97568               |1233                 |111                |CONS_LATAM    |   WWWW                       |
+      | 97569               |1233                 |111                |CONS_LATAM    |   WWWW                       |
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_material_plan_status" by keyFields ""
-      | localMaterialNumber | spRelevant | dpRelevant | npRelevant |
+      | localMaterialNumber | spRelevant | dpRelevant | noPlanRelevant |
+      |97568                |X           |X           |X               |
+      |97569                |X           |X           |X               |
+
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields ""
       | localSourceSystem | sourceSystem |
+      |Project_One        |CONS_LATAM    |
     And I wait "/edm/source_system_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPProductDetail.xml" and execute file "jar/pangea-view.jar"
