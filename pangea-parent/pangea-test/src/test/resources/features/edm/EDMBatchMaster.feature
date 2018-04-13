@@ -5,12 +5,14 @@ Feature: EDMBatchMaster AEAZ-2368
     # 1. get record from mcha,mchb,source_system_v1. If not records found, skip. (J1) (mch1_matnr:000000000007703910,000000000007047792)
     # 2. get Plant_V1-Plant where Plant_V1-localPlant = mcha-WERKS (N2) (mch1_matnr:000000000007703910)
     # 3. Use Enterprise Date Format (DD/MM/YYYY) (N3) (mch1_matnr:000000000007703910)
-    # 4. get material_global_v1-PrimaryPlanningCode where batch_master_localMaterialNumber = MCH1-MATNR (N4) (mch1_matnr:000000000007703910)
+    # 4. get material_global_v1-PrimaryPlanningCode where batch_master_localMaterialNumber = MCH1-MATNR (N4) (000000000007703910)
 
     Given I import "/project_one/mch1" by keyFields "matnr,charg"
       | matnr              | charg      | vfdat    | hsdat    |
       | 000000000007703910 | 0 190GB 01 | 19900713 | 19920813 |
       | 000000000007047792 | 0 603B7 A  | 19991011 | 20000101 |
+      | 000000000007047793 | 0 603B7 B  | 19991011 | 20000101 |
+
     And I wait "/project_one/mch1" Async Queue complete
 
     Given I import "/project_one/mcha" by keyFields "werks,matnr,charg,mandt"
@@ -47,10 +49,12 @@ Feature: EDMBatchMaster AEAZ-2368
     Then I check region data "/edm/batch_master_v1" by keyFields "sourceSystem,localMaterialNumber,localBatchNumber,localPlant,localStorageLocation"
       | sourceSystem | localMaterialNumber | localBatchNumber | localPlant | localStorageLocation | localBatchExpDate | localBatchMfgDate | plant | materialNumber |
       | CONS_LATAM   | 000000000007703910  | 0 190GB 01       | PE01       | PE01                 | 13/07/1990        | 13/08/1992        | PE01  | 7703910        |
-      | CONS_LATAM   | 000000000007047792  | 0 603B7 A        | CO02       | PE02                 | 11/10/1999        | 01/01/2000        |       |                |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+      | functionalArea | interfaceID    | errorCode | sourceSystem | key1               | key2      | key3 | key4 | key5 | errorValue |
+      | SP             | EdmBatchMaster | N4        | edm          | 000000000007047792 | 0 603B7 A |      |      |      |            |
+      | SP             | EdmBatchMaster | N4        | edm          | 000000000007047793 | 0 603B7 B |      |      |      |            |
+
 
     And I compare the number of records between "/project_one/mch1" and "/edm/batch_master_v1,/plan/edm_failed_data"
 

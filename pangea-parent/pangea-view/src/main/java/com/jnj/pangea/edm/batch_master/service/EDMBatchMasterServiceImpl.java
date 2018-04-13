@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.batch_master.service;
 
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
@@ -43,43 +44,7 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
         Mch1Entity mch1Entity = (Mch1Entity) o;
         EDMBatchMasterBo eDMBatchMasterBo = new EDMBatchMasterBo();
 
-        // J1
-        MchaEntity mchaEntity = mchaDao.getEntityWithMatnrAndCharg(mch1Entity.getMatnr(), mch1Entity.getCharg());
 
-        if (null != mchaEntity) {
-
-            String mandt = mchaEntity.getMandt();
-            if (StringUtils.isNotEmpty(mandt)) {
-
-                EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(mandt);
-                if (null != edmSourceSystemV1Entity) {
-                    eDMBatchMasterBo.setSourceSystem(edmSourceSystemV1Entity.getSourceSystem());
-                }
-            }
-
-            eDMBatchMasterBo.setLocalPlant(mchaEntity.getWerks());
-
-            String charg = mchaEntity.getCharg();
-            if (StringUtils.isNotEmpty(charg)) {
-
-                MchbEntity mchbEntity = mchbDao.getEntityWithCharg(charg);
-                if (null != mchbEntity) {
-
-                    eDMBatchMasterBo.setLocalStorageLocation(mchbEntity.getLgort());
-                }
-            }
-
-            // N2
-            String localPlant = mchaEntity.getWerks();
-            if (StringUtils.isNotEmpty(localPlant)) {
-
-                EDMPlantV1Entity plantV1Entity = plantV1Dao.getEntityWithLocalPlant(localPlant);
-                if (null != plantV1Entity) {
-
-                    eDMBatchMasterBo.setPlant(plantV1Entity.getPlant());
-                }
-            }
-        }
 
         // N4
         String localMaterialNumber = mch1Entity.getMatnr();
@@ -89,21 +54,66 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
             if (null != materialGlobalV1Entity && StringUtils.isNotEmpty(materialGlobalV1Entity.getMaterialNumber())) {
 
                 eDMBatchMasterBo.setMaterialNumber(materialGlobalV1Entity.getPrimaryPlanningCode());
+
+                // J1
+                MchaEntity mchaEntity = mchaDao.getEntityWithMatnrAndCharg(mch1Entity.getMatnr(), mch1Entity.getCharg());
+
+                if (null != mchaEntity) {
+
+                    String mandt = mchaEntity.getMandt();
+                    if (StringUtils.isNotEmpty(mandt)) {
+
+                        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(mandt);
+                        if (null != edmSourceSystemV1Entity) {
+                            eDMBatchMasterBo.setSourceSystem(edmSourceSystemV1Entity.getSourceSystem());
+                        }
+                    }
+
+                    eDMBatchMasterBo.setLocalPlant(mchaEntity.getWerks());
+
+                    String charg = mchaEntity.getCharg();
+                    if (StringUtils.isNotEmpty(charg)) {
+
+                        MchbEntity mchbEntity = mchbDao.getEntityWithCharg(charg);
+                        if (null != mchbEntity) {
+
+                            eDMBatchMasterBo.setLocalStorageLocation(mchbEntity.getLgort());
+                        }
+                    }
+
+                    // N2
+                    String localPlant = mchaEntity.getWerks();
+                    if (StringUtils.isNotEmpty(localPlant)) {
+
+                        EDMPlantV1Entity plantV1Entity = plantV1Dao.getEntityWithLocalPlant(localPlant);
+                        if (null != plantV1Entity) {
+
+                            eDMBatchMasterBo.setPlant(plantV1Entity.getPlant());
+                        }
+                    }
+                }
+
+                eDMBatchMasterBo.setLocalMaterialNumber(mch1Entity.getMatnr());
+                eDMBatchMasterBo.setLocalBatchNumber(mch1Entity.getCharg());
+                SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+                SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.DD_MM_YYYY);
+                try {
+                    eDMBatchMasterBo.setLocalBatchExpDate(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
+                    eDMBatchMasterBo.setLocalBatchMfgDate(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                resultObject.setBaseBo(eDMBatchMasterBo);
+
+            } else {
+
+                // Reject record
+                resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.EDM_BATCH_MASTER, IConstant.FAILED.ERROR_CODE.N4,
+                        "", "edm", mch1Entity.getMatnr(), mch1Entity.getCharg()));
             }
         }
 
-        eDMBatchMasterBo.setLocalMaterialNumber(mch1Entity.getMatnr());
-        eDMBatchMasterBo.setLocalBatchNumber(mch1Entity.getCharg());
-        SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-        SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.DD_MM_YYYY);
-        try {
-            eDMBatchMasterBo.setLocalBatchExpDate(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
-            eDMBatchMasterBo.setLocalBatchMfgDate(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        resultObject.setBaseBo(eDMBatchMasterBo);
         return resultObject;
     }
 }

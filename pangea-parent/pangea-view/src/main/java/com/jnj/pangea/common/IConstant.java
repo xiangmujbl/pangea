@@ -61,6 +61,10 @@ public interface IConstant {
         String PROJECT_ONE_EINE = "/project_one/eine";
         String PROJECT_ONE_MCHA = "/project_one/mcha";
         String PROJECT_ONE_MCHB = "/project_one/mchb";
+        String PROJECT_ONE_AFPO = "/project_one/afpo";
+        String PROJECT_ONE_AUFK = "/project_one/aufk";
+        String PROJECT_ONE_JEST = "/project_one/jest";
+        String PROJECT_ONE_TJ02T = "/project_one/tj02t";
     }
 
     interface PLAN_CNS_LOT_SIZE_KEY_TRANS {
@@ -300,6 +304,25 @@ public interface IConstant {
         String CHARG = "charg";
     }
 
+    interface PROJECT_ONE_AFPO {
+        String AUFNR = "aufnr";
+    }
+
+    interface PROJECT_ONE_AUFK {
+        String AUFNR = "aufnr";
+    }
+
+    interface PROJECT_ONE_JEST {
+        String OBJNR = "objnr";
+        String STAT = "stat";
+        String INACT = "inact";
+    }
+
+    interface PROJECT_ONE_TJ02T {
+        String SPRAS = "spras";
+        String ISTAT = "istat";
+    }
+
 
     // -----region attribute value
     interface VALUE {
@@ -340,6 +363,8 @@ public interface IConstant {
         String DD_MM_YYYY = "dd/MM/yyyy";
         String N="N";
         String BLANK="Blank";
+        String OR = "OR";
+        String SPACE = " ";
     }
 
     interface FAILED {
@@ -359,6 +384,7 @@ public interface IConstant {
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
             String OMP_GDM_BATCH="OMPGdmBatch";
             String EDM_PLANNED_ORDER="EdmPlannedOrder";
+            String EDM_BATCH_MASTER="EdmBatchMaster";
         }
 
         interface ERROR_CODE {
@@ -382,6 +408,7 @@ public interface IConstant {
 
             String N2 = "N2";
             String N1 = "N1";
+            String N4 = "N4";
         }
     }
 }
