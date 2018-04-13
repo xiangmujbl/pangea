@@ -357,6 +357,7 @@ public interface IConstant {
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
             String OMP_GDM_BATCH="OMPGdmBatch";
+            String EDM_PLANNED_ORDER="EdmPlannedOrder";
         }
 
         interface ERROR_CODE {
@@ -379,6 +380,7 @@ public interface IConstant {
             String E9 = "E9";
 
             String N2 = "N2";
+            String N1 = "N1";
         }
     }
 }
