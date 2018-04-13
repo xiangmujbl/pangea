@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_fpb.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
@@ -18,6 +17,8 @@ import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_fpb.bo.OMPGdmFpbBo;
+
+import java.util.UUID;
 
 public class OMPGdmFpbServiceImpl implements ICommonService {
 
@@ -55,7 +56,7 @@ public class OMPGdmFpbServiceImpl implements ICommonService {
         String productId = sourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode();
         gdmFpbBo.setProductId(productId);
 
-        String sequeceNumber = "";
+        String sequeceNumber = UUID.randomUUID().toString();
         String fpbId = productId +sequeceNumber;
         gdmFpbBo.setFpbId(fpbId);
 
@@ -86,7 +87,6 @@ public class OMPGdmFpbServiceImpl implements ICommonService {
             }
         }
 
-        LogUtil.getCoreLog().info("gdmFpbBo:"+gdmFpbBo);
         resultObject.setBaseBo(gdmFpbBo);
         return resultObject;
     }
