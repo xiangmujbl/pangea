@@ -16,10 +16,10 @@ public class PlanCnsFinPlanValDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsFinPlanValEntity getEntityWithConditions(String localMaterialNumber) {
+    public PlanCnsFinPlanValEntity getEntityWithConditions(String localMaterialNumber,String identifier) {
         if (null != localMaterialNumber && !"".equals(localMaterialNumber)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_FIN_PLAN_VAL.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
-                    .and(IConstant.PLAN_CNS_FIN_PLAN_VAL.IDENTIFIER).is(IConstant.VALUE.FPB).toQueryString();
+                    .and(IConstant.PLAN_CNS_FIN_PLAN_VAL.IDENTIFIER).is(identifier).toQueryString();
             return queryForObject(IConstant.REGION.PLAN_CNS_FIN_PLAN_VAL, queryString, PlanCnsFinPlanValEntity.class);
         }
         return null;
