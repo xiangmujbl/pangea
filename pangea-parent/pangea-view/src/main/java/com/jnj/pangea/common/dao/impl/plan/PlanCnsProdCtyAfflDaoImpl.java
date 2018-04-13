@@ -1,7 +1,5 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsProdCtyAfflEntity;
@@ -19,8 +17,6 @@ public class PlanCnsProdCtyAfflDaoImpl  extends CommonDaoImpl {
     }
 
     public List<PlanCnsProdCtyAfflEntity> getEntitiesAll() {
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROD_CTY_AFFL.SOURCE_SYSTEM).is(IConstant.VALUE.PROJECT_ONE).toQueryString();
-        LogUtil.getCoreLog().info("queryString:"+queryString);
         return queryForList(IConstant.REGION.PLAN_CNS_PROD_CTY_AFFL,"*:*", PlanCnsProdCtyAfflEntity.class);
     }
 }

@@ -1,11 +1,8 @@
 package com.jnj.pangea.plan.cns_prod_cty_affl.service;
 
-import akka.parboiled2.Parser;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsProdCtyAfflDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
@@ -16,8 +13,7 @@ import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_prod_cty_affl.bo.PlanCnsProdCtyAfflBo;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
 
@@ -40,7 +36,7 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
-        Map<String, Object> prodCtyAfflEntityMap  = (HashMap) o2;
+        Set<String> prodCtyAfflEntitySet  = (Set) o2;
 
         PlanCnsProdCtyAfflBo cnsProdCtyAfflBo = new PlanCnsProdCtyAfflBo();
 
@@ -50,17 +46,20 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
 
             String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
 
-            LogUtil.getCoreLog().info("localMaterialNumber:"+localMaterialNumber);
             PlanCnsMaterialPlanStatusEntity materialPlanStatusEntityC1 = cnsMaterialPlanStatusDao.getEntityWithDpRelevantAndLocalMaterialnumber(localMaterialNumber);
 
             if (null != materialPlanStatusEntityC1) {
                 String localParentCode = materialPlanStatusEntityC1.getLocalParentCode();
-                LogUtil.getCoreLog().info("materialPlanStatusEntityC1:"+materialPlanStatusEntityC1.toString());
-                LogUtil.getCoreLog().info("localParentCode:"+localParentCode);
-                LogUtil.getCoreLog().info("!prodCtyAfflEntityMap.containsKey(localParentCode):"+!prodCtyAfflEntityMap.containsKey(localParentCode));
-                if (!prodCtyAfflEntityMap.containsKey(localParentCode)) {
+
+                if (!prodCtyAfflEntitySet.contains(localParentCode)) {
                     cnsProdCtyAfflBo.setDpParentCode(localParentCode);
+                }else{
+                    FailData failData = checkFailData(materialGlobalV1Entity);
+                    failData.setErrorCode("C1");
+                    resultObject.setFailData(failData);
+                    return resultObject;
                 }
+
             } else {
                 FailData failData = checkFailData(materialGlobalV1Entity);
                 failData.setErrorCode("C1");
@@ -109,8 +108,7 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        LogUtil.getCoreLog().info("cnsProdCtyAfflBo:"+cnsProdCtyAfflBo.toString());
-        prodCtyAfflEntityMap.put(cnsProdCtyAfflBo.getDpParentCode(),cnsProdCtyAfflBo);
+        prodCtyAfflEntitySet.add(cnsProdCtyAfflBo.getDpParentCode());
         resultObject.setBaseBo(cnsProdCtyAfflBo);
         return resultObject;
     }
