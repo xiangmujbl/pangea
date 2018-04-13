@@ -356,6 +356,7 @@ public interface IConstant {
         String DP = "DP";
         String SP1 = "SP";
         String V = "V";
+        String C = "C";
         String S = "S";
         String SPRAS_EN = "EN";
         String PLSCN = "000";

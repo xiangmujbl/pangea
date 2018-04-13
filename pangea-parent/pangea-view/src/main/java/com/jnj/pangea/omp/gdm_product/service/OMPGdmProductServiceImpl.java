@@ -246,6 +246,12 @@ public class OMPGdmProductServiceImpl {
                 resultObject.setBaseBo(productBo);
                 resultObjects.add(resultObject);
             }
+        }else{
+            ResultObject resultObject = new ResultObject();
+            FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode");
+            resultObject.setFailData(failData);
+            resultObjects.add(resultObject);
+            return resultObjects;
         }
         return resultObjects;
     }

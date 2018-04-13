@@ -43,9 +43,14 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
         String localBaseUOM = edmMaterialGlobalV1Entity.getLocalBaseUom();
         if (StringUtils.isNotEmpty(localBaseUOM)) {
             CnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUOM);
-            String gdmProductUnitConversionId = edmMaterialGlobalV1Entity.getPrimaryPlanningCode();
+            String gdmProductUnitConversionId = "";
+            if (StringUtils.isNotEmpty(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
+                gdmProductUnitConversionId += edmMaterialGlobalV1Entity.getPrimaryPlanningCode();
+            }
             if (cnsPlanUnitEntity != null) {
-                gdmProductUnitConversionId += cnsPlanUnitEntity.getUnit();
+                if (StringUtils.isNotEmpty(cnsPlanUnitEntity.getUnit())) {
+                    gdmProductUnitConversionId += cnsPlanUnitEntity.getUnit();
+                }
                 if (!StringUtils.isEmpty(cnsPlanUnitEntity.getUnit())) {
                     gdmProductUnitConversionBo.setUnitId(cnsPlanUnitEntity.getUnit());
                 }

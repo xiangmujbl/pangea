@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-1613
-Feature: OMPProductCountry-AEAZ-1613
+@pangea_test @AEAZ-1615
+Feature: OMPProductCountry-AEAZ-1615
 
   Scenario: Full Load curation
 
