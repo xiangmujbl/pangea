@@ -4,7 +4,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class CnsProdCountryAffEntity extends CommonEntity {
+public class CnsProdCtyAfflEntity extends CommonEntity {
 
     private String sourceSystem;
     private String dpParentCode;
@@ -16,7 +16,7 @@ public class CnsProdCountryAffEntity extends CommonEntity {
     private String rootSize;
     private String countryGroup;
 
-    public CnsProdCountryAffEntity(Map<String, Object> map) {
+    public CnsProdCtyAfflEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("countryGroup"));
         setDpParentCode((String) map.get("dpParentCode"));

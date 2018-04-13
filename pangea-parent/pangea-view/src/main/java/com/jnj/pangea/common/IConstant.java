@@ -338,7 +338,8 @@ public interface IConstant {
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";
         String DD_MM_YYYY = "dd/MM/yyyy";
-
+        String N="N";
+        String BLANK="Blank";
     }
 
     interface FAILED {
