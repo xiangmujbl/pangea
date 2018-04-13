@@ -108,6 +108,8 @@ public class EDMPurchaseRequisitionV1ServiceImpl implements ICommonService {
         purchaseRequisitionV1Bo.setLocalXSysPReqNo (ebanEntity.getBanfnCs());
         purchaseRequisitionV1Bo.setLocalXSysPReqItem (ebanEntity.getBnfpoCs());
         purchaseRequisitionV1Bo.setLocalXSysItemCat (ebanEntity.getItemCs());
+        purchaseRequisitionV1Bo.setMfrPartNum(ebanEntity.getMfrpn());
+        purchaseRequisitionV1Bo.setPrMrpHrzn(ebanEntity.getDispo());
 
         resultObject.setBaseBo(purchaseRequisitionV1Bo);
         return resultObject;
