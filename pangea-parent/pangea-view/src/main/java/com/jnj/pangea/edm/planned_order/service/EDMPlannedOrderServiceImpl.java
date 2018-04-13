@@ -125,9 +125,4 @@ public class EDMPlannedOrderServiceImpl implements ICommonService {
 
         return resultObject;
     }
-
-    @Override
-    public List<ResultObject> buildViewList(String key, Object o, Object o2) {
-        return null;
-    }
 }
