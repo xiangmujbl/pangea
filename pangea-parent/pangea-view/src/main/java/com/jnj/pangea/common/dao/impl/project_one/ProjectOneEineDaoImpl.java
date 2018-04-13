@@ -5,6 +5,8 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.project_one.EineEntity;
 
+import java.util.List;
+
 public class ProjectOneEineDaoImpl extends CommonDaoImpl {
 
     private static ProjectOneEineDaoImpl instance;
@@ -16,9 +18,9 @@ public class ProjectOneEineDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EineEntity getEntityWithInfnr(String infnr) {
+    public List<EineEntity> getEntityWithInfnr(String infnr) {
 
         String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_EINE.INFNR).is(infnr).toQueryString();
-        return queryForObject(IConstant.REGION.PROJECT_ONE_EINE, queryString, EineEntity.class);
+        return queryForList(IConstant.REGION.PROJECT_ONE_EINE, queryString, EineEntity.class);
     }
 }
