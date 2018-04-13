@@ -2,10 +2,12 @@
 Feature: EDMBatchMaster AEAZ-2368
 
   Scenario: Full Load curation
-    # 1. get record from mcha,mchb,source_system_v1. If not records found, skip. (J1) (mch1_matnr:000000000007703910,000000000007047792)
-    # 2. get Plant_V1-Plant where Plant_V1-localPlant = mcha-WERKS (N2) (mch1_matnr:000000000007703910)
-    # 3. Use Enterprise Date Format (DD/MM/YYYY) (N3) (mch1_matnr:000000000007703910)
+    # 1. get record from mcha,mchb,source_system_v1 (J1) (000000000007703910)
+    # 2. get Plant_V1-Plant where Plant_V1-localPlant = mcha-WERKS (N2) (000000000007703910)
+    # 3. Use Enterprise Date Format (DD/MM/YYYY) (N3) (000000000007703910)
     # 4. get material_global_v1-PrimaryPlanningCode where batch_master_localMaterialNumber = MCH1-MATNR (N4) (000000000007703910)
+    # 5. material_global_v1-MaterialNumber is blank (N4) (000000000007047792)
+    # 6. get material_global_v1-PrimaryPlanningCode where batch_master_localMaterialNumber <> MCH1-MATNR (N4) (000000000007047793)
 
     Given I import "/project_one/mch1" by keyFields "matnr,charg"
       | matnr              | charg      | vfdat    | hsdat    |
