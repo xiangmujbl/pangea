@@ -26,10 +26,12 @@ public abstract class CommonController extends BaseController {
             ResultObject resultObject = process(raw);
             if (resultObject.isSuccess()) {
                 BaseBo baseBo = resultObject.getBaseBo();
-                result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
+                if (null != baseBo) {
+                    result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
+                }
             } else {
-                if (null != resultObject.getFailData()) {
-                    FailData failData = resultObject.getFailData();
+                FailData failData = resultObject.getFailData();
+                if (null != failData) {
                     result.add(ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap()));
                 }
             }
