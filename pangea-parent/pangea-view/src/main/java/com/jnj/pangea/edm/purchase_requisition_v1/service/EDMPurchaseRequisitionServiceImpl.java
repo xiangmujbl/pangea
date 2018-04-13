@@ -116,6 +116,9 @@ public class EDMPurchaseRequisitionServiceImpl implements ICommonService {
     }
 
     private String getFieldWithT1(String localSourceSystem) {
+        if ("".equals(localSourceSystem)){
+            return "";
+        }
         return sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(localSourceSystem);
     }
 
