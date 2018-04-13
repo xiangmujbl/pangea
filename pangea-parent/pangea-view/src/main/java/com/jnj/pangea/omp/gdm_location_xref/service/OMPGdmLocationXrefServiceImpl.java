@@ -2,10 +2,9 @@ package com.jnj.pangea.omp.gdm_location_xref.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_location_xref.bo.OMPGdmLocationXrefBo;
 
@@ -32,23 +31,23 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
 
         OMPGdmLocationXrefBo gdmLocationXrefBo = new OMPGdmLocationXrefBo();
 
-        if (cnsPlnSplLocEntity==null){
+        if (cnsPlnSplLocEntity == null) {
             return resultObject;
         }
         // rules C1
-        gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem()+"_"+cnsPlnSplLocEntity.getVendorCustomer()+"_"+cnsPlnSplLocEntity.getLocalNumber());
+        gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
         //rules C2
-        if (getFieldWithC2(cnsPlnSplLocEntity)){
+        if (getFieldWithC2(cnsPlnSplLocEntity)) {
             gdmLocationXrefBo.setActiveFCTERP(IConstant.VALUE.YES);
         }
 
         //rules C3
-        if (cnsPlnSplLocEntity.getVendorCustomer().equals("C")){
+        if (IConstant.VALUE.C.equals(cnsPlnSplLocEntity.getVendorCustomer())) {
             gdmLocationXrefBo.setCustomerId(cnsPlnSplLocEntity.getLocalNumber());
         }
 
         //rules C4
-        if (cnsPlnSplLocEntity.getVendorCustomer().equals("V")){
+        if (IConstant.VALUE.V.equals(cnsPlnSplLocEntity.getVendorCustomer())) {
             gdmLocationXrefBo.setVendorId(cnsPlnSplLocEntity.getLocalNumber());
         }
 
@@ -70,14 +69,15 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
 
     /**
      * rules C2
+     *
      * @param cnsPlnSplLocEntity
      * @return
      */
-    private boolean getFieldWithC2(PlanCnsPlnSplLocEntity cnsPlnSplLocEntity){
+    private boolean getFieldWithC2(PlanCnsPlnSplLocEntity cnsPlnSplLocEntity) {
         List<PlanCnsPlanParameterEntity> entities = cnsPlanParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT);
-        if (!entities.isEmpty()){
-            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity:entities) {
-                if (cnsPlanParameterEntity.getParameterValue().equals(cnsPlnSplLocEntity.getLocalNumber())){
+        if (!entities.isEmpty()) {
+            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity : entities) {
+                if (cnsPlanParameterEntity.getParameterValue().equals(cnsPlnSplLocEntity.getLocalNumber())) {
                     return true;
                 }
             }
