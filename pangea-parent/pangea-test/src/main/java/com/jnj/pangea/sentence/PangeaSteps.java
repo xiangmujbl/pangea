@@ -5,9 +5,17 @@ import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
 import cucumber.api.DataTable;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.errors.SerializationException;
 import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -15,12 +23,16 @@ import org.springframework.web.client.RestTemplate;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 public class PangeaSteps extends CommonSteps {
 
     private static String computingNode = "";
     private static Integer computingPartition = 1;
     private static String mboxSink = "";
+    private static String bootstrapServers = "";
+    private static String schemaRegistryUrl = "";
+    private static String topic = "";
 
     static {
         computingNode = ADFConfigHelper.getProperty("computingNode");
@@ -28,6 +40,9 @@ public class PangeaSteps extends CommonSteps {
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
         mboxSink = ADFConfigHelper.getProperty("mboxSink");
+        bootstrapServers = ADFConfigHelper.getProperty("bootstrap.servers");
+        schemaRegistryUrl = ADFConfigHelper.getProperty("schema.registry.url");
+        topic = ADFConfigHelper.getProperty("kafka.topic");
     }
 
     public PangeaSteps() {
@@ -132,20 +147,22 @@ public class PangeaSteps extends CommonSteps {
 
     private void submitComputeTask(String xml, String drl) {
         ComputeClient client = null;
-        try {
-            String name = "";
-            if (xml.contains("/")) {
-                String[] arr = xml.split("/");
-                name = arr[arr.length - 1].substring(0, arr[arr.length - 1].length() - 4);
-            } else {
-                name = xml.substring(0, xml.length() - 4);
-            }
+        String name = "";
+        if (xml.contains("/")) {
+            String[] arr = xml.split("/");
+            name = arr[arr.length - 1].substring(0, arr[arr.length - 1].length() - 4);
+        } else {
+            name = xml.substring(0, xml.length() - 4);
+        }
 
-            String taskId = "Cucumber-test-" + name + "-" + System.currentTimeMillis();
-            String commandString = "-type F";
-            if (computingPartition == null || computingPartition == 0) {
-                computingPartition = 1;
-            }
+        String taskId = "Cucumber-test-" + name + "-" + System.currentTimeMillis();
+        String commandString = "-type F";
+        if (computingPartition == null || computingPartition == 0) {
+            computingPartition = 1;
+        }
+        try {
+            sendRecord("gdmLocationType.tsv", "START_FILE");
+
             client = new ComputeClient();
             client.connect(computingNode);
             client.submitTask(taskId, xml, drl, commandString, computingPartition);
@@ -162,8 +179,38 @@ public class PangeaSteps extends CommonSteps {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            sendRecord("gdmLocationType.tsv", "END_FILE");
             if (client != null) {
                 client.close();
+            }
+        }
+    }
+
+    private void sendRecord(String fileName, String type) {
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroSerializer.class);
+        props.put("schema.registry.url", schemaRegistryUrl);
+        try (KafkaProducer producer = new KafkaProducer(props)){
+            String startKeySchema = "{\"type\":\"record\",\"name\":\"keySchema\",\"fields\":[{\"name\":\"_OP_TYPE_\",\"type\":\"string\"}]}";
+            String gdmFileSchema = "{\"type\":\"record\",\"name\":\"fileSchema\",\"fields\":[{\"name\":\"fileName\",\"type\":\"string\"}]}";
+
+            Schema.Parser parser = new Schema.Parser();
+            Schema schema = parser.parse(startKeySchema);
+            GenericRecord keyRecord = new GenericData.Record(schema);
+            keyRecord.put("_OP_TYPE_", type);
+
+            parser = new Schema.Parser();
+            schema = parser.parse(gdmFileSchema);
+            GenericRecord avroRecord = new GenericData.Record(schema);
+            avroRecord.put("fileName", fileName);
+            ProducerRecord<Object, Object> record = new ProducerRecord<Object, Object>(topic, keyRecord, avroRecord);
+
+            try {
+                producer.send(record);
+            } catch (SerializationException e) {
+                // may need to do something with it
             }
         }
     }

@@ -12,9 +12,9 @@ Feature:  OMPGdmLocationType-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmLocationType.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "gdmLocationType.tsv"
+    Then A file is found on sink application with name "gdm_omp_location_type.tsv"
 
-    And I check file data for filename "gdmLocationType.tsv" by keyFields "locationTypeId,activeFctErp,activeOprErp,activeSopErp,label"
+    And I check file data for filename "gdm_omp_location_type.tsv" by keyFields "locationTypeId,activeFctErp,activeOprErp,activeSopErp,label"
       | locationTypeId | activeFctErp | activeOprErp | activeSopErp | label                        |
       | 10             | YES          | YES          | YES          | Copacker                     |
       | 20             | YES          | YES          | YES          | Subcon                       |
@@ -29,5 +29,5 @@ Feature:  OMPGdmLocationType-Curation
 
     And I will remove all data with region "/plan/cns_loc_type"
 
-    And I will remove the test file on sink application "gdmLocationType.tsv"
+    And I will remove the test file on sink application "gdm_omp_location_type.tsv"
 
