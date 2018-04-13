@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/project_one/eban" viewRegion="/edm/purchase_requisition_v1" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.edm.purchase_requisition_v1.controller.EDMPurchaseRequisitionV1Controller">
+              executionClassName="com.jnj.pangea.edm.purchase_requisition_v1.controller.EDMPurchaseRequisitionController">
         <regions>
 
             <region path="/project_one/eban">

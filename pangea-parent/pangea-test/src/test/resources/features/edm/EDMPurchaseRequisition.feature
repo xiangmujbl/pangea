@@ -15,7 +15,7 @@ Feature: EDMPurchaseRequisitionV1 AEAZ-2372
       | CONS_LATAM   | project_one       |
     And I wait "/edm/source_system_v1" Async Queue complete
 
-    When I submit task with xml file "xml/edm/EDMPurchaseRequisitionV1.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/EDMPurchaseRequisition.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/purchase_requisition_v1" by keyFields "sourceSystem,prNum,prLineNbr"
       | sourceSystem | prNum      | prLineNbr | plntCd | matlNum | prLineUomCd | prTypeCd | prCatCd | localControlInd | delInd | prStsCd | recCrtInd | prchsngGrpNum | crtByNm  | chngOnDt | prchInfoDesc      | slocCd | intrnlRefNum | locaalMaterialGroup | suplPlntCd | prLineQty | prRqstDt | needByDt | apprByDt | localPrGRLeadTimeDays | prLineCatCd | acctAsgnmtCatCd | localGRInd | localSupNum | localFixedVendor | prchsngOrgNum | poTypeCd | localAgreement | localAgreementItem | localInfoRecord | asgnSuplSrcInd | localQuotaArr | localQuotaArrItem | prMrpHrzn | bomNum | localPurchaseOrder | localItem | localPODate | localPOQuantity | prClseInd | localReservation | splStkInd | fxInd | localOrderUnit | localSubjToRelease | localBatch | localSpIndStckTfr | localProdVersion | localdelvAddrADRNR | localdelvAddrADRN2 | localCustomer | supNum | localSCVendor | localCurrency | localOverallReqRel | mfrPartNum | localManufacturer | localExternalManuf | localPDT | localIncomplete | lineStsCd | blokInd | localBlockingText | localProcuringPlant | localIssStorLoc | localXSysPReqNo | localXSysPReqItem | localXSysItemCat |

@@ -5,15 +5,15 @@ import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.project_one.EbanEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.purchase_requisition_v1.bo.EDMPurchaseRequisitionV1Bo;
+import com.jnj.pangea.edm.purchase_requisition_v1.bo.EDMPurchaseRequisitionBo;
 
-public class EDMPurchaseRequisitionV1ServiceImpl implements ICommonService {
+public class EDMPurchaseRequisitionServiceImpl implements ICommonService {
 
-    private static EDMPurchaseRequisitionV1ServiceImpl instance;
+    private static EDMPurchaseRequisitionServiceImpl instance;
 
-    public static EDMPurchaseRequisitionV1ServiceImpl getInstance() {
+    public static EDMPurchaseRequisitionServiceImpl getInstance() {
         if (instance == null) {
-            instance = new EDMPurchaseRequisitionV1ServiceImpl();
+            instance = new EDMPurchaseRequisitionServiceImpl();
         }
         return instance;
     }
@@ -26,7 +26,7 @@ public class EDMPurchaseRequisitionV1ServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         EbanEntity ebanEntity = (EbanEntity) o;
 
-        EDMPurchaseRequisitionV1Bo purchaseRequisitionV1Bo = new EDMPurchaseRequisitionV1Bo();
+        EDMPurchaseRequisitionBo purchaseRequisitionV1Bo = new EDMPurchaseRequisitionBo();
         if (ebanEntity==null){
             return resultObject;
         }

@@ -3,7 +3,7 @@ package com.jnj.pangea.edm.purchase_requisition_v1.bo;
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class EDMPurchaseRequisitionV1Bo extends BaseBo {
+public class EDMPurchaseRequisitionBo extends BaseBo {
 
     private String sourceSystem;
     private String prNum;
