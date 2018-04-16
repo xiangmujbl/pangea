@@ -5,7 +5,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
-import com.jnj.pangea.common.entity.plan.CnsProdCountryAffEntity;
+import com.jnj.pangea.common.entity.plan.CnsProdCtyAffEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_country.bo.GDMProductCountryBo;
 
@@ -24,45 +24,45 @@ public class GDMProductCountryServiceImpl implements ICommonService {
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
-        CnsProdCountryAffEntity prodCountryAffEntity = (CnsProdCountryAffEntity) o;
+        CnsProdCtyAffEntity prodCtyAfflEntity = (CnsProdCtyAffEntity) o;
 
         GDMProductCountryBo productCountryBo = new GDMProductCountryBo();
 
-        String dpParentCode = prodCountryAffEntity.getDpParentCode();
-        String country = prodCountryAffEntity.getCountry();
-        if (null != dpParentCode && null != country){
-            String uniqueId = IConstant.VALUE.LA_ + prodCountryAffEntity.getDpParentCode() + prodCountryAffEntity.getCountry();
+        String dpParentCode = prodCtyAfflEntity.getDpParentCode();
+        String country = prodCtyAfflEntity.getCountry();
+        if (null != dpParentCode && null != country) {
+            String uniqueId = IConstant.VALUE.LA_ + prodCtyAfflEntity.getDpParentCode() + prodCtyAfflEntity.getCountry();
             productCountryBo.setUniqueId(uniqueId);
             productCountryBo.setActiveFcterp(IConstant.VALUE.YES);
-            productCountryBo.setCountryGroup(prodCountryAffEntity.getCountryGroup());
+            productCountryBo.setCountryGroup(prodCtyAfflEntity.getCountryGroup());
 
             EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountry(country);
-            if (null != countryEntity){
+            if (null != countryEntity) {
                 productCountryBo.setCountryId(countryEntity.getCountryCode());
             }
-            productCountryBo.setDpPlannerId(prodCountryAffEntity.getDpPlanner());
-            productCountryBo.setDpSegmentation(prodCountryAffEntity.getDpSegmentation());
-            productCountryBo.setProductClassification(prodCountryAffEntity.getProductClassification());
+            productCountryBo.setDpPlannerId(prodCtyAfflEntity.getDpPlanner());
+            productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
+            productCountryBo.setProductClassification(prodCtyAfflEntity.getProductClassification());
             productCountryBo.setProductId(dpParentCode);
-            productCountryBo.setProductStatus(prodCountryAffEntity.getProductStatus());
-            productCountryBo.setRootSize(prodCountryAffEntity.getRootSize());
-            productCountryBo.setSegmentation(prodCountryAffEntity.getDpSegmentation());
+            productCountryBo.setProductStatus(prodCtyAfflEntity.getProductStatus());
+            productCountryBo.setRootSize(prodCtyAfflEntity.getRootSize());
+            productCountryBo.setSegmentation(prodCtyAfflEntity.getDpSegmentation());
 
             resultObject.setBaseBo(productCountryBo);
-        }else {
-            FailData failData = writeFailDataToRegion(prodCountryAffEntity, "C1", "All Key fields not Exist");
+        } else {
+            FailData failData = writeFailDataToRegion(prodCtyAfflEntity, IConstant.FAILED.ERROR_CODE.C1, "All Key fields not Exist");
             resultObject.setFailData(failData);
         }
 
         return resultObject;
     }
 
-    private FailData writeFailDataToRegion(CnsProdCountryAffEntity prodCountryAffEntity, String ruleCode, String errorValue) {
+    private FailData writeFailDataToRegion(CnsProdCtyAffEntity prodCountryAffEntity, String ruleCode, String errorValue) {
         FailData failData = new FailData();
-        failData.setFunctionalArea("DP");
-        failData.setInterfaceID("GDMProductCountry");
+        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
+        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_PRODUCT_COUNTRY);
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem("CONS_LATAM");
+        failData.setSourceSystem("");
         failData.setKey1(prodCountryAffEntity.getDpPlanner());
         failData.setKey2(prodCountryAffEntity.getCountry());
         failData.setKey3("");

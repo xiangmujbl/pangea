@@ -245,6 +245,7 @@ public interface IConstant {
             String GDM_UNIT_EVOL = "GDMUnitEvol";
             String EDM_SALES_ORDER = "EDMSalesOrder";
             String OMP_GDM_CLUSTER = "OMPGdmCluster";
+            String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
 
         }
 
