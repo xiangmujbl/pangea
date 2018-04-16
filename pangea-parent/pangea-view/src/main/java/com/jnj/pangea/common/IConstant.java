@@ -30,12 +30,18 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
-        String PROJECT_ONE_VBEP = "/project_one/vbep";
-        String PROJECT_ONE_VBAP = "/project_one/vbap";
-        String PROJECT_ONE_VBPA = "/project_one/vbpa";
-        String PROJECT_ONE_VBKD = "/project_one/vbkd";
+        String PROJECT_ONE_VBEP="/project_one/vbep";
+        String PROJECT_ONE_VBAP="/project_one/vbap";
+        String PROJECT_ONE_VBPA="/project_one/vbpa";
+        String PROJECT_ONE_VBKD="/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
-        String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
+        String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
+        String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
+        String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
+        String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
+        String EDM_CURRENCY_V1 = "/edm/currency_v1";
+        String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
+        String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -81,26 +87,23 @@ public interface IConstant {
         String STRGR = "strgr";
         String SPRAS = "spras";
     }
-
     interface PROJECT_ONE_VBAP {
-        String VBELN = "vbeln";
+       String VBELN="vbeln";
     }
-
     interface PROJECT_ONE_VBEP {
-        String VBELN = "vbeln";
-        String POSNR = "posnr";
+        String VBELN="vbeln";
+        String POSNR="posnr";
     }
 
     interface PROJECT_ONE_VBPA {
-        String VBELN = "vbeln";
-        String POSNR = "posnr";
-        String PARVW = "parvw";
+        String VBELN="vbeln";
+        String POSNR="posnr";
+        String PARVW="parvw";
     }
-
     interface PROJECT_ONE_VBKD {
-        String VBELN = "vbeln";
-        String POSNR = "posnr";
-        String PARVW = "parvw";
+        String VBELN="vbeln";
+        String POSNR="posnr";
+        String PARVW="parvw";
     }
 
     interface NGEMS_MATERIAL_LINKAGE {
@@ -137,6 +140,7 @@ public interface IConstant {
     }
 
 
+
     interface EDM_MATERIAL_GLOBAL_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
@@ -166,6 +170,31 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String PLANNING_TYPE = "planningType";
     }
+    interface CNS_PROD_LOC_ATTRIB {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
+
+    interface PLAN_CNS_FIN_PLAN_VAL {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
+    }
+    interface PLAN_CNS_FIN_PLAN_QTY {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
+    }
+    interface EDM_CURRENCY_V1 {
+        String LOCAL_CURRENCY = "localCurrency";
+    }
+    interface PLAN_CNS_MATERIAL_PLAN_STATUS {
+        String DP_RELEVANT = "dpRelevant";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
+    interface PLAN_CNS_PROD_CTY_AFFL{
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
 
     // -----region attribute value
     interface VALUE {
@@ -187,12 +216,18 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
-        String WE = "WE";
-        String LA_ = "LA_";
+        String WE="WE";
+        String LA_="LA_";
         String PGA = "PGA";
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
-        String USD = "USD";
+        String USD="USD";
+        String PANGEA = "Pangea";
+        String FPB = "FPB";
+        String SAPR = "SAPR";
+        String SAMPLE = "SAMPLE";
+        String REGULAR = "REGULAR";
+        String ACTIVE = "ACTIVE";
         String STR_ONE = "001";
     }
 

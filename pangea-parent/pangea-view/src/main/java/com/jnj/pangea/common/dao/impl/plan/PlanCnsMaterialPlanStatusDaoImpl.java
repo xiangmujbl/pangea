@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
@@ -16,10 +17,17 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsMaterialPlanStatusEntity getEntityWithConditions(String param) {
+    public PlanCnsMaterialPlanStatusEntity getEntityWithConditions(String localMaterialnumber) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.DP_RELEVANT).is(IConstant.VALUE.X)
+                .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber)
+                .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(IConstant.VALUE.PROJECT_ONE).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
+    }
 
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
-        return null;
+    public PlanCnsMaterialPlanStatusEntity getEntityWithDpRelevantAndLocalMaterialnumber(String localMaterialnumber) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.DP_RELEVANT).is(IConstant.VALUE.X)
+                .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber).toQueryString();
+        LogUtil.getCoreLog().info("queryString:"+queryString);
+        return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
 }
