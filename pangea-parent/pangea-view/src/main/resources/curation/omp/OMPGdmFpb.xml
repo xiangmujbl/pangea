@@ -1,0 +1,84 @@
+<adf-curation>
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_fpb" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_fpb.controller.OMPGdmFpbController">
+        <regions>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localDpParentCode,localBaseUom
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
+                    </relation>
+                    <relation path="/plan/cns_fin_plan_qty" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber,
+                            unitId=/edm/material_global_v1.localBaseUom.
+                        </expression>
+                    </relation>
+                    <relation path="/plan/cns_fin_plan_val" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+                    </relation>
+                    <relation path="/edm/material_auom_v1" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cns_fin_plan_qty">
+                <columns>
+                    localMaterialNumber,identifier,country,currency,unitId,quantity
+                </columns>
+                <relations>
+                    <relation path="/edm/country_v1" isPrimaryKey="false">
+                        <expression>localCountry = /plan/cns_fin_plan_qty.country</expression>
+                    </relation>
+                    <relation path="/edm/currency_v1" isPrimaryKey="false">
+                        <expression>localCurrency = /plan/cns_fin_plan_qty.currency</expression>
+                    </relation>
+                    <relation path="/edm/material_auom_v1" isPrimaryKey="false">
+                        <expression>localAuom = /plan/cns_fin_plan_qty.unitId</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/plan/cns_fin_plan_val">
+                <columns>
+                    localMaterialNumber,identifier,value
+                </columns>
+            </region>
+
+            <region path="/edm/material_auom_v1">
+                <columns>
+                    localMaterialNumber,localAuom,localNumerator,localDenominator
+                </columns>
+            </region>
+
+            <region path="/edm/country_v1">
+                <columns>
+                    sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion
+                </columns>
+            </region>
+
+            <region path="/edm/currency_v1">
+                <columns>
+                    sourceSystem,localCurrency,currencyCode,currencyName,isoNumeric
+                </columns>
+            </region>
+
+            <region path="/omp/gdm_fpb">
+                <columns>
+                    fpbId,countryId,currencyId,dueDate,fromDueDate,productId,value,volume
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

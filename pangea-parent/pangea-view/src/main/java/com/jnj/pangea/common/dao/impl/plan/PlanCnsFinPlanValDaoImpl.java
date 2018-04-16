@@ -1,0 +1,28 @@
+package com.jnj.pangea.common.dao.impl.plan;
+
+import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
+import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanValEntity;
+
+public class PlanCnsFinPlanValDaoImpl extends CommonDaoImpl {
+
+    private static PlanCnsFinPlanValDaoImpl instance;
+
+    public static PlanCnsFinPlanValDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new PlanCnsFinPlanValDaoImpl();
+        }
+        return instance;
+    }
+
+    public PlanCnsFinPlanValEntity getEntityWithConditions(String localMaterialNumber) {
+        if (null != localMaterialNumber && !"".equals(localMaterialNumber)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_FIN_PLAN_VAL.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+                    .and(IConstant.PLAN_CNS_FIN_PLAN_VAL.IDENTIFIER).is(IConstant.VALUE.FPB).toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_FIN_PLAN_VAL, queryString, PlanCnsFinPlanValEntity.class);
+        }
+        return null;
+    }
+
+}

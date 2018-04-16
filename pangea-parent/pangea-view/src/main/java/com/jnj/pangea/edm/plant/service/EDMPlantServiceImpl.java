@@ -6,7 +6,7 @@ import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001KDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001WDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
+import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
 import com.jnj.pangea.common.entity.project_one.T001Entity;
@@ -100,7 +100,7 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(land1)) {
             return "";
         }
-        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountry(land1);
+        EDMCountryV1Entity countryEntity = countryV1Dao.getEntityWithLocalCountry(land1);
         if (null != countryEntity) {
             return countryEntity.getCountryCode();
         }
