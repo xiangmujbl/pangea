@@ -167,6 +167,9 @@ node ('ADFSlaveLarge'){
 	} catch(ex){
 		echo "enter into Exception" 
         currentBuild.result = 'FAILURE'
+		junit 'pangea-parent/pangea-test/target/surefire-reports/*.xml'
+		cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'pangea-parent/pangea-test/target/Destination', sortingMethod: 'ALPHABETICAL'
+
 		sshagent (credentials: ['sa-its-adaas']) {
 		  sh '''
 		  ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com "
