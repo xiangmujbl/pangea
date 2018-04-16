@@ -122,3 +122,6 @@
 
 /plan/cns_prod_cty_affl
 
+
+/omp/product_detail
+
