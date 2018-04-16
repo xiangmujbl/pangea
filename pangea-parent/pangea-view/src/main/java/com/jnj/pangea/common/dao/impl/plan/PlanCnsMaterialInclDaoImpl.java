@@ -28,4 +28,13 @@ public class PlanCnsMaterialInclDaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria().toQueryString();
         return queryForList(IConstant.REGION.PLAN_CNS_MATERIAL_INCL,queryString,CnsMaterialInclEntity.class);
     }
+
+    public CnsMaterialInclEntity getEntityWithLocalMaterialNumberAndLocalPlant(String localMaterialNumber, String localPlant) {
+        if (null!=localMaterialNumber && null!=localPlant){
+            String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_INCL.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+                    .and(IConstant.CNS_MATERIAL_INCL.LOCAL_PLANT).is(localPlant).toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_INCL,queryString,CnsMaterialInclEntity.class);
+        }
+        return null;
+    }
 }

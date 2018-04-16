@@ -169,6 +169,7 @@ public interface IConstant {
     interface CNS_MATERIAL_INCL {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String PLANNING_TYPE = "planningType";
+        String LOCAL_PLANT = "localPlant";
     }
     interface CNS_PROD_LOC_ATTRIB {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -199,7 +200,7 @@ public interface IConstant {
     // -----region attribute value
     interface VALUE {
 
-        String PROJECT_ONE = "project_one";
+        String PROJECT_ONE = "Project_One";
         String EMS = "[EMS]";
         String EN = "E";
         String PT = "P";
