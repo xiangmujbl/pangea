@@ -119,56 +119,38 @@
 /plan/cns_pln_spl_loc
 /omp/gdm_location_xref
 
-
 /edm/material_plant_fin_v1
 /plan/cns_prod_loc_attrib
 /plan/cns_lot_size_key_trans
 /plan/cns_con_mode
 /omp/gdm_product_location
 
-
-
-
-
 /project_one/eban
 /edm/purchase_requisition_v1
 
-
-
-
-
 /omp/gdm_batch
-
-
-
 
 /project_one/mcha
 /project_one/mchb
 
-
-
-
 /omp/certainity
 
-
-/project_one/plaf
 /project_one/plaf
 /edm/planned_order_v1
-
 
 /project_one/eina
 /project_one/eine
 /edm/purchasing_info_record_v1
 
-
 /plan/cns_process_type
 /omp/process_type
 
+/project_one/afko
+/project_one/aufk
+/project_one/jest
+/project_one/tj02t
+/project_one/afpo
+/edm/process_order_v1
 
-
-
-
-
-
-
+/omp/gdm_pos
 
