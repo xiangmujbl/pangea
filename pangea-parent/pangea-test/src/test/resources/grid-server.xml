@@ -66,6 +66,8 @@
 
 		<adf-grid:partitioned-region name="gdm_product_unit_conversion" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
+        <adf-grid:partitioned-region name="gdm_product_location" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
 	</adf-grid:replicated-region>
 
 
