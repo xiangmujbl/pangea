@@ -1,0 +1,33 @@
+<adf-curation>
+    <curation mainRegion="/plan/cns_prod_cty_affl" viewRegion="/omp/product_country" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.product_country.controller.GDMProductCountryController">
+        <regions>
+
+            <region path="/plan/cns_prod_cty_affl">
+                <columns>
+                    sourceSystem,dpParentCode,country,productClassification,productStatus,dpSegmentation,dpPlanner,rootSize,countryGroup
+                </columns>
+                <relations>
+                    <relation path="/edm/country_v1">
+                        <expression>
+                            localCountry=/plan/cns_prod_cty_affl.country
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/country_v1">
+                <columns>
+                    localCountry,countryCode
+                </columns>
+            </region>
+
+            <region path="/omp/product_country">
+                <columns>
+                    uniqueId,activeFcterp,countryGroup,countryId,dpPlannerId,dpSegmentation,productClassification,productId,productStatus,rootSize,segmentation
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
