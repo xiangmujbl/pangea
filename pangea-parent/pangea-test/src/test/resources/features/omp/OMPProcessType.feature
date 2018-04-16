@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-2375
-Feature: OMPProcessType 
+Feature: OMPProcessType AEAZ-2375
 
-  Scenario: Full Load curation AEAZ-2375
+  Scenario: Full Load curation
     # 1. get record from cns_process_type
 
     Given I import "/plan/cns_process_type" by keyFields "processTypeId"

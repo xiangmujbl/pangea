@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-2369
-Feature: EDMSourceList-Curation
+Feature: EDMSourceList-Curation AEAZ-2369
 
-  Scenario: Full Load curation AEAZ-2369
+  Scenario: Full Load curation
     # 1. Get sourceSystem from sourceSystem (T1)
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
