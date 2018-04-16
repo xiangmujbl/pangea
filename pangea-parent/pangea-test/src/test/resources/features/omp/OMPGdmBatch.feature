@@ -33,11 +33,11 @@ Feature: OMPGdmBatch AEAZ-2374
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
       | SP             | OMPGdmBatch | N2        |              |              | 007  | 005  |      |      |      |            |
 
-#    And I compare the number of records between "/edm/batch_master_v1" and "/omp/gdm_batch,/plan/edm_failed_data"
-#
-#    And I delete the test data
-#
-#    And I will remove all data with region "/omp/gdm_batch"
-#
-#    And I will remove all data with region "/plan/edm_failed_data"
+    And I compare the number of records between "/edm/batch_master_v1" and "/omp/gdm_batch,/plan/edm_failed_data"
+
+    And I delete the test data
+
+    And I will remove all data with region "/omp/gdm_batch"
+
+    And I will remove all data with region "/plan/edm_failed_data"
 
