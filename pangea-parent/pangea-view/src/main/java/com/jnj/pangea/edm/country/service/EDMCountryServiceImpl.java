@@ -16,7 +16,6 @@ public class EDMCountryServiceImpl implements ICommonService {
 
 
     private static ICommonService instance;
-    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private EMSFMdmCountriesDaoImpl emsfMdmCountriesDao = EMSFMdmCountriesDaoImpl.getInstance();
 
     public static ICommonService getInstance() {
@@ -33,33 +32,24 @@ public class EDMCountryServiceImpl implements ICommonService {
         EMSFMdmCountriesEntity mainData = (EMSFMdmCountriesEntity) o;
 
         EDMCountryBo edmCountryBo = new EDMCountryBo();
-        resultObject.setBaseBo(edmCountryBo);
 
         String zSourceSystem = mainData.getzSourceSystem();
-        if (StringUtils.isNotEmpty(zSourceSystem)) {
-            String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(zSourceSystem);
-            edmCountryBo.setSourceSystem(sourceSystem);
-        } else {
-            resultObject.setFailData(null);
-            return resultObject;
-        }
 
-        processSystem(mainData, edmCountryBo);
+        edmCountryBo.setSourceSystem(zSourceSystem);
+        edmCountryBo.setLocalCountry(mainData.getMdmCode());
 
         String zEntCodeIso3166Alpha2 = mainData.getzEntCodeIso3166Alpha2();
+
+        edmCountryBo.setCountryCode(zEntCodeIso3166Alpha2);
         if (StringUtils.isNotEmpty(zEntCodeIso3166Alpha2)) {
-            EMSFMdmCountriesEntity emsfMdmCountriesEntity = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode(IConstant.VALUE.EMS, mainData.getzEntCodeIso3166Alpha2());
+            EMSFMdmCountriesEntity emsfMdmCountriesEntity = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode(IConstant.VALUE.EMS, zEntCodeIso3166Alpha2);
             if (emsfMdmCountriesEntity != null) {
                 edmCountryBo.setCountryName(emsfMdmCountriesEntity.getMdmName());
             }
         }
-        return resultObject;
-    }
 
-    private boolean processSystem(EMSFMdmCountriesEntity mainData, EDMCountryBo edmCountryBo) {
-        edmCountryBo.setLocalCountry(mainData.getMdmCode());
-        edmCountryBo.setCountryCode(mainData.getzEntCodeIso3166Alpha2());
-        return true;
+        resultObject.setBaseBo(edmCountryBo);
+        return resultObject;
     }
 
 }

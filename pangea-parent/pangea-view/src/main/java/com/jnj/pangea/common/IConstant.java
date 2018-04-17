@@ -122,7 +122,7 @@ public interface IConstant {
 
     interface EMS_F_MDM_COUNTRIES {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
-        String MDM_CODE = "mdmCode";
+        String Z_ENT_CODE_ISO_3166_ALPHA_2 = "zEntCodeIso3166Alpha2";
     }
 
     interface EMS_F_Z_CURRENCIES {
