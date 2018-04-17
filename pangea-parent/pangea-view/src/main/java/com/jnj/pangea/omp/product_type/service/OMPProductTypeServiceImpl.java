@@ -30,7 +30,7 @@ public class OMPProductTypeServiceImpl implements ICommonService {
 
         productTypeBo.setActiveFCTERP(IConstant.VALUE.YES);
         productTypeBo.setActiveOPRERP(IConstant.VALUE.YES);
-        productTypeBo.setActiveSOPERP(IConstant.VALUE.YES);
+        productTypeBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         resultObject.setBaseBo(productTypeBo);
         return resultObject;

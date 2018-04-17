@@ -30,7 +30,7 @@ public class OMPLocationTypeServiceImpl implements ICommonService {
         locationTypeBo.setLabel(cnsLocationTypeEntity.getPlanLocTypeDesc());
         locationTypeBo.setActiveFCTERP(IConstant.VALUE.YES);
         locationTypeBo.setActiveOPRERP(IConstant.VALUE.YES);
-        locationTypeBo.setActiveSOPERP(IConstant.VALUE.YES);
+        locationTypeBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         resultObject.setBaseBo(locationTypeBo);
         return resultObject;

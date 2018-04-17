@@ -108,7 +108,7 @@ public interface IConstant {
 
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
-        String SOURCE_SYSTEM="sourceSystem";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface PROJECT_ONE_TMABCT {
@@ -345,7 +345,7 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
-        String NO="NO";
+        String NO = "NO";
         String WE = "WE";
         String LA_ = "LA_";
         String PGA = "PGA";
@@ -364,8 +364,8 @@ public interface IConstant {
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";
         String DD_MM_YYYY = "dd/MM/yyyy";
-        String N="N";
-        String BLANK="Blank";
+        String N = "N";
+        String BLANK = "Blank";
         String OR = "OR";
         String SPACE = " ";
     }
@@ -385,9 +385,9 @@ public interface IConstant {
             String OMP_GDM_PRODUCT_LOCATION = "OMPGdmProductLocation";
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
-            String OMP_GDM_BATCH="OMPGdmBatch";
-            String EDM_PLANNED_ORDER="EdmPlannedOrder";
-            String EDM_BATCH_MASTER="EdmBatchMaster";
+            String OMP_GDM_BATCH = "OMPGdmBatch";
+            String EDM_PLANNED_ORDER = "EdmPlannedOrder";
+            String EDM_BATCH_MASTER = "EdmBatchMaster";
         }
 
         interface ERROR_CODE {
