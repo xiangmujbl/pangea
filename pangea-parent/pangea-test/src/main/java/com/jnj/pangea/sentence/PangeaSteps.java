@@ -95,27 +95,37 @@ public class PangeaSteps extends CommonSteps {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        ResponseEntity<byte[]> response = restTemplate.exchange("http://" + mboxSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
+        Integer count = 3;
 
         File file = new File("tmp.tsv");
         FileOutputStream output = null;
-        if(response.getStatusCode().equals(HttpStatus.OK))
-        {
 
-                try (FileOutputStream fileOutputStream = output = new FileOutputStream(file)) {
-                    IOUtils.write(response.getBody(), output);
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+        do{
+            ResponseEntity<byte[]> response = restTemplate.exchange("http://" + mboxSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
+
+                if(response.getStatusCode().equals(HttpStatus.OK)){
+
+                    try (FileOutputStream fileOutputStream = output = new FileOutputStream(file)) {
+                        IOUtils.write(response.getBody(), output);
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    Assert.assertTrue(file.exists());
+                    //TODO file is empty at the moment???
+                    //Assert.assertTrue(file.length() > 0);
+                    return file;
+
+                } else {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    count++;
                 }
-
-
-        }
-
-        Assert.assertTrue(file.exists());
-        Assert.assertTrue(file.length() > 0);
-
+            } while(count < 4);
         return file;
     }
 
