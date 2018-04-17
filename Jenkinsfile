@@ -9,8 +9,8 @@ node ('ADFSlaveLarge'){
 	def uploadTestclass =params.Upload_TestClass_To_Artifactory
 	def uploadReport =params.Upload_TestData_and_Report
 	def updateJira =params.Update_JIRA
+	def setTestFeature =params.Set_Test_Feature_By_Committed_JIRA
 	
-	def junitJobName = "ADF_Junit_CI_Build" 
 	
 	def _cfg = ''
 	currentBuild.result = "SUCCESS"
@@ -26,7 +26,9 @@ node ('ADFSlaveLarge'){
 	        snapOrRels = getSnapOrRels(prjVersionNo)
 		    _cfg = getJenkinsConfigurationId ()
 			echo " _cfg ***** = ${_cfg}"
-			getTargetJira()
+			if(setTestFeature){
+				setTestTarget()
+			}
 		}
 	
 		stage('build source') {
@@ -75,6 +77,7 @@ node ('ADFSlaveLarge'){
             sshagent (credentials: ['sa-its-adaas']) {
 
               sh "ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com 'cd /app/cur_install/bin && ./deploy.sh && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster-protocol/0.3.04-0.4/adf-compute-cluster-protocol-0.3.04-0.4.jar /app/adf/compute/lib0 && cp ${WORKSPACE}/pangea-parent/pangea-test/src/test/resources/grid-server.xml /app/adf/curation/conf && ./startserver.sh curation && ./startserver.sh cachegrid && ./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar &&./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4-wan-shuffle-function.jar && ./hotdeploy.sh all /app/cur_install/source/extension/adf-topic-queue-0.3-v1-1121.jar && ./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/DI-plugin/0.3.04-SNAPSHOT/DI-plugin-0.3.04-SNAPSHOT.jar &&./startserver.sh computer' "
+              //sh "ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com 'cd /app/cur_install/bin && ./deploy.sh && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster-protocol/0.3.04-0.4/adf-compute-cluster-protocol-0.3.04-0.4.jar /app/adf/compute/lib0 && cp ${WORKSPACE}/pangea-parent/pangea-test/src/test/resources/grid-server.xml /app/adf/curation/conf && ./startserver.sh curation && ./startserver.sh cachegrid && ./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4-function.jar &&./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4-wan-shuffle-function.jar && ./hotdeploy.sh all /app/cur_install/source/extension/adf-topic-queue-0.3-v1-1121.jar && ./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/DI-plugin/0.3.04-SNAPSHOT/DI-plugin-0.3.04-SNAPSHOT.jar &&./startserver.sh computer' "
 
 			  }
         }		
@@ -131,7 +134,7 @@ node ('ADFSlaveLarge'){
 				//	server.upload(uploadExcelData)
 				
 				node ('master'){
-				  withEnv(["junitJobName=${junitJobName}","snapOrRels=${snapOrRels}","prjVersionNo=${prjVersionNo}"]) {
+				  withEnv(["snapOrRels=${snapOrRels}","prjVersionNo=${prjVersionNo}"]) {
 				  sh '''
 					cd $JENKINS_HOME/jobs/${JOB_NAME}/lastSuccessful
 					tar cvf ./cucumber.tar ./cucumber-html-reports/
@@ -140,9 +143,9 @@ node ('ADFSlaveLarge'){
 				  def uploadTestResult = """{ 
 				  "files": [
 				  {
-				    "pattern": "$JENKINS_HOME/jobs/${junitJobName}/lastSuccessful/cucumber.tar",
+				    "pattern": "$JENKINS_HOME/jobs/${JOB_NAME}/lastSuccessful/cucumber.tar",
                     "props": "groupId=com.jnj.pangea.pangea-test/;artifactId=CucumberReportHTML",
-                    "target": "taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test//${prjVersionNo}/CucumberReportHTML/cucumberReport_${BUILD_NUMBER}.tar",
+                    "target": "taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/cucumberReport_${BUILD_NUMBER}.tar",
                     "flat": "false" 
                   }]
 				 }"""
@@ -197,42 +200,53 @@ def getSnapOrRels(String prjVersionNo){
  
 def updateJiraComment(Boolean uploadReport,String jobName,String snapOrRels,String prjVersionNo){
 	echo "enter into updateJiraComment "
-    //def commit = sh (returnStdout: true, script: "git log -1 --pretty=format:%s --grep='[a-zA-Z]-[0-9]' ").trim()
-	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='6 days ago' ").trim()
-    echo "commit=   '${commit}' "
+
 	def jenkinsUrl = "${env.JENKINS_URL}".trim()
 	def buildNumber ="${env.BUILD_NUMBER}".trim()
-	def commitArray = commit.split(" |,|\r|\n")
-	def jiraMap = [:]
-	for (int i = 0; i < commitArray.size(); ++i) { 
-		def commitMsg = "${commitArray[i]}".trim()
-		echo "updateJiraComment commitMsg=   '${commitMsg}' "
-		def matcher = commitMsg ==~ /[A-Za-z]{1,}-\d{4}/
-		if(matcher){
-          jiraMap.put("${commitArray[i]}","${commitArray[i]}")
-		  
 
-		}
-	}
-	
+	def jiraMap = getTargetJira()
 	for (String key : jiraMap.keySet()) {
-      echo "key=   '${key}' "
-			if (uploadReport) {
-				//jiraAddComment comment: "Cucumber Report URL: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html  \r\n Artifactory Cucumber Report URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/   \r\n Artifactory Test Data URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/adf/adf-test-framework/${prjVersionNo}/TestData/ ", idOrKey: "${key}", site: 'JiraForJnj'
-				jiraAddComment comment: "Cucumber Report URL: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html  \r\n Artifactory Cucumber Report URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/   \r\n Artifactory Test Data URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/TestData/ ", idOrKey: "${key}", site: 'JiraForJnj'
-			
-			} else {
-				jiraAddComment comment: "Cucumber Report URL for Local: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html ", idOrKey: "${key}", site: 'JiraForJnj'
-			}
+		echo "key@@@@=   '${key}' "
+		if (uploadReport) {
+			//jiraAddComment comment: "Cucumber Report URL: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html  \r\n Artifactory Cucumber Report URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/   \r\n Artifactory Test Data URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/adf/adf-test-framework/${prjVersionNo}/TestData/ ", idOrKey: "${key}", site: 'JiraForJnj'
+			//jiraAddComment comment: "Cucumber Report URL: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html  \r\n Artifactory Cucumber Report URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/   \r\n Artifactory Test Data URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/TestData/ ", idOrKey: "${key}", site: 'JiraForJnj'
+		
+		} else {
+			//jiraAddComment comment: "Cucumber Report URL for Local: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html ", idOrKey: "${key}", site: 'JiraForJnj'
+		}
+		
+    }
+
+}
+
+def setTestTarget(){
+    echo "enter into setTestTarget() "
+	def testTargetJira=""
+	
+	def jiraMap = getTargetJira()
+	for (String key : jiraMap.keySet()) {
+		echo "key***=   '${key}' "
+		testTargetJira = "@${key},${testTargetJira}"
+		echo "testTargetJira=   '${testTargetJira}' "
     }
 	
 	
+	// update Main test Class BaseFlowTest.java
+	withEnv(["testTargetJira=${testTargetJira}"]) {
+		sh '''
+			echo "update Main test Class"
+			echo " testTargetJira=${testTargetJira}"
+			cd ${WORKSPACE}/pangea-parent/pangea-test/src/test/java/com/jnj/pangea
+			sed -i s#@pangea_test#${testTargetJira}# BaseFlowTest.java
+					 
+		'''
+	}
 }
 
 def Map getTargetJira(){
     echo "enter into getTargetJira() "
 	    //def commit = sh (returnStdout: true, script: "git log -1 --pretty=format:%s --grep='[a-zA-Z]-[0-9]' ").trim()
-	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='6 days ago' ").trim()
+	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='3 days ago' ").trim()
      echo "commit=   '${commit}' "
 
 
@@ -255,8 +269,6 @@ def Map getTargetJira(){
 	
 	return jiraMap
 }
-
-
 
 def String getJenkinsConfigurationId (){
 
