@@ -35,11 +35,13 @@ public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
     }
 
     public EDMSourceSystemV1Entity getEntityWithLocalSourceSystem(String localSourceSystem) {
+        if (null != localSourceSystem) {
+            String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(localSourceSystem).toQueryString();
+            return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
 
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(localSourceSystem).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
+        }
+        return null;
     }
-
 
 
 }

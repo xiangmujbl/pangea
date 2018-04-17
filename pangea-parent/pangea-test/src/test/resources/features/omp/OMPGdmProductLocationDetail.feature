@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-2377
-Feature:  OMPGdmProductLocationDetail-Curation
+Feature:  OMPGdmProductLocationDetail-Curation AEAZ-2377
 
-  Scenario: Full Load curation AEAZ-2377
+  Scenario: Full Load curation
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
