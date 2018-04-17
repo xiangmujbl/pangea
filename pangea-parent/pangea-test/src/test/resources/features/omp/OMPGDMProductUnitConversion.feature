@@ -25,7 +25,7 @@ Feature: OMPGdmProductUnitConversion AEAZ-1815
 
     Then I check region data "/omp/gdm_product_unit_conversion" by keyFields "gdmProductUnitConversionId"
       | gdmProductUnitConversionId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | productId | unitId |
-      | 1DPSP                      | YES    | YES          | YES          | YES          | 0.10    | -         | DPSP   |
+      | 1DPSP                      | YES    | YES          | YES          | NO           | 0.10   | -         | DPSP   |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

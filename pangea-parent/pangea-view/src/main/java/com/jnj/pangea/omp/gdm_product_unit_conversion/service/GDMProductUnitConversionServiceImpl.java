@@ -77,6 +77,6 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
         gdmProductUnitConversionBo.setActive(IConstant.VALUE.YES);
         gdmProductUnitConversionBo.setActiveFCTERP(IConstant.VALUE.YES);
         gdmProductUnitConversionBo.setActiveOPRERP(IConstant.VALUE.YES);
-        gdmProductUnitConversionBo.setActiveSOPERP(IConstant.VALUE.YES);
+        gdmProductUnitConversionBo.setActiveSOPERP(IConstant.VALUE.NO);
     }
 }
