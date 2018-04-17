@@ -209,10 +209,10 @@ def updateJiraComment(Boolean uploadReport,String jobName,String snapOrRels,Stri
 		echo "key@@@@=   '${key}' "
 		if (uploadReport) {
 			//jiraAddComment comment: "Cucumber Report URL: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html  \r\n Artifactory Cucumber Report URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/   \r\n Artifactory Test Data URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/adf/adf-test-framework/${prjVersionNo}/TestData/ ", idOrKey: "${key}", site: 'JiraForJnj'
-			//jiraAddComment comment: "Cucumber Report URL: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html  \r\n Artifactory Cucumber Report URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/   \r\n Artifactory Test Data URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/TestData/ ", idOrKey: "${key}", site: 'JiraForJnj'
+			jiraAddComment comment: "Cucumber Report URL: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html  \r\n Artifactory Cucumber Report URL: https://artifactrepo.jnj.com/artifactory/list/taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/ ", idOrKey: "${key}", site: 'JiraForJnj'
 		
 		} else {
-			//jiraAddComment comment: "Cucumber Report URL for Local: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html ", idOrKey: "${key}", site: 'JiraForJnj'
+			jiraAddComment comment: "Cucumber Report URL for Local: ${jenkinsUrl}job/${jobName}/${buildNumber}/cucumber-html-reports/overview-features.html ", idOrKey: "${key}", site: 'JiraForJnj'
 		}
 		
     }
@@ -255,7 +255,7 @@ def Map getTargetJira(){
 	for (int i = 0; i < commitArray.size(); ++i) { 
 		def commitMsg = "${commitArray[i]}".trim()
 		echo "commitMsg=   '${commitMsg}' "
-		def matcher = commitMsg ==~ /[A-Za-z]{1,}-\d{4}/
+		def matcher = commitMsg ==~ /[A-Za-z]{1,}-\d{2,}/
 		if(matcher){
 			jiraMap.put("${commitArray[i]}","${commitArray[i]}")
 		  
