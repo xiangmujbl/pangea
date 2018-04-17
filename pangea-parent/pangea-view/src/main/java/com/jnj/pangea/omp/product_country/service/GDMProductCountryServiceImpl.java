@@ -3,11 +3,10 @@ package com.jnj.pangea.omp.product_country.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
 import com.jnj.pangea.common.entity.plan.CnsProdCtyAffEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_country.bo.GDMProductCountryBo;
+import org.apache.commons.lang3.StringUtils;
 
 public class GDMProductCountryServiceImpl implements ICommonService {
     private static GDMProductCountryServiceImpl instance;
@@ -19,8 +18,6 @@ public class GDMProductCountryServiceImpl implements ICommonService {
         return instance;
     }
 
-    EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
-
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
@@ -30,23 +27,40 @@ public class GDMProductCountryServiceImpl implements ICommonService {
 
         String dpParentCode = prodCtyAfflEntity.getDpParentCode();
         String country = prodCtyAfflEntity.getCountry();
-        if (null != dpParentCode && null != country) {
+        if (StringUtils.isNotEmpty(dpParentCode) && StringUtils.isNotEmpty(country)) {
+            // C1
             String uniqueId = IConstant.VALUE.LA_ + prodCtyAfflEntity.getDpParentCode() + prodCtyAfflEntity.getCountry();
             productCountryBo.setUniqueId(uniqueId);
-            productCountryBo.setActiveFcterp(IConstant.VALUE.YES);
-            productCountryBo.setCountryGroup(prodCtyAfflEntity.getCountryGroup());
-
-            EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountry(country);
-            if (null != countryEntity) {
-                productCountryBo.setCountryId(countryEntity.getCountryCode());
-            }
-            productCountryBo.setDpPlannerId(prodCtyAfflEntity.getDpPlanner());
+            // D1
+            productCountryBo.setActiveFCTERP(IConstant.VALUE.YES);
+            productCountryBo.setCountryGroup(prodCtyAfflEntity.getCountryGrp());
+            productCountryBo.setCountryId(prodCtyAfflEntity.getCountry());
+            productCountryBo.setDpPlannerId(prodCtyAfflEntity.getDpPlannerId());
             productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
-            productCountryBo.setProductClassification(prodCtyAfflEntity.getProductClassification());
-            productCountryBo.setProductId(dpParentCode);
-            productCountryBo.setProductStatus(prodCtyAfflEntity.getProductStatus());
+            // T1
+            if (StringUtils.isNotEmpty(prodCtyAfflEntity.getOvrPrdClass())) {
+                productCountryBo.setProductClassification(prodCtyAfflEntity.getOvrPrdClass());
+            } else if (StringUtils.isNotEmpty(prodCtyAfflEntity.getProdClassification())) {
+                productCountryBo.setProductClassification(prodCtyAfflEntity.getProdClassification());
+            } else {
+                FailData failData = writeFailDataToRegion(prodCtyAfflEntity, IConstant.FAILED.ERROR_CODE.T1, "All Key fields not Exist");
+                resultObject.setFailData(failData);
+                return resultObject;
+            }
+            productCountryBo.setProductId(prodCtyAfflEntity.getDpParentCode());
+            // T2
+            if (StringUtils.isNotEmpty(prodCtyAfflEntity.getOvrPrdStat())) {
+                productCountryBo.setProductStatus(prodCtyAfflEntity.getOvrPrdStat());
+            } else if (StringUtils.isNotEmpty(prodCtyAfflEntity.getProdStatus())) {
+                productCountryBo.setProductStatus(prodCtyAfflEntity.getProdStatus());
+            } else {
+                FailData failData = writeFailDataToRegion(prodCtyAfflEntity, IConstant.FAILED.ERROR_CODE.T2, "All Key fields not Exist");
+                resultObject.setFailData(failData);
+                return resultObject;
+            }
+
             productCountryBo.setRootSize(prodCtyAfflEntity.getRootSize());
-            productCountryBo.setSegmentation(prodCtyAfflEntity.getDpSegmentation());
+            productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
 
             resultObject.setBaseBo(productCountryBo);
         } else {
@@ -59,13 +73,13 @@ public class GDMProductCountryServiceImpl implements ICommonService {
 
     private FailData writeFailDataToRegion(CnsProdCtyAffEntity prodCountryAffEntity, String ruleCode, String errorValue) {
         FailData failData = new FailData();
-        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
+        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
         failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_PRODUCT_COUNTRY);
         failData.setErrorCode(ruleCode);
         failData.setSourceSystem("");
-        failData.setKey1(prodCountryAffEntity.getDpPlanner());
-        failData.setKey2(prodCountryAffEntity.getCountry());
-        failData.setKey3("");
+        failData.setKey1(prodCountryAffEntity.getSourceSystem());
+        failData.setKey2(prodCountryAffEntity.getDpParentCode());
+        failData.setKey3(prodCountryAffEntity.getCountry());
         failData.setKey4("");
         failData.setKey5("");
         failData.setErrorValue(errorValue);

@@ -5,26 +5,13 @@
 
             <region path="/plan/cns_prod_cty_affl">
                 <columns>
-                    sourceSystem,dpParentCode,country,productClassification,productStatus,dpSegmentation,dpPlanner,rootSize,countryGroup
-                </columns>
-                <relations>
-                    <relation path="/edm/country_v1">
-                        <expression>
-                            localCountry=/plan/cns_prod_cty_affl.country
-                        </expression>
-                    </relation>
-                </relations>
-            </region>
-
-            <region path="/edm/country_v1">
-                <columns>
-                    localCountry,countryCode
+                    sourceSystem,dpParentCode,country,prodClassification,prodStatus,ovrPrdClass,ovrPrdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp
                 </columns>
             </region>
 
             <region path="/omp/product_country">
                 <columns>
-                    uniqueId,activeFcterp,countryGroup,countryId,dpPlannerId,dpSegmentation,productClassification,productId,productStatus,rootSize,segmentation
+                    uniqueId,activeFCTERP,countryGroup,countryId,dpPlannerId,dpSegmentation,productClassification,productId,productStatus,rootSize,segmentation
                 </columns>
             </region>
 

@@ -253,6 +253,7 @@ public interface IConstant {
         interface ERROR_CODE {
 
             String T1 = "T1";
+            String T2 = "T2";
 
             String C1 = "C1";
 
