@@ -74,7 +74,7 @@ node ('ADFSlaveLarge'){
         stage('deploy cluster'){
             sshagent (credentials: ['sa-its-adaas']) {
 
-              sh "ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com 'cd /app/cur_install/bin && ./deploy.sh && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster-protocol/0.3.04-0.4/adf-compute-cluster-protocol-0.3.04-0.4.jar /app/adf/compute/lib0 && cp ${WORKSPACE}/pangea-parent/pangea-test/src/test/resources/grid-server.xml /app/adf/curation/conf && ./startserver.sh curation && ./startserver.sh cachegrid && ./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar &&./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4-wan-shuffle-function.jar && ./hotdeploy.sh all /app/cur_install/source/extension/adf-topic-queue-0.3-v1-1121.jar && ./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/DI-plugin/0.3.04-SNAPSHOT/DI-plugin-0.3.04-SNAPSHOT.jar &&./startserver.sh computer' "
+              sh "ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com 'cd /app/cur_install/bin && ./deploy.sh && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster-protocol/0.3.04-0.4/adf-compute-cluster-protocol-0.3.04-0.4.jar /app/adf/compute/lib0 && cp ${WORKSPACE}/pangea-parent/pangea-test/src/test/resources/grid-server.xml /app/adf/curation/conf && ./startserver.sh curation && ./startserver.sh cachegrid && ./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar &&./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4-wan-shuffle-function.jar && ./hotdeploy.sh all /app/cur_install/source/extension/adf-topic-queue-0.3-v1-1121.jar && ./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/DI-plugin/0.3.04-SNAPSHOT/DI-plugin-0.3.04-SNAPSHOT.jar &&./startserver.sh computer' "
 
 			  }
         }		
@@ -198,11 +198,11 @@ def getSnapOrRels(String prjVersionNo){
 def updateJiraComment(Boolean uploadReport,String jobName,String snapOrRels,String prjVersionNo){
 	echo "enter into updateJiraComment "
     //def commit = sh (returnStdout: true, script: "git log -1 --pretty=format:%s --grep='[a-zA-Z]-[0-9]' ").trim()
-	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='3 days ago' ").trim()
+	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='6 days ago' ").trim()
     echo "commit=   '${commit}' "
 	def jenkinsUrl = "${env.JENKINS_URL}".trim()
 	def buildNumber ="${env.BUILD_NUMBER}".trim()
-	def commitArray = commit.split(" |,")
+	def commitArray = commit.split(" |,|\r|\n")
 	def jiraMap = [:]
 	for (int i = 0; i < commitArray.size(); ++i) { 
 		def commitMsg = "${commitArray[i]}".trim()
@@ -232,11 +232,11 @@ def updateJiraComment(Boolean uploadReport,String jobName,String snapOrRels,Stri
 def Map getTargetJira(){
     echo "enter into getTargetJira() "
 	    //def commit = sh (returnStdout: true, script: "git log -1 --pretty=format:%s --grep='[a-zA-Z]-[0-9]' ").trim()
-	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='3 days ago' ").trim()
+	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='6 days ago' ").trim()
      echo "commit=   '${commit}' "
 
 
-	def commitArray = commit.split(" |,")
+	def commitArray = commit.split(" |,|\r|\n")
 	def jiraMap = [:]
 	for (int i = 0; i < commitArray.size(); ++i) { 
 		def commitMsg = "${commitArray[i]}".trim()
@@ -255,6 +255,7 @@ def Map getTargetJira(){
 	
 	return jiraMap
 }
+
 
 
 def String getJenkinsConfigurationId (){
