@@ -108,6 +108,7 @@ public interface IConstant {
 
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
+        String SOURCE_SYSTEM="sourceSystem";
     }
 
     interface PROJECT_ONE_TMABCT {
@@ -344,7 +345,7 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
-        String NO = "NO";
+        String NO="NO";
         String WE = "WE";
         String LA_ = "LA_";
         String PGA = "PGA";
