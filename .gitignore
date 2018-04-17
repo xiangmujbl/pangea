@@ -1,5 +1,8 @@
-
 /.idea/
 *.iml
-.DS_Store
-c:
+target/ 
+.DS_Store 
+/pangea-parent/pangea-test/src/test/resources/jar/
+/pangea-parent/pangea-test/src/test/resources/xml/
+/pangea-parent/pangea-test/target/
+/pangea-parent/pangea-view/target/
