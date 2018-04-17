@@ -42,6 +42,7 @@ public interface IConstant {
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
+        String PLAN_CNS_CLUSTERS="/plan/cns_clusters";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -197,6 +198,10 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
+    interface PLAN_CNS_CLUSTERS{
+        String COUNTRY_ID = "countryId";
+    }
+
     // -----region attribute value
     interface VALUE {
 
@@ -217,6 +222,7 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
+        String NO = "NO";
         String WE="WE";
         String LA_="LA_";
         String PGA = "PGA";
@@ -230,6 +236,7 @@ public interface IConstant {
         String REGULAR = "REGULAR";
         String ACTIVE = "ACTIVE";
         String STR_ONE = "001";
+        String BLANK = "BLANK";
     }
 
     interface FAILED {
