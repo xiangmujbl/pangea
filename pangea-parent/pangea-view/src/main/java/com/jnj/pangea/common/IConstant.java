@@ -114,7 +114,6 @@ public interface IConstant {
 
     interface PLAN_CNS_MATERIAL_PLAN_STATUS {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-        String SOURCE_SYSTEM="sourceSystem";
     }
 
     interface NGEMS_GOLDEN_MATERIAL {
