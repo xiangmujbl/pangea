@@ -65,10 +65,10 @@ public class OMPGdmProductLocationServiceImpl {
         if ("".equals(sourceSystem)){
             return resultObjectList;
         }
-        EDMSourceSystemV1Entity edmSourceSystemV1Entity = systemV1Dao.getEntityWithLocalSourceSystem(sourceSystem);
-        if (edmSourceSystemV1Entity == null) {
-            return resultObjectList;
-        }
+//        EDMSourceSystemV1Entity edmSourceSystemV1Entity = systemV1Dao.getEntityWithSourceSystem(sourceSystem);
+//        if (edmSourceSystemV1Entity == null) {
+//            return resultObjectList;
+//        }
         String localPlant = materialPlantV1Entity.getLocalPlant();
         if ("".equals(localPlant)){
             return resultObjectList;
@@ -77,7 +77,7 @@ public class OMPGdmProductLocationServiceImpl {
         if (planStatusEntity == null) {
             return resultObjectList;
         }
-        List<OMPGdmProductLocationBo> boList = getFieldWithJ1(edmMaterialGlobalV1Entity, planStatusEntity, edmSourceSystemV1Entity);
+        List<OMPGdmProductLocationBo> boList = getFieldWithJ1(edmMaterialGlobalV1Entity, planStatusEntity);
         if (boList == null||boList.size()==0){
             FailData failData = new FailData();
             failData.setErrorCode("J1");
@@ -219,7 +219,7 @@ public class OMPGdmProductLocationServiceImpl {
 
 
     //rules J1
-    public List<OMPGdmProductLocationBo> getFieldWithJ1( EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity planStatusEntity, EDMSourceSystemV1Entity edmSourceSystemV1Entity) {
+    public List<OMPGdmProductLocationBo> getFieldWithJ1( EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity planStatusEntity) {
         List<OMPGdmProductLocationBo> boList = new ArrayList<OMPGdmProductLocationBo>();
         if (edmMaterialGlobalV1Entity == null) {
             return new ArrayList<OMPGdmProductLocationBo>();
@@ -240,7 +240,7 @@ public class OMPGdmProductLocationServiceImpl {
                 return new ArrayList<OMPGdmProductLocationBo>();
             }
             OMPGdmProductLocationBo ompGdmProductLocationBo = new OMPGdmProductLocationBo();
-            ompGdmProductLocationBo.setProductId(edmSourceSystemV1Entity.getSourceSystem() + "_" + edmMaterialGlobalV1Entity.getLocalDpParentCode());
+            ompGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getSourceSystem() + "_" + edmMaterialGlobalV1Entity.getLocalDpParentCode());
             boList.add(ompGdmProductLocationBo);
         }
         return boList;

@@ -12,7 +12,7 @@ Feature: OMPLocationType AEAZ-1763
 
     Then I check region data "/omp/location_type" by keyFields "locationTypeId"
       | locationTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label                        |
-      | CO01           | YES          | YES          | YES          | Internal Manufacturing Plant |
+      | CO01           | YES          | YES          | NO           | Internal Manufacturing Plant |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

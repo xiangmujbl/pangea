@@ -38,7 +38,7 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
                 gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);
                 gdmUnitMeasurableBo.setActiveFCTERP(IConstant.VALUE.YES);
                 gdmUnitMeasurableBo.setActiveOPRERP(IConstant.VALUE.YES);
-                gdmUnitMeasurableBo.setActiveSOPERP(IConstant.VALUE.YES);
+                gdmUnitMeasurableBo.setActiveSOPERP(IConstant.VALUE.NO);
                 gdmUnitMeasurableBo.setFactor(unitOfMeasureV1Entity.getFactor());
                 gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
                 gdmUnitMeasurableBo.setMeasure(unitOfMeasureV1Entity.getMeasure());

@@ -58,6 +58,8 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         gdmLocationXrefBo.setActive(IConstant.VALUE.YES);
         gdmLocationXrefBo.setActiveOPRERP(IConstant.VALUE.YES);
 
+        gdmLocationXrefBo.setActiveSOPERP(IConstant.VALUE.NO);
+
         gdmLocationXrefBo.setCountryId(cnsPlnSplLocEntity.getLocalCountry());
         gdmLocationXrefBo.setLabel(cnsPlnSplLocEntity.getLocalName());
         gdmLocationXrefBo.setLocationTypeId(cnsPlnSplLocEntity.getPlanLocTypeId());

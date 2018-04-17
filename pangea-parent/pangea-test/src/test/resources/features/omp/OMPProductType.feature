@@ -13,8 +13,8 @@ Feature: OMPProductType AEAZ-1981
 
     Then I check region data "/omp/product_type" by keyFields "productTypeId"
       | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
-      | DIEN          | YES          | YES          | YES          | Service          |
-      | FERT          | YES          | YES          | YES          | Finished Product |
+      | DIEN          | YES          | YES          | NO           | Service          |
+      | FERT          | YES          | YES          | NO           | Finished Product |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

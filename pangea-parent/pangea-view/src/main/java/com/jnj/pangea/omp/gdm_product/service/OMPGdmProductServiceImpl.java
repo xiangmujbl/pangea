@@ -79,7 +79,7 @@ public class OMPGdmProductServiceImpl {
                     gdmProductBo.setActive(IConstant.VALUE.YES);
                     gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
                     gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
+                    gdmProductBo.setActiveSOPERP(IConstant.VALUE.NO);
 
                     productBos.add(gdmProductBo);
                 }

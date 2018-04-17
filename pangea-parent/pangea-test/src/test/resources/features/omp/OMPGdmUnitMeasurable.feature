@@ -22,7 +22,7 @@ Feature: OMPGdmUnitMeasurable AEAZ-1980
 
     Then I check region data "/omp/gdm_unit" by keyFields "unitId"
       | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure | precision | shortDescription |
-      | EA     | YES    | YES          | YES          | YES          |        | EA      | -               | -       |           | -                |
+      | EA     | YES    | YES          | YES          | NO           |        | EA      | -               | -       |           | -                |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID       | key1 | key2      | key3 | key4 | key5 | errorValue                              | sourceSystem |
