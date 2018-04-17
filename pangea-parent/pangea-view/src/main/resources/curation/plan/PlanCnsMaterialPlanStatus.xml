@@ -14,8 +14,7 @@
                         <expression></expression>
                     </relation>
                     <relation path="/edm/material_global_v1">
-                        <expression>localMaterialNumber=/edm/material_plant_v1.localPlant,
-                            localMaterialNumber=/edm/material_plant_v1.localMaterialNumber </expression>
+                        <expression>localMaterialNumber=/edm/material_plant_v1.localMaterialNumber</expression>
                     </relation>
                     <relation path="/plan/cns_plan_parameter">
                         <expression></expression>

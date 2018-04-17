@@ -3,18 +3,14 @@ package com.jnj.pangea.omp.gdm_fpb.service;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.*;
 import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanQtyEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanQtyDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanValEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanValDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMMaterialAuomV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialAuomV1DaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_fpb.bo.OMPGdmFpbBo;
@@ -77,7 +73,7 @@ public class OMPGdmFpbServiceImpl implements ICommonService {
 
         if (null != finPlanQtyEntity) {
             String country = finPlanQtyEntity.getCountry();
-            EDMCountryV1Entity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
+            EDMCountryEntity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
             if (null != countryV1Entity) {
                 gdmFpbBo.setCountryId(countryV1Entity.getCountryCode());
             }
