@@ -16,8 +16,8 @@ Feature:  OMPProductDetail-Curation
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_material_plan_status" by keyFields "localMaterialNumber"
-      | localMaterialNumber | spRelevant | dpRelevant | noPlanRelevant |
-      | 97568               | X          | X          | X              |
+      | localMaterialNumber | spRelevant | dpRelevant | noPlanRelevant |sourceSystem|
+      | 97568               | X          | X          | X              |CONS_LATAM  |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 

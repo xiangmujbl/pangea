@@ -89,7 +89,7 @@ public interface IConstant {
         String SPRAS = "spras";
     }
     interface PROJECT_ONE_VBAP {
-       String VBELN="vbeln";
+        String VBELN="vbeln";
     }
     interface PROJECT_ONE_VBEP {
         String VBELN="vbeln";
@@ -112,10 +112,6 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
-    interface PLAN_CNS_MATERIAL_PLAN_STATUS {
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-    }
-
     interface NGEMS_GOLDEN_MATERIAL {
         String MATERIAL_NUMBER = "materialNumber";
     }
@@ -127,7 +123,7 @@ public interface IConstant {
 
     interface EMS_F_MDM_COUNTRIES {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
-        String MDM_CODE = "mdmCode";
+        String Z_ENT_CODE_ISO_3166_ALPHA_2 = "zEntCodeIso3166Alpha2";
     }
 
     interface EMS_F_Z_CURRENCIES {
@@ -174,10 +170,43 @@ public interface IConstant {
     interface CNS_MATERIAL_INCL {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String PLANNING_TYPE = "planningType";
+        String LOCAL_PLANT = "localPlant";
+    }
+    interface CNS_PROD_LOC_ATTRIB {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
+
+    interface PLAN_CNS_FIN_PLAN_VAL {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
+    }
+    interface PLAN_CNS_FIN_PLAN_QTY {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
+    }
+    interface EDM_CURRENCY_V1 {
+        String LOCAL_CURRENCY = "localCurrency";
+    }
+    interface PLAN_CNS_MATERIAL_PLAN_STATUS {
+        String DP_RELEVANT = "dpRelevant";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
+    interface PLAN_CNS_PROD_CTY_AFFL{
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
+
+    interface PLAN_CNS_CLUSTERS{
+        String COUNTRY_ID = "countryId";
     }
 
     // -----region attribute value
     interface VALUE {
+        String LATAM_ROOT="LATAM_ROOT";
+        String LATAM_SKU="LATAM_SKU";
+        String LATAM_TECH="LATAM_TECH";
         String PROJECT_ONE = "project_one";
         String EMS = "[EMS]";
         String EN = "E";
@@ -195,18 +224,21 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
+        String NO = "NO";
         String WE="WE";
         String LA_="LA_";
         String PGA = "PGA";
         String UNDERLINE = "_";
         String BACK_SLANT = "/";
-        String USD = "USD";
+        String USD="USD";
+        String PANGEA = "Pangea";
+        String FPB = "FPB";
+        String SAPR = "SAPR";
+        String SAMPLE = "SAMPLE";
+        String REGULAR = "REGULAR";
+        String ACTIVE = "ACTIVE";
         String STR_ONE = "001";
-        String LATAM_SKU="LATAM_SKU";
-        String LATAM_ROOT="LATAM_ROOT";
-        String LATAM_TECH="LATAM_TECH";
-        String NO="NO";
-        String PANGEA="pangea";
+        String BLANK = "BLANK";
     }
 
     interface FAILED {
@@ -223,12 +255,15 @@ public interface IConstant {
             String GDM_UNIT_EVOL = "GDMUnitEvol";
             String EDM_SALES_ORDER = "EDMSalesOrder";
             String OMP_GDM_CLUSTER = "OMPGdmCluster";
+            String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
+            String PLAN_CNS_MATERIAL_PLAN_STATUS = "PlanCnsMaterialPlanStatus";
 
         }
 
         interface ERROR_CODE {
 
             String T1 = "T1";
+            String T2 = "T2";
 
             String C1 = "C1";
 
@@ -245,6 +280,5 @@ public interface IConstant {
             String E8 = "E8";
             String E9 = "E9";
         }
-
     }
 }
