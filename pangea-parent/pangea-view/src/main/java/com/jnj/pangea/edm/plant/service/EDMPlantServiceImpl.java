@@ -7,6 +7,7 @@ import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001KDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001WDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
+import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.ems.EMSFZEnterprisePlants;
 import com.jnj.pangea.common.entity.project_one.T001Entity;

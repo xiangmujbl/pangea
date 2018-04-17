@@ -36,7 +36,13 @@ public interface IConstant {
         String PROJECT_ONE_VBKD="/project_one/vbkd";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1="/edm/material_auom_v1";
-        String PLAN_CNS_MATERIAL_PLAN_STATUS="/plan/cns_material_plan_status";
+        String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
+        String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
+        String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
+        String EDM_CURRENCY_V1 = "/edm/currency_v1";
+        String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
+        String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
+        String PLAN_CNS_CLUSTERS="/plan/cns_clusters";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {

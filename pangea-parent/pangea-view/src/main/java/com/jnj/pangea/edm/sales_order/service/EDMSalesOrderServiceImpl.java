@@ -38,9 +38,6 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
         VbakEntity vbakEntity = (VbakEntity) o;
         EDMSalesOrderBo salesOrderBo = new EDMSalesOrderBo();
 
-        if (null==vbakEntity){
-           return resultObject;
-        }
         //rule T1
         salesOrderBo.setSourceSystem(sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE).getSourceSystem());
 
@@ -139,10 +136,6 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
     //J4
     private VbkdEntity getFieldWithJ4(String vbeln, String posnr) {
-        if ("".equals(vbeln)){
-            VbkdEntity vbkdEntity = new VbkdEntity(new HashMap<>());
-            return vbkdEntity;
-        }
         VbkdEntity entity = vbkdDao.getEntityWithPosnrAndVbeln(vbeln, posnr);
         if (null != entity) {
             return entity;
@@ -153,10 +146,6 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
     //J3
     private VbpaEntity getFieldWithJ3(String vbeln, String posnr, String parvw) {
-        if ("".equals(vbeln)||"".equals(parvw)){
-            VbpaEntity vbpaEntity = new VbpaEntity(new HashMap<>());
-            return vbpaEntity;
-        }
         VbpaEntity entity = vbpaDao.getEntityWithPosnrAndParvwAndVbeln(vbeln, posnr, parvw);
         if (null != entity) {
             return entity;
@@ -167,9 +156,6 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
     //J2
     private VbepEntity getFieldWithJ2(String vbeln, String posnr) {
-        if ("".equals(vbeln)){
-            return null;
-        }
         VbepEntity entity = vbepDao.getEntityWithVbelnAndPosnr(vbeln, posnr);
         if (null != entity) {
             return entity;
@@ -179,9 +165,6 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
     //J1
     private VbapEntity getFieldWithJ1(String vbeln) {
-        if ("".equals(vbeln)){
-            return null;
-        }
         VbapEntity entity = vbapDao.getEntityWithVbeln(vbeln);
         if (null != entity) {
             return entity;
