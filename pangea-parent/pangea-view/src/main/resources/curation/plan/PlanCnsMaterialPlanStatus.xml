@@ -7,7 +7,7 @@
 
             <region path="/edm/material_plant_v1">
                 <columns>
-                    localMaterialNumber,localPlant,materialNumber,localDeletionFlagPlant,localMrpType,localMaterialType
+                    localMaterialNumber,localPlant,materialNumber,localMrpType
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1">
@@ -20,7 +20,10 @@
                         <expression></expression>
                     </relation>
                     <relation path="/plan/cns_material_incl">
-                        <expression></expression>
+                        <expression>
+                            localMaterialNumber=/edm/material_plant_v1.localMaterialNumber,
+                            localPlant=/edm/material_plant_v1.localPlant
+                        </expression>
                     </relation>
                 </relations>
             </region>
