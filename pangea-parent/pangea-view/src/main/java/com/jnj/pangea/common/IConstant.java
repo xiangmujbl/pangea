@@ -345,6 +345,7 @@ public interface IConstant {
         String NP = "NP";
         String Y = "Y";
         String YES = "YES";
+        String NO="NO";
         String WE = "WE";
         String LA_ = "LA_";
         String PGA = "PGA";

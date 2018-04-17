@@ -49,6 +49,8 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         //rules T3
         gdmLocationEdmBo.setActiveOPRERP(IConstant.VALUE.YES);
 
+        gdmLocationEdmBo.setActiveSOPERP(IConstant.VALUE.NO);
+
         gdmLocationEdmBo.setCountryId(plantV1Entity.getCountry());
         gdmLocationEdmBo.setCurrencyId(plantV1Entity.getLocalCurrency());
         gdmLocationEdmBo.setLabel(plantV1Entity.getLocalPlantName());
