@@ -25,6 +25,38 @@ public class OMPProductDetailBo extends BaseBo {
                 .toJsonString();
     }
 
+    public String getProductDetailId() {
+        return productDetailId;
+    }
+
+    public void setProductDetailId(String productDetailId) {
+        this.productDetailId = productDetailId;
+    }
+
+    public String getActiveFCTERP() {
+        return activeFCTERP;
+    }
+
+    public void setActiveFCTERP(String activeFCTERP) {
+        this.activeFCTERP = activeFCTERP;
+    }
+
+    public String getActiveOPRERP() {
+        return activeOPRERP;
+    }
+
+    public void setActiveOPRERP(String activeOPRERP) {
+        this.activeOPRERP = activeOPRERP;
+    }
+
+    public String getActiveSOPERP() {
+        return activeSOPERP;
+    }
+
+    public void setActiveSOPERP(String activeSOPERP) {
+        this.activeSOPERP = activeSOPERP;
+    }
+
     public String getCLASS() {
         return CLASS;
     }
@@ -33,40 +65,8 @@ public class OMPProductDetailBo extends BaseBo {
         this.CLASS = CLASS;
     }
 
-    public String getProductDetailId() {
-        return this.productDetailId;
-    }
-
-    public void setProductDetailId(String productDetailId) {
-        this.productDetailId = productDetailId;
-    }
-
-    public String getActiveFCTERP() {
-        return this.activeFCTERP;
-    }
-
-    public void setActiveFCTERP(String activeFCTERP) {
-        this.activeFCTERP = activeFCTERP;
-    }
-
-    public String getActiveOPRERP() {
-        return this.activeOPRERP;
-    }
-
-    public void setActiveOPRERP(String activeOPRERP) {
-        this.activeOPRERP = activeOPRERP;
-    }
-
-    public String getActiveSOPERP() {
-        return this.activeSOPERP;
-    }
-
-    public void setActiveSOPERP(String activeSOPERP) {
-        this.activeSOPERP = activeSOPERP;
-    }
-
     public String getComments() {
-        return this.comments;
+        return comments;
     }
 
     public void setComments(String comments) {
@@ -74,7 +74,7 @@ public class OMPProductDetailBo extends BaseBo {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -82,7 +82,7 @@ public class OMPProductDetailBo extends BaseBo {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -90,7 +90,7 @@ public class OMPProductDetailBo extends BaseBo {
     }
 
     public String getProductId() {
-        return this.productId;
+        return productId;
     }
 
     public void setProductId(String productId) {
@@ -98,7 +98,7 @@ public class OMPProductDetailBo extends BaseBo {
     }
 
     public String getUnit() {
-        return this.unit;
+        return unit;
     }
 
     public void setUnit(String unit) {
@@ -106,11 +106,10 @@ public class OMPProductDetailBo extends BaseBo {
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public void setValue(String value) {
         this.value = value;
     }
-
 }
