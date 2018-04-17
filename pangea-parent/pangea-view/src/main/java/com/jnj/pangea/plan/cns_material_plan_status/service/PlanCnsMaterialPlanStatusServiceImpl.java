@@ -1,14 +1,12 @@
 package com.jnj.pangea.plan.cns_material_plan_status.service;
 
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialInclDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
-import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001DaoImpl;
-import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT001KDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
@@ -35,9 +33,6 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private PlanCnsPlanParameterDaoImpl planParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
-    private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
-    private ProjectOneT001KDaoImpl t001KDao = ProjectOneT001KDaoImpl.getInstance();
-    private ProjectOneT001DaoImpl t001Dao = ProjectOneT001DaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl materialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
     private PlanCnsMaterialInclDaoImpl materialInclDao = PlanCnsMaterialInclDaoImpl.getInstance();
@@ -64,6 +59,10 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
             if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
                 materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
             }
+        }else{
+            FailData failData = checkFailData(materialPlantV1Entity);
+            resultObject.setFailData(failData);
+            return resultObject;
         }
 
         materialPlanStatusBo.setMaterialNumber(materialPlantV1Entity.getMaterialNumber());
@@ -171,7 +170,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
         for (PlanCnsPlanParameterEntity planParameterEntity : lmList) {
             lmSet.add(planParameterEntity.getParameterValue());
         }
-        if (lmSet.contains(materialPlantV1Entity.getLocalPlant())){
+        if (lmSet.contains(materialPlantV1Entity.getLocalMrpType())){
             lmFlag = true;
         }
 
@@ -182,32 +181,18 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
 
     }
 
-//    private FailData checkF1(EDMMaterialPlantV1Entity materialPlantV1Entity) {
-//        FailData failData = new FailData();
-//        failData.setErrorCode("F1");
-//        failData.setFunctionalArea("DP");
-//        failData.setInterfaceID("PangeaCnsMaterialPlanStatus");
-//        failData.setSourceSystem(IConstant.VALUE.PROJECT_ONE);
-//        failData.setKey1(materialPlantV1Entity.getLocalPlant());
-//        failData.setKey2(materialPlantV1Entity.getLocalMaterialNumber());
-//        failData.setKey3("");
-//        failData.setKey4("");
-//        failData.setKey5("");
-//        return failData;
-//    }
-//
-//    private FailData checkF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity) {
-//        FailData failData = new FailData();
-//        failData.setErrorCode("F2,F3");
-//        failData.setFunctionalArea("DP");
-//        failData.setInterfaceID("PangeaCnsMaterialPlanStatus");
-//        failData.setSourceSystem(IConstant.VALUE.PROJECT_ONE);
-//        failData.setKey1(materialPlantV1Entity.getLocalPlant());
-//        failData.setKey2(materialPlantV1Entity.getLocalMaterialNumber());
-//        failData.setKey3("");
-//        failData.setKey4("");
-//        failData.setKey5("");
-//        return failData;
-//    }
+    private FailData checkFailData(EDMMaterialPlantV1Entity materialPlantV1Entity) {
+        FailData failData = new FailData();
+        failData.setErrorCode(IConstant.FAILED.ERROR_CODE.T2);
+        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.PLAN_CNS_MATERIAL_PLAN_STATUS);
+        failData.setSourceSystem(IConstant.VALUE.CONS_LATAM);
+        failData.setKey1(materialPlantV1Entity.getLocalPlant());
+        failData.setKey2(materialPlantV1Entity.getLocalMaterialNumber());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
+        return failData;
+    }
 
 }

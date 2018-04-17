@@ -200,7 +200,7 @@ public interface IConstant {
     // -----region attribute value
     interface VALUE {
 
-        String PROJECT_ONE = "Project_One";
+        String PROJECT_ONE = "project_one";
         String EMS = "[EMS]";
         String EN = "E";
         String PT = "P";
@@ -247,6 +247,7 @@ public interface IConstant {
             String EDM_SALES_ORDER = "EDMSalesOrder";
             String OMP_GDM_CLUSTER = "OMPGdmCluster";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
+            String PLAN_CNS_MATERIAL_PLAN_STATUS = "PlanCnsMaterialPlanStatus";
 
         }
 
