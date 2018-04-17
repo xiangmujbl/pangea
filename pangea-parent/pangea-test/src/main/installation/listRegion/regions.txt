@@ -125,3 +125,12 @@
 
 /omp/product_detail
 
+
+/omp/gdm_customer
+
+
+
+
+
+
+
