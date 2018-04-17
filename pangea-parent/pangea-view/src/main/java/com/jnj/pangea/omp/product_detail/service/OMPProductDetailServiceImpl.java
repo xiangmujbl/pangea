@@ -39,7 +39,11 @@ public class OMPProductDetailServiceImpl {
             return  new ArrayList<ResultObject>();
         }
          //rules J1
-        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumber(materialGlobalV1Entity.getLocalMaterialNumber());
+        String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
+        if("".equals(localMaterialNumber)){
+            return  new ArrayList<ResultObject>();
+        }
+        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(localMaterialNumber,IConstant.VALUE.CONS_LATAM);
         if (cnsMaterialPlanStatusEntity==null){
             return  new ArrayList<ResultObject>();
         }
