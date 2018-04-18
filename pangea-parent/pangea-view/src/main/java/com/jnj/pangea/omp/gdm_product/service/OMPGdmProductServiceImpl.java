@@ -52,40 +52,13 @@ public class OMPGdmProductServiceImpl {
             sourceSystemSS = sourceSystemV1Entity.getSourceSystem();
         }
 
-        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumber(materialGlobalV1Entity.getLocalMaterialNumber());
+        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(materialGlobalV1Entity.getSourceSystem(),materialGlobalV1Entity.getLocalMaterialNumber());
 
         if (null != materialPlanStatusEntity) {
 
             List<OMPGdmProductBo> productBos = new ArrayList<>();
 
-            if ((IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) &&
-                    IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
-
-                if (null == primaryPlanningCode || null == localDPParentCode){
-                    ResultObject resultObject = new ResultObject();
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode or PrimaryPlanningCode");
-                    resultObject.setFailData(failData);
-                    resultObjects.add(resultObject);
-                    return resultObjects;
-                }
-
-                for (int i=0;i<2;i++){
-                    OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-                    if (i==0){
-                        gdmProductBo.setProductId(primaryPlanningCode);
-                    }else if(i==1){
-                        gdmProductBo.setProductId(sourceSystemSS+IConstant.VALUE.UNDERLINE+localDPParentCode);
-                    }
-                    gdmProductBo.setActive(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveSOPERP(IConstant.VALUE.NO);
-
-                    productBos.add(gdmProductBo);
-                }
-
-            } else if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) ||
-                    IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
+            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
                 if (null == primaryPlanningCode){
                     ResultObject resultObject = new ResultObject();
                     FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "primaryPlanningCode is not available for SPRelevant mateial");
@@ -96,13 +69,10 @@ public class OMPGdmProductServiceImpl {
 
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                 gdmProductBo.setProductId(primaryPlanningCode);
-                gdmProductBo.setActive(IConstant.VALUE.YES);
                 gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
-                gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
-
                 productBos.add(gdmProductBo);
-
-            } else if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
+            }
+            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
                 if (null == localDPParentCode){
                     ResultObject resultObject = new ResultObject();
                     FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode");
@@ -110,18 +80,18 @@ public class OMPGdmProductServiceImpl {
                     resultObjects.add(resultObject);
                     return resultObjects;
                 }
-
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                 gdmProductBo.setProductId(sourceSystemSS+IConstant.VALUE.UNDERLINE+localDPParentCode);
-                gdmProductBo.setActive(IConstant.VALUE.YES);
                 gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
-                gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
                 productBos.add(gdmProductBo);
             }
 
             for (OMPGdmProductBo productBo:productBos) {
 
                 ResultObject resultObject = new ResultObject();
+
+                productBo.setActive(IConstant.VALUE.YES);
+                productBo.setActiveSOPERP(IConstant.VALUE.NO);
 
                 String refDescription = materialGlobalV1Entity.getRefDescription();
 
