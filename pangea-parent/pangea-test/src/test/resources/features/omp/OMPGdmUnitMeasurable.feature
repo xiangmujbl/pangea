@@ -26,8 +26,9 @@ Feature: OMPGdmUnitMeasurable AEAZ-1980
       | EA     | YES    | YES          | YES          | NO           |        | EA      | -               | -       |           | -                |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID       | key1 | key2      | key3 | key4 | key5 | errorValue                              | sourceSystem |
-      | T1        | SP             | GdmUnitMeasurable | %0   | CON_LATAM |      |      |      | Enterprise UOM is missing for local UOM |              |
+      | errorCode | functionalArea | interfaceID       | key1 | key2       | key3 | key4 | key5 | errorValue                              | sourceSystem |
+      | T1        | SP             | GdmUnitMeasurable | %0   | CONS_LATAM |      |      |      | Enterprise UOM is missing for local UOM |              |
+      | T1        | SP             | GdmUnitMeasurable | EA   | BTB        |      |      |      | Enterprise UOM is missing for local UOM |              |
 
     And I compare the number of records between "/edm/unit_of_measure_v1" and "/omp/gdm_unit,/plan/edm_failed_data"
 
