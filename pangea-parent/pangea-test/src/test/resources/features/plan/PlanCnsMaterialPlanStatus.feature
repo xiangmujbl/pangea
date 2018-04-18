@@ -37,9 +37,9 @@ Feature: CnsMaterialPlanStatus AEAZ-1692
 
     And I import "/plan/cns_material_incl" by keyFields "localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | planningType | localPlant |
-      | CONS_LATAM   | 000000000000203700  | SP           | BR12       |
-      | CONS_LATAM   | 000000000000213997  | NP           | BR12       |
-      | CONS_LATAM   | 000000000000213998  | NP           | BR12       |
+      | CONS_LATAM   | 000000000000087759  | SP           | BR12       |
+      | CONS_LATAM   | 000000000000087764  | NP           | BR12       |
+      | CONS_LATAM   | 000000000000087765  | NP           | BR12       |
 
     And I wait "/plan/cns_material_incl" Async Queue complete
 
@@ -47,14 +47,17 @@ Feature: CnsMaterialPlanStatus AEAZ-1692
 
     Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
-      | CONS_LATAM   | 000000000000203700  | BR12       | -              |                 | -   | X      | X          | X          | X            |                |
-      | CONS_LATAM   | 000000000000213997  | BR12       | -              |                 | -   | X      | X          | X          | X            | X              |
-      | CONS_LATAM   | 000000000000213998  | BR12       | -              |                 |     | X      | X          | X          | X            | X              |
+      | CONS_LATAM   | 000000000000203700  | BR12       | -              |                 |     | X      | X          | X          |              |                |
+      | CONS_LATAM   | 000000000000213997  | BR12       | -              |                 |     | X      | X          | X          |              |                |
+      | CONS_LATAM   | 000000000000213998  | BR12       | -              |                 |     | X      | X          | X          |              |                |
+      | CONS_LATAM   | 000000000000087759  | BR12       |                |                 |     |        |            |            |              |                |
+      | CONS_LATAM   | 000000000000087764  | BR12       |                |                 |     | X      |            |            |              | X              |
+      | CONS_LATAM   | 000000000000087765  | BR12       |                |                 |     | X      |            |            |              | X              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/edm/material_plant_v1" and "/plan/cns_material_plan_status,/plan/edm_failed_data"
+    And I compare the number of records between "/edm/material_plant_v1,/plan/cns_material_incl" and "/plan/cns_material_plan_status,/plan/edm_failed_data"
 
     And I delete the test data
 

@@ -282,6 +282,8 @@ public interface IConstant {
             String E7 = "E7";
             String E8 = "E8";
             String E9 = "E9";
+
+            String F2F3 = "F2F3";
         }
     }
 }
