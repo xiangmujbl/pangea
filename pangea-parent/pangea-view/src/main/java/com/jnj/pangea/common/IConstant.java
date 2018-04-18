@@ -204,6 +204,7 @@ public interface IConstant {
     interface CNS_PLAN_UNIT {
         String LOCAL_UOM = "localUom";
         String PLAN_FLAG = "planFlag";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
 

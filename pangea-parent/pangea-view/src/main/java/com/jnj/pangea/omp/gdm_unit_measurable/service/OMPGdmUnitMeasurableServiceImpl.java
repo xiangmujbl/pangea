@@ -31,8 +31,9 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
 
         OMPGdmUnitMeasurableBo gdmUnitMeasurableBo = new OMPGdmUnitMeasurableBo();
         String localUom = unitOfMeasureV1Entity.getLocalUom();
-        if (StringUtils.isNotEmpty(localUom)) {
-            CnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localUom);
+        String sourceSystem = unitOfMeasureV1Entity.getSourceSystem();
+        if (StringUtils.isNotEmpty(localUom) && StringUtils.isNotEmpty(sourceSystem)) {
+            CnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUomAndSourceSystem(localUom, sourceSystem);
             if (null != cnsPlanUnitEntity) {
                 gdmUnitMeasurableBo.setUnitId(cnsPlanUnitEntity.getUnit());
                 gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);

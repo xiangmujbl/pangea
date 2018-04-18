@@ -7,8 +7,8 @@ Feature: OMPGdmUnitMeasurable AEAZ-1980
 
     Given I import "/edm/unit_of_measure_v1" by keyFields "localUom,sourceSystem"
       | uom | factor | isoCode | uomName         | measure | roundingDecimal | localUom | sourceSystem |
-      | EA  |        | EA      | -               | -       |                 | EA       | CON_LATAM    |
-      | %O2 |        | EA      | %LC, %label clm | -       |                 | %0       | CON_LATAM    |
+      | EA  |        | EA      | -               | -       |                 | EA       | CONS_LATAM   |
+      | %O2 |        | EA      | %LC, %label clm | -       |                 | %0       | CONS_LATAM   |
 
     And I wait "/edm/unit_of_measure_v1" Async Queue complete
 
