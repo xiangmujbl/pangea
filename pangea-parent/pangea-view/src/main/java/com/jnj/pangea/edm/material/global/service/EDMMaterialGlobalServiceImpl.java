@@ -72,6 +72,17 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
                 materialGlobalBo.setMaterialType(goldenMaterialEntity.getMaterialType());
                 materialGlobalBo.setBaseUom(goldenMaterialEntity.getBaseUom());
                 materialGlobalBo.setParentCode(goldenMaterialEntity.getParentCode());
+                // J3
+                if (StringUtils.isEmpty(goldenMaterialEntity.getGlobalDpParentCode()) &&
+                        StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
+
+                    materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getParentCode());
+                }
+                if (StringUtils.isEmpty(goldenMaterialEntity.getParentCode())) {
+
+                    materialGlobalBo.setGlobalDpParentCode("");
+                }
+
                 materialGlobalBo.setForm(goldenMaterialEntity.getForm());
                 materialGlobalBo.setCategory(goldenMaterialEntity.getCategory());
                 materialGlobalBo.setSubBrand(goldenMaterialEntity.getSubBrand());
@@ -80,11 +91,16 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
                 materialGlobalBo.setGlobalBusinessUnit(goldenMaterialEntity.getGlobalBusinessUnit());
                 materialGlobalBo.setProductFamily(goldenMaterialEntity.getProductFamily());
                 materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
-                materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
+                // J4
+                String primaryPlanningCode = goldenMaterialEntity.getPrimaryPlanningCode();
+                if (StringUtils.isNotEmpty(primaryPlanningCode)) {
+                    materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
+                } else {
+                    materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getMaterialNumber());
+                }
             }
         }
         materialGlobalBo.setLocalManufacturingTechnology("");
-        materialGlobalBo.setGlobalDpParentCode("");
         materialGlobalBo.setLocalDpParentCode("");
 
         resultObject.setBaseBo(materialGlobalBo);

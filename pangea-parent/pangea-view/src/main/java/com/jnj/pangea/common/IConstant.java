@@ -43,6 +43,7 @@ public interface IConstant {
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
         String PLAN_CNS_CLUSTERS="/plan/cns_clusters";
+        String PLAN_CNS_DEM_GRP_ASGN="/plan/cns_dem_grp_asgn";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -202,6 +203,10 @@ public interface IConstant {
         String COUNTRY_ID = "countryId";
     }
 
+    interface PLAN_CNS_DEM_GRP_ASGN{
+        String CUSTOMER_SHIP_TO = "customerShipTo";
+    }
+
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT="LATAM_ROOT";
@@ -279,6 +284,8 @@ public interface IConstant {
             String E7 = "E7";
             String E8 = "E8";
             String E9 = "E9";
+
+            String F2F3 = "F2F3";
         }
     }
 }
