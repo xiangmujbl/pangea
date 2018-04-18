@@ -43,6 +43,7 @@ public interface IConstant {
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
         String PLAN_CNS_CLUSTERS="/plan/cns_clusters";
+        String PLAN_CNS_DEM_GRP_ASGN="/plan/cns_dem_grp_asgn";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -200,6 +201,10 @@ public interface IConstant {
 
     interface PLAN_CNS_CLUSTERS{
         String COUNTRY_ID = "countryId";
+    }
+
+    interface PLAN_CNS_DEM_GRP_ASGN{
+        String CUSTOMER_SHIP_TO = "customerShipTo";
     }
 
     // -----region attribute value

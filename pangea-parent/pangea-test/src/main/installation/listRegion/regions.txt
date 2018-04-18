@@ -140,3 +140,7 @@
 
 
 
+
+/project_one/knvh
+/omp/gdm_pos
+

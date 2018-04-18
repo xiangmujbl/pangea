@@ -12,6 +12,8 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
     private String channel;
     private String channelDescription;
     private String customerName;
+    private String customerShipTo;
+    private String group;
 
     public PlanCnsDemGrpAsgnEntity(Map<String, Object> map) {
         super(map);
@@ -22,6 +24,8 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
         setChannel((String) map.get("channel"));
         setChannelDescription((String) map.get("channelDescription"));
         setCustomerName((String) map.get("customerName"));
+        setCustomerShipTo((String) map.get("customerShipTo"));
+        setGroup((String) map.get("group"));
     }
 
     public String getCountryAffiliate() {
@@ -62,6 +66,22 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
 
     public void setChannelDescription(String channelDescription) {
         this.channelDescription = channelDescription;
+    }
+
+    public String getGroup() {
+        return this.group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getCustomerShipTo() {
+        return this.customerShipTo;
+    }
+
+    public void setCustomerShipTo(String customerShipTo) {
+        this.customerShipTo = customerShipTo;
     }
 
     public String getCustomerName() {
