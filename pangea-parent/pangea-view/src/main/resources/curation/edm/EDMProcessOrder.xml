@@ -1,0 +1,71 @@
+<adf-curation>
+    <curation mainRegion="/project_one/afko" viewRegion="/edm/process_order_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.process_order.controller.EDMProcessOrderController">
+        <regions>
+
+            <region path="/project_one/afko">
+                <columns>
+                    aufnr,gltrp,gstrp,gltrs,gstrs,gstri,gltri,ftrmi,ftrmp,dispo,fevor,rsnum,gasmg,gamng,gmein,plnbez,plnty,plnnr,plnaw,plnal,pverw,stlbez,terkz,rueck,rmzhl,igmng
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/aufk" isPrimaryKey="true">
+                        <expression>aufnr=/project_one/afko.aufnr</expression>
+                    </relation>
+                    <relation path="/project_one/afpo" isPrimaryKey="true">
+                        <expression>aufnr=/project_one/afko.aufnr</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/project_one/aufk">
+                <columns>
+                    aufnr,auart,autyp,erdat,aedat,werks,loekz,idat2,procnr,logsystem
+                </columns>
+                <relations>
+                    <relation path="/project_one/jest" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/jest">
+                <columns>
+                    aufnr,objnr,stat,inact
+                </columns>
+                <relations>
+                    <relation path="/project_one/tj02t" isPrimaryKey="false">
+                        <expression>istat=/project_one/jest.stat</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/tj02t">
+                <columns>
+                    istat,spras,txt04,txt30
+                </columns>
+            </region>
+
+            <region path="/project_one/afpo">
+                <columns>
+                    aufnr,posnr,plnum,psamg,psmng,wemng,amein,matnr,elikz,verid,charg
+                </columns>
+            </region>
+
+            <region path="/edm/process_order_v1">
+                <columns>
+                    sourceSystem,mfgOrdrNum,mfgOrdrItemNum,ordrType,localOrderCat,crtdDttm,chgDttm,plntCd,delInd,localTechnicalCompletion,localProductionProcessNo,localLogicalSystem,plnEndDt,plnStrtDt,prdtnSchdEndDt,prdtnSchdStrtDt,prdntStrtDt,prdtnEndDt,prdtnRlseDt,prdtnPlanRlseDt,mfgPlnnr,mfgSprvsr,localReservation,localTotalScrap,localTargetQty,localBaseUOM,localMaterialAFKOPLNBEZ,localTaskListType,localGroup,localApplication,localGroupCounter,localUsage,localMaterialAFKOSTLBEZ,localSchedulingType,localConfirmation,localConfirmationCounter,localConfirmedQtyIGMNG,plnndOrdr,scrpQty,ordrQty,rcvdQty,prdtnUom,matlNum,dlvCmpltInd,prdntVrsnNum,btchNum,ordrStts,localSystemStatus,localLanguage,localStatus1,localStatus2
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
