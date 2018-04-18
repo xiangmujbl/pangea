@@ -23,13 +23,8 @@ public class VbkdDaoImpl extends CommonDaoImpl {
         return null;
     }
 
-    public VbkdEntity getEntityWithPosnrAndVbeln(String vbeln, String posnr) {
-        String queryString;
-        if ("".equals(posnr) || null == posnr) {
-            queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBKD.POSNR).isNull().toQueryString();
-        } else {
-            queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBKD.POSNR).is(posnr).toQueryString();
-        }
+    public VbkdEntity getEntityWithPosnrAndVbelAndPosnrIsNullOrBlankOr000000(String vbeln) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBKD.POSNR).isNull().or(QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.POSNR).is("000000")).toQueryString();
         return queryForObject(IConstant.REGION.PROJECT_ONE_VBKD, queryString, VbkdEntity.class);
     }
 }

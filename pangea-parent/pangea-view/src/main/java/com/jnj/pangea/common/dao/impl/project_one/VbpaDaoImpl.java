@@ -23,13 +23,10 @@ public class VbpaDaoImpl extends CommonDaoImpl {
         return null;
     }
 
-    public VbpaEntity getEntityWithPosnrAndParvwAndVbeln(String vbeln,String posnr, String parvw) {
-        String queryString;
-        if ("".equals(posnr) || null == posnr) {
-            queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).isNull().and(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).toQueryString();
-        } else {
-            queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).is(posnr).and(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).toQueryString();
-        }
+    public VbpaEntity getEntityWithPosnrAndParvwAndVbelnAndPosnrIsNullOrBlankOr000000(String vbeln, String parvw) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).isNull().or(QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).is("000000")).and(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).toQueryString();
+
         return queryForObject(IConstant.REGION.PROJECT_ONE_VBPA, queryString, VbpaEntity.class);
     }
 }

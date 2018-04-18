@@ -121,11 +121,11 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
 
 
         //rule J3
-        VbpaEntity vbpaEntity = getFieldWithJ3(vbakEntity.getVbeln(), "", IConstant.VALUE.WE);
+        VbpaEntity vbpaEntity = getFieldWithJ3(vbakEntity.getVbeln(),  IConstant.VALUE.WE);
         salesOrderBo.setLocalShipToParty(vbpaEntity.getKunnr());
 
         //rule J4
-        VbkdEntity vbkdEntity = getFieldWithJ4(vbakEntity.getVbeln(), "");
+        VbkdEntity vbkdEntity = getFieldWithJ4(vbakEntity.getVbeln());
         salesOrderBo.setLocalIncoTerms1(vbkdEntity.getInco1());
         salesOrderBo.setLocalIncoTerms2(vbkdEntity.getInco2());
         salesOrderBo.setLocalCustomerGroup(vbkdEntity.getKdgrp());
@@ -135,8 +135,8 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
     }
 
     //J4
-    private VbkdEntity getFieldWithJ4(String vbeln, String posnr) {
-        VbkdEntity entity = vbkdDao.getEntityWithPosnrAndVbeln(vbeln, posnr);
+    private VbkdEntity getFieldWithJ4(String vbeln) {
+        VbkdEntity entity = vbkdDao.getEntityWithPosnrAndVbelAndPosnrIsNullOrBlankOr000000(vbeln);
         if (null != entity) {
             return entity;
         }
@@ -145,8 +145,8 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
     }
 
     //J3
-    private VbpaEntity getFieldWithJ3(String vbeln, String posnr, String parvw) {
-        VbpaEntity entity = vbpaDao.getEntityWithPosnrAndParvwAndVbeln(vbeln, posnr, parvw);
+    private VbpaEntity getFieldWithJ3(String vbeln,String parvw) {
+        VbpaEntity entity = vbpaDao.getEntityWithPosnrAndParvwAndVbelnAndPosnrIsNullOrBlankOr000000(vbeln,parvw);
         if (null != entity) {
             return entity;
         }
