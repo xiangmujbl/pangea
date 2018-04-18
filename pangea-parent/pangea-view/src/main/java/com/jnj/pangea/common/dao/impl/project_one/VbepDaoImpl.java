@@ -5,6 +5,8 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.project_one.VbepEntity;
 
+import java.util.List;
+
 public class VbepDaoImpl extends CommonDaoImpl {
 
     private static VbepDaoImpl instance;
@@ -23,7 +25,7 @@ public class VbepDaoImpl extends CommonDaoImpl {
         return null;
     }
 
-    public VbepEntity getEntityWithVbelnAndPosnr(String vbeln, String posnr) {
+    public List<VbepEntity> getEntityWithVbelnAndPosnr(String vbeln, String posnr) {
         String queryString;
         if (null==posnr||"".equals(posnr)){
             queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBEP.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBEP.POSNR).isNull().toQueryString();

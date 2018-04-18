@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.project_one;
 
+import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
@@ -24,7 +25,10 @@ public class VbkdDaoImpl extends CommonDaoImpl {
     }
 
     public VbkdEntity getEntityWithPosnrAndVbelAndPosnrIsNullOrBlankOr000000(String vbeln) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBKD.POSNR).isNull().or(QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.POSNR).is("000000")).toQueryString();
+        ADFCriteria adfCriteria = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).is("000000");
+        ADFCriteria adfCriteria1 = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).isNull();
+        ADFCriteria criteria = adfCriteria1.or(adfCriteria);
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBKD.VBELN).is(vbeln).and(criteria).toQueryString();
         return queryForObject(IConstant.REGION.PROJECT_ONE_VBKD, queryString, VbkdEntity.class);
     }
 }

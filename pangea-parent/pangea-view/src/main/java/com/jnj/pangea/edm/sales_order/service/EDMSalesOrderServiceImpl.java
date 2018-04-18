@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.sales_order.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -10,9 +11,11 @@ import com.jnj.pangea.common.entity.project_one.*;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.sales_order.bo.EDMSalesOrderBo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class EDMSalesOrderServiceImpl implements ICommonService {
+public class EDMSalesOrderServiceImpl{
 
     private static EDMSalesOrderServiceImpl instance;
 
@@ -31,40 +34,19 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
     private VbkdDaoImpl vbkdDao = VbkdDaoImpl.getInstance();
     private EDMSalesOrderV1DaoImpl salesOrderV1Dao = EDMSalesOrderV1DaoImpl.getInstance();
 
-    @Override
-    public ResultObject buildView(String key, Object o, Object o2) {
+    public List<ResultObject> buildView(String key, Object o, Object o2) {
 
-        ResultObject resultObject = new ResultObject();
+        List<ResultObject> resultObjectList=new ArrayList<ResultObject>();
         VbakEntity vbakEntity = (VbakEntity) o;
-        EDMSalesOrderBo salesOrderBo = new EDMSalesOrderBo();
 
-        //rule T1
-        salesOrderBo.setSourceSystem(sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE).getSourceSystem());
-
-        salesOrderBo.setSalesOrderNo(vbakEntity.getVbeln());
-        salesOrderBo.setLocalOrderCreateDt(vbakEntity.getErdat());
-        salesOrderBo.setLocalOrderDate(vbakEntity.getAudat());
-        salesOrderBo.setLocalValidFromDt(vbakEntity.getGuebg());
-        salesOrderBo.setLocalValidToDt(vbakEntity.getGueen());
-        salesOrderBo.setLocalDocumentCateg(vbakEntity.getVbtyp());
-        salesOrderBo.setLocalOrderType(vbakEntity.getAuart());
-        salesOrderBo.setLocalOrderReason(vbakEntity.getAugru());
-        salesOrderBo.setLocalDeliveryBlock(vbakEntity.getLifsk());
-        salesOrderBo.setLocalBillingBlock(vbakEntity.getFaksk());
-        salesOrderBo.setLocalSalesOrg(vbakEntity.getVkorg());
-        salesOrderBo.setLocalDistrChannel(vbakEntity.getVtweg());
-        salesOrderBo.setLocalDivision(vbakEntity.getSpart());
-        salesOrderBo.setLocalSalesGroup(vbakEntity.getVkgrp());
-        salesOrderBo.setLocalSalesOffice(vbakEntity.getVkbur());
-        salesOrderBo.setLocalRequestedDate(vbakEntity.getVdatu());
-        salesOrderBo.setLocalCustomerPO(vbakEntity.getBstnk());
-        salesOrderBo.setLocalSoldToParty(vbakEntity.getKunnr());
-        salesOrderBo.setLocalChangeDt(vbakEntity.getAedat());
-        salesOrderBo.setLocalPricingProcedure(vbakEntity.getKalsm());
-
+        if (vbakEntity==null){
+            return resultObjectList;
+        }
+        LogUtil.getLogger().info("-------rule J1------{}---------------",vbakEntity.getVbeln());
         //rule J1
-        VbapEntity vbapEntity = getFieldWithJ1(vbakEntity.getVbeln());
-        if (null == vbapEntity) {
+        List<VbapEntity> vbapEntities = getFieldWithJ1(vbakEntity.getVbeln());
+        if (vbapEntities.isEmpty()) {
+            ResultObject resultObject = new ResultObject();
             FailData failData = new FailData();
             failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
             failData.setErrorValue("No Sales Item Found");
@@ -77,61 +59,101 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
             failData.setKey4("");
             failData.setKey5("");
             resultObject.setFailData(failData);
-            return resultObject;
+            resultObjectList.add(resultObject);
+            return resultObjectList;
         }
-        salesOrderBo.setSalesOrderItem(vbapEntity.getPosnr());
-        salesOrderBo.setLocalMaterialNumber(vbapEntity.getMatnr());
-        salesOrderBo.setLocalPlant(vbapEntity.getWerks());
-        salesOrderBo.setLocalItemCategory(vbapEntity.getPstyv());
-        salesOrderBo.setLocalItemDlvRlvnt(vbapEntity.getLfrel());
-        salesOrderBo.setLocalItemBillRlvnt(vbapEntity.getFkrel());
-        salesOrderBo.setLocalRejReason(vbapEntity.getAbgru());
-        salesOrderBo.setSalesOrderQty(vbapEntity.getKwmeng());
-        salesOrderBo.setLocalSalesUnit(vbapEntity.getVrkme());
-        salesOrderBo.setLocalNumtoBase(vbapEntity.getUmvkz());
-        salesOrderBo.setLocalDentoBase(vbapEntity.getUmvkn());
-        salesOrderBo.setLocalBillingBlockItem(vbapEntity.getFaksp());
-        salesOrderBo.setLocalSDItemValue(vbapEntity.getNetwr());
-        salesOrderBo.setLocalSDItemCurrency(vbapEntity.getWaerk());
-        salesOrderBo.setLocalStorageLocation(vbapEntity.getLgort());
-        salesOrderBo.setLocalShippingPoint(vbapEntity.getVstel());
-        salesOrderBo.setLocalRoute(vbapEntity.getRoute());
 
-        //rule J2
-        VbepEntity vbepEntity = getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
-        if (null == vbepEntity) {
-            FailData failData = new FailData();
-            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J2);
-            failData.setErrorValue("No Schedule lines Found");
-            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.EDM_SALES_ORDER);
-            failData.setSourceSystem("");
-            failData.setKey1(vbakEntity.getVbeln());
-            failData.setKey2("");
-            failData.setKey3("");
-            failData.setKey4("");
-            failData.setKey5("");
-            resultObject.setFailData(failData);
-            return resultObject;
+        for (VbapEntity vbapEntity:vbapEntities){
+            //rule J2
+            LogUtil.getLogger().info("-------rule J2------{}---------------",vbapEntity.getPosnr());
+            List<VbepEntity> vbepEntities= getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
+            if (vbepEntities.isEmpty()) {
+                ResultObject resultObject = new ResultObject();
+                FailData failData = new FailData();
+                failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J2);
+                failData.setErrorValue("No Schedule lines Found");
+                failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+                failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.EDM_SALES_ORDER);
+                failData.setSourceSystem("");
+                failData.setKey1(vbakEntity.getVbeln());
+                failData.setKey2("");
+                failData.setKey3("");
+                failData.setKey4("");
+                failData.setKey5("");
+                resultObject.setFailData(failData);
+                resultObjectList.add(resultObject);
+                return resultObjectList;
+            }
+
+            for (VbepEntity vbepEntity:vbepEntities){
+
+                ResultObject resultObject = new ResultObject();
+                EDMSalesOrderBo salesOrderBo = new EDMSalesOrderBo();
+
+                //rule T1
+                salesOrderBo.setSourceSystem(sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE).getSourceSystem());
+
+                salesOrderBo.setSalesOrderNo(vbakEntity.getVbeln());
+                salesOrderBo.setLocalOrderCreateDt(vbakEntity.getErdat());
+                salesOrderBo.setLocalOrderDate(vbakEntity.getAudat());
+                salesOrderBo.setLocalValidFromDt(vbakEntity.getGuebg());
+                salesOrderBo.setLocalValidToDt(vbakEntity.getGueen());
+                salesOrderBo.setLocalDocumentCateg(vbakEntity.getVbtyp());
+                salesOrderBo.setLocalOrderType(vbakEntity.getAuart());
+                salesOrderBo.setLocalOrderReason(vbakEntity.getAugru());
+                salesOrderBo.setLocalDeliveryBlock(vbakEntity.getLifsk());
+                salesOrderBo.setLocalBillingBlock(vbakEntity.getFaksk());
+                salesOrderBo.setLocalSalesOrg(vbakEntity.getVkorg());
+                salesOrderBo.setLocalDistrChannel(vbakEntity.getVtweg());
+                salesOrderBo.setLocalDivision(vbakEntity.getSpart());
+                salesOrderBo.setLocalSalesGroup(vbakEntity.getVkgrp());
+                salesOrderBo.setLocalSalesOffice(vbakEntity.getVkbur());
+                salesOrderBo.setLocalRequestedDate(vbakEntity.getVdatu());
+                salesOrderBo.setLocalCustomerPO(vbakEntity.getBstnk());
+                salesOrderBo.setLocalSoldToParty(vbakEntity.getKunnr());
+                salesOrderBo.setLocalChangeDt(vbakEntity.getAedat());
+                salesOrderBo.setLocalPricingProcedure(vbakEntity.getKalsm());
+
+                salesOrderBo.setSalesOrderItem(vbapEntity.getPosnr());
+                salesOrderBo.setLocalMaterialNumber(vbapEntity.getMatnr());
+                salesOrderBo.setLocalPlant(vbapEntity.getWerks());
+                salesOrderBo.setLocalItemCategory(vbapEntity.getPstyv());
+                salesOrderBo.setLocalItemDlvRlvnt(vbapEntity.getLfrel());
+                salesOrderBo.setLocalItemBillRlvnt(vbapEntity.getFkrel());
+                salesOrderBo.setLocalRejReason(vbapEntity.getAbgru());
+                salesOrderBo.setSalesOrderQty(vbapEntity.getKwmeng());
+                salesOrderBo.setLocalSalesUnit(vbapEntity.getVrkme());
+                salesOrderBo.setLocalNumtoBase(vbapEntity.getUmvkz());
+                salesOrderBo.setLocalDentoBase(vbapEntity.getUmvkn());
+                salesOrderBo.setLocalBillingBlockItem(vbapEntity.getFaksp());
+                salesOrderBo.setLocalSDItemValue(vbapEntity.getNetwr());
+                salesOrderBo.setLocalSDItemCurrency(vbapEntity.getWaerk());
+                salesOrderBo.setLocalStorageLocation(vbapEntity.getLgort());
+                salesOrderBo.setLocalShippingPoint(vbapEntity.getVstel());
+                salesOrderBo.setLocalRoute(vbapEntity.getRoute());
+
+                salesOrderBo.setScheduleLineItem(vbepEntity.getEtenr());
+                salesOrderBo.setLocalScheduleLineDate(vbepEntity.getEdatu());
+                salesOrderBo.setLocalSchLineQty(vbepEntity.getWmeng());
+                salesOrderBo.setLocalSchLineConfimQty(vbepEntity.getBmeng());
+
+                //rule J3
+                VbpaEntity vbpaEntity = getFieldWithJ3(vbakEntity.getVbeln(),  IConstant.VALUE.WE);
+                salesOrderBo.setLocalShipToParty(vbpaEntity.getKunnr());
+
+                //rule J4
+                VbkdEntity vbkdEntity = getFieldWithJ4(vbakEntity.getVbeln());
+                salesOrderBo.setLocalIncoTerms1(vbkdEntity.getInco1());
+                salesOrderBo.setLocalIncoTerms2(vbkdEntity.getInco2());
+                salesOrderBo.setLocalCustomerGroup(vbkdEntity.getKdgrp());
+
+                resultObject.setBaseBo(salesOrderBo);
+                resultObjectList.add(resultObject);
+            }
+
         }
-        salesOrderBo.setScheduleLineItem(vbepEntity.getEtenr());
-        salesOrderBo.setLocalScheduleLineDate(vbepEntity.getEdatu());
-        salesOrderBo.setLocalSchLineQty(vbepEntity.getWmeng());
-        salesOrderBo.setLocalSchLineConfimQty(vbepEntity.getBmeng());
 
-
-        //rule J3
-        VbpaEntity vbpaEntity = getFieldWithJ3(vbakEntity.getVbeln(),  IConstant.VALUE.WE);
-        salesOrderBo.setLocalShipToParty(vbpaEntity.getKunnr());
-
-        //rule J4
-        VbkdEntity vbkdEntity = getFieldWithJ4(vbakEntity.getVbeln());
-        salesOrderBo.setLocalIncoTerms1(vbkdEntity.getInco1());
-        salesOrderBo.setLocalIncoTerms2(vbkdEntity.getInco2());
-        salesOrderBo.setLocalCustomerGroup(vbkdEntity.getKdgrp());
-
-        resultObject.setBaseBo(salesOrderBo);
-        return resultObject;
+        return resultObjectList;
     }
 
     //J4
@@ -155,22 +177,16 @@ public class EDMSalesOrderServiceImpl implements ICommonService {
     }
 
     //J2
-    private VbepEntity getFieldWithJ2(String vbeln, String posnr) {
-        VbepEntity entity = vbepDao.getEntityWithVbelnAndPosnr(vbeln, posnr);
-        if (null != entity) {
+    private List<VbepEntity> getFieldWithJ2(String vbeln, String posnr) {
+        List<VbepEntity> entity = vbepDao.getEntityWithVbelnAndPosnr(vbeln, posnr);
             return entity;
-        }
-        return null;
+
     }
 
     //J1
-    private VbapEntity getFieldWithJ1(String vbeln) {
-        VbapEntity entity = vbapDao.getEntityWithVbeln(vbeln);
-        if (null != entity) {
-            return entity;
-        }
-        return null;
-
+    private List<VbapEntity> getFieldWithJ1(String vbeln) {
+        List<VbapEntity> entitys = vbapDao.getEntityWithVbeln(vbeln);
+        return entitys;
     }
 
 }
