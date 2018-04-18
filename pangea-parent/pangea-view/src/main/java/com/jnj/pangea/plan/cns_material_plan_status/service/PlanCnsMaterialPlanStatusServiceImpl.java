@@ -1,26 +1,20 @@
 package com.jnj.pangea.plan.cns_material_plan_status.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialInclDaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
+public class PlanCnsMaterialPlanStatusServiceImpl {
 
     private static PlanCnsMaterialPlanStatusServiceImpl instance;
 
@@ -32,59 +26,89 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
     }
 
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
-    private PlanCnsPlanParameterDaoImpl planParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
-    private EDMMaterialGlobalDaoImpl materialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
-    private PlanCnsMaterialInclDaoImpl materialInclDao = PlanCnsMaterialInclDaoImpl.getInstance();
 
-    @Override
-    public ResultObject buildView(String key, Object o, Object o2) {
-
+    public ResultObject buildView(String key, Object o, Set<String> f1Set, Set<String> f2ASet,Set<String> f2BSet, Set<String> f3ASet,Set<String> f3BSet) {
         ResultObject resultObject = new ResultObject();
 
         EDMMaterialPlantV1Entity materialPlantV1Entity = (EDMMaterialPlantV1Entity) o;
 
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
 
-        // T1
-        materialPlanStatusBo.setSourceSystem(getFieldWithT1());
+        String localPlant = materialPlantV1Entity.getLocalPlant();
+        String localMrpType = materialPlantV1Entity.getLocalMrpType();
+        LogUtil.getCoreLog().info("localPlant:"+ localPlant);
+        LogUtil.getCoreLog().info("localMrpType:"+ localMrpType);
 
-        //T2
-        String localMaterialNumber = materialPlantV1Entity.getLocalMaterialNumber();
-        CnsMaterialInclEntity materialInclEntity = materialInclDao.getEntityWithLocalMaterialNumberAndLocalPlant(localMaterialNumber,materialPlantV1Entity.getLocalPlant());
-        if (null!=materialInclEntity){
-            materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber());
+
+        boolean f2A = f2ASet.contains(localPlant);
+        boolean f2B = f2BSet.contains(localMrpType);
+        boolean f3A = f3ASet.contains(localPlant);
+        boolean f3B = f3BSet.contains(localMrpType);
+        boolean flag = (f2A && f2B) || (f3A && f3B);
+        LogUtil.getCoreLog().info("flag:"+flag);
+        if ((f2A && f2B) || (f3A && f3B)){
+            // T1
+            materialPlanStatusBo.setSourceSystem(getFieldWithT1());
+
+            materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
             materialPlanStatusBo.setLocalPlant(materialPlantV1Entity.getLocalPlant());
+            materialPlanStatusBo.setMaterialNumber(materialPlantV1Entity.getMaterialNumber());
 
-            if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
-                materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
+            EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
+            if (null != materialGlobalV1Entity) {
+                if (f1Set.contains(materialGlobalV1Entity.getMaterialType())){
+                    String localParentCode = materialGlobalV1Entity.getLocalDpParentCode();
+                    materialPlanStatusBo.setLocalParentCode(localParentCode);
+                    materialPlanStatusBo.setPpc(materialGlobalV1Entity.getPrimaryPlanningCode());
+                }
             }
+            if (f2A && f2B){
+                materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
+            }
+            if (f3A && f3B) {
+                materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
+            }
+
+            if (null!=materialPlanStatusBo.getLocalParentCode() && !"".equals(materialPlanStatusBo.getLocalParentCode())){
+                materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
+            }
+
+            //T7
+            getFieldWithT7(materialPlanStatusBo);
+
+            LogUtil.getCoreLog().info("materialPlanStatusBo:"+materialPlanStatusBo);
+            resultObject.setBaseBo(materialPlanStatusBo);
         }else{
-            FailData failData = checkFailData(materialPlantV1Entity);
+            FailData failData = checkFailData(materialPlantV1Entity,IConstant.FAILED.ERROR_CODE.F2F3);
             resultObject.setFailData(failData);
             return resultObject;
         }
 
-        materialPlanStatusBo.setMaterialNumber(materialPlantV1Entity.getMaterialNumber());
+        return resultObject;
+    }
 
-        EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(localMaterialNumber);
-        if (null != entityWithLocalMaterialNumber) {
-            String localParentCode = entityWithLocalMaterialNumber.getLocalDpParentCode();
-            materialPlanStatusBo.setLocalParentCode(localParentCode);
-            materialPlanStatusBo.setPpc(entityWithLocalMaterialNumber.getPrimaryPlanningCode());
+    public ResultObject materialInclBuildView(CnsMaterialInclEntity materialInclEntity) {
+
+        ResultObject resultObject = new ResultObject();
+
+        PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
+
+        // T1
+        materialPlanStatusBo.setSourceSystem(getFieldWithT1());
+
+        materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber());
+        materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant());
+
+        if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
+            materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
         }
-
-        if (null!=materialPlanStatusBo.getLocalParentCode()){
-            materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
-        }
-
-        checkWithF1F2AndF3(materialPlantV1Entity,materialPlanStatusBo);
 
         //T7
         getFieldWithT7(materialPlanStatusBo);
 
+        LogUtil.getCoreLog().info("materialPlanStatusBo:"+materialPlanStatusBo);
         resultObject.setBaseBo(materialPlanStatusBo);
-
         return resultObject;
     }
 
@@ -112,78 +136,9 @@ public class PlanCnsMaterialPlanStatusServiceImpl implements ICommonService {
         }
     }
 
-    private PlanCnsMaterialPlanStatusBo checkWithF1F2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity,PlanCnsMaterialPlanStatusBo materialPlanStatusBo) {
-        List<PlanCnsPlanParameterEntity> planParameterEntities = new ArrayList<>();
-        List<PlanCnsPlanParameterEntity> t1DpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
-                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
-        planParameterEntities.addAll(t1DpList);
-
-        List<PlanCnsPlanParameterEntity> t1SpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
-                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.SP_RELEVANT, IConstant.VALUE.MATERIAL_TYPE);
-        planParameterEntities.addAll(t1SpList);
-
-        List<String> parameterValues = new ArrayList<>();
-        for (PlanCnsPlanParameterEntity planParameterEntity : planParameterEntities) {
-            parameterValues.add(planParameterEntity.getParameterValue());
-        }
-        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialType(parameterValues);
-        if (null != materialGlobalV1Entity) {
-            //F2 F3
-            if (checkWithF2AndF3(materialPlantV1Entity, materialGlobalV1Entity, IConstant.VALUE.DP_RELEVANT)) {//F2
-                materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
-            }
-            if (checkWithF2AndF3(materialPlantV1Entity, materialGlobalV1Entity, IConstant.VALUE.SP_RELEVANT)) {//F3
-                materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
-            }
-        }
-        return materialPlanStatusBo;
-    }
-
-    private Boolean checkWithF2AndF3(EDMMaterialPlantV1Entity materialPlantV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, String attribute) {
-
-        if (null == materialPlantV1Entity) {
-            return null;
-        }
-        if (null == materialGlobalV1Entity) {
-            return null;
-        }
-
-//        Boolean lpFlag = materialPlantV1Entity.getLocalPlant().equals(materialGlobalV1Entity.getLocalMaterialNumber());
-
-        List<PlanCnsPlanParameterEntity> ldList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
-                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.PLANT);
-
-        Boolean ldFlag = false;
-        Set<String> ldSet = new HashSet<>();
-        for (PlanCnsPlanParameterEntity planParameterEntity : ldList) {
-            ldSet.add(planParameterEntity.getParameterValue());
-        }
-        if (ldSet.contains(materialPlantV1Entity.getLocalPlant())){
-            ldFlag = true;
-        }
-
-        Boolean lmFlag = false;
-        List<PlanCnsPlanParameterEntity> lmList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
-                IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, attribute, IConstant.VALUE.MRP_TYPE, IConstant.VALUE.I);
-
-        Set<String> lmSet = new HashSet<>();
-        for (PlanCnsPlanParameterEntity planParameterEntity : lmList) {
-            lmSet.add(planParameterEntity.getParameterValue());
-        }
-        if (lmSet.contains(materialPlantV1Entity.getLocalMrpType())){
-            lmFlag = true;
-        }
-
-        if (ldFlag && lmFlag) {
-            return true;
-        }
-        return false;
-
-    }
-
-    private FailData checkFailData(EDMMaterialPlantV1Entity materialPlantV1Entity) {
+    private FailData checkFailData(EDMMaterialPlantV1Entity materialPlantV1Entity,String ErrorCode) {
         FailData failData = new FailData();
-        failData.setErrorCode(IConstant.FAILED.ERROR_CODE.T2);
+        failData.setErrorCode(ErrorCode);
         failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
         failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.PLAN_CNS_MATERIAL_PLAN_STATUS);
         failData.setSourceSystem(IConstant.VALUE.CONS_LATAM);
