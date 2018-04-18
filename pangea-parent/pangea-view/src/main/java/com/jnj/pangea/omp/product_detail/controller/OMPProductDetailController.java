@@ -9,10 +9,7 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlantAttrEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_detail.service.OMPProductDetailServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -34,7 +31,7 @@ public class OMPProductDetailController extends BaseController {
 
             List<ResultObject> resultObjectList = service.buildView(raw.getKey(), materialGlobalV1Entity, null);
 
-            for (ResultObject resultObject:resultObjectList) {
+            for (ResultObject resultObject : resultObjectList) {
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = resultObject.getBaseBo();
                     ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());

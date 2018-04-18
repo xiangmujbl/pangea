@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.product_detail.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
@@ -33,27 +34,31 @@ public class OMPProductDetailServiceImpl{
         List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
 
+
         List<OMPProductDetailBo> BoList = new ArrayList<OMPProductDetailBo>();
 
         if (materialGlobalV1Entity==null){
-            return  new ArrayList<ResultObject>();
+            return resultObjectList;
         }
          //rules J1
         String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
         if ("".equals(localMaterialNumber)){
-            return  new ArrayList<ResultObject>();
+            return resultObjectList;
         }
         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(localMaterialNumber,IConstant.VALUE.CONS_LATAM);
         if (cnsMaterialPlanStatusEntity==null){
-            return  new ArrayList<ResultObject>();
+            return resultObjectList;
         }
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(materialGlobalV1Entity.getSourceSystem());
         if (edmSourceSystemV1Entity==null){
-            return  new ArrayList<ResultObject>();
+            return resultObjectList;
         }
-
+        LogUtil.getLogger().info("------------------{}-----------------------",edmSourceSystemV1Entity.getLocalSourceSystem());
         //rules T1
         List<OMPProductDetailBo> boList = getFieldWithT1(materialGlobalV1Entity, cnsMaterialPlanStatusEntity, edmSourceSystemV1Entity, BoList);
+
+        LogUtil.getLogger().info("------------------{}-----------------------",boList.size());
+
         if (boList==null||boList.size()==0){
             return resultObjectList;
         }
@@ -102,7 +107,6 @@ public class OMPProductDetailServiceImpl{
         productDetailBo.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
         productDetailBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
         boList.add(productDetailBo);
-
 
         if (IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getDpRelevant())){
             OMPProductDetailBo productDetailBo1=new OMPProductDetailBo();
