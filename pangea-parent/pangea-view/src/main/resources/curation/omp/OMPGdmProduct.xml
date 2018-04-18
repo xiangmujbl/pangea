@@ -8,13 +8,10 @@
                     sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
                 </columns>
                 <relations>
-                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
-                        <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
-                    </relation>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>
-                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber,
-                            localPlant=/edm/material_global_v1.localPlant
+                            sourceSystem=/edm/material_global_v1.sourceSystem
+                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber
                         </expression>
                     </relation>
                     <relation path="/edm/product_family_v1" isPrimaryKey="false">
@@ -45,11 +42,6 @@
 
             </region>
 
-            <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
-                </columns>
-            </region>
             <region path="/plan/cns_material_plan_status">
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant

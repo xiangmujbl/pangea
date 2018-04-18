@@ -3,6 +3,10 @@ Feature:  OMPGdmProduct AEAZ-1765
 
   Scenario: Full Load curation
 
+    And I will remove all data with region "/omp/product"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localRefDescription             | localMaterialType | localBaseUom | materialNumber | refDescription                           | materialType | localDpParentCode | parentCode    | globalDpParentCode | form | category | subBrand | brand | franchise | globalBusinessUnit | productFamily | localManufacturingTechnology | manufacturingTechnology | localMaterialGroup | materialGroup | flagForDeletion | materialStatus | division | batchManageIndicator | minRemShelfLife | totalShelfLife | primaryPlanningCode |
       | CONS_LATAM   | BR01                | JS COTTON BALLS 50 GRX20 T50P35 | FERT              | CRT          | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FERT         | LDPC01            | 7891010931582 | GDPC01             | 101  | 1001     | 101      | TD001 | FCH001    | GFO001             | AB101         | LMT01                        | Wipes                   | 01                 | MG01          |                 | 08             | 10       | X                    | 180             | 9999           | 1233                |
@@ -10,11 +14,6 @@ Feature:  OMPGdmProduct AEAZ-1765
 
 
     And I wait "/edm/material_global_v1" Async Queue complete
-
-    And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
-      | localSourceSystem | localSourceSystemName    | sourceSystem | sourceSystemName   |
-      | CONS_LATAM        | [MD Synthes SAP Anspach] | [CONS_LATAM] | Consumer Latam Ent |
-    And I wait "/edm/source_system_v1" Async Queue complete
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
@@ -93,9 +92,9 @@ Feature:  OMPGdmProduct AEAZ-1765
     When I submit task with xml file "xml/omp/OMPGdmProduct.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/omp/product" by keyFields "productId"
-      | productId           | active | activeFCTERP | activeOPRERP | activeSOPERP | color | description                              | groes | isroot | issku | label                                    | matkl | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc  | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | prdha | shortDescription                         | sourceLocationId | subFranchise | technology | unitId |
-      | 1234                | YES    |              | YES          | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |       |        |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
-      | [CONS_LATAM]_LDPC02 | YES    | YES          |              | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |       |        |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
+      | productId         | active | activeFCTERP | activeOPRERP | activeSOPERP | color | description                              | groes | isroot | issku | label                                    | matkl | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc  | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | prdha | shortDescription                         | sourceLocationId | subFranchise | technology | unitId |
+      | 1234              | YES    |              | YES          | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |       |        |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
+      | CONS_LATAM_LDPC02 | YES    | YES          |              | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |       |        |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue                                                      |

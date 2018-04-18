@@ -26,7 +26,6 @@ public class OMPGdmProductServiceImpl {
         return instance;
     }
 
-    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private EDMProductFamilyV1DaoImpl productFamilyV1Dao = EDMProductFamilyV1DaoImpl.getInstance();
     private EDMFormV1DaoImpl formV1Dao = EDMFormV1DaoImpl.getInstance();
@@ -46,12 +45,6 @@ public class OMPGdmProductServiceImpl {
         String localDPParentCode = materialGlobalV1Entity.getLocalDpParentCode();
         String sourceSystem = materialGlobalV1Entity.getSourceSystem();
 
-        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(sourceSystem);
-        String sourceSystemSS = "";
-        if (null != sourceSystemV1Entity) {
-            sourceSystemSS = sourceSystemV1Entity.getSourceSystem();
-        }
-
         PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(materialGlobalV1Entity.getSourceSystem(),materialGlobalV1Entity.getLocalMaterialNumber());
 
         if (null != materialPlanStatusEntity) {
@@ -59,7 +52,7 @@ public class OMPGdmProductServiceImpl {
             List<OMPGdmProductBo> productBos = new ArrayList<>();
 
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-                if (null == primaryPlanningCode){
+                if (null == primaryPlanningCode || "".equals(primaryPlanningCode)){
                     ResultObject resultObject = new ResultObject();
                     FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "primaryPlanningCode is not available for SPRelevant mateial");
                     resultObject.setFailData(failData);
@@ -73,7 +66,7 @@ public class OMPGdmProductServiceImpl {
                 productBos.add(gdmProductBo);
             }
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
-                if (null == localDPParentCode){
+                if (null == localDPParentCode || "".equals(localDPParentCode)){
                     ResultObject resultObject = new ResultObject();
                     FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode");
                     resultObject.setFailData(failData);
@@ -81,7 +74,7 @@ public class OMPGdmProductServiceImpl {
                     return resultObjects;
                 }
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-                gdmProductBo.setProductId(sourceSystemSS+IConstant.VALUE.UNDERLINE+localDPParentCode);
+                gdmProductBo.setProductId(sourceSystem+IConstant.VALUE.UNDERLINE+localDPParentCode);
                 gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
                 productBos.add(gdmProductBo);
             }
@@ -212,7 +205,6 @@ public class OMPGdmProductServiceImpl {
                     resultObjects.add(resultObject);
                     return resultObjects;
                 }
-
                 resultObject.setBaseBo(productBo);
                 resultObjects.add(resultObject);
             }
@@ -246,54 +238,6 @@ public class OMPGdmProductServiceImpl {
         }
 
         return planUnitEntity;
-    }
-
-    private List<OMPGdmProductBo> checkJ1AndE1(EDMMaterialGlobalV1Entity materialGlobalV1Entity,PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity,String primaryPlanningCode,String localDPParentCode){
-        List<OMPGdmProductBo> productBos = new ArrayList<>();
-
-        if ((IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) &&
-                IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
-
-            if (null == materialGlobalV1Entity.getPrimaryPlanningCode() || null == materialGlobalV1Entity.getLocalDpParentCode()){
-
-            }
-            for (int i=0;i<2;i++){
-                OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-                if (i==0){
-                    gdmProductBo.setProductId(primaryPlanningCode);
-                }else if(i==1){
-                    gdmProductBo.setProductId(localDPParentCode);
-                }
-                gdmProductBo.setActive(IConstant.VALUE.YES);
-                gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
-                gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
-                gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
-
-                productBos.add(gdmProductBo);
-            }
-
-        } else if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) ||
-                IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-
-            OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-            gdmProductBo.setProductId(primaryPlanningCode);
-            gdmProductBo.setActive(IConstant.VALUE.YES);
-            gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
-            gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
-
-            productBos.add(gdmProductBo);
-
-        } else if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
-
-            OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-            gdmProductBo.setProductId(localDPParentCode);
-            gdmProductBo.setActive(IConstant.VALUE.YES);
-            gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
-            gdmProductBo.setActiveSOPERP(IConstant.VALUE.YES);
-            productBos.add(gdmProductBo);
-        }
-
-        return productBos;
     }
 
     private FailData writeFailDataToRegion(EDMMaterialGlobalV1Entity materialGlobalV1Entity, String ruleCode, String errorValue) {
