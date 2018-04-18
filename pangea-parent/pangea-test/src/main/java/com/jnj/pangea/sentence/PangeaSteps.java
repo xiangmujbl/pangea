@@ -36,13 +36,13 @@ public class PangeaSteps extends CommonSteps {
             long count1 = 0;
             String[] region1 = compare1.split(",");
             for (String region : region1) {
-                count1 += adfService.onPath(region).count();
+                count1 += adfService.onPath(region).queryOql("select * from " + region).size();
             }
 
             long count2 = 0;
             String[] region2 = compare2.split(",");
             for (String region : region2) {
-                count2 += adfService.onPath(region).count();
+                count2 += adfService.onPath(region).queryOql("select * from " + region).size();
             }
             Assert.assertEquals(count1, count2);
         });
