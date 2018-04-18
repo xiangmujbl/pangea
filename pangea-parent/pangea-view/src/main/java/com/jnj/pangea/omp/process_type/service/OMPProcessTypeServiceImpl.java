@@ -31,7 +31,7 @@ public class OMPProcessTypeServiceImpl implements ICommonService {
 
         // N1
         processTypeBo.setActiveOPRERP(IConstant.VALUE.YES);
-        processTypeBo.setActiveSOPERP(IConstant.VALUE.YES);
+        processTypeBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         resultObject.setBaseBo(processTypeBo);
         return resultObject;

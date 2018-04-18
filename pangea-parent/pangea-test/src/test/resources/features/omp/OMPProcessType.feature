@@ -14,7 +14,7 @@ Feature: OMPProcessType AEAZ-2375
 
     Then I check region data "/omp/process_type" by keyFields "processTypeId"
       | processTypeId | activeOPRERP | activeSOPERP | label       |
-      | 1             | YES          | YES          | Inter Plant |
+      | 1             | YES          | NO           | Inter Plant |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
