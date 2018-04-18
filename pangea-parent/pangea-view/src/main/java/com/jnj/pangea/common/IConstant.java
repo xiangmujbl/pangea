@@ -245,7 +245,7 @@ public interface IConstant {
     }
 
     interface CNS_MATERIAL_PLAN_STATUS {
-
+        String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
     }
