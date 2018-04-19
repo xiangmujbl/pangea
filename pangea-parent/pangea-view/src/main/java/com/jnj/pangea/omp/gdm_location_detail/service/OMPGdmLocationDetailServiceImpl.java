@@ -34,8 +34,11 @@ public class OMPGdmLocationDetailServiceImpl {
         String value2 = cnsPlantAttrEntity.getLocationAttribute2Value();
         String value3 = cnsPlantAttrEntity.getLocationAttribute3Value();
         String value4 = cnsPlantAttrEntity.getLocationAttribute4Value();
+
         String name = "";
         String value = "";
+
+        // T1 - create multi records per attr
         for (int i=0;i<4;i++){
 
             ResultObject resultObject = new ResultObject();
@@ -55,26 +58,30 @@ public class OMPGdmLocationDetailServiceImpl {
                 value = value4;
             }
 
+            // Rule T1/T2
+            gdmLocationDetailBo.setName(name);
+            gdmLocationDetailBo.setValue(value);
+
+            // Rule N1
             gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
             gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.YES);
 
+            // Rule N3
             String CLASS = "";
             if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())){
                 CLASS = IConstant.VALUE.PGA;
                 gdmLocationDetailBo.setCLASS(CLASS);
             }
 
+            // Rule C1
             String locationid = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
             gdmLocationDetailBo.setLocationid(locationid);
 
-            gdmLocationDetailBo.setName(name);
-            gdmLocationDetailBo.setValue(value);
-
+            // Rule C2
             String locationDetailId = locationid+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
 
             resultObject.setBaseBo(gdmLocationDetailBo);
-
             resultObjectList.add(resultObject);
         }
 

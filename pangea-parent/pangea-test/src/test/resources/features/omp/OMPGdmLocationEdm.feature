@@ -16,7 +16,9 @@ Feature: OMPGdmLocationEdm-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmLocationEdm.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_location" by keyFields "locationId"
+    Then A file is found on sink application with name "gdmLocationEdm.tsv"
+
+    And I check file data for filename "gdmLocationEdm.tsv" by keyFields "locationId"
       | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerid | label       | locationTypeId | regionId | vendorid |
       | CONS_LATAM_AR01 | YES    | YES          | YES          |              | 00        | AR         |            | Pilar Plant | AH             | edmPlant |          |
 
@@ -30,4 +32,6 @@ Feature: OMPGdmLocationEdm-Curation
     And I will remove all data with region "/omp/gdm_location"
 
     And I will remove all data with region "/edm/plant_v1"
+
+    And I will remove the test file on sink application "gdmLocationEdm.tsv"
 
