@@ -5,11 +5,14 @@
 
             <region path="/edm/batch_master_v1">
                 <columns>
-                    localMaterialNumber,localBatchNumber,localBatchExpDate,localBatchMfgDate,materialNumber
+                    localBatchNumber,localBatchExpDate,localBatchMfgDate,srcSysCd,locPrtyId,matlId
                 </columns>
                 <relations>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/edm/batch_master_v1.localMaterialNumber</expression>
+                        <expression>localMaterialNumber=/edm/batch_master_v1.matlId</expression>
                     </relation>
                 </relations>
             </region>
@@ -17,6 +20,12 @@
             <region path="/edm/material_global_v1">
                 <columns>
                     localMaterialNumber,materialNumber,primaryPlanningCode
+                </columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant
                 </columns>
             </region>
 

@@ -49,36 +49,37 @@ public class OMPGdmProductLocationServiceImpl {
 
         List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
         EDMMaterialPlantV1Entity materialPlantV1Entity = (EDMMaterialPlantV1Entity) o;
+        List<OMPGdmProductLocationBo> boList=null;
+        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity=null;
+        PlanCnsMaterialPlanStatusEntity planStatusEntity=null;
+        EDMMatPlantFiV1Entity matPlantFiV1Entity=null;
+
         //rules J1
-        if (materialPlantV1Entity == null) {
-            return resultObjectList;
-        }
         String localMaterialNumber = materialPlantV1Entity.getLocalMaterialNumber();
-        if ("".equals(localMaterialNumber)){
-            return resultObjectList;
+        if (!"".equals(localMaterialNumber)){
+           edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+
         }
-        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
-        if (edmMaterialGlobalV1Entity == null) {
-            return resultObjectList;
-        }
-        String sourceSystem = edmMaterialGlobalV1Entity.getSourceSystem();
-        if ("".equals(sourceSystem)){
-            return resultObjectList;
-        }
+//        String sourceSystem = edmMaterialGlobalV1Entity.getSourceSystem();
+//        if ("".equals(sourceSystem)){
+//            ResultObject resultObject = new ResultObject();
+//            OMPGdmProductLocationBo ompGdmProductLocationBo = new OMPGdmProductLocationBo();
+//            resultObject.setBaseBo(ompGdmProductLocationBo);
+//            resultObjectList.add(resultObject);
+//            return resultObjectList;
+//        }
 //        EDMSourceSystemV1Entity edmSourceSystemV1Entity = systemV1Dao.getEntityWithSourceSystem(sourceSystem);
 //        if (edmSourceSystemV1Entity == null) {
 //            return resultObjectList;
 //        }
         String localPlant = materialPlantV1Entity.getLocalPlant();
-        if ("".equals(localPlant)){
-            return resultObjectList;
+        if (!"".equals(localPlant)){
+                planStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(localMaterialNumber, localPlant);
         }
-        PlanCnsMaterialPlanStatusEntity planStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(localMaterialNumber, localPlant);
-        if (planStatusEntity == null) {
-            return resultObjectList;
+        if (planStatusEntity != null && edmMaterialGlobalV1Entity!=null) {
+                boList = getFieldWithJ1(edmMaterialGlobalV1Entity,planStatusEntity);
         }
-        List<OMPGdmProductLocationBo> boList = getFieldWithJ1(edmMaterialGlobalV1Entity, planStatusEntity);
-        if (boList == null||boList.size()==0){
+        if (boList==null || boList.isEmpty()){
             FailData failData = new FailData();
             failData.setErrorCode("J1");
             failData.setErrorValue("Unable to find DPParentCode");
@@ -98,29 +99,33 @@ public class OMPGdmProductLocationServiceImpl {
 
 
         //rules J2
-        EDMMatPlantFiV1Entity matPlantFiV1Entity = getFieldWithJ2(materialPlantV1Entity);
-        if (matPlantFiV1Entity == null) {
-            return resultObjectList;
+        if(materialPlantV1Entity!=null){
+                matPlantFiV1Entity = getFieldWithJ2(materialPlantV1Entity);
         }
         for (OMPGdmProductLocationBo bo : boList) {
-            bo.setCost(matPlantFiV1Entity.getLocalStandardPrice());
-            bo.setProductValue(matPlantFiV1Entity.getLocalStandardPrice());
-            bo.setStprs(matPlantFiV1Entity.getLocalStandardPrice());
-            bo.setVerpr(matPlantFiV1Entity.getLocalMovingAverage());
-            bo.setVprsv(matPlantFiV1Entity.getLocalPriceControlIndicator());
-            bo.setPeinh(matPlantFiV1Entity.getLocalPriceUnit());
-
+            if (matPlantFiV1Entity!=null){
+                bo.setCost(matPlantFiV1Entity.getLocalStandardPrice());
+                bo.setProductValue(matPlantFiV1Entity.getLocalStandardPrice());
+                bo.setStprs(matPlantFiV1Entity.getLocalStandardPrice());
+                bo.setVerpr(matPlantFiV1Entity.getLocalMovingAverage());
+                bo.setVprsv(matPlantFiV1Entity.getLocalPriceControlIndicator());
+                bo.setPeinh(matPlantFiV1Entity.getLocalPriceUnit());
+            }
             //rules C1
             bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant());
             //rules D1
             bo.setActive(IConstant.VALUE.YES);
-            //rules T1
-            if (IConstant.VALUE.X.equals(planStatusEntity.getDpRelevant())) {
-                bo.setActiveFCTERP(IConstant.VALUE.YES);
-            }
-            //rules T2
-            if (IConstant.VALUE.X.equals(planStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(planStatusEntity.getNoPlanRelevant())) {
-                bo.setActiveOPRERP(IConstant.VALUE.YES);
+
+            if(planStatusEntity!=null){
+                //rules T1
+                if (IConstant.VALUE.X.equals(planStatusEntity.getDpRelevant())) {
+                    bo.setActiveFCTERP(IConstant.VALUE.YES);
+                }
+
+                //rules T2
+                if (IConstant.VALUE.X.equals(planStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(planStatusEntity.getNoPlanRelevant())) {
+                    bo.setActiveOPRERP(IConstant.VALUE.YES);
+                }
             }
 
             //rules E1
@@ -137,20 +142,22 @@ public class OMPGdmProductLocationServiceImpl {
 
             //rules E4
             PlanCnsProdLocAttribEntity attribEntity = getFieldWithE4(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
-            if (attribEntity==null){
-                return new ArrayList<ResultObject>();
-            }
-            if (attribEntity != null) {
+            if (attribEntity!=null){
                 bo.setMinmrsl(attribEntity.getMinMinShelfLife());
                 bo.setSupplyGroup(attribEntity.getSupplyGroup());
+
+                //rules E5
+                if (attribEntity.getMinShelfLife() == null || "".equals(attribEntity.getMinShelfLife())) {
+                    bo.setMinRemainingShelfLife(edmMaterialGlobalV1Entity.getMinRemShelfLife());
+                } else {
+                    bo.setMinRemainingShelfLife(attribEntity.getMinShelfLife());
+                }
+
             }
 
-            //rules E5
-            if (attribEntity.getMinShelfLife() == null || "".equals(attribEntity.getMinShelfLife())) {
-                bo.setMinRemainingShelfLife(edmMaterialGlobalV1Entity.getMinRemShelfLife());
-            } else {
-                bo.setMinRemainingShelfLife(attribEntity.getMinShelfLife());
-            }
+
+
+
 
             //rules E6
             PlanCnsSplProcTypEntity planCnsSplProcTypEntity = getFieldWithE6(materialPlantV1Entity.getLocalSpecialProcurementType(), materialPlantV1Entity.getSourceSystem());
@@ -177,8 +184,12 @@ public class OMPGdmProductLocationServiceImpl {
             }
 
             //No rules
-            bo.setLabel(edmMaterialGlobalV1Entity.getLocalRefDescription());
-            bo.setTotalShelfLife(edmMaterialGlobalV1Entity.getTotalShelfLife());
+            if(edmMaterialGlobalV1Entity!=null){
+                bo.setLabel(edmMaterialGlobalV1Entity.getLocalRefDescription());
+                bo.setTotalShelfLife(edmMaterialGlobalV1Entity.getTotalShelfLife());
+                bo.setProductTypeId(edmMaterialGlobalV1Entity.getLocalMaterialType());
+            }
+
             bo.setBasmg (materialPlantV1Entity.getLocalBaseQuantity());
             bo.setBstfe (materialPlantV1Entity.getLocalFixedLotSize());
             bo.setBstma (materialPlantV1Entity.getLocalMaximumLotSize());

@@ -14,6 +14,10 @@ public class EDMBatchMasterV1Entity extends CommonEntity {
     private String localDateofManufacture;
     private String localBatchExpDate;
     private String localBatchMfgDate;
+    private String srcSysCd;
+    private String matlId;
+    private String locPrtyId;
+
 
     public EDMBatchMasterV1Entity(Map<String, Object> map) {
         super(map);
@@ -25,7 +29,14 @@ public class EDMBatchMasterV1Entity extends CommonEntity {
         setLocalDateofManufacture((String) map.get("localDateofManufacture"));
         setLocalBatchExpDate((String) map.get("localBatchExpDate"));
         setLocalBatchMfgDate((String) map.get("localBatchMfgDate"));
+        setSrcSysCd((String) map.get("srcSysCd"));
+        setMatlId((String) map.get("matlId"));
+        setLocPrtyId((String) map.get("locPrtyId"));
     }
+
+    public String getSrcSysCd() { return srcSysCd; }
+
+    public void setSrcSysCd(String srcSysCd) { this.srcSysCd = srcSysCd; }
 
     public String getSourceSystem() {
         return sourceSystem;
@@ -90,4 +101,12 @@ public class EDMBatchMasterV1Entity extends CommonEntity {
     public void setLocalBatchMfgDate(String localBatchMfgDate) {
         this.localBatchMfgDate = localBatchMfgDate;
     }
+
+    public String getMatlId() { return matlId; }
+
+    public void setMatlId(String matlId) { this.matlId = matlId; }
+
+    public String getLocPrtyId() { return locPrtyId; }
+
+    public void setLocPrtyId(String locPrtyId) { this.locPrtyId = locPrtyId; }
 }
