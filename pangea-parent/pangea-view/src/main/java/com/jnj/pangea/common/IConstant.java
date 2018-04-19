@@ -248,7 +248,6 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
-        String SOURCE_SYSTEM = "sourceSystem";
         String SP_RELEVANT = "sPRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
