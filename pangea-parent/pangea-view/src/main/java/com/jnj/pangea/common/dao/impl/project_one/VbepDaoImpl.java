@@ -18,13 +18,6 @@ public class VbepDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public VbepEntity getEntityWithConditions(String param) {
-
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
-        return null;
-    }
-
     public List<VbepEntity> getEntityWithVbelnAndPosnr(String vbeln, String posnr) {
         String queryString;
         if (null==posnr||"".equals(posnr)){
@@ -32,6 +25,6 @@ public class VbepDaoImpl extends CommonDaoImpl {
         }else {
             queryString= QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBEP.VBELN).is(vbeln).and(IConstant.PROJECT_ONE_VBEP.POSNR).is(posnr).toQueryString();
         }
-        return queryForObject(IConstant.REGION.PROJECT_ONE_VBEP, queryString, VbepEntity.class);
+        return queryForList(IConstant.REGION.PROJECT_ONE_VBEP, queryString, VbepEntity.class);
     }
 }

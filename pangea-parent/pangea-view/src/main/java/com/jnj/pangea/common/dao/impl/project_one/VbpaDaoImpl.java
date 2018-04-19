@@ -17,13 +17,6 @@ public class VbpaDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public VbpaEntity getEntityWithConditions(String param) {
-
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
-        return null;
-    }
-
     public VbpaEntity getEntityWithPosnrAndParvwAndVbelnAndPosnrIsNullOrBlankOr000000(String vbeln, String parvw) {
         ADFCriteria adfCriteria = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).is("000000");
         ADFCriteria adfCriteria1 = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).isNull();

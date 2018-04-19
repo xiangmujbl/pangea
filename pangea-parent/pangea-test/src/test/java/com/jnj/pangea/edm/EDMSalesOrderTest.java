@@ -10,5 +10,6 @@ import org.junit.runner.RunWith;
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "json:target/reports/json/EDMSalesOrder.json"})
-public class EDMSalesOrderTest {
+public class EDMSalesOrderTest{
+
 }
