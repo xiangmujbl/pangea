@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/product" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_product" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_product.controller.OMPGdmProductController">
         <regions>
 
@@ -89,9 +89,9 @@
             </region>
 
 
-            <region path="/omp/product">
+            <region path="/omp/gdm_product">
                 <columns>
-                    productId,active,activeFCTERP,activeOPRERP,activeSOPERP,color,description,groes,isroot,issku,label,matkl,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,prdha,shortDescription,sourceLocationId,subFranchise,technology,unitId
+                    productId,active,activeFCTERP,activeOPRERP,activeSOPERP,color,description,groes,isRoot,isSku,label,matkl,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,prdha,shortDescription,sourceLocationId,subFranchise,technology,unitId
                 </columns>
             </region>
 

@@ -45,14 +45,14 @@ public class OMPGdmProductServiceImpl {
         String localDPParentCode = materialGlobalV1Entity.getLocalDpParentCode();
         String sourceSystem = materialGlobalV1Entity.getSourceSystem();
 
-        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(materialGlobalV1Entity.getSourceSystem(),materialGlobalV1Entity.getLocalMaterialNumber());
+        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(materialGlobalV1Entity.getSourceSystem(), materialGlobalV1Entity.getLocalMaterialNumber());
 
         if (null != materialPlanStatusEntity) {
 
             List<OMPGdmProductBo> productBos = new ArrayList<>();
 
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-                if (null == primaryPlanningCode || "".equals(primaryPlanningCode)){
+                if (null == primaryPlanningCode || "".equals(primaryPlanningCode)) {
                     ResultObject resultObject = new ResultObject();
                     FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "primaryPlanningCode is not available for SPRelevant mateial");
                     resultObject.setFailData(failData);
@@ -66,7 +66,7 @@ public class OMPGdmProductServiceImpl {
                 productBos.add(gdmProductBo);
             }
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
-                if (null == localDPParentCode || "".equals(localDPParentCode)){
+                if (null == localDPParentCode || "".equals(localDPParentCode)) {
                     ResultObject resultObject = new ResultObject();
                     FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode");
                     resultObject.setFailData(failData);
@@ -74,12 +74,12 @@ public class OMPGdmProductServiceImpl {
                     return resultObjects;
                 }
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-                gdmProductBo.setProductId(sourceSystem+IConstant.VALUE.UNDERLINE+localDPParentCode);
+                gdmProductBo.setProductId(sourceSystem + IConstant.VALUE.UNDERLINE + localDPParentCode);
                 gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
                 productBos.add(gdmProductBo);
             }
 
-            for (OMPGdmProductBo productBo:productBos) {
+            for (OMPGdmProductBo productBo : productBos) {
 
                 ResultObject resultObject = new ResultObject();
 
@@ -93,113 +93,101 @@ public class OMPGdmProductServiceImpl {
                 productBo.setMatkl(materialGlobalV1Entity.getMaterialGroup());
 
                 String productFamily = materialGlobalV1Entity.getProductFamily();
-                if (null != productFamily && !"".equals(productFamily)){
-                    EDMProductFamilyV1Entity productFamilyV1Entity = productFamilyV1Dao.getEntityWithProductFamily(productFamily);
-                    productBo.setPlanningHierarchy1(productFamily);
-                    if (null != productFamilyV1Entity){
-                        productBo.setPlanningHierarchy1Desc(productFamilyV1Entity.getProductFamilyName());
-                    }
-                }
-
+                productBo.setPlanningHierarchy1(productFamily);
                 String form = materialGlobalV1Entity.getForm();
-                if (null != form && !"".equals(form)){
-                    EDMFormV1Entity formV1Entity = formV1Dao.getEntityWithFormName(form);
-                    productBo.setPlanningHierarchy2(form);
-                    if (null != formV1Entity){
-                        productBo.setPlanningHierarchy2Desc(formV1Entity.getFormDescription());
-                    }
-                }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E3, "There is no Form assigned for product");
-                    resultObject.setFailData(failData);
-                    resultObjects.add(resultObject);
-                    return resultObjects;
-                }
-
+                productBo.setPlanningHierarchy2(form);
                 String category = materialGlobalV1Entity.getCategory();
-                if (null != category && !"".equals(category)){
-                    EDMCategoryV1Entity categoryV1Entity = categoryV1Dao.getEntityWithCategory(category);
-                    productBo.setPlanningHierarchy3(category);
-                    if (null != categoryV1Entity){
-                        productBo.setPlanningHierarchy3Desc(categoryV1Entity.getCategoryName());
-                    }
-                }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E4, "There is no Category assigned for product");
-                    resultObject.setFailData(failData);
-                    resultObjects.add(resultObject);
-                    return resultObjects;
-                }
-
+                productBo.setPlanningHierarchy3(category);
                 String subBrand = materialGlobalV1Entity.getSubBrand();
-                if (null != subBrand && !"".equals(subBrand)){
-                    EDMSubBrandV1Entity subBrandV1Entity = subBrandV1Dao.getEntityWithSubBrand(subBrand);
-                    productBo.setPlanningHierarchy4(subBrand);
-                    if (null != subBrandV1Entity){
-                        productBo.setPlanningHierarchy4Desc(subBrandV1Entity.getSubBrandDescription());
-                    }
-                }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E5, "There is no subBrand assigned for product");
-                    resultObject.setFailData(failData);
-                    resultObjects.add(resultObject);
-                    return resultObjects;
-                }
-
+                productBo.setPlanningHierarchy4(subBrand);
                 String brand = materialGlobalV1Entity.getBrand();
-                if (null != brand && !"".equals(brand)){
-                    EDMBrandV1Entity brandV1Entity = brandV1Dao.getEntityWithBrand(brand);
-                    productBo.setPlanningHierarchy5(brand);
-                    if (null != brandV1Entity){
-                        productBo.setPlanningHierarchy5Desc(brandV1Entity.getBrandDescription());
-                    }
-                }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E6, "There is no brand assigned for product");
-                    resultObject.setFailData(failData);
-                    resultObjects.add(resultObject);
-                    return resultObjects;
-                }
-
+                productBo.setPlanningHierarchy5(brand);
                 String franchise = materialGlobalV1Entity.getFranchise();
-                if (null != franchise && !"".equals(franchise)){
-                    EDMFranchiseV1Entity franchiseV1Entity = franchiseV1Dao.getEntityWithFranchise(franchise);
-                    productBo.setPlanningHierarchy6(franchise);
-                    if (null != franchiseV1Entity){
-                        productBo.setPlanningHierarchy6Desc(franchiseV1Entity.getFranchiseDescription());
-                    }
-                }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E7, "There is no franchise assigned for product");
-                    resultObject.setFailData(failData);
-                    resultObjects.add(resultObject);
-                    return resultObjects;
-                }
-
+                productBo.setPlanningHierarchy6(franchise);
                 String globalBusinessUnit = materialGlobalV1Entity.getGlobalBusinessUnit();
-                if (null != globalBusinessUnit && !"".equals(globalBusinessUnit)){
-                    EDMGlobalBaseUnitV1Entity globalBaseUnitV1Entity = globalBaseUnitV1Dao.getEntityWithGbu(globalBusinessUnit);
-                    productBo.setPlanningHierarchy7(globalBusinessUnit);
-                    if (null != globalBaseUnitV1Entity){
-                        productBo.setPlanningHierarchy7Desc(globalBaseUnitV1Entity.getGbuName());
+                productBo.setPlanningHierarchy7(globalBusinessUnit);
+
+                String dpRelevant = materialPlanStatusEntity.getDpRelevant();
+                if (IConstant.VALUE.X.equals(dpRelevant)) {
+
+                    productBo.setPlanningHierarchy1Desc(checkE2(productFamily));
+
+                    String planningHierarchy2Desc = checkE3(form);
+                    if (null != planningHierarchy2Desc) {
+                        productBo.setPlanningHierarchy2Desc(planningHierarchy2Desc);
+                    } else {
+                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E3, "There is no Form assigned for product");
+                        resultObject.setFailData(failData);
+                        resultObjects.add(resultObject);
+                        return resultObjects;
                     }
-                }else {
-                    FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E8, "There is no globalBusinessUnit assigned for product");
-                    resultObject.setFailData(failData);
-                    resultObjects.add(resultObject);
-                    return resultObjects;
+
+                    String planningHierarchy3Desc = checkE4(category);
+                    if (null != planningHierarchy3Desc) {
+                        productBo.setPlanningHierarchy3Desc(planningHierarchy3Desc);
+                    } else {
+                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E4, "There is no Category assigned for product");
+                        resultObject.setFailData(failData);
+                        resultObjects.add(resultObject);
+                        return resultObjects;
+                    }
+
+                    String planningHierarchy4Desc = checkE5(subBrand);
+                    if (null != planningHierarchy4Desc) {
+                        productBo.setPlanningHierarchy4Desc(planningHierarchy4Desc);
+                    } else {
+                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E5, "There is no subBrand assigned for product");
+                        resultObject.setFailData(failData);
+                        resultObjects.add(resultObject);
+                        return resultObjects;
+                    }
+
+                    String planningHierarchy5Desc = checkE6(brand);
+                    if (null != planningHierarchy5Desc) {
+                        productBo.setPlanningHierarchy5Desc(planningHierarchy5Desc);
+                    } else {
+                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E6, "There is no brand assigned for product");
+                        resultObject.setFailData(failData);
+                        resultObjects.add(resultObject);
+                        return resultObjects;
+                    }
+
+                    String planningHierarchy6Desc = checkE7(franchise);
+                    if (null != planningHierarchy6Desc) {
+                        productBo.setPlanningHierarchy6Desc(planningHierarchy6Desc);
+                    } else {
+                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E7, "There is no franchise assigned for product");
+                        resultObject.setFailData(failData);
+                        resultObjects.add(resultObject);
+                        return resultObjects;
+                    }
+
+                    String planningHierarchy7Desc = checkE8(globalBusinessUnit);
+                    if (null != planningHierarchy7Desc) {
+                        productBo.setPlanningHierarchy7Desc(planningHierarchy7Desc);
+                    } else {
+                        FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E8, "There is no globalBusinessUnit assigned for product");
+                        resultObject.setFailData(failData);
+                        resultObjects.add(resultObject);
+                        return resultObjects;
+                    }
                 }
 
                 productBo.setShortDescription(refDescription);
                 productBo.setTechnology(materialGlobalV1Entity.getLocalManufacturingTechnology());
 
                 String localBaseUom = materialGlobalV1Entity.getLocalBaseUom();
-                if (null != localBaseUom && !"".equals(localBaseUom)){
-                    CnsPlanUnitEntity planUnitEntity = checkE9(materialPlanStatusEntity,localBaseUom);
-                    if (null != planUnitEntity){
+                if (null != localBaseUom && !"".equals(localBaseUom)) {
+                    CnsPlanUnitEntity planUnitEntity = checkE9(materialPlanStatusEntity, localBaseUom);
+                    if (null != planUnitEntity) {
                         productBo.setUnitId(planUnitEntity.getUnit());
-                    }else{
+                    } else {
                         FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E9, "No Plannable Enterprise UOM has been assigned to the local Unit");
                         resultObject.setFailData(failData);
                         resultObjects.add(resultObject);
                         return resultObjects;
                     }
-                }else{
+                } else {
                     FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E9, "No Plannable Enterprise UOM has been assigned to the local Unit");
                     resultObject.setFailData(failData);
                     resultObjects.add(resultObject);
@@ -208,7 +196,7 @@ public class OMPGdmProductServiceImpl {
                 resultObject.setBaseBo(productBo);
                 resultObjects.add(resultObject);
             }
-        }else{
+        } else {
             ResultObject resultObject = new ResultObject();
             FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode");
             resultObject.setFailData(failData);
@@ -218,26 +206,82 @@ public class OMPGdmProductServiceImpl {
         return resultObjects;
     }
 
-
-    private CnsPlanUnitEntity checkE9(PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity, String localBaseUom){
-
-        CnsPlanUnitEntity planUnitEntity = null;
-
-        if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) && IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())){
-
-            planUnitEntity = cnsPlanUnitDao.getEntityWithLocalUomAndPlanFlag(localBaseUom,IConstant.VALUE.DPSP);
-
-        }else if(IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())){
-
-            planUnitEntity = cnsPlanUnitDao.getEntityWithLocalUomAndPlanFlag(localBaseUom,IConstant.VALUE.DP);
-
-        }else if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant())){
-
-            planUnitEntity = cnsPlanUnitDao.getEntityWithLocalUomAndPlanFlag(localBaseUom,IConstant.VALUE.SP1);
-
+    private String checkE2(String productFamily) {
+        if (null != productFamily && !"".equals(productFamily)) {
+            EDMProductFamilyV1Entity productFamilyV1Entity = productFamilyV1Dao.getEntityWithProductFamily(productFamily);
+            if (null != productFamilyV1Entity) {
+                return productFamilyV1Entity.getProductFamilyName();
+            }
         }
+        return null;
+    }
 
-        return planUnitEntity;
+    private String checkE3(String form) {
+        if (null != form && !"".equals(form)) {
+            EDMFormV1Entity formV1Entity = formV1Dao.getEntityWithFormName(form);
+            if (null != formV1Entity) {
+                return formV1Entity.getFormDescription();
+            }
+        }
+        return null;
+    }
+
+    private String checkE4(String category) {
+        if (null != category && !"".equals(category)) {
+            EDMCategoryV1Entity categoryV1Entity = categoryV1Dao.getEntityWithCategory(category);
+            if (null != categoryV1Entity) {
+                return categoryV1Entity.getCategoryName();
+            }
+        }
+        return null;
+    }
+
+    private String checkE5(String subBrand) {
+        if (null != subBrand && !"".equals(subBrand)) {
+            EDMSubBrandV1Entity subBrandV1Entity = subBrandV1Dao.getEntityWithSubBrand(subBrand);
+            if (null != subBrandV1Entity) {
+                return subBrandV1Entity.getSubBrandDescription();
+            }
+        }
+        return null;
+    }
+
+    private String checkE6(String brand) {
+        if (null != brand && !"".equals(brand)) {
+            EDMBrandV1Entity brandV1Entity = brandV1Dao.getEntityWithBrand(brand);
+            if (null != brandV1Entity) {
+                return brandV1Entity.getBrandDescription();
+            }
+        }
+        return null;
+    }
+
+    private String checkE7(String franchise) {
+        if (null != franchise && !"".equals(franchise)) {
+            EDMFranchiseV1Entity franchiseV1Entity = franchiseV1Dao.getEntityWithFranchise(franchise);
+            if (null != franchiseV1Entity) {
+                return franchiseV1Entity.getFranchiseDescription();
+            }
+        }
+        return null;
+    }
+
+    private String checkE8(String globalBusinessUnit) {
+        if (null != globalBusinessUnit && !"".equals(globalBusinessUnit)) {
+            EDMGlobalBaseUnitV1Entity globalBaseUnitV1Entity = globalBaseUnitV1Dao.getEntityWithGbu(globalBusinessUnit);
+            if (null != globalBaseUnitV1Entity) {
+                return globalBaseUnitV1Entity.getGbuName();
+            }
+        }
+        return null;
+    }
+
+    private CnsPlanUnitEntity checkE9(PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity, String localBaseUom) {
+        if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
+            CnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
+            return planUnitEntity;
+        }
+        return null;
     }
 
     private FailData writeFailDataToRegion(EDMMaterialGlobalV1Entity materialGlobalV1Entity, String ruleCode, String errorValue) {
