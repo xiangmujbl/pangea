@@ -23,8 +23,8 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-2377
 
     Then I check region data "/omp/gdm_product_location_detail" by keyFields "productLocationDetailId"
       | productLocationDetailId           | activeOPRERP | activeSOPERP | CLASS | comments | description | name   | productLocationId      | unit | value  |
-      | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 |              |              | PGA   |          | Pangea      | ATTRB1 | EM9999-CONS_LATAM_BR19 |      | VALUE1 |
-      | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 |              |              | PGA   |          | Pangea      | ATTRB2 | EM9999-CONS_LATAM_BR19 |      | VALUE2 |
+      | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | YES          | NO           | PGA   |          | Pangea      | ATTRB1 | EM9999-CONS_LATAM_BR19 |      | VALUE1 |
+      | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 | YES          | NO           | PGA   |          | Pangea      | ATTRB2 | EM9999-CONS_LATAM_BR19 |      | VALUE2 |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
