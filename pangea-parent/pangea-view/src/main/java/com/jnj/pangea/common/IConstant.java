@@ -248,6 +248,9 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String SP_RELEVANT = "sPRelevant";
+        String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
 
     interface EDM_MAT_PLANT_FI_V1 {
@@ -338,6 +341,7 @@ public interface IConstant {
         String CNS_MATERIAL_PLAN_STATUS = "cns_material_plan_status";
         String DP_RELEVANT = "DPRelevant";
         String SP_RELEVANT = "SPRelevant";
+        String NO_PLAN_RELEVANT = "NoPlanRelevant";
         String PLANT = "Plant";
         String MRP_TYPE = "MRPType";
         String I = "I";
