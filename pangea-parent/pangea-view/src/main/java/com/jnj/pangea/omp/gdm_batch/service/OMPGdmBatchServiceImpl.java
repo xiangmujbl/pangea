@@ -107,9 +107,7 @@ public class OMPGdmBatchServiceImpl implements ICommonService {
         String srcSysCd = batchMasterV1Entity.getSrcSysCd();
         String matlId = batchMasterV1Entity.getMatlId();
         String locPrtyId = batchMasterV1Entity.getLocPrtyId();
-        LogUtil.getCoreLog().info("===============nihaohhhh==================",batchMasterV1Entity);
         if((!StringUtils.isEmpty(srcSysCd))&&(!StringUtils.isEmpty(matlId))&&(!StringUtils.isEmpty(locPrtyId))){
-            LogUtil.getCoreLog().info("===============shifoutrue==================",batchMasterV1Entity);
             PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusDaoEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity(srcSysCd, matlId, locPrtyId);
             if(cnsMaterialPlanStatusDaoEntity==null){
                 return IConstant.VALUE.N;

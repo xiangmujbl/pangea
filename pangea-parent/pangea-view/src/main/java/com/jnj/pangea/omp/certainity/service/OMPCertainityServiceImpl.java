@@ -33,7 +33,7 @@ public class OMPCertainityServiceImpl implements ICommonService {
         //rules N1
         certainityBo.setActiveFCTERP(IConstant.VALUE.YES);
         certainityBo.setActiveOPRERP(IConstant.VALUE.YES);
-        certainityBo.setActiveSOPERP(IConstant.VALUE.YES);
+        certainityBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         resultObject.setBaseBo(certainityBo);
         return resultObject;
