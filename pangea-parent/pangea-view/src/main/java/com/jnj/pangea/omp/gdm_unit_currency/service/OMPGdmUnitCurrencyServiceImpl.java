@@ -5,6 +5,7 @@ import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_unit_currency.bo.OMPGdmUnitCurrencyBo;
+import org.apache.commons.lang.StringUtils;
 
 public class OMPGdmUnitCurrencyServiceImpl implements ICommonService {
 
@@ -25,7 +26,7 @@ public class OMPGdmUnitCurrencyServiceImpl implements ICommonService {
         EDMCurrencyV1Entity currencyV1Entity = (EDMCurrencyV1Entity) o;
 
         OMPGdmUnitCurrencyBo gdmUnitCurrencyBo = new OMPGdmUnitCurrencyBo();
-        if (null != currencyV1Entity){
+        if (null != currencyV1Entity && StringUtils.isNotEmpty(currencyV1Entity.getCurrencyCode())){
             gdmUnitCurrencyBo.setUnitId(currencyV1Entity.getCurrencyCode());
             gdmUnitCurrencyBo.setActive(IConstant.VALUE.YES);
             gdmUnitCurrencyBo.setActiveFCTERP(IConstant.VALUE.YES);
