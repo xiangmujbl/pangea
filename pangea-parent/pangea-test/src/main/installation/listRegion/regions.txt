@@ -124,6 +124,7 @@
 /plan/cns_lot_size_key_trans
 /plan/cns_con_mode
 /omp/gdm_product_location
+/omp/gdm_product
 
 /project_one/eban
 /edm/purchase_requisition_v1
