@@ -55,7 +55,7 @@ public class OMPGdmLocationDetailServiceImpl {
             }
 
             gdmLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
-            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.YES);
+            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
 
             String CLASS = "";
             if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())) {
