@@ -12,7 +12,7 @@ Feature: OMPGdmCountry AEAZ-1614
 
     Then I check region data "/omp/gdm_country" by keyFields "countryId"
       | countryId | activeFCTERP | activeOPRERP | activeSOPERP | countryDescription | mrc |
-      | BARAZIL   | YES          | YES          | YES          | BR                 |     |
+      | BARAZIL   | YES          | YES          | NO           | BR                 |     |
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 

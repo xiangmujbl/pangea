@@ -30,7 +30,7 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
         }
         gdmCountryBo.setActiveFCTERP(IConstant.VALUE.YES);
         gdmCountryBo.setActiveOPRERP(IConstant.VALUE.YES);
-        gdmCountryBo.setActiveSOPERP(IConstant.VALUE.YES);
+        gdmCountryBo.setActiveSOPERP(IConstant.VALUE.NO);
         gdmCountryBo.setMrc("");
         resultObject.setBaseBo(gdmCountryBo);
         return resultObject;
