@@ -53,9 +53,9 @@ Feature: EDMPlant AEAZ-495
     When I submit task with xml file "xml/edm/EDMPlant_ProjectOne.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/plant_v1" by keyFields "sourceSystem,localPlant"
-      | sourceSystem | localPlant                                             | localPlantName | plant | localPlanningRelevant | localCountry | country | site | localPlantType | plantType     | localCurrency | region   |
-      | CONS_LATAM   | [Consumer LATAM], AR01, J&J BR-Alhandra PB-Com&Distrib | Pilar Plant    | -     |                       | AR           | 00      | -    | AH             | All Countries | BRL           | edmPlant |
-      | CONS_LATAM   | [Consumer LATAM], AR02, J&J BR-Alhandra PB-Com&Distrib | S & M Pilar    | 00    |                       | AR           | 00      | *    | DC             | Miscellaneous | ARS           | gdmPlant |
+      | sourceSystem | localPlant | localPlantName | plant | localPlanningRelevant | localCountry | country | site | localPlantType | plantType     | localCurrency | region   |
+      | CONS_LATAM   | AR01       | Pilar Plant    | -     |                       | AR           | 00      | -    | AH             | All Countries | BRL           | edmPlant |
+      | CONS_LATAM   | AR02       | S & M Pilar    | 00    |                       | AR           | 00      | *    | DC             | Miscellaneous | ARS           | gdmPlant |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
