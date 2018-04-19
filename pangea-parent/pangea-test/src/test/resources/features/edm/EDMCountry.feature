@@ -7,10 +7,10 @@ Feature: EDMCountry AEAZ-492
 
     Given I import "/ems/ems_f_mdm_countries" by keyFields "zSourceSystem,mdmCode"
       | zSourceSystem | mdmCode | zEntCodeIso3166Alpha2 | mdmName       |
-      | project_one   | *       | -                     | All Countries |
-      | project_two   | 00      | -                     | Miscellaneous |
-      | [EMS]         | *       | 00                    | All Countries |
-      | [EMS]         | 00      | -                     | All Countries |
+      | project_one   | *       | AD                    | All Countries |
+      | project_two   | 00      | AE                    | Miscellaneous |
+      | [EMS]         | AD      |                       | All Countries |
+      | [EMS]         | AE      |                       | Miscellaneous |
     And I wait "/ems/ems_f_mdm_countries" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -24,8 +24,8 @@ Feature: EDMCountry AEAZ-492
 
     Then I check region data "/edm/country_v1" by keyFields "sourceSystem,localCountry"
       | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion | consumerPlannRegDesc |
-      | CONS_LATAM   | *            | -           | All Countries |                        |                      |
-      | CONS_LATAM   | 00           | -           | All Countries |                        |                      |
+      | CONS_LATAM   | *            | AD          | All Countries |                        |                      |
+      | CONS_LATAM   | 00           | AE          | Miscellaneous |                        |                      |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
