@@ -39,6 +39,8 @@ public interface IConstant {
         String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
         String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
         String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
+        String PLAN_CNS_CUST_CHANNEL="/plan/cns_cust_channel";
+        String PLAN_CNS_DP_PRICE="/plan/cns_dp_price";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
@@ -55,8 +57,16 @@ public interface IConstant {
         String SPARS = "spars";
     }
 
+    interface PLAN_CNS_DP_PRICE {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+    }
+
     interface PROJECT_ONE_T001W {
         String WERKS = "werks";
+    }
+
+    interface PLAN_CNS_CUST_CHANNEL {
+        String CHANNEL = "channel";
     }
 
     interface EDM_COUNTRY_V1 {
@@ -124,7 +134,7 @@ public interface IConstant {
 
     interface EMS_F_MDM_COUNTRIES {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
-        String Z_ENT_CODE_ISO_3166_ALPHA_2 = "zEntCodeIso3166Alpha2";
+        String MDM_CODE = "mdmCode";
     }
 
     interface EMS_F_Z_CURRENCIES {
@@ -148,6 +158,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_TYPE = "localMaterialType";
         String LOCAL_BASE_UOM = "localBaseUom";
+        String LOCAL_DP_PARENT_CODE="localDpParentCode";
     }
 
     interface EDM_MATERIAL_AUOM_V1 {
@@ -244,6 +255,7 @@ public interface IConstant {
         String ACTIVE = "ACTIVE";
         String STR_ONE = "001";
         String BLANK = "BLANK";
+        String OMP="omp";
     }
 
     interface FAILED {

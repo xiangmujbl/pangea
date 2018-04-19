@@ -16,6 +16,8 @@ public class EDMCountryServiceImpl implements ICommonService {
 
 
     private static ICommonService instance;
+
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private EMSFMdmCountriesDaoImpl emsfMdmCountriesDao = EMSFMdmCountriesDaoImpl.getInstance();
 
     public static ICommonService getInstance() {
@@ -33,14 +35,19 @@ public class EDMCountryServiceImpl implements ICommonService {
 
         EDMCountryBo edmCountryBo = new EDMCountryBo();
 
+        // J1
         String zSourceSystem = mainData.getzSourceSystem();
+        if (StringUtils.isNotEmpty(zSourceSystem)) {
+            edmCountryBo.setSourceSystem(sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(zSourceSystem));
+        }
 
-        edmCountryBo.setSourceSystem(zSourceSystem);
         edmCountryBo.setLocalCountry(mainData.getMdmCode());
 
         String zEntCodeIso3166Alpha2 = mainData.getzEntCodeIso3166Alpha2();
 
         edmCountryBo.setCountryCode(zEntCodeIso3166Alpha2);
+
+        // T2
         if (StringUtils.isNotEmpty(zEntCodeIso3166Alpha2)) {
             EMSFMdmCountriesEntity emsfMdmCountriesEntity = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode(IConstant.VALUE.EMS, zEntCodeIso3166Alpha2);
             if (emsfMdmCountriesEntity != null) {
