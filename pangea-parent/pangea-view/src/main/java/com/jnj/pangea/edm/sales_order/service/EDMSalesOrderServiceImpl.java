@@ -61,10 +61,14 @@ public class EDMSalesOrderServiceImpl{
             return resultObjectList;
         }
 
+        LogUtil.getLogger().info("-----------------{}------------","rule J1");
+
         for (VbapEntity vbapEntity:vbapEntities){
             //rule J2
             if(vbapEntity!=null){
                 vbepEntities= getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
+                LogUtil.getLogger().info("-----------------{}------------","rule J2");
+
             }
             if (vbepEntities==null || vbepEntities.size()==0) {
                 ResultObject resultObject = new ResultObject();
@@ -85,7 +89,7 @@ public class EDMSalesOrderServiceImpl{
             }
 
             for (VbepEntity vbepEntity:vbepEntities){
-
+                LogUtil.getLogger().info("-----------------{}------------","new bo");
                 EDMSalesOrderBo salesOrderBo = new EDMSalesOrderBo();
 
                 //rule T1

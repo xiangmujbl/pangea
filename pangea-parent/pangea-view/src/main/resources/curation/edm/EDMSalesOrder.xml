@@ -12,16 +12,13 @@
                         <expression></expression>
                     </relation>
                     <relation path="/project_one/vbap" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                    <relation path="/project_one/vbep" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>vbeln=/project_one/vbak.vbeln</expression>
                     </relation>
                     <relation path="/project_one/vbpa" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>vbeln=/project_one/vbak.vbeln</expression>
                     </relation>
                     <relation path="/project_one/vbkd" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>vbeln=/project_one/vbak.vbeln</expression>
                     </relation>
                 </relations>
             </region>
@@ -35,6 +32,11 @@
                 <columns>
                     vbeln,posnr,matnr,werks,pstyv,lfrel,fkrel,abgru,kwmeng,vrkme,umvkz,umvkn,faksp,netwr,waerk,lgort,vstel,route
                 </columns>
+                <relations>
+                    <relation path="/project_one/vbep" isPrimaryKey="false">
+                        <expression>posnr=/project_one/vbap.posnr</expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/project_one/vbep">

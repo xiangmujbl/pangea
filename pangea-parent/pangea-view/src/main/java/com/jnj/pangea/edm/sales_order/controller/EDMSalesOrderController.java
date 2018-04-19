@@ -4,6 +4,7 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
@@ -26,6 +27,7 @@ public class EDMSalesOrderController extends BaseController {
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
         List<ViewResultItem> result = new ArrayList<>();
+        LogUtil.getLogger().info("------list size------{}---------------",list.size());
         list.forEach(raw -> {
 
             RawDataValue rawValue = raw.getValue();
@@ -49,6 +51,7 @@ public class EDMSalesOrderController extends BaseController {
             }
 
         });
+        LogUtil.getLogger().info("------result size------{}---------------",result.size());
         return result;
     }
 }
