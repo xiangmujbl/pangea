@@ -13,8 +13,8 @@ public class OMPGdmProductBo extends BaseBo {
     private String color;
     private String description;
     private String groes;
-    private String isroot;
-    private String issku;
+    private String isRoot;
+    private String isSku;
     private String label;
     private String matkl;
     private String planningHierarchy1;
@@ -109,20 +109,20 @@ public class OMPGdmProductBo extends BaseBo {
         this.groes = groes;
     }
 
-    public String getIsroot() {
-        return this.isroot;
+    public String getIsRoot() {
+        return isRoot;
     }
 
-    public void setIsroot(String isroot) {
-        this.isroot = isroot;
+    public void setIsRoot(String isRoot) {
+        this.isRoot = isRoot;
     }
 
-    public String getIssku() {
-        return this.issku;
+    public String getIsSku() {
+        return isSku;
     }
 
-    public void setIssku(String issku) {
-        this.issku = issku;
+    public void setIsSku(String isSku) {
+        this.isSku = isSku;
     }
 
     public String getLabel() {
