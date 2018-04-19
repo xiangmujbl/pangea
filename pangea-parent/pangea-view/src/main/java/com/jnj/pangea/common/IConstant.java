@@ -384,6 +384,7 @@ public interface IConstant {
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
             String OMP_GDM_PRODUCT = "OMPGdmProduct";
             String OMP_GDM_PRODUCT_LOCATION = "OMPGdmProductLocation";
+            String GDM_UNIT_CURRENCY = "GdmUnitCurrency";
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
             String OMP_GDM_BATCH = "OMPGdmBatch";
@@ -402,6 +403,7 @@ public interface IConstant {
             String J3 = "J3";
             String J4 = "J4";
 
+            String E1 = "E1";
             String E3 = "E3";
             String E4 = "E4";
             String E5 = "E5";

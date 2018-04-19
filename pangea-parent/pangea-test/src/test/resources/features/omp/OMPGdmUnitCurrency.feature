@@ -4,11 +4,12 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
   Scenario: Full Load curation
     #  1. get atrributes from currency_v1 (rule E1)
     #  2. If no records found, Skip insertion (rule E1)
+    #  3. If currencyCode is not available, reject record (rule E1)
 
     Given I import "/edm/currency_v1" by keyFields "localCountry,sourceSystem"
       | localCountry | sourceSystem | isoNumeric | currencyName | currencyCode |
       | USD          | MDDePuy      | -          | US Dollar    | USD          |
-      |              |              |            |              |              |
+      | AFA          | CONS_LATAM   | -          | -            |              |
 
     And I wait "/edm/currency_v1" Async Queue complete
 
@@ -19,7 +20,8 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
       | USD    | YES    | YES          | YES          | NO           |        | -       | US Dollar       |         |           | US Dollar        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+      | errorCode | functionalArea | interfaceID     | key1       | key2 | key3 | key4 | key5 | errorValue | sourceSystem |
+      | E1        | SP             | GdmUnitCurrency | CONS_LATAM | AFA  |      |      |      |            | omp          |
 
     And I compare the number of records between "/edm/currency_v1" and "/omp/gdm_unit,/plan/edm_failed_data"
 
