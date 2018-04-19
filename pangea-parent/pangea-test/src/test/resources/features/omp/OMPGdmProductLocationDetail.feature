@@ -5,7 +5,7 @@ Feature:  OMPGdmProductLocationDetail-Curation
 
     Given I import "/plan/cns_material_plan_status" by keyFields "SourceSystem,localMaterialNumber,localPlant"
       | SourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
-      | CONS_LATAM   | LT9999              | BR19       | 9862           | G3a             | G4a | X      | X          |            | X            | X              |
+      | CONS_LATAM   | LT9999              | BR19       | 9862           | G3a             | G4a | X      | X          | X          | X            | X              |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -23,9 +23,9 @@ Feature:  OMPGdmProductLocationDetail-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmProductLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "gdmProductLocationDetail.tsv"
+    Then A file is found on sink application with name "gdm_omp_product_location_detail_ross_1.tsv"
 
-    And I check file data for filename "gdmProductLocationDetail.tsv" by keyFields "productLocationDetailId"
+    And I check file data for filename "gdm_omp_product_location_detail_ross_1.tsv" by keyFields "productLocationDetailId"
       | productLocationDetailId           | activeOprerp | activeSoperp | CLASS | description | name   | productLocationId      | unit | value  |
       | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | YES          | NO           | PGA   | Pangea      | ATTRB1 | EM9999-CONS_LATAM_BR19 |      | VALUE1 |
       | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 | YES          | NO           | PGA   | Pangea      | ATTRB2 | EM9999-CONS_LATAM_BR19 |      | VALUE2 |
@@ -46,4 +46,4 @@ Feature:  OMPGdmProductLocationDetail-Curation
 
     And I will remove all data with region "/plan/cns_material_plan_status"
 
-    And I will remove the test file on sink application "gdmProductLocationDetail.tsv"
+    And I will remove the test file on sink application "gdm_omp_product_location_detail_ross_1.tsv"

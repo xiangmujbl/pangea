@@ -29,7 +29,7 @@ public class OMPGdmLotSizeKeyServiceImpl implements ICommonService {
         if (null!=cnsLotSizeKeyEntity){
             lotSizeKeyBo.setLotSizeKey(cnsLotSizeKeyEntity.getLotSizeKey());
             lotSizeKeyBo.setComments(cnsLotSizeKeyEntity.getComments());
-            lotSizeKeyBo.setDescRiption(cnsLotSizeKeyEntity.getLotSizeKeyDescription());
+            lotSizeKeyBo.setDescription(cnsLotSizeKeyEntity.getLotSizeKeyDescription());
             lotSizeKeyBo.setPeriod(cnsLotSizeKeyEntity.getPeriod());
             lotSizeKeyBo.setQuantity(cnsLotSizeKeyEntity.getQuantity());
             lotSizeKeyBo.setActiveOprerp(IConstant.VALUE.YES);
