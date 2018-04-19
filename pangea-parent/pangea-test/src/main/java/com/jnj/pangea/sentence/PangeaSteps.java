@@ -124,7 +124,7 @@ public class PangeaSteps extends CommonSteps {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
                 //updated to remove call to readline() before entering while loop - we were skipping the first line
                 String line = null;
-                int count = 1;
+                int count = 0;
                 // check headers
 
                 while ((line = bufferedReader.readLine()) != null) {
