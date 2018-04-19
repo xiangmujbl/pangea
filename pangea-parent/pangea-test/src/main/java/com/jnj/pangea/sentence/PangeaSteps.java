@@ -97,18 +97,18 @@ public class PangeaSteps extends CommonSteps {
 
         ResponseEntity<byte[]> response = restTemplate.exchange("http://" + mboxSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
 
-        File file = new File("tmp.tsv");
+        File file = new File(fileName);
         FileOutputStream output = null;
         if(response.getStatusCode().equals(HttpStatus.OK))
         {
 
-                try (FileOutputStream fileOutputStream = output = new FileOutputStream(file)) {
-                    IOUtils.write(response.getBody(), output);
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+            try (FileOutputStream fileOutputStream = output = new FileOutputStream(file)) {
+                IOUtils.write(response.getBody(), output);
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
 
 
         }
@@ -121,14 +121,13 @@ public class PangeaSteps extends CommonSteps {
 
     private void checkFileData(List<List<String>> list, String[] keyFields, File file) {
 
-        try {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-                String line = bufferedReader.readLine();
+                //updated to remove call to readline() before entering while loop - we were skipping the first line
+                String line = null;
                 int count = 1;
                 // check headers
 
-                while (line != null) {
-                    line = bufferedReader.readLine();
+                while ((line = bufferedReader.readLine()) != null) {
                     // check record
                     List<String> fileList = Arrays.asList(line.split("\t"));
                     Assert.assertEquals(fileList.size(), list.get(count).size());
@@ -136,7 +135,7 @@ public class PangeaSteps extends CommonSteps {
 
                     count++;
                 }
-            }
+
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
