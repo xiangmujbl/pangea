@@ -187,6 +187,7 @@ public class OMPGdmProductLocationServiceImpl {
             if(edmMaterialGlobalV1Entity!=null){
                 bo.setLabel(edmMaterialGlobalV1Entity.getLocalRefDescription());
                 bo.setTotalShelfLife(edmMaterialGlobalV1Entity.getTotalShelfLife());
+                bo.setProductTypeId(edmMaterialGlobalV1Entity.getLocalMaterialType());
             }
 
             bo.setBasmg (materialPlantV1Entity.getLocalBaseQuantity());
