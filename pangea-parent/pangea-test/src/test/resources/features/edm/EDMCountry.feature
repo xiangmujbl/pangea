@@ -23,9 +23,9 @@ Feature: EDMCountry AEAZ-492
     When I submit task with xml file "xml/edm/EDMCountry.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/country_v1" by keyFields "sourceSystem,localCountry"
-      | sourceSystem | localCountry | countryCode | countryName | consumerPlanningRegion | consumerPlannRegDesc |
-      | CONS_LATAM   | *            | -           |             |                        |                      |
-      | CONS_LATAM   | 00           | -           |             |                        |                      |
+      | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion | consumerPlannRegDesc |
+      | CONS_LATAM   | *            | -           | All Countries |                        |                      |
+      | CONS_LATAM   | 00           | -           | All Countries |                        |                      |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
