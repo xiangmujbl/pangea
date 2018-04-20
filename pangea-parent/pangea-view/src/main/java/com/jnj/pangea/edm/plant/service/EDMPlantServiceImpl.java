@@ -47,7 +47,7 @@ public class EDMPlantServiceImpl implements ICommonService {
 
         plantBo.setSourceSystem(getFieldWithT1(zPlantSourceSystem));
 
-        String localPlant = enterprisePlants.getzPlant();
+        String localPlant = enterprisePlants.getzPlant().split(",")[1].trim();
         plantBo.setLocalPlant(localPlant);
 
         // rule T2
@@ -92,8 +92,7 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(zPlant)) {
             return null;
         }
-        String plant = zPlant.split(",")[1].trim();
-        return t001WDao.getEntityWithZPlant(plant);
+        return t001WDao.getEntityWithZPlant(zPlant);
     }
 
     private String getFieldWithT4(String land1) {

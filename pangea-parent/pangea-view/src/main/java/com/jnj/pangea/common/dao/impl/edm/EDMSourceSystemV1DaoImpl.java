@@ -23,7 +23,6 @@ public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
 
         EDMSourceSystemV1Entity sourceSystems = queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
         if (null != sourceSystems) {
-            LogUtil.getCoreLog().info("------------" + queryString + "--------" + sourceSystems.getSourceSystem());
             return sourceSystems.getSourceSystem();
         }
         return "";

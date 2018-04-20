@@ -1,42 +1,39 @@
-package com.jnj.pangea.edm.sales_order.controller;
+package com.jnj.pangea.omp.gdm_conversion_storage.controller;
 
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.controller.CommonController;
-import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
-import com.jnj.pangea.common.entity.project_one.VbakEntity;
-import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.sales_order.service.EDMSalesOrderServiceImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsDpPriceEntity;
+import com.jnj.pangea.omp.gdm_conversion_storage.service.OMPGdmConversionStorageServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class EDMSalesOrderController extends BaseController {
+public class OMPGdmConversionStorageController extends BaseController {
 
-    private EDMSalesOrderServiceImpl service = EDMSalesOrderServiceImpl.getInstance();
+    private OMPGdmConversionStorageServiceImpl service = OMPGdmConversionStorageServiceImpl.getInstance();
 
+    @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
         List<ViewResultItem> result = new ArrayList<>();
-        LogUtil.getLogger().info("------list size------{}---------------",list.size());
         list.forEach(raw -> {
 
             RawDataValue rawValue = raw.getValue();
 
-            VbakEntity vbakEntity = BeanUtil.mapToBean(rawValue.toMap(), VbakEntity.class);
+            PlanCnsDpPriceEntity planCnsDpPriceEntity = BeanUtil.mapToBean(rawValue.toMap(), PlanCnsDpPriceEntity.class);
 
-            List<ResultObject> resultObjectList = service.buildView(raw.getKey(), vbakEntity, null);
+            List<ResultObject> resultObjectList = service.buildView(raw.getKey(),planCnsDpPriceEntity , null);
 
-            for (ResultObject resultObject : resultObjectList) {
+            for (ResultObject resultObject:resultObjectList) {
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = resultObject.getBaseBo();
                     ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
@@ -51,7 +48,8 @@ public class EDMSalesOrderController extends BaseController {
             }
 
         });
-        LogUtil.getLogger().info("------result size------{}---------------",result.size());
         return result;
+
     }
+
 }

@@ -47,9 +47,9 @@ Feature: CnsMaterialPlanStatus AEAZ-1692
 
     Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
-      | CONS_LATAM   | 000000000000203700  | BR12       | -              |                 |     | X      | X          | X          |              |                |
-      | CONS_LATAM   | 000000000000213997  | BR12       | -              |                 |     | X      | X          | X          |              |                |
-      | CONS_LATAM   | 000000000000213998  | BR12       | -              |                 |     | X      | X          | X          |              |                |
+      | CONS_LATAM   | 000000000000203700  | BR12       | -              |                 |     | X      |            | X          |              |                |
+      | CONS_LATAM   | 000000000000213997  | BR12       | -              |                 |     | X      |            | X          |              |                |
+      | CONS_LATAM   | 000000000000213998  | BR12       | -              |                 |     | X      |            | X          |              |                |
       | CONS_LATAM   | 000000000000087759  | BR12       |                |                 |     |        |            |            |              |                |
       | CONS_LATAM   | 000000000000087764  | BR12       |                |                 |     | X      |            |            |              | X              |
       | CONS_LATAM   | 000000000000087765  | BR12       |                |                 |     | X      |            |            |              | X              |

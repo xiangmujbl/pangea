@@ -7,11 +7,12 @@ import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_country.bo.OMPGdmCountryBo;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 public class OMPGdmCountryServiceImpl implements ICommonService {
 
-    private PlanCnsPlanParameterDaoImpl planCnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
     private static OMPGdmCountryServiceImpl instance;
 
     public static OMPGdmCountryServiceImpl getInstance() {
@@ -21,36 +22,32 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
         return instance;
     }
 
+    private PlanCnsPlanParameterDaoImpl cnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
+
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
         EDMCountryV1Entity countryV1Entity = (EDMCountryV1Entity) o;
+
         OMPGdmCountryBo gdmCountryBo = new OMPGdmCountryBo();
-        if (null != countryV1Entity) {
 
-            String sourceSystem = countryV1Entity.getSourceSystem();
-            if (StringUtils.isNotEmpty(sourceSystem)) {
-
-                PlanCnsPlanParameterEntity planCnsPlanParameterEntity = planCnsPlanParameterDao.getEntitiesWithSourceSystem(sourceSystem);
-
-                if (null != planCnsPlanParameterEntity) {
-
-                    // rules T1
-                    gdmCountryBo.setCountryId(countryV1Entity.getCountryCode());
-                    gdmCountryBo.setCountryDescription(countryV1Entity.getCountryName());
-
-                    // rules D1
-                    gdmCountryBo.setActiveFCTERP(IConstant.VALUE.YES);
-                    gdmCountryBo.setActiveOPRERP(IConstant.VALUE.YES);
-
-                    // rules D2
-                    gdmCountryBo.setActiveSOPERP(IConstant.VALUE.NO);
-                    gdmCountryBo.setMrc("");
-                }
-                resultObject.setBaseBo(gdmCountryBo);
+        // F1
+        String sourceSystem = countryV1Entity.getSourceSystem();
+        if (StringUtils.isNotEmpty(sourceSystem)) {
+            List<PlanCnsPlanParameterEntity> cnsPlanParameterEntities = cnsPlanParameterDao.getEntitiesWithSourceSystem(sourceSystem);
+            if (cnsPlanParameterEntities.isEmpty()) {
+                return resultObject;
             }
         }
+
+        gdmCountryBo.setCountryId(countryV1Entity.getCountryCode());
+        gdmCountryBo.setCountryDescription(countryV1Entity.getCountryName());
+        gdmCountryBo.setActiveFCTERP(IConstant.VALUE.YES);
+        gdmCountryBo.setActiveOPRERP(IConstant.VALUE.YES);
+        gdmCountryBo.setActiveSOPERP(IConstant.VALUE.NO);
+        gdmCountryBo.setMrc("");
+        resultObject.setBaseBo(gdmCountryBo);
         return resultObject;
     }
 }
