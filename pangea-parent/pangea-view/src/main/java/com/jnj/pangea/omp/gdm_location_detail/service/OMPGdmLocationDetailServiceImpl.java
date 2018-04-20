@@ -24,7 +24,6 @@ public class OMPGdmLocationDetailServiceImpl {
         List<ResultObject> resultObjectList = new LinkedList<>();
         PlanCnsPlantAttrEntity cnsPlantAttrEntity = (PlanCnsPlantAttrEntity) o;
 
-        // TODO add logic
         String name1 = cnsPlantAttrEntity.getLocationAttribute1Desc();
         String name2 = cnsPlantAttrEntity.getLocationAttribute2Desc();
         String name3 = cnsPlantAttrEntity.getLocationAttribute3Desc();
@@ -63,7 +62,6 @@ public class OMPGdmLocationDetailServiceImpl {
             gdmLocationDetailBo.setValue(value);
 
             // Rule N1
-            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
             gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.YES);
 
             // Rule N3
@@ -80,6 +78,9 @@ public class OMPGdmLocationDetailServiceImpl {
             // Rule C2
             String locationDetailId = locationid+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
+
+            // Rule N5
+            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.NO);
 
             resultObject.setBaseBo(gdmLocationDetailBo);
             resultObjectList.add(resultObject);

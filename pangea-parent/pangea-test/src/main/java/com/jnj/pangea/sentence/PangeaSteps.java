@@ -124,18 +124,56 @@ public class PangeaSteps extends CommonSteps {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
                 //updated to remove call to readline() before entering while loop - we were skipping the first line
                 String line = null;
-                int count = 0;
+
+
+//                int count = 0;
                 // check headers
 
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    // check record
+//                    List<String> fileList = Arrays.asList(line.split("\t"));
+//                    Assert.assertEquals(fileList.size(), list.get(count).size());
+//                    Assert.assertTrue(list.get(count).containsAll(fileList));
+//
+//                    count++;
+//                }
+
+                // go through each line in the file
                 while ((line = bufferedReader.readLine()) != null) {
                     // check record
                     List<String> fileList = Arrays.asList(line.split("\t"));
-                    Assert.assertEquals(fileList.size(), list.get(count).size());
-                    Assert.assertTrue(list.get(count).containsAll(fileList));
 
-                    count++;
+                    boolean found = false;
+                    int count = -1;
+
+                    // go through each line in feature step data, looking for line from file
+                    for (int x = 0; x < list.size(); x++) {
+
+                        //break if found or lines are different sizes - obviously no match
+                        if (found || (fileList.size() != list.get(x).size())) {
+                            break;
+                        }
+
+                        // if feature line has same data as file line
+                        if (list.get(x).containsAll(fileList)) {
+                            found = true;
+                            count = x;  //identify line that matches
+                        }
+                    }
+
+                    // if line is found and has an index
+                    if (found) {
+                        // if reaches here, should be correct line, use asserts to pass tests
+                        Assert.assertEquals(fileList.size(), list.get(count).size());
+                        Assert.assertTrue(list.get(count).containsAll(fileList));
+                    }
+                    else {
+                        // reaches here then line not found, fail test
+                        System.err.println("Record not Found.\n"+fileList);
+                        Assert.fail();
+                    }
+
                 }
-
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
