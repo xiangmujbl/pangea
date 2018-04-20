@@ -62,7 +62,6 @@ public class OMPGdmProductServiceImpl {
 
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                 gdmProductBo.setProductId(primaryPlanningCode);
-                gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
                 productBos.add(gdmProductBo);
             }
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
@@ -75,7 +74,6 @@ public class OMPGdmProductServiceImpl {
                 }
                 OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                 gdmProductBo.setProductId(sourceSystem + IConstant.VALUE.UNDERLINE + localDPParentCode);
-                gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
                 productBos.add(gdmProductBo);
             }
 
@@ -83,7 +81,12 @@ public class OMPGdmProductServiceImpl {
 
                 ResultObject resultObject = new ResultObject();
 
-                productBo.setActive(IConstant.VALUE.YES);
+                productBo.setActive(IConstant.VALUE.NO);
+                productBo.setActiveFCTERP(IConstant.VALUE.NO);
+                productBo.setActiveOPRERP(IConstant.VALUE.NO);
+
+                checkE1(productBo,materialPlanStatusEntity);
+
                 productBo.setActiveSOPERP(IConstant.VALUE.NO);
 
                 String refDescription = materialGlobalV1Entity.getRefDescription();
@@ -204,6 +207,19 @@ public class OMPGdmProductServiceImpl {
             return resultObjects;
         }
         return resultObjects;
+    }
+
+    private OMPGdmProductBo checkE1(OMPGdmProductBo productBo,PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity) {
+        if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())){
+            productBo.setActive(IConstant.VALUE.YES);
+            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())){
+                productBo.setActiveOPRERP(IConstant.VALUE.YES);
+            }
+            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())){
+                productBo.setActiveFCTERP(IConstant.VALUE.YES);
+            }
+        }
+        return productBo;
     }
 
     private String checkE2(String productFamily) {
