@@ -34,7 +34,7 @@
                 </columns>
                 <relations>
                     <relation path="/project_one/vbep" isPrimaryKey="false">
-                        <expression>posnr=/project_one/vbap.posnr</expression>
+                        <expression>posnr=/project_one/vbap.posnr,vbeln=/project_one/vbap.vbeln</expression>
                     </relation>
                 </relations>
             </region>
