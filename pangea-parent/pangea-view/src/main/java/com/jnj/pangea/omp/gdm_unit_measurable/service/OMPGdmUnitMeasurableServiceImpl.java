@@ -30,12 +30,13 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
         EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity = (EDMUnitOfMeasureV1Entity) o;
 
         OMPGdmUnitMeasurableBo gdmUnitMeasurableBo = new OMPGdmUnitMeasurableBo();
-        String localUom = unitOfMeasureV1Entity.getLocalUom();
-        String sourceSystem = unitOfMeasureV1Entity.getSourceSystem();
-        if (StringUtils.isNotEmpty(localUom) && StringUtils.isNotEmpty(sourceSystem)) {
-            CnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUomAndSourceSystem(localUom, sourceSystem);
-            if (null != cnsPlanUnitEntity && StringUtils.isNotEmpty(cnsPlanUnitEntity.getUnit())) {
-                gdmUnitMeasurableBo.setUnitId(cnsPlanUnitEntity.getUnit());
+
+        // rule F1
+        String uom = unitOfMeasureV1Entity.getUom();
+        if (StringUtils.isNotEmpty(uom)) {
+            CnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(uom);
+            if (null != cnsPlanUnitEntity) {
+                gdmUnitMeasurableBo.setUnitId(unitOfMeasureV1Entity.getUom());
                 gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);
                 gdmUnitMeasurableBo.setActiveFCTERP(IConstant.VALUE.YES);
                 gdmUnitMeasurableBo.setActiveOPRERP(IConstant.VALUE.YES);
@@ -44,14 +45,18 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
                 gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
                 gdmUnitMeasurableBo.setMeasure(unitOfMeasureV1Entity.getMeasure());
                 gdmUnitMeasurableBo.setPrecision(unitOfMeasureV1Entity.getRoundingDecimal());
-                gdmUnitMeasurableBo.setLongDescription(unitOfMeasureV1Entity.getUomName());
-                gdmUnitMeasurableBo.setShortDescription(unitOfMeasureV1Entity.getUomName());
-                resultObject.setBaseBo(gdmUnitMeasurableBo);
 
-            } else {
-                resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_MEASURABLE, IConstant.FAILED.ERROR_CODE.T1,
-                        "Enterprise UOM is missing for local UOM", "", unitOfMeasureV1Entity.getLocalUom(),
-                        unitOfMeasureV1Entity.getSourceSystem()));
+                // rule E1
+                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getUomName())) {
+                    gdmUnitMeasurableBo.setLongDescription(unitOfMeasureV1Entity.getUomName());
+                    gdmUnitMeasurableBo.setShortDescription(unitOfMeasureV1Entity.getUomName());
+                    resultObject.setBaseBo(gdmUnitMeasurableBo);
+                } else {
+
+                    resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_MEASURABLE, IConstant.FAILED.ERROR_CODE.E1,
+                            "", "omp", unitOfMeasureV1Entity.getLocalUom(),
+                            unitOfMeasureV1Entity.getSourceSystem()));
+                }
             }
         }
         return resultObject;

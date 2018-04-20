@@ -21,13 +21,6 @@ public class PlanCnsPlanUnitDaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.CNS_PLAN_UNIT,queryString,CnsPlanUnitEntity.class);
     }
 
-    public CnsPlanUnitEntity getCnsPlanUnitEntityWithLocalUomAndSourceSystem(String localUom, String sourceSystem) {
-        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_UNIT.LOCAL_UOM).is(localUom)
-                .and(IConstant.CNS_PLAN_UNIT.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
-        return queryForObject(IConstant.REGION.CNS_PLAN_UNIT,queryString,CnsPlanUnitEntity.class);
-    }
-
-
     public CnsPlanUnitEntity getEntityWithLocalUomAndPlanFlag(String localBaseUom,String planFlag) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_UNIT.LOCAL_UOM).is(localBaseUom)
                 .and(IConstant.CNS_PLAN_UNIT.PLAN_FLAG).is(planFlag).toQueryString();
