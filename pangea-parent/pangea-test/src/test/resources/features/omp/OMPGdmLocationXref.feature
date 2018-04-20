@@ -6,7 +6,7 @@ Feature:  OMPGdmLocationXref AEAZ-1764
 
     Given I import "/plan/cns_pln_spl_loc" by keyFields "sourceSystem,vendorOrCustomer,localNumber,localName"
       | sourceSystem | vendorOrCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion |
-      | BtB          | V              | 234500      | US           | USD           | Silgan    | Silgan234500  | NJ          |
+      | BtB          | V                | 234500      | US           | USD           | Silgan    | Silgan234500  | NJ          |
 
     And I wait "/plan/cns_pln_spl_loc" Async Queue complete
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem"
@@ -19,7 +19,7 @@ Feature:  OMPGdmLocationXref AEAZ-1764
 
     Then I check region data "/omp/gdm_location" by keyFields "locationId"
       | locationId   | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerId | label  | locationTypeId | regionId | vendorId |
-      | BtB_V_234500 | YES    | YES          | YES          |      NO        | US        | USD        |            | Silgan | Silgan234500   | NJ       | 234500   |
+      | BtB_V_234500 | YES    | NO           | YES          | NO           | US        | USD        |            | Silgan | Silgan234500   | NJ       | 234500   |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
