@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPGdmConversionStorage
+@pangea_test @AEAZ-2759
+Feature: OMPGdmConversionStorage AEAZ-2759
 
   Scenario: Full Load curation
 
