@@ -48,6 +48,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
 
 
         //rules T2
+        gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.NO);
         List<PlanCnsPlanParameterEntity> entities = parameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT);
         if (entities!=null && entities.size()>0){
             for (PlanCnsPlanParameterEntity cnsPlanParameterEntity:entities){
@@ -56,9 +57,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
                    LogUtil.getLogger().info("LocalPlant======={}",plantV1Entity.getLocalPlant());
                    if (cnsPlanParameterEntity.getParameterValue().equals(plantV1Entity.getLocalPlant())){
                        gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
-                       break;
-                   }else if (!cnsPlanParameterEntity.getAttribute().equals(IConstant.VALUE.DP_RELEVANT)){
-                       gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.NO);
+                       LogUtil.getLogger().info("LocalPlant======={}",gdmLocationEdmBo.getActiveFCTERP());
                        break;
                    }
                }
