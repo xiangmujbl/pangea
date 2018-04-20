@@ -53,7 +53,7 @@
 
             <region path="/project_one/vbkd">
                 <columns>
-                    vbeln,posnr,inco1,inco2,,kdgrp
+                    vbeln,posnr,inco1,inco2,kdgrp
                 </columns>
             </region>
 
