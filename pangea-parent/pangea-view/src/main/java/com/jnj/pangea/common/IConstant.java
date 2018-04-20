@@ -122,6 +122,7 @@ public interface IConstant {
 
     interface EDM_COUNTRY_V1 {
         String LOCAL_COUNTRY = "localCountry";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface PROJECT_ONE_T001K {
