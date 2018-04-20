@@ -56,6 +56,9 @@ public class EDMProcessOrderBo extends BaseBo {
     private String localLanguage;
     private String localStatus1;
     private String localStatus2;
+    private String fctrNmrtrMeas;
+    private String fctrDnmntrMeas;
+    private String goodRcptLdDaysQty;
 
     @Override
     public String getKey() {
@@ -472,6 +475,30 @@ public class EDMProcessOrderBo extends BaseBo {
 
     public void setLocalStatus2(String localStatus2) {
         this.localStatus2 = localStatus2;
+    }
+
+    public String getFctrNmrtrMeas() {
+        return this.fctrNmrtrMeas;
+    }
+
+    public void setFctrNmrtrMeas(String fctrNmrtrMeas) {
+        this.fctrNmrtrMeas = fctrNmrtrMeas;
+    }
+
+    public String getFctrDnmntrMeas() {
+        return this.fctrDnmntrMeas;
+    }
+
+    public void setFctrDnmntrMeas(String fctrDnmntrMeas) {
+        this.fctrDnmntrMeas = fctrDnmntrMeas;
+    }
+
+    public String getGoodRcptLdDaysQty() {
+        return this.goodRcptLdDaysQty;
+    }
+
+    public void setGoodRcptLdDaysQty(String goodRcptLdDaysQty) {
+        this.goodRcptLdDaysQty = goodRcptLdDaysQty;
     }
 
 }

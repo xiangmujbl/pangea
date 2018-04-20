@@ -17,6 +17,9 @@ public class AfpoEntity extends CommonEntity {
     private String elikz;
     private String verid;
     private String charg;
+    private String umrez;
+    private String umren;
+    private String webaz;
 
     public AfpoEntity(Map<String, Object> map) {
         super(map);
@@ -32,6 +35,9 @@ public class AfpoEntity extends CommonEntity {
         setElikz((String) map.get("elikz"));
         setVerid((String) map.get("verid"));
         setCharg((String) map.get("charg"));
+        setUmrez((String) map.get("umrez"));
+        setUmren((String) map.get("umren"));
+        setWebaz((String) map.get("webaz"));
     }
 
     public String getAufnr() {
@@ -120,6 +126,30 @@ public class AfpoEntity extends CommonEntity {
 
     public void setCharg(String charg) {
         this.charg = charg;
+    }
+
+    public String getUmrez() {
+        return this.umrez;
+    }
+
+    public void setUmrez(String umrez) {
+        this.umrez = umrez;
+    }
+
+    public String getUmren() {
+        return this.umren;
+    }
+
+    public void setUmren(String umren) {
+        this.umren = umren;
+    }
+
+    public String getWebaz() {
+        return this.webaz;
+    }
+
+    public void setWebaz(String webaz) {
+        this.webaz = webaz;
     }
 
 }

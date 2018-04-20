@@ -56,13 +56,13 @@
 
             <region path="/project_one/afpo">
                 <columns>
-                    aufnr,posnr,plnum,psamg,psmng,wemng,amein,matnr,elikz,verid,charg
+                    aufnr,posnr,plnum,psamg,psmng,wemng,amein,matnr,umrez,umren,webaz,elikz,verid,charg
                 </columns>
             </region>
 
             <region path="/edm/process_order_v1">
                 <columns>
-                    sourceSystem,mfgOrdrNum,mfgOrdrItemNum,ordrType,localOrderCat,crtdDttm,chgDttm,plntCd,delInd,localTechnicalCompletion,localProductionProcessNo,localLogicalSystem,plnEndDt,plnStrtDt,prdtnSchdEndDt,prdtnSchdStrtDt,prdntStrtDt,prdtnEndDt,prdtnRlseDt,prdtnPlanRlseDt,mfgPlnnr,mfgSprvsr,localReservation,localTotalScrap,localTargetQty,localBaseUOM,localMaterialAFKOPLNBEZ,localTaskListType,localGroup,localApplication,localGroupCounter,localUsage,localMaterialAFKOSTLBEZ,localSchedulingType,localConfirmation,localConfirmationCounter,localConfirmedQtyIGMNG,plnndOrdr,scrpQty,ordrQty,rcvdQty,prdtnUom,matlNum,dlvCmpltInd,prdntVrsnNum,btchNum,ordrStts,localSystemStatus,localLanguage,localStatus1,localStatus2
+                    sourceSystem,mfgOrdrNum,mfgOrdrItemNum,ordrType,localOrderCat,crtdDttm,chgDttm,plntCd,delInd,localTechnicalCompletion,localProductionProcessNo,localLogicalSystem,plnEndDt,plnStrtDt,prdtnSchdEndDt,prdtnSchdStrtDt,prdntStrtDt,prdtnEndDt,prdtnRlseDt,prdtnPlanRlseDt,mfgPlnnr,mfgSprvsr,localReservation,localTotalScrap,localTargetQty,localBaseUOM,localMaterialAFKOPLNBEZ,localTaskListType,localGroup,localApplication,localGroupCounter,localUsage,localMaterialAFKOSTLBEZ,localSchedulingType,localConfirmation,localConfirmationCounter,localConfirmedQtyIGMNG,plnndOrdr,scrpQty,ordrQty,rcvdQty,prdtnUom,matlNum,fctrNmrtrMeas,fctrDnmntrMeas,goodRcptLdDaysQty,dlvCmpltInd,prdntVrsnNum,btchNum,ordrStts,localSystemStatus,localLanguage,localStatus1,localStatus2
                 </columns>
             </region>
 

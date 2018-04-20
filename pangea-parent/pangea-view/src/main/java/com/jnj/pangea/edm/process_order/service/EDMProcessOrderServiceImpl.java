@@ -102,6 +102,9 @@ public class EDMProcessOrderServiceImpl implements ICommonService {
                 processOrderBo.setDlvCmpltInd(afpoEntity.getElikz());
                 processOrderBo.setPrdntVrsnNum(afpoEntity.getVerid());
                 processOrderBo.setBtchNum(afpoEntity.getCharg());
+                processOrderBo.setFctrNmrtrMeas(afpoEntity.getUmrez());
+                processOrderBo.setFctrDnmntrMeas(afpoEntity.getUmren());
+                processOrderBo.setGoodRcptLdDaysQty(afpoEntity.getWebaz());
             }
         }
 
