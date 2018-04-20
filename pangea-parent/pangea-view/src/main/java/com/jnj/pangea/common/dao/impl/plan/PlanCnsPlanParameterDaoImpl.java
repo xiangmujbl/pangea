@@ -34,4 +34,9 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
                 .and(IConstant.CNS_PLAN_PARAMETER.INCL_EXCL).is(inclExcl).toQueryString();
         return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
+
+    public PlanCnsPlanParameterEntity getEntitiesWithSourceSystem(String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
 }
