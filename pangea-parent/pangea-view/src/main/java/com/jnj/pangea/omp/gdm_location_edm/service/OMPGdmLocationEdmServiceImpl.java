@@ -53,11 +53,8 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         if (entities!=null && entities.size()>0){
             for (PlanCnsPlanParameterEntity cnsPlanParameterEntity:entities){
                if (cnsPlanParameterEntity!=null){
-                   LogUtil.getLogger().info("ParameterValue======={}",cnsPlanParameterEntity.getParameterValue());
-                   LogUtil.getLogger().info("LocalPlant======={}",plantV1Entity.getLocalPlant());
                    if (cnsPlanParameterEntity.getParameterValue().equals(plantV1Entity.getLocalPlant())){
                        gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
-                       LogUtil.getLogger().info("LocalPlant======={}",gdmLocationEdmBo.getActiveFCTERP());
                        break;
                    }
                }
@@ -119,10 +116,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
 
         //rules T9
         EDMCurrencyV1Entity currencyV1Entity = currencyV1DaoImpl.getEntityWithLocalCurrencyAndSourceSystem(plantV1Entity.getLocalCurrency(), plantV1Entity.getSourceSystem());
-        LogUtil.getLogger().info("getLocalCurrency================{}",plantV1Entity.getLocalCurrency());
-        LogUtil.getLogger().info("getSourceSystem================{}",plantV1Entity.getSourceSystem());
         if (currencyV1Entity!=null){
-            LogUtil.getLogger().info("getCurrencyCode================{}",currencyV1Entity.getCurrencyCode());
             gdmLocationEdmBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
         }
 

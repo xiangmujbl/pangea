@@ -46,7 +46,7 @@ Feature: OMPGdmLocationEdm AEAZ-1764
 
     Then I check region data "/omp/gdm_location" by keyFields "locationId"
       | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerId | label       | locationTypeId | regionId | vendorId |
-      | CONS_LATAM_AR01 | YES    | NO           | YES          | NO           | 00        |            |            | Pilar Plant | typeid001      | regin001 |          |
+      | CONS_LATAM_AR01 | YES    | NO           | YES          | NO           | 00        | code001    |            | Pilar Plant | typeid001      | regin001 |          |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID       | errorCode | sourceSystem | businessArea | key1 | key2         | key3 | key4 | key5 | errorValue               |
