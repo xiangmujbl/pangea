@@ -52,7 +52,7 @@ public class OMPGdmPosServiceImpl implements ICommonService {
                 } else {
 
                     resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_EVOL, IConstant.FAILED.ERROR_CODE.C1,
-                            "All Key fields not Exist", "", cnsDpPosEntity.getLocalMaterial(),
+                            "Unable to Find the group", "omp", cnsDpPosEntity.getLocalMaterial(),
                             cnsDpPosEntity.getCustomer(),cnsDpPosEntity.getYearMonth()));
                 }
             }
