@@ -119,7 +119,10 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
 
         //rules T9
         EDMCurrencyV1Entity currencyV1Entity = currencyV1DaoImpl.getEntityWithLocalCurrencyAndSourceSystem(plantV1Entity.getLocalCurrency(), plantV1Entity.getSourceSystem());
+        LogUtil.getLogger().info("getLocalCurrency================{}",plantV1Entity.getLocalCurrency());
+        LogUtil.getLogger().info("getSourceSystem================{}",plantV1Entity.getSourceSystem());
         if (currencyV1Entity!=null){
+            LogUtil.getLogger().info("getCurrencyCode================{}",currencyV1Entity.getCurrencyCode());
             gdmLocationEdmBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
         }
 
