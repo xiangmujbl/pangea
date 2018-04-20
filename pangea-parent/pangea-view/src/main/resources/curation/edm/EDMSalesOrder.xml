@@ -4,7 +4,7 @@
         <regions>
 
             <region path="/project_one/vbak">
-                <columns>vbeln,erdat,audat,guebg,gueen,vbtyp,auart,augru,lifsk,faksk,vkorg,vtweg,spart,vkgrp,vkbur,vdatu,bstnk,kunnr,aedat,kalsm</columns>
+                <columns>erdat,vbeln,audat,guebg,gueen,vbtyp,auart,augru,lifsk,faksk,vkorg,vtweg,spart,vkgrp,vkbur,vdatu,bstnk,kunnr,aedat,kalsm</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
@@ -21,15 +21,11 @@
                 </relations>
             </region>
             <region path="/edm/source_system_v1">
-                <columns>
-                  localSourceSystem,sourceSystem
-                </columns>
+                <columns>localSourceSystem,sourceSystem</columns>
             </region>
 
             <region path="/project_one/vbap">
-                <columns>
-                    vbeln,posnr,matnr,werks,pstyv,lfrel,fkrel,abgru,kwmeng,vrkme,umvkz,umvkn,faksp,netwr,waerk,lgort,vstel,route
-                </columns>
+                <columns>posnr,vbeln,matnr,werks,pstyv,lfrel,fkrel,abgru,kwmeng,vrkme,umvkz,umvkn,faksp,netwr,waerk,lgort,vstel,route</columns>
                 <relations>
                     <relation path="/project_one/vbep" isPrimaryKey="false">
                         <expression>posnr=/project_one/vbap.posnr,vbeln=/project_one/vbap.vbeln</expression>
@@ -38,15 +34,15 @@
             </region>
 
             <region path="/project_one/vbep">
-                <columns>vbeln,posnr,etenr,edatu,wmeng,bmeng</columns>
+                <columns>posnr,vbeln,etenr,edatu,wmeng,bmeng</columns>
             </region>
 
             <region path="/project_one/vbpa">
-                <columns>vbeln,posnr,parvw,kunnr</columns>
+                <columns>posnr,vbeln,parvw,kunnr</columns>
             </region>
 
             <region path="/project_one/vbkd">
-                <columns>vbeln,posnr,inco1,inco2,kdgrp</columns>
+                <columns>posnr,vbeln,inco1,inco2,kdgrp</columns>
             </region>
 
             <region path="/edm/sales_order_v1">
