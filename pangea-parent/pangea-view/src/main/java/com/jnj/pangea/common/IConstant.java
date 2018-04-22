@@ -50,6 +50,7 @@ public interface IConstant {
         String PROJECT_ONE_KNVH="/project_one/knvh";
         String PROJECT_ONE_TVRO="/project_one/tvro";
         String PLAN_CNS_ORD_REJ="/plan/cns_ord_rej";
+        String PLAN_CNS_CUST_EXCL="/plan/cns_cust_excl";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -104,7 +105,7 @@ public interface IConstant {
         String SPRAS = "spras";
     }
     interface PROJECT_ONE_VBAP {
-        String VBELN="vbeln";
+       String VBELN="vbeln";
     }
     interface PROJECT_ONE_VBEP {
         String VBELN="vbeln";
@@ -214,11 +215,35 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
+    interface PLAN_CNS_CERT_DETER{
+        String SALES_ORG = "salesOrg";
+        String ORDER_TYPE = "orderType";
+        String ITEM_CATEGORY = "itemCategory";
+    }
     interface PLAN_CNS_CLUSTERS{
         String COUNTRY_ID = "countryId";
     }
 
     interface PLAN_CNS_DEM_GRP_ASGN{
+        String CUSTOMER_ID = "customerId";
+        String SALES_ORGANIZATION = "salesOrganization";
+        String CUSTOMER_SHIP_TO = "customerShipTo";
+    }
+    interface PROJECT_ONE_KNVH{
+        String KUNNR = "kunnr";
+        String VKORG = "vkorg";
+        String DATBI = "datbi";
+    }
+    interface PROJECT_ONE_TVRO{
+        String ROUTE="route";
+    }
+    interface PLAN_CNS_ORD_REJ{
+        String SALES_ORG="salesOrg";
+        String REJ_CD="rejCd";
+    }
+
+    interface PLAN_CNS_CUST_EXCL{
+        String SALES_ORG = "salesOrg";
         String CUSTOMER_SHIP_TO = "customerShipTo";
     }
 
@@ -262,6 +287,10 @@ public interface IConstant {
         String STR_ONE = "001";
         String BLANK = "BLANK";
         String OMP="omp";
+        String CNS_SALES_HISTORY = "CNS_SalesHistory";
+        String RESTRICT_SELECT = "restrictSelect";
+        String INITIAL_SELECT = "initialSelect";
+        String LESS_MONTH = "lessMonth";
     }
 
     interface FAILED {
@@ -280,6 +309,7 @@ public interface IConstant {
             String OMP_GDM_CLUSTER = "OMPGdmCluster";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
             String PLAN_CNS_MATERIAL_PLAN_STATUS = "PlanCnsMaterialPlanStatus";
+            String EDM_SALES_HISTORY = "EDMSalesHistory";
 
         }
 
@@ -287,6 +317,7 @@ public interface IConstant {
 
             String T1 = "T1";
             String T2 = "T2";
+            String T5 = "T5";
 
             String C1 = "C1";
 
@@ -305,5 +336,6 @@ public interface IConstant {
 
             String F2F3 = "F2F3";
         }
+
     }
 }

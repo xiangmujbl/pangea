@@ -26,4 +26,12 @@ public class ProjectOneKnvhDaoImpl extends CommonDaoImpl {
         return null;
     }
 
+    public ProjectOneKnvhEntity getEntityWithKunnrAndVkorg(String kunnr, String vkorg) {
+        if (null != kunnr && !"".equals(kunnr) && null!=vkorg && !"".equals(vkorg)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.KUNNR).is(kunnr)
+                    .and(IConstant.PROJECT_ONE_KNVH.VKORG).is(vkorg).toQueryString();
+            return queryForObject(IConstant.REGION.PROJECT_ONE_KNVH, queryString, ProjectOneKnvhEntity.class);
+        }
+        return null;
+    }
 }

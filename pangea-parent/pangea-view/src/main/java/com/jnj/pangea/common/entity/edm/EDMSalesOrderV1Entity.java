@@ -9,6 +9,7 @@ public class EDMSalesOrderV1Entity extends CommonEntity {
     private String sourceSystem;
     private String salesOrderNo;
     private String salesOrderItem;
+    private String scheduleLineItem;
     private String localSalesOrg;
     private String localShipToParty;
     private String localOrderCreateDt;
@@ -30,6 +31,7 @@ public class EDMSalesOrderV1Entity extends CommonEntity {
         setSourceSystem((String) map.get("sourceSystem"));
         setSalesOrderNo((String) map.get("salesOrderNo"));
         setSalesOrderItem((String) map.get("salesOrderItem"));
+        setScheduleLineItem((String) map.get("scheduleLineItem"));
         setLocalSalesOrg((String) map.get("localSalesOrg"));
         setLocalShipToParty((String) map.get("localShipToParty"));
         setLocalOrderCreateDt((String) map.get("localOrderCreateDt"));
@@ -68,6 +70,14 @@ public class EDMSalesOrderV1Entity extends CommonEntity {
 
     public void setSalesOrderItem(String salesOrderItem) {
         this.salesOrderItem = salesOrderItem;
+    }
+
+    public String getScheduleLineItem() {
+        return scheduleLineItem;
+    }
+
+    public void setScheduleLineItem(String scheduleLineItem) {
+        this.scheduleLineItem = scheduleLineItem;
     }
 
     public String getLocalSalesOrg() {
