@@ -46,6 +46,10 @@ public interface IConstant {
         String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";
         String PLAN_CNS_CLUSTERS="/plan/cns_clusters";
         String PLAN_CNS_DEM_GRP_ASGN="/plan/cns_dem_grp_asgn";
+        String PLAN_CNS_CERT_DETER="/plan/cns_cert_deter";
+        String PROJECT_ONE_KNVH="/project_one/knvh";
+        String PROJECT_ONE_TVRO="/project_one/tvro";
+        String PLAN_CNS_ORD_REJ="/plan/cns_ord_rej";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -253,6 +257,8 @@ public interface IConstant {
         String SAMPLE = "SAMPLE";
         String REGULAR = "REGULAR";
         String ACTIVE = "ACTIVE";
+        String BASE = "BASE";
+        String ZERO = "0";
         String STR_ONE = "001";
         String BLANK = "BLANK";
         String OMP="omp";

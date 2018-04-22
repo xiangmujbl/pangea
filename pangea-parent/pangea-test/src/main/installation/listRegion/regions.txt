@@ -123,6 +123,18 @@
 /plan/cns_prod_cty_affl
 
 
+/edm/sales_order_V1
+/edm/plant_V1
+/plan/cns_certainty_determine
+/edm/currency_V1
+/project_one/knvh
+/project_one/tvro
+/edm/material_global_V1
+/plan/cns_ord_rej
+/omp/gdm_sales_history
+
+
+
 /omp/product_detail
 
 
