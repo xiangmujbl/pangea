@@ -4,15 +4,11 @@
         <regions>
 
             <region path="/plan/cons_time_dep_xchange">
-                <columns>
-                    uniqueId,sourceSystem,fromCurrency,effectiveEndDate,effectiveStartDate,exchangeRate,preference
-                </columns>
+                <columns>uniqueId,sourceSystem,fromCurrency,effectiveEndDate,effectiveStartDate,exchangeRate,preference</columns>
             </region>
 
             <region path="/omp/gdm_unit_evol">
-                <columns>
-                    uniqueId,activeFCTERP,unitId,startEff,endEff,factor,preference
-                </columns>
+                <columns>uniqueId,activeFCTERP,unitId,startEff,endEff,factor,preference</columns>
             </region>
 
         </regions>

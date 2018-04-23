@@ -4,15 +4,11 @@
         <regions>
 
             <region path="/ngems/franchise_v1">
-                <columns>
-                    franchise,franchiseDescription
-                </columns>
+                <columns>franchise,franchiseDescription</columns>
             </region>
 
             <region path="/edm/franchise_v1">
-                <columns>
-                    franchise,franchiseDescription
-                </columns>
+                <columns>franchise,franchiseDescription</columns>
             </region>
 
         </regions>

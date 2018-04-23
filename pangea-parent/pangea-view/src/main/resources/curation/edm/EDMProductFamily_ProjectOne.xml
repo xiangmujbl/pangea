@@ -4,15 +4,11 @@
         <regions>
 
             <region path="/ngems/product_family_v1">
-                <columns>
-                    productFamily,productFamilyName
-                </columns>
+                <columns>productFamily,productFamilyName</columns>
             </region>
 
             <region path="/edm/product_family_v1">
-                <columns>
-                    productFamily,productFamilyName
-                </columns>
+                <columns>productFamily,productFamilyName</columns>
             </region>
 
         </regions>

@@ -4,9 +4,7 @@
         <regions>
 
             <region path="/project_one/mara">
-                <columns>
-                    matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf,mhdrz,mhdhb
-                </columns>
+                <columns>matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf,mhdrz,mhdhb</columns>
                 <relations>
                     <relation path="/project_one/makt" isPrimaryKey="true">
                         <expression>matnr=/project_one/mara.matnr</expression>
@@ -21,27 +19,19 @@
             </region>
 
             <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
-                </columns>
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
 
             <region path="/project_one/makt">
-                <columns>
-                    matnr,spras,maktx
-                </columns>
+                <columns>matnr,spras,maktx</columns>
             </region>
 
             <region path="/ngems/golden_material">
-                <columns>
-                    materialNumber,materialDescription,franchise,materialType,baseUom,parentCode,brand,form,materialStatus,subBrand,manufTechnology,category,productFamily,globalBusinessUnit,primaryPlanningCode
-                </columns>
+                <columns>materialNumber,materialDescription,franchise,materialType,baseUom,parentCode,brand,form,materialStatus,subBrand,manufTechnology,category,productFamily,globalBusinessUnit,primaryPlanningCode</columns>
             </region>
 
             <region path="/ngems/material_linkage">
-                <columns>
-                    sourceSystem,localMaterialNumber,materialNumber
-                </columns>
+                <columns>sourceSystem,localMaterialNumber,materialNumber</columns>
                 <relations>
                     <relation path="/ngems/golden_material" isPrimaryKey="false">
                         <expression>materialNumber=/ngems/material_linkage.materialNumber</expression>
@@ -50,9 +40,7 @@
             </region>
 
             <region path="/edm/material_global_v1">
-                <columns>
-                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
-                </columns>
+                <columns>sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode</columns>
             </region>
 
         </regions>

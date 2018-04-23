@@ -4,15 +4,11 @@
         <regions>
 
             <region path="/ems/customer_group">
-                <columns>
-                    sourceSystem,customerShipTo,subFranchise,planningCustomerGroup,fromDate,toDate
-                </columns>
+                <columns>sourceSystem,customerShipTo,subFranchise,planningCustomerGroup,fromDate,toDate</columns>
             </region>
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>
-                    sourceSystem,customerShipTo,subFranchise,group,fromDate,toDate
-                </columns>
+                <columns>sourceSystem,customerShipTo,subFranchise,group,fromDate,toDate</columns>
             </region>
 
         </regions>

@@ -4,9 +4,7 @@
         <regions>
 
             <region path="">
-                <columns>
-
-                </columns>
+                <columns></columns>
                 <relations>
                     <relation path="" isPrimaryKey="false">
                         <expression></expression>
@@ -15,9 +13,7 @@
             </region>
 
             <region path="/${system}/${_name}">
-                <columns>
-
-                </columns>
+                <columns></columns>
             </region>
 
         </regions>

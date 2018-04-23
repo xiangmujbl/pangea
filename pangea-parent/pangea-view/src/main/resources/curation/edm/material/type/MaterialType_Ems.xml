@@ -4,16 +4,12 @@
         <regions>
 
             <region path="/ems/ems_f_mdm_material_types">
-                <columns>
-                    mdmCode,mdmName,zSourceSystem
-                </columns>
+                <columns>mdmCode,mdmName,zSourceSystem</columns>
                 <filter>zSourceSystem:\[EMS\]</filter>
             </region>
 
             <region path="/edm/material_type_v1">
-                <columns>
-                    materialType,materialTypeName
-                </columns>
+                <columns>materialType,materialTypeName</columns>
             </region>
 
         </regions>

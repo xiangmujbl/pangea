@@ -39,7 +39,12 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
                 if (planCnsPlanParameterEntityList.size() > 0) {
 
                     // rules T1
-                    gdmCountryBo.setCountryId(countryV1Entity.getCountryCode());
+                    for (PlanCnsPlanParameterEntity entity:planCnsPlanParameterEntityList) {
+                        if (countryV1Entity.getSourceSystem().equals(entity.getSourceSystem())){
+                            gdmCountryBo.setCountryId(countryV1Entity.getCountryCode());
+                            break;
+                        }
+                    }
                     gdmCountryBo.setCountryDescription(countryV1Entity.getCountryName());
 
                     // rules D1

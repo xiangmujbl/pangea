@@ -4,9 +4,7 @@
         <regions>
 
             <region path="/ems/ems_f_z_currencies">
-                <columns>
-                    zSourceSystem,zCode,zEntCodeIso4217Alpha,zName,zIso4217Numeric
-                </columns>
+                <columns>zSourceSystem,zCode,zEntCodeIso4217Alpha,zName,zIso4217Numeric</columns>
                 <filter>(*:* -zSourceSystem:\[EMS\])</filter>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -19,23 +17,17 @@
             </region>
 
             <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
-                </columns>
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
 
             <region path="/ems/ems_f_z_currencies" alias="/ems/ems_f_z_currencies_clone">
-                <columns>
-                    zSourceSystem,zCode,zEntCodeIso4217Alpha,zName,zIso4217Numeric
-                </columns>
+                <columns>zSourceSystem,zCode,zEntCodeIso4217Alpha,zName,zIso4217Numeric</columns>
 
             </region>
 
 
             <region path="/edm/currency_v1">
-                <columns>
-                    sourceSystem,localCurrency,currencyCode,currencyName,isoNumeric
-                </columns>
+                <columns>sourceSystem,localCurrency,currencyCode,currencyName,isoNumeric</columns>
             </region>
 
         </regions>

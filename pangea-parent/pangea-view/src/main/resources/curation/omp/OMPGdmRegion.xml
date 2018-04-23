@@ -4,15 +4,11 @@
         <regions>
 
             <region path="/plan/cns_plan_region">
-                <columns>
-                    planningRegionId,planningRegionDesc
-                </columns>
+                <columns>planningRegionId,planningRegionDesc</columns>
             </region>
 
             <region path="/omp/gdm_region">
-                <columns>
-                    regionId,activeFCTERP,activeOPRERP,activeSOPERP,regionDescription
-                </columns>
+                <columns>regionId,activeFCTERP,activeOPRERP,activeSOPERP,regionDescription</columns>
             </region>
 
         </regions>

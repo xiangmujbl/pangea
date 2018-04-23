@@ -4,15 +4,11 @@
         <regions>
 
             <region path="/ngems/global_base_unit_v1">
-                <columns>
-                    gbu,gbuName
-                </columns>
+                <columns>gbu,gbuName</columns>
             </region>
 
             <region path="/edm/global_base_unit_v1">
-                <columns>
-                    gbu,gbuName
-                </columns>
+                <columns>gbu,gbuName</columns>
             </region>
 
         </regions>

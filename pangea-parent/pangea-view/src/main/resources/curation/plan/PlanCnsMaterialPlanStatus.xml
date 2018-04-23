@@ -6,9 +6,7 @@
         <regions>
 
             <region path="/edm/material_plant_v1">
-                <columns>
-                    localMaterialNumber,localPlant,materialNumber,localMrpType
-                </columns>
+                <columns>localMaterialNumber,localPlant,materialNumber,localMrpType</columns>
                 <relations>
                     <relation path="/edm/source_system_v1">
                         <expression></expression>
@@ -29,33 +27,23 @@
             </region>
 
             <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
-                </columns>
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
 
             <region path="/edm/material_global_v1">
-                <columns>
-                    localMaterialType,localMaterialNumber,localDpParentCode,primaryPlanningCode
-                </columns>
+                <columns>localMaterialType,localMaterialNumber,localDpParentCode,primaryPlanningCode</columns>
             </region>
 
             <region path="/plan/cns_plan_parameter">
-                <columns>
-                    sourceSystem,dataObject,attribute,parameter,inclExcl,parameterValue
-                </columns>
+                <columns>sourceSystem,dataObject,attribute,parameter,inclExcl,parameterValue</columns>
             </region>
 
             <region path="/plan/cns_material_incl">
-                <columns>
-                    sourceSystem,localMaterialNumber,planningType,localPlant
-                </columns>
+                <columns>sourceSystem,localMaterialNumber,planningType,localPlant</columns>
             </region>
 
             <region path="/plan/cns_material_plan_status">
-                <columns>
-                    sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
-                </columns>
+                <columns>sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant</columns>
             </region>
 
         </regions>

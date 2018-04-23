@@ -4,6 +4,7 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
@@ -22,6 +23,7 @@ public class OMPProductDetailController extends BaseController {
 
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
+        LogUtil.getCoreLog().info("================Rawlist===={}==============",list.size());
         List<ViewResultItem> result = new ArrayList<>();
         list.forEach(raw -> {
 
@@ -46,6 +48,7 @@ public class OMPProductDetailController extends BaseController {
             }
 
         });
+        LogUtil.getCoreLog().info("================result===={}==============",result.size());
         return result;
     }
 }

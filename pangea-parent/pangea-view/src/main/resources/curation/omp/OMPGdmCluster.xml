@@ -4,20 +4,11 @@
         <regions>
 
             <region path="/plan/cns_clusters">
-                <columns>
-                    cluster,countryId,subCluster
-                </columns>
+                <columns>cluster,countryId,subCluster</columns>
             </region>
 
             <region path="/omp/gdm_cluster">
-                <columns>
-                    clusterId,
-                    activeFCTERP,
-                    clusterDescription,
-                    clusterNr,
-                    countryId,
-                    subFranchise
-                </columns>
+                <columns>clusterId,activeFCTERP,clusterDescription,clusterNr,countryId,subFranchise</columns>
             </region>
 
         </regions>
