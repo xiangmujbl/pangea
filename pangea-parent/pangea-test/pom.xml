@@ -14,7 +14,7 @@
 
     <properties>
         <adf.version>0.3.04</adf.version>
-        <adf.compute.version>0.3.04-0.3-0124</adf.compute.version>
+        <adf.compute.version>0.3.04-0.4</adf.compute.version>
     </properties>
 
     <dependencies>
@@ -61,9 +61,25 @@
             <artifactId>cucumber-core</artifactId>
             <version>1.2.5</version>
         </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>1.0.0-cp1</version>
+        </dependency>
 
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>http://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
