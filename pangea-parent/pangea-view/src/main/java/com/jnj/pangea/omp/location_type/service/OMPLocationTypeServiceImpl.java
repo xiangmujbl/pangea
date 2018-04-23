@@ -28,9 +28,9 @@ public class OMPLocationTypeServiceImpl implements ICommonService {
 
         locationTypeBo.setLocationTypeId(cnsLocationTypeEntity.getPlanLocTypeId());
         locationTypeBo.setLabel(cnsLocationTypeEntity.getPlanLocTypeDesc());
-        locationTypeBo.setActiveFctErp(IConstant.VALUE.YES);
-        locationTypeBo.setActiveOprErp(IConstant.VALUE.YES);
-        locationTypeBo.setActiveSopErp(IConstant.VALUE.YES);
+        locationTypeBo.setActiveFCTERP(IConstant.VALUE.YES);
+        locationTypeBo.setActiveOPRERP(IConstant.VALUE.YES);
+        locationTypeBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         resultObject.setBaseBo(locationTypeBo);
         return resultObject;

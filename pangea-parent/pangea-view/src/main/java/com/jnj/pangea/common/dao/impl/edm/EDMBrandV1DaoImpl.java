@@ -22,4 +22,9 @@ public class EDMBrandV1DaoImpl extends CommonDaoImpl {
         //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         return null;
     }
+
+    public EDMBrandV1Entity getEntityWithBrand(String brand) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_BRAND_V1.BRAND).is(brand).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_BRAND_V1, queryString, EDMBrandV1Entity.class);
+    }
 }

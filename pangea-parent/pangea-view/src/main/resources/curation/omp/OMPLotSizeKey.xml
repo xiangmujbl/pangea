@@ -11,13 +11,7 @@
 
             <region path="/omp/lot_size_key">
                 <columns>
-                    lotSizeKey,
-                    activeOprerp,
-                    activeSoperp,
-                    comments,
-                    descRiption,
-                    period,
-                    quantity
+                    lotSizeKey,activeOPRERP,activeSOPERP,comments,description,period,quantity
                 </columns>
             </region>
 

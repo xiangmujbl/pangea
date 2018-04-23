@@ -7,36 +7,27 @@ public class EDMBatchMasterBo extends BaseBo {
 
     private String sourceSystem;
     private String localMaterialNumber;
-    private String materialNumber;
     private String localBatchNumber;
-    private String localShelfLifeExpiration;
-    private String localDateofManufacture;
+    private String localPlant;
+    private String localStorageLocation;
+    private String localBatchExpDate;
+    private String localBatchMfgDate;
+    private String plant;
+    private String materialNumber;
 
-    @Override
-    public String toString() {
-        return "EDMBatchMasterBo{" +
-                "sourceSystem='" + sourceSystem + '\'' +
-                ", localMaterialNumber='" + localMaterialNumber + '\'' +
-                ", materialNumber='" + materialNumber + '\'' +
-                ", localBatchNumber='" + localBatchNumber + '\'' +
-                ", localShelfLifeExpiration='" + localShelfLifeExpiration + '\'' +
-                ", localDateofManufacture='" + localDateofManufacture + '\'' +
-                '}';
-    }
-
-    // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("sourceSystem", this.sourceSystem)
-                .add("localMaterialNumber",this.localMaterialNumber)
-                .add("materialNumber",this.materialNumber)
-                .add("localBatchNumber",this.localBatchNumber)
+                .add("localMaterialNumber", this.localMaterialNumber)
+                .add("localBatchNumber", this.localBatchNumber)
+                .add("localPlant", this.localPlant)
+                .add("localStorageLocation", this.localStorageLocation)
                 .toJsonString();
     }
 
     public String getSourceSystem() {
-        return sourceSystem;
+        return this.sourceSystem;
     }
 
     public void setSourceSystem(String sourceSystem) {
@@ -44,42 +35,67 @@ public class EDMBatchMasterBo extends BaseBo {
     }
 
     public String getLocalMaterialNumber() {
-        return localMaterialNumber;
+        return this.localMaterialNumber;
     }
 
     public void setLocalMaterialNumber(String localMaterialNumber) {
         this.localMaterialNumber = localMaterialNumber;
     }
 
-    public String getMaterialNumber() {
-        return materialNumber;
-    }
-
-    public void setMaterialNumber(String materialNumber) {
-        this.materialNumber = materialNumber;
-    }
-
     public String getLocalBatchNumber() {
-        return localBatchNumber;
+        return this.localBatchNumber;
     }
 
     public void setLocalBatchNumber(String localBatchNumber) {
         this.localBatchNumber = localBatchNumber;
     }
 
-    public String getLocalShelfLifeExpiration() {
-        return localShelfLifeExpiration;
+    public String getLocalPlant() {
+        return this.localPlant;
     }
 
-    public void setLocalShelfLifeExpiration(String localShelfLifeExpiration) {
-        this.localShelfLifeExpiration = localShelfLifeExpiration;
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
     }
 
-    public String getLocalDateofManufacture() {
-        return localDateofManufacture;
+    public String getLocalStorageLocation() {
+        return this.localStorageLocation;
     }
 
-    public void setLocalDateofManufacture(String localDateofManufacture) {
-        this.localDateofManufacture = localDateofManufacture;
+    public void setLocalStorageLocation(String localStorageLocation) {
+        this.localStorageLocation = localStorageLocation;
     }
+
+    public String getLocalBatchExpDate() {
+        return this.localBatchExpDate;
+    }
+
+    public void setLocalBatchExpDate(String localBatchExpDate) {
+        this.localBatchExpDate = localBatchExpDate;
+    }
+
+    public String getLocalBatchMfgDate() {
+        return this.localBatchMfgDate;
+    }
+
+    public void setLocalBatchMfgDate(String localBatchMfgDate) {
+        this.localBatchMfgDate = localBatchMfgDate;
+    }
+
+    public String getPlant() {
+        return this.plant;
+    }
+
+    public void setPlant(String plant) {
+        this.plant = plant;
+    }
+
+    public String getMaterialNumber() {
+        return this.materialNumber;
+    }
+
+    public void setMaterialNumber(String materialNumber) {
+        this.materialNumber = materialNumber;
+    }
+
 }

@@ -1,10 +1,18 @@
 package com.jnj.pangea.omp.gdm_location_edm.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlantAttrDaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
+import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlantAttrEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_location_edm.bo.OMPGdmLocationEdmBo;
 
@@ -22,6 +30,10 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
     }
 
     private PlanCnsPlanParameterDaoImpl parameterDao= PlanCnsPlanParameterDaoImpl.getInstance();
+    private EDMCountryV1DaoImpl  countryV1DaoImpl= EDMCountryV1DaoImpl.getInstance();
+    private PlanCnsPlantAttrDaoImpl  cnsPlantAttrDaoImpl= PlanCnsPlantAttrDaoImpl.getInstance();
+    private EDMCurrencyV1DaoImpl currencyV1DaoImpl= EDMCurrencyV1DaoImpl.getInstance();
+
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -30,49 +42,94 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         EDMPlantV1Entity plantV1Entity = (EDMPlantV1Entity) o;
 
         OMPGdmLocationEdmBo gdmLocationEdmBo = new OMPGdmLocationEdmBo();
-        if (null==plantV1Entity){
-            return resultObject;
-        }
+
         //rules C1
         gdmLocationEdmBo.setLocationId(plantV1Entity.getSourceSystem()+"_"+plantV1Entity.getLocalPlant());
 
+
+        //rules T2
+        gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.NO);
+        List<PlanCnsPlanParameterEntity> entities = parameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT);
+        if (entities!=null && entities.size()>0){
+            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity:entities){
+               if (cnsPlanParameterEntity!=null){
+                   if (cnsPlanParameterEntity.getParameterValue().equals(plantV1Entity.getLocalPlant())){
+                       gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
+                       break;
+                   }
+               }
+            }
+        }
+
+        //rules T7
+        if (IConstant.VALUE.X.equals(plantV1Entity.getLocalPlanningRelevant())){
+            gdmLocationEdmBo.setActiveOPRERP(IConstant.VALUE.YES);
+        }else{
+            gdmLocationEdmBo.setActiveOPRERP(IConstant.VALUE.NO);
+        }
+
         //rules T1
-        if (plantV1Entity.getLocalPlanningRelevant().equals(IConstant.VALUE.X)){
+        if (IConstant.VALUE.YES.equals(gdmLocationEdmBo.getActiveFCTERP())||IConstant.VALUE.YES.equals(gdmLocationEdmBo.getActiveOPRERP())){
             gdmLocationEdmBo.setActive(IConstant.VALUE.YES);
         }
 
-        //rules T2
-        if (getFieldWithJ2(plantV1Entity)){
-            gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
+        //rules T5
+        gdmLocationEdmBo.setActiveSOPERP(IConstant.VALUE.NO);
+
+        //rules T8
+        PlanCnsPlantAttrEntity cnsPlantAttrEntity = cnsPlantAttrDaoImpl.getEntityWithLocalPlantAndSourceSystem(plantV1Entity.getLocalPlant(), plantV1Entity.getSourceSystem());
+        if (cnsPlantAttrEntity==null){
+            FailData failData = new FailData();
+            failData.setErrorCode("T8");
+            failData.setErrorValue("Missing Location Type Id");
+            failData.setFunctionalArea("SP");
+            failData.setInterfaceID("OMPGdmLocationEdm");
+            failData.setSourceSystem("omp");
+            failData.setKey1(plantV1Entity.getLocalPlant());
+            failData.setKey2(plantV1Entity.getSourceSystem());
+            failData.setKey3("");
+            failData.setKey4("");
+            failData.setKey5("");
+            resultObject.setFailData(failData);
+            return resultObject;
+        }
+        gdmLocationEdmBo.setLocationTypeId(cnsPlantAttrEntity.getPlanLocTypeId());
+
+        //rules T10
+        String countryId = plantV1Entity.getCountry();
+        if ("".equals(countryId)){
+            FailData failData = new FailData();
+            failData.setErrorCode("T10");
+            failData.setErrorValue("Missing Country");
+            failData.setFunctionalArea("SP");
+            failData.setInterfaceID("OMPGdmLocationEdm");
+            failData.setSourceSystem("omp");
+            failData.setKey1(plantV1Entity.getLocalPlant());
+            failData.setKey2(plantV1Entity.getSourceSystem());
+            failData.setKey3("");
+            failData.setKey4("");
+            failData.setKey5("");
+            resultObject.setFailData(failData);
+            return resultObject;
+        }
+        gdmLocationEdmBo.setCountryId(countryId);
+
+        //rules T9
+        EDMCurrencyV1Entity currencyV1Entity = currencyV1DaoImpl.getEntityWithLocalCurrencyAndSourceSystem(plantV1Entity.getLocalCurrency(), plantV1Entity.getSourceSystem());
+        if (currencyV1Entity!=null){
+            gdmLocationEdmBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
         }
 
-        //rules T3
-        gdmLocationEdmBo.setActiveOPRERP(IConstant.VALUE.YES);
+        //rules T6
+        EDMCountryEntity countryEntity = countryV1DaoImpl.getEntityWithLocalCountryAndSourceSystem(plantV1Entity.getLocalCountry(), plantV1Entity.getSourceSystem());
+        if (countryEntity!=null){
+            gdmLocationEdmBo.setRegionId(countryEntity.getConsumerPlanningRegion());
+        }
 
-        gdmLocationEdmBo.setCountryId(plantV1Entity.getCountry());
-        gdmLocationEdmBo.setCurrencyId(plantV1Entity.getLocalCurrency());
         gdmLocationEdmBo.setLabel(plantV1Entity.getLocalPlantName());
-        gdmLocationEdmBo.setLocationTypeId(plantV1Entity.getPlantType());
-        gdmLocationEdmBo.setRegionId(plantV1Entity.getRegion());
 
         resultObject.setBaseBo(gdmLocationEdmBo);
         return resultObject;
     }
 
-
-    /**
-     * rules T2
-     * @param plantV1Entity
-     */
-    private boolean getFieldWithJ2(EDMPlantV1Entity plantV1Entity){
-        List<PlanCnsPlanParameterEntity> entities = parameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT);
-        if (!entities.isEmpty()){
-            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity:entities) {
-                if (cnsPlanParameterEntity.getParameterValue().equals(plantV1Entity.getLocalPlant())){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }

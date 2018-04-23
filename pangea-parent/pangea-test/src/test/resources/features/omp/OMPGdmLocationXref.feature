@@ -1,16 +1,17 @@
-@pangea_test
-Feature:  OMPGdmLocationXref-Curation
+@pangea_test @AEAZ-1764
+Feature:  OMPGdmLocationXref AEAZ-1764
 
   Scenario: Full Load curation
+    # 1. get atrributes from cns_plan_parameter(rules C2)
 
-    Given I import "/plan/cns_pln_spl_loc" by keyFields "sourceSystem,vendorCustomer,localNumber,localName"
-      | sourceSystem | vendorCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion |
-      |BtB           |V          |   234500    |US            |USD            |Silgan     |Silgan234500   |NJ           |
+    Given I import "/plan/cns_pln_spl_loc" by keyFields "sourceSystem,vendorOrCustomer,localNumber,localName"
+      | sourceSystem | vendorOrCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion |
+      | BtB          | V                | 234500      | US           | USD           | Silgan    | Silgan234500  | NJ          |
 
     And I wait "/plan/cns_pln_spl_loc" Async Queue complete
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem"
-      | parameterValue | sourceSystem | dataObject | attribute | parameter |
-      |234500          |CONS_LATAM    |cns_material_plan_status|DPRelevant|Plant|
+      | parameterValue | sourceSystem | dataObject               | attribute  | parameter |
+      | 234500         | CONS_LATAM   | cns_material_plan_status | DPRelevant | Plant     |
 
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
