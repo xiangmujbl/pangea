@@ -1,31 +1,38 @@
 package com.jnj.pangea.omp.gdm_sales_history.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSalesOrderV1Entity;
+import com.jnj.pangea.common.entity.plan.PlanCnsCustExclEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustExclDaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsSoTypeInclEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsSoTypeInclDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsCertDeterEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCertDeterDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsDemGrpAsgnEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsDemGrpAsgnDaoImpl;
-import com.jnj.pangea.common.entity.plan.*;
-import com.jnj.pangea.common.entity.projectOne.ProjectOneKnvhEntity;
-import com.jnj.pangea.common.dao.impl.projectOne.ProjectOneKnvhDaoImpl;
-import com.jnj.pangea.common.entity.projectOne.ProjectOneTvroEntity;
-import com.jnj.pangea.common.dao.impl.projectOne.ProjectOneTvroDaoImpl;
+import com.jnj.pangea.common.entity.project_one.KnvhEntity;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneKnvhDaoImpl;
+import com.jnj.pangea.common.entity.project_one.TvroEntity;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneTvroDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsOrdRejEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsOrdRejDaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_sales_history.bo.OMPGdmSalesHistoryBo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,22 +59,20 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     private PlanCnsDemGrpAsgnDaoImpl cnsDemGrpAsgnDao = PlanCnsDemGrpAsgnDaoImpl.getInstance();
     private ProjectOneKnvhDaoImpl knvhDao = ProjectOneKnvhDaoImpl.getInstance();
     private ProjectOneTvroDaoImpl tvroDao = ProjectOneTvroDaoImpl.getInstance();
-    private EDMMaterialGlobalDaoImpl materialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
+    private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private PlanCnsOrdRejDaoImpl cnsOrdRejDao = PlanCnsOrdRejDaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl cnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    private SimpleDateFormat YMDSdf = new SimpleDateFormat("yyyyMMdd");
+    private SimpleDateFormat DMYSdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
         EDMSalesOrderV1Entity salesOrderV1Entity = (EDMSalesOrderV1Entity) o;
-        String parameterValueF2 = getParameterValue(IConstant.VALUE.RESTRICT_SELECT);
-        String parameterValueJ1 = getParameterValue(IConstant.VALUE.INITIAL_SELECT);
 
         OMPGdmSalesHistoryBo gdmSalesHistoryBo = new OMPGdmSalesHistoryBo();
-
         String localSalesOrg = salesOrderV1Entity.getLocalSalesOrg();
         String localShipToParty = salesOrderV1Entity.getLocalShipToParty();
         String localOrderType = salesOrderV1Entity.getLocalOrderType();
@@ -79,10 +84,17 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         gdmSalesHistoryBo.setCertaintyId(checkT2(localSalesOrg, localOrderType, localItemCategory));
 
-        gdmSalesHistoryBo.setCurrencyId(checkT4(salesOrderV1Entity.getLocalSdItemCurrency()));
+        String currencyId = checkT4(salesOrderV1Entity.getLocalSDItemCurrency());
+        if (StringUtils.isNotEmpty(currencyId)){
+            gdmSalesHistoryBo.setCurrencyId(currencyId);
+        }else {
+            FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T4, "Unable to find the Enterprise currency code");
+            resultObject.setFailData(failData);
+            return resultObject;
+        }
 
         String customerId = checkT5(localShipToParty, localSalesOrg, salesOrderV1Entity.getLocalRequestedDate());
-        if (null != customerId) {
+        if (StringUtils.isNotEmpty(customerId)) {
             gdmSalesHistoryBo.setCustomerId(customerId);
         } else {
             FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T5, "Demand group can not be determined");
@@ -90,16 +102,17 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        gdmSalesHistoryBo.setDueDate(checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate()));
-
-        gdmSalesHistoryBo.setFromDueDate(checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate()));
-
+        String dueDate = checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate());
+        if (StringUtils.isNotEmpty(dueDate)) {
+            gdmSalesHistoryBo.setDueDate(dueDate);
+            gdmSalesHistoryBo.setFromDueDate(checkF2T6(dueDate));
+        }
         String locationId = salesOrderV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + salesOrderV1Entity.getLocalPlant();
         gdmSalesHistoryBo.setLocationId(locationId);
 
         gdmSalesHistoryBo.setOrderType(salesOrderV1Entity.getLocalOrderType());
 
-        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(salesOrderV1Entity.getLocalMaterialNumber());
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(salesOrderV1Entity.getLocalMaterialNumber());
         if (null != materialGlobalV1Entity) {
             gdmSalesHistoryBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
             gdmSalesHistoryBo.setSalesUnit(checkT10(materialGlobalV1Entity.getLocalBaseUom()));
@@ -107,7 +120,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         gdmSalesHistoryBo.setQuantity(checkJ2T9(salesOrderV1Entity));
 
-        LogUtil.getCoreLog().info("gdmSalesHistoryBo:" + gdmSalesHistoryBo.toMap());
         resultObject.setBaseBo(gdmSalesHistoryBo);
         return resultObject;
     }
@@ -155,13 +167,13 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         if (null != demGrpAsgnEntity) {
             return demGrpAsgnEntity.getDemandGroup();
         } else {
-            ProjectOneKnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorg(localShipToParty, localSalesOrg);
+            KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorg(localShipToParty, localSalesOrg);
             if (null != knvhEntity) {
                 String kunnr = knvhEntity.getHkunnr();
                 String datbi = knvhEntity.getDatbi();
                 try {
-                    if (null != kunnr && !"".equals(kunnr)) {
-                        if (sdf.parse(localRequestedDate).getTime() <= sdf.parse(datbi).getTime()) {
+                    if (StringUtils.isNotEmpty(kunnr)) {
+                        if (YMDSdf.parse(localRequestedDate).getTime() <= YMDSdf.parse(datbi).getTime()) {
                             demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(kunnr);
                             if (null != demGrpAsgnEntity) {
                                 return demGrpAsgnEntity.getDemandGroup();
@@ -190,21 +202,36 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
     private String checkT6(String localRoute, String localRequestedDate) {
 
-        ProjectOneTvroEntity tvroEntity = tvroDao.getEntityWithRoute(localRoute);
+        TvroEntity tvroEntity = tvroDao.getEntityWithRoute(localRoute);
         if (null != tvroEntity) {
             String trazt = tvroEntity.getTrazt();
             try {
-                Date traztFormat = sdf.parse(trazt);
-                Date localRequestedDateFormat = sdf.parse(localRequestedDate);
+                Long traztLong = Long.parseLong(trazt);
+                Date localRequestedDateFormat = YMDSdf.parse(localRequestedDate);
 
-                Long time = localRequestedDateFormat.getTime() - traztFormat.getTime();
+                Long time = localRequestedDateFormat.getTime() - traztLong*1000*60*60*24;
                 Date dueDate = new Date(time);
-                return sdf.format(dueDate);
+                return DMYSdf.format(dueDate);
             } catch (ParseException e) {
                 e.printStackTrace();
+                return null;
             }
         }
         return null;
+    }
+
+    private String checkF2T6(String dueDate) {
+        String parameterValue = getParameterValue(IConstant.VALUE.RESTRICT_SELECT);
+        try {
+            Date dueDateFormat = DMYSdf.parse(dueDate);
+            Long parameterValueLong = Long.parseLong(parameterValue);
+            Long time = dueDateFormat.getTime() - parameterValueLong*24*60*60*1000;
+            Date fromDueDate = new Date(time);
+            return DMYSdf.format(fromDueDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private PlanCnsOrdRejEntity checkJ2(EDMSalesOrderV1Entity salesOrderV1Entity) {
@@ -213,12 +240,12 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
     private String checkJ2T9(EDMSalesOrderV1Entity salesOrderV1Entity) {
         PlanCnsOrdRejEntity ordRejEntity = null;
-        if (null != salesOrderV1Entity.getLocalRejReason() || !"".equals(salesOrderV1Entity.getLocalRejReason())){
+        if (null != salesOrderV1Entity.getLocalRejReason() || !"".equals(salesOrderV1Entity.getLocalRejReason())) {
             ordRejEntity = checkJ2(salesOrderV1Entity);
         }
         if (null != ordRejEntity || null == salesOrderV1Entity.getLocalRejReason() || "".equals(salesOrderV1Entity.getLocalRejReason())) {
             try {
-                int salesOrderQty = Integer.parseInt(salesOrderV1Entity.getSalesOrderQty());
+                Double salesOrderQty = Double.parseDouble(salesOrderV1Entity.getSalesOrderQty());
                 int localNumtoBase = Integer.parseInt(salesOrderV1Entity.getLocalNumtoBase());
                 int localDentoBase = Integer.parseInt(salesOrderV1Entity.getLocalDentoBase());
                 if (0 != salesOrderQty && 0 != localNumtoBase && 0 != localDentoBase) {
@@ -235,7 +262,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     }
 
     private String checkT10(String localBaseUom) {
-        CnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
+        PlanCnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
         if (null != planUnitEntity) {
             return planUnitEntity.getUnit();
         }

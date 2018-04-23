@@ -30,7 +30,7 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("salesHistoryId", this.salesHistoryId)
-                .add("activeFCTERP",this.activeFCTERP)
+                .add("activeFCTERP", this.activeFCTERP)
                 .toJsonString();
     }
 

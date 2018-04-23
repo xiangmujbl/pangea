@@ -1,8 +1,8 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
+import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
-import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsCustExclEntity;
 
 public class PlanCnsCustExclDaoImpl extends CommonDaoImpl {
@@ -17,12 +17,11 @@ public class PlanCnsCustExclDaoImpl extends CommonDaoImpl {
     }
 
     public PlanCnsCustExclEntity getEntityWithSalesOrgAndCustomerShipTo(String salesOrg, String customerShipTo){
-        if (null != salesOrg && null != customerShipTo){
-           String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
-                   .and(IConstant.PLAN_CNS_CUST_EXCL.CUSTOMER_SHIP_TO).is(customerShipTo).toQueryString();
-           return queryForObject(IConstant.REGION.PLAN_CNS_CUST_EXCL,queryString,PlanCnsCustExclEntity.class);
+        if (!salesOrg.isEmpty() && !customerShipTo.isEmpty()){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
+                    .and(IConstant.PLAN_CNS_CUST_EXCL.CUSTOMER_SHIP_TO).is(customerShipTo).toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_CUST_EXCL,queryString,PlanCnsCustExclEntity.class);
         }
         return null;
     }
-
 }

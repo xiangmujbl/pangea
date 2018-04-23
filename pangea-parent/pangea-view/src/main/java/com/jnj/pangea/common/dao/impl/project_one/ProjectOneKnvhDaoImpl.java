@@ -5,8 +5,6 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.project_one.KnvhEntity;
 
-import java.util.Date;
-
 public class ProjectOneKnvhDaoImpl extends CommonDaoImpl {
 
     private static ProjectOneKnvhDaoImpl instance;
@@ -18,9 +16,22 @@ public class ProjectOneKnvhDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public KnvhEntity getEntityWithCurrentDate() {
+    public KnvhEntity getEntityWithConditions(String kunnr, String vkorg, String datbi) {
+        if (null != kunnr && !"".equals(kunnr) && null!=vkorg && !"".equals(vkorg) && null!=datbi && !"".equals(datbi)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.KUNNR).is(kunnr)
+                    .and(IConstant.PROJECT_ONE_KNVH.VKORG).is(vkorg)
+                    .and(IConstant.PROJECT_ONE_KNVH.DATBI).greaterThanEqual(datbi).toQueryString();
+            return queryForObject(IConstant.REGION.PROJECT_ONE_KNVH, queryString, KnvhEntity.class);
+        }
+        return null;
+    }
 
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).greaterThanEqual(new Date()).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, queryString, KnvhEntity.class);
+    public KnvhEntity getEntityWithKunnrAndVkorg(String kunnr, String vkorg) {
+        if (null != kunnr && !"".equals(kunnr) && null!=vkorg && !"".equals(vkorg)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.KUNNR).is(kunnr)
+                    .and(IConstant.PROJECT_ONE_KNVH.VKORG).is(vkorg).toQueryString();
+            return queryForObject(IConstant.REGION.PROJECT_ONE_KNVH, queryString, KnvhEntity.class);
+        }
+        return null;
     }
 }

@@ -31,7 +31,6 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
     private String brand;
     private String localDpParentCode;
     private String primaryPlanningCode;
-
     private String localBaseUom;
 
     public String getLocalBaseUom() {

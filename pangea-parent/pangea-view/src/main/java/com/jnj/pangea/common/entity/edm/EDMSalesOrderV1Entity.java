@@ -17,7 +17,7 @@ public class EDMSalesOrderV1Entity extends CommonEntity {
     private String localPlant;
     private String localMaterialNumber;
     private String localItemCategory;
-    private String localSdItemCurrency;
+    private String localSDItemCurrency;
     private String localRequestedDate;
     private String localRejReason;
     private String salesOrderQty;
@@ -39,7 +39,7 @@ public class EDMSalesOrderV1Entity extends CommonEntity {
         setLocalPlant((String) map.get("localPlant"));
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
         setLocalItemCategory((String) map.get("localItemCategory"));
-        setLocalSdItemCurrency((String) map.get("localSdItemCurrency"));
+        setLocalSDItemCurrency((String) map.get("localSDItemCurrency"));
         setLocalRequestedDate((String) map.get("localRequestedDate"));
         setLocalRejReason((String) map.get("localRejReason"));
         setSalesOrderQty((String) map.get("salesOrderQty"));
@@ -136,12 +136,12 @@ public class EDMSalesOrderV1Entity extends CommonEntity {
         this.localItemCategory = localItemCategory;
     }
 
-    public String getLocalSdItemCurrency() {
-        return this.localSdItemCurrency;
+    public String getLocalSDItemCurrency() {
+        return localSDItemCurrency;
     }
 
-    public void setLocalSdItemCurrency(String localSdItemCurrency) {
-        this.localSdItemCurrency = localSdItemCurrency;
+    public void setLocalSDItemCurrency(String localSDItemCurrency) {
+        this.localSDItemCurrency = localSDItemCurrency;
     }
 
     public String getLocalRequestedDate() {

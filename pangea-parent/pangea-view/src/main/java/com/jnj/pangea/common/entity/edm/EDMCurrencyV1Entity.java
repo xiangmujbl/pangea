@@ -5,7 +5,6 @@ import com.jnj.pangea.common.entity.CommonEntity;
 import java.util.Map;
 
 public class EDMCurrencyV1Entity extends CommonEntity {
-
     private String localCurrency;
     private String sourceSystem;
     private String isoNumeric;

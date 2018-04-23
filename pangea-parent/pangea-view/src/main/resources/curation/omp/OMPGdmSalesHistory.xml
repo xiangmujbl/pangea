@@ -5,7 +5,7 @@
 
             <region path="/edm/sales_order_v1">
                 <columns>
-                    sourceSystem,salesOrderNo,salesOrderItem,localSalesOrg,localShipToParty,localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localItemCategory,localSdItemCurrency,localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute
+                    sourceSystem,salesOrderNo,salesOrderItem,localSalesOrg,localShipToParty,localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localItemCategory,localSDItemCurrency,localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute
                 </columns>
                 <relations>
                     <relation path="/plan/cns_cust_excl" isPrimaryKey="false">
@@ -42,7 +42,7 @@
                         </expression>
                     </relation>
                     <relation path="/edm/currency_v1" isPrimaryKey="false">
-                        <expression>localCurrency=/edm/sales_order_v1.localSdItemCurrency</expression>
+                        <expression>localCurrency=/edm/sales_order_v1.localSDItemCurrency</expression>
                     </relation>
                     <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
                         <expression>
@@ -79,7 +79,7 @@
 
             <region path="/plan/cns_plan_parameter">
                 <columns>
-                    sourceSystem,dataObject,attribute,parameter,inclusionExclusion,parameterValues
+                    sourceSystem,dataObject,attribute,parameter,inclExcl,parameterValue
                 </columns>
             </region>
 
@@ -87,11 +87,13 @@
                 <columns>
                     salesOrg,orderType,country
                 </columns>
-                <relation path="/edm/plant_v1" isPrimaryKey="false">
-                    <expression>
-                        country=/edm/cns_so_type_incl.country
-                    </expression>
-                </relation>
+                <relations>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression>
+                            country=/edm/cns_so_type_incl.country
+                        </expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/edm/plant_v1">
@@ -102,7 +104,7 @@
 
             <region path="/plan/cns_material_plan_status">
                 <columns>
-                    localPlant,localMaterialNumber,dpParent
+                    localPlant,localMaterialNumber,dpRelevant
                 </columns>
             </region>
 
@@ -122,12 +124,14 @@
                 <columns>
                     demandGroup,customerId,salesOrganization
                 </columns>
-                <relation path="/project_one/knvh" isPrimaryKey="false">
-                    <expression>
-                        hkunnr=/plan/cns_dem_grp_asgn.customerId,
-                        kunnr=/plan/cns_dem_grp_asgn.customerId
-                    </expression>
-                </relation>
+                <relations>
+                    <relation path="/project_one/knvh" isPrimaryKey="false">
+                        <expression>
+                            hkunnr=/plan/cns_dem_grp_asgn.customerId,
+                            kunnr=/plan/cns_dem_grp_asgn.customerId
+                        </expression>
+                    </relation>
+                </relations>
             </region>
             <region path="/project_one/knvh">
                 <columns>
@@ -143,9 +147,11 @@
                 <columns>
                     localMaterialNumber,primaryPlanningCode,localBaseUom
                 </columns>
-                <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
-                    <expression>localUom=/edm/sales_order_v1.localBaseUom</expression>
-                </relation>
+                <relations>
+                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
+                        <expression>localUom=/edm/sales_order_v1.localBaseUom</expression>
+                    </relation>
+                </relations>
             </region>
             <region path="/plan/cns_ord_rej">
                 <columns>
