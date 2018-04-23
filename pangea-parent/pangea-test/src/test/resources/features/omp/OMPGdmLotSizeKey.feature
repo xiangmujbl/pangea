@@ -4,8 +4,13 @@ Feature:  OMPGdmLotSizeKey-Curation
   Scenario: Full Load curation
 
     Given I import "/plan/cns_lot_size_key" by keyFields "lotSizeKey"
-      | lotSizeKey | comments | lotSizeKeyDescription | period | quantity |sourceSystem|localLotSizeKey|
-      |     WB       |  BtB Standard, used by all      |    Weekly lot size                   |   W     |       1   |     CONS_LATAM       |   AN            |
+      | lotSizeKey |          comments           | lotSizeKeyDescription           | period | quantity | sourceSystem | localLotSizeKey |
+      |     WB     |  Weekly lot                 | Weekly lot size                 |   W    |    1     | CONS_LATAM   |   AN            |
+      |     EX     |  Lot for Lot                | Lot-for-lot order quantity (JJ) |   E    |    0     | CONS_LATAM   |   AN            |
+      |     FX     |  Fixed Lot                  | Fixed order quantity (JJ)       |   F    |    0     | CONS_LATAM   |   AN            |
+      |     MB     |  Monthly Lot                | Monthly lot size (JJ)           |   M    |    1     | CONS_LATAM   |   AN            |
+      |     Z1     |  10 Day Lot                 | 10 Days                         |   T    |    10    | CONS_LATAM   |   AN            |
+
 
     And I wait "/plan/cns_lot_size_key" Async Queue complete
 
@@ -14,8 +19,12 @@ Feature:  OMPGdmLotSizeKey-Curation
     Then A file is found on sink application with name "omp_gdm_lot_size_key.tsv"
 
     And I check file data for filename "omp_gdm_lot_size_key.tsv" by keyFields "lotSizeKey"
-      | lotSizeKey |  activeOprerp |  activeSoperp |  comments                 |  description    |  period  |  quantity  |
-      |     WB     |        YES    |               | BtB Standard, used by all | Weekly lot size | W        | 1          |
+      |  activeOprerp |  period  |  comments   |  quantity  | lotSizeKey |  activeSoperp |   description                    |
+      |        YES    | F        | Fixed Lot   | 0          |     FX     |       NO      |  Fixed order quantity (JJ)       |
+      |        YES    | T        | 10 Day Lot  | 10         |     Z1     |       NO      |  10 Days                         |
+      |        YES    | M        | Monthly Lot | 1          |     MB     |       NO      |  Monthly lot size (JJ)           |
+      |        YES    | W        | Weekly lot  | 1          |     WB     |       NO      |  Weekly lot size                 |
+      |        YES    | E        | Lot for Lot | 0          |     EX     |       NO      |  Lot-for-lot order quantity (JJ) |
 
     And I delete the test data
 
