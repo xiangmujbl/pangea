@@ -5,49 +5,49 @@ import com.jnj.pangea.common.BaseBo;
 
 public class EDMBatchMasterBo extends BaseBo {
 
-    private String sourceSystem;
-    private String localMaterialNumber;
-    private String localBatchNumber;
+    private String srcSysCd;
+    private String matlNum;
+    private String btchNum;
     private String localPlant;
-    private String localStorageLocation;
-    private String localBatchExpDate;
-    private String localBatchMfgDate;
+    private String localStorLocation;
+    private String btchExpDt;
+    private String btchMfgDt;
     private String plant;
     private String materialNumber;
 
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("sourceSystem", this.sourceSystem)
-                .add("localMaterialNumber", this.localMaterialNumber)
-                .add("localBatchNumber", this.localBatchNumber)
+                .makeJsonObject("srcSysCd", this.srcSysCd)
+                .add("matlNum", this.matlNum)
+                .add("btchNum", this.btchNum)
                 .add("localPlant", this.localPlant)
-                .add("localStorageLocation", this.localStorageLocation)
+                .add("localStorLocation", this.localStorLocation)
                 .toJsonString();
     }
 
-    public String getSourceSystem() {
-        return this.sourceSystem;
+    public String getSrcSysCd() {
+        return this.srcSysCd;
     }
 
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
+    public void setSrcSysCd(String srcSysCd) {
+        this.srcSysCd = srcSysCd;
     }
 
-    public String getLocalMaterialNumber() {
-        return this.localMaterialNumber;
+    public String getMatlNum() {
+        return this.matlNum;
     }
 
-    public void setLocalMaterialNumber(String localMaterialNumber) {
-        this.localMaterialNumber = localMaterialNumber;
+    public void setMatlNum(String matlNum) {
+        this.matlNum = matlNum;
     }
 
-    public String getLocalBatchNumber() {
-        return this.localBatchNumber;
+    public String getBtchNum() {
+        return this.btchNum;
     }
 
-    public void setLocalBatchNumber(String localBatchNumber) {
-        this.localBatchNumber = localBatchNumber;
+    public void setBtchNum(String btchNum) {
+        this.btchNum = btchNum;
     }
 
     public String getLocalPlant() {
@@ -58,28 +58,28 @@ public class EDMBatchMasterBo extends BaseBo {
         this.localPlant = localPlant;
     }
 
-    public String getLocalStorageLocation() {
-        return this.localStorageLocation;
+    public String getLocalStorLocation() {
+        return this.localStorLocation;
     }
 
-    public void setLocalStorageLocation(String localStorageLocation) {
-        this.localStorageLocation = localStorageLocation;
+    public void setLocalStorLocation(String localStorLocation) {
+        this.localStorLocation = localStorLocation;
     }
 
-    public String getLocalBatchExpDate() {
-        return this.localBatchExpDate;
+    public String getBtchExpDt() {
+        return this.btchExpDt;
     }
 
-    public void setLocalBatchExpDate(String localBatchExpDate) {
-        this.localBatchExpDate = localBatchExpDate;
+    public void setBtchExpDt(String btchExpDt) {
+        this.btchExpDt = btchExpDt;
     }
 
-    public String getLocalBatchMfgDate() {
-        return this.localBatchMfgDate;
+    public String getBtchMfgDt() {
+        return this.btchMfgDt;
     }
 
-    public void setLocalBatchMfgDate(String localBatchMfgDate) {
-        this.localBatchMfgDate = localBatchMfgDate;
+    public void setBtchMfgDt(String btchMfgDt) {
+        this.btchMfgDt = btchMfgDt;
     }
 
     public String getPlant() {

@@ -379,7 +379,7 @@ public interface IConstant {
         String SPRAS_EN = "EN";
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";
-        String DD_MM_YYYY = "dd/MM/yyyy";
+        String YYYYMMDDHHNNSS = "YYYY/MM/DD HH:NN:SS";
         String N = "N";
         String BLANK = "Blank";
         String OR = "OR";
