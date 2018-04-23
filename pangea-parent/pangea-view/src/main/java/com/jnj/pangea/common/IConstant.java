@@ -12,6 +12,7 @@ public interface IConstant {
         String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
         String EDM_PLANT_V1 = "/edm/plant_v1";
+        String EDM_CURRENCY_V1="/edm/currency_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
         String PROJECT_ONE_MAKT = "/project_one/makt";
         String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
@@ -38,6 +39,7 @@ public interface IConstant {
         String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
         String PLAN_CNS_PROD_LOC_ATTRIB = "/plan/cns_prod_loc_attrib";
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
+        String PLAN_CNS_PLANT_ATTR="/plan/cns_plant_attr";
         String EDM_PRODUCT_FAMILY_V1 = "/edm/product_family_v1";
         String EDM_FORM_V1 = "/edm/form_v1";
         String EDM_CATEGORY_V1 = "/edm/category_v1";
@@ -65,6 +67,15 @@ public interface IConstant {
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
+    }
+    interface EDM_CURRENCY_V1 {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_CURRENCY = "localCurrency";
+    }
+
+    interface PLAN_CNS_PLANT_ATTR {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface PLAN_CNS_LOT_SIZE_KEY_TRANS {
@@ -122,6 +133,7 @@ public interface IConstant {
 
     interface EDM_COUNTRY_V1 {
         String LOCAL_COUNTRY = "localCountry";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface PROJECT_ONE_T001K {
@@ -372,6 +384,8 @@ public interface IConstant {
         String BLANK = "Blank";
         String OR = "OR";
         String SPACE = " ";
+        String CURRENCY = "CURRENCY";
+        String ZERO = "0";
     }
 
     interface FAILED {

@@ -14,7 +14,6 @@ public class EDMCurrencyV1Entity extends CommonEntity {
 
     public EDMCurrencyV1Entity(Map<String, Object> map) {
         super(map);
-
         setLocalCountry((String) map.get("localCountry"));
         setSourceSystem((String) map.get("sourceSystem"));
         setIsoNumeric((String) map.get("isoNumeric"));
@@ -55,11 +54,10 @@ public class EDMCurrencyV1Entity extends CommonEntity {
     }
 
     public String getCurrencyCode() {
-        return this.currencyCode;
+        return currencyCode;
     }
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
-
 }
