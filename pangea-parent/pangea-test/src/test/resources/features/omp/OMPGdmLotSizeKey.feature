@@ -16,9 +16,9 @@ Feature:  OMPGdmLotSizeKey-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmLotSizeKey.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "omp_gdm_lot_size_key.tsv"
+    Then A file is found on sink application with name "LotSizeKey.tsv"
 
-    And I check file data for filename "omp_gdm_lot_size_key.tsv" by keyFields "lotSizeKey"
+    And I check file data for filename "LotSizeKey.tsv" by keyFields "lotSizeKey"
       |  activeOprerp |  period  |  comments   |  quantity  | lotSizeKey |  activeSoperp |   description                    |
       |        YES    | F        | Fixed Lot   | 0          |     FX     |       NO      |  Fixed order quantity (JJ)       |
       |        YES    | T        | 10 Day Lot  | 10         |     Z1     |       NO      |  10 Days                         |
@@ -32,5 +32,5 @@ Feature:  OMPGdmLotSizeKey-Curation
 
     And I will remove all data with region "/plan/cns_lot_size_key"
 
-    And I will remove the test file on sink application "omp_gdm_lot_size_key.tsv"
+    And I will remove the test file on sink application "LotSizeKey.tsv"
 
