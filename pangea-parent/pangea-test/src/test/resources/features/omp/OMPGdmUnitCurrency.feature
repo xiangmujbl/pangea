@@ -17,7 +17,7 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
 
     Then A file is found on sink application with name "gdm_unit.tsv"
 
-    Then I check file data for filename "/omp/gdm_unit" by keyFields "unitId"
+    Then I check file data for filename "gdm_unit.tsv" by keyFields "unitId"
       | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure  | precision | shortDescription |
       | USD    | YES    | YES          | YES          | NO           |        | -       | US Dollar       | CURRENCY | 0         | US Dollar        |
 
@@ -33,5 +33,5 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will remove the test file on sink application "gdm_unit.tsv"
+    And I will remove the test file on sink application "gdm_unit.tsv"
 

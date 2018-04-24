@@ -25,7 +25,7 @@ Feature: OMPGdmProductUnitConversion AEAZ-1815
 
     Then A file is found on sink application with name "gdm_product_unit_conversion.tsv"
 
-    Then I check file data for filename "/omp/gdm_product_unit_conversion" by keyFields "gdmProductUnitConversionId"
+    Then I check file data for filename "gdm_product_unit_conversion.tsv" by keyFields "gdmProductUnitConversionId"
       | gdmProductUnitConversionId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | productId | unitId |
       | 1DPSP                      | YES    | YES          | YES          | NO           | 0.10   | -         | DPSP   |
 
