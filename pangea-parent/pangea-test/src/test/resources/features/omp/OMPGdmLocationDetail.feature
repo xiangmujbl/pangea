@@ -12,9 +12,9 @@ Feature:  OMPGdmLocationDetail-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "omp_gdm_location_detail.tsv"
+    Then A file is found on sink application with name "LocationDetail.tsv"
 
-    Then I check file data for filename "omp_gdm_location_detail.tsv" by keyFields "locationDetailId"
+    Then I check file data for filename "LocationDetail.tsv" by keyFields "locationDetailId"
       | locationDetailId                     | activeOprerp | activeSoperp | CLASS | comments | description | locationid      | name     | unit | value   |
       | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | No           | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1  |      | VALUE1  |
       | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | No           | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2  |      | VALUE2  |
@@ -32,5 +32,5 @@ Feature:  OMPGdmLocationDetail-Curation
 
     And I will remove all data with region "/plan/cns_plant_attr"
 
-    And I will remove the test file on sink application "omp_gdm_location_detail.tsv"
+    And I will remove the test file on sink application "LocationDetail.tsv"
 

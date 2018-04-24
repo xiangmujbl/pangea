@@ -198,7 +198,7 @@ public class PangeaSteps extends CommonSteps {
             computingPartition = 1;
         }
         try {
-            sendRecord("gdmLocationType.tsv", "START_FILE");
+//            sendRecord("gdmLocationType.tsv", "START_FILE");
 
             client = new ComputeClient();
             client.connect(computingNode);
@@ -216,7 +216,7 @@ public class PangeaSteps extends CommonSteps {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            sendRecord("gdmLocationType.tsv", "END_FILE");
+//            sendRecord("gdmLocationType.tsv", "END_FILE");
             if (client != null) {
                 client.close();
             }

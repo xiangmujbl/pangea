@@ -8,3 +8,4 @@ target/
 /pangea-parent/pangea-view/target/
 c:/
 
+/pangea-parent/pangea-test/*.tsv

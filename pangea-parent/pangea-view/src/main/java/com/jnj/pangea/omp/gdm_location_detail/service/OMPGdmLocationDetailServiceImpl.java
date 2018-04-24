@@ -62,7 +62,7 @@ public class OMPGdmLocationDetailServiceImpl {
             gdmLocationDetailBo.setValue(value);
 
             // Rule N1
-            gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.YES);
+            gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.NO);
 
             // Rule N3
             String CLASS = "";
@@ -80,7 +80,10 @@ public class OMPGdmLocationDetailServiceImpl {
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
 
             // Rule N5
-            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.NO);
+            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
+
+            // No Rule
+//            gdmLocationDetailBo.setDescription(cnsPlantAttrEntity.getPlanLocTypeDesc());
 
             resultObject.setBaseBo(gdmLocationDetailBo);
             resultObjectList.add(resultObject);
