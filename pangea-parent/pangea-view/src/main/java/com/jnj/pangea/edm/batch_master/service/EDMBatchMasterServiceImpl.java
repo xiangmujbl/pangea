@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.batch_master.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -96,7 +97,8 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
                 eDMBatchMasterBo.setMatlNum(mch1Entity.getMatnr());
                 eDMBatchMasterBo.setBtchNum(mch1Entity.getCharg());
                 SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-                SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHNNSS);
+                SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
+
                 try {
                     eDMBatchMasterBo.setBtchExpDt(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
                     eDMBatchMasterBo.setBtchMfgDt(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
