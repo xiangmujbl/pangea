@@ -43,6 +43,8 @@ Feature: OMPGdmConversionStorage AEAZ-2759
 
     When I submit task with xml file "xml/omp/OMPGdmConversionStorage.xml" and execute file "jar/pangea-view.jar"
 
+    Then A file is found on sink application with name "PANGEA_V1_omp_gdm_conversion_storage.tsv"
+
     Then I check region data "/omp/gdm_conversion_storage" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
       | sourceSystem | aggregationId               | currencyId | dueDate              | forecastUploadId | fromDueDate          | salesPrice | unitId |
       | nihao        | pinjie1-58.90-code01-code01 | BRL1       | 31/01/2018 23:59:59  |pinjie1-58.90-code01-code01-31/01/2018 23:59:59                  | 01/01/2018 00:00:00  | 57.80      |        |
@@ -52,6 +54,7 @@ Feature: OMPGdmConversionStorage AEAZ-2759
       | functionalArea | interfaceID             | errorCode | sourceSystem | businessArea | key1 | key2    | key3 | key4     | key5   | errorValue |
       | DP             | OMPGdmConversionStorage | J1        | omp          |              | 57930| wobuhao | BRL3 | anhuiaa  | 201804 | sourceSystem / dpParent code / channel / countryCode do not exist |
       | DP             | OMPGdmConversionStorage | C5        | omp          |              | 57939| wobuhao | BRL3 | realdate | 201804 | sales price do not exist |
+
     And I compare the number of records between "/plan/cns_dp_price" and "/omp/gdm_conversion_storage,/plan/edm_failed_data"
 
     And I delete the test data
@@ -59,4 +62,6 @@ Feature: OMPGdmConversionStorage AEAZ-2759
     And I will remove all data with region "/omp/gdm_conversion_storage"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "PANGEA_V1_omp_gdm_conversion_storage.tsv"
 
