@@ -35,10 +35,10 @@ public class EDMPurchaseRequisitionServiceImpl implements ICommonService {
         purchaseRequisitionV1Bo.setSourceSystem(getFieldWithT1(IConstant.VALUE.PROJECT_ONE));
 
         //rules N1
-        purchaseRequisitionV1Bo.setDelInd(getFieldWithN1(ebanEntity.getLoekz()));
+        purchaseRequisitionV1Bo.setPrStsCd(getFieldWithN1(ebanEntity.getStatu()));
 
         //rules N2
-        purchaseRequisitionV1Bo.setPrStsCd(getFieldWithN2(ebanEntity.getStatu()));
+        purchaseRequisitionV1Bo.setDelInd(getFieldWithN2(ebanEntity.getLoekz()));
 
         purchaseRequisitionV1Bo.setPrNum(ebanEntity.getBanfn());
         purchaseRequisitionV1Bo.setPrLineNbr(ebanEntity.getBnfpo());
@@ -122,16 +122,16 @@ public class EDMPurchaseRequisitionServiceImpl implements ICommonService {
         return sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(localSourceSystem);
     }
 
-    private String getFieldWithN1(String loekz){
-        if (IConstant.VALUE.N.equals(loekz)){
-            return loekz;
+    private String getFieldWithN1(String statu){
+        if (IConstant.VALUE.N.equals(statu)){
+            return statu;
         }
         return "";
     }
 
-    private String getFieldWithN2(String statu){
-        if (IConstant.VALUE.BLANK.equals(statu)){
-            return statu;
+    private String getFieldWithN2(String loekz){
+        if (IConstant.VALUE.BLANK.equals(loekz)){
+            return loekz;
         }
         return "";
     }
