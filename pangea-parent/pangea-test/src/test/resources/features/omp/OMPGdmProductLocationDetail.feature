@@ -21,6 +21,13 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-2377
 
     When I submit task with xml file "xml/omp/OMPGdmProductLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
+    Then A file is found on sink application with name "PANGEA_V1_gdm_product_location_detail.tsv"
+
+    Then I check file data for filename "PANGEA_V1_gdm_product_location_detail.tsv" by keyFields "productLocationDetailId"
+      | productLocationDetailId           | activeOPRERP | activeSOPERP | CLASS | comments | description | name   | productLocationId      | unit | value  |
+      | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | YES          | NO           | PGA   |          | Pangea      | ATTRB1 | EM9999-CONS_LATAM_BR19 |      | VALUE1 |
+      | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 | YES          | NO           | PGA   |          | Pangea      | ATTRB2 | EM9999-CONS_LATAM_BR19 |      | VALUE2 |
+
     Then I check region data "/omp/gdm_product_location_detail" by keyFields "productLocationDetailId"
       | productLocationDetailId           | activeOPRERP | activeSOPERP | CLASS | comments | description | name   | productLocationId      | unit | value  |
       | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | YES          | NO           | PGA   |          | Pangea      | ATTRB1 | EM9999-CONS_LATAM_BR19 |      | VALUE1 |
@@ -36,4 +43,6 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-2377
     And I will remove all data with region "/omp/gdm_product_location_detail"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "PANGEA_V1_gdm_product_location_detail.tsv"
 

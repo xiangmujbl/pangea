@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.batch_master.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -65,7 +66,7 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
 
                         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(mandt);
                         if (null != edmSourceSystemV1Entity) {
-                            eDMBatchMasterBo.setSourceSystem(edmSourceSystemV1Entity.getSourceSystem());
+                            eDMBatchMasterBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
                         }
                     }
 
@@ -77,7 +78,7 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
                         MchbEntity mchbEntity = mchbDao.getEntityWithCharg(charg);
                         if (null != mchbEntity) {
 
-                            eDMBatchMasterBo.setLocalStorageLocation(mchbEntity.getLgort());
+                            eDMBatchMasterBo.setLocalStorLocation(mchbEntity.getLgort());
                         }
                     }
 
@@ -93,13 +94,14 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
                     }
                 }
 
-                eDMBatchMasterBo.setLocalMaterialNumber(mch1Entity.getMatnr());
-                eDMBatchMasterBo.setLocalBatchNumber(mch1Entity.getCharg());
+                eDMBatchMasterBo.setMatlNum(mch1Entity.getMatnr());
+                eDMBatchMasterBo.setBtchNum(mch1Entity.getCharg());
                 SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-                SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.DD_MM_YYYY);
+                SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
+
                 try {
-                    eDMBatchMasterBo.setLocalBatchExpDate(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
-                    eDMBatchMasterBo.setLocalBatchMfgDate(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
+                    eDMBatchMasterBo.setBtchExpDt(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
+                    eDMBatchMasterBo.setBtchMfgDt(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

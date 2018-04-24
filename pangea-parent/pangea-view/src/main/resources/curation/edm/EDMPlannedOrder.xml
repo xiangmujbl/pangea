@@ -11,11 +11,8 @@
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/edm/plant_v1" isPrimaryKey="false">
-                        <expression>plant=/project_one/plaf.plwrk</expression>
-                    </relation>
-                        <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/project_one/plaf.matnr</expression>
+                    <relation path="/edm/plant_v1" isPrimaryKey="true">
+                        <expression>localPlant=/project_one/plaf.plwrk</expression>
                     </relation>
                 </relations>
             </region>
@@ -32,15 +29,9 @@
                 </columns>
                 <relations>
                     <relation path="/project_one/plaf_clone" isPrimaryKey="false">
-                        <expression>plant=/project_one/plaf_clone.plwrk</expression>
+                        <expression>localPlant=/project_one/plaf_clone.plwrk</expression>
                     </relation>
                 </relations>
-            </region>
-
-            <region path="/edm/material_global_v1">
-                <columns>
-                    localMaterialNumber,materialNumber
-                </columns>
             </region>
 
             <region path="/project_one/plaf" alias="/project_one/plaf_clone">
@@ -51,7 +42,7 @@
 
             <region path="/edm/planned_order_v1">
                 <columns>
-                    sourceSystem,mfgPlannedOrderId,localPlant,plant,localproductionPlant,localMaterialNumber,materialNumber,localUom,localProcurementType,localSplProcType,localPrdVersion,localPrdOrdType,plannedOrdQty,localScrapQty,requirementQty,orderstrtDate,ordStrtTime,ordFinishDate,ordEndTime,grProcessDays,ordFirmInd,localStorageLoc,localDocVersion,prdStartDate,prdFinishDate,mrpController,localPlanningScenario
+                    srcSysCd,mfgPlanOrdrDocId,planPlntCd,plntCd,matlNum,uomCd,prcmtTypeCd,splPrcmtTypeCd,prdtnVersNum,planOrdrTypeCd,planOrdrQty,fxScrapQty,reqQty,planOrdrStrtDt,prdtnStrtTm,planOrdrEndDt,planOrdrEndTm,grDaysLeadQty,firmingInd,sLocCd,prdtnVers,prdtnStrtDt,prdtnFnshdDt,mrpCtlId,plngScnroCd
                 </columns>
             </region>
 

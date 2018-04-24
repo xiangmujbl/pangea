@@ -15,9 +15,11 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
 
     When I submit task with xml file "xml/omp/OMPGdmUnitCurrency.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_unit" by keyFields "unitId"
-      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure | precision | shortDescription |
-      | USD    | YES    | YES          | YES          | NO           |        | -       | US Dollar       |         |           | US Dollar        |
+    Then A file is found on sink application with name "gdm_unit.tsv"
+
+    Then I check file data for filename "/omp/gdm_unit" by keyFields "unitId"
+      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure  | precision | shortDescription |
+      | USD    | YES    | YES          | YES          | NO           |        | -       | US Dollar       | CURRENCY | 0         | US Dollar        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID     | key1       | key2 | key3 | key4 | key5 | errorValue | sourceSystem |
@@ -30,4 +32,6 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
     And I will remove all data with region "/omp/gdm_unit"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+#    And I will remove the test file on sink application "gdm_unit.tsv"
 

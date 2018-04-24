@@ -11,7 +11,9 @@ Feature: OMPProductType AEAZ-1981
 
     When I submit task with xml file "xml/omp/OMPProductType.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/product_type" by keyFields "productTypeId"
+    Then A file is found on sink application with name "product_type.tsv"
+
+    Then I check file data for filename "/omp/product_type" by keyFields "productTypeId"
       | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
       | DIEN          | YES          | YES          | NO           | Service          |
       | FERT          | YES          | YES          | NO           | Finished Product |
@@ -26,3 +28,5 @@ Feature: OMPProductType AEAZ-1981
     And I will remove all data with region "/omp/product_type"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+#    And I will remove the test file on sink application "product_type.tsv"

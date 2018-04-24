@@ -379,11 +379,13 @@ public interface IConstant {
         String SPRAS_EN = "EN";
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";
-        String DD_MM_YYYY = "dd/MM/yyyy";
+        String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
         String N = "N";
         String BLANK = "Blank";
         String OR = "OR";
         String SPACE = " ";
+        String CURRENCY = "CURRENCY";
+        String ZERO = "0";
     }
 
     interface FAILED {

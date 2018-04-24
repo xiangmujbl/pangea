@@ -38,8 +38,8 @@ public class OMPGdmUnitCurrencyServiceImpl implements ICommonService {
                 gdmUnitCurrencyBo.setActiveSOPERP(IConstant.VALUE.NO);
                 gdmUnitCurrencyBo.setFactor("");
                 gdmUnitCurrencyBo.setIsoCode(currencyV1Entity.getIsoNumeric());
-                gdmUnitCurrencyBo.setMeasure("");
-                gdmUnitCurrencyBo.setPrecision("");
+                gdmUnitCurrencyBo.setMeasure(IConstant.VALUE.CURRENCY);
+                gdmUnitCurrencyBo.setPrecision(IConstant.VALUE.ZERO);
                 gdmUnitCurrencyBo.setLongDescription(currencyV1Entity.getCurrencyName());
                 gdmUnitCurrencyBo.setShortDescription(currencyV1Entity.getCurrencyName());
                 resultObject.setBaseBo(gdmUnitCurrencyBo);
