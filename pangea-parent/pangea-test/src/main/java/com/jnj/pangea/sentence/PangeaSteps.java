@@ -120,7 +120,6 @@ public class PangeaSteps extends CommonSteps {
                 count++;
             }
 
-
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

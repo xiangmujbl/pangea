@@ -22,7 +22,8 @@ public class OMPGdmLocationDetailController extends BaseController {
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
-
+//        return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), PlanCnsLocTypeEntity.class), null);
+//        System.out.println("here!");
         List<ViewResultItem> result = new ArrayList<>();
         list.forEach(raw -> {
 

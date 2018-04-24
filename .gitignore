@@ -11,3 +11,4 @@ pangea-parent/\.idea/
 *.ipr
 pangea-parent/pangea-parent\.iws
 
+/pangea-parent/pangea-test/*.tsv
