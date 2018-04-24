@@ -44,7 +44,7 @@ public class OMPGdmProductLocationDetailServiceImpl {
 
             String localMaterialNumberPr = prodLocAttribEntity.getLocalMaterialNumber();
             String sourceSystemPr = prodLocAttribEntity.getSourceSystem();
-            EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystemPr,localMaterialNumberPr);
+            EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithSourceSystemAndLocalMaterialNumber(sourceSystemPr,localMaterialNumberPr);
 
             String name = "";
             String value = "";

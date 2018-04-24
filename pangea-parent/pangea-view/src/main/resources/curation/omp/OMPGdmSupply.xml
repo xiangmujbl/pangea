@@ -1,0 +1,64 @@
+<adf-curation>
+    <curation mainRegion="/edm/source_list_v1" viewRegion="/omp/gdm_supply" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_supply.controller.OMPGdmSupplyController">
+        <regions>
+
+            <region path="/edm/source_list_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,localVendorAccountNumber,localFixedVendor,localFixedOutlinePurchaseAgreementItem,localVendorAccountNumber,localPlantfromWhichMaterialisProcured
+                </columns>
+                <relations>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/source_list_v1.localMaterialNumber
+                        </expression>
+                    </relation>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression>
+                            localPlant=/edm/source_list_v1.localPlant,
+                            sourceSystem=/edm/source_list_v1.sourceSystem
+                        </expression>
+                    </relation>
+                    <relation path="/edm/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/source_list_v1.localMaterialNumber,
+                            localPlant=/edm/source_list_v1.localPlant
+                        </expression>
+                    </relation>
+                    <relation path="/edm/cns_spl_pln_loc" isPrimaryKey="false">
+                        <expression>
+                            localNumber=/edm/source_list_v1.localVendorAccountNumber
+                        </expression>
+                    </relation>
+
+                </relations>
+
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    primaryPlanningCode,localMaterialNumber,materialNumber
+                </columns>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    localPlant,sourceSystem,localPlanningRelevant,localPurchasingGroup,
+                </columns>
+            </region>
+
+            <region path="/edm/cns_material_plan_status">
+                <columns>
+                    localMaterialNumber,localPlant,sourceSystem,spRelevant
+                </columns>
+            </region>
+
+            <region path="/edm/cns_spl_pln_loc">
+                <columns>
+                    localNumber,vendorOrCustomer
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
