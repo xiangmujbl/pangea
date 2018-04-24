@@ -274,7 +274,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         failData.setErrorCode(errorCode);
         failData.setErrorValue(errorValue);
         failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.EDM_SALES_HISTORY);
+        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_SALES_HISTORY);
         failData.setSourceSystem(salesOrderV1Entity.getSourceSystem());
         failData.setKey1(salesOrderV1Entity.getSalesOrderNo());
         failData.setKey2(salesOrderV1Entity.getSalesOrderItem());

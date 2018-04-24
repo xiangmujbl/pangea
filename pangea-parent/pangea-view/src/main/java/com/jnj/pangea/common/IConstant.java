@@ -309,7 +309,7 @@ public interface IConstant {
             String OMP_GDM_CLUSTER = "OMPGdmCluster";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
             String PLAN_CNS_MATERIAL_PLAN_STATUS = "PlanCnsMaterialPlanStatus";
-            String EDM_SALES_HISTORY = "OMPGdmSalesHistory";
+            String OMP_GDM_SALES_HISTORY = "OMPGdmSalesHistory";
 
         }
 
