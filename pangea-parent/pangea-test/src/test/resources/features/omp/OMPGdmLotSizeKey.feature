@@ -1,4 +1,4 @@
-@pangea_test
+@pangea_test @AEAZ-2378
 Feature:  OMPGdmLotSizeKey-Curation
 
   Scenario: Full Load curation
