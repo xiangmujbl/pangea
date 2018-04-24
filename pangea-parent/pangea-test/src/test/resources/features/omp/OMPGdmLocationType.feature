@@ -1,8 +1,8 @@
-@pangea_test
+@pangea_test @AEAZ-1763
 Feature:  OMPGdmLocationType-Curation
 
-  Scenario: Full Load curation
-    
+  Scenario: Full Load consumption
+
     Given I import "/plan/cns_loc_type" by keyFields "planLocTypeId"
       | planLocTypeId | planLocTypeDesc              | planLocTypeComments |
       | 10            | Copacker                     |                     |
@@ -12,22 +12,19 @@ Feature:  OMPGdmLocationType-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmLocationType.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "gdm_omp_location_type.tsv"
+    Then A file is found on sink application with name "LocationType.tsv"
 
-    And I check file data for filename "gdm_omp_location_type.tsv" by keyFields "locationTypeId,activeFctErp,activeOprErp,activeSopErp,label"
-      | locationTypeId | activeFctErp | activeOprErp | activeSopErp | label                        |
-      | 10             | YES          | YES          | YES          | Copacker                     |
-      | 20             | YES          | YES          | YES          | Subcon                       |
-      | 30             | YES          | YES          | YES          | Internal Manufacturing Plant |
-
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-
-#    And I compare the number of records between "/plan/cns_loc_type" and "/omp/gdm_location_type,/plan/edm_failed_data"
+    And I check file data for filename "LocationType.tsv" by keyFields "locationTypeId,activeFctErp,activeOprErp,activeSopErp,label"
+      | activeOprerp | locationTypeId | activeSoperp | label                        | activeFprerp |
+      | YES          | 30             | YES          | Internal Manufacturing Plant | YES          |
+      | YES          | 20             | YES          | Subcon                       | YES          |
+      | YES          | 10             | YES          | Copacker                     | YES          |
 
     And I delete the test data
 
+    And I will remove all data with region "/omp/gdm_location_type"
+
     And I will remove all data with region "/plan/cns_loc_type"
 
-    And I will remove the test file on sink application "gdm_omp_location_type.tsv"
+    And I will remove the test file on sink application "LocationType.tsv"
 
