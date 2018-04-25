@@ -386,6 +386,8 @@ public interface IConstant {
         String SPACE = " ";
         String CURRENCY = "CURRENCY";
         String ZERO = "0";
+        String BA = "BA";
+        String FALSE = "FALSE";
     }
 
     interface FAILED {

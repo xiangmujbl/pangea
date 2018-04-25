@@ -1,0 +1,26 @@
+<adf-curation>
+    <curation mainRegion="/edm/purchase_requisition_v1" viewRegion="/omp/gdm_req_from_erp" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_req_from_erp.controller.OMPGdmReqFromErpController">
+        <regions>
+
+            <region path="/edm/purchase_requisition_v1">
+                <columns>
+                    sourceSystem, prNum, prLineNbr, plntCd, matlNum,prLineUomCd, prTypeCd, prCatCd, localControlInd, delInd, prStsCd, recCrtInd, prchsngGrpNum, crtByNm, chngOnDt, prchInfoDesc, mfrPartNum, slocCd, intrnlRefNum, locaalMaterialGroup, suplPlntCd, prLineQty, prRqstDt, needByDt, apprByDt, localPrGRLeadTimeDays, prLineCatCd, acctAsgnmtCatCd, localGRInd, localSupNum, localFixedVendor, prchsngOrgNum, poTypeCd, localAgreement, localAgreementItem, localInfoRecord, asgnSuplSrcInd, localQuotaArr, localQuotaArrItem, bomNum, localPurchaseOrder, localItem, localPODate, localPOQuantity, prClseInd, localReservation, splStkInd, fxInd, localOrderUnit, localSubjToRelease, localBatch, localSpIndStckTfr, localProdVersion, localdelvAddrADRNR, localdelvAddrADRN2, localCustomer, supNum, localSCVendor, localCurrency, localOverallReqRel, localManufacturer, localExternalManuf, localPDT, prMrpHrzn, localIncomplete, lineStsCd, blokInd, localBlockingText, localProcuringPlant, localIssStorLoc, localXSysPReqNo, localXSysPReqItem, localXSysItemCat
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
+                </columns>
+            </region>
+
+            <region path="/plan/cns_plan_unit">
+                <columns>
+                    localUom,unit,localUomName,plantFlag,sourceSystem
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
