@@ -30,6 +30,7 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
+        String PLAN_CNS_PLANT_ATTR="/plan/cns_plant_attr";
         String PROJECT_ONE_VBEP="/project_one/vbep";
         String PROJECT_ONE_VBAP="/project_one/vbap";
         String PROJECT_ONE_VBPA="/project_one/vbpa";
@@ -39,6 +40,7 @@ public interface IConstant {
         String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
         String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
         String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
+        String PLAN_CNS_ABC_IND = "/plan/cns_abc_ind";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
     }
 
@@ -56,6 +58,7 @@ public interface IConstant {
     }
 
     interface EDM_COUNTRY_V1 {
+        String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_COUNTRY = "localCountry";
     }
 
@@ -137,7 +140,15 @@ public interface IConstant {
         String LOCAL_UOM = "localUom";
     }
 
+    interface PLAN_CNS_PLANT_ATTR {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANT = "localPlant";
+    }
 
+    interface PLAN_CNS_ABC_IND {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_ABC_INDICATOR = "localAbcIndicator";
+    }
 
     interface EDM_MATERIAL_GLOBAL_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
@@ -181,6 +192,7 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
     interface EDM_CURRENCY_V1 {
+        String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_CURRENCY = "localCurrency";
     }
 

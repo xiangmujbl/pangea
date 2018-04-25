@@ -44,13 +44,17 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         }
 
         //rules C3
-        if (cnsPlnSplLocEntity.getVendorCustomer().equals("C")){
+        if (cnsPlnSplLocEntity.getVendorCustomer() != null && cnsPlnSplLocEntity.getVendorCustomer().equals("C")){
             gdmLocationXrefBo.setCustomerid(cnsPlnSplLocEntity.getLocalNumber());
+        } else {
+            gdmLocationXrefBo.setCustomerid("");
         }
-
         //rules C4
-        if (cnsPlnSplLocEntity.getVendorCustomer().equals("V")){
+        if (cnsPlnSplLocEntity.getVendorCustomer() != null && cnsPlnSplLocEntity.getVendorCustomer().equals("V")){
             gdmLocationXrefBo.setVendorid(cnsPlnSplLocEntity.getLocalNumber());
+        }
+        else {
+            gdmLocationXrefBo.setVendorid("");
         }
 
         //rules D1
@@ -59,6 +63,9 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         //rules D2
         gdmLocationXrefBo.setActive(IConstant.VALUE.YES);
         gdmLocationXrefBo.setActiveOPRERP(IConstant.VALUE.YES);
+
+        //rules D4
+        gdmLocationXrefBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         gdmLocationXrefBo.setCountryId(cnsPlnSplLocEntity.getLocalCountry());
         gdmLocationXrefBo.setLabel(cnsPlnSplLocEntity.getLocalName());
