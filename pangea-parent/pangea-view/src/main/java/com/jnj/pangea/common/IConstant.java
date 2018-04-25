@@ -38,6 +38,8 @@ public interface IConstant {
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
         String PLAN_CNS_PROD_LOC_ATTRIB = "/plan/cns_prod_loc_attrib";
+        String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
+        String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PLANT_ATTR="/plan/cns_plant_attr";
         String EDM_PRODUCT_FAMILY_V1 = "/edm/product_family_v1";
@@ -197,6 +199,14 @@ public interface IConstant {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
         String MDM_SAP_CODE = "mdmSapCode";
     }
+    interface PLAN_CNS_FIN_PLAN_VAL {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
+    }
+    interface PLAN_CNS_FIN_PLAN_QTY {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String IDENTIFIER = "identifier";
+    }
 
     interface EMS_F_MDM_COUNTRIES {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
@@ -255,11 +265,7 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
     }
 
-    interface CNS_PROD_LOC_ATTRIB {
-        String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-        String LOCAL_PLANT = "localPlant";
-    }
+
 
     interface CNS_MATERIAL_PLAN_STATUS {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -374,6 +380,7 @@ public interface IConstant {
         String BACK_SLANT = "/";
         String USD = "USD";
         String PANGEA = "Pangea";
+        String FPB = "FPB";
         String LINE = "-";
         String DPSP = "DPSP";
         String DP = "DP";
