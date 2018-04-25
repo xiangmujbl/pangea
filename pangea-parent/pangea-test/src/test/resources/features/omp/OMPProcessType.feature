@@ -12,9 +12,9 @@ Feature: OMPProcessType AEAZ-2375
 
     When I submit task with xml file "xml/omp/OMPProcessType.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "PANGEA_V1_gdm_process_type.tsv"
+    Then A file is found on sink application with name "GDMProcessType.tsv"
 
-    Then I check file data for filename "PANGEA_V1_gdm_process_type.tsv" by keyFields "processTypeId"
+    Then I check file data for filename "GDMProcessType.tsv" by keyFields "processTypeId"
       | processTypeId | activeOPRERP | activeSOPERP | label       |
       | 1             | YES          | NO           | Inter Plant |
 
@@ -33,5 +33,5 @@ Feature: OMPProcessType AEAZ-2375
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "PANGEA_V1_gdm_process_type.tsv"
+    And I will remove the test file on sink application "GDMProcessType.tsv"
 
