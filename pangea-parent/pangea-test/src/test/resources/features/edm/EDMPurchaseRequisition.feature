@@ -4,7 +4,7 @@ Feature: EDMPurchaseRequisitionV1 AEAZ-2372
   Scenario: Full Load curation
     #1. get atrributes from source_system_v1(rules T1)
 
-    Given I import "/project_one/eban" by keyFields "banfn,bnfpo,werks"
+    Given I import "/project_one/eban" by keyFields "banfn,bnfpo"
       | banfn      | bnfpo | werks | matnr | meins | bsart | bstyp | bsakz | loekz | statu | estkz | ekgrp | ernam    | erdat    | txz01             | ematn | lgort | bednr | matkl    | reswk | menge | badat    | lfdat    | frgdt    | webaz | pstyp | knttp | wepos | lifnr | flief | ekorg | vrtyp | konnr | ktpnr | infnr | zugba | qunum | qupos | dispo | sernr | ebeln      | ebelp | bedat    | bsmng | ebakz | rsnum      | sobkz | fixkz | bmein | frgrl | charg | umsok | verid | adrnr | adrn2 | kunnr | emlif | lblkz | waers | gsfrg | mfrpn | mfrnr | emnfr | plifz | berid | memory | banpr | blckd | blckt | beswk | reslo | banfnCs | bnfpoCs | itemCs |
       | 0010000230 | 00010 | CO01  |       | EA    | PM    | B     |       | Blank | N     | R     | C17   | CSALGUER | 20050902 | FUENTE DE VOLTAJE |       |       |       | 95160000 |       | 4.000 | 20050901 | 20050915 | 20050901 | 0     | 0     | K     | X     |       |       |       |       |       | 00000 |       |       |       | 000   | 111   |       | 3000153227 | 00010 | 20050916 | 4.000 |       | 0000000000 |       |       |       |       |       |       |       |       |       |       |       |       | COP   |       | 222   |       |       | 0     |       |        | 05    |       |       |       |       |         | 00000   |        |
     And I wait "/project_one/eban" Async Queue complete
