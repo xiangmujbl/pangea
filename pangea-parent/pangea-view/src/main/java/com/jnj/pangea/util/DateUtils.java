@@ -20,6 +20,7 @@ public class DateUtils {
     public final static String US_MMM_dd_yyyy_hhmmssSSSaa = "MMM dd yyyy hh:mm:ss:SSSaa";
     public final static String US_EEE_MMM_dd_hhmmsszyyyy = "EEE MMM dd HH:mm:ss z yyyy";
     public final static String dd_MM_yyyy_HHmmss = "dd/MM/yyyy HH:mm:ss";
+    public final static String F_dd_MM_yyyy_HHmmss = "dd-MM-yyyy HH:mm:ss";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
@@ -92,5 +93,18 @@ public class DateUtils {
         calendar.setTime(date);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59);
         return calendar.getTime();
+    }
+
+    public static Date offsetDate(Date date, int days) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
+        return calendar.getTime();
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println((int) Double.parseDouble("0.00"));
     }
 }

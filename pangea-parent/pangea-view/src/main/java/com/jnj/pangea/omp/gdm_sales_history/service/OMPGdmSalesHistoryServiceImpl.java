@@ -3,38 +3,23 @@ package com.jnj.pangea.omp.gdm_sales_history.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.edm.EDMSalesOrderV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsCustExclEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustExclDaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsSoTypeInclEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsSoTypeInclDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsCertDeterEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsCertDeterDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsDemGrpAsgnEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsDemGrpAsgnDaoImpl;
-import com.jnj.pangea.common.entity.project_one.KnvhEntity;
-import com.jnj.pangea.common.dao.impl.project_one.ProjectOneKnvhDaoImpl;
-import com.jnj.pangea.common.entity.project_one.TvroEntity;
-import com.jnj.pangea.common.dao.impl.project_one.ProjectOneTvroDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsOrdRejEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsOrdRejDaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.*;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneKnvhDaoImpl;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneTvroDaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMSalesOrderV1Entity;
+import com.jnj.pangea.common.entity.plan.*;
+import com.jnj.pangea.common.entity.project_one.KnvhEntity;
+import com.jnj.pangea.common.entity.project_one.TvroEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_sales_history.bo.OMPGdmSalesHistoryBo;
+import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -85,9 +70,9 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         gdmSalesHistoryBo.setCertaintyId(checkT2(localSalesOrg, localOrderType, localItemCategory));
 
         String currencyId = checkT4(salesOrderV1Entity.getLocalSDItemCurrency());
-        if (StringUtils.isNotEmpty(currencyId)){
+        if (StringUtils.isNotEmpty(currencyId)) {
             gdmSalesHistoryBo.setCurrencyId(currencyId);
-        }else {
+        } else {
             FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T4, "Unable to find the Enterprise currency code");
             resultObject.setFailData(failData);
             return resultObject;
@@ -173,7 +158,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                 String datbi = knvhEntity.getDatbi();
                 try {
                     if (StringUtils.isNotEmpty(kunnr)) {
-                        if (YMDSdf.parse(localRequestedDate).getTime() <= YMDSdf.parse(datbi).getTime()) {
+                        if (StringUtils.isNotEmpty(localRequestedDate) && StringUtils.isNotEmpty(datbi) && Integer.parseInt(localRequestedDate) <= Integer.parseInt(datbi)) {
                             demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(kunnr);
                             if (null != demGrpAsgnEntity) {
                                 return demGrpAsgnEntity.getDemandGroup();
@@ -190,7 +175,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                             }
                         }
                     }
-                } catch (ParseException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     return null;
                 }
@@ -205,16 +190,12 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         TvroEntity tvroEntity = tvroDao.getEntityWithRoute(localRoute);
         if (null != tvroEntity) {
             String trazt = tvroEntity.getTrazt();
-            try {
-                Long traztLong = Long.parseLong(trazt);
-                Date localRequestedDateFormat = YMDSdf.parse(localRequestedDate);
+            if (StringUtils.isNotEmpty(trazt) && StringUtils.isNotEmpty(localRequestedDate)) {
 
-                Long time = localRequestedDateFormat.getTime() - traztLong*1000*60*60*24;
-                Date dueDate = new Date(time);
-                return DMYSdf.format(dueDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null;
+                int traztLong = (int) Double.parseDouble(trazt);
+                Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
+                Date dueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztLong);
+                return DateUtils.dateToString(dueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
             }
         }
         return null;
@@ -222,14 +203,13 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
     private String checkF2T6(String dueDate) {
         String parameterValue = getParameterValue(IConstant.VALUE.RESTRICT_SELECT);
-        try {
-            Date dueDateFormat = DMYSdf.parse(dueDate);
-            Long parameterValueLong = Long.parseLong(parameterValue);
-            Long time = dueDateFormat.getTime() - parameterValueLong*24*60*60*1000;
-            Date fromDueDate = new Date(time);
-            return DMYSdf.format(fromDueDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (StringUtils.isNotEmpty(dueDate) && StringUtils.isNotEmpty(StringUtils.trim(parameterValue))) {
+
+            Date dueDateFormat = DateUtils.stringToDate(dueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
+            int parameterValueLong = (int) Double.parseDouble(parameterValue);
+            Date fromDueDate = DateUtils.offsetDate(dueDateFormat, -parameterValueLong);
+            return DateUtils.dateToString(fromDueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
+        } else {
             return null;
         }
     }
