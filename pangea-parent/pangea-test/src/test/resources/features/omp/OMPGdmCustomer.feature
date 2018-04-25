@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPGdmCustomer
+@pangea_test @AEAZ-2710
+Feature: OMPGdmCustomer AEAZ-2710
 
   Scenario: Full Load curation
     # 1. get attributes from cns_clusters if no record found then skip that record (J1)
@@ -29,6 +29,14 @@ Feature: OMPGdmCustomer
 
     When I submit task with xml file "xml/omp/OMPGdmCustomer.xml" and execute file "jar/pangea-view.jar"
 
+    Then A file is found on sink application with name "PANGEA_V1_omp_gdm_customer.tsv"
+
+    Then I check file data for filename "PANGEA_V1_omp_gdm_customer.tsv" by keyFields "customerId"
+      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | aggrSoldTo | channel | channelDescription      | countryId | custCluster | distributionChannel | distributor | division | eCommerce | globalCustomerId | name                                | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupId | regionId | salesOrganization | soldTo | sourceLocationId | subCluster | ucn   |
+      | 76100001   | YES    | YES          | NO           | NO           | BLANK      | CH006   | Distributor Traditional | BR        | BR           | BLANK               | BLANK       | BLANK    | BLANK      | BLANK            | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD | BLANK   |                |             |               |             | BLANK                   | BR1      | BRAZIL            |        | BLANK            | Brazil     | BLANK |
+      | 76100003   | YES    | YES          | NO           | NO           | BLANK      | CH005   | Modern Trade            | CH        |              | BLANK               | BLANK       | BLANK    | BLANK      | BLANK            | GRUPO WM VAREJO                     | BLANK   |                |             |               |             | BLANK                   | CH1      |                   |        | BLANK            |            | BLANK |
+      | 76100004   | YES    | YES          | NO           | NO           | BLANK      | CH008   | Clubs/Cash & Carry      | CO        | CO           | BLANK               | BLANK       | BLANK    | BLANK      | BLANK            | GRUPO WMSE ATACADO SAMS             | BLANK   |                |             |               |             | BLANK                   |          | ANDEAN            |        | BLANK            | Andean     | BLANK |
+
     Then I check region data "/omp/gdm_customer" by keyFields "customerId"
       | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | aggrSoldTo | channel | channelDescription      | countryId | custCluster | distributionChannel | distributor | division | eCommerce | globalCustomerId | name                                | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupId | regionId | salesOrganization | soldTo | sourceLocationId | subCluster | ucn   |
       | 76100001   | YES    | YES          | NO           | NO           | BLANK      | CH006   | Distributor Traditional | BR        | BR           | BLANK               | BLANK       | BLANK    | BLANK      | BLANK            | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD | BLANK   |                |             |               |             | BLANK                   | BR1      | BRAZIL            |        | BLANK            | Brazil     | BLANK |
@@ -45,4 +53,6 @@ Feature: OMPGdmCustomer
     And I will remove all data with region "/omp/gdm_customer"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "PANGEA_V1_omp_gdm_customer.tsv"
 
