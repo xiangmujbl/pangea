@@ -1,3 +1,5 @@
 
 /.idea/
 *.iml
+
+pangea-parent/pangea-test/src/test/resources/jar/pangea-view\.jar
