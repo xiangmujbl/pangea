@@ -33,5 +33,5 @@ Feature:  OMPGdmLocationXref-Curation
 
     And I will remove all data with region "/plan/cns_pln_spl_loc"
 
-    #And I will remove the test file on sink application "gdmLocationXref.tsv"
+    And I will remove the test file on sink application "gdmLocationXref.tsv"
 

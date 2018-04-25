@@ -63,4 +63,4 @@ Feature: OMPGdmLocationEdm AEAZ-1764
 
     And I will remove all data with region "/edm/plant_v1"
 
-#    And I will remove the test file on sink application "gdmLocationEdm.tsv"
+    And I will remove the test file on sink application "gdmLocationEdm.tsv"
