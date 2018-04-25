@@ -213,6 +213,5 @@ public interface IConstant {
         String USD="USD";
         String PANGEA = "Pangea";
         String FPB = "FPB";
-        String NO = "NO";
     }
 }
