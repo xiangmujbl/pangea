@@ -3,3 +3,11 @@
 *.iml
 
 pangea-parent/pangea-test/src/test/resources/jar/pangea-view\.jar
+
+*.class
+
+pangea-parent/pangea-test/target/classes/
+
+pangea-parent/pangea-parent\.ipr
+
+pangea-parent/pangea-parent\.iws

@@ -70,9 +70,7 @@ public interface IConstant {
         String WERKS = "werks";
     }
 
-    interface PLAN_CNS_CUST_CHANNEL {
-        String CHANNEL = "channel";
-    }
+
 
     interface EDM_COUNTRY_V1 {
         String LOCAL_COUNTRY = "localCountry";
@@ -255,9 +253,7 @@ public interface IConstant {
         String CHANNEL = "channel";
     }
 
-    interface PLAN_CNS_DP_PRICE {
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-    }
+
 
     // -----region attribute value
     interface VALUE {
