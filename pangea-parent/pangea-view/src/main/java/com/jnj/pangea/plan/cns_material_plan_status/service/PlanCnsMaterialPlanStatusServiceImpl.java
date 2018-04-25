@@ -10,6 +10,7 @@ import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Set;
 
@@ -27,21 +28,21 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
 
-    public ResultObject buildView(String key, Object o, Set<String> f1Set, Set<String> f2ASet,Set<String> f2BSet, Set<String> f3ASet,Set<String> f3BSet) {
+    public ResultObject buildView(String key, Object o, Set<String> f1Set, Set<String> f2ASet, Set<String> f2BSet, Set<String> f3ASet, Set<String> f3BSet) {
         ResultObject resultObject = new ResultObject();
 
         EDMMaterialPlantV1Entity materialPlantV1Entity = (EDMMaterialPlantV1Entity) o;
 
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
 
-        String localPlant = materialPlantV1Entity.getLocalPlant().trim();
-        String localMrpType = materialPlantV1Entity.getLocalMrpType().trim();
+        String localPlant = StringUtils.trim(materialPlantV1Entity.getLocalPlant());
+        String localMrpType = StringUtils.trim(materialPlantV1Entity.getLocalMrpType());
 
         boolean f2A = f2ASet.contains(localPlant);
         boolean f2B = !f2BSet.contains(localMrpType);
         boolean f3A = f3ASet.contains(localPlant);
         boolean f3B = f3BSet.contains(localMrpType);
-        if ((f2A && f2B) || (f3A && f3B)){
+        if ((f2A && f2B) || (f3A && f3B)) {
             // T1
             materialPlanStatusBo.setSourceSystem(getFieldWithT1());
 
@@ -51,20 +52,20 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
 
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
             if (null != materialGlobalV1Entity) {
-                if (f1Set.contains(materialGlobalV1Entity.getMaterialType().trim())){
-                    String localParentCode = materialGlobalV1Entity.getLocalDpParentCode().trim();
+                if (f1Set.contains(StringUtils.trim(materialGlobalV1Entity.getMaterialType()))) {
+                    String localParentCode = StringUtils.trim(materialGlobalV1Entity.getLocalDpParentCode());
                     materialPlanStatusBo.setLocalParentCode(localParentCode);
-                    materialPlanStatusBo.setPpc(materialGlobalV1Entity.getPrimaryPlanningCode().trim());
+                    materialPlanStatusBo.setPpc(StringUtils.trim(materialGlobalV1Entity.getPrimaryPlanningCode()));
                 }
             }
-            if (f2A && f2B){
+            if (f2A && f2B) {
                 materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
             }
             if (f3A && f3B) {
                 materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
             }
 
-            if (null!=materialPlanStatusBo.getLocalParentCode() && !"".equals(materialPlanStatusBo.getLocalParentCode())){
+            if (null != materialPlanStatusBo.getLocalParentCode() && !"".equals(materialPlanStatusBo.getLocalParentCode())) {
                 materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
             }
 
@@ -72,8 +73,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
             getFieldWithT7(materialPlanStatusBo);
 
             resultObject.setBaseBo(materialPlanStatusBo);
-        }else{
-            FailData failData = checkFailData(materialPlantV1Entity,IConstant.FAILED.ERROR_CODE.F2F3);
+        } else {
+            FailData failData = checkFailData(materialPlantV1Entity, IConstant.FAILED.ERROR_CODE.F2F3);
             resultObject.setFailData(failData);
             return resultObject;
         }
@@ -90,10 +91,10 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
         // T1
         materialPlanStatusBo.setSourceSystem(getFieldWithT1());
 
-        materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber().trim());
-        materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant().trim());
+        materialPlanStatusBo.setLocalMaterialNumber(StringUtils.trim(materialInclEntity.getLocalMaterialNumber()));
+        materialPlanStatusBo.setLocalPlant(StringUtils.trim(materialInclEntity.getLocalPlant()));
 
-        if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
+        if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())) {
             materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
         }
 
@@ -124,7 +125,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
         }
     }
 
-    private FailData checkFailData(EDMMaterialPlantV1Entity materialPlantV1Entity,String ErrorCode) {
+    private FailData checkFailData(EDMMaterialPlantV1Entity materialPlantV1Entity, String ErrorCode) {
         FailData failData = new FailData();
         failData.setErrorCode(ErrorCode);
         failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
