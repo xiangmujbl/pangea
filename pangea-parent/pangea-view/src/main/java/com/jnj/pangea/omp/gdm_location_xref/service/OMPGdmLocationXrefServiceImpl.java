@@ -38,17 +38,13 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorOrCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
 
         //rules C3
-        if (cnsPlnSplLocEntity.getVendorCustomer() != null && cnsPlnSplLocEntity.getVendorCustomer().equals("C")){
-            gdmLocationXrefBo.setCustomerid(cnsPlnSplLocEntity.getLocalNumber());
-        } else {
-            gdmLocationXrefBo.setCustomerid("");
+        if (IConstant.VALUE.C.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
+            gdmLocationXrefBo.setCustomerId(cnsPlnSplLocEntity.getLocalNumber());
         }
+
         //rules C4
-        if (cnsPlnSplLocEntity.getVendorCustomer() != null && cnsPlnSplLocEntity.getVendorCustomer().equals("V")){
-            gdmLocationXrefBo.setVendorid(cnsPlnSplLocEntity.getLocalNumber());
-        }
-        else {
-            gdmLocationXrefBo.setVendorid("");
+        if (IConstant.VALUE.V.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
+            gdmLocationXrefBo.setVendorId(cnsPlnSplLocEntity.getLocalNumber());
         }
 
         //rules D1
