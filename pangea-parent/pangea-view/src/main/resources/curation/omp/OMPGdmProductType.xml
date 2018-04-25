@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/material_type_v1" viewRegion="/omp/product_type" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.product_type.controller.OMPProductTypeController"
-              writeTo="all" topic="product_type">
+              writeTo="all" topic="PANGEA_V1_product_type">
         <regions>
 
             <region path="/edm/material_type_v1">
