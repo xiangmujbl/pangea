@@ -12,7 +12,7 @@
 
             <region path="/omp/gdm_location_type">
                 <columns>
-                    locationTypeId,activeFprerp,activeOprerp,activeSoperp,label
+                    LocationTypeId,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,LABEL
                 </columns>
             </region>
 

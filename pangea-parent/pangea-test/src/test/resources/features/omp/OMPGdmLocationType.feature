@@ -5,20 +5,16 @@ Feature:  OMPGdmLocationType-Curation
 
     Given I import "/plan/cns_loc_type" by keyFields "planLocTypeId"
       | planLocTypeId | planLocTypeDesc              | planLocTypeComments |
-      | 10            | Copacker                     |                     |
-      | 20            | Subcon                       | Consumer Specific   |
-      | 30            | Internal Manufacturing Plant |                     |
+      | CO01          | Internal Manufacturing Plant |                     |
     And I wait "/plan/cns_loc_type" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmLocationType.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "LocationType.tsv"
 
-    And I check file data for filename "LocationType.tsv" by keyFields "locationTypeId,activeFctErp,activeOprErp,activeSopErp,label"
-      | activeOprerp | locationTypeId | activeSoperp | label                        | activeFprerp |
-      | YES          | 30             | YES          | Internal Manufacturing Plant | YES          |
-      | YES          | 20             | YES          | Subcon                       | YES          |
-      | YES          | 10             | YES          | Copacker                     | YES          |
+    And I check file data for filename "LocationType.tsv" by keyFields "locationTypeId,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,planLocTypeDesc"
+      | ActiveOPRERP | LocationTypeId | ActiveSOPERP | LABEL                        | ActiveFCTERP |
+      | YES          | CO01           | YES          | Internal Manufacturing Plant | YES          |
 
     And I delete the test data
 
