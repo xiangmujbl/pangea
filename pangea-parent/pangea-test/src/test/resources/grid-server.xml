@@ -42,6 +42,7 @@
 		<adf-grid:partitioned-region name="gdm_pos" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="gdm_country" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 		<adf-grid:partitioned-region name="gdm_fpb" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="gdm_lfu" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 	</adf-grid:replicated-region>
 
 	<adf-grid:replicated-region id="ems">
