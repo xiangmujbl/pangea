@@ -34,8 +34,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
 
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
 
-        String localPlant = materialPlantV1Entity.getLocalPlant();
-        String localMrpType = materialPlantV1Entity.getLocalMrpType();
+        String localPlant = materialPlantV1Entity.getLocalPlant().trim();
+        String localMrpType = materialPlantV1Entity.getLocalMrpType().trim();
 
         boolean f2A = f2ASet.contains(localPlant);
         boolean f2B = !f2BSet.contains(localMrpType);
@@ -51,10 +51,10 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
 
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
             if (null != materialGlobalV1Entity) {
-                if (f1Set.contains(materialGlobalV1Entity.getMaterialType())){
-                    String localParentCode = materialGlobalV1Entity.getLocalDpParentCode();
+                if (f1Set.contains(materialGlobalV1Entity.getMaterialType().trim())){
+                    String localParentCode = materialGlobalV1Entity.getLocalDpParentCode().trim();
                     materialPlanStatusBo.setLocalParentCode(localParentCode);
-                    materialPlanStatusBo.setPpc(materialGlobalV1Entity.getPrimaryPlanningCode());
+                    materialPlanStatusBo.setPpc(materialGlobalV1Entity.getPrimaryPlanningCode().trim());
                 }
             }
             if (f2A && f2B){
@@ -90,8 +90,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
         // T1
         materialPlanStatusBo.setSourceSystem(getFieldWithT1());
 
-        materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber());
-        materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant());
+        materialPlanStatusBo.setLocalMaterialNumber(materialInclEntity.getLocalMaterialNumber().trim());
+        materialPlanStatusBo.setLocalPlant(materialInclEntity.getLocalPlant().trim());
 
         if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
             materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);

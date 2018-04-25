@@ -93,7 +93,7 @@ public class PlanCnsMaterialPlanStatusController extends BaseController {
 
         Set<String> parameterValues = new HashSet<>();
         for (PlanCnsPlanParameterEntity planParameterEntity : planParameterEntities) {
-            parameterValues.add(planParameterEntity.getParameterValue());
+            parameterValues.add(planParameterEntity.getParameterValue().trim());
         }
         return parameterValues;
     }
@@ -104,7 +104,7 @@ public class PlanCnsMaterialPlanStatusController extends BaseController {
 
         Set<String> ldSet = new HashSet<>();
         for (PlanCnsPlanParameterEntity planParameterEntity : ldList) {
-            ldSet.add(planParameterEntity.getParameterValue());
+            ldSet.add(planParameterEntity.getParameterValue().trim());
         }
         return ldSet;
     }
@@ -115,7 +115,7 @@ public class PlanCnsMaterialPlanStatusController extends BaseController {
 
         Set<String> lmSet = new HashSet<>();
         for (PlanCnsPlanParameterEntity planParameterEntity : lmList) {
-            lmSet.add(planParameterEntity.getParameterValue());
+            lmSet.add(planParameterEntity.getParameterValue().trim());
         }
         return lmSet;
     }
@@ -126,7 +126,7 @@ public class PlanCnsMaterialPlanStatusController extends BaseController {
 
         Set<String> ldSet = new HashSet<>();
         for (PlanCnsPlanParameterEntity planParameterEntity : ldList) {
-            ldSet.add(planParameterEntity.getParameterValue());
+            ldSet.add(planParameterEntity.getParameterValue().trim());
         }
         return ldSet;
     }
@@ -137,7 +137,7 @@ public class PlanCnsMaterialPlanStatusController extends BaseController {
 
         Set<String> lmSet = new HashSet<>();
         for (PlanCnsPlanParameterEntity planParameterEntity : lmList) {
-            lmSet.add(planParameterEntity.getParameterValue());
+            lmSet.add(planParameterEntity.getParameterValue().trim());
         }
         return lmSet;
     }
