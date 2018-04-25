@@ -16,14 +16,14 @@ Feature:  OMPGdmLocationDetail-Curation
 
     Then I check file data for filename "LocationDetail.tsv" by keyFields "locationDetailId"
       | locationDetailId                     | activeOprerp | activeSoperp | CLASS | comments | description | locationid      | name     | unit | value   |
-      | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | No           | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1  |      | VALUE1  |
-      | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | No           | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2  |      | VALUE2  |
-      | CONS_LATAM_BR12/PGA/ATTRIB3/VALUE3   | No           | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB3  |      | VALUE3  |
-      | CONS_LATAM_BR12/PGA/ATTRIB4/VALUE4   | No           | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB4  |      | VALUE4  |
-      | CONS_LATAM_BR13/PGA/GLBATTR1/GLBVAL1 | No           | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR1 |      | GLBVAL1 |
-      | CONS_LATAM_BR13/PGA/GLBATTR2/GLBVAL2 | No           | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR2 |      | GLBVAL2 |
-      | CONS_LATAM_BR13/PGA/GLBATTR3/GLBVAL3 | No           | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR3 |      | GLBVAL3 |
-      | CONS_LATAM_BR13/PGA/GLBATTR4/GLBVAL4 | No           | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR4 |      | GLBVAL4 |
+      | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | YES          | NO          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1  |      | VALUE1  |
+      | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | YES          | NO          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2  |      | VALUE2  |
+      | CONS_LATAM_BR12/PGA/ATTRIB3/VALUE3   | YES          | NO          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB3  |      | VALUE3  |
+      | CONS_LATAM_BR12/PGA/ATTRIB4/VALUE4   | YES          | NO          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB4  |      | VALUE4  |
+      | CONS_LATAM_BR13/PGA/GLBATTR1/GLBVAL1 | YES          | NO          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR1 |      | GLBVAL1 |
+      | CONS_LATAM_BR13/PGA/GLBATTR2/GLBVAL2 | YES          | NO          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR2 |      | GLBVAL2 |
+      | CONS_LATAM_BR13/PGA/GLBATTR3/GLBVAL3 | YES          | NO          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR3 |      | GLBVAL3 |
+      | CONS_LATAM_BR13/PGA/GLBATTR4/GLBVAL4 | YES          | NO          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR4 |      | GLBVAL4 |
 
 
     And I delete the test data
