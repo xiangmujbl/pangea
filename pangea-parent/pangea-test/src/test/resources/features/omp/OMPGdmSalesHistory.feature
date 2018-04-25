@@ -6,10 +6,10 @@ Feature: OMPGdmSalesHistory AEAZ-2530
     And I will remove all data with region "/plan/edm_failed_data"
 
     Given I import "/edm/sales_order_v1" by keyFields "sourceSystem,salesOrderNo,salesOrderItem"
-      | sourceSystem | salesOrderNo | salesOrderItem | localSalesOrg | localShipToParty | localOrderCreateDt | localOrderType | localPlant | localMaterialNumber | localItemCategory | localSDItemCurrency | localRequestedDate | localRejReason | salesOrderQty | localNumtoBase | localDentoBase | localRoute |
-      | CONS_LATAM   | 0008288858   | 000003         | BR01          | 0000177376       | 20150402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20150402           |                | 1.000         | 1              | 1              | B08002     |
-      | CONS_LATAM   | 0008288859   | 000003         | BR01          | 0000118476       | 20150402           | ZSRT           | BR08       | 000000000000081097  | ZSRT              | BR08                | 20150402           |                | 2.000         | 1              | 1              | B08004     |
-      | CONS_LATAM   | 0008288860   | 000001         | BR01          | 0000185314       | 20150402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20150402           |                | 2.000         | 1              | 1              | B08010     |
+      | sourceSystem | salesOrderNo | salesOrderItem | scheduleLineItem | localSalesOrg | localShipToParty | localOrderCreateDt | localOrderType | localPlant | localMaterialNumber | localItemCategory | localSDItemCurrency | localRequestedDate | localRejReason | salesOrderQty | localNumtoBase | localDentoBase | localRoute |
+      | CONS_LATAM   | 0008288858   | 000003         |                  | BR01          | 0000177376       | 20150402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20150402           |                | 1.000         | 1              | 1              | B08002     |
+      | CONS_LATAM   | 0008288859   | 000003         |                  | BR01          | 0000118476       | 20150402           | ZSRT           | BR08       | 000000000000081097  | ZSRT              | BR08                | 20150402           |                | 2.000         | 1              | 1              | B08004     |
+      | CONS_LATAM   | 0008288860   | 000001         |                  | BR01          | 0000185314       | 20150402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20150402           |                | 2.000         | 1              | 1              | B08010     |
     And I wait "/edm/sales_order_v1" Async Queue complete
     Given I import "/plan/cns_cust_excl" by keyFields "salesOrg,customerShipTo"
       | salesOrg | customerShipTo |
