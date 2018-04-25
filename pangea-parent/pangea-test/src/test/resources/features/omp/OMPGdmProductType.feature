@@ -11,7 +11,7 @@ Feature: OMPProductType AEAZ-1981
 
     When I submit task with xml file "xml/omp/OMPGdmProductType.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMProductType.tsv"
+    Then A file is found on sink application with name "ProductType.tsv"
 
 #    Then I check file data for filename "GDMProductType.tsv" by keyFields "productTypeId"
 #      | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
