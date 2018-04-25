@@ -22,4 +22,9 @@ public class EDMProductFamilyV1DaoImpl extends CommonDaoImpl {
         //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         return null;
     }
+
+    public EDMProductFamilyV1Entity getEntityWithProductFamily(String productFamily) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_PRODUCT_FAMILY_V1.PRODUCT_FAMILY).is(productFamily).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_PRODUCT_FAMILY_V1, queryString, EDMProductFamilyV1Entity.class);
+    }
 }

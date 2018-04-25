@@ -6,12 +6,12 @@ import com.jnj.pangea.common.BaseBo;
 public class OMPLotSizeKeyBo extends BaseBo {
 
     private String lotSizeKey;
-    private String  activeOprerp;
-    private String  activeSoperp;
-    private String  comments;
-    private String  descRiption;
-    private String  period;
-    private String  quantity;
+    private String activeOPRERP;
+    private String activeSOPERP;
+    private String comments;
+    private String description;
+    private String period;
+    private String quantity;
 
     @Override
     public String getKey() {
@@ -21,47 +21,47 @@ public class OMPLotSizeKeyBo extends BaseBo {
     }
 
     public String getLotSizeKey() {
-        return lotSizeKey;
+        return this.lotSizeKey;
     }
 
     public void setLotSizeKey(String lotSizeKey) {
         this.lotSizeKey = lotSizeKey;
     }
 
-    public String getActiveOprerp() {
-        return activeOprerp;
+    public String getActiveOPRERP() {
+        return this.activeOPRERP;
     }
 
-    public void setActiveOprerp(String activeOprerp) {
-        this.activeOprerp = activeOprerp;
+    public void setActiveOPRERP(String activeOPRERP) {
+        this.activeOPRERP = activeOPRERP;
     }
 
-    public String getActiveSoperp() {
-        return activeSoperp;
+    public String getActiveSOPERP() {
+        return this.activeSOPERP;
     }
 
-    public void setActiveSoperp(String activeSoperp) {
-        this.activeSoperp = activeSoperp;
+    public void setActiveSOPERP(String activeSOPERP) {
+        this.activeSOPERP = activeSOPERP;
     }
 
     public String getComments() {
-        return comments;
+        return this.comments;
     }
 
     public void setComments(String comments) {
         this.comments = comments;
     }
 
-    public String getDescRiption() {
-        return descRiption;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setDescRiption(String descRiption) {
-        this.descRiption = descRiption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPeriod() {
-        return period;
+        return this.period;
     }
 
     public void setPeriod(String period) {
@@ -69,10 +69,11 @@ public class OMPLotSizeKeyBo extends BaseBo {
     }
 
     public String getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+
 }

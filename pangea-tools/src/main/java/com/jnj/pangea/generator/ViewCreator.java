@@ -79,7 +79,7 @@ public class ViewCreator {
 
     public void generateTestJavaFile() {
         String path = TEST_DIR + this.system + "/";
-        String fileName = this.fullName + ".java";
+        String fileName = this.fullName + "Test.java";
         generateFileWithFtl(path, fileName, "test_java.ftl", null);
     }
 

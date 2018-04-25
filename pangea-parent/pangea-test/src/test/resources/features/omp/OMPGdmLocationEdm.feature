@@ -50,17 +50,15 @@ Feature: OMPGdmLocationEdm AEAZ-1764
       | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerId | label       | locationTypeId | regionId | vendorId |
       | CONS_LATAM_AR01 | YES    | NO           | YES          | NO           | 00        | code001    |            | Pilar Plant | typeid001      | regin001 |          |
 
-#    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-#      | functionalArea | interfaceID       | errorCode | sourceSystem | businessArea | key1 | key2         | key3 | key4 | key5 | errorValue               |
-#      | SP             | OMPGdmLocationEdm | T8        | omp          |              | AR02 | CONS_LATAM02 |      |      |      | Missing Location Type Id |
-#      | SP             | OMPGdmLocationEdm | T10       | omp          |              | AR03 | CONS_LATAM03 |      |      |      | Missing Country          |
-#
-#    And I compare the number of records between "/edm/plant_v1" and "/omp/gdm_location,/plan/edm_failed_data"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID       | errorCode | sourceSystem | businessArea | key1 | key2         | key3 | key4 | key5 | errorValue               |
+      | SP             | OMPGdmLocationEdm | T8        | omp          |              | AR02 | CONS_LATAM02 |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T10       | omp          |              | AR03 | CONS_LATAM03 |      |      |      | Missing Country          |
 
     And I delete the test data
 
     And I will remove all data with region "/omp/gdm_location"
 
-    And I will remove all data with region "/edm/plant_v1"
+    And I will remove all data with region "/edm/edm_failed_data"
 
     And I will remove the test file on sink application "gdmLocationEdm.tsv"

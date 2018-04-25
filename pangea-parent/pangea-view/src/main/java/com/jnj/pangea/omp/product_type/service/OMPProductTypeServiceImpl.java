@@ -28,9 +28,9 @@ public class OMPProductTypeServiceImpl implements ICommonService {
         productTypeBo.setProductTypeId(EDMMaterialTypeV1Entity.getMaterialType());
         productTypeBo.setLabel(EDMMaterialTypeV1Entity.getMaterialTypeName());
 
-        productTypeBo.setActiveFctErp(IConstant.VALUE.YES);
-        productTypeBo.setActiveOprErp(IConstant.VALUE.YES);
-        productTypeBo.setActiveSopErp(IConstant.VALUE.YES);
+        productTypeBo.setActiveFCTERP(IConstant.VALUE.YES);
+        productTypeBo.setActiveOPRERP(IConstant.VALUE.YES);
+        productTypeBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         resultObject.setBaseBo(productTypeBo);
         return resultObject;

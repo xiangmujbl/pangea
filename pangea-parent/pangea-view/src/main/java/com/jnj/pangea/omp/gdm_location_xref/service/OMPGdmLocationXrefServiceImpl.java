@@ -1,12 +1,10 @@
 package com.jnj.pangea.omp.gdm_location_xref.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_location_xref.bo.OMPGdmLocationXrefBo;
 
@@ -33,15 +31,11 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
 
         OMPGdmLocationXrefBo gdmLocationXrefBo = new OMPGdmLocationXrefBo();
 
-        if (cnsPlnSplLocEntity==null){
+        if (cnsPlnSplLocEntity == null) {
             return resultObject;
         }
         // rules C1
-        gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem()+"_"+cnsPlnSplLocEntity.getVendorCustomer()+"_"+cnsPlnSplLocEntity.getLocalNumber());
-        //rules C2
-        if (getFieldWithC2(cnsPlnSplLocEntity)){
-            gdmLocationXrefBo.setActiveFCTERP(IConstant.VALUE.YES);
-        }
+        gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorOrCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
 
         //rules C3
         if (cnsPlnSplLocEntity.getVendorCustomer() != null && cnsPlnSplLocEntity.getVendorCustomer().equals("C")){
@@ -64,7 +58,8 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         gdmLocationXrefBo.setActive(IConstant.VALUE.YES);
         gdmLocationXrefBo.setActiveOPRERP(IConstant.VALUE.YES);
 
-        //rules D4
+        // rules D4
+        gdmLocationXrefBo.setActiveFCTERP(IConstant.VALUE.NO);
         gdmLocationXrefBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         gdmLocationXrefBo.setCountryId(cnsPlnSplLocEntity.getLocalCountry());
@@ -74,22 +69,5 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
 
         resultObject.setBaseBo(gdmLocationXrefBo);
         return resultObject;
-    }
-
-    /**
-     * rules C2
-     * @param cnsPlnSplLocEntity
-     * @return
-     */
-    private boolean getFieldWithC2(PlanCnsPlnSplLocEntity cnsPlnSplLocEntity){
-        List<PlanCnsPlanParameterEntity> entities = cnsPlanParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT);
-        if (!entities.isEmpty()){
-            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity:entities) {
-                if (cnsPlanParameterEntity.getParameterValue().equals(cnsPlnSplLocEntity.getLocalNumber())){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

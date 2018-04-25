@@ -12,7 +12,7 @@
 
             <region path="/omp/gdm_location_detail">
                 <columns>
-                    locationDetailId,activeOprerp,activeSoperp,CLASS,comments,description,locationid,name,unit,value
+                    locationDetailId,activeOPRERP,activeSOPERP,CLASS,comments,description,locationId,name,unit,value
                 </columns>
             </region>
 

@@ -36,47 +36,45 @@ public class OMPGdmLocationDetailServiceImpl {
 
         String name = "";
         String value = "";
-
-        // T1 - create multi records per attr
-        for (int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
 
             ResultObject resultObject = new ResultObject();
             OMPGdmLocationDetailBo gdmLocationDetailBo = new OMPGdmLocationDetailBo();
 
-            if (i == 0){
+            if (i == 0) {
                 name = name1;
                 value = value1;
-            }else if (i == 1){
+            } else if (i == 1) {
                 name = name2;
                 value = value2;
-            }else if (i==2){
+            } else if (i == 2) {
                 name = name3;
                 value = value3;
-            }else if (i==3){
+            } else if (i == 3) {
                 name = name4;
                 value = value4;
             }
 
-            // Rule T1/T2
-            gdmLocationDetailBo.setName(name);
-            gdmLocationDetailBo.setValue(value);
+            gdmLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
+            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
 
             // Rule N5
             gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.NO);
 
             // Rule N3
             String CLASS = "";
-            if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())){
+            if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())) {
                 CLASS = IConstant.VALUE.PGA;
                 gdmLocationDetailBo.setCLASS(CLASS);
             }
 
-            // Rule C1
-            String locationid = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
-            gdmLocationDetailBo.setLocationid(locationid);
+            String locationid = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
+            gdmLocationDetailBo.setLocationId(locationid);
 
-            // Rule C2
-            String locationDetailId = locationid+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
+            gdmLocationDetailBo.setName(name);
+            gdmLocationDetailBo.setValue(value);
+
+            String locationDetailId = locationid + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + name + IConstant.VALUE.BACK_SLANT + value;
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
 
             // Rule N1
