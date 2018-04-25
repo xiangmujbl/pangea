@@ -247,6 +247,18 @@ public interface IConstant {
         String CUSTOMER_SHIP_TO = "customerShipTo";
     }
 
+    interface EDM_CURRENCY {
+        String LOCAL_CURRENCY = "localCurrency";
+    }
+
+    interface PLAN_CNS_CUST_CHANNEL {
+        String CHANNEL = "channel";
+    }
+
+    interface PLAN_CNS_DP_PRICE {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+    }
+
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT="LATAM_ROOT";

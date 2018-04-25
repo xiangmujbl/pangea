@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_conversion_storage.controller;
 
-import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
@@ -13,7 +12,6 @@ import com.jnj.pangea.common.entity.plan.PlanCnsDpPriceEntity;
 import com.jnj.pangea.omp.gdm_conversion_storage.service.OMPGdmConversionStorageServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,34 +20,36 @@ public class OMPGdmConversionStorageController extends BaseController {
     private OMPGdmConversionStorageServiceImpl service = OMPGdmConversionStorageServiceImpl.getInstance();
 
     @Override
-    public List<ViewResultItem> process(List<RawDataEvent> list) {
+    public List<ViewResultItem> process(List<RawDataEvent> events) {
 
-        List<ViewResultItem> result = new ArrayList<>();
-        list.forEach(raw -> {
-
-            RawDataValue rawValue = raw.getValue();
-
-            PlanCnsDpPriceEntity planCnsDpPriceEntity = BeanUtil.mapToBean(rawValue.toMap(), PlanCnsDpPriceEntity.class);
-
-            List<ResultObject> resultObjectList = service.buildView(raw.getKey(),planCnsDpPriceEntity , null);
-
-            for (ResultObject resultObject:resultObjectList) {
+        List<ViewResultItem> result = new LinkedList<>();
+        events.forEach(raw -> {
+            List<ResultObject> resultObjects = process(raw);
+            resultObjects.forEach(resultObject -> {
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = resultObject.getBaseBo();
-                    ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
-                    result.add(viewRaw);
+                    result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
                 } else {
-                    if (resultObject.getFailData() != null) {
+                    if (null != resultObject.getFailData()) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
-                        result.add(viewResultItem);
+                        result.add(ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap()));
                     }
                 }
-            }
-
+            });
         });
         return result;
-
     }
 
+    private List<ResultObject> process(RawDataEvent raw) {
+
+        List<ResultObject> resultObjects = new LinkedList<>();
+
+        PlanCnsDpPriceEntity cnsDpPriceEntity = BeanUtil.mapToBean(raw.getValue().toMap(), PlanCnsDpPriceEntity.class);
+        List<String> aggIds = service.getFieldWithC1(cnsDpPriceEntity.getLocalMaterialNumber(), cnsDpPriceEntity.getCountry());
+
+        if (!aggIds.isEmpty()) {
+            aggIds.forEach(aggId -> resultObjects.add(service.buildView(raw.getKey(), cnsDpPriceEntity, aggId)));
+        }
+        return resultObjects;
+    }
 }
