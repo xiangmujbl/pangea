@@ -23,9 +23,9 @@ Feature: OMPGdmUnitMeasurable AEAZ-1980
 
     When I submit task with xml file "xml/omp/OMPGdmUnitMeasurable.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMUnitMeasure.tsv"
+    Then A file is found on sink application with name "GDMUnit.tsv"
 
-#    Then I check file data for filename "GDMUnitMeasure.tsv" by keyFields "unitId"
+#    Then I check file data for filename "GDMUnit.tsv" by keyFields "unitId"
 #      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure | precision | shortDescription |
 #      | EA     | YES    | YES          | YES          | NO           | 1      | EA      | Each            | -       | 0         | Each             |
 
@@ -41,5 +41,5 @@ Feature: OMPGdmUnitMeasurable AEAZ-1980
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMUnitMeasure.tsv"
+    And I will remove the test file on sink application "GDMUnit.tsv"
 

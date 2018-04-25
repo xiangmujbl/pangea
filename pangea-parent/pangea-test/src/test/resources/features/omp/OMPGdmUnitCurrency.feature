@@ -15,9 +15,9 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
 
     When I submit task with xml file "xml/omp/OMPGdmUnitCurrency.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMUnitCurrency.tsv"
+    Then A file is found on sink application with name "GDMUnit.tsv"
 #
-#    Then I check file data for filename "GDMUnitCurrency.tsv" by keyFields "unitId"
+#    Then I check file data for filename "GDMUnit.tsv" by keyFields "unitId"
 #      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure  | precision | shortDescription |
 #      | USD    | YES    | YES          | YES          | NO           |        | -       | US Dollar       | CURRENCY | 0         | US Dollar        |
 
@@ -33,5 +33,5 @@ Feature: OMPGdmUnitCurrency AEAZ-1980
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMUnitCurrency.tsv"
+    And I will remove the test file on sink application "GDMUnit.tsv"
 
