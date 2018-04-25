@@ -12,9 +12,9 @@ Feature:  OMPGdmLocationDetail-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "PANGEA_V1_gdm_location_detail.tsv"
+    Then A file is found on sink application with name "GDMLocationDetail.tsv"
 
-    Then I check file data for filename "/omp/gdm_location_detail" by keyFields "locationDetailId"
+    Then I check file data for filename "GDMLocationDetail.tsv" by keyFields "locationDetailId"
       | locationDetailId                     | activeOPRERP | activeSOPERP | CLASS | comments | description | locationId      | name     | unit | value   |
       | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | YES          | NO           | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1  |      | VALUE1  |
       | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | YES          | NO           | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2  |      | VALUE2  |
@@ -36,5 +36,5 @@ Feature:  OMPGdmLocationDetail-Curation
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "PANGEA_V1_gdm_location_detail.tsv"
+    And I will remove the test file on sink application "GDMLocationDetail.tsv"
 
