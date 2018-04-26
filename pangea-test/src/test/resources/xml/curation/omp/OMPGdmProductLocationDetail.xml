@@ -21,7 +21,7 @@
 
             <region path="/plan/cns_prod_loc_attrib">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,schdAttrbName1,schAttrbDesc1,schdAttrbName2,schAttrbDesc2,schdAttrbName3,schAttrbDesc3
+                    sourceSystem,localMaterialNumber,localPlant,SchdAttrbName1,SchAttrbDesc1,SchdAttrbName2,SchAttrbDesc2,SchdAttrbName3,SchAttrbDesc3,SupplyGroup,minShelfLife,minMinshelfLife
                 </columns>
                 <relations>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">

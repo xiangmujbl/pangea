@@ -174,10 +174,8 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
     }
 
-    interface PLAN_CNS_FIN_PLAN_VAL {
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-    }
-    interface PLAN_CNS_FIN_PLAN_QTY {
+    interface CNS_MATERIAL_PLAN_STATUS {
+        String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
     interface EDM_CURRENCY_V1 {
