@@ -3,7 +3,7 @@ Feature:  OMPGdmReqFromErp-Consumption
 
   Scenario: Full Load Consumption
 
-    Given I import "/edm/purchase_requisition_v1" by keyFields "sourceSystem, prNum"
+    Given I import "/edm/purchase_requisition_v1" by keyFields "prNum"
       | sourceSystem | prNum      | prLineNbr | plntCd | matlNum | prLineUomCd | prTypeCd | prCatCd | localControlInd | delInd | prStsCd | recCrtInd | prchsngGrpNum | crtByNm  | chngOnDt | prchInfoDesc      | slocCd | intrnlRefNum | locaalMaterialGroup | suplPlntCd | prLineQty | prRqstDt | needByDt | apprByDt | localPrGRLeadTimeDays | prLineCatCd | acctAsgnmtCatCd | localGRInd | localSupNum | localFixedVendor | prchsngOrgNum | poTypeCd | localAgreement | localAgreementItem | localInfoRecord | asgnSuplSrcInd | localQuotaArr | localQuotaArrItem | prMrpHrzn | bomNum | localPurchaseOrder | localItem | localPODate | localPOQuantity | prClseInd | localReservation | splStkInd | fxInd | localOrderUnit | localSubjToRelease | localBatch | localSpIndStckTfr | localProdVersion | localdelvAddrADRNR | localdelvAddrADRN2 | localCustomer | supNum | localSCVendor | localCurrency | localOverallReqRel | mfrPartNum | localManufacturer | localExternalManuf | localPDT | localIncomplete | lineStsCd | blokInd | localBlockingText | localProcuringPlant | localIssStorLoc | localXSysPReqNo | localXSysPReqItem | localXSysItemCat |
       | CONS_LATAM   | 0010000230 | 00010     | CO01   |         | EA          | PM       | B       |                 | Blank  | N       | R         | C17           | CSALGUER | 20050902 | FUENTE DE VOLTAJE |        |              | 95160000            |            | 4.000     | 20050901 | 20050915 | 20050901 | 0                     | 0           | K               | X          |             |                  |               |          |                | 00000              |                 |                |               | 000               | 111       |        | 3000153227         | 00010     | 20050916    | 4.000           |           | 0000000000       |           |       |                |                    |            |                   |                  |                    |                    |               |        |               | COP           |                    | 222        |                   |                    | 0        |                 | 05        |         |                   |                     |                 |                 | 00000             |                  |
 
@@ -28,7 +28,7 @@ Feature:  OMPGdmReqFromErp-Consumption
     Then A file is found on sink application with name "REQFROMERP.tsv"
 
     And I check file data for filename "REQFROMERP.tsv" by keyFields "SupplyId"
-
+    | REQFromERPId | BLCKD | BLCKT | DELETED | DeliveryDate | DELKZ | DELNR | DELPS | ERPId | FLIEF | LocationId | ManualOffset | PLIFZ | PRIO_URG | ProductId | REQType | TotalQuantity | UnitId | VERID | WRK02 |
 
     And I delete the test data
 

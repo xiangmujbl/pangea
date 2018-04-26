@@ -5,26 +5,26 @@ import com.jnj.pangea.common.BaseBo;
 
 public class OMPGdmReqFromErpBo extends BaseBo {
 
-    private String reqFromErpId;
-    private String blckd;
-    private String blckt;
-    private String deleted;
-    private String deliveryDate;
-    private String delkz;
-    private String delnr;
-    private String delps;
-    private String erpId;
-    private String flief;
-    private String locationId;
-    private String manualOffset;
-    private String plifz;
-    private String prio_urg;
-    private String productId;
-    private String reqType;
-    private String totalQuantity;
-    private String unitId;
-    private String verid;
-    private String wrk02;
+    private String REQFromERPId;
+    private String BLCKD;
+    private String BLCKT;
+    private String DELETED;
+    private String DeliveryDate;
+    private String DELKZ;
+    private String DELNR;
+    private String DELPS;
+    private String ERPId;
+    private String FLIEF;
+    private String LocationId;
+    private String ManualOffset;
+    private String PLIFZ;
+    private String PRIO_URG;
+    private String ProductId;
+    private String REQType;
+    private String TotalQuantity;
+    private String UnitId;
+    private String VERID;
+    private String WRK02;
 
     @Override
     public String getKey() {
@@ -33,163 +33,163 @@ public class OMPGdmReqFromErpBo extends BaseBo {
                 .toJsonString();
     }
 
-    public String getReqFromErpId() {
-        return reqFromErpId;
+    public String getREQFromERPId() {
+        return REQFromERPId;
     }
 
-    public void setReqFromErpId(String reqFromErpId) {
-        this.reqFromErpId = reqFromErpId;
+    public void setREQFromERPId(String REQFromERPId) {
+        this.REQFromERPId = REQFromERPId;
     }
 
-    public String getBlckd() {
-        return blckd;
+    public String getBLCKD() {
+        return BLCKD;
     }
 
-    public void setBlckd(String blckd) {
-        this.blckd = blckd;
+    public void setBLCKD(String BLCKD) {
+        this.BLCKD = BLCKD;
     }
 
-    public String getBlckt() {
-        return blckt;
+    public String getBLCKT() {
+        return BLCKT;
     }
 
-    public void setBlckt(String blckt) {
-        this.blckt = blckt;
+    public void setBLCKT(String BLCKT) {
+        this.BLCKT = BLCKT;
     }
 
-    public String getDeleted() {
-        return deleted;
+    public String getDELETED() {
+        return DELETED;
     }
 
-    public void setDeleted(String deleted) {
-        this.deleted = deleted;
+    public void setDELETED(String DELETED) {
+        this.DELETED = DELETED;
     }
 
     public String getDeliveryDate() {
-        return deliveryDate;
+        return DeliveryDate;
     }
 
     public void setDeliveryDate(String deliveryDate) {
-        this.deliveryDate = deliveryDate;
+        DeliveryDate = deliveryDate;
     }
 
-    public String getDelkz() {
-        return delkz;
+    public String getDELKZ() {
+        return DELKZ;
     }
 
-    public void setDelkz(String delkz) {
-        this.delkz = delkz;
+    public void setDELKZ(String DELKZ) {
+        this.DELKZ = DELKZ;
     }
 
-    public String getDelnr() {
-        return delnr;
+    public String getDELNR() {
+        return DELNR;
     }
 
-    public void setDelnr(String delnr) {
-        this.delnr = delnr;
+    public void setDELNR(String DELNR) {
+        this.DELNR = DELNR;
     }
 
-    public String getDelps() {
-        return delps;
+    public String getDELPS() {
+        return DELPS;
     }
 
-    public void setDelps(String delps) {
-        this.delps = delps;
+    public void setDELPS(String DELPS) {
+        this.DELPS = DELPS;
     }
 
-    public String getErpId() {
-        return erpId;
+    public String getERPId() {
+        return ERPId;
     }
 
-    public void setErpId(String erpId) {
-        this.erpId = erpId;
+    public void setERPId(String ERPId) {
+        this.ERPId = ERPId;
     }
 
-    public String getFlief() {
-        return flief;
+    public String getFLIEF() {
+        return FLIEF;
     }
 
-    public void setFlief(String flief) {
-        this.flief = flief;
+    public void setFLIEF(String FLIEF) {
+        this.FLIEF = FLIEF;
     }
 
     public String getLocationId() {
-        return locationId;
+        return LocationId;
     }
 
     public void setLocationId(String locationId) {
-        this.locationId = locationId;
+        LocationId = locationId;
     }
 
     public String getManualOffset() {
-        return manualOffset;
+        return ManualOffset;
     }
 
     public void setManualOffset(String manualOffset) {
-        this.manualOffset = manualOffset;
+        ManualOffset = manualOffset;
     }
 
-    public String getPlifz() {
-        return plifz;
+    public String getPLIFZ() {
+        return PLIFZ;
     }
 
-    public void setPlifz(String plifz) {
-        this.plifz = plifz;
+    public void setPLIFZ(String PLIFZ) {
+        this.PLIFZ = PLIFZ;
     }
 
-    public String getPrio_urg() {
-        return prio_urg;
+    public String getPRIO_URG() {
+        return PRIO_URG;
     }
 
-    public void setPrio_urg(String prio_urg) {
-        this.prio_urg = prio_urg;
+    public void setPRIO_URG(String PRIO_URG) {
+        this.PRIO_URG = PRIO_URG;
     }
 
     public String getProductId() {
-        return productId;
+        return ProductId;
     }
 
     public void setProductId(String productId) {
-        this.productId = productId;
+        ProductId = productId;
     }
 
-    public String getReqType() {
-        return reqType;
+    public String getREQType() {
+        return REQType;
     }
 
-    public void setReqType(String reqType) {
-        this.reqType = reqType;
+    public void setREQType(String REQType) {
+        this.REQType = REQType;
     }
 
     public String getTotalQuantity() {
-        return totalQuantity;
+        return TotalQuantity;
     }
 
     public void setTotalQuantity(String totalQuantity) {
-        this.totalQuantity = totalQuantity;
+        TotalQuantity = totalQuantity;
     }
 
     public String getUnitId() {
-        return unitId;
+        return UnitId;
     }
 
     public void setUnitId(String unitId) {
-        this.unitId = unitId;
+        UnitId = unitId;
     }
 
-    public String getVerid() {
-        return verid;
+    public String getVERID() {
+        return VERID;
     }
 
-    public void setVerid(String verid) {
-        this.verid = verid;
+    public void setVERID(String VERID) {
+        this.VERID = VERID;
     }
 
-    public String getWrk02() {
-        return wrk02;
+    public String getWRK02() {
+        return WRK02;
     }
 
-    public void setWrk02(String wrk02) {
-        this.wrk02 = wrk02;
+    public void setWRK02(String WRK02) {
+        this.WRK02 = WRK02;
     }
 }

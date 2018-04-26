@@ -42,16 +42,16 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
         OMPGdmReqFromErpBo gdmReqFromErpBo = new OMPGdmReqFromErpBo();
 
-        gdmReqFromErpBo.setBlckd(edmPurchaseRequisitionV1Entity.getBlokInd());
-        gdmReqFromErpBo.setBlckt(edmPurchaseRequisitionV1Entity.getLocalBlockingText());
-        gdmReqFromErpBo.setDelnr(edmPurchaseRequisitionV1Entity.getPrNum());
-        gdmReqFromErpBo.setDelps(edmPurchaseRequisitionV1Entity.getPrLineNbr());
-        gdmReqFromErpBo.setFlief(edmPurchaseRequisitionV1Entity.getLocalFixedVendor());
-        gdmReqFromErpBo.setPlifz(edmPurchaseRequisitionV1Entity.getLocalPDT());
-        gdmReqFromErpBo.setReqType(edmPurchaseRequisitionV1Entity.getPrTypeCd());
+        gdmReqFromErpBo.setBLCKD(edmPurchaseRequisitionV1Entity.getBlokInd());
+        gdmReqFromErpBo.setBLCKT(edmPurchaseRequisitionV1Entity.getLocalBlockingText());
+        gdmReqFromErpBo.setDELNR(edmPurchaseRequisitionV1Entity.getPrNum());
+        gdmReqFromErpBo.setDELPS(edmPurchaseRequisitionV1Entity.getPrLineNbr());
+        gdmReqFromErpBo.setFLIEF(edmPurchaseRequisitionV1Entity.getLocalFixedVendor());
+        gdmReqFromErpBo.setPLIFZ(edmPurchaseRequisitionV1Entity.getLocalPDT());
+        gdmReqFromErpBo.setREQType(edmPurchaseRequisitionV1Entity.getPrTypeCd());
         gdmReqFromErpBo.setTotalQuantity(edmPurchaseRequisitionV1Entity.getPrLineQty());
-        gdmReqFromErpBo.setVerid(edmPurchaseRequisitionV1Entity.getLocalProdVersion());
-        gdmReqFromErpBo.setWrk02(edmPurchaseRequisitionV1Entity.getSuplPlntCd());
+        gdmReqFromErpBo.setVERID(edmPurchaseRequisitionV1Entity.getLocalProdVersion());
+        gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSuplPlntCd());
 
         //N1
         //No pr_doc_ic?
@@ -75,7 +75,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             e.printStackTrace();
         }
         //N3
-        gdmReqFromErpBo.setDelkz(IConstant.VALUE.BA);
+        gdmReqFromErpBo.setDELKZ(IConstant.VALUE.BA);
 
         //N4
         if (!edmPurchaseRequisitionV1Entity.getSourceSystem().isEmpty() && edmPurchaseRequisitionV1Entity.getSourceSystem() != null
@@ -85,7 +85,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             //N5
             if(IConstant.VALUE.CONS_LATAM.equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getSourceSystem())) {
                 gdmReqFromErpBo.setManualOffset(" ");
-                gdmReqFromErpBo.setPrio_urg(" ");
+                gdmReqFromErpBo.setPRIO_URG(" ");
             }
 
             //N6
@@ -110,7 +110,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     gdmReqFromErpBo.setUnitId(cnsPlanUnitEntity.getUnit());
 
                     //N8
-                    gdmReqFromErpBo.setDeleted(IConstant.VALUE.FALSE);
+                    gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
 
                     //N9
                     if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
