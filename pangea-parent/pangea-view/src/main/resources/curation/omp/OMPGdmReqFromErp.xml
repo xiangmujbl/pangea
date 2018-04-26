@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/purchase_requisition_v1" viewRegion="/omp/gdm_req_from_erp" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_req_from_erp.controller.OMPGdmReqFromErpController"
-            writeTo="all" topic="omp_gdm_req_from_erp">
+              writeTo="kafka" topic="omp_gdm_req_from_erp">
         <regions>
 
             <region path="/edm/purchase_requisition_v1">

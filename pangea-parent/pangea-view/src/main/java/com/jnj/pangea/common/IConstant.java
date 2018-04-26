@@ -388,6 +388,7 @@ public interface IConstant {
         String ZERO = "0";
         String BA = "BA";
         String FALSE = "FALSE";
+        String COLON = ":";
     }
 
     interface FAILED {

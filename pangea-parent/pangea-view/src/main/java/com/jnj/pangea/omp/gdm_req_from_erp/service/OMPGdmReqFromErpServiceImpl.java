@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -59,8 +60,18 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
         //N2
         try {
-        String deliveryDate = edmPurchaseRequisitionV1Entity.getNeedByDt() + IConstant.VALUE.SPACE + edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays();
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY/MM/DD HH:NN:SS");
+            String dateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
+            String year = dateToFormat.substring(0, 3);
+            String month = dateToFormat.substring(4,5);
+            String day = dateToFormat.substring(6,7);
+            dateToFormat = year+IConstant.VALUE.BACK_SLANT+month+IConstant.VALUE.BACK_SLANT+day;
+            String timeToFormat = edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays();
+            String hours = timeToFormat.substring(0,1);
+            String minutes = timeToFormat.substring(2,3);
+            String seconds = timeToFormat.substring(4,5);
+            timeToFormat = hours + IConstant.VALUE.COLON + minutes + IConstant.VALUE.COLON + seconds;
+            String deliveryDate = dateToFormat + IConstant.VALUE.SPACE + timeToFormat;
+            SimpleDateFormat sdf = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
             Date date = sdf.parse(deliveryDate);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);

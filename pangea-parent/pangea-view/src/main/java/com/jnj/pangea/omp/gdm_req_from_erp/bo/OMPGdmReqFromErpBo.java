@@ -29,7 +29,7 @@ public class OMPGdmReqFromErpBo extends BaseBo {
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("", "")
+                .makeJsonObject("REQFromERPId", this.REQFromERPId)
                 .toJsonString();
     }
 
