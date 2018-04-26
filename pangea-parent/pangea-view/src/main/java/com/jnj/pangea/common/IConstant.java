@@ -277,9 +277,7 @@ public interface IConstant {
         String SP_RELEVANT = "sPRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
-    interface EDM_CURRENCY_V1 {
-        String LOCAL_CURRENCY = "localCurrency";
-    }
+
 
     interface EDM_MAT_PLANT_FI_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
