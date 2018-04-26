@@ -25,15 +25,16 @@ public class OMPLotSizeKeyServiceImpl implements ICommonService {
         PlanCnsLotSizeKeyEntity cnsLotSizeKeyEntity = (PlanCnsLotSizeKeyEntity) o;
 
         OMPLotSizeKeyBo lotSizeKeyBo = new OMPLotSizeKeyBo();
-        if (null!=cnsLotSizeKeyEntity){
-            lotSizeKeyBo.setLotSizeKey(cnsLotSizeKeyEntity.getLotSizeKey());
-            lotSizeKeyBo.setComments(cnsLotSizeKeyEntity.getComments());
-            lotSizeKeyBo.setDescRiption(cnsLotSizeKeyEntity.getLotSizeKeyDescription());
-            lotSizeKeyBo.setPeriod(cnsLotSizeKeyEntity.getPeriod());
-            lotSizeKeyBo.setQuantity(cnsLotSizeKeyEntity.getQuantity());
-            lotSizeKeyBo.setActiveOprerp(IConstant.VALUE.YES);
-            lotSizeKeyBo.setActiveSoperp("");
+        if(cnsLotSizeKeyEntity==null){
+            return resultObject;
         }
+        lotSizeKeyBo.setLotSizeKey(cnsLotSizeKeyEntity.getLotSizeKey());
+        lotSizeKeyBo.setComments(cnsLotSizeKeyEntity.getComments());
+        lotSizeKeyBo.setDescription(cnsLotSizeKeyEntity.getLotSizeKeyDescription());
+        lotSizeKeyBo.setPeriod(cnsLotSizeKeyEntity.getPeriod());
+        lotSizeKeyBo.setQuantity(cnsLotSizeKeyEntity.getQuantity());
+        lotSizeKeyBo.setActiveOPRERP(IConstant.VALUE.YES);
+        lotSizeKeyBo.setActiveSOPERP(IConstant.VALUE.NO);
         resultObject.setBaseBo(lotSizeKeyBo);
         return resultObject;
     }

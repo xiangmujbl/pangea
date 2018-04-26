@@ -11,7 +11,7 @@ import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanValEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanValDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialAuomV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialAuomV1DaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
@@ -65,13 +65,13 @@ public class OMPGdmFpbServiceImpl implements ICommonService {
 
             if (null != finPlanQtyEntity){
                 String country = finPlanQtyEntity.getCountry();
-                EDMCountryV1Entity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
+                EDMCountryEntity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
                 if (null != countryV1Entity){
                     gdmFpbBo.setCountryId(countryV1Entity.getCountryCode());
                 }
 
                 String currency = finPlanQtyEntity.getCurrency();
-                EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
+                EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrencyAndSourceSystem(currency,sourceSystem);
                 if (null != currencyV1Entity){
                     gdmFpbBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
                 }

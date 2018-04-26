@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPProductType-Curation
+@pangea_test @AEAZ-1981
+Feature: OMPProductType AEAZ-1981
 
   Scenario: Full Load curation
 
@@ -11,10 +11,12 @@ Feature: OMPProductType-Curation
 
     When I submit task with xml file "xml/omp/OMPProductType.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/product_type" by keyFields "productTypeId"
-      | productTypeId | activeFctErp | activeOprErp | activeSopErp | label            |
-      | DIEN          | YES          | YES          | YES          | Service          |
-      | FERT          | YES          | YES          | YES          | Finished Product |
+    Then A file is found on sink application with name "product_type.tsv"
+
+    Then I check file data for filename "/omp/product_type" by keyFields "productTypeId"
+      | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
+      | DIEN          | YES          | YES          | NO           | Service          |
+      | FERT          | YES          | YES          | NO           | Finished Product |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -25,4 +27,6 @@ Feature: OMPProductType-Curation
 
     And I will remove all data with region "/omp/product_type"
 
-    And I will remove all data with region "/edm/material_type_v1"
+    And I will remove all data with region "/plan/edm_failed_data"
+
+#    And I will remove the test file on sink application "product_type.tsv"

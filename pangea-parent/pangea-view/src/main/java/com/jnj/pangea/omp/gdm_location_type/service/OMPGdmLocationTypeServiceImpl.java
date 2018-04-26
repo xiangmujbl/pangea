@@ -27,11 +27,11 @@ public class OMPGdmLocationTypeServiceImpl implements ICommonService {
         OMPGdmLocationTypeBo gdmLocationTypeBo = new OMPGdmLocationTypeBo();
         // TODO add logic
         gdmLocationTypeBo.setLocationTypeId(cnsLocTypeEntity.getPlanLocTypeId());
-        gdmLocationTypeBo.setActiveFprerp(IConstant.VALUE.YES);
-        gdmLocationTypeBo.setActiveOprerp(IConstant.VALUE.YES);
-        gdmLocationTypeBo.setActiveSoperp(IConstant.VALUE.YES);
+        gdmLocationTypeBo.setActiveFCTERP(IConstant.VALUE.YES);
+        gdmLocationTypeBo.setActiveOPRERP(IConstant.VALUE.YES);
+        gdmLocationTypeBo.setActiveSOPERP(IConstant.VALUE.YES);
 
-        gdmLocationTypeBo.setLabel(cnsLocTypeEntity.getPlanLocTypeDesc());
+        gdmLocationTypeBo.setLABEL(cnsLocTypeEntity.getPlanLocTypeDesc());
 
         resultObject.setBaseBo(gdmLocationTypeBo);
         return resultObject;

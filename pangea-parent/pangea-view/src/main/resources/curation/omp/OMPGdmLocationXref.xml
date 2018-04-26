@@ -1,12 +1,12 @@
 <adf-curation>
     <curation mainRegion="/plan/cns_pln_spl_loc" viewRegion="/omp/gdm_location" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_location_xref.controller.OMPGdmLocationXrefController"
-              writeTo="kafka" topic="gdm_omp_location_xref">
+              writeTo="kafka" topic="gdmLocationXref">
         <regions>
 
             <region path="/plan/cns_pln_spl_loc">
                 <columns>
-                    sourceSystem,vendorCustomer,localNumber,localCountry,localCurrency,localNumber,localName,planLocTypeId,localRegion
+                    sourceSystem,vendorOrCustomer,localNumber,localCountry,localCurrency,localNumber,localName,planLocTypeId,localRegion
                 </columns>
                 <relations>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
@@ -30,11 +30,11 @@
                     activeSOPERP,
                     countryId,
                     currencyId,
-                    customerid,
+                    customerId,
                     label,
                     locationTypeId,
                     regionId,
-                    vendorid
+                    vendorId
                 </columns>
             </region>
 

@@ -3,6 +3,7 @@ package com.jnj.pangea.common.dao.impl.edm;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
 import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
 
 public class EDMCountryV1DaoImpl extends CommonDaoImpl {
@@ -17,9 +18,17 @@ public class EDMCountryV1DaoImpl extends CommonDaoImpl {
     }
 
 
-    public EDMCountryV1Entity getEntityWithLocalCountry(String land1) {
+    public EDMCountryEntity getEntityWithLocalCountry(String land1) {
 
         String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryV1Entity.class);
+        return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+    }
+
+    public EDMCountryEntity getEntityWithLocalCountryAndSourceSystem(String localCountry, String sourceSystem) {
+        if ("".equals(localCountry)||"".equals(sourceSystem)){
+            return null;
+        }
+        String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(localCountry).and(IConstant.EDM_COUNTRY_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
     }
 }

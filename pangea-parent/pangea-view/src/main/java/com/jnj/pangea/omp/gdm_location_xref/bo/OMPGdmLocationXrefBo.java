@@ -12,11 +12,11 @@ public class OMPGdmLocationXrefBo extends BaseBo {
     private String  activeSOPERP;
     private String  countryId;
     private String  currencyId;
-    private String  customerid;
+    private String  customerId;
     private String  label;
     private String  locationTypeId;
     private String  regionId;
-    private String  vendorid;
+    private String  vendorId;
 
     @Override
     public String getKey() {
@@ -81,12 +81,20 @@ public class OMPGdmLocationXrefBo extends BaseBo {
         this.currencyId = currencyId;
     }
 
-    public String getCustomerid() {
-        return customerid;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerid(String customerid) {
-        this.customerid = customerid;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
     }
 
     public String getLabel() {
@@ -113,11 +121,4 @@ public class OMPGdmLocationXrefBo extends BaseBo {
         this.regionId = regionId;
     }
 
-    public String getVendorid() {
-        return vendorid;
-    }
-
-    public void setVendorid(String vendorid) {
-        this.vendorid = vendorid;
-    }
 }
