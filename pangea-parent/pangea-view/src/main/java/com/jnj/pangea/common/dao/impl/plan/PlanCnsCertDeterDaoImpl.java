@@ -50,4 +50,12 @@ public class PlanCnsCertDeterDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
+
+    public PlanCnsCertDeterEntity getEntitiesWithSalesOrg(String salesOrg) {
+        if (null != salesOrg && !"".equals(salesOrg) ){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CERT_DETER.SALES_ORG).is(salesOrg).toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_CERT_DETER, queryString, PlanCnsCertDeterEntity.class);
+        }
+        return null;
+    }
 }
