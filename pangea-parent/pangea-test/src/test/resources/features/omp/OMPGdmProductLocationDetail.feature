@@ -9,9 +9,12 @@ Feature:  OMPGdmProductLocationDetail-Curation
       | CONS_LATAM   | LT9999              | BR19       | 9862           | G3a             | G4a | X      | X          | X          | X            | X              |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
+    Given I import "/plan/cns_prod_loc_attrib" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+      | sourceSystem | localMaterialNumber | localPlant | schdAttrbName1 | schAttrbDesc1 | schdAttrbName2 | schAttrbDesc2 | schdAttrbName3 | schAttrbDesc3 | supplyGroup | minShelfLife | minMinShelfLife |
+      | CONS_LATAM   | LT9999              | BR19       | ATTRB1         | VALUE1        | ATTRB2         | VALUE2        |                |               |             |              |                 |
 
     Given I import "/plan/cns_prod_loc_attrib" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-      | sourceSystem | localMaterialNumber | localPlant | schdAttrbName1 | schAttrbDesc1 | schdAttrbName2 | schAttrbDesc2 | schdAttrbName3 | schAttrbDesc3 |
+      | SourceSystem | localMaterialNumber | localPlant | SchdAttrbName1 | SchdAttrbDesc1 | SchedAttrbName2 | SchdAttrbDesc2 | SchedAttrbName3 | SchdAttrbDesc3 |
       | CONS_LATAM   | LT9999              | BR19       | ATTRB1         | VALUE1         | ATTRB2          | VALUE2         |                 |                |
 
     And I wait "/plan/cns_prod_loc_attrib" Async Queue complete
@@ -33,6 +36,9 @@ Feature:  OMPGdmProductLocationDetail-Curation
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+
+#    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+#      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
     #And I compare the number of records between "/plan/cns_material_plan_status" and "/omp/gdm_product_location_detail,/plan/edm_failed_data"
 

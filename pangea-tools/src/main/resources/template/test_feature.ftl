@@ -1,5 +1,5 @@
 @pangea_test @${jira}
-Feature: ${jira} ${fullName}-Curation
+Feature: ${fullName} ${jira}
 
   Scenario: Full Load curation
 
@@ -23,5 +23,5 @@ Feature: ${jira} ${fullName}-Curation
 
     And I will remove all data with region "${view.path}"
 
-    And I will remove all data with region "${main.path}"
+    And I will remove all data with region "/plan/edm_failed_data"
 

@@ -6,9 +6,9 @@ import com.jnj.pangea.common.BaseBo;
 public class OMPLocationTypeBo extends BaseBo {
 
     private String locationTypeId;
-    private String activeFctErp;
-    private String activeOprErp;
-    private String activeSopErp;
+    private String activeFCTERP;
+    private String activeOPRERP;
+    private String activeSOPERP;
     private String label;
 
     @Override
@@ -26,28 +26,28 @@ public class OMPLocationTypeBo extends BaseBo {
         this.locationTypeId = locationTypeId;
     }
 
-    public String getActiveFctErp() {
-        return this.activeFctErp;
+    public String getActiveFCTERP() {
+        return activeFCTERP;
     }
 
-    public void setActiveFctErp(String activeFctErp) {
-        this.activeFctErp = activeFctErp;
+    public void setActiveFCTERP(String activeFCTERP) {
+        this.activeFCTERP = activeFCTERP;
     }
 
-    public String getActiveOprErp() {
-        return this.activeOprErp;
+    public String getActiveOPRERP() {
+        return activeOPRERP;
     }
 
-    public void setActiveOprErp(String activeOprErp) {
-        this.activeOprErp = activeOprErp;
+    public void setActiveOPRERP(String activeOPRERP) {
+        this.activeOPRERP = activeOPRERP;
     }
 
-    public String getActiveSopErp() {
-        return this.activeSopErp;
+    public String getActiveSOPERP() {
+        return activeSOPERP;
     }
 
-    public void setActiveSopErp(String activeSopErp) {
-        this.activeSopErp = activeSopErp;
+    public void setActiveSOPERP(String activeSOPERP) {
+        this.activeSOPERP = activeSOPERP;
     }
 
     public String getLabel() {

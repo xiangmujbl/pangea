@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class XdClient {
 
-    private static final long CHECK_INTERVAL = 5000;
+    private static final long CHECK_INTERVAL = 2000;
 
     private String host;
     private String port;
@@ -48,11 +48,13 @@ public class XdClient {
     }
 
     public void runSny(String name, String definition) {
+        deleteIfExist(name);
         template.jobOperations().createJob(name, definition, true);
         template.jobOperations().launchJob(name, null);
     }
 
     public boolean runAsny(String name, String definition) {
+        deleteIfExist(name);
         template.jobOperations().createJob(name, definition, true);
         template.jobOperations().launchJob(name, null);
         // it seems that the XD does not provided the method to get the job's executionId, so we get it by filtered the list.
@@ -66,6 +68,14 @@ public class XdClient {
             return checkStatus(jobExecutionId);
         }
         return false;
+    }
+
+    private void deleteIfExist(String name) {
+        try {
+            template.jobOperations().destroy(name);
+        } catch (Exception e) {
+
+        }
     }
 
     private boolean checkStatus(long executionId) {

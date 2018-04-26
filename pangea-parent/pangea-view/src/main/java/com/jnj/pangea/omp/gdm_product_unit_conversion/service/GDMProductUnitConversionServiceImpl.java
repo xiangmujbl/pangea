@@ -1,6 +1,6 @@
 package com.jnj.pangea.omp.gdm_product_unit_conversion.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialAuomDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
@@ -17,7 +17,7 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
 
     private static GDMProductUnitConversionServiceImpl instance;
 
-    private final DecimalFormat df=new DecimalFormat("0.00");
+    private final DecimalFormat df = new DecimalFormat("0.00");
 
 
     public static GDMProductUnitConversionServiceImpl getInstance() {
@@ -29,6 +29,7 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
 
     private PlanCnsPlanUnitDaoImpl planCnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
     private EDMMaterialAuomDaoImpl edmMaterialAuomDao = EDMMaterialAuomDaoImpl.getInstance();
+
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -37,36 +38,45 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
         GDMProductUnitConversionBo gdmProductUnitConversionBo = new GDMProductUnitConversionBo();
 
 
-        processSystem(edmMaterialGlobalV1Entity,gdmProductUnitConversionBo);
-        CnsPlanUnitEntity cnsPlanUnitEntity =  planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(edmMaterialGlobalV1Entity.getLocalBaseUom());
-        StringBuilder sb = new StringBuilder(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
-        if(cnsPlanUnitEntity!=null){
-            sb.append(cnsPlanUnitEntity.getUnit());
-            if( !StringUtils.isEmpty(cnsPlanUnitEntity.getUnit())){
-                gdmProductUnitConversionBo.setUnitId(cnsPlanUnitEntity.getUnit());
+        processSystem(edmMaterialGlobalV1Entity, gdmProductUnitConversionBo);
+
+        String localBaseUOM = edmMaterialGlobalV1Entity.getLocalBaseUom();
+        if (StringUtils.isNotEmpty(localBaseUOM)) {
+            CnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUOM);
+            String gdmProductUnitConversionId = "";
+            if (StringUtils.isNotEmpty(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
+                gdmProductUnitConversionId += edmMaterialGlobalV1Entity.getPrimaryPlanningCode();
+            }
+            if (cnsPlanUnitEntity != null) {
+                if (StringUtils.isNotEmpty(cnsPlanUnitEntity.getUnit())) {
+                    gdmProductUnitConversionId += cnsPlanUnitEntity.getUnit();
+                }
+                if (!StringUtils.isEmpty(cnsPlanUnitEntity.getUnit())) {
+                    gdmProductUnitConversionBo.setUnitId(cnsPlanUnitEntity.getUnit());
+                }
+            }
+            gdmProductUnitConversionBo.setGdmProductUnitConversionId(gdmProductUnitConversionId);
+        }
+
+        String localMaterialNumber = edmMaterialGlobalV1Entity.getLocalMaterialNumber();
+        if (StringUtils.isNotEmpty(localMaterialNumber)) {
+            EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomDao.getEntityWithLocalMaterialNumAndLocalAuom(localMaterialNumber, localMaterialNumber);
+            if (edmMaterialAuomV1Entity != null) {
+                String factor = String.valueOf(df.format((float) Integer.valueOf(edmMaterialAuomV1Entity.getLocalNumerator()) / Integer.valueOf(edmMaterialAuomV1Entity.getLocalDenominator())));
+                gdmProductUnitConversionBo.setFactor(factor);
             }
         }
-        gdmProductUnitConversionBo.setGdmProductUnitConversionId(sb.toString());
-        //
-        EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomDao.getEntityWithLocalMaterialNumAndLocalAuom(edmMaterialGlobalV1Entity.getLocalMaterialNumber(),edmMaterialGlobalV1Entity.getLocalMaterialNumber());
 
-        if(edmMaterialAuomV1Entity!=null){
-            LogUtil.getCoreLog().info("edmMaterialAuomV1Entity:{}",edmMaterialAuomV1Entity.toString());
-            String factor = String .valueOf(df.format((float)Integer.valueOf(edmMaterialAuomV1Entity.getLocalNumerator())/Integer.valueOf(edmMaterialAuomV1Entity.getLocalDenominator())));
-            gdmProductUnitConversionBo.setFactor(factor);
-        }
-        LogUtil.getCoreLog().info("gdmProductUnitConversionBo:{}",gdmProductUnitConversionBo.toString());
         resultObject.setBaseBo(gdmProductUnitConversionBo);
         return resultObject;
     }
 
 
-
-    private void processSystem(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity,GDMProductUnitConversionBo gdmProductUnitConversionBo) {
+    private void processSystem(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, GDMProductUnitConversionBo gdmProductUnitConversionBo) {
         gdmProductUnitConversionBo.setProductId(edmMaterialGlobalV1Entity.getLocalDpParentCode());
-        gdmProductUnitConversionBo.setActive("YES");
-        gdmProductUnitConversionBo.setActiveFCTERP("YES");
-        gdmProductUnitConversionBo.setActiveOPRERP("YES");
-        gdmProductUnitConversionBo.setActiveSOPERP("YES");
+        gdmProductUnitConversionBo.setActive(IConstant.VALUE.YES);
+        gdmProductUnitConversionBo.setActiveFCTERP(IConstant.VALUE.YES);
+        gdmProductUnitConversionBo.setActiveOPRERP(IConstant.VALUE.YES);
+        gdmProductUnitConversionBo.setActiveSOPERP(IConstant.VALUE.NO);
     }
 }

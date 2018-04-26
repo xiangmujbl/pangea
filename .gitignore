@@ -7,4 +7,17 @@ target/
 /pangea-parent/pangea-test/target/
 /pangea-parent/pangea-view/target/
 c:/
+pangea-parent/\.idea/
+*.ipr
+pangea-parent/pangea-parent\.iws
 
+/pangea-parent/pangea-test/*.tsv
+pangea-parent/pangea-view/target/
+
+pangea-parent/pangea-test/target/
+
+pangea-parent/\.idea/
+
+*.ipr
+
+*.iws
