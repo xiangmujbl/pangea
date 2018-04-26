@@ -196,7 +196,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                 int traztLong = (int) Double.parseDouble(trazt);
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
                 Date dueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztLong);
-                return DateUtils.dateToString(dueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
+                return DateUtils.dateToString(dueDate, DateUtils.dd_MM_yyyy_HHmmss);
             }
         }
         return null;
@@ -208,7 +208,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             Date presentDate = new Date();
             int parameterValueLong = (int) Double.parseDouble(parameterValue);
             Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueLong);
-            Date dueDateFormat = DateUtils.stringToDate(dueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
+            Date dueDateFormat = DateUtils.stringToDate(dueDate, DateUtils.dd_MM_yyyy_HHmmss);
             if (dueDateFormat.getTime() >= resultDate.getTime()) {
                 return dueDate;
             }
