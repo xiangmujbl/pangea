@@ -5,219 +5,219 @@ import com.jnj.pangea.common.BaseBo;
 
 public class OMPGdmSupplyBo extends BaseBo {
 
-    private String supplyId;
-    private String active;
-    private String activeOprerp;
-    private String activeSoperp;
-    private String fromDate;
-    private String label;
-    private String locationId;
-    private String machineCapacity;
-    private String machineTypeId;
-    private String maxQuantity;
-    private String maxQuantityType;
-    private String minQuantity;
-    private String minQuantityType;
-    private String planLevelId;
-    private String preference;
-    private String processTypeId;
-    private String productId;
-    private String purchasingGroup;
-    private String purchasingOrganization;
-    private String toDate;
-    private String transportType;
-    private String supplierId;
-    private String vendor;
+    private String SupplyId;
+    private String Active;
+    private String ActiveOPRERP;
+    private String ActiveSOPERP;
+    private String FromDate;
+    private String LABEL;
+    private String LocationId;
+    private String MACHINECAPACITY;
+    private String MACHINETYPEID;
+    private String MaxQuantity;
+    private String MaxQuantityType;
+    private String MinQuantity;
+    private String MinQuantityType;
+    private String PLANLEVELID;
+    private String Preference;
+    private String PROCESSTYPEID;
+    private String ProductId;
+    private String PURCHASINGGROUP;
+    private String PURCHASINGORGANIZATION;
+    private String SupplierId;
+    private String ToDate;
+    private String TransportType;
+    private String VENDOR;
 
     // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("supplyId", this.supplyId)
+                .makeJsonObject("supplyId", this.SupplyId)
                 .toJsonString();
     }
 
     public String getSupplyId() {
-        return this.supplyId;
+        return SupplyId;
     }
 
     public void setSupplyId(String supplyId) {
-        this.supplyId = supplyId;
+        SupplyId = supplyId;
     }
 
     public String getActive() {
-        return this.active;
+        return Active;
     }
 
     public void setActive(String active) {
-        this.active = active;
+        Active = active;
     }
 
-    public String getActiveOprerp() {
-        return this.activeOprerp;
+    public String getActiveOPRERP() {
+        return ActiveOPRERP;
     }
 
-    public void setActiveOprerp(String activeOprerp) {
-        this.activeOprerp = activeOprerp;
+    public void setActiveOPRERP(String activeOPRERP) {
+        ActiveOPRERP = activeOPRERP;
     }
 
-    public String getActiveSoperp() {
-        return this.activeSoperp;
+    public String getActiveSOPERP() {
+        return ActiveSOPERP;
     }
 
-    public void setActiveSoperp(String activeSoperp) {
-        this.activeSoperp = activeSoperp;
+    public void setActiveSOPERP(String activeSOPERP) {
+        ActiveSOPERP = activeSOPERP;
     }
 
     public String getFromDate() {
-        return this.fromDate;
+        return FromDate;
     }
 
     public void setFromDate(String fromDate) {
-        this.fromDate = fromDate;
+        FromDate = fromDate;
     }
 
-    public String getLabel() {
-        return this.label;
+    public String getLABEL() {
+        return LABEL;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setLABEL(String LABEL) {
+        this.LABEL = LABEL;
     }
 
     public String getLocationId() {
-        return locationId;
+        return LocationId;
     }
 
     public void setLocationId(String locationId) {
-        this.locationId = locationId;
+        LocationId = locationId;
     }
 
-    public String getMachineCapacity() {
-        return machineCapacity;
+    public String getMACHINECAPACITY() {
+        return MACHINECAPACITY;
     }
 
-    public void setMachineCapacity(String machineCapacity) {
-        this.machineCapacity = machineCapacity;
+    public void setMACHINECAPACITY(String MACHINECAPACITY) {
+        this.MACHINECAPACITY = MACHINECAPACITY;
     }
 
-    public String getMachineTypeId() {
-        return machineTypeId;
+    public String getMACHINETYPEID() {
+        return MACHINETYPEID;
     }
 
-    public void setMachineTypeId(String machineTypeId) {
-        this.machineTypeId = machineTypeId;
+    public void setMACHINETYPEID(String MACHINETYPEID) {
+        this.MACHINETYPEID = MACHINETYPEID;
     }
 
     public String getMaxQuantity() {
-        return maxQuantity;
+        return MaxQuantity;
     }
 
     public void setMaxQuantity(String maxQuantity) {
-        this.maxQuantity = maxQuantity;
+        MaxQuantity = maxQuantity;
     }
 
     public String getMaxQuantityType() {
-        return maxQuantityType;
+        return MaxQuantityType;
     }
 
     public void setMaxQuantityType(String maxQuantityType) {
-        this.maxQuantityType = maxQuantityType;
+        MaxQuantityType = maxQuantityType;
     }
 
     public String getMinQuantity() {
-        return minQuantity;
+        return MinQuantity;
     }
 
     public void setMinQuantity(String minQuantity) {
-        this.minQuantity = minQuantity;
+        MinQuantity = minQuantity;
     }
 
     public String getMinQuantityType() {
-        return minQuantityType;
+        return MinQuantityType;
     }
 
     public void setMinQuantityType(String minQuantityType) {
-        this.minQuantityType = minQuantityType;
+        MinQuantityType = minQuantityType;
     }
 
-    public String getPlanLevelId() {
-        return planLevelId;
+    public String getPLANLEVELID() {
+        return PLANLEVELID;
     }
 
-    public void setPlanLevelId(String planLevelId) {
-        this.planLevelId = planLevelId;
+    public void setPLANLEVELID(String PLANLEVELID) {
+        this.PLANLEVELID = PLANLEVELID;
     }
 
     public String getPreference() {
-        return preference;
+        return Preference;
     }
 
     public void setPreference(String preference) {
-        this.preference = preference;
+        Preference = preference;
     }
 
-    public String getProcessTypeId() {
-        return processTypeId;
+    public String getPROCESSTYPEID() {
+        return PROCESSTYPEID;
     }
 
-    public void setProcessTypeId(String processTypeId) {
-        this.processTypeId = processTypeId;
+    public void setPROCESSTYPEID(String PROCESSTYPEID) {
+        this.PROCESSTYPEID = PROCESSTYPEID;
     }
 
     public String getProductId() {
-        return productId;
+        return ProductId;
     }
 
     public void setProductId(String productId) {
-        this.productId = productId;
+        ProductId = productId;
     }
 
-    public String getPurchasingGroup() {
-        return purchasingGroup;
+    public String getPURCHASINGGROUP() {
+        return PURCHASINGGROUP;
     }
 
-    public void setPurchasingGroup(String purchasingGroup) {
-        this.purchasingGroup = purchasingGroup;
+    public void setPURCHASINGGROUP(String PURCHASINGGROUP) {
+        this.PURCHASINGGROUP = PURCHASINGGROUP;
     }
 
-    public String getPurchasingOrganization() {
-        return purchasingOrganization;
+    public String getPURCHASINGORGANIZATION() {
+        return PURCHASINGORGANIZATION;
     }
 
-    public void setPurchasingOrganization(String purchasingOrganization) {
-        this.purchasingOrganization = purchasingOrganization;
-    }
-
-    public String getToDate() {
-        return toDate;
-    }
-
-    public void setToDate(String toDate) {
-        this.toDate = toDate;
-    }
-
-    public String getTransportType() {
-        return transportType;
-    }
-
-    public void setTransportType(String transportType) {
-        this.transportType = transportType;
+    public void setPURCHASINGORGANIZATION(String PURCHASINGORGANIZATION) {
+        this.PURCHASINGORGANIZATION = PURCHASINGORGANIZATION;
     }
 
     public String getSupplierId() {
-        return supplierId;
+        return SupplierId;
     }
 
     public void setSupplierId(String supplierId) {
-        this.supplierId = supplierId;
+        SupplierId = supplierId;
     }
 
-    public String getVendor() {
-        return vendor;
+    public String getToDate() {
+        return ToDate;
     }
 
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
+    public void setToDate(String toDate) {
+        ToDate = toDate;
+    }
+
+    public String getTransportType() {
+        return TransportType;
+    }
+
+    public void setTransportType(String transportType) {
+        TransportType = transportType;
+    }
+
+    public String getVENDOR() {
+        return VENDOR;
+    }
+
+    public void setVENDOR(String VENDOR) {
+        this.VENDOR = VENDOR;
     }
 }

@@ -1,11 +1,12 @@
 <adf-curation>
     <curation mainRegion="/edm/source_list_v1" viewRegion="/omp/gdm_supply" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_supply.controller.OMPGdmSupplyController">
+              executionClassName="com.jnj.pangea.omp.gdm_supply.controller.OMPGdmSupplyController"
+              writeTo="kafka" topic="omp_gdm_supply">
         <regions>
 
             <region path="/edm/source_list_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,localVendorAccountNumber,localFixedVendor,localFixedOutlinePurchaseAgreementItem,localVendorAccountNumber,localPlantfromWhichMaterialisProcured
+                     sourceSystem,localMaterialNumber,localPlant,localNumberofSourceListRecord,materialNumber,plant,localCreatedOn,localCreatedBy,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localFixedvendor,localAgreementNumber,localAgreementItem,localFixedOutlinePurchaseAgreementItem,localPlantfromWhichMaterialisProcured,localMatForManufPartNumber,localBlockedSourceofSupply,localPurchasingOrganization,localPurchasingDocumentCategory,localCategoryofSourceListRecord,localSourceListUsageinMaterialsPlanning
                 </columns>
                 <relations>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
@@ -43,13 +44,25 @@
 
             <region path="/edm/plant_v1">
                 <columns>
-                    localPlant,sourceSystem,localPlanningRelevant,localPurchasingGroup,
+                    sourceSystem,localPlant,plant
                 </columns>
             </region>
 
             <region path="/edm/cns_material_plan_status">
                 <columns>
-                    localMaterialNumber,localPlant,sourceSystem,spRelevant
+                    sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
+                </columns>
+            </region>
+
+            <region path="/edm/material_plant_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,materialNumber,plant,localPlantStatus,plantStatus,localProcurementType,localDeletionFlagPlant,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity
+                </columns>
+            </region>
+
+            <region path="/plan/cns_process_type">
+                <columns>
+                    processTypeId,processTypeDescription
                 </columns>
             </region>
 

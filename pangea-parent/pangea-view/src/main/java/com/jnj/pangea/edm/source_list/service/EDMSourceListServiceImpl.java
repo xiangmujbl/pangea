@@ -37,7 +37,7 @@ public class EDMSourceListServiceImpl implements ICommonService {
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
         edmSourceListBo.setSourceSystem(edmSourceSystemV1Entity.getSourceSystem());
         processSystem(eordEntity,edmSourceListBo);
-        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(edmSourceSystemV1Entity.getSourceSystem(),eordEntity.getMatnr());
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getEntityWithSourceSystemAndLocalMaterialNumber(edmSourceSystemV1Entity.getSourceSystem(),eordEntity.getMatnr());
 
         if(materialGlobalV1Entity!=null){
             edmSourceListBo.setMaterialNumber(materialGlobalV1Entity.getMaterialNumber());

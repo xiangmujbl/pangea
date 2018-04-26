@@ -66,10 +66,10 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
 
             // N2
             gdmSupplyBo.setActive("YES");
-            gdmSupplyBo.setActiveOprerp("YES");
+            gdmSupplyBo.setActiveOPRERP("YES");
 
             // N20
-            gdmSupplyBo.setActiveSoperp("No");
+            gdmSupplyBo.setActiveSOPERP("No");
 
             // N15
             String fromDate = new SimpleDateFormat("YYYY/MM/DD HH:mm:SS").format(edmSourceListV1Entity.getLocalSourceListRecordValidFrom());
@@ -77,9 +77,9 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
 
             // N19
             if(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() == null || edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().equals("")) {
-                gdmSupplyBo.setLabel("VENDOR Transport");
+                gdmSupplyBo.setLABEL("VENDOR Transport");
             } else {
-                gdmSupplyBo.setLabel("INTERNAL Transport");
+                gdmSupplyBo.setLABEL("INTERNAL Transport");
             }
 
             // N3
@@ -88,10 +88,10 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                 gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() + "_" + edmSourceListV1Entity.getLocalPlant());
 
                 // N4
-                gdmSupplyBo.setMachineCapacity("infinite");
+                gdmSupplyBo.setMACHINECAPACITY("infinite");
 
                 // N5
-                gdmSupplyBo.setMachineTypeId("SUPPLY");
+                gdmSupplyBo.setMACHINETYPEID("SUPPLY");
 
                 // N6
                 EDMMaterialPlantV1Entity edmMaterialPlantV1Entity = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
@@ -113,7 +113,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                 }
 
                 // N9
-                gdmSupplyBo.setPlanLevelId("*");
+                gdmSupplyBo.setPLANLEVELID("*");
 
                 // N10
                 if(!edmSourceListV1Entity.getLocalFixedvendor().equals("") || edmSourceListV1Entity.getLocalFixedOutlinePurchaseAgreementItem().equals("")) {
@@ -125,10 +125,10 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                 // N18
                  if(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().equals("")) {
                      PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions("VENDOR Transport");
-                     gdmSupplyBo.setProcessTypeId(planCnsProcessTypeEntity.getProcessTypeId());
+                     gdmSupplyBo.setPROCESSTYPEID(planCnsProcessTypeEntity.getProcessTypeId());
                  } else {
                      PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions("INTERNAL Transport");
-                     gdmSupplyBo.setProcessTypeId(planCnsProcessTypeEntity.getProcessTypeId());
+                     gdmSupplyBo.setPROCESSTYPEID(planCnsProcessTypeEntity.getProcessTypeId());
                  }
 
                  // N11
@@ -147,16 +147,16 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                     }
 
                     // N12
-                    gdmSupplyBo.setPurchasingGroup(edmMaterialPlantV1Entity.getLocalPurchasingGroup());
+                    gdmSupplyBo.setPURCHASINGGROUP(edmMaterialPlantV1Entity.getLocalPurchasingGroup());
 
                     // N13
-                    gdmSupplyBo.setPurchasingOrganization(edmSourceListV1Entity.getLocalPurchasingOrganization());
+                    gdmSupplyBo.setPURCHASINGORGANIZATION(edmSourceListV1Entity.getLocalPurchasingOrganization());
 
                     // N14
                     gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured());
 
                     // N15
-                    String toDate = new SimpleDateFormat("YYYY/MM/DD HH:mm:SS").format(edmSourceListV1Entity.getLocalSourceListRecordValidTo());
+                    String toDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(edmSourceListV1Entity.getLocalSourceListRecordValidTo());
                     gdmSupplyBo.setFromDate(toDate);
 
                     // N17
@@ -165,14 +165,14 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                     // N16
                     PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
                     if(planCnsPlnSplLocEntity == null) {
-                        gdmSupplyBo.setVendor(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                        gdmSupplyBo.setVENDOR(edmSourceListV1Entity.getLocalVendorAccountNumber());
                     } else {
-                        String localSpecialProcurementType = edmMaterialPlantV1Entity.getLocalSpecialProcurementType();
+                        String localSpecialProcurementType = ""; // edmMaterialPlantV1Entity.getLocalSpecialProcurementType();
                         if(localSpecialProcurementType.equals("30")) {
                             FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N11", "");
                             resultObject.setFailData(failData);
                         } else {
-                            gdmSupplyBo.setVendor(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                            gdmSupplyBo.setVENDOR(edmSourceListV1Entity.getLocalVendorAccountNumber());
                         }
                     }
 

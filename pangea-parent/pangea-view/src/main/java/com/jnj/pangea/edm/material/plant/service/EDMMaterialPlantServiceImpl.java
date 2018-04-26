@@ -45,7 +45,7 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         materialPlantBo.setLocalPlant(werks);
         materialPlantBo.setLocalDeletionFlagPlant(werks);
 
-        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystem,matnr);
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithSourceSystemAndLocalMaterialNumber(sourceSystem,matnr);
         if (null != materialGlobalV1Entity){
             String materialNumber = materialGlobalV1Entity.getMaterialNumber();
             materialPlantBo.setMaterialNumber(materialNumber);
