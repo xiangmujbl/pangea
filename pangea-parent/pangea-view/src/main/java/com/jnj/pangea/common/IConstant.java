@@ -278,6 +278,7 @@ public interface IConstant {
         String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
 
+
     interface EDM_MAT_PLANT_FI_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";

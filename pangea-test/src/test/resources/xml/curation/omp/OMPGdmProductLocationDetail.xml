@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/plan/cns_material_plan_status" viewRegion="/omp/gdm_product_location_detail" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_product_location_detail.controller.OMPGdmProductLocationDetailController"
-              writeTo="kafka" topic="gdm_omp_product_location_detail_ross_1">
+              writeTo="kafka" topic="gdm_omp_product_location_detail">
         <regions>
 
             <region path="/plan/cns_material_plan_status">
@@ -26,8 +26,8 @@
                 <relations>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
                         <expression>
-                            localMaterialNumber=/omp/cns_prod_loc_attrib.localMaterialNumber,
-                            sourceSystem=/omp/cns_prod_loc_attrib.sourceSystem
+                            localMaterialNumber=/plan/cns_prod_loc_attrib.localMaterialNumber,
+                            sourceSystem=/plan/cns_prod_loc_attrib.sourceSystem
                         </expression>
                     </relation>
                 </relations>
@@ -41,7 +41,7 @@
 
             <region path="/omp/gdm_product_location_detail">
                 <columns>
-                    productLocationDetailId,activeOprerp,activeSoperp,CLASS,comments,description,name,productLocationId,unit,value
+                    productLocationDetailId,activeOprerp,activeSoperp,CLASS,description,name,productLocationId,unit,value
                 </columns>
             </region>
 
