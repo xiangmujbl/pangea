@@ -294,7 +294,7 @@ public interface IConstant {
         String BASE = "BASE";
         String ZERO = "0";
         String STR_ONE = "001";
-        String BLANK = "BLANK";
+        String BLANK = "";
         String OMP="omp";
         String CNS_SALES_HISTORY = "CNS_SalesHistory";
         String RESTRICT_SELECT = "restrictSelect";

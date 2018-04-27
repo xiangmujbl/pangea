@@ -51,7 +51,7 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
         gdmCustomerBo.setPartner(IConstant.VALUE.BLANK);
         gdmCustomerBo.setPlanningCustomerGroupId(IConstant.VALUE.BLANK);
         gdmCustomerBo.setSourceLocationId(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setUcn(IConstant.VALUE.BLANK);
+        gdmCustomerBo.setUcn(IConstant.VALUE.ZERO);
 
         // J1
         String countryID = cnsDemGrpAsgnEntity.getCountryAffiliate();
