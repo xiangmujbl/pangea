@@ -33,9 +33,9 @@ Feature: OMPGdmCustomer AEAZ-2710
 
     Then I check file data for filename "GDMCustomer.tsv" by keyFields "customerId"
       | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | aggrSoldTo | channel | channelDescription      | countryId | custCluster | distributionChannel | distributor | division | eCommerce | globalCustomerId | name                                | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupId | regionId | salesOrganization | soldTo | sourceLocationId | subCluster | ucn   |
-      | 76100001   | YES    | YES          | NO           | NO           | BLANK      | CH006   | Distributor Traditional | BR        | BR           | BLANK               | BLANK       | BLANK    | BLANK      | BLANK            | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD | BLANK   |                |             |               |             | BLANK                   | BR1      | BRAZIL            |        | BLANK            | Brazil     | BLANK |
-      | 76100003   | YES    | YES          | NO           | NO           | BLANK      | CH005   | Modern Trade            | CH        |              | BLANK               | BLANK       | BLANK    | BLANK      | BLANK            | GRUPO WM VAREJO                     | BLANK   |                |             |               |             | BLANK                   | CH1      |                   |        | BLANK            |            | BLANK |
-      | 76100004   | YES    | YES          | NO           | NO           | BLANK      | CH008   | Clubs/Cash & Carry      | CO        | CO           | BLANK               | BLANK       | BLANK    | BLANK      | BLANK            | GRUPO WMSE ATACADO SAMS             | BLANK   |                |             |               |             | BLANK                   |          | ANDEAN            |        | BLANK            | Andean     | BLANK |
+      | 76100001   | YES    | YES          | NO           | NO           | BLANK      | CH006   | Distributor Traditional | BR        | BR          | BLANK               | NO          | BLANK    | NO        | BLANK            | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD | BLANK   |                |             |               |             | BLANK                   | BR1      | BRAZIL            |        | BLANK            | Brazil     | BLANK |
+      | 76100003   | YES    | YES          | NO           | NO           | BLANK      | CH005   | Modern Trade            | CH        |             | BLANK               | NO          | BLANK    | NO        | BLANK            | GRUPO WM VAREJO                     | BLANK   |                |             |               |             | BLANK                   | CH1      |                   |        | BLANK            |            | BLANK |
+      | 76100004   | YES    | YES          | NO           | NO           | BLANK      | CH008   | Clubs/Cash & Carry      | CO        | CO          | BLANK               | NO          | BLANK    | NO        | BLANK            | GRUPO WMSE ATACADO SAMS             | BLANK   |                |             |               |             | BLANK                   |          | ANDEAN            |        | BLANK            | Andean     | BLANK |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -48,5 +48,5 @@ Feature: OMPGdmCustomer AEAZ-2710
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMCustomer.tsv"
+#    And I will remove the test file on sink application "GDMCustomer.tsv"
 
