@@ -12,8 +12,7 @@ import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_prod_cty_affl.bo.PlanCnsProdCtyAfflBo;
-
-import java.util.Set;
+import org.apache.commons.lang.StringUtils;
 
 public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
 
@@ -36,7 +35,6 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
-        Set<String> prodCtyAfflEntitySet  = (Set) o2;
 
         PlanCnsProdCtyAfflBo cnsProdCtyAfflBo = new PlanCnsProdCtyAfflBo();
 
@@ -51,15 +49,14 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
             if (null != materialPlanStatusEntityC1) {
                 String localParentCode = materialPlanStatusEntityC1.getLocalParentCode();
 
-                if (!prodCtyAfflEntitySet.contains(localParentCode)) {
+                if (StringUtils.isNotEmpty(localParentCode)) {
                     cnsProdCtyAfflBo.setDpParentCode(localParentCode);
-                }else{
+                } else {
                     FailData failData = checkFailData(materialGlobalV1Entity);
                     failData.setErrorCode("C1");
                     resultObject.setFailData(failData);
                     return resultObject;
                 }
-
             } else {
                 FailData failData = checkFailData(materialGlobalV1Entity);
                 failData.setErrorCode("C1");
@@ -89,16 +86,8 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
                 cnsProdCtyAfflBo.setProdClassification(IConstant.VALUE.REGULAR);
             }
 
-            if (null == cnsProdCtyAfflBo.getOvrProdClass()) {
-                cnsProdCtyAfflBo.setOvrProdClass(cnsProdCtyAfflBo.getProdClassification());
-            }
-
             if (null == cnsProdCtyAfflBo.getProdStatus()) {
                 cnsProdCtyAfflBo.setProdStatus(IConstant.VALUE.ACTIVE);
-            }
-
-            if (null == cnsProdCtyAfflBo.getOvrProdStat()) {
-                cnsProdCtyAfflBo.setOvrProdStat(cnsProdCtyAfflBo.getProdStatus());
             }
 
         } else {
@@ -108,7 +97,6 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        prodCtyAfflEntitySet.add(cnsProdCtyAfflBo.getDpParentCode());
         resultObject.setBaseBo(cnsProdCtyAfflBo);
         return resultObject;
     }

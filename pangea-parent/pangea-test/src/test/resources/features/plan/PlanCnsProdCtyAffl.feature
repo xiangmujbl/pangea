@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-2531
-Feature: AEAZ-2531 PlanCnsProdCtyAffl-Curation
+Feature: PlanCnsProdCtyAffl-Curation AEAZ-2531
 
   Scenario: Full Load curation
     #1.get sourceSystem from source_system_v1 (rule T1)
@@ -43,9 +43,9 @@ Feature: AEAZ-2531 PlanCnsProdCtyAffl-Curation
 
     Then I check region data "/plan/cns_prod_cty_affl" by keyFields "sourceSystem,dpParentCode,country"
       | sourceSystem | dpParentCode      | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
-      | CONS_LATAM   | 7320133000740000  | BR      | REGULAR            | REGULAR      | ACTIVE     | ACTIVE      |                |             |          |            |
-      | CONS_LATAM   | 975760150         | BR      | SAMPLE             | SAMPLE       | ACTIVE     | ACTIVE      |                |             |          |            |
-      | CONS_LATAM   | 78910106115210000 | BR      | REGULAR            | REGULAR      | ACTIVE     | ACTIVE      |                |             |          |            |
+      | CONS_LATAM   | 7320133000740000  | BR      | REGULAR            |              | ACTIVE     |             |                |             |          |            |
+      | CONS_LATAM   | 975760150         | BR      | SAMPLE             |              | ACTIVE     |             |                |             |          |            |
+      | CONS_LATAM   | 78910106115210000 | BR      | REGULAR            |              | ACTIVE     |             |                |             |          |            |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
