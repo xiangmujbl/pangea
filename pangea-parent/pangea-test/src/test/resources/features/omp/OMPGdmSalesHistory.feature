@@ -7,9 +7,9 @@ Feature: OMPGdmSalesHistory AEAZ-2530
 
     Given I import "/edm/sales_order_v1" by keyFields "sourceSystem,salesOrderNo,salesOrderItem"
       | sourceSystem | salesOrderNo | salesOrderItem | scheduleLineItem | localSalesOrg | localShipToParty | localOrderCreateDt | localOrderType | localPlant | localMaterialNumber | localItemCategory | localSDItemCurrency | localRequestedDate | localRejReason | salesOrderQty | localNumtoBase | localDentoBase | localRoute |
-      | CONS_LATAM   | 0008288858   | 000003         |                  | BR01          | 0000177376       | 20150402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20150402           |                | 1.000         | 1              | 1              | B08002     |
-      | CONS_LATAM   | 0008288859   | 000003         |                  | BR01          | 0000118476       | 20150402           | ZSRT           | BR08       | 000000000000081097  | ZSRT              | BR08                | 20150402           |                | 2.000         | 1              | 1              | B08004     |
-      | CONS_LATAM   | 0008288860   | 000001         |                  | BR01          | 0000185314       | 20150402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20150402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288858   | 000003         |                  | BR01          | 0000177376       | 20190402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20190402           |                | 1.000         | 1              | 1              | B08002     |
+      | CONS_LATAM   | 0008288859   | 000003         |                  | BR01          | 0000118476       | 20190402           | ZSRT           | BR08       | 000000000000081097  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08004     |
+      | CONS_LATAM   | 0008288860   | 000001         |                  | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
     And I wait "/edm/sales_order_v1" Async Queue complete
     Given I import "/plan/cns_cust_excl" by keyFields "salesOrg,customerShipTo"
       | salesOrg | customerShipTo |
@@ -19,13 +19,13 @@ Feature: OMPGdmSalesHistory AEAZ-2530
     And I wait "/plan/cns_cust_excl" Async Queue complete
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter"
       | sourceSystem | dataObject       | attribute      | parameter | inclExcl | parameterValue |
-      | CONS_LATAM   | CNS_SalesHistory | restrictSelect | lessMonth | I        | 90             |
-      | CONS_LATAM   | CNS_SalesHistory | initialSelect  | lessMonth | I        | 180            |
+      | CONS_LATAM   | CNS_SalesHistory | restrictSelect | lessMonth | I        | 1              |
+      | CONS_LATAM   | CNS_SalesHistory | initialSelect  | lessMonth | I        | 2              |
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/plan/cns_so_type_incl" by keyFields "salesOrg,orderType,country"
       | salesOrg | orderType | country |
-      | ZSRT     | BR01      | BR      |
+      | BR01     | ZSRT      | BR      |
     And I wait "/plan/cns_so_type_incl" Async Queue complete
 
     Given I import "/edm/plant_v1" by keyFields "localPlant"
@@ -85,11 +85,14 @@ Feature: OMPGdmSalesHistory AEAZ-2530
 
     When I submit task with xml file "xml/omp/OMPGdmSalesHistory.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_sales_history" by keyFields "salesHistoryId,activeFCTERP"
+    Then A file is found on sink application with name "GDMSaleshistory.tsv"
+
+    Then I check file data for filename "GDMSaleshistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
       | salesHistoryId   | activeFCTERP | certaintyId | conversionFactorXx | currencyId | customerId | demandStreamId | dueDate             | forecastItemId | fromDueDate         | locationId      | orderReason | orderStatus | orderSubType | orderType | productId | quantity | salesUnit | unitId | validValueXx |
-      | 0008288860000001 | YES          | FOC         |                    | ADP        | 76100009   |                | 02-01-2015 00:00:00 |                | 04-10-2014 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
-      | 0008288859000003 | YES          | FOC         |                    | ADP        | 76100008   |                | 01-02-2015 00:00:00 |                | 03-11-2014 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC02     | 2.0      | CA        |        |              |
-      | 0008288858000003 | YES          | FOC         |                    | ADP        | 76100007   |                | 03-03-2015 00:00:00 |                | 03-12-2014 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC01     | 1.0      | CA        |        |              |
+      | 0008288860000001 | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288859000003 | YES          | FOC         |                    | ADP        | 76100008   |                | 01/02/2019 00:00:00 |                | 01/02/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC02     | 2.0      | CA        |        |              |
+      | 0008288858000003 | YES          | FOC         |                    | ADP        | 76100007   |                | 03/03/2019 00:00:00 |                | 03/03/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC01     | 1.0      | CA        |        |              |
+
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
@@ -100,4 +103,6 @@ Feature: OMPGdmSalesHistory AEAZ-2530
     And I will remove all data with region "/omp/gdm_sales_history"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "GDMSaleshistory.tsv"
 

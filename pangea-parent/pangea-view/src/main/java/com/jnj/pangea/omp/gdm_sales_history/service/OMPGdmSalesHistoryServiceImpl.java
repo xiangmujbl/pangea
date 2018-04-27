@@ -102,7 +102,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         if (null != materialGlobalV1Entity) {
             gdmSalesHistoryBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
             gdmSalesHistoryBo.setSalesUnit(checkT10(materialGlobalV1Entity.getLocalBaseUom()));
-        }else {
+        } else {
             FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T8, "Material not found in material global");
             resultObject.setFailData(failData);
             return resultObject;
@@ -138,7 +138,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                 certDeterEntity = cnsCertDeterDao.getEntitiesWithSalesOrgAndOrderType(localSalesOrg, localOrderType);
                 if (null != certDeterEntity) {
                     return certDeterEntity.getCertaintyKey();
-                }else{
+                } else {
                     return IConstant.VALUE.BASE;
                 }
             }
@@ -227,7 +227,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueInt);
         if (localOrderCreateDateFormat.getTime() >= resultDate.getTime()) {
             PlanCnsSoTypeInclEntity soTypeInclEntity = cnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType());
-
             if (null != soTypeInclEntity) {
                 String localPlant = salesOrderV1Entity.getLocalPlant();
                 EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithLocalPlantAndCountry(localPlant, soTypeInclEntity.getCountry());
