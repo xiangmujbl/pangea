@@ -13,6 +13,7 @@ public class DateUtils {
     public final static String F_yyyyMMdd = "yyyyMMdd";
     public final static String F_yyyyMM = "yyyyMM";
     public final static String F_yyyyMMddHHmmss = "yyyyMMddHHmmss";
+    public final static String F_yyyyMMddHHmmss_ = "yyyyMMddHH:mm:ss";
     public final static String yyyyMMdd_HHmmss = "yyyyMMdd_HH-mm-ss";
     public final static String yyyy_MM_dd_HHmmss_SSS = "yyyy/MM/dd HH:mm:ss.SSS";
     public final static String yyyyMMdd_HHmmssSSS = "yyyyMMdd HH:mm:ss:SSS";

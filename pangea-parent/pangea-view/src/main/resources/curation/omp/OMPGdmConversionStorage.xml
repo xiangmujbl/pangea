@@ -2,19 +2,22 @@
     <curation mainRegion="/plan/cns_dp_price" viewRegion="/omp/gdm_conversion_storage" chunkSize="1000"
               chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_conversion_storage.controller.OMPGdmConversionStorageController"
-              writeTo="all" topic="omp_gdm_conversion_storage" >
+              writeTo="all" topic="PANGEA_V1_omp_gdm_conversion_storage" >
         <regions>
 
             <region path="/plan/cns_dp_price">
                 <columns>localMaterialNumber,country,currency,fromDate,salesPrice,sourceSystem</columns>
                 <relations>
                     <relation path="/edm/country_v1" isPrimaryKey="false">
-                        <expression>localCountry=/plan/cns_dp_price.country</expression>
+                        <expression></expression>
                     </relation>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/plan/cns_dp_price.localMaterialNumber,sourceSystem=/plan/cns_dp_price.sourceSystem</expression>
+                        <expression></expression>
                     </relation>
                     <relation path="/plan/cns_cust_channel" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_dp_price" alias="/plan/cns_dp_price_clone">
                         <expression></expression>
                     </relation>
                 </relations>
@@ -32,13 +35,19 @@
                 <columns>localMaterialNumber,sourceSystem,localDpParentCode</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
-                        <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
+                        <expression></expression>
                     </relation>
                 </relations>
             </region>
 
             <region path="/plan/cns_cust_channel">
-                <columns>channel</columns>
+                <columns>channel,salesOrg</columns>
+            </region>
+
+            <region path="/plan/cns_dp_price" alias="/plan/cns_dp_price_clone">
+                <columns>
+                    localMaterialNumber,salesPrice
+                </columns>
             </region>
 
             <region path="/omp/gdm_conversion_storage">

@@ -40,7 +40,7 @@ public interface IConstant {
         String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
         String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
         String PLAN_CNS_CUST_CHANNEL="/plan/cns_cust_channel";
-        String PLAN_CNS_DP_PRICE="/plan/cns_dp_price";
+        String PLAN_CNS_DP_PRICE_CLONE="/plan/cns_dp_price_clone";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PROD_CTY_AFFL="/plan/cns_prod_cty_affl";

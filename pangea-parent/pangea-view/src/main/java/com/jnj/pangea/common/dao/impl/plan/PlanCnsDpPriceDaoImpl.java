@@ -21,6 +21,6 @@ public class PlanCnsDpPriceDaoImpl extends CommonDaoImpl {
     public List<PlanCnsDpPriceEntity> getEntitiesWithLocalMaterialNumbers(List<String> localMaterialNumbers) {
 
         String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DP_PRICE.LOCAL_MATERIAL_NUMBER).in(localMaterialNumbers).toQueryString();
-        return queryForList(IConstant.REGION.PLAN_CNS_DP_PRICE, queryString, PlanCnsDpPriceEntity.class);
+        return queryForList(IConstant.REGION.PLAN_CNS_DP_PRICE_CLONE, queryString, PlanCnsDpPriceEntity.class);
     }
 }

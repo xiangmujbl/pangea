@@ -18,9 +18,9 @@ public class PlanCnsCustChannelDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<PlanCnsCustChannelEntity> getEntitiesWithStartCharInChannel(String startCharInChannel) {
+    public List<PlanCnsCustChannelEntity> getEntitiesWithStartCharInSalesOrg(String startCharInSalesOrg) {
 
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_CHANNEL.CHANNEL).startsWith(startCharInChannel).toQueryString();
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_CHANNEL.SALES_ORG).startsWith(startCharInSalesOrg).toQueryString();
         return queryForList(IConstant.REGION.PLAN_CNS_CUST_CHANNEL, queryString, PlanCnsCustChannelEntity.class);
     }
 
