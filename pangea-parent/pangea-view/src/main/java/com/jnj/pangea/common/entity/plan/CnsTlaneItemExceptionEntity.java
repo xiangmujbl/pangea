@@ -4,7 +4,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class CnsTlaneItemEntity extends CommonEntity {
+public class CnsTlaneItemExceptionEntity extends CommonEntity {
 
     private String validTo;
     private String originLocation;
@@ -16,10 +16,11 @@ public class CnsTlaneItemEntity extends CommonEntity {
     private String mode;
     private String sequenceNumber;
     private String tlaneName;
+    private String deletionIndicator;
+    private String refSeqNumTlaneItem;
 
 
-
-    public CnsTlaneItemEntity (Map<String, Object> map) {
+    public CnsTlaneItemExceptionEntity (Map<String, Object> map) {
         super(map);
         setValidTo((String) map.get("validTo"));
         setOriginLocation((String) map.get("originLocation"));
@@ -31,6 +32,24 @@ public class CnsTlaneItemEntity extends CommonEntity {
         setMode((String) map.get("mode"));
         setMode((String) map.get("sequenceNumber"));
         setMode((String) map.get("tlaneName"));
+        setMode((String) map.get("deletionIndicator"));
+        setMode((String) map.get("refSeqNumTlaneItem"));
+    }
+
+    public String getDeletionIndicator () {
+        return deletionIndicator;
+    }
+
+    public void setDeletionIndicator (String deletionIndicator) {
+        this.deletionIndicator = deletionIndicator;
+    }
+
+    public String getRefSeqNumTlaneItem () {
+        return refSeqNumTlaneItem;
+    }
+
+    public void setRefSeqNumTlaneItem (String refSeqNumTlaneItem) {
+        this.refSeqNumTlaneItem = refSeqNumTlaneItem;
     }
 
     public String getSequenceNumber () {

@@ -4,50 +4,112 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class CnsMaterialInclEntity extends CommonEntity {
+public class CnsTlaneItemEntity extends CommonEntity {
 
-    private String sourceSystem;
-    private String localMaterialNumber;
-    private String planningType;
-    private String localPlant;
+    private String validTo;
+    private String originLocation;
+    private String materialNumber;
+    private String processTypeId;
+    private String validFrom;
+    private String destinationLocation;
+    private String leadTime;
+    private String mode;
+    private String sequenceNumber;
+    private String tlaneName;
 
-    public CnsMaterialInclEntity(Map<String, Object> map) {
+
+
+    public CnsTlaneItemEntity (Map<String, Object> map) {
         super(map);
-        setSourceSystem((String) map.get("sourceSystem"));
-        setLocalMaterialNumber((String) map.get("localMaterialNumber"));
-        setPlanningType((String) map.get("planningType"));
-        setLocalPlant((String) map.get("localPlant"));
+        setValidTo((String) map.get("validTo"));
+        setOriginLocation((String) map.get("originLocation"));
+        setMaterialNumber((String) map.get("materialNumber"));
+        setProcessTypeId((String) map.get("processTypeId"));
+        setValidFrom((String) map.get("validFrom"));
+        setDestinationLocation((String) map.get("destinationlocation"));
+        setLeadTime((String) map.get("leadtime"));
+        setMode((String) map.get("mode"));
+        setMode((String) map.get("sequenceNumber"));
+        setMode((String) map.get("tlaneName"));
     }
 
-    public String getLocalMaterialNumber() {
-        return localMaterialNumber;
+    public String getSequenceNumber () {
+        return sequenceNumber;
     }
 
-    public void setLocalMaterialNumber(String localMaterialNumber) {
-        this.localMaterialNumber = localMaterialNumber;
+    public void setSequenceNumber (String sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
-    public String getPlanningType() {
-        return planningType;
+    public String getTlaneName () {
+        return tlaneName;
     }
 
-    public void setPlanningType(String planningType) {
-        this.planningType = planningType;
+    public void setTlaneName (String tlaneName) {
+        this.tlaneName = tlaneName;
     }
 
-    public String getLocalPlant() {
-        return localPlant;
+    public String getValidTo () {
+        return validTo;
     }
 
-    public void setLocalPlant(String localPlant) {
-        this.localPlant = localPlant;
+    public void setValidTo (String validTo) {
+        this.validTo = validTo;
     }
 
-    public String getSourceSystem() {
-        return sourceSystem;
+    public String getOriginLocation () {
+        return originLocation;
     }
 
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
+    public void setOriginLocation (String originLocation) {
+        this.originLocation = originLocation;
+    }
+
+    public String getMaterialNumber () {
+        return materialNumber;
+    }
+
+    public void setMaterialNumber (String materialNumber) {
+        this.materialNumber = materialNumber;
+    }
+
+    public String getLeadTime () {
+        return leadTime;
+    }
+
+    public void setLeadTime (String leadTime) {
+        this.leadTime = leadTime;
+    }
+
+    public String getMode () {
+        return mode;
+    }
+
+    public void setMode (String mode) {
+        this.mode = mode;
+    }
+
+    public String getProcessTypeId () {
+        return processTypeId;
+    }
+
+    public void setProcessTypeId (String processTypeId) {
+        this.processTypeId = processTypeId;
+    }
+
+    public String getValidFrom () {
+        return validFrom;
+    }
+
+    public void setValidFrom (String validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public String getDestinationLocation () {
+        return destinationLocation;
+    }
+
+    public void setDestinationLocation (String destinationLocation) {
+        this.destinationLocation = destinationLocation;
     }
 }
