@@ -14,6 +14,7 @@ public class EDMBatchMasterBo extends BaseBo {
     private String btchMfgDt;
     private String plant;
     private String materialNumber;
+    private String btchStsCd;
 
     @Override
     public String getKey() {
@@ -96,6 +97,14 @@ public class EDMBatchMasterBo extends BaseBo {
 
     public void setMaterialNumber(String materialNumber) {
         this.materialNumber = materialNumber;
+    }
+
+    public String getBtchStsCd() {
+        return this.btchStsCd;
+    }
+
+    public void setBtchStsCd(String btchStsCd) {
+        this.btchStsCd = btchStsCd;
     }
 
 }

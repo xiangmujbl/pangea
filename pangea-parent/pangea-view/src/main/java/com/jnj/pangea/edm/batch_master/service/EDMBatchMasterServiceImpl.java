@@ -96,6 +96,7 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
 
                 eDMBatchMasterBo.setMatlNum(mch1Entity.getMatnr());
                 eDMBatchMasterBo.setBtchNum(mch1Entity.getCharg());
+                eDMBatchMasterBo.setBtchStsCd(mch1Entity.getZustd());
                 SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
                 SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
 
