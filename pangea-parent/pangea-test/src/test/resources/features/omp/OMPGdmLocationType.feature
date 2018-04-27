@@ -14,11 +14,9 @@ Feature:  OMPGdmLocationType-Curation
 
     And I check file data for filename "LocationType.tsv" by keyFields "locationTypeId,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,planLocTypeDesc"
       | ActiveOPRERP | LocationTypeId | ActiveSOPERP | LABEL                        | ActiveFCTERP |
-      | YES          | CO01           | YES          | Internal Manufacturing Plant | YES          |
+      | YES          | CO01           | NO           | Internal Manufacturing Plant | YES          |
 
     And I delete the test data
-
-    And I will remove all data with region "/omp/gdm_location_type"
 
     And I will remove all data with region "/plan/cns_loc_type"
 
