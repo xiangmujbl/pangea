@@ -18,9 +18,9 @@ Feature: OMPProductCountry AEAZ-1615
 
     When I submit task with xml file "xml/omp/OMPProductCountry.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "OMPProductCountry.tsv"
+    Then A file is found on sink application with name "GDMProductCountry.tsv"
 
-    Then I check file data for filename "OMPProductCountry.tsv" by keyFields "uniqueId"
+    Then I check file data for filename "GDMProductCountry.tsv" by keyFields "uniqueId"
       | uniqueId                    | activeFCTERP | countryGroup | countryId | dpPlannerId | dpSegmentation | productClassification | productId              | productStatus | rootSize | segmentation |
       | LA_0000000000000517180241BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | 0000000000000517180241 | INACTIVE      |          |              |
       | LA_0000000000000517180242BR | YES          | SUNFRESH     | BR        | DP004       |                | SAMPLE                | 0000000000000517180242 | INACTIVE      |          |              |
@@ -50,5 +50,5 @@ Feature: OMPProductCountry AEAZ-1615
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "OMPProductCountry.tsv"
+#    And I will remove the test file on sink application "GDMProductCountry.tsv"
 
