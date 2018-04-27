@@ -11,6 +11,7 @@ import com.jnj.pangea.common.dao.impl.project_one.ProjectOneKnvhDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneTvroDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSalesOrderV1Entity;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.common.entity.project_one.KnvhEntity;
@@ -20,7 +21,6 @@ import com.jnj.pangea.omp.gdm_sales_history.bo.OMPGdmSalesHistoryBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
@@ -48,9 +48,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     private PlanCnsOrdRejDaoImpl cnsOrdRejDao = PlanCnsOrdRejDaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl cnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
 
-    private SimpleDateFormat YMDSdf = new SimpleDateFormat("yyyyMMdd");
-    private SimpleDateFormat DMYSdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -58,6 +55,10 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         EDMSalesOrderV1Entity salesOrderV1Entity = (EDMSalesOrderV1Entity) o;
 
         OMPGdmSalesHistoryBo gdmSalesHistoryBo = new OMPGdmSalesHistoryBo();
+
+        if (!checkJ1(salesOrderV1Entity)) {
+            return null;
+        }
         String localSalesOrg = salesOrderV1Entity.getLocalSalesOrg();
         String localShipToParty = salesOrderV1Entity.getLocalShipToParty();
         String localOrderType = salesOrderV1Entity.getLocalOrderType();
@@ -133,10 +134,11 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                 certDeterEntity = cnsCertDeterDao.getEntitiesWithSalesOrgAndOrderType(localSalesOrg, localOrderType);
                 if (null != certDeterEntity) {
                     return certDeterEntity.getCertaintyKey();
+                }else{
+                    return IConstant.VALUE.BASE;
                 }
             }
         }
-        return IConstant.VALUE.BASE;
     }
 
     private String checkT4(String localSdItemCurrency) {
@@ -180,7 +182,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                     return null;
                 }
             }
-
         }
         return null;
     }
@@ -195,7 +196,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                 int traztLong = (int) Double.parseDouble(trazt);
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
                 Date dueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztLong);
-                return DateUtils.dateToString(dueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
+                return DateUtils.dateToString(dueDate, DateUtils.dd_MM_yyyy_HHmmss);
             }
         }
         return null;
@@ -204,14 +205,37 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     private String checkF2T6(String dueDate) {
         String parameterValue = getParameterValue(IConstant.VALUE.RESTRICT_SELECT);
         if (StringUtils.isNotEmpty(dueDate) && StringUtils.isNotEmpty(StringUtils.trim(parameterValue))) {
-
-            Date dueDateFormat = DateUtils.stringToDate(dueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
+            Date presentDate = new Date();
             int parameterValueLong = (int) Double.parseDouble(parameterValue);
-            Date fromDueDate = DateUtils.offsetDate(dueDateFormat, -parameterValueLong);
-            return DateUtils.dateToString(fromDueDate, DateUtils.F_dd_MM_yyyy_HHmmss);
-        } else {
-            return null;
+            Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueLong);
+            Date dueDateFormat = DateUtils.stringToDate(dueDate, DateUtils.dd_MM_yyyy_HHmmss);
+            if (dueDateFormat.getTime() >= resultDate.getTime()) {
+                return dueDate;
+            }
         }
+        return null;
+    }
+
+    private boolean checkJ1(EDMSalesOrderV1Entity salesOrderV1Entity) {
+        Date presentDate = new Date();
+        Date localOrderCreateDateFormat = DateUtils.stringToDate(salesOrderV1Entity.getLocalOrderCreateDt(), DateUtils.F_yyyyMMdd);
+        int parameterValueInt = Integer.parseInt(getParameterValue(IConstant.VALUE.INITIAL_SELECT));
+        Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueInt);
+        if (localOrderCreateDateFormat.getTime() >= resultDate.getTime()) {
+            PlanCnsSoTypeInclEntity soTypeInclEntity = cnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType());
+
+            if (null != soTypeInclEntity) {
+                String localPlant = salesOrderV1Entity.getLocalPlant();
+                EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithLocalPlantAndCountry(localPlant, soTypeInclEntity.getCountry());
+
+                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithThereConditions(salesOrderV1Entity.getLocalMaterialNumber(), localPlant, IConstant.VALUE.X);
+
+                if (null != plantV1Entity && null != materialPlanStatusEntity) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private PlanCnsOrdRejEntity checkJ2(EDMSalesOrderV1Entity salesOrderV1Entity) {

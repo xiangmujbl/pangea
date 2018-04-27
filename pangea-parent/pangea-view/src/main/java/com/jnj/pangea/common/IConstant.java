@@ -51,10 +51,12 @@ public interface IConstant {
         String PROJECT_ONE_TVRO="/project_one/tvro";
         String PLAN_CNS_ORD_REJ="/plan/cns_ord_rej";
         String PLAN_CNS_CUST_EXCL="/plan/cns_cust_excl";
+        String PLAN_CNS_SO_TYPE_INCL="/plan/cns_so_type_incl";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface project_one_tmabct {
@@ -172,6 +174,7 @@ public interface IConstant {
     interface EDM_PLANT_V1 {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
+        String COUNTRY = "country";
     }
 
     interface CNS_PLAN_PARAMETER {
@@ -208,6 +211,7 @@ public interface IConstant {
         String DP_RELEVANT = "dpRelevant";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANT = "localPlant";
     }
     interface PLAN_CNS_PROD_CTY_AFFL{
         String SOURCE_SYSTEM = "sourceSystem";
@@ -251,6 +255,10 @@ public interface IConstant {
 
     interface PLAN_CNS_CUST_CHANNEL {
         String CHANNEL = "channel";
+    }
+    interface PLAN_CNS_SO_TYPE_INCL {
+        String SALES_ORG = "salesOrg";
+        String ORDER_TYPE = "orderType";
     }
 
 
