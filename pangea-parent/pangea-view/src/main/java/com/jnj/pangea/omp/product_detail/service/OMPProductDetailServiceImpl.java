@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.product_detail.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
@@ -34,16 +33,14 @@ public class OMPProductDetailServiceImpl{
         List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
 
-
         List<OMPProductDetailBo> BoList = new ArrayList<OMPProductDetailBo>();
-
 
          //rules J1
         String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
 
         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(localMaterialNumber,IConstant.VALUE.CONS_LATAM);
 
-        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(materialGlobalV1Entity.getSourceSystem());
+        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithSourceSystem(materialGlobalV1Entity.getSourceSystem());
 
         //rules T1
         getFieldWithT1(materialGlobalV1Entity, cnsMaterialPlanStatusEntity, edmSourceSystemV1Entity, BoList);
@@ -69,7 +66,6 @@ public class OMPProductDetailServiceImpl{
             resultObject.setBaseBo(bo);
             resultObjectList.add(resultObject);
         }
-
         return resultObjectList;
     }
 

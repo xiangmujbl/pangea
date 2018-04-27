@@ -56,6 +56,7 @@ public interface IConstant {
 
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface project_one_tmabct {
