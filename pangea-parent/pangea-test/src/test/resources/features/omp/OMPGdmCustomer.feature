@@ -48,5 +48,5 @@ Feature: OMPGdmCustomer AEAZ-2710
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will remove the test file on sink application "GDMCustomer.tsv"
+    And I will remove the test file on sink application "GDMCustomer.tsv"
 

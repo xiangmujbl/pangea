@@ -1,6 +1,7 @@
 <adf-curation>
     <curation mainRegion="/plan/cns_prod_cty_affl" viewRegion="/omp/product_country" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.product_country.controller.GDMProductCountryController">
+              executionClassName="com.jnj.pangea.omp.product_country.controller.GDMProductCountryController"
+              writeTo="all" topic="omp_product_country">
         <regions>
 
             <region path="/plan/cns_prod_cty_affl">
