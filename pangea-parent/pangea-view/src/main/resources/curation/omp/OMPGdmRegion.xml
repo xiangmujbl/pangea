@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/plan/cns_plan_region" viewRegion="/omp/gdm_region" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_region.controller.OMPGdmRegionController"
-              writeTo="all" topic="PANGEA_V1_omp_gdm_region">
+              writeTo="all" topic="omp_gdm_region">
         <regions>
 
             <region path="/plan/cns_plan_region">

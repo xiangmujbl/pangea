@@ -1,5 +1,5 @@
-@pangea_test
-Feature: OMPGdmUnitEvol-Curation
+@pangea_test @AEAZ-2712
+Feature: OMPGdmUnitEvol-Curation AEAZ-2712
 
   Scenario: Full Load curation
   #  1. make sure of data construction (Rule:C1)
@@ -20,7 +20,7 @@ Feature: OMPGdmUnitEvol-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmUnitEvol.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "PANGEA_V1_omp_gdm_unit_evol.tsv"
+    Then A file is found on sink application with name "GDMUnitEvol.tsv"
 
 #    Then I check region data "/omp/gdm_unit_evol" by keyFields "uniqueId"
 #      | uniqueId         | activeFCTERP | unitId | startEff   | endEff     | factor      | preference |
@@ -43,6 +43,6 @@ Feature: OMPGdmUnitEvol-Curation
 
     And I will remove all data with region "/omp/gdm_unit_evol"
     And I will remove all data with region "/plan/edm_failed_data"
-    And I will remove the test file on sink application "PANGEA_V1_omp_gdm_unit_evol.tsv"
+    And I will remove the test file on sink application "GDMUnitEvol.tsv"
 
 

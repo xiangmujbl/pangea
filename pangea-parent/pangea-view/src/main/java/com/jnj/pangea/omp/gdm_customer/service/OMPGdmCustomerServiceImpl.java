@@ -43,9 +43,9 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
         gdmCustomerBo.setChannelDescription(cnsDemGrpAsgnEntity.getChannelDescription());
         gdmCustomerBo.setCountryId(cnsDemGrpAsgnEntity.getCountryAffiliate());
         gdmCustomerBo.setDistributionChannel(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setDistributor(IConstant.VALUE.BLANK);
+        gdmCustomerBo.setDistributor(IConstant.VALUE.NO);
         gdmCustomerBo.setDivision(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setECommerce(IConstant.VALUE.BLANK);
+        gdmCustomerBo.setECommerce(IConstant.VALUE.NO);
         gdmCustomerBo.setGlobalCustomerId(IConstant.VALUE.BLANK);
         gdmCustomerBo.setName(cnsDemGrpAsgnEntity.getCustomerName());
         gdmCustomerBo.setPartner(IConstant.VALUE.BLANK);

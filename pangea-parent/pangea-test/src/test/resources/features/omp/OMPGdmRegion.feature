@@ -13,14 +13,9 @@ Feature: OMPGdmRegion AEAZ-2711
 
     When I submit task with xml file "xml/omp/OMPGdmRegion.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "PANGEA_V1_omp_gdm_region.tsv"
+    Then A file is found on sink application with name "GDMRegion.tsv"
 
-    Then I check file data for filename "/omp/gdm_region" by keyFields "regionId"
-      | regionId | activeFCTERP | activeOPRERP | activeSOPERP | regionDescription          |
-      | NORTHREG | YES          | YES          | YES          | South America North Region |
-      | SOUTHREG | YES          | YES          | YES          | South America South Region |
-
-    Then I check region data "/omp/gdm_region" by keyFields "regionId"
+    Then I check file data for filename "GDMRegion.tsv" by keyFields "regionId"
       | regionId | activeFCTERP | activeOPRERP | activeSOPERP | regionDescription          |
       | NORTHREG | YES          | YES          | YES          | South America North Region |
       | SOUTHREG | YES          | YES          | YES          | South America South Region |
@@ -36,5 +31,5 @@ Feature: OMPGdmRegion AEAZ-2711
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will remove the test file on sink application "PANGEA_V1_omp_gdm_region.tsv"
+    And I will remove the test file on sink application "GDMRegion.tsv"
 

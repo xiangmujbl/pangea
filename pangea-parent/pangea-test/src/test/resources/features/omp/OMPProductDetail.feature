@@ -28,7 +28,7 @@ Feature:  OMPProductDetail-Curation AEAZ-2713
 
     When I submit task with xml file "xml/omp/OMPProductDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "PANGEA_V1_gdm_omp_product_detail.tsv"
+    Then A file is found on sink application with name "OmpProductDetail.tsv"
 
     Then I check region data "/omp/product_detail" by keyFields "productDetailId"
       | productDetailId               | activeFCTERP | activeOPRERP | activeSOPERP | CLASS | comments | description | name       | productId        | unit | value           |
@@ -49,4 +49,4 @@ Feature:  OMPProductDetail-Curation AEAZ-2713
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-   And I will remove the test file on sink application "PANGEA_V1_gdm_omp_product_detail.tsv"
+#   And I will remove the test file on sink application "OmpProductDetail.tsv"

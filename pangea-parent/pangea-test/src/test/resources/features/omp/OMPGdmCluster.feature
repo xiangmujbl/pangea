@@ -11,6 +11,8 @@ Feature: OMPGdmCluster AEAZ-1613
 
     When I submit task with xml file "xml/omp/OMPGdmCluster.xml" and execute file "jar/pangea-view.jar"
 
+    Then A file is found on sink application with name "GDMCluster.tsv"
+
     Then I check region data "/omp/gdm_cluster" by keyFields "clusterId"
       | clusterId    | activeFCTERP | clusterDescription | clusterNr | countryId | subFranchise |
       | ARSOUTHSouth | YES          | SOUTH              | SOUTH     | AR        | South        |
@@ -24,4 +26,6 @@ Feature: OMPGdmCluster AEAZ-1613
     And I will remove all data with region "/omp/gdm_cluster"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+#    And I will remove the test file on sink application "GDMCluster.tsv"
 
