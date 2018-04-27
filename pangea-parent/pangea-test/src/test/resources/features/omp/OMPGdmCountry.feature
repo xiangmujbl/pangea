@@ -20,7 +20,7 @@ Feature: OMPGdmCountry AEAZ-1614
 
     Then A file is found on sink application with name "GDMCountry.tsv"
 
-    Then I check region data "/omp/gdm_country" by keyFields "countryId"
+    Then I check file data for filename "GDMCountry.tsv" by keyFields "countryId"
       | countryId | activeFCTERP | activeOPRERP | activeSOPERP | countryDescription | mrc |
       | ZW        | YES          | YES          | NO           | Zimbabwe1          |     |
 
@@ -35,5 +35,5 @@ Feature: OMPGdmCountry AEAZ-1614
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will remove the test file on sink application "GDMCountry.tsv"
+    And I will remove the test file on sink application "GDMCountry.tsv"
 

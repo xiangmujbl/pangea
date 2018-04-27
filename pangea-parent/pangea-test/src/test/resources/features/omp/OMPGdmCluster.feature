@@ -13,7 +13,7 @@ Feature: OMPGdmCluster AEAZ-1613
 
     Then A file is found on sink application with name "GDMCluster.tsv"
 
-    Then I check region data "/omp/gdm_cluster" by keyFields "clusterId"
+    Then I check file data for filename "GDMCluster.tsv" by keyFields "clusterId"
       | clusterId    | activeFCTERP | clusterDescription | clusterNr | countryId | subFranchise |
       | ARSOUTHSouth | YES          | SOUTH              | SOUTH     | AR        | South        |
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -27,5 +27,5 @@ Feature: OMPGdmCluster AEAZ-1613
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will remove the test file on sink application "GDMCluster.tsv"
+    And I will remove the test file on sink application "GDMCluster.tsv"
 

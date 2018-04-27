@@ -22,6 +22,17 @@ Feature: OMPGdmUnitEvol-Curation AEAZ-2712
 
     Then A file is found on sink application with name "GDMUnitEvol.tsv"
 
+    Then I check file data for filename "GDMUnitEvol.tsv" by keyFields "uniqueId"
+      | uniqueId         | activeFCTERP | unitId | startEff   | endEff     | factor      | preference |
+      | CONS_LATAMVEF001 | YES          | VEF    | 2019/1/1   | 2020/1/1   | 700         | 100        |
+      | CONS_LATAMBRL001 | YES          | BRL    | 2017/12/31 | 2018/12/31 | 300         | 100        |
+      | CONS_LATAMBRL002 | YES          | BRL    | 2016/1/1   | 2016/12/31 | 290         | 100        |
+      | CONS_LATAMVEF002 | YES          | VEF    | 2018/1/1   | 2019/1/1   | 700         | 100        |
+      | CONS_LATAMVEF003 | YES          | VEF    | 2020/1/1   | 2021/1/1   | 700         | 100        |
+      | CONS_LATAMVEF004 | YES          | VEF    | 2021/1/1   | 2022/1/1   | 700         | 100        |
+      | CONS_LATAMVYU001 | YES          | UYU    | 2018/1/1   | 2019/1/1   | 28.90172958 | 100        |
+      | CONS_LATAMVYU002 | YES          | UYU    | 2020/1/1   | 2021/1/1   | 28.90172958 | 100        |
+
 #    Then I check region data "/omp/gdm_unit_evol" by keyFields "uniqueId"
 #      | uniqueId         | activeFCTERP | unitId | startEff   | endEff     | factor      | preference |
 #      | CONS_LATAMVEF001 | YES          | VEF    | 2019/1/1   | 2020/1/1   | 700         | 100        |
