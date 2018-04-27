@@ -102,6 +102,10 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         if (null != materialGlobalV1Entity) {
             gdmSalesHistoryBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
             gdmSalesHistoryBo.setSalesUnit(checkT10(materialGlobalV1Entity.getLocalBaseUom()));
+        }else {
+            FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T8, "Material not found in material global");
+            resultObject.setFailData(failData);
+            return resultObject;
         }
 
         gdmSalesHistoryBo.setQuantity(checkJ2T9(salesOrderV1Entity));

@@ -1,6 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/sales_order_v1" viewRegion="/omp/gdm_sales_history" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_sales_history.controller.OMPGdmSalesHistoryController">
+              executionClassName="com.jnj.pangea.omp.gdm_sales_history.controller.OMPGdmSalesHistoryController"
+              writeTo="all" topic="PANGEA_V1_gdm_omp_gdm_sales_history"     >
         <regions>
             <region path="/edm/sales_order_v1">
                 <columns>sourceSystem,salesOrderNo,salesOrderItem,scheduleLineItem,localSalesOrg,localShipToParty,localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localItemCategory,localSDItemCurrency,localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute</columns>
