@@ -17,7 +17,9 @@ Feature:  OMPGdmLocationXref AEAZ-1764
 
     When I submit task with xml file "xml/omp/OMPGdmLocationXref.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_location" by keyFields "locationId"
+    Then A file is found on sink application with name "GDMLocation.tsv"
+
+    Then I check file data for filename "GDMLocation.tsv" by keyFields "locationId"
       | locationId   | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerId | label  | locationTypeId | regionId | vendorId |
       | BtB_V_234500 | YES    | NO           | YES          | NO           | US        | USD        |            | Silgan | Silgan234500   | NJ       | 234500   |
 
@@ -31,4 +33,6 @@ Feature:  OMPGdmLocationXref AEAZ-1764
     And I will remove all data with region "/omp/gdm_location"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "GDMLocation.tsv"
 
