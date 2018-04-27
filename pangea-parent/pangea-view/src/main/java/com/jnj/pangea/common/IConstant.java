@@ -255,6 +255,7 @@ public interface IConstant {
 
     interface PLAN_CNS_CUST_CHANNEL {
         String CHANNEL = "channel";
+        String SALES_ORG = "salesOrg";
     }
     interface PLAN_CNS_SO_TYPE_INCL {
         String SALES_ORG = "salesOrg";
@@ -336,6 +337,7 @@ public interface IConstant {
             String T2 = "T2";
             String T4 = "T4";
             String T5 = "T5";
+            String T8 = "T8";
 
             String C1 = "C1";
 
