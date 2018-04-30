@@ -27,7 +27,7 @@ public class OMPProcessTypeServiceImpl implements ICommonService {
         OMPProcessTypeBo processTypeBo = new OMPProcessTypeBo();
 
         processTypeBo.setProcessTypeId(cnsProcessTypeEntity.getProcessTypeId());
-        processTypeBo.setLabel(cnsProcessTypeEntity.getProcessTypeDescription());
+        processTypeBo.setLabel(cnsProcessTypeEntity.getProcessTypeDesc());
 
         // N1
         processTypeBo.setActiveOPRERP(IConstant.VALUE.YES);

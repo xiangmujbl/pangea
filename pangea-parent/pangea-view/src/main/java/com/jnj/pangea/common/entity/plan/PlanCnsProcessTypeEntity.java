@@ -32,4 +32,6 @@ public class PlanCnsProcessTypeEntity extends CommonEntity {
         this.processTypeDesc = processTypeDesc;
     }
 
+
+
 }
