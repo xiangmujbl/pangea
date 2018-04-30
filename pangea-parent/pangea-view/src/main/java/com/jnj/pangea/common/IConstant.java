@@ -369,6 +369,53 @@ public interface IConstant {
             String STAT = "stat";
             String INACT = "inact";
         }
+        String PROJECT_ONE = "project_one";
+        String EMS = "[EMS]";
+        String EN = "E";
+        String PT = "P";
+        String SP = "S";
+        String CONS_LATAM = "CONS_LATAM";
+        String CNS_MATERIAL_PLAN_STATUS = "cns_material_plan_status";
+        String DP_RELEVANT = "DPRelevant";
+        String SP_RELEVANT = "SPRelevant";
+        String NO_PLAN_RELEVANT = "NoPlanRelevant";
+        String PLANT = "Plant";
+        String MRP_TYPE = "MRPType";
+        String I = "I";
+        String MATERIAL_TYPE = "MaterialType";
+        String X = "X";
+        String NP = "NP";
+        String Y = "Y";
+        String YES = "YES";
+        String NO = "NO";
+        String WE = "WE";
+        String LA_ = "LA_";
+        String PGA = "PGA";
+        String UNDERLINE = "_";
+        String BACK_SLANT = "/";
+        String USD = "USD";
+        String PANGEA = "Pangea";
+        String LINE = "-";
+        String DPSP = "DPSP";
+        String DP = "DP";
+        String SP1 = "SP";
+        String V = "V";
+        String C = "C";
+        String S = "S";
+        String SPRAS_EN = "EN";
+        String PLSCN = "000";
+        String YYYYMMDD = "yyyyMMdd";
+        String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
+        String N = "N";
+        String BLANK = "Blank";
+        String OR = "OR";
+        String SPACE = " ";
+        String CURRENCY = "CURRENCY";
+        String ZERO = "0";
+        String BA = "BA";
+        String FALSE = "FALSE";
+        String COLON = ":";
+    }
 
         interface PROJECT_ONE_TJ02T {
             String SPRAS = "spras";
