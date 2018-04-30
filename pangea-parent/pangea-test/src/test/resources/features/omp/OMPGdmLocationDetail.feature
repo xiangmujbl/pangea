@@ -12,7 +12,9 @@ Feature:  OMPGdmLocationDetail-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_location_detail" by keyFields "locationDetailId"
+    Then A file is found on sink application with name "GDMLocationDetail.tsv"
+
+    Then I check file data for filename "GDMLocationDetail.tsv" by keyFields "locationDetailId"
       | locationDetailId                     | activeOPRERP | activeSOPERP | CLASS | comments | description | locationId      | name     | unit | value   |
       | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | YES          | NO           | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1  |      | VALUE1  |
       | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | YES          | NO           | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2  |      | VALUE2  |

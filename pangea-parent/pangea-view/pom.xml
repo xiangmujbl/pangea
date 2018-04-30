@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.jnj.adf</groupId>
             <artifactId>adf-compute</artifactId>
-            <version>0.3.04-0.3-SNAPSHOT</version>
+            <version>0.3.04-0.5-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

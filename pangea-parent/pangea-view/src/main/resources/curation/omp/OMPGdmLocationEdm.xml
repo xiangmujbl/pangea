@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/plant_v1" viewRegion="/omp/gdm_location" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_location_edm.controller.OMPGdmLocationEdmController"
-              writeTo="kafka" topic="gdm_omp_location_edm">
+              writeTo="all" topic="omp_gdm_location">
         <regions>
 
             <region path="/edm/plant_v1">

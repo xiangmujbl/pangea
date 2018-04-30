@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_location_edm.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -29,10 +28,10 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         return instance;
     }
 
-    private PlanCnsPlanParameterDaoImpl parameterDao= PlanCnsPlanParameterDaoImpl.getInstance();
-    private EDMCountryV1DaoImpl  countryV1DaoImpl= EDMCountryV1DaoImpl.getInstance();
-    private PlanCnsPlantAttrDaoImpl  cnsPlantAttrDaoImpl= PlanCnsPlantAttrDaoImpl.getInstance();
-    private EDMCurrencyV1DaoImpl currencyV1DaoImpl= EDMCurrencyV1DaoImpl.getInstance();
+    private PlanCnsPlanParameterDaoImpl parameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
+    private EDMCountryV1DaoImpl countryV1DaoImpl = EDMCountryV1DaoImpl.getInstance();
+    private PlanCnsPlantAttrDaoImpl cnsPlantAttrDaoImpl = PlanCnsPlantAttrDaoImpl.getInstance();
+    private EDMCurrencyV1DaoImpl currencyV1DaoImpl = EDMCurrencyV1DaoImpl.getInstance();
 
 
     @Override
@@ -44,16 +43,16 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         OMPGdmLocationEdmBo gdmLocationEdmBo = new OMPGdmLocationEdmBo();
 
         //rules C1
-        gdmLocationEdmBo.setLocationId(plantV1Entity.getSourceSystem()+"_"+plantV1Entity.getLocalPlant());
+        gdmLocationEdmBo.setLocationId(plantV1Entity.getSourceSystem() + "_" + plantV1Entity.getLocalPlant());
 
 
         //rules T2
         gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.NO);
         List<PlanCnsPlanParameterEntity> entities = parameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT);
-        if (entities!=null && entities.size()>0){
-            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity:entities){
-                if (cnsPlanParameterEntity!=null){
-                    if (cnsPlanParameterEntity.getParameterValue().equals(plantV1Entity.getLocalPlant())){
+        if (entities != null && entities.size() > 0) {
+            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity : entities) {
+                if (cnsPlanParameterEntity != null) {
+                    if (cnsPlanParameterEntity.getParameterValue().equals(plantV1Entity.getLocalPlant())) {
                         gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
                         break;
                     }
@@ -62,15 +61,18 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         }
 
         //rules T7
-        if (IConstant.VALUE.X.equals(plantV1Entity.getLocalPlanningRelevant())){
+        if (IConstant.VALUE.X.equals(plantV1Entity.getLocalPlanningRelevant())) {
             gdmLocationEdmBo.setActiveOPRERP(IConstant.VALUE.YES);
-        }else{
+        } else {
             gdmLocationEdmBo.setActiveOPRERP(IConstant.VALUE.NO);
         }
 
         //rules T1
-        if (IConstant.VALUE.YES.equals(gdmLocationEdmBo.getActiveFCTERP())||IConstant.VALUE.YES.equals(gdmLocationEdmBo.getActiveOPRERP())){
+        if (IConstant.VALUE.YES.equals(gdmLocationEdmBo.getActiveFCTERP()) || IConstant.VALUE.YES.equals(gdmLocationEdmBo.getActiveOPRERP())) {
             gdmLocationEdmBo.setActive(IConstant.VALUE.YES);
+        } else {
+            resultObject.setBaseBo(null);
+            return resultObject;
         }
 
         //rules T5
@@ -78,8 +80,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
 
         //rules T8
         PlanCnsPlantAttrEntity cnsPlantAttrEntity = cnsPlantAttrDaoImpl.getEntityWithLocalPlantAndSourceSystem(plantV1Entity.getLocalPlant(), plantV1Entity.getSourceSystem());
-        if (cnsPlantAttrEntity==null){
-            /*
+        if (cnsPlantAttrEntity == null) {
             FailData failData = new FailData();
             failData.setErrorCode("T8");
             failData.setErrorValue("Missing Location Type Id");
@@ -92,16 +93,14 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
             failData.setKey4("");
             failData.setKey5("");
             resultObject.setFailData(failData);
-            return resultObject;*/
-            resultObject.setBaseBo(new OMPGdmLocationEdmBo());
             return resultObject;
+
         }
         gdmLocationEdmBo.setLocationTypeId(cnsPlantAttrEntity.getPlanLocTypeId());
 
         //rules T10
         String countryId = plantV1Entity.getCountry();
-        if ("".equals(countryId)){
-            /*
+        if ("".equals(countryId)) {
             FailData failData = new FailData();
             failData.setErrorCode("T10");
             failData.setErrorValue("Missing Country");
@@ -114,21 +113,20 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
             failData.setKey4("");
             failData.setKey5("");
             resultObject.setFailData(failData);
-            return resultObject;*/
-            resultObject.setBaseBo(new OMPGdmLocationEdmBo());
             return resultObject;
+
         }
         gdmLocationEdmBo.setCountryId(countryId);
 
         //rules T9
         EDMCurrencyV1Entity currencyV1Entity = currencyV1DaoImpl.getEntityWithLocalCurrencyAndSourceSystem(plantV1Entity.getLocalCurrency(), plantV1Entity.getSourceSystem());
-        if (currencyV1Entity!=null){
+        if (currencyV1Entity != null) {
             gdmLocationEdmBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
         }
 
         //rules T6
         EDMCountryEntity countryEntity = countryV1DaoImpl.getEntityWithLocalCountryAndSourceSystem(plantV1Entity.getLocalCountry(), plantV1Entity.getSourceSystem());
-        if (countryEntity!=null){
+        if (countryEntity != null) {
             gdmLocationEdmBo.setRegionId(countryEntity.getConsumerPlanningRegion());
         }
 

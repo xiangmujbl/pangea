@@ -138,6 +138,8 @@
 /project_one/afpo
 /edm/process_order_v1
 /omp/gdm_pos
+/project_one/eban
+/plan/cns_plan_object_filter
 
 /plan/cns_prod_loc_attrib
 /omp/gdm_product_location_detail

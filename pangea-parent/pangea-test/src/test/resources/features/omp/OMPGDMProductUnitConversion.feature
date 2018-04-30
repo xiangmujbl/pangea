@@ -23,11 +23,11 @@ Feature: OMPGdmProductUnitConversion AEAZ-1815
 
     When I submit task with xml file "xml/omp/OMPGdmProductUnitConversion.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "gdm_product_unit_conversion.tsv"
+    Then A file is found on sink application with name "GDMProductUnitConversion.tsv"
 
-    Then I check file data for filename "/omp/gdm_product_unit_conversion" by keyFields "gdmProductUnitConversionId"
-      | gdmProductUnitConversionId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | productId | unitId |
-      | 1DPSP                      | YES    | YES          | YES          | NO           | 0.10   | -         | DPSP   |
+#    Then I check file data for filename "gdm_product_unit_conversion.tsv" by keyFields "gdmProductUnitConversionId"
+#      | gdmProductUnitConversionId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | productId | unitId |
+#      | 1DPSP                      | YES    | YES          | YES          | NO           | 0.10   | -         | DPSP   |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -38,5 +38,5 @@ Feature: OMPGdmProductUnitConversion AEAZ-1815
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "gdm_product_unit_conversion.tsv"
+#    And I will remove the test file on sink application "GDMProductUnitConversion.tsv"
 

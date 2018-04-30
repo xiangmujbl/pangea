@@ -53,37 +53,37 @@ public class EDMPlannedOrderServiceImpl implements ICommonService {
                     PlafEntity plafCloneEntity = plafDaoImpl.getEntityWithLocalPlant(plantV1Entity.getLocalPlant());
                     if (null != plafCloneEntity) {
                         plannedOrderBo.setPlngScnroCd(plafCloneEntity.getPlscn());
+
+                        plannedOrderBo.setMfgPlanOrdrDocId(plafEntity.getPlnum());
+                        plannedOrderBo.setPlanPlntCd(plafEntity.getPlwrk());
+                        plannedOrderBo.setPlntCd(plafEntity.getPwwrk());
+                        plannedOrderBo.setMatlNum(plafEntity.getMatnr());
+                        plannedOrderBo.setUomCd(plafEntity.getMeins());
+                        plannedOrderBo.setPrcmtTypeCd(plafEntity.getBeskz());
+                        plannedOrderBo.setSplPrcmtTypeCd(plafEntity.getSobes());
+                        plannedOrderBo.setPrdtnVersNum(plafEntity.getNumvr());
+                        plannedOrderBo.setPlanOrdrTypeCd(plafEntity.getPaart());
+                        plannedOrderBo.setPlanOrdrQty(plafEntity.getGsmng());
+                        plannedOrderBo.setFxScrapQty(plafEntity.getAvmng());
+                        plannedOrderBo.setReqQty(plafEntity.getBdmng());
+                        plannedOrderBo.setPlanOrdrStrtDt(plafEntity.getPsttr());
+                        plannedOrderBo.setPrdtnStrtTm(plafEntity.getPstti());
+                        plannedOrderBo.setPlanOrdrEndDt(plafEntity.getPedtr());
+                        plannedOrderBo.setPlanOrdrEndTm(plafEntity.getPedti());
+                        plannedOrderBo.setGrDaysLeadQty(plafEntity.getWebaz());
+                        plannedOrderBo.setFirmingInd(plafEntity.getAuffx());
+                        plannedOrderBo.setSLocCd(plafEntity.getLgort());
+                        plannedOrderBo.setPrdtnVers(plafEntity.getVerid());
+                        plannedOrderBo.setPrdtnStrtDt(plafEntity.getTerst());
+                        plannedOrderBo.setPrdtnFnshdDt(plafEntity.getTered());
+                        plannedOrderBo.setMrpCtlId(plafEntity.getDispo());
+
+                        if (StringUtils.isNotEmpty(sourceSystemV1Entity.getSourceSystem()) && StringUtils.isNotEmpty(plafEntity.getPlnum())) {
+                            resultObject.setBaseBo(plannedOrderBo);
+                        }
                     }
                 }
             }
-        }
-
-        plannedOrderBo.setMfgPlanOrdrDocId(plafEntity.getPlnum());
-        plannedOrderBo.setPlanPlntCd(plafEntity.getPlwrk());
-        plannedOrderBo.setPlntCd(plafEntity.getPwwrk());
-        plannedOrderBo.setMatlNum(plafEntity.getMatnr());
-        plannedOrderBo.setUomCd(plafEntity.getMeins());
-        plannedOrderBo.setPrcmtTypeCd(plafEntity.getBeskz());
-        plannedOrderBo.setSplPrcmtTypeCd(plafEntity.getSobes());
-        plannedOrderBo.setPrdtnVersNum(plafEntity.getNumvr());
-        plannedOrderBo.setPlanOrdrTypeCd(plafEntity.getPaart());
-        plannedOrderBo.setPlanOrdrQty(plafEntity.getGsmng());
-        plannedOrderBo.setFxScrapQty(plafEntity.getAvmng());
-        plannedOrderBo.setReqQty(plafEntity.getBdmng());
-        plannedOrderBo.setPlanOrdrStrtDt(plafEntity.getPsttr());
-        plannedOrderBo.setPrdtnStrtTm(plafEntity.getPstti());
-        plannedOrderBo.setPlanOrdrEndDt(plafEntity.getPedtr());
-        plannedOrderBo.setPlanOrdrEndTm(plafEntity.getPedti());
-        plannedOrderBo.setGrDaysLeadQty(plafEntity.getWebaz());
-        plannedOrderBo.setFirmingInd(plafEntity.getAuffx());
-        plannedOrderBo.setSLocCd(plafEntity.getLgort());
-        plannedOrderBo.setPrdtnVers(plafEntity.getVerid());
-        plannedOrderBo.setPrdtnStrtDt(plafEntity.getTerst());
-        plannedOrderBo.setPrdtnFnshdDt(plafEntity.getTered());
-        plannedOrderBo.setMrpCtlId(plafEntity.getDispo());
-
-        if (StringUtils.isNotEmpty(sourceSystemV1Entity.getSourceSystem()) && StringUtils.isNotEmpty(plafEntity.getPlnum())) {
-            resultObject.setBaseBo(plannedOrderBo);
         }
 
         return resultObject;

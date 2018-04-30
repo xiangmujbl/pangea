@@ -10,10 +10,10 @@ Feature: EDMBatchMaster AEAZ-2368
     # 6. get material_global_v1-PrimaryPlanningCode where batch_master_localMaterialNumber <> MCH1-MATNR (N4) (000000000007047793)
 
     Given I import "/project_one/mch1" by keyFields "matnr,charg"
-      | matnr              | charg      | vfdat    | hsdat    |
-      | 000000000007703910 | 0 190GB 01 | 19900713 | 19920813 |
-      | 000000000007047792 | 0 603B7 A  | 19991011 | 20000101 |
-      | 000000000007047793 | 0 603B7 B  | 19991011 | 20000101 |
+      | matnr              | charg      | vfdat    | hsdat    |zustd|
+      | 000000000007703910 | 0 190GB 01 | 19900713 | 19920813 |     |
+      | 000000000007047792 | 0 603B7 A  | 19991011 | 20000101 |     |
+      | 000000000007047793 | 0 603B7 B  | 19991011 | 20000101 |     |
 
     And I wait "/project_one/mch1" Async Queue complete
 
@@ -48,9 +48,9 @@ Feature: EDMBatchMaster AEAZ-2368
 
     When I submit task with xml file "xml/edm/EDMBatchMaster.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/edm/batch_master_v1" by keyFields "sourceSystem,localMaterialNumber,localBatchNumber,localPlant,localStorageLocation"
-      | sourceSystem | localMaterialNumber | localBatchNumber | localPlant | localStorageLocation | localBatchExpDate | localBatchMfgDate | plant | materialNumber |
-      | CONS_LATAM   | 000000000007703910  | 0 190GB 01       | PE01       | PE01                 | 13/07/1990        | 13/08/1992        | PE01  | 7703910        |
+    Then I check region data "/edm/batch_master_v1" by keyFields "srcSysCd,matlNum,btchNum,localPlant,localStorLocation"
+      | srcSysCd   | matlNum            | btchNum    | localPlant | localStorLocation | btchExpDt           | btchMfgDt           | plant | materialNumber |btchStsCd|
+      | CONS_LATAM | 000000000007703910 | 0 190GB 01 | PE01       | PE01              | 1990/07/13 00:00:00 | 1992/08/13 00:00:00 | PE01  | 7703910        |         |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID    | errorCode | sourceSystem | key1               | key2      | key3 | key4 | key5 | errorValue |
