@@ -45,6 +45,11 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
         Mch1Entity mch1Entity = (Mch1Entity) o;
         EDMBatchMasterBo eDMBatchMasterBo = new EDMBatchMasterBo();
 
+        // TODO add logic
+        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
+        eDMBatchMasterBo.setSourceSystem(edmSourceSystemV1Entity.getSourceSystem());
+        processSystem(mch1Entity,eDMBatchMasterBo);
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getEntityWithSourceSystemAndLocalMaterialNumber(edmSourceSystemV1Entity.getSourceSystem(),mch1Entity.getMatnr());
 
 
         // N4

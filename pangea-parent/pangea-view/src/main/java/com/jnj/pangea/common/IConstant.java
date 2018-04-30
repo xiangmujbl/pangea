@@ -13,6 +13,7 @@ public interface IConstant {
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
         String EDM_PLANT_V1 = "/edm/plant_v1";
         String EDM_CURRENCY_V1="/edm/currency_v1";
+        String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
         String PROJECT_ONE_MAKT = "/project_one/makt";
         String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
@@ -69,6 +70,10 @@ public interface IConstant {
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
+        String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
+        String CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
+        String CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
+        String EDM_CURRENCY_V1 = "/edm/currency_v1";
     }
     interface EDM_CURRENCY_V1 {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -238,6 +243,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_TYPE = "localMaterialType";
         String LOCAL_BASE_UOM = "localBaseUom";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface EDM_MATERIAL_AUOM_V1 {
@@ -248,6 +254,12 @@ public interface IConstant {
     interface EDM_PLANT_V1 {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
+    }
+
+    interface EDM_MATERIAL_PLANT_V1 {
+        String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
 
     interface CNS_PLAN_PARAMETER {
@@ -282,6 +294,22 @@ public interface IConstant {
     interface EDM_MAT_PLANT_FI_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
+    }
+    interface PLAN_CNS_PROCESS_TYPE {
+        String PROCESS_TYPE_DESC = "processTypeDesc";
+    }
+    interface CNS_MATERIAL_PLAN_STATUS {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
+    interface PLAN_CNS_PLN_SPL_LOC {
+        String LOCAL_NUMBER = "localNumber";
+        String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
+    }
+
+    interface EDM_CURRENCY_V1 {
+        String LOCAL_CURRENCY = "localCurrency";
     }
 
         interface EDM_PRODUCT_FAMILY_V1 {
