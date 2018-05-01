@@ -33,6 +33,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530
     Given I import "/plan/cns_so_type_incl" by keyFields "salesOrg,orderType,country"
       | salesOrg | orderType | country |
       | BR01     | ZSRT      | BR      |
+      | BR01     | LOT4      | BR      |
     And I wait "/plan/cns_so_type_incl" Async Queue complete
 
     Given I import "/edm/plant_v1" by keyFields "localPlant"
