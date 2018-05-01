@@ -1,0 +1,88 @@
+<adf-curation>
+    <curation mainRegion="/plan/cns_tlane_item_exception" viewRegion="/omp/gdm_transport" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_transport.controller.OMPGdmTransportExceptionController"
+              writeTo="kafka" topic="omp_gdm_transport_ex">
+        <regions>
+
+            <region path="/plan/cns_tlane_item_exception">
+                <columns>
+                    validTo,originLocation,materialNumber,processTypeId,validFrom,destinationLocation,leadTime,mode,sequenceNumber,tlaneName,deletionIndicator,refSeqNumTlaneItem
+                </columns>
+                <relations>
+                    <relation path="/edm/material_plant_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/source_list_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_process_type" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/edm_failed_data" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/material_plant_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,materialNumber,plant,localPlantStatus,plantStatus,localProcurementType,localDeletionFlagPlant,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity
+                </columns>
+            </region>
+            <region path="/edm/material_global_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCod,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
+                </columns>
+            </region>
+            <region path="/edm/plant_v1">
+                <columns>
+                    sourceSystem,localPlant,plant
+                </columns>
+            </region>
+            <region path="/edm/source_list_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,localNumberofSourceListRecord,materialNumber,plant,localCreatedOn,localCreatedBy,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localFixedvendor,localAgreementNumber,localAgreementItem,localFixedOutlinePurchaseAgreementItem,localPlantfromWhichMaterialisProcured,localMatForManufPartNumber,localBlockedSourceofSupply,localPurchasingOrganization,localPurchasingDocumentCategory,localCategoryofSourceListRecord,localSourceListUsageinMaterialsPlanning
+                </columns>
+            </region>
+            <region path="/plan/cns_spl_pln_loc">
+                <columns>
+                    sourceSystem,localNumber
+                </columns>
+            </region>
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
+                </columns>
+            </region>
+            <region path="/plan/cns_process_type">
+                <columns>
+                    processTypeId,processTypeDesc
+                </columns>
+            </region>
+            <region path="/plan/edm_failed_data">
+                <columns>
+                    functionalArea,interfaceID,errorCode,sourceSystem,businessArea,key1,key2,key3,key4,key5,timeStamp,errorValue
+                </columns>
+            </region>
+
+
+            <region path="/omp/gdm_transport">
+                <columns>
+                    transportId,active,activeOPRERP,activeSOPERP,endEff,fromLocationId,fromProductId,label,machineTypeId,minQuantity,planLevelId,processTypeId,purchasingGroup,purchasingOrganization,requirementOffset,startEff,toLocationId,toProductId,transportOffset,transportType,vendorId
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>
