@@ -28,13 +28,14 @@ public class PlanCnsProcessTypeDaoImpl extends CommonDaoImpl {
     public PlanCnsProcessTypeEntity getEntityWithConditions(String param) {
         LogUtil.getCoreLog().info("\n\nN18 getEntityWithConditions: {}\n\n", param);
 
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROCESS_TYPE.PROCESS_TYPE_DESC).is(param).toQueryString();
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROCESS_TYPE.PROCESS_TYPE_DESCRIPTION).is(param).toQueryString();
         LogUtil.getCoreLog().info("\n\nN18 queryString: {}\n\n", queryString);
+        return queryForObject(IConstant.REGION.PLAN_CNS_PROCESS_TYPE, queryString, PlanCnsProcessTypeEntity.class);
+    }
+
+    public PlanCnsProcessTypeEntity getCnsProcessTypeById(String processTypeId) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROCESS_TYPE.PROCESS_TYPE_ID).is(processTypeId).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PROCESS_TYPE, queryString, PlanCnsProcessTypeEntity.class);
     }
 }
 
-    public CnsProcessTypeEntity getCnsProcessTypeById(String processTypeId) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROCESS_TYPE.PROCESS_TYPE_ID).is(processTypeId).toQueryString();
-        return queryForObject(IConstant.REGION.PLAN_CNS_PROCESS_TYPE,queryString,CnsProcessTypeEntity.class);
-    }
