@@ -1,16 +1,17 @@
 package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseRequisitionV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_req_from_erp.bo.OMPGdmReqFromErpBo;
 
@@ -33,6 +34,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
     private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl planCnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
+    private PlanCnsPlanObjectFilterDaoImpl planCnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -54,9 +56,8 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSuplPlntCd());
 
         //N1
-        //No pr_doc_ic?
-        gdmReqFromErpBo.setREQFromERPId("1111");
-        //gdmReqFromErpBo.setReqFromErpId(edmPurchaseRequisitionV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.);
+        //Fake pr_doc_ic?
+        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrDocId());
 
         //N2
         try {
@@ -131,10 +132,23 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
 
                     //N9
+                    boolean n9Success = false;
                     if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
-                        gdmReqFromErpBo.setERPId("1111"); //Change when object available
-                    } else {
-
+                         PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectPlantAttributeAndSourceFilterPlantValue(edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getPlntCd());
+                         if(planObjectFilterEntity.getSourceObjectPlantAttribute().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd()) &&
+                            planObjectFilterEntity.getSourceFilterPlantValue().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
+                             if(planObjectFilterEntity.getSourceFilterAttributeTechName().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPrTypeCd())
+                                     && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I")) {
+                                 if(edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
+                                     gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
+                                     n9Success = true;
+                                 }
+                             }
+                         }
+                    }
+                    if(!n9Success) {
+                        FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N9", "Skip");
+                        resultObject.setFailData(failData);
                     }
                 } else {
                     FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N7", "Critical error - Cns Plan Unit - unit not found");

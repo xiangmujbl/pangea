@@ -67,6 +67,7 @@ public interface IConstant {
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
+        String PLAN_CNS_PLAN_OBJECT_FILTER = "/plan/cns_plan_object_filter";
     }
     interface EDM_CURRENCY_V1 {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -338,6 +339,13 @@ public interface IConstant {
     interface PROJECT_ONE_TJ02T {
         String SPRAS = "spras";
         String ISTAT = "istat";
+    }
+
+    interface  PLAN_CNS_PLAN_OBJECT_FILTER {
+        String SOURCE_OBJECT_TECH_NAME = "sourceObjectTechName";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
+        String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
     }
 
 

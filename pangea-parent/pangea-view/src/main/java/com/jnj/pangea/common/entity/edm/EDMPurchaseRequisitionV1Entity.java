@@ -79,6 +79,7 @@ public class EDMPurchaseRequisitionV1Entity extends CommonEntity{
     private String localXSysPReqNo;
     private String localXSysPReqItem;
     private String localXSysItemCat;
+    private String prDocId;
 
 
     public EDMPurchaseRequisitionV1Entity(Map<String, Object> map) {
@@ -156,6 +157,7 @@ public class EDMPurchaseRequisitionV1Entity extends CommonEntity{
         setLocalXSysPReqNo((String) map.get("localXSysPReqNo"));
         setLocalXSysPReqItem((String) map.get("localXSysPReqItem"));
         setLocalXSysItemCat((String) map.get("localXSysItemCat"));
+        setPrDocId((String) map.get("prDocId"));
 
     }
 
@@ -741,5 +743,13 @@ public class EDMPurchaseRequisitionV1Entity extends CommonEntity{
 
     public void setLocalXSysItemCat(String localXSysItemCat) {
         this.localXSysItemCat = localXSysItemCat;
+    }
+
+    public String getPrDocId() {
+        return prDocId;
+    }
+
+    public void setPrDocId(String prDocId) {
+        this.prDocId = prDocId;
     }
 }
