@@ -14,12 +14,11 @@ Feature:  OMPProductDetail AEAZ-2713
     Given I import "/plan/cns_material_plan_status" by keyFields "localMaterialNumber"
       | localMaterialNumber | spRelevant | dpRelevant | noPlanRelevant | sourceSystem |
       | 97568               | X          | X          | X              | CONS_LATAM   |
-
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | sourceSystem |
-      | [Consumer LATAM]  | CONS_LATAM   |
+      | CONS_LATAM        | project_one  |
     And I wait "/edm/source_system_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPProductDetail.xml" and execute file "jar/pangea-view.jar"
@@ -27,12 +26,12 @@ Feature:  OMPProductDetail AEAZ-2713
     Then A file is found on sink application with name "ProductDetail.tsv"
 
     Then I check file data for filename "ProductDetail.tsv" by keyFields "productDetailId"
-      | productDetailId               | activeFCTERP | activeOPRERP | activeSOPERP | CLASS | comments | description | name       | productId       | unit | value          |
-      | 1233/PGA/LATAM_ROOT           | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | 1233            |      | CONS_LATAM_111 |
-      | 1233/PGA/LATAM_SKU            | NO           | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | 1233            |      | 97568          |
-      | 1233/PGA/LATAM_TECH           | NO           | YES          |              | PGA   |          | Pangea      | LATAM_TECH | 1233            |      | WWWW           |
-      | CONS_LATAM_111/PGA/LATAM_ROOT | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | CONS_LATAM_111  |      | CONS_LATAM_111 |
-      | CONS_LATAM_111/PGA/LATAM_SKU  | YES          | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | CONS_LATAM_1233 |      | 97568          |
+      | productDetailId               | activeFCTERP | activeOPRERP | activeSOPERP | CLASS | comments | description | name       | productId        | unit | value           |
+      | 1233/PGA/LATAM_ROOT           | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | 1233             |      | project_one_111 |
+      | 1233/PGA/LATAM_SKU            | NO           | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | 1233             |      | 97568           |
+      | 1233/PGA/LATAM_TECH           | NO           | YES          |              | PGA   |          | Pangea      | LATAM_TECH | 1233             |      | WWWW            |
+      | CONS_LATAM_111/PGA/LATAM_ROOT | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | project_one_111  |      | project_one_111 |
+      | CONS_LATAM_111/PGA/LATAM_SKU  | YES          | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | project_one_1233 |      | 97568           |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

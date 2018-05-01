@@ -44,7 +44,7 @@ public class OMPProductDetailServiceImpl {
         if (StringUtils.isEmpty(sourceSystem)) {
             return resultObjectList;
         }
-        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithSourceSystem(sourceSystem);
+        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(sourceSystem);
 
         //rules T1
         getFieldWithT1(materialGlobalV1Entity, cnsMaterialPlanStatusEntity, edmSourceSystemV1Entity, BoList);
