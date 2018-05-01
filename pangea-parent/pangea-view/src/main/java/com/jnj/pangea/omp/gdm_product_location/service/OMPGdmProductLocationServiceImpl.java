@@ -196,7 +196,7 @@ public class OMPGdmProductLocationServiceImpl {
             bo.setBstmi(materialPlantV1Entity.getLocalMinimumLotSize());
             bo.setBstrf(materialPlantV1Entity.getLocalRoundingValueForPoq());
             bo.setDismm(materialPlantV1Entity.getLocalMrpType());
-            bo.setDispo(materialPlantV1Entity.getLocalMRPController());
+            bo.setDispo(materialPlantV1Entity.getLocalMrpController());
             bo.setDzeit(materialPlantV1Entity.getLocalInHouseProcessingTime());
             bo.setEisbe(materialPlantV1Entity.getLocalSafetyStock());
             bo.setEislo(materialPlantV1Entity.getLocalMinimumSafetyStock());

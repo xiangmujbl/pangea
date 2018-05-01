@@ -33,3 +33,8 @@ public class PlanCnsProcessTypeDaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.PLAN_CNS_PROCESS_TYPE, queryString, PlanCnsProcessTypeEntity.class);
     }
 }
+
+    public CnsProcessTypeEntity getCnsProcessTypeById(String processTypeId) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROCESS_TYPE.PROCESS_TYPE_ID).is(processTypeId).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PROCESS_TYPE,queryString,CnsProcessTypeEntity.class);
+    }

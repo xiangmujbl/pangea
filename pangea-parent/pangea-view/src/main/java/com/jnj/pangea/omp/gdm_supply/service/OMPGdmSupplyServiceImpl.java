@@ -253,7 +253,8 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                             LogUtil.getCoreLog().info("\n\nN17 setTransportType: {}\n\n", "Default");
 
                             // N16
-                            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
+                            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemAndLocalNumber(edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
+
                             if (planCnsPlnSplLocEntity == null) {
                                 gdmSupplyBo.setVENDOR(edmSourceListV1Entity.getLocalVendorAccountNumber());
                                 LogUtil.getCoreLog().info("\n\nN16 setVENDOR: {}\n\n", edmSourceListV1Entity.getLocalVendorAccountNumber());
