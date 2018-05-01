@@ -1,9 +1,12 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+
+import java.util.List;
 
 public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
 
@@ -21,9 +24,9 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
     }
 
-    public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
-                .and(QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.SOURCE_SYSTEM).is(sourceSystem)).toQueryString();
+    public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialNumberAndSourceSystem(String materialNumber, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.MATERIAL_NUMBER).is(materialNumber)
+                .and(IConstant.EDM_MATERIAL_GLOBAL_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
     }
 }
