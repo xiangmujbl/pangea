@@ -15,6 +15,8 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | CONS_LATAM   | 0008288860   | 000004         |                  | BR01          | 0000185314       | 20190402           | LOT1           | BR08       | 000000000000081222  | LIC1              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
       | CONS_LATAM   | 0008288860   | 000005         |                  | BR01          | 0000185314       | 20190402           | LOT2           | BR08       | 000000000000081222  | LIC2              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
       | CONS_LATAM   | 0008288860   | 000006         |                  | BR01          | 0000185314       | 20190402           | LOT3           | BR08       | 000000000000081222  | LIC3              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288860   | 000007         |                  | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR01          | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288860   | 000008         |                  | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
 
     And I wait "/edm/sales_order_v1" Async Queue complete
     Given I import "/plan/cns_cust_excl" by keyFields "salesOrg,customerShipTo"
@@ -85,7 +87,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530
     And I wait "/edm/material_global_v1" Async Queue complete
     Given I import "/plan/cns_ord_rej" by keyFields "salesOrg"
       | salesOrg | rejCd |
-      | BR01     | 91    |
+      | BR01     | LRR01 |
       | BR01     | 92    |
       | BR01     | 93    |
     And I wait "/plan/cns_ord_rej" Async Queue complete
@@ -108,6 +110,8 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | 0008288860000004 | YES          | CK1         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT1      | PPC03     | 2.0      | CA        |        |              |
       | 0008288860000005 | YES          | CK2         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT2      | PPC03     | 2.0      | CA        |        |              |
       | 0008288860000006 | YES          | BASE        |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT3      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288860000007 | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288860000008 | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 0        | CA        |        |              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
