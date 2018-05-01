@@ -71,6 +71,7 @@ public interface IConstant {
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
+        String PLAN_CNS_PLAN_OBJECT_FILTER = "/plan/cns_plan_object_filter";
         String PLAN_CNS_PLN_SPL_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
     }
@@ -250,6 +251,7 @@ public interface IConstant {
         String LOCAL_MATERIAL_TYPE = "localMaterialType";
         String LOCAL_BASE_UOM = "localBaseUom";
         String PRIMARY_PLANNING_CODE = "primaryPlanningCode";
+        String MATERIAL_NUMBER = "materialNumber";
     }
 
     interface EDM_MATERIAL_AUOM_V1 {
@@ -389,6 +391,12 @@ public interface IConstant {
         String ISTAT = "istat";
     }
 
+    interface  PLAN_CNS_PLAN_OBJECT_FILTER {
+        String SOURCE_OBJECT_TECH_NAME = "sourceObjectTechName";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
+        String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
+    }
     interface PLAN_CNS_PROCESS_TYPE {
         String PROCESS_TYPE_ID = "processTypeId";
         String PROCESS_TYPE_DESCRIPTION = "processTypeDesc";
@@ -435,13 +443,16 @@ public interface IConstant {
         String SPRAS_EN = "EN";
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";
-        String DD_MM_YYYY = "dd/MM/yyyy";
+        String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
         String N = "N";
         String BLANK = "Blank";
         String OR = "OR";
         String SPACE = " ";
         String CURRENCY = "CURRENCY";
         String ZERO = "0";
+        String BA = "BA";
+        String FALSE = "FALSE";
+        String COLON = ":";
         String STAR = "*";
         String TRANSPORT = "TRANSPORT";
     }

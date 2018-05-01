@@ -11,8 +11,7 @@
                 <relations>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>
-                            sourceSystem=/edm/material_global_v1.sourceSystem
-                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber
+                            sourceSystem=/edm/material_global_v1.sourceSystem,localMaterialNumber=/edm/material_global_v1.localMaterialNumber
                         </expression>
                     </relation>
                     <relation path="/edm/product_family_v1" isPrimaryKey="false">

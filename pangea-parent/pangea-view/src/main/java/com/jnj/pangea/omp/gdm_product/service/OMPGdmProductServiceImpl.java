@@ -4,6 +4,8 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
 import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
@@ -24,6 +26,7 @@ import com.jnj.pangea.common.entity.edm.EDMGlobalBaseUnitV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBaseUnitV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.omp.gdm_product.bo.OMPGdmProductBo;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -61,7 +64,7 @@ public class OMPGdmProductServiceImpl {
 
         PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(materialGlobalV1Entity.getSourceSystem(), materialGlobalV1Entity.getLocalMaterialNumber());
 
-        if (null != materialPlanStatusEntity && (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())||IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())||IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) ) {
+        if (null != materialPlanStatusEntity && (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant()))) {
 
             List<OMPGdmProductBo> productBos = new ArrayList<>();
 
@@ -88,7 +91,7 @@ public class OMPGdmProductServiceImpl {
                 productBo.setActiveFCTERP(IConstant.VALUE.NO);
                 productBo.setActiveOPRERP(IConstant.VALUE.NO);
 
-                checkE1(productBo,materialPlanStatusEntity);
+                checkE1(productBo, materialPlanStatusEntity);
 
                 productBo.setActiveSOPERP(IConstant.VALUE.NO);
 
@@ -118,9 +121,8 @@ public class OMPGdmProductServiceImpl {
 
                     productBo.setPlanningHierarchy1Desc(checkE2(productFamily));
 
-                    String planningHierarchy2Desc = checkE3(form);
-                    if (null != planningHierarchy2Desc) {
-                        productBo.setPlanningHierarchy2Desc(planningHierarchy2Desc);
+                    if (StringUtils.isNotEmpty(form)) {
+                        productBo.setPlanningHierarchy2Desc(checkE3(form));
                     } else {
                         FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E3, "There is no Form assigned for product");
                         resultObject.setFailData(failData);
@@ -128,9 +130,8 @@ public class OMPGdmProductServiceImpl {
                         return resultObjects;
                     }
 
-                    String planningHierarchy3Desc = checkE4(category);
-                    if (null != planningHierarchy3Desc) {
-                        productBo.setPlanningHierarchy3Desc(planningHierarchy3Desc);
+                    if (StringUtils.isNotEmpty(category)) {
+                        productBo.setPlanningHierarchy3Desc(checkE4(category));
                     } else {
                         FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E4, "There is no Category assigned for product");
                         resultObject.setFailData(failData);
@@ -138,9 +139,8 @@ public class OMPGdmProductServiceImpl {
                         return resultObjects;
                     }
 
-                    String planningHierarchy4Desc = checkE5(subBrand);
-                    if (null != planningHierarchy4Desc) {
-                        productBo.setPlanningHierarchy4Desc(planningHierarchy4Desc);
+                    if (StringUtils.isNotEmpty(subBrand)) {
+                        productBo.setPlanningHierarchy4Desc(checkE5(subBrand));
                     } else {
                         FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E5, "There is no subBrand assigned for product");
                         resultObject.setFailData(failData);
@@ -148,9 +148,8 @@ public class OMPGdmProductServiceImpl {
                         return resultObjects;
                     }
 
-                    String planningHierarchy5Desc = checkE6(brand);
-                    if (null != planningHierarchy5Desc) {
-                        productBo.setPlanningHierarchy5Desc(planningHierarchy5Desc);
+                    if (StringUtils.isNotEmpty(brand)) {
+                        productBo.setPlanningHierarchy5Desc(checkE6(brand));
                     } else {
                         FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E6, "There is no brand assigned for product");
                         resultObject.setFailData(failData);
@@ -158,9 +157,8 @@ public class OMPGdmProductServiceImpl {
                         return resultObjects;
                     }
 
-                    String planningHierarchy6Desc = checkE7(franchise);
-                    if (null != planningHierarchy6Desc) {
-                        productBo.setPlanningHierarchy6Desc(planningHierarchy6Desc);
+                    if (StringUtils.isNotEmpty(franchise)) {
+                        productBo.setPlanningHierarchy6Desc(checkE7(franchise));
                     } else {
                         FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E7, "There is no franchise assigned for product");
                         resultObject.setFailData(failData);
@@ -168,9 +166,8 @@ public class OMPGdmProductServiceImpl {
                         return resultObjects;
                     }
 
-                    String planningHierarchy7Desc = checkE8(globalBusinessUnit);
-                    if (null != planningHierarchy7Desc) {
-                        productBo.setPlanningHierarchy7Desc(planningHierarchy7Desc);
+                    if (StringUtils.isNotEmpty(globalBusinessUnit)) {
+                        productBo.setPlanningHierarchy7Desc(checkE8(globalBusinessUnit));
                     } else {
                         FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E8, "There is no globalBusinessUnit assigned for product");
                         resultObject.setFailData(failData);
@@ -212,13 +209,13 @@ public class OMPGdmProductServiceImpl {
         return resultObjects;
     }
 
-    private OMPGdmProductBo checkE1(OMPGdmProductBo productBo,PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity) {
-        if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())){
+    private OMPGdmProductBo checkE1(OMPGdmProductBo productBo, PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity) {
+        if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
             productBo.setActive(IConstant.VALUE.YES);
-            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())){
+            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
                 productBo.setActiveOPRERP(IConstant.VALUE.YES);
             }
-            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())){
+            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
                 productBo.setActiveFCTERP(IConstant.VALUE.YES);
             }
         }

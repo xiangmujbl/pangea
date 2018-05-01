@@ -82,6 +82,7 @@
 /plan/cns_plant_attr
 /plan/cns_prod_country_aff
 /plan/cns_material_plan_status
+/plan/cns_plan_object_filter
 /omp/product_type
 /plan/cns_loc_type
 /omp/location_type
@@ -148,3 +149,5 @@
 
 /omp/gdm_fpb
 
+
+/project_one/eban

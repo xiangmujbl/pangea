@@ -6,7 +6,7 @@
 
             <region path="/project_one/mch1">
                 <columns>
-                    matnr,charg,vfdat,hsdat
+                    matnr,charg,vfdat,hsdat,zustd
                 </columns>
                 <relations>
                     <relation path="/project_one/mcha" isPrimaryKey="false">
@@ -63,7 +63,7 @@
 
             <region path="/edm/batch_master_v1">
                 <columns>
-                    srcSysCd,matlNum,btchNum,localPlant,localStorLocation,btchExpDt,btchMfgDt,plant,materialNumber
+                    srcSysCd,matlNum,btchNum,localPlant,localStorLocation,btchExpDt,btchMfgDt,plant,materialNumber,btchStsCd
                 </columns>
             </region>
 
