@@ -1,21 +1,20 @@
 package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseRequisitionV1Entity;
-import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_req_from_erp.bo.OMPGdmReqFromErpBo;
 
-import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,13 +31,15 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         return instance;
     }
 
-    private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao;
-    private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao;
-    private PlanCnsPlanUnitDaoImpl planCnsPlanUnitDao;
+    private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
+    private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
+    private PlanCnsPlanUnitDaoImpl planCnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
+    private PlanCnsPlanObjectFilterDaoImpl planCnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
+
         EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity = (EDMPurchaseRequisitionV1Entity) o;
 
         OMPGdmReqFromErpBo gdmReqFromErpBo = new OMPGdmReqFromErpBo();
@@ -55,32 +56,38 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSuplPlntCd());
 
         //N1
-        //No pr_doc_ic?
-        //gdmReqFromErpBo.setReqFromErpId(edmPurchaseRequisitionV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.);
+        //Fake pr_doc_ic?
+        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrDocId());
 
         //N2
         try {
             String dateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
-            String year = dateToFormat.substring(0, 3);
-            String month = dateToFormat.substring(4,5);
-            String day = dateToFormat.substring(6,7);
-            dateToFormat = year+IConstant.VALUE.BACK_SLANT+month+IConstant.VALUE.BACK_SLANT+day;
-            String timeToFormat = edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays();
-            String hours = timeToFormat.substring(0,1);
-            String minutes = timeToFormat.substring(2,3);
-            String seconds = timeToFormat.substring(4,5);
-            timeToFormat = hours + IConstant.VALUE.COLON + minutes + IConstant.VALUE.COLON + seconds;
-            String deliveryDate = dateToFormat + IConstant.VALUE.SPACE + timeToFormat;
+            String year = dateToFormat.substring(0, 4);
+            String month = dateToFormat.substring(4,6);
+            String day = dateToFormat.substring(6,8);
+            if(dateToFormat.length() > 8) {
+                String hours = dateToFormat.substring(8,10);
+                String minutes = dateToFormat.substring(10,12);
+                String seconds = dateToFormat.substring(12,14);
+                dateToFormat = year+IConstant.VALUE.BACK_SLANT+month+IConstant.VALUE.BACK_SLANT+day+IConstant.VALUE.SPACE+hours+IConstant.VALUE.COLON+minutes+IConstant.VALUE.COLON+seconds;
+            } else {
+
+                dateToFormat = year + IConstant.VALUE.BACK_SLANT + month + IConstant.VALUE.BACK_SLANT + day+" 00:00:00";
+            }
+            String timeToMove = edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays();
+            String deliveryDate = dateToFormat;
             SimpleDateFormat sdf = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
             Date date = sdf.parse(deliveryDate);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
+            cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
             if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
                 cal.add(Calendar.DATE, 2);
             } else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                 cal.add(Calendar.DATE, 1);
             }
-            deliveryDate = sdf.format(cal);
+            Date d2 = cal.getTime();
+            deliveryDate = sdf.format(d2);
             gdmReqFromErpBo.setDeliveryDate(deliveryDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -95,8 +102,8 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
             //N5
             if(IConstant.VALUE.CONS_LATAM.equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getSourceSystem())) {
-                gdmReqFromErpBo.setManualOffset(" ");
-                gdmReqFromErpBo.setPRIO_URG(" ");
+                gdmReqFromErpBo.setManualOffset("");
+                gdmReqFromErpBo.setPRIO_URG("");
             }
 
             //N6
@@ -104,6 +111,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(edmPurchaseRequisitionV1Entity.getMatlNum(),edmPurchaseRequisitionV1Entity.getSourceSystem());
             //Step 2
             if(!materialGlobalV1Entity.getLocalMaterialNumber().isEmpty() || materialGlobalV1Entity.getLocalMaterialNumber() != null) {
+
                 PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
                 if (planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
                     //Step 3
@@ -124,10 +132,23 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
 
                     //N9
+                    boolean n9Success = false;
                     if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
-
-                    } else {
-
+                         PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectPlantAttributeAndSourceFilterPlantValue(edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getPlntCd());
+                         if(planObjectFilterEntity.getSourceObjectPlantAttribute().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd()) &&
+                            planObjectFilterEntity.getSourceFilterPlantValue().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
+                             if(planObjectFilterEntity.getSourceFilterAttributeTechName().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPrTypeCd())
+                                     && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I")) {
+                                 if(edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
+                                     gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
+                                     n9Success = true;
+                                 }
+                             }
+                         }
+                    }
+                    if(!n9Success) {
+                        FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N9", "Skip");
+                        resultObject.setFailData(failData);
                     }
                 } else {
                     FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N7", "Critical error - Cns Plan Unit - unit not found");
@@ -142,7 +163,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N4", "Critical error - blank values");
             resultObject.setFailData(failData);
         }
-
+        resultObject.setBaseBo(gdmReqFromErpBo);
         return resultObject;
     }
 
