@@ -26,7 +26,9 @@ public abstract class CommonController extends BaseController {
             if (null != resultObject){
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = resultObject.getBaseBo();
-                    result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
+                    if (null != baseBo) {
+                        result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
+                    }
                 } else {
                     if (null != resultObject.getFailData()) {
                         FailData failData = resultObject.getFailData();
