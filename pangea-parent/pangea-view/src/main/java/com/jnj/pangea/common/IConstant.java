@@ -151,6 +151,7 @@ public interface IConstant {
 
     interface PROJECT_ONE_MAKT {
         String MATNR = "matnr";
+        String SPRAS = "spras";
     }
 
     interface PROJECT_ONE_T439T {
@@ -186,6 +187,7 @@ public interface IConstant {
 
     interface NGEMS_MATERIAL_LINKAGE {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String MATERIAL_NUMBER = "materialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
