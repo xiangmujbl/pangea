@@ -35,10 +35,6 @@ Feature: OMPGdmCustomer AEAZ-2710
       | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | aggrSoldTo | channel | channelDescription      | countryId | custCluster | distributionChannel | distributor | division | eCommerce | globalCustomerId | name                                | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupId | regionId | salesOrganization | soldTo | sourceLocationId | subCluster | ucn |
       | 76100001   | YES    | YES          | NO           | NO           |            | CH006   | Distributor Traditional | BR        | BR          |                     | NO          |          | NO        |                  | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD |         |                |             |               |             |                         | BR1      | BRAZIL            |        |                  | Brazil     | 0   |
 
-    Then I check region data "/omp/gdm_customer" by keyFields "customerId"
-      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | aggrSoldTo | channel | channelDescription      | countryId | custCluster | distributionChannel | distributor | division | eCommerce | globalCustomerId | name                                | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupId | regionId | salesOrganization | soldTo | sourceLocationId | subCluster | ucn |
-      | 76100001   | YES    | YES          | NO           | NO           |            | CH006   | Distributor Traditional | BR        | BR          |                     | NO          |          | NO        |                  | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD |         |                |             |               |             |                         | BR1      | BRAZIL            |        | 	                | Brazil     | 0   |
-
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
