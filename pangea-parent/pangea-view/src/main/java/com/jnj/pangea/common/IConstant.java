@@ -81,7 +81,7 @@ public interface IConstant {
 
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
         String CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
-        String EDM_CURRENCY_V1 = "/edm/currency_v1";
+
 
     }
 
@@ -429,9 +429,7 @@ public interface IConstant {
         String BA = "BA";
         String FALSE = "FALSE";
         String COLON = ":";
-        String NO = "NO";
         String YYYYMMDDBS = "yyyy/MM/dd";
-        String YYYYMMDD = "yyyyMMdd";
     }
 
     interface FAILED {
