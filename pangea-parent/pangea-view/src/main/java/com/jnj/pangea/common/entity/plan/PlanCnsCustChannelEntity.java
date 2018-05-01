@@ -7,11 +7,13 @@ import java.util.Map;
 public class PlanCnsCustChannelEntity extends CommonEntity {
 
     private String channel;
+    private String salesOrg;
 
     public PlanCnsCustChannelEntity(Map<String, Object> map) {
         super(map);
 
         setChannel((String) map.get("channel"));
+        setSalesOrg((String) map.get("salesOrg"));
     }
 
     public String getChannel() {
@@ -22,4 +24,11 @@ public class PlanCnsCustChannelEntity extends CommonEntity {
         this.channel = channel;
     }
 
+    public String getSalesOrg() {
+        return salesOrg;
+    }
+
+    public void setSalesOrg(String salesOrg) {
+        this.salesOrg = salesOrg;
+    }
 }
