@@ -44,6 +44,7 @@ public interface IConstant {
         String CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
+
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -237,5 +238,7 @@ public interface IConstant {
         String PANGEA = "Pangea";
         String FPB = "FPB";
         String NO = "NO";
+        String YYYYMMDDBS = "yyyy/MM/dd";
+        String YYYYMMDD = "yyyyMMdd";
     }
 }

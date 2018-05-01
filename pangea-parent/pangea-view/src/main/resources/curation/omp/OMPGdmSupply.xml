@@ -6,10 +6,15 @@
 
             <region path="/edm/source_list_v1">
                 <columns>
-                     sourceSystem,localMaterialNumber,localPlant,localNumberofSourceListRecord,materialNumber,plant,localCreatedOn,localCreatedBy,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localFixedvendor,localAgreementNumber,localAgreementItem,localFixedOutlinePurchaseAgreementItem,localPlantfromWhichMaterialisProcured,localMatForManufPartNumber,localBlockedSourceofSupply,localPurchasingOrganization,localPurchasingDocumentCategory,localCategoryofSourceListRecord,localSourceListUsageinMaterialsPlanning
+                    sourceSystem,localMaterialNumber,localPlant,localNumberofSourceListRecord,materialNumber,plant,localCreatedOn,
+                    localCreatedBy,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localFixedvendor,
+                    localAgreementNumber,localAgreementItem,localFixedOutlinePurchaseAgreementItem,localPlantfromWhichMaterialisProcured,
+                    localMatForManufPartNumber,localBlockedSourceofSupply,localPurchasingOrganization,localPurchasingDocumentCategory,
+                    localCategoryofSourceListRecord,localSourceListUsageinMaterialsPlanning
                 </columns>
+
                 <relations>
-                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                    <relation path="/edm/material_plant_v1" isPrimaryKey="false">
                         <expression>
                             localMaterialNumber=/edm/source_list_v1.localMaterialNumber
                         </expression>
@@ -20,16 +25,28 @@
                             sourceSystem=/edm/source_list_v1.sourceSystem
                         </expression>
                     </relation>
-                    <relation path="/edm/cns_material_plan_status" isPrimaryKey="false">
+
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>
                             localMaterialNumber=/edm/source_list_v1.localMaterialNumber,
-                            localPlant=/edm/source_list_v1.localPlant
+                            localPlant=/edm/source_list_v1.localPlant,
+                            sourceSystem=/edm/source_list_v1.sourceSystem
                         </expression>
                     </relation>
-                    <relation path="/edm/cns_spl_pln_loc" isPrimaryKey="false">
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/source_list_v1.localMaterialNumber
+                        </expression>
+                    </relation>
+
+                    <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
                         <expression>
                             localNumber=/edm/source_list_v1.localVendorAccountNumber
                         </expression>
+                    </relation>
+
+                    <relation path="/plan/cns_process_type" isPrimaryKey="false">
+                        <expression></expression>
                     </relation>
 
                 </relations>
@@ -38,17 +55,17 @@
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    primaryPlanningCode,localMaterialNumber,materialNumber
+                     localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode
                 </columns>
             </region>
 
             <region path="/edm/plant_v1">
                 <columns>
-                    sourceSystem,localPlant,plant
+                    sourceSystem,localPlant,plant,localPlanningRelevant
                 </columns>
             </region>
 
-            <region path="/edm/cns_material_plan_status">
+            <region path="/plan/cns_material_plan_status">
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
                 </columns>
@@ -56,22 +73,27 @@
 
             <region path="/edm/material_plant_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,materialNumber,plant,localPlantStatus,plantStatus,localProcurementType,localDeletionFlagPlant,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity
+                    sourceSystem,localMaterialNumber,localPlant,materialNumber,plant,localPlantStatus,plantStatus,localProcurementType,localDeletionFlagPlant,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity,localPurchasingGroup
                 </columns>
             </region>
 
             <region path="/plan/cns_process_type">
                 <columns>
-                    processTypeId,processTypeDescription
+                    processTypeId,processTypeDesc
                 </columns>
             </region>
 
-            <region path="/edm/cns_spl_pln_loc">
+            <region path="/plan/cns_spl_pln_loc">
                 <columns>
                     localNumber,vendorOrCustomer
                 </columns>
             </region>
 
+            <region path="/omp/gdm_supply">
+                <columns>
+                    SupplyId,Active,ActiveOPRERP,ActiveSOPERP,FromDate,LABEL,LocationId,MACHINECAPACITY,MACHINETYPEID,MaxQuantity,MaxQuantityType,MinQuantity,MinQuantityType,PLANLEVELID,Preference,PROCESSTYPEID,ProductId,PURCHASINGGROUP,PURCHASINGORGANIZATION,SupplierId,ToDate,TransportType,VENDOR
+                </columns>
+            </region>
         </regions>
     </curation>
 </adf-curation>
