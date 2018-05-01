@@ -187,6 +187,7 @@ public interface IConstant {
 
     interface PROJECT_ONE_MAKT {
         String MATNR = "matnr";
+        String SPRAS = "spras";
     }
 
     interface PROJECT_ONE_T439T {
@@ -222,6 +223,7 @@ public interface IConstant {
 
     interface NGEMS_MATERIAL_LINKAGE {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String MATERIAL_NUMBER = "materialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
@@ -441,6 +443,7 @@ public interface IConstant {
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
             String OMP_GDM_PRODUCT = "OMPGdmProduct";
             String OMP_GDM_PRODUCT_LOCATION = "OMPGdmProductLocation";
+            String OMP_GDM_PRODUCT_UNIT_CONVERSION = "OMPGdmProductUnitConversion";
             String GDM_UNIT_CURRENCY = "GdmUnitCurrency";
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";

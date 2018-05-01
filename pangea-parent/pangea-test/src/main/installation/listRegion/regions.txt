@@ -140,6 +140,11 @@
 /omp/gdm_pos
 /project_one/eban
 /plan/cns_plan_object_filter
+/edm/material_global_v2
+
+
+
+
 
 /plan/cns_prod_loc_attrib
 /omp/gdm_product_location_detail
