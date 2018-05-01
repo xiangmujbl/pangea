@@ -45,5 +45,5 @@ Feature:  OMPGdmLocationDetail-Curation
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "LocationDetail.tsv"
+    And I will remove the test file on sink application "PANGEA_V1_gdm_location_detail.tsv"
 
