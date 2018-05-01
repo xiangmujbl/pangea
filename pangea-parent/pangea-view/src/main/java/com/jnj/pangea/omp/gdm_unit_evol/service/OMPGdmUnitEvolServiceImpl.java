@@ -51,7 +51,9 @@ public class OMPGdmUnitEvolServiceImpl implements ICommonService {
             resultObject.setBaseBo(gdmUnitEvolBo);
         } else {
             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_EVOL, IConstant.FAILED.ERROR_CODE.C1,
-                    "All Key fields not Exist", "", consTimeDepXchangeEntity.getUniqueId()));
+                    "All Key fields not Exist", "", consTimeDepXchangeEntity.getSourceSystem(),
+                    consTimeDepXchangeEntity.getFromCurrency(),consTimeDepXchangeEntity.getEffectiveStartDate(),
+                    consTimeDepXchangeEntity.getEffectiveEndDate()));
         }
 //        }
         return resultObject;

@@ -5,7 +5,7 @@ Feature: OMPGdmUnitEvol-Curation AEAZ-2712
   #  1. make sure of data construction (Rule:C1)
   #  2. if values is not exist, filed data record (Rule:C1)
 
-    Given I import "/plan/cons_time_dep_xchange" by keyFields "uniqueId"
+    Given I import "/plan/cons_time_dep_xchange" by keyFields "sourceSystem,fromCurrency,effectiveStartDate,effectiveEndDate"
       | uniqueId | sourceSystem | fromCurrency | effectiveStartDate | effectiveEndDate | exchangeRate | preference |
       | 1        | CONS_LATAM   | VEF          | 2019/1/1           | 2020/1/1         | 700          | 100        |
       | 2        | CONS_LATAM   | BRL          | 2017/12/31         | 2018/12/31       | 300          | 100        |
@@ -24,29 +24,18 @@ Feature: OMPGdmUnitEvol-Curation AEAZ-2712
 
     Then I check file data for filename "GDMUnitEvol.tsv" by keyFields "uniqueId"
       | uniqueId         | activeFCTERP | unitId | startEff   | endEff     | factor      | preference |
-      | CONS_LATAMVEF001 | YES          | VEF    | 2019/1/1   | 2020/1/1   | 700         | 100        |
-      | CONS_LATAMBRL001 | YES          | BRL    | 2017/12/31 | 2018/12/31 | 300         | 100        |
-      | CONS_LATAMBRL002 | YES          | BRL    | 2016/1/1   | 2016/12/31 | 290         | 100        |
-      | CONS_LATAMVEF002 | YES          | VEF    | 2018/1/1   | 2019/1/1   | 700         | 100        |
+      | CONS_LATAMVEF001 | YES          | VEF    | 2018/1/1   | 2019/1/1   | 700         | 100        |
+      | CONS_LATAMVEF002 | YES          | VEF    | 2019/1/1   | 2020/1/1   | 700         | 100        |
+      | CONS_LATAMBRL001 | YES          | BRL    | 2016/1/1   | 2016/12/31 | 290         | 100        |
+      | CONS_LATAMBRL002 | YES          | BRL    | 2017/12/31 | 2018/12/31 | 300         | 100        |
       | CONS_LATAMVEF003 | YES          | VEF    | 2020/1/1   | 2021/1/1   | 700         | 100        |
       | CONS_LATAMVEF004 | YES          | VEF    | 2021/1/1   | 2022/1/1   | 700         | 100        |
-      | CONS_LATAMVYU001 | YES          | UYU    | 2018/1/1   | 2019/1/1   | 28.90172958 | 100        |
-      | CONS_LATAMVYU002 | YES          | UYU    | 2020/1/1   | 2021/1/1   | 28.90172958 | 100        |
-
-#    Then I check region data "/omp/gdm_unit_evol" by keyFields "uniqueId"
-#      | uniqueId         | activeFCTERP | unitId | startEff   | endEff     | factor      | preference |
-#      | CONS_LATAMVEF001 | YES          | VEF    | 2019/1/1   | 2020/1/1   | 700         | 100        |
-#      | CONS_LATAMBRL001 | YES          | BRL    | 2017/12/31 | 2018/12/31 | 300         | 100        |
-#      | CONS_LATAMBRL002 | YES          | BRL    | 2016/1/1   | 2016/12/31 | 290         | 100        |
-#      | CONS_LATAMVEF002 | YES          | VEF    | 2018/1/1   | 2019/1/1   | 700         | 100        |
-#      | CONS_LATAMVEF003 | YES          | VEF    | 2020/1/1   | 2021/1/1   | 700         | 100        |
-#      | CONS_LATAMVEF004 | YES          | VEF    | 2021/1/1   | 2022/1/1   | 700         | 100        |
-#      | CONS_LATAMVYU001 | YES          | UYU    | 2018/1/1   | 2019/1/1   | 28.90172958 | 100        |
-#      | CONS_LATAMVYU002 | YES          | UYU    | 2020/1/1   | 2021/1/1   | 28.90172958 | 100        |
+      | CONS_LATAMUYU001 | YES          | UYU    | 2018/1/1   | 2019/1/1   | 28.90172958 | 100        |
+      | CONS_LATAMUYU002 | YES          | UYU    | 2020/1/1   | 2021/1/1   | 28.90172958 | 100        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1 | key2 | key3 | key4 | key5 | errorValue               | sourceSystem |
-      | C1        | DP             | GDMUnitEvol | 9    |      |      |      |      | All Key fields not Exist |              |
+      | errorCode | functionalArea | interfaceID | key1       | key2 | key3     | key4     | key5 | errorValue               | sourceSystem |
+      | C1        | DP             | GDMUnitEvol | CONS_LATAM |      | 2019/1/1 | 2020/1/1 |      | All Key fields not Exist |              |
 
     And I compare the number of records between "/plan/cons_time_dep_xchange" and "/omp/gdm_unit_evol,/plan/edm_failed_data"
 
