@@ -32,21 +32,19 @@ Feature: OMPGdmCustomer AEAZ-2710
     Then A file is found on sink application with name "GDMCustomer.tsv"
 
     Then I check file data for filename "GDMCustomer.tsv" by keyFields "customerId"
-      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | aggrSoldTo | channel | channelDescription      | countryId | custCluster | distributionChannel | distributor | division | eCommerce | globalCustomerId | name                                | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupId | regionId | salesOrganization | soldTo | sourceLocationId | subCluster | ucn   |
-      | 76100001   | YES    | YES          | NO           | NO           | BLANK      | CH006   | Distributor Traditional | BR        | BR          | BLANK               | NO          | BLANK    | NO        | BLANK            | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD | BLANK   |                |             |               |             | BLANK                   | BR1      | BRAZIL            |        | BLANK            | Brazil     | BLANK |
-      | 76100003   | YES    | YES          | NO           | NO           | BLANK      | CH005   | Modern Trade            | CH        |             | BLANK               | NO          | BLANK    | NO        | BLANK            | GRUPO WM VAREJO                     | BLANK   |                |             |               |             | BLANK                   | CH1      |                   |        | BLANK            |            | BLANK |
-      | 76100004   | YES    | YES          | NO           | NO           | BLANK      | CH008   | Clubs/Cash & Carry      | CO        | CO          | BLANK               | NO          | BLANK    | NO        | BLANK            | GRUPO WMSE ATACADO SAMS             | BLANK   |                |             |               |             | BLANK                   |          | ANDEAN            |        | BLANK            | Andean     | BLANK |
+      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | aggrSoldTo | channel | channelDescription      | countryId | custCluster | distributionChannel | distributor | division | eCommerce | globalCustomerId | name                                | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupId | regionId | salesOrganization | soldTo | sourceLocationId | subCluster | ucn |
+      | 76100001   | YES    | YES          | NO           | NO           |            | CH006   | Distributor Traditional | BR        | BR          |                     | NO          |          | NO        |                  | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD |         |                |             |               |             |                         | BR1      | BRAZIL            |        |                  | Brazil     | 0   |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/plan/cns_dem_grp_asgn" and "/omp/gdm_customer,/plan/edm_failed_data"
+#    And I compare the number of records between "/plan/cns_dem_grp_asgn" and "/omp/gdm_customer,/plan/edm_failed_data"
 
     And I delete the test data
 
-    And I will remove all data with region "/omp/gdm_customer"
+#    And I will remove all data with region "/omp/gdm_customer"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMCustomer.tsv"
+#    And I will remove the test file on sink application "GDMCustomer.tsv"
 

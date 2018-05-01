@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_customer.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
@@ -30,28 +31,7 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
         PlanCnsDemGrpAsgnEntity cnsDemGrpAsgnEntity = (PlanCnsDemGrpAsgnEntity) o;
-
         OMPGdmCustomerBo gdmCustomerBo = new OMPGdmCustomerBo();
-
-        gdmCustomerBo.setCustomerId(cnsDemGrpAsgnEntity.getDemandGroup());
-        gdmCustomerBo.setActive(IConstant.VALUE.YES);
-        gdmCustomerBo.setActiveFCTERP(IConstant.VALUE.YES);
-        gdmCustomerBo.setActiveOPRERP(IConstant.VALUE.NO);
-        gdmCustomerBo.setActiveSOPERP(IConstant.VALUE.NO);
-        gdmCustomerBo.setAggrSoldTo(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setChannel(cnsDemGrpAsgnEntity.getChannel());
-        gdmCustomerBo.setChannelDescription(cnsDemGrpAsgnEntity.getChannelDescription());
-        gdmCustomerBo.setCountryId(cnsDemGrpAsgnEntity.getCountryAffiliate());
-        gdmCustomerBo.setDistributionChannel(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setDistributor(IConstant.VALUE.NO);
-        gdmCustomerBo.setDivision(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setECommerce(IConstant.VALUE.NO);
-        gdmCustomerBo.setGlobalCustomerId(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setName(cnsDemGrpAsgnEntity.getCustomerName());
-        gdmCustomerBo.setPartner(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setPlanningCustomerGroupId(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setSourceLocationId(IConstant.VALUE.BLANK);
-        gdmCustomerBo.setUcn(IConstant.VALUE.ZERO);
 
         // J1
         String countryID = cnsDemGrpAsgnEntity.getCountryAffiliate();
@@ -72,10 +52,30 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
             EDMCountryEntity eDMCountryEntity = countryV1Dao.getEntityWithLocalCountry(localCountry);
             if (null != eDMCountryEntity) {
                 gdmCustomerBo.setRegionId(eDMCountryEntity.getConsumerPlanningRegion());
+
+                gdmCustomerBo.setCustomerId(cnsDemGrpAsgnEntity.getDemandGroup());
+                gdmCustomerBo.setActive(IConstant.VALUE.YES);
+                gdmCustomerBo.setActiveFCTERP(IConstant.VALUE.YES);
+                gdmCustomerBo.setActiveOPRERP(IConstant.VALUE.NO);
+                gdmCustomerBo.setActiveSOPERP(IConstant.VALUE.NO);
+                gdmCustomerBo.setAggrSoldTo(IConstant.VALUE.BLANK);
+                gdmCustomerBo.setChannel(cnsDemGrpAsgnEntity.getChannel());
+                gdmCustomerBo.setChannelDescription(cnsDemGrpAsgnEntity.getChannelDescription());
+                gdmCustomerBo.setCountryId(cnsDemGrpAsgnEntity.getCountryAffiliate());
+                gdmCustomerBo.setDistributionChannel(IConstant.VALUE.BLANK);
+                gdmCustomerBo.setDistributor(IConstant.VALUE.NO);
+                gdmCustomerBo.setDivision(IConstant.VALUE.BLANK);
+                gdmCustomerBo.setECommerce(IConstant.VALUE.NO);
+                gdmCustomerBo.setGlobalCustomerId(IConstant.VALUE.BLANK);
+                gdmCustomerBo.setName(cnsDemGrpAsgnEntity.getCustomerName());
+                gdmCustomerBo.setPartner(IConstant.VALUE.BLANK);
+                gdmCustomerBo.setPlanningCustomerGroupId(IConstant.VALUE.BLANK);
+                gdmCustomerBo.setSourceLocationId(IConstant.VALUE.BLANK);
+                gdmCustomerBo.setUcn(IConstant.VALUE.ZERO);
+                resultObject.setBaseBo(gdmCustomerBo);
             }
         }
 
-        resultObject.setBaseBo(gdmCustomerBo);
         return resultObject;
     }
 }
