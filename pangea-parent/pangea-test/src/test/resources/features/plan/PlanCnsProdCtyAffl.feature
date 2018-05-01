@@ -22,7 +22,7 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-2531
       | sourceSystem | localMaterialNumber | localPlant | dpRelevant | localParentCode   |
       | project_one  | BR01                | BR12       | X          | 7320133000740000  |
       | project_one  | BR02                | BR12       | X          | 975760150         |
-      | project_one  | NP                  | BR12       | X          | 78910106115210000 |
+      | project_one  | NP                  | BR12       |            | 78910106115210000 |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -42,15 +42,14 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-2531
     When I submit task with xml file "xml/plan/PlanCnsProdCtyAffl.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/plan/cns_prod_cty_affl" by keyFields "sourceSystem,dpParentCode,country"
-      | sourceSystem | dpParentCode      | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
-      | CONS_LATAM   | 7320133000740000  | BR      | REGULAR            |              | ACTIVE     |             |                |             |          |            |
-      | CONS_LATAM   | 975760150         | BR      | SAMPLE             |              | ACTIVE     |             |                |             |          |            |
-      | CONS_LATAM   | 78910106115210000 | BR      | REGULAR            |              | ACTIVE     |             |                |             |          |            |
+      | sourceSystem | dpParentCode     | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
+      | CONS_LATAM   | 7320133000740000 | BR      | REGULAR            |              | ACTIVE     |             |                |             |          |            |
+      | CONS_LATAM   | 975760150        | BR      | SAMPLE             |              | ACTIVE     |             |                |             |          |            |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/edm/material_global_v1" and "/plan/cns_prod_cty_affl,/plan/edm_failed_data"
+#    And I compare the number of records between "/edm/material_global_v1" and "/plan/cns_prod_cty_affl,/plan/edm_failed_data"
 
     And I delete the test data
 
