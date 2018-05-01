@@ -23,6 +23,7 @@ public class DateUtils {
     public final static String dd_MM_yyyy_HHmmss = "dd/MM/yyyy HH:mm:ss";
     public final static String F_dd_MM_yyyy_HHmmss = "dd-MM-yyyy HH:mm:ss";
     public final static String F_yyyy_MM_dd_HHmmss = "yyyyMMdd HH:mm:ss";
+    public final static String J_yyyyWW = "yyyyWW";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
@@ -52,6 +53,17 @@ public class DateUtils {
     }
 
     public static Date stringToDate(String dateStr, String format, Locale locale) {
+
+        if (J_yyyyWW.equals(format) && dateStr.length() == 6) {
+            String year = dateStr.substring(0, 4);
+            String week = dateStr.substring(4, 6);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Integer.parseInt(year), Calendar.JANUARY, 0, 0, 0, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            calendar.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(week));
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1);
+            return calendar.getTime();
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
         Date s_date = null;
         try {
@@ -107,6 +119,6 @@ public class DateUtils {
 
     public static void main(String[] args) {
 
-        System.out.println((int) Double.parseDouble("0.00"));
+        System.out.println(dateToString(stringToDate("201805", J_yyyyWW), yyyy_MM_dd_HHmmssSSS));
     }
 }

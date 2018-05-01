@@ -6,16 +6,16 @@ Feature: OMPGdmConversionStorage AEAZ-2759
     Given I import "/plan/cns_dp_price" by keyFields "sourceSystem,localMaterialNumber,currency,country,fromDate"
       | localMaterialNumber | currency | country  | fromDate | salesPrice | sourceSystem |
       | 57928               | BRL1     | jiangsu  | 201801   | 56.70      | nihao        |
-      | 57929               | BRL2     | nnajing  | 201804   | 57.50      | wohao        |
-      | 57930               | BRL3     | anhuiaa  | 201804   | 57.50      | wobuhao      |
+      | 57929               | BRL2     | nnajing  | 201802   | 57.50      | wohao        |
+      | 57930               | BRL3     | anhuiaa  | 201803   | 57.50      | wobuhao      |
       | 57939               | BRL3     | realdate | 201804   | 0          | wobuhao      |
     And I wait "/plan/cns_dp_price" Async Queue complete
 
     Given I import "/edm/country_v1" by keyFields "localCountry"
       | countryCode | localCountry |
-      | code01      | jiangsu      |
-      | error01     | nnajing      |
-      | edoc08      | realdate     |
+      | CH          | jiangsu      |
+      | EN          | nnajing      |
+      | BR          | realdate     |
     And I wait "/edm/country_v1" Async Queue complete
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -27,11 +27,11 @@ Feature: OMPGdmConversionStorage AEAZ-2759
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
-    Given I import "/plan/cns_cust_channel" by keyFields "channel"
+    Given I import "/plan/cns_cust_channel" by keyFields "salesOrg"
       | channel | salesOrg |
-      | code01  | code01   |
-      | error01 | error01  |
-      | edoc08  | edoc08   |
+      | CH001   | CH001    |
+      | CH002   | EN001    |
+      | CH003   | BR002    |
     And I wait "/plan/cns_cust_channel" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -45,15 +45,15 @@ Feature: OMPGdmConversionStorage AEAZ-2759
 
     Then A file is found on sink application with name "GDMConversionStorage.tsv"
 
-    Then I check region data "/omp/gdm_conversion_storage" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
-      | aggregationId               | currencyId | dueDate          | forecastUploadId                             | fromDueDate      | salesPrice | sourceSystem |
-      | nihao-58.90-code01-code01   | BRL1       | 2018013123:59:59 | nihao-58.90-code01-code01-2018013123:59:59   | 2018010100:00:00 | 56.7       | nihao        |
-      | wobuhao-60.66-edoc08-edoc08 | BRL3       | 2018043023:59:59 | wobuhao-60.66-edoc08-edoc08-2018043023:59:59 | 2018040100:00:00 | 0.0        | wobuhao      |
-      | wohao-59.70-error01-error01 | BRL2       | 2018043023:59:59 | wohao-59.70-error01-error01-2018043023:59:59 | 2018040100:00:00 | 57.5       | wohao        |
+    Then I check file data for filename "GDMConversionStorage.tsv" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
+      | aggregationId          | currencyId | dueDate          | forecastUploadId                        | fromDueDate      | salesPrice | sourceSystem | unitId |
+      | nihao-58.90-CH001-CH   | BRL1       | 2018010800:00:00 | nihao-58.90-CH001-CH-2018010800:00:00   | 2018010100:00:00 | 56.7       | nihao        |        |
+      | wobuhao-60.66-CH003-BR | BRL3       | 2018012900:00:00 | wobuhao-60.66-CH003-BR-2018012900:00:00 | 2018012200:00:00 | 0.0        | wobuhao      |        |
+      | wohao-59.70-CH002-EN   | BRL2       | 2018011500:00:00 | wohao-59.70-CH002-EN-2018011500:00:00   | 2018010800:00:00 | 57.5       | wohao        |        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID             | errorCode | sourceSystem | businessArea | key1  | key2    | key3 | key4    | key5   | errorValue                       |
-      | DP             | OMPGdmConversionStorage | J1        | omp          |              | 57930 | wobuhao | BRL3 | anhuiaa | 201804 | localMaterialNumber do not exist |
+      | functionalArea | interfaceID             | errorCode | sourceSystem | businessArea | key1  | key2    | key3 | key4    | key5   | errorValue                                                        |
+      | DP             | OMPGdmConversionStorage | J1        | omp          |              | 57930 | wobuhao | BRL3 | anhuiaa | 201803 | sourceSystem / dpParent code / channel / countryCode do not exist |
 
     And I compare the number of records between "/plan/cns_dp_price" and "/omp/gdm_conversion_storage,/plan/edm_failed_data"
 
