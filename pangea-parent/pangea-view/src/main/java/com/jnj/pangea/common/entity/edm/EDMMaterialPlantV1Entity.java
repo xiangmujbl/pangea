@@ -42,6 +42,7 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localConsumptionPeriodForward;
     private String localGoodsReceiptProcessingTimeInDays;
     private String localBatchManagementRequirementIndicator;
+    private String localPurchasingGroup;
 
     public String getLocalPurchasingGroup() {
         return localPurchasingGroup;
@@ -51,7 +52,6 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localPurchasingGroup = localPurchasingGroup;
     }
 
-    private String localPurchasingGroup;
 
     public String getSourceSystem() {
         return sourceSystem;
