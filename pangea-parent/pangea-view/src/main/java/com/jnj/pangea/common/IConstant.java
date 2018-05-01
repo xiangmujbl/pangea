@@ -10,8 +10,10 @@ public interface IConstant {
         String FAIL_DATA = "/plan/edm_failed_data";
         // -----region
         String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
+        String EDM_SOURCE_LIST_V1 = "/edm/source_list_v1";
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
         String EDM_PLANT_V1 = "/edm/plant_v1";
+        String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
         String PROJECT_ONE_MAKT = "/project_one/makt";
         String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
@@ -39,11 +41,24 @@ public interface IConstant {
         String PLAN_CNS_PROD_LOC_ATTRIB ="/plan/cns_prod_loc_attrib";
         String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
         String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
+        String PLAN_CNS_PLN_SPL_LOC = "/plan/cns_spl_pln_loc";
+        String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
+        String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
+
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
+    }
+
+    interface EDM_SOURCE_LIST_V1 {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANT = "localPlant";
+        String MATERIAL_NUMBER = "manterialNumber";
+        String LOCAL_BLOCKED_SOURCE_OF_SUPPLY = "localBlockedSourceOfSupply";
+        String LOCAL_SOURCE_LIST_RECORD_VALID_FROM = "localSourceListRecordValidFrom";
+        String LOCAL_SOURCE_LIST_RECORD_VALID_TO = "localSourceListRecordValidTo";
     }
 
     interface project_one_tmabct {
@@ -144,6 +159,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_TYPE = "localMaterialType";
         String LOCAL_BASE_UOM = "localBaseUom";
+        String PRIMARY_PLANNING_CODE = "primaryPlanningCode";
     }
 
     interface EDM_MATERIAL_AUOM_V1 {
@@ -154,6 +170,12 @@ public interface IConstant {
     interface EDM_PLANT_V1 {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
+    }
+
+    interface EDM_MATERIAL_PLANT_V1 {
+        String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String MATERIAL_NUMBER = "materialNumber";
     }
 
     interface CNS_PLAN_PARAMETER {
@@ -174,6 +196,17 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
     }
 
+    interface PLAN_CNS_PLN_SPL_LOC {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_NUMBER = "localNumber";
+    }
+
+    interface PLAN_CNS_MATERIAL_PLAN_STATUS {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANT = "localPlant";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+    }
+
     interface PLAN_CNS_FIN_PLAN_VAL {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
@@ -182,6 +215,11 @@ public interface IConstant {
     }
     interface EDM_CURRENCY_V1 {
         String LOCAL_CURRENCY = "localCurrency";
+    }
+
+    interface PLAN_CNS_PROCESS_TYPE {
+        String PROCESS_TYPE_ID = "processTypeId";
+        String PROCESS_TYPE_DESCRIPTION = "processTypeDesc";
     }
 
     // -----region attribute value
@@ -213,6 +251,7 @@ public interface IConstant {
         String USD="USD";
         String PANGEA = "Pangea";
         String FPB = "FPB";
-        String NO = "NO";
+        String TRANSPORT = "TRANSPORT";
+        String STAR = "*";
     }
 }

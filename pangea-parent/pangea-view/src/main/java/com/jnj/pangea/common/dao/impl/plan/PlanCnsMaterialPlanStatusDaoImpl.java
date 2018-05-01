@@ -16,10 +16,11 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsMaterialPlanStatusEntity getEntityWithConditions(String param) {
+    public PlanCnsMaterialPlanStatusEntity getEntityWithMatNumPlantNumSourceSystem(String matNum, String plantNum, String sourceSystem) {
 
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
-        return null;
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(matNum)
+                .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(plantNum)
+                .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
 }

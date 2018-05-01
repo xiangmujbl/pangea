@@ -21,17 +21,16 @@ public class OMPGdmTransportServiceImpl {
         return instance;
     }
 
-    public ResultObject buildView(String key, Object o, Object o2, Object o3) {
+    public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
         CnsTlaneItemEntity tlaneItemEntity = (CnsTlaneItemEntity) o;
-        CnsTlaneItemExceptionEntity tlaneItemExEntity = (CnsTlaneItemExceptionEntity) o2;
-        CnsProcessTypeEntity processTypeEntity = (CnsProcessTypeEntity) o3;
 
         OMPGdmTransportBo gdmTransportBo = new OMPGdmTransportBo();
 
         // TODO add rest of Rule logic
-        gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
+
+
 
         resultObject.setBaseBo(gdmTransportBo);
 

@@ -27,8 +27,8 @@ public class CnsTlaneItemExceptionEntity extends CommonEntity {
         setMaterialNumber((String) map.get("materialNumber"));
         setProcessTypeId((String) map.get("processTypeId"));
         setValidFrom((String) map.get("validFrom"));
-        setDestinationLocation((String) map.get("destinationlocation"));
-        setLeadTime((String) map.get("leadtime"));
+        setDestinationLocation((String) map.get("destinationLocation"));
+        setLeadTime((String) map.get("leadTime"));
         setMode((String) map.get("mode"));
         setMode((String) map.get("sequenceNumber"));
         setMode((String) map.get("tlaneName"));

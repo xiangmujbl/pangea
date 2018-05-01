@@ -163,6 +163,12 @@
 
 		<adf-grid:partitioned-region name="cns_lot_size_key" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
+		<adf-grid:partitioned-region name="cns_process_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="cns_tlane_item" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
+		<adf-grid:partitioned-region name="cns_tlane_item_exception" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
 	</adf-grid:replicated-region>
 
 

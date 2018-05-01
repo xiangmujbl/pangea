@@ -35,4 +35,9 @@ public class EDMMaterialGlobalDaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_BASE_UOM).is(parameterValue).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1,queryString,EDMMaterialGlobalV1Entity.class);
     }
+
+    public EDMMaterialGlobalV1Entity getEntityWithPrimaryPlanningCode(String primaryPlanningCode) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.PRIMARY_PLANNING_CODE).is(primaryPlanningCode).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1,queryString,EDMMaterialGlobalV1Entity.class);
+    }
 }
