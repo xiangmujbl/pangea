@@ -6,7 +6,8 @@ Feature: OMPProcessType AEAZ-2375
 
     Given I import "/plan/cns_process_type" by keyFields "processTypeId"
       | processTypeId | processTypeDescription |
-      | 1             | Inter Plant            |
+      | 1             | subcontracting         |
+      | 2             | Inter Plant            |
 
     And I wait "/plan/cns_process_type" Async Queue complete
 
@@ -15,8 +16,9 @@ Feature: OMPProcessType AEAZ-2375
     Then A file is found on sink application with name "GDMProcessType.tsv"
 
     Then I check file data for filename "GDMProcessType.tsv" by keyFields "processTypeId"
-      | processTypeId | activeOPRERP | activeSOPERP | label       |
-      | 1             | YES          | NO           | Inter Plant |
+      | processTypeId | activeOPRERP | activeSOPERP | label          |
+      | 1             | YES          | NO           | subcontracting |
+      | 2             | YES          | NO           | Inter Plant    |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
