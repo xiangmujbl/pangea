@@ -10,6 +10,12 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | CONS_LATAM   | 0008288858   | 000003         |                  | BR01          | 0000177376       | 20190402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20190402           |                | 1.000         | 1              | 1              | B08002     |
       | CONS_LATAM   | 0008288859   | 000003         |                  | BR01          | 0000118476       | 20190402           | ZSRT           | BR08       | 000000000000081097  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08004     |
       | CONS_LATAM   | 0008288860   | 000001         |                  | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288860   | 000002         |                  | BR01          | 0000185315       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288860   | 000003         |                  | BR01          | 0000185316       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288860   | 000004         |                  | BR01          | 0000185314       | 20190402           | LOT1           | BR08       | 000000000000081222  | LIC1              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288860   | 000005         |                  | BR01          | 0000185314       | 20190402           | LOT2           | BR08       | 000000000000081222  | LIC2              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288860   | 000006         |                  | BR01          | 0000185314       | 20190402           | LOT3           | BR08       | 000000000000081222  | LIC3              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+
     And I wait "/edm/sales_order_v1" Async Queue complete
     Given I import "/plan/cns_cust_excl" by keyFields "salesOrg,customerShipTo"
       | salesOrg | customerShipTo |
@@ -41,6 +47,8 @@ Feature: OMPGdmSalesHistory AEAZ-2530
     Given I import "/plan/cns_cert_deter" by keyFields "salesOrg"
       | certaintyKey | salesOrg | orderType | itemCategory |
       | FOC          | BR01     | ZSRT      | ZSRT         |
+      | CK1          | BR01     | ZSRT      | LIC1         |
+      | CK2          | BR01     | LOT2      | ZSRT         |
     And I wait "/plan/cns_cert_deter" Async Queue complete
     Given I import "/edm/currency_v1" by keyFields "localCurrency"
       | currencyCode | localCurrency |
@@ -53,12 +61,15 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | 76100007    | 0000177376 | BR01              |
       | 76100008    | 0000118476 | BR01              |
       | 76100009    | 0000185314 | BR01              |
+      | 76100010    | HK0001     | BR01              |
+      | 76100011    | 0000185316 | BR01              |
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
     Given I import "/project_one/knvh" by keyFields "kunnr"
-      | kunnr | vkorg | datbi | hkunnr   |
-      | KOO1  | HK001 | VK    | 20170512 |
-      | KOO2  | HK002 | VK    | 20170512 |
-      | K003  | HK003 | VK    | 20170512 |
+      | kunnr      | vkorg | datbi    | hkunnr   |
+      | 0000185315 | BR01  | 20190512 | HK0001   |
+      | 0000185316 | BR01  | 20190512 | HK0002   |
+      | KOO2       | HK002 | VK       | 20170512 |
+      | K003       | HK003 | VK       | 20170512 |
     And I wait "/project_one/knvh" Async Queue complete
     Given I import "/project_one/tvro" by keyFields "route"
       | trazt | route  |
@@ -92,6 +103,11 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | 0008288860000001 | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
       | 0008288859000003 | YES          | FOC         |                    | ADP        | 76100008   |                | 01/02/2019 00:00:00 |                | 01/02/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC02     | 2.0      | CA        |        |              |
       | 0008288858000003 | YES          | FOC         |                    | ADP        | 76100007   |                | 03/03/2019 00:00:00 |                | 03/03/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC01     | 1.0      | CA        |        |              |
+      | 0008288860000002 | YES          | FOC         |                    | ADP        | 76100010   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288860000003 | YES          | FOC         |                    | ADP        | 76100011   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288860000004 | YES          | CK1         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT1      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288860000005 | YES          | CK2         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT2      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288860000006 | YES          | BASE        |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 |                | 02/01/2019 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT3      | PPC03     | 2.0      | CA        |        |              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_sales_history.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -110,6 +111,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         gdmSalesHistoryBo.setQuantity(checkJ2T9(salesOrderV1Entity));
 
+        LogUtil.getCoreLog().info("gdmSalesHistoryBo:"+gdmSalesHistoryBo.toMap());
         resultObject.setBaseBo(gdmSalesHistoryBo);
         return resultObject;
     }
