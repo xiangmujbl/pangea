@@ -88,10 +88,10 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        String dueDate = checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate());
-        if (StringUtils.isNotEmpty(dueDate)) {
-            gdmSalesHistoryBo.setDueDate(dueDate);
-            gdmSalesHistoryBo.setFromDueDate(checkF2T6(dueDate));
+        String fromDueDate = checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate());
+        if (StringUtils.isNotEmpty(fromDueDate)) {
+            gdmSalesHistoryBo.setFromDueDate(fromDueDate);
+            gdmSalesHistoryBo.setDueDate(checkF2T6(fromDueDate));
         }
         String locationId = salesOrderV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + salesOrderV1Entity.getLocalPlant();
         gdmSalesHistoryBo.setLocationId(locationId);
@@ -199,22 +199,22 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
                 int traztLong = (int) Double.parseDouble(trazt);
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
-                Date dueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztLong);
-                return DateUtils.dateToString(dueDate, DateUtils.dd_MM_yyyy_HHmmss);
+                Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztLong);
+                return DateUtils.dateToString(fromDueDate, DateUtils.F_yyyy_MM_dd_HHmmss);
             }
         }
         return null;
     }
 
-    private String checkF2T6(String dueDate) {
+    private String checkF2T6(String fromDueDate) {
         String parameterValue = getParameterValue(IConstant.VALUE.RESTRICT_SELECT);
-        if (StringUtils.isNotEmpty(dueDate) && StringUtils.isNotEmpty(StringUtils.trim(parameterValue))) {
+        if (StringUtils.isNotEmpty(fromDueDate) && StringUtils.isNotEmpty(StringUtils.trim(parameterValue))) {
             Date presentDate = new Date();
             int parameterValueLong = (int) Double.parseDouble(parameterValue);
             Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueLong);
-            Date dueDateFormat = DateUtils.stringToDate(dueDate, DateUtils.dd_MM_yyyy_HHmmss);
+            Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.F_yyyy_MM_dd_HHmmss);
             if (dueDateFormat.getTime() >= resultDate.getTime()) {
-                return dueDate;
+                return fromDueDate;
             }
         }
         return null;

@@ -22,6 +22,7 @@ public class DateUtils {
     public final static String US_EEE_MMM_dd_hhmmsszyyyy = "EEE MMM dd HH:mm:ss z yyyy";
     public final static String dd_MM_yyyy_HHmmss = "dd/MM/yyyy HH:mm:ss";
     public final static String F_dd_MM_yyyy_HHmmss = "dd-MM-yyyy HH:mm:ss";
+    public final static String F_yyyy_MM_dd_HHmmss = "yyyyMMdd HH:mm:ss";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
