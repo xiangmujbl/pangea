@@ -65,8 +65,6 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | certaintyKey | salesOrg | orderType | itemCategory |
       | FOC          | BR01     | ZSRT      | ZSRT         |
       | FOC          | BR01     | ZSRT      | LIC5         |
-      | FOC          | BR01     | LOT6      | ZSRT         |
-    And I wait "/plan/cns_cert_deter" Async Queue complete
     #
     Given I import "/edm/currency_v1" by keyFields "localCurrency"
       | currencyCode | localCurrency |
@@ -126,7 +124,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | 0008288863000003 | YES          | FOC         |                    | ADP        | 76100011   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
       | 0008288864000004 | YES          | BASE        |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT4      | PPC03     | 2.0      | CA        |        |              |
 
-      | 0008288865000005 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT5      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288865000005 | YES          | BASE        |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT5      | PPC03     | 2.0      | CA        |        |              |
       | 0008288866000006 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT6      | PPC03     | 2.0      | CA        |        |              |
 
       | 0008288867000007 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 0        | CA        |        |              |
