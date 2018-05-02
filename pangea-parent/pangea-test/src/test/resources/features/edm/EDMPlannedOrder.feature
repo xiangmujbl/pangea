@@ -19,13 +19,6 @@ Feature: EDMPlannedOrder AEAZ-2370
 
     And I wait "/edm/source_system_v1" Async Queue complete
 
-    Given I import "/edm/plant_v1" by keyFields "localPlant"
-      | localPlant | plant |
-      | BR02       | BR02  |
-      | BR03       | BR02  |
-
-    And I wait "/edm/plant_v1" Async Queue complete
-
     When I submit task with xml file "xml/edm/EDMPlannedOrder.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/planned_order_v1" by keyFields "srcSysCd,mfgPlanOrdrDocId"

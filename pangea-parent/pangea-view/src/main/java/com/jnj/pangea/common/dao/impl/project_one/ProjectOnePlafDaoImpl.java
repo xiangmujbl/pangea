@@ -19,4 +19,9 @@ public class ProjectOnePlafDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PROJECT_ONE_PLAF.PLSCN).is(IConstant.VALUE.PLSCN).toQueryString();
         return queryForObject(IConstant.REGION.PROJECT_ONE_PLAF_CLONE, queryString, PlafEntity.class);
     }
+
+    public PlafEntity getEntityWithPlscn(){
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_PLAF.PLSCN).is(IConstant.VALUE.PLSCN).toQueryString();
+        return queryForObject(IConstant.REGION.PROJECT_ONE_PLAF_CLONE, queryString, PlafEntity.class);
+    }
 }
