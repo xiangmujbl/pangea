@@ -22,8 +22,7 @@
                     </relation>
                     <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
                         <expression>
-                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem,
-                            sourceFilterPlantValue=/edm/purchase_requisition_v1.plntCd
+                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem
                         </expression>
                     </relation>
 
@@ -62,7 +61,7 @@
 
             <region path="/plan/cns_plan_object_filter">
                 <columns>
-                    sourceObjectTechName,sourceSystem,inclusion_Exclusion,sourceFilterPlantValue,sourceObjectPlantAttribute,sourceFilterAttributeValue,sourceFilterAttributeTechName
+                    sourceObjectTechName,sourceSystem,inclusion_Exclusion,sourceObjectAttribute1Value,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute2
                 </columns>
             </region>
 

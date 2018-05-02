@@ -348,11 +348,6 @@ public interface IConstant {
         String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
 
-
-
-
-
-
     interface EDM_MAT_PLANT_FI_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
@@ -437,13 +432,10 @@ public interface IConstant {
     }
 
     interface  PLAN_CNS_PLAN_OBJECT_FILTER {
-        String SOURCE_OBJECT_TECH_NAME = "sourceObjectTechName";
         String SOURCE_SYSTEM = "sourceSystem";
-        String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
-        String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
+        String SOURCE_OBJECT_ATTRIBUTE1 = "sourceObjectAttribute1";
+        String SOURCE_OBJECT_ATTRIBUTE1_VALUE = "sourceObjectAttribute1Value";
     }
-
-
 
     interface PLAN_CNS_PROD_CTY_AFFL {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -543,6 +535,8 @@ public interface IConstant {
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
+        String YYYYMMDDBS = "yyyy/MM/dd";
+        String MMDYYYY = "MM/d/yyyy";
         String N = "N";
         String BLANK = "Blank";
         String OR = "OR";
@@ -552,7 +546,6 @@ public interface IConstant {
         String BA = "BA";
         String FALSE = "FALSE";
         String COLON = ":";
-        String YYYYMMDDBS = "yyyy/MM/dd";
         String TRANSPORT = "TRANSPORT";
         String STAR = "*";
         String LFU = "LFU";
