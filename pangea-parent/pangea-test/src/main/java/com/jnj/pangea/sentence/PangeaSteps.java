@@ -113,7 +113,7 @@ public class PangeaSteps extends CommonSteps {
 
             while ((line = bufferedReader.readLine()) != null) {
                 // check record
-                List<String> fileList = Arrays.asList(line.split("\t"));
+                List<String> fileList = Arrays.asList(line.split("\t", -1));
                 Assert.assertEquals(fileList.size(), list.get(count).size());
                 // compare record ignore the order
                 boolean isContain = false;

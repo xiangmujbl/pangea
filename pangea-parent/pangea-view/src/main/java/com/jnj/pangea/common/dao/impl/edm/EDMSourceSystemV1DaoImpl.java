@@ -1,6 +1,7 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
@@ -35,15 +36,18 @@ public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
     }
 
     public EDMSourceSystemV1Entity getEntityWithLocalSourceSystem(String localSourceSystem) {
-
+        if ("".equals(localSourceSystem)){
+            return null;
+        }
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(localSourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
     }
 
-
     public EDMSourceSystemV1Entity getEntityWithSourceSystem(String sourceSystem) {
+        if ("".equals(sourceSystem)){
+            return null;
+        }
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
-
     }
 }

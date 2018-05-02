@@ -1,0 +1,30 @@
+<adf-curation>
+    <curation mainRegion="/project_one/eord" viewRegion="/edm/source_list_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.source_list.controller.EDMSourceListController">
+        <regions>
+
+            <region path="/project_one/eord">
+                <columns>
+                    matnr,werks,zeord,erdat,ernam,vdatu,bdatu,lifnr,flifn,ebeln,ebelp,febel,reswk,ematn,notkz,ekorg,vrtyp,eortp,autet
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/edm/source_list_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,localNumberofSourceListRecord,localDateonWhichRecordWasCreated,localNameofPersonwhoCreatedtheObject,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localFixedvendor,localAgreementNumber,localAgreementItem,localFixedOutlinePurchaseAgreementItem,localPlantfromWhichMaterialisProcured,localMaterialNumberCorrespondingtoManufacturerPartNumber,localBlockedSourceofSupply,localPurchasingOrganization,localPurchasingDocumentCategory,localCategoryofSourceListRecord,localSourceListUsageinMaterialsPlanning
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

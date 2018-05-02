@@ -246,7 +246,7 @@ def setTestTarget(){
 def Map getTargetJira(){
     echo "enter into getTargetJira() "
 	    //def commit = sh (returnStdout: true, script: "git log -1 --pretty=format:%s --grep='[a-zA-Z]-[0-9]' ").trim()
-	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='7 days ago' ").trim()
+	 def commit = sh (returnStdout: true, script: "git log --pretty=format:%s --grep='[a-zA-Z]-[0-9]' --after='3 days ago' ").trim()
      echo "commit=   '${commit}' "
 
 

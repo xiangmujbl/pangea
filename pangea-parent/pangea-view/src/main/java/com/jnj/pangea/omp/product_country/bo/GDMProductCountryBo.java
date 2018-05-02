@@ -5,7 +5,7 @@ import com.jnj.pangea.common.BaseBo;
 
 public class GDMProductCountryBo extends BaseBo {
     private String uniqueId;
-    private String activeFcterp;
+    private String activeFCTERP;
     private String countryGroup;
     private String countryId;
     private String dpPlannerId;
@@ -31,12 +31,12 @@ public class GDMProductCountryBo extends BaseBo {
         this.uniqueId = uniqueId;
     }
 
-    public String getActiveFcterp() {
-        return activeFcterp;
+    public String getActiveFCTERP() {
+        return activeFCTERP;
     }
 
-    public void setActiveFcterp(String activeFcterp) {
-        this.activeFcterp = activeFcterp;
+    public void setActiveFCTERP(String activeFCTERP) {
+        this.activeFCTERP = activeFCTERP;
     }
 
     public String getCountryGroup() {

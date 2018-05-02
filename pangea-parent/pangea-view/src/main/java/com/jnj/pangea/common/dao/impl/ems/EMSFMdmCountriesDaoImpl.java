@@ -19,7 +19,6 @@ public class EMSFMdmCountriesDaoImpl extends CommonDaoImpl {
     public EMSFMdmCountriesEntity getMdmNameWithzSourceSystemAndMdmCode(String zSourceSystem, String zEntCodeIso3166Alpha2) {
         String countryQueryString = QueryHelper.buildCriteria(IConstant.EMS_F_MDM_COUNTRIES.Z_SOURCE_SYSTEM)
                 .is(zSourceSystem).and(IConstant.EMS_F_MDM_COUNTRIES.MDM_CODE).is(zEntCodeIso3166Alpha2).toQueryString();
-        EMSFMdmCountriesEntity emsfMdmCountriesEntity = queryForObject(IConstant.REGION.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString, EMSFMdmCountriesEntity.class);
-        return emsfMdmCountriesEntity;
+        return queryForObject(IConstant.REGION.EMS_F_MDM_COUNTRIES_CLONE, countryQueryString, EMSFMdmCountriesEntity.class);
     }
 }

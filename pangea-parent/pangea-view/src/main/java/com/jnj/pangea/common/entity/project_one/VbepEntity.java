@@ -15,7 +15,6 @@ public class VbepEntity extends CommonEntity {
 
     public VbepEntity(Map<String, Object> map) {
         super(map);
-
         setVbeln((String) map.get("vbeln"));
         setPosnr((String) map.get("posnr"));
         setEtenr((String) map.get("etenr"));

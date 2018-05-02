@@ -181,7 +181,7 @@ public class OMPGdmProductServiceImpl {
 
                 String localBaseUom = materialGlobalV1Entity.getLocalBaseUom();
                 if (null != localBaseUom && !"".equals(localBaseUom)) {
-                    CnsPlanUnitEntity planUnitEntity = checkE9(materialPlanStatusEntity, localBaseUom);
+                    PlanCnsPlanUnitEntity planUnitEntity = checkE9(materialPlanStatusEntity, localBaseUom);
                     if (null != planUnitEntity) {
                         productBo.setUnitId(planUnitEntity.getUnit());
                     } else {
@@ -292,9 +292,9 @@ public class OMPGdmProductServiceImpl {
         return null;
     }
 
-    private CnsPlanUnitEntity checkE9(PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity, String localBaseUom) {
+    private PlanCnsPlanUnitEntity checkE9(PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity, String localBaseUom) {
         if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-            CnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
+            PlanCnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
             return planUnitEntity;
         }
         return null;

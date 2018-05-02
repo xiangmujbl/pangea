@@ -146,7 +146,7 @@ public class OMPGdmProductLocationServiceImpl {
             //rules E4
             PlanCnsProdLocAttribEntity attribEntity = getFieldWithE4(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
             if (attribEntity != null) {
-                bo.setMinmrsl(attribEntity.getMinMinShelfLife());
+                bo.setMinmrsl(attribEntity.getMinShelfLife());
                 bo.setSupplyGroup(attribEntity.getSupplyGroup());
 
                 //rules E5
@@ -286,8 +286,8 @@ public class OMPGdmProductLocationServiceImpl {
                 for (PlanConsTimeDepXchangeEntity entity : entities) {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
                     try {
-                        Date end = format.parse(entity.getEndEff());
-                        Date start = format.parse(entity.getStartEff());
+                        Date end = format.parse(entity.getEffectiveEndDate());
+                        Date start = format.parse(entity.getEffectiveStartDate());
                         Date date = new Date();
                         if (date.compareTo(end) <= 0 && date.compareTo(start) >= 0) {
                             if (edmMaterialPlantFinV1Entity.getLocalMvp() != null || "".equals(edmMaterialPlantFinV1Entity.getLocalMvp())) {
@@ -315,8 +315,8 @@ public class OMPGdmProductLocationServiceImpl {
                 for (PlanConsTimeDepXchangeEntity entity : entities) {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
                     try {
-                        Date end = format.parse(entity.getEndEff());
-                        Date start = format.parse(entity.getStartEff());
+                        Date end = format.parse(entity.getEffectiveEndDate());
+                        Date start = format.parse(entity.getEffectiveStartDate());
                         Date date = new Date();
                         if (date.compareTo(end) <= 0 && date.compareTo(start) >= 0) {
                             if (edmMaterialPlantFinV1Entity.getLocalStandardPrice() != null || "".equals(edmMaterialPlantFinV1Entity.getLocalStandardPrice())) {
