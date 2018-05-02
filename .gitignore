@@ -13,3 +13,5 @@ pangea-parent/pangea-parent\.ipr
 pangea-parent/pangea-parent\.iws
 
 *.pb
+
+pangea-parent/pangea-view/target/

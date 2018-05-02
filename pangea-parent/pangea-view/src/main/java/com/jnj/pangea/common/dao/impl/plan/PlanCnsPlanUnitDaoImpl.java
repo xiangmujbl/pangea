@@ -3,6 +3,7 @@ package com.jnj.pangea.common.dao.impl.plan;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 
 public class PlanCnsPlanUnitDaoImpl extends CommonDaoImpl {
@@ -28,7 +29,7 @@ public class PlanCnsPlanUnitDaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.CNS_PLAN_UNIT,queryString,PlanCnsPlanUnitEntity.class);
     }
 
-    public CnsPlanUnitEntity getEntityWithLocalUomAndPlanFlag(String localBaseUom,String planFlag) {
+    public CnsPlanUnitEntity getEntityWithLocalUomAndPlanFlag(String localBaseUom, String planFlag) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_UNIT.LOCAL_UOM).is(localBaseUom)
                 .and(IConstant.CNS_PLAN_UNIT.PLAN_FLAG).is(planFlag).toQueryString();
         return queryForObject(IConstant.REGION.CNS_PLAN_UNIT,queryString,CnsPlanUnitEntity.class);

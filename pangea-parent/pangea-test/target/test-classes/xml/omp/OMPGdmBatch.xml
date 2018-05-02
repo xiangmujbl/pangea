@@ -1,0 +1,41 @@
+<adf-curation>
+    <curation mainRegion="/edm/batch_master_v1" viewRegion="/omp/gdm_batch" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_batch.controller.OMPGdmBatchController"
+              writeTo="all" topic="PANGEA_V1_gdm_batch">
+        <regions>
+
+            <region path="/edm/batch_master_v1">
+                <columns>
+                    localBatchNumber,localBatchExpDate,localBatchMfgDate,srcSysCd,locPrtyId,matlId
+                </columns>
+                <relations>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/edm/batch_master_v1.matlId</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,materialNumber,primaryPlanningCode
+                </columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant
+                </columns>
+            </region>
+
+            <region path="/omp/gdm_batch">
+                <columns>
+                    batchId,active,activeOPRERP,activeSOPERP,expirationDate,manufacturingDate,productId
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

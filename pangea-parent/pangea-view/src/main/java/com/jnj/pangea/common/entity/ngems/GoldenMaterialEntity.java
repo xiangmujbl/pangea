@@ -32,7 +32,7 @@ public class GoldenMaterialEntity extends CommonEntity {
         setBaseUom((String) map.get("baseUom"));
         setGlobalDpParentCode((String) map.get("globalDpParentCode"));
         setParentCode((String) map.get("parentCode"));
-        setGlobalDpParentCode((String) map.get("globalDpParentCode"));
+
         setBrand((String) map.get("brand"));
         setForm((String) map.get("form"));
         setMaterialStatus((String) map.get("materialStatus"));
@@ -84,13 +84,6 @@ public class GoldenMaterialEntity extends CommonEntity {
         this.baseUom = baseUom;
     }
 
-    public String getGlobalDpParentCode() {
-        return globalDpParentCode;
-    }
-
-    public void setGlobalDpParentCode(String globalDpParentCode) {
-        this.globalDpParentCode = globalDpParentCode;
-    }
 
     public String getParentCode() {
         return parentCode;

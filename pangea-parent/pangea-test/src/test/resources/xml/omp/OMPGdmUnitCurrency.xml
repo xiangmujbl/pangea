@@ -1,0 +1,21 @@
+<adf-curation>
+    <curation mainRegion="/edm/currency_v1" viewRegion="/omp/gdm_unit" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_unit_currency.controller.OMPGdmUnitCurrencyController"
+              writeTo="all" topic="PANGEA_V1_gdm_unit_currency">
+        <regions>
+
+            <region path="/edm/currency_v1">
+                <columns>
+                    localCountry,sourceSystem,isoNumeric,currencyName,currencyCode
+                </columns>
+            </region>
+
+            <region path="/omp/gdm_unit">
+                <columns>
+                    unitId,active,activeFCTERP,activeOPRERP,activeSOPERP,factor,isoCode,longDescription,measure,precision,shortDescription
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

@@ -28,6 +28,7 @@ public class EDMCurrencyV1DaoImpl extends CommonDaoImpl {
         }
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_CURRENCY_V1.LOCAL_CURRENCY).is(localCurrency).and(IConstant.EDM_CURRENCY_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.EDM_CURRENCY_V1, queryString, EDMCurrencyV1Entity.class);
+    }
 
     public EDMCurrencyV1Entity getEntityWithConditions(String param) {
 

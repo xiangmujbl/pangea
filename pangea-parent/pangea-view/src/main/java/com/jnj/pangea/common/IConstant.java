@@ -308,6 +308,10 @@ public interface IConstant {
     interface EDM_BRAND_V1 {
         String BRAND = "brand";
     }
+    interface PLAN_CNS_PROD_LOC_ATTRIB {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
+    }
 
     interface EDM_FRANCHISE_V1 {
         String FRANCHISE = "franchise";
