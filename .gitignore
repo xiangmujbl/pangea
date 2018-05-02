@@ -2,8 +2,14 @@
 /.idea/
 *.iml
 
-pangea-parent/pangea-view/target/
+pangea-parent/pangea-test/src/test/resources/jar/pangea-view\.jar
 
-pangea-parent/pangea-test/target/
+*.class
 
-pangea-parent/\.idea/
+pangea-parent/pangea-test/target/classes/
+
+pangea-parent/pangea-parent\.ipr
+
+pangea-parent/pangea-parent\.iws
+
+*.pb

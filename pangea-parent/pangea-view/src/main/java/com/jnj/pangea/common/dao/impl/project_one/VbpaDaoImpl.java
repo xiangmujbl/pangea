@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.project_one;
 
+import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
@@ -16,20 +17,12 @@ public class VbpaDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public VbpaEntity getEntityWithConditions(String param) {
+    public VbpaEntity getEntityWithPosnrAndParvwAndVbelnAndPosnrIsNullOrBlankOr000000(String vbeln, String parvw) {
+        ADFCriteria adfCriteria = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).is("000000");
+        ADFCriteria adfCriteria1 = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).isNull();
+        ADFCriteria criteria = adfCriteria1.or(adfCriteria);
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).and(criteria).toQueryString();
 
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
-        return null;
-    }
-
-    public VbpaEntity getEntityWithPosnrAndParvwAndVbeln(String vbeln,String posnr, String parvw) {
-        String queryString;
-        if ("".equals(posnr) || null == posnr) {
-            queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).isNull().and(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).toQueryString();
-        } else {
-            queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBPA.POSNR).is(posnr).and(IConstant.PROJECT_ONE_VBPA.PARVW).is(parvw).and(IConstant.PROJECT_ONE_VBPA.VBELN).is(vbeln).toQueryString();
-        }
         return queryForObject(IConstant.REGION.PROJECT_ONE_VBPA, queryString, VbpaEntity.class);
     }
 }

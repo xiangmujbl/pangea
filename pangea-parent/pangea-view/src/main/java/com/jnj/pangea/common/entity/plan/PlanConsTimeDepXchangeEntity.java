@@ -5,16 +5,69 @@ import com.jnj.pangea.common.entity.CommonEntity;
 import java.util.Map;
 
 public class PlanConsTimeDepXchangeEntity extends CommonEntity {
-    private String preference;
-    private String unitId;
-    private String endEff;
-    private String factor;
+
     private String uniqueId;
-    private String startEff;
+    private String sourceSystem;
+    private String fromCurrency;
+    private String effectiveEndDate;
+    private String effectiveStartDate;
     private String exchangeRate;
+    private String preference;
+
+    public PlanConsTimeDepXchangeEntity(Map<String, Object> map) {
+        super(map);
+
+        setUniqueId((String) map.get("uniqueId"));
+        setSourceSystem((String) map.get("sourceSystem"));
+        setFromCurrency((String) map.get("fromCurrency"));
+        setEffectiveEndDate((String) map.get("effectiveEndDate"));
+        setEffectiveStartDate((String) map.get("effectiveStartDate"));
+        setExchangeRate((String) map.get("exchangeRate"));
+        setPreference((String) map.get("preference"));
+    }
+
+    public String getUniqueId() {
+        return this.uniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    public String getSourceSystem() {
+        return this.sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
+    }
+
+    public String getFromCurrency() {
+        return this.fromCurrency;
+    }
+
+    public void setFromCurrency(String fromCurrency) {
+        this.fromCurrency = fromCurrency;
+    }
+
+    public String getEffectiveEndDate() {
+        return this.effectiveEndDate;
+    }
+
+    public void setEffectiveEndDate(String effectiveEndDate) {
+        this.effectiveEndDate = effectiveEndDate;
+    }
+
+    public String getEffectiveStartDate() {
+        return this.effectiveStartDate;
+    }
+
+    public void setEffectiveStartDate(String effectiveStartDate) {
+        this.effectiveStartDate = effectiveStartDate;
+    }
 
     public String getExchangeRate() {
-        return exchangeRate;
+        return this.exchangeRate;
     }
 
     public void setExchangeRate(String exchangeRate) {
@@ -27,56 +80,5 @@ public class PlanConsTimeDepXchangeEntity extends CommonEntity {
 
     public void setPreference(String preference) {
         this.preference = preference;
-    }
-
-    public String getUnitId() {
-        return unitId;
-    }
-
-    public void setUnitId(String unitId) {
-        this.unitId = unitId;
-    }
-
-    public String getEndEff() {
-        return endEff;
-    }
-
-    public void setEndEff(String endEff) {
-        this.endEff = endEff;
-    }
-
-    public String getFactor() {
-        return factor;
-    }
-
-    public void setFactor(String factor) {
-        this.factor = factor;
-    }
-
-    public String getUniqueId() {
-        return uniqueId;
-    }
-
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    public String getStartEff() {
-        return startEff;
-    }
-
-    public void setStartEff(String startEff) {
-        this.startEff = startEff;
-    }
-
-    public PlanConsTimeDepXchangeEntity(Map<String, Object> map) {
-        super(map);
-        setPreference((String) map.get("preference"));
-        setUnitId((String)map.get("unitId"));
-        setEndEff((String)map.get("endEff"));
-        setFactor((String)map.get("factor"));
-        setUniqueId((String)map.get("uniqueId"));
-        setStartEff((String)map.get("startEff"));
-        setExchangeRate((String)map.get("exchangeRate"));
     }
 }

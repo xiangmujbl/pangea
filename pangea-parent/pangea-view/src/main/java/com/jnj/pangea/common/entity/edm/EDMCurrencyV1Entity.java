@@ -5,8 +5,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 import java.util.Map;
 
 public class EDMCurrencyV1Entity extends CommonEntity {
-
-    private String localCountry;
+    private String localCurrency;
     private String sourceSystem;
     private String isoNumeric;
     private String currencyName;
@@ -14,19 +13,20 @@ public class EDMCurrencyV1Entity extends CommonEntity {
 
     public EDMCurrencyV1Entity(Map<String, Object> map) {
         super(map);
-        setLocalCountry((String) map.get("localCountry"));
+
+        setLocalCurrency((String) map.get("localCurrency"));
         setSourceSystem((String) map.get("sourceSystem"));
         setIsoNumeric((String) map.get("isoNumeric"));
         setCurrencyName((String) map.get("currencyName"));
         setCurrencyCode((String) map.get("currencyCode"));
     }
 
-    public String getLocalCountry() {
-        return this.localCountry;
+    public String getLocalCurrency() {
+        return localCurrency;
     }
 
-    public void setLocalCountry(String localCountry) {
-        this.localCountry = localCountry;
+    public void setLocalCurrency(String localCurrency) {
+        this.localCurrency = localCurrency;
     }
 
     public String getSourceSystem() {
@@ -54,10 +54,11 @@ public class EDMCurrencyV1Entity extends CommonEntity {
     }
 
     public String getCurrencyCode() {
-        return currencyCode;
+        return this.currencyCode;
     }
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
+
 }
