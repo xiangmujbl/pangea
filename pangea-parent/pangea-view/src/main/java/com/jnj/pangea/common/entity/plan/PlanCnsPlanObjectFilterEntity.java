@@ -14,10 +14,6 @@ public class PlanCnsPlanObjectFilterEntity extends CommonEntity {
     private String sourceObjectAttribute2Value;
     private String inclusion_Exclusion;
     private String Comments;
-    private String sourceFilterPlantValue;
-    private String sourceObjectPlantAttribute;
-    private String sourceFilterAttributeValue;
-    private String sourceFilterAttributeTechName;
 
 
     public PlanCnsPlanObjectFilterEntity(Map<String, Object> map) {
@@ -30,10 +26,6 @@ public class PlanCnsPlanObjectFilterEntity extends CommonEntity {
         setSourceObjectAttribute2Value((String) map.get("sourceObjectAttribute2Value"));
         setInclusion_Exclusion((String) map.get("inclusion_Exclusion"));
         setComments((String) map.get("Comments"));
-        setSourceFilterPlantValue((String) map.get("sourceFilterPlantValue"));
-        setSourceObjectPlantAttribute((String) map.get("sourceObjectPlantAttribute"));
-        setSourceFilterAttributeValue((String) map.get("sourceFilterAttributeValue"));
-        setSourceFilterAttributeTechName((String) map.get("sourceFilterAttributeTechName"));
     }
 
     public String getSourceObjectTechName() {
@@ -100,35 +92,4 @@ public class PlanCnsPlanObjectFilterEntity extends CommonEntity {
         Comments = comments;
     }
 
-    public String getSourceFilterPlantValue() {
-        return sourceFilterPlantValue;
-    }
-
-    public void setSourceFilterPlantValue(String sourceFilterPlantValue) {
-        this.sourceFilterPlantValue = sourceFilterPlantValue;
-    }
-
-    public String getSourceObjectPlantAttribute() {
-        return sourceObjectPlantAttribute;
-    }
-
-    public void setSourceObjectPlantAttribute(String sourceObjectPlantAttribute) {
-        this.sourceObjectPlantAttribute = sourceObjectPlantAttribute;
-    }
-
-    public String getSourceFilterAttributeValue() {
-        return sourceFilterAttributeValue;
-    }
-
-    public void setSourceFilterAttributeValue(String sourceFilterAttributeValue) {
-        this.sourceFilterAttributeValue = sourceFilterAttributeValue;
-    }
-
-    public String getSourceFilterAttributeTechName() {
-        return sourceFilterAttributeTechName;
-    }
-
-    public void setSourceFilterAttributeTechName(String sourceFilterAttributeTechName) {
-        this.sourceFilterAttributeTechName = sourceFilterAttributeTechName;
-    }
 }
