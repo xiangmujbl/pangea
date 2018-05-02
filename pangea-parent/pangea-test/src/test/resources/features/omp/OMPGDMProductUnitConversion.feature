@@ -6,7 +6,7 @@ Feature: OMPGdmProductUnitConversion AEAZ-1815
     Given I import "/plan/cns_plan_unit" by keyFields "plantFlag,unit,localUom,sourceSystem,localUomName"
       | plantFlag | unit | localUom | sourceSystem | localUomName |
       | CS        | DPSP | CS       | CRT          | CONS_LATAM   |
-      | EA        | DPSP | EA       | EA           | CONS_LATAM   |
+      | EA        |      | EA       | EA           | CONS_LATAM   |
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
     Given I import "/edm/material_auom_v1" by keyFields "localMaterialNumber,localAuom"

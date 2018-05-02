@@ -115,8 +115,15 @@ public class PangeaSteps extends CommonSteps {
                 // check record
                 List<String> fileList = Arrays.asList(line.split("\t"));
                 Assert.assertEquals(fileList.size(), list.get(count).size());
-                Assert.assertTrue(list.get(count).containsAll(fileList));
-
+                // compare record ignore the order
+                boolean isContain = false;
+                for (List<String> target : list) {
+                    isContain = target.containsAll(fileList);
+                    if (isContain) {
+                        break;
+                    }
+                }
+                Assert.assertTrue(isContain);
                 count++;
             }
 
