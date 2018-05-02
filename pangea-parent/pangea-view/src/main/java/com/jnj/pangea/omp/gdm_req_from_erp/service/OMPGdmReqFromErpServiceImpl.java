@@ -12,6 +12,7 @@ import com.jnj.pangea.common.entity.edm.EDMPurchaseRequisitionV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_req_from_erp.bo.OMPGdmReqFromErpBo;
 
@@ -124,7 +125,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     }
                 }
                 //N7
-                CnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
+                PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
                 if (!cnsPlanUnitEntity.getUnit().isEmpty() || cnsPlanUnitEntity.getUnit() != null) {
                     gdmReqFromErpBo.setUnitId(cnsPlanUnitEntity.getUnit());
 

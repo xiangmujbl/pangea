@@ -40,8 +40,6 @@ public interface IConstant {
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
         String PLAN_CNS_PROD_LOC_ATTRIB = "/plan/cns_prod_loc_attrib";
-        String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
-        String PLAN_CNS_PROD_LOC_ATTRIB = "/plan/cns_prod_loc_attrib";
         String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
         String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
         String PLAN_CNS_CUST_CHANNEL = "/plan/cns_cust_channel";
@@ -84,17 +82,18 @@ public interface IConstant {
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
-        String PLAN_CNS_FIN_PLAN_VAL = "/plan/cns_fin_plan_val";
-        String PLAN_CNS_FIN_PLAN_QTY = "/plan/cns_fin_plan_qty";
         String CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PLN_SPL_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
         String PLAN_CNS_PLAN_OBJECT_FILTER = "/plan/cns_plan_object_filter";
     }
+
+
     interface PLAN_CNS_MATERIAL_PLAN_STATUS {
+        String DP_RELEVANT = "dpRelevant";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PLANT = "localPlant";
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
 
     interface PLAN_CNS_PLN_SPL_LOC {
@@ -116,6 +115,7 @@ public interface IConstant {
         String IDENTIFIER = "identifier";
 
     }
+
     interface EDM_MATERIAL_PLANT_V1 {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
@@ -185,7 +185,7 @@ public interface IConstant {
         String LOCAL_PROCUREMENT_TYPE = "localProcurementType";
     }
 
-    }
+
 
 
 
@@ -444,23 +444,6 @@ public interface IConstant {
     }
 
 
-    interface PLAN_CNS_FIN_PLAN_VAL {
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-        String IDENTIFIER = "identifier";
-    }
-
-    interface PLAN_CNS_FIN_PLAN_QTY {
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-        String IDENTIFIER = "identifier";
-    }
-
-
-    interface PLAN_CNS_MATERIAL_PLAN_STATUS {
-        String DP_RELEVANT = "dpRelevant";
-        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
-        String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_PLANT = "localPlant";
-    }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -572,8 +555,6 @@ public interface IConstant {
         String YYYYMMDDBS = "yyyy/MM/dd";
         String TRANSPORT = "TRANSPORT";
         String STAR = "*";
-
-        String FPB = "FPB";
         String LFU = "LFU";
         String SAPR = "SAPR";
         String SAMPLE = "SAMPLE";

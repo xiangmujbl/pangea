@@ -50,18 +50,12 @@ public class GeneraRepot {
         String newFilePath = filePath + fileName;
         File newFile = new File(newFilePath);
 
-                File oldFile = new File(filePath + "cucumber-html-reports");
+        boolean flag = oldFile.renameTo(newFile);
 
         if (flag) {
             FileToZip.zipDirectory(newFilePath);
         }
 
     }
-
-                if (flag) {
-                        FileToZip.zipDirectory(newFilePath);
-                }
-
-        }
 
 }

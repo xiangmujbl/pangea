@@ -8,6 +8,8 @@
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
                 </columns>
+                <filter>spRelevant:X OR noPlanRelevant:X</filter>
+
                 <relations>
                     <relation path="/plan/cns_prod_loc_attrib" isPrimaryKey="false">
                         <expression>
@@ -21,7 +23,7 @@
 
             <region path="/plan/cns_prod_loc_attrib">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,schdAttrbName1,schAttrbDesc1,schdAttrbName2,schAttrbDesc2,schdAttrbName3,schAttrbDesc3
+                    sourceSystem,localMaterialNumber,localPlant,schdAttrbName1,schAttrbDesc1,schdAttrbName2,schAttrbDesc2,schdAttrbName3,schAttrbDesc3,supplyGroup,minShelfLife,minMinshelfLife
                 </columns>
                 <relations>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
@@ -41,7 +43,7 @@
 
             <region path="/omp/gdm_product_location_detail">
                 <columns>
-                    productLocationDetailId,activeOprerp,activeSoperp,CLASS,description,name,productLocationId,unit,value
+                    productLocationDetailId,activeOPRERP,activeSOPERP,CLASS,comments,description,name,productLocationId,unit,value
                 </columns>
             </region>
 

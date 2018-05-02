@@ -212,7 +212,7 @@ LogUtil.getCoreLog().info(destSourceSystem);
             // if we have an entry for location
             if (entryExists) {
 
-                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = materialPlanStatusDao.getEntityWithMatNumPlantNumSourceSystem(localMatNum, originLocalPlantNum, originSourceSystem);
+                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = materialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(localMatNum, originLocalPlantNum, originSourceSystem);
 
                 //if material relevant
                 if (materialPlanStatusEntity.getSpRelevant().equals("X")) {
