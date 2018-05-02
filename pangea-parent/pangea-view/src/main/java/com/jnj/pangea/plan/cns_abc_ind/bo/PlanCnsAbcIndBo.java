@@ -4,11 +4,11 @@ import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
 public class PlanCnsAbcIndBo extends BaseBo {
-    private String sourceSystem="";
-    private String localIndicator="";
-    private String localIndicatorDescription="";
-    private String indicator="";
-    private String indicatorDecription="";
+    private String sourceSystem = "";
+    private String localIndicator = "";
+    private String localIndicatorDescription = "";
+    private String indicator = "";
+    private String indicatorDescription = "";
 
     public String getSourceSystem() {
         return sourceSystem;
@@ -42,12 +42,12 @@ public class PlanCnsAbcIndBo extends BaseBo {
         this.indicator = indicator;
     }
 
-    public String getIndicatorDecription() {
-        return indicatorDecription;
+    public String getIndicatorDescription() {
+        return indicatorDescription;
     }
 
-    public void setIndicatorDecription(String indicatorDecription) {
-        this.indicatorDecription = indicatorDecription;
+    public void setIndicatorDescription(String indicatorDescription) {
+        this.indicatorDescription = indicatorDescription;
     }
 
     @Override
@@ -55,9 +55,9 @@ public class PlanCnsAbcIndBo extends BaseBo {
         return RawDataHelper.getInstance()
                 .makeJsonObject("sourceSystem", this.sourceSystem)
                 .add("localIndicator", this.localIndicator)
-                .add("localIndicatorDescription",this.localIndicatorDescription)
-                .add("indicator",this.indicator)
-                .add("indicatorDecription",this.indicatorDecription)
+                .add("localIndicatorDescription", this.localIndicatorDescription)
+                .add("indicator", this.indicator)
+                .add("indicatorDescription", this.indicatorDescription)
                 .toJsonString();
     }
 }

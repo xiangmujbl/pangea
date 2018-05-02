@@ -37,19 +37,19 @@ public class EDMSourceListServiceImpl implements ICommonService {
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
         edmSourceListBo.setSourceSystem(edmSourceSystemV1Entity.getSourceSystem());
         processSystem(eordEntity,edmSourceListBo);
-        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(edmSourceSystemV1Entity.getSourceSystem(),eordEntity.getMatnr());
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getEntityWithSourceSystemAndLocalMaterialNumber(edmSourceSystemV1Entity.getSourceSystem(),eordEntity.getMatnr());
 
         if(materialGlobalV1Entity!=null){
-            edmSourceListBo.setMaterialNumber(materialGlobalV1Entity.getMaterialNumber());
+            edmSourceListBo.setLocalMaterialNumber(materialGlobalV1Entity.getMaterialNumber());
         }else{
-            edmSourceListBo.setMaterialNumber("");
+            edmSourceListBo.setLocalMaterialNumber("");
         }
 
         EDMPlantV1Entity edmPlantV1Entity = edmPlantV1Dao.getPlantWithSourceSystemAndLocalPlant(edmSourceSystemV1Entity.getSourceSystem(),eordEntity.getWerks());
         if(edmPlantV1Entity!=null){
-            edmSourceListBo.setPlant(edmPlantV1Entity.getPlant());
+            edmSourceListBo.setLocalPlant(edmPlantV1Entity.getPlant());
         }else{
-            edmSourceListBo.setPlant("");
+            edmSourceListBo.setLocalPlant("");
         }
         resultObject.setBaseBo(edmSourceListBo);
         return resultObject;
@@ -60,8 +60,8 @@ public class EDMSourceListServiceImpl implements ICommonService {
         edmSourceListBo.setLocalMaterialNumber(eordEntity.getMatnr());
         edmSourceListBo.setLocalPlant(eordEntity.getWerks());
         edmSourceListBo.setLocalNumberofSourceListRecord(eordEntity.getZeord());
-        edmSourceListBo.setLocalCreatedOn(eordEntity.getErdat());
-        edmSourceListBo.setLocalCreatedBy(eordEntity.getErnam());
+        edmSourceListBo.setLocalDateonWhichRecordWasCreated(eordEntity.getErdat());
+        edmSourceListBo.setLocalNameofPersonwhoCreatedtheObject(eordEntity.getErnam());
         edmSourceListBo.setLocalSourceListRecordValidFrom(eordEntity.getVdatu());
         edmSourceListBo.setLocalSourceListRecordValidTo(eordEntity.getBdatu());
         edmSourceListBo.setLocalVendorAccountNumber(eordEntity.getLifnr());
@@ -70,7 +70,7 @@ public class EDMSourceListServiceImpl implements ICommonService {
         edmSourceListBo.setLocalAgreementItem(eordEntity.getEbelp());
         edmSourceListBo.setLocalFixedOutlinePurchaseAgreementItem(eordEntity.getFebel());
         edmSourceListBo.setLocalPlantfromWhichMaterialisProcured(eordEntity.getReswk());
-        edmSourceListBo.setLocalMatForManufPartNumber(eordEntity.getEmatn());
+        edmSourceListBo.setLocalMaterialNumberCorrespondingtoManufacturerPartNumber(eordEntity.getEmatn());
         edmSourceListBo.setLocalBlockedSourceofSupply(eordEntity.getNotkz());
         edmSourceListBo.setLocalPurchasingOrganization(eordEntity.getEkorg());
         edmSourceListBo.setLocalPurchasingDocumentCategory(eordEntity.getVrtyp());

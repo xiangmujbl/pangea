@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-495
-Feature: EDMPlant-Curation
+Feature: EDMPlant AEAZ-495
 
   Scenario: Full Load curation
     #  1. test get sourceSystem from source_system_v1 (rule T1)
@@ -9,10 +9,10 @@ Feature: EDMPlant-Curation
     #  5. test get WAERS form T001 by joining T001K-BWKEY = T001W-BWKEY and T001K-BUKRS = t001-BUKRS ( rule J1 )
 
     Given I import "/ems/ems_f_z_enterprise_plants" by keyFields "zPlantSourceSystem,zPlant"
-      | zPlantSourceSystem | zPlant | zEntPlantNumber | zSite | zEntPlantType | zRegion  |
-      | project_one        | AR01   | -               | -     | All Countries | edmPlant |
-      | project_two        | AR02   | 00              | *     | Miscellaneous | gdmPlant |
-      | [EMS]              | AR06   | 00              | ET    | All Countries | fase     |
+      | zPlantSourceSystem | zPlant                                                 | zEntPlantNumber | zSite | zEntPlantType | zRegion  |
+      | project_one        | [Consumer LATAM], AR01, J&J BR-Alhandra PB-Com&Distrib | -               | -     | All Countries | edmPlant |
+      | project_two        | [Consumer LATAM], AR02, J&J BR-Alhandra PB-Com&Distrib | 00              | *     | Miscellaneous | gdmPlant |
+      | [EMS]              | [Consumer LATAM], AR06, J&J BR-Alhandra PB-Com&Distrib | 00              | ET    | All Countries | fase     |
     And I wait "/ems/ems_f_z_enterprise_plants" Async Queue complete
 
 
@@ -58,10 +58,9 @@ Feature: EDMPlant-Curation
       | CONS_LATAM   | AR02       | S & M Pilar    | 00    |                       | AR           | 00      | *    | DC             | Miscellaneous | ARS           | gdmPlant |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
-      | DP             | EDMPlant    | T1        | project_one  |              | [EMS] | AR06 |      |      |      |            |
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/plan/edm_failed_data"
+#    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/plan/edm_failed_data"
 
     And I delete the test data
 

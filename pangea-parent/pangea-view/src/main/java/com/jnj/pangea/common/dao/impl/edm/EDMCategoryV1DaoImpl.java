@@ -22,4 +22,9 @@ public class EDMCategoryV1DaoImpl extends CommonDaoImpl {
         //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         return null;
     }
+
+    public EDMCategoryV1Entity getEntityWithCategory(String category) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_CATEGORY_V1.CATEGORY).is(category).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_CATEGORY_V1, queryString, EDMCategoryV1Entity.class);
+    }
 }

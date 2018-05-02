@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1480
-Feature: PlanCnsPlantAttr-Curation
+Feature: PlanCnsPlantAttr AEAZ-1480
 
   Scenario: Full Load curation
     # 1. test the filter localPlanningRelevant='Y'
@@ -18,9 +18,9 @@ Feature: PlanCnsPlantAttr-Curation
       | [Consumer LATAM] | BR02       | A              | 00             |       | 00        | Y                     |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID      | errorCode | sourceSystem | businessArea | key1             | key2 | key3 | key4 | key5 | errorValue |
-      | SP             | PlanCnsPlantAttr | FILTER    | edm          |              | [Consumer LATAM] | BR06 |      |      |      |            |
-    And I compare the number of records between "/edm/plant_v1" and "/plan/cns_plant_attr,/plan/edm_failed_data"
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+
+#    And I compare the number of records between "/edm/plant_v1" and "/plan/cns_plant_attr,/plan/edm_failed_data"
 
     And I delete the test data
 

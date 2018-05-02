@@ -22,4 +22,9 @@ public class EDMFormV1DaoImpl extends CommonDaoImpl {
         //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         return null;
     }
+
+    public EDMFormV1Entity getEntityWithFormName(String form) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_FORM_V1.FORM).is(form).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_FORM_V1, queryString, EDMFormV1Entity.class);
+    }
 }

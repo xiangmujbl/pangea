@@ -10,6 +10,7 @@ public class EDMCountryBo extends BaseBo {
     private String countryCode;
     private String countryName;
     private String consumerPlanningRegion;
+    private String consumerPlannRegDesc;
 
     public String getSourceSystem() {
         return sourceSystem;
@@ -19,13 +20,12 @@ public class EDMCountryBo extends BaseBo {
         this.sourceSystem = sourceSystem;
     }
 
-    public void setLocalCountry(String localCountry) {
-        this.localCountry = localCountry;
+    public String getLocalCountry() {
+        return localCountry;
     }
 
-    public String getLocalCountry() {
-
-        return localCountry;
+    public void setLocalCountry(String localCountry) {
+        this.localCountry = localCountry;
     }
 
     public String getCountryCode() {
@@ -36,23 +36,28 @@ public class EDMCountryBo extends BaseBo {
         this.countryCode = countryCode;
     }
 
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public String getConsumerPlanningRegion() {
+        return consumerPlanningRegion;
+    }
+
     public void setConsumerPlanningRegion(String consumerPlanningRegion) {
         this.consumerPlanningRegion = consumerPlanningRegion;
     }
 
-    public String getConsumerPlanningRegion() {
-
-        return consumerPlanningRegion;
+    public String getConsumerPlannRegDesc() {
+        return consumerPlannRegDesc;
     }
 
-    public void setCountryName(String countryName) {
-
-        this.countryName = countryName;
-    }
-
-    public String getCountryName() {
-
-        return countryName;
+    public void setConsumerPlannRegDesc(String consumerPlannRegDesc) {
+        this.consumerPlannRegDesc = consumerPlannRegDesc;
     }
 
     @Override

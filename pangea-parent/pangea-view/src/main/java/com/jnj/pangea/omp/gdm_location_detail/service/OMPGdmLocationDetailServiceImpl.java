@@ -24,7 +24,6 @@ public class OMPGdmLocationDetailServiceImpl {
         List<ResultObject> resultObjectList = new LinkedList<>();
         PlanCnsPlantAttrEntity cnsPlantAttrEntity = (PlanCnsPlantAttrEntity) o;
 
-        // TODO add logic
         String name1 = cnsPlantAttrEntity.getLocationAttribute1Desc();
         String name2 = cnsPlantAttrEntity.getLocationAttribute2Desc();
         String name3 = cnsPlantAttrEntity.getLocationAttribute3Desc();
@@ -62,16 +61,15 @@ public class OMPGdmLocationDetailServiceImpl {
             gdmLocationDetailBo.setName(name);
             gdmLocationDetailBo.setValue(value);
 
-            // Rule N1
-            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
-            gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.YES);
+            // Rule N5
+            gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.NO);
 
             // Rule N3
             String CLASS = "";
             if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())){
                 CLASS = IConstant.VALUE.PGA;
-                gdmLocationDetailBo.setCLASS(CLASS);
             }
+            gdmLocationDetailBo.setCLASS(CLASS);
 
             // Rule C1
             String locationid = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
@@ -80,6 +78,9 @@ public class OMPGdmLocationDetailServiceImpl {
             // Rule C2
             String locationDetailId = locationid+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
+
+            // Rule N1
+            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
 
             resultObject.setBaseBo(gdmLocationDetailBo);
             resultObjectList.add(resultObject);

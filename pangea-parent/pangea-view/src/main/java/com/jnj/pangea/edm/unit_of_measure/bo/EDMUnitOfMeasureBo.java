@@ -10,7 +10,7 @@ public class EDMUnitOfMeasureBo extends BaseBo {
     private String localUomName;
     private String uom;
     private String uomName;
-    private String isocode;
+    private String isoCode;
     private String measure;
     private String factor;
     private String roundingDecimal;
@@ -55,12 +55,12 @@ public class EDMUnitOfMeasureBo extends BaseBo {
         this.uomName = uomName;
     }
 
-    public String getIsocode() {
-        return isocode;
+    public String getIsoCode() {
+        return isoCode;
     }
 
-    public void setIsocode(String isocode) {
-        this.isocode = isocode;
+    public void setIsoCode(String isoCode) {
+        this.isoCode = isoCode;
     }
 
     public String getMeasure() {

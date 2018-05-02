@@ -70,7 +70,7 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         materialPlantBo.setLocalProcurementType(beskz);
 
         String bstfe = marcEntity.getBstfe();
-        materialPlantBo.setLocalFixedlotsize(bstfe);
+        materialPlantBo.setLocalFixedLotSize(bstfe);
 
         String bstma = marcEntity.getBstma();
         materialPlantBo.setLocalMaximumLotSize(bstma);
@@ -79,10 +79,10 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         materialPlantBo.setLocalMinimumLotSize(bstmi);
 
         String bstrf = marcEntity.getBstrf();
-        materialPlantBo.setLocalRoundingvalueForPoq(bstrf);
+        materialPlantBo.setLocalRoundingValueForPoq(bstrf);
 
         String disls = marcEntity.getDisls();
-        materialPlantBo.setLocalLotsize(disls);
+        materialPlantBo.setLocalLotSize(disls);
 
         String dismm = marcEntity.getDismm();
         materialPlantBo.setLocalMrpType(dismm);
@@ -106,23 +106,23 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         materialPlantBo.setLocalProductionUnit(frtme);
 
         String insmk = marcEntity.getInsmk();
-        materialPlantBo.setLocalPosttoInspectionStock(insmk);
+        materialPlantBo.setLocalPostToInspectionStock(insmk);
 
 
         String kausf = marcEntity.getKausf();
         materialPlantBo.setLocalComponentScrapInPercent(kausf);
 
         String kzkri = marcEntity.getKzkri();
-        materialPlantBo.setLocalCriticalpart(kzkri);
+        materialPlantBo.setLocalCriticalPart(kzkri);
 
         String maabc = marcEntity.getMaabc();
         materialPlantBo.setLocalAbcIndicator(maabc);
 
         String mabst = marcEntity.getMabst();
-        materialPlantBo.setLocalMaximumStocklevel(mabst);
+        materialPlantBo.setLocalMaximumStockLevel(mabst);
 
         String mtvfp = marcEntity.getMtvfp();
-        materialPlantBo.setLocalCheckingGroupforAvailabilityCheck(mtvfp);
+        materialPlantBo.setLocalCheckingGroupForAvailabilityCheck(mtvfp);
 
         String plifz = marcEntity.getPlifz();
         materialPlantBo.setLocalPlannedDeliveryTimeInDays(plifz);
@@ -131,7 +131,7 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         materialPlantBo.setLocalDependentRequirements(sbdkz);
 
         String shflg = marcEntity.getShflg();
-        materialPlantBo.setLocalSafetytimeIndicator(shflg);
+        materialPlantBo.setLocalSafetyTimeIndicator(shflg);
 
         String shzet = marcEntity.getShzet();
         materialPlantBo.setLocalSafetyTime(shzet);
@@ -155,12 +155,12 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         materialPlantBo.setLocalGoodsReceiptProcessingTimeInDays(webaz);
 
         String xchpf = marcEntity.getXchpf();
-        materialPlantBo.setLocalBatchManagementRequirmentIndicator(xchpf);
+        materialPlantBo.setLocalBatchManagementRequirementIndicator(xchpf);
 
         String fxhor = marcEntity.getFxhor();
         materialPlantBo.setLocalPlanningTimeFence(fxhor);
 
-        materialPlantBo.setLocalPosttoinspstk(insmk);
+        materialPlantBo.setLocalPostToInspStk(insmk);
 
         materialPlantBo.setLocalComponentScrap(kausf);
 

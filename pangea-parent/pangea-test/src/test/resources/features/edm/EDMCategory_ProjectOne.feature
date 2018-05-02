@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1271
-Feature: EDMCategory
+Feature: EDMCategory AEAZ-1271
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation

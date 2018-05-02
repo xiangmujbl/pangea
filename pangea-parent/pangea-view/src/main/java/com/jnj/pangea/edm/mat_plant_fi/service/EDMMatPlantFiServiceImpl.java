@@ -1,12 +1,15 @@
 package com.jnj.pangea.edm.mat_plant_fi.service;
 
-import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.project_one.MbewEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mat_plant_fi.bo.EDMMatPlantFiBo;
+import org.apache.commons.lang3.StringUtils;
 
 public class EDMMatPlantFiServiceImpl implements ICommonService {
 
@@ -30,45 +33,34 @@ public class EDMMatPlantFiServiceImpl implements ICommonService {
         MbewEntity mbewEntity = (MbewEntity) o;
 
         EDMMatPlantFiBo matPlantFiBo = new EDMMatPlantFiBo();
-        String sourceSystem = null;
-        if(null != sourceSystemV1Dao.getSourceSystemWithProjectOne()){
-            sourceSystem = sourceSystemV1Dao.getSourceSystemWithProjectOne().getSourceSystem();
+
+        String sourceSystem = "";
+        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
+        if (null != sourceSystemV1Entity) {
+            sourceSystem = sourceSystemV1Entity.getSourceSystem();
             matPlantFiBo.setSourceSystem(sourceSystem);
-
-            matPlantFiBo.setLocalMaterialNumber(mbewEntity.getMatnr());
-
-            String bwkey = mbewEntity.getBwkey();
-            matPlantFiBo.setLocalPlant(bwkey);
-            matPlantFiBo.setLocalDeleIndicator(mbewEntity.getLvorm());
-
-            String plant = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(sourceSystem,bwkey).getPlant();
-            matPlantFiBo.setPlant(plant);
-
-            matPlantFiBo.setPriceControl(mbewEntity.getVprsv());
-            matPlantFiBo.setLocalStandardPrice(mbewEntity.getStprs());
-            matPlantFiBo.setLocalPriceUnit(mbewEntity.getPeinh());
-            matPlantFiBo.setLocalMvp(mbewEntity.getVerpr());
-            resultObject.setBaseBo(matPlantFiBo);
-        }else{
-            FailData failData = writeFailDataToRegion(mbewEntity, "T1", "Unable to find the Source System");
-            resultObject.setFailData(failData);
         }
+
+        matPlantFiBo.setLocalMaterialNumber(mbewEntity.getMatnr());
+
+        String bwkey = mbewEntity.getBwkey();
+        matPlantFiBo.setLocalPlant(bwkey);
+        matPlantFiBo.setLocalDeleIndicator(mbewEntity.getLvorm());
+
+        if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(bwkey)) {
+            EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(sourceSystem, bwkey);
+            if (null != plantV1Entity) {
+                matPlantFiBo.setPlant(plantV1Entity.getPlant());
+            }
+        }
+
+        matPlantFiBo.setPriceControl(mbewEntity.getVprsv());
+        matPlantFiBo.setLocalStandardPrice(mbewEntity.getStprs());
+        matPlantFiBo.setLocalPriceUnit(mbewEntity.getPeinh());
+        matPlantFiBo.setLocalMvp(mbewEntity.getVerpr());
+        resultObject.setBaseBo(matPlantFiBo);
 
         return resultObject;
     }
 
-    private FailData writeFailDataToRegion(MbewEntity mbewEntity, String ruleCode, String errorValue) {
-        FailData failData = new FailData();
-        failData.setFunctionalArea("DP");
-        failData.setInterfaceID("EDMMatPlantFi");
-        failData.setErrorCode(ruleCode);
-        failData.setSourceSystem("EMS");
-        failData.setKey1(mbewEntity.getMatnr());
-        failData.setKey2(mbewEntity.getBwkey());
-        failData.setKey3("");
-        failData.setKey4("");
-        failData.setKey5("");
-        failData.setErrorValue(errorValue);
-        return failData;
-    }
 }

@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1276
-Feature: EDMForm
+Feature: EDMForm AEAZ-1276
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation

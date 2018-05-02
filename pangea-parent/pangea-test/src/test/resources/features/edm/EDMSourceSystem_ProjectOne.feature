@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-868
-Feature: EDMSourceSystem
+Feature: EDMSourceSystem AEAZ-868
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation

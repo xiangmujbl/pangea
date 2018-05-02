@@ -1,0 +1,60 @@
+<adf-curation>
+    <curation mainRegion="/project_one/mara" viewRegion="/edm/material_global_v2" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.material_global.controller.EDMMaterialGlobalController">
+        <regions>
+
+            <region path="/project_one/mara">
+                <columns>
+                    matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf,mhdrz,mhdhb,mandt
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/makt" isPrimaryKey="false">
+                        <expression>matnr=/project_one/mara.matnr</expression>
+                    </relation>
+                    <relation path="/ngems/material_linkage" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/project_one/mara.matnr</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/makt">
+                <columns>
+                    mandt,matnr,maktx,spras
+                </columns>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+
+            <region path="/ngems/material_linkage">
+                <columns>
+                    localMaterialNumber,sourceSystem,materialNumber
+                </columns>
+                <relations>
+                    <relation path="/ngems/golden_material" isPrimaryKey="false">
+                        <expression>materialNumber=/ngems/material_linkage.materialNumber</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/ngems/golden_material">
+                <columns>
+                    materialNumber,materialDescription,materialType,baseUom,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufTechnology,primaryPlanningCode
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v2">
+                <columns>
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1272
-Feature: EDMSubBrand
+Feature: EDMSubBrand AEAZ-1272
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation
@@ -30,3 +30,4 @@ Feature: EDMSubBrand
     And I delete the test data
 
     And I will remove all data with region "/edm/sub_brand_v1"
+    And I will remove all data with region "/plan/edm_failed_data"

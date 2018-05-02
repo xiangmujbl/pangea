@@ -10,6 +10,7 @@ public class Mch1Entity extends CommonEntity {
     private String charg;
     private String vfdat;
     private String hsdat;
+    private String zustd;
 
     @Override
     public String toString() {
@@ -18,6 +19,7 @@ public class Mch1Entity extends CommonEntity {
                 ", charg='" + charg + '\'' +
                 ", vfdat='" + vfdat + '\'' +
                 ", hsdat='" + hsdat + '\'' +
+                ", zustd='" + zustd + '\'' +
                 '}';
     }
 
@@ -28,6 +30,7 @@ public class Mch1Entity extends CommonEntity {
         setCharg((String) map.get("charg"));
         setVfdat((String) map.get("vfdat"));
         setHsdat((String) map.get("hsdat"));
+        setZustd((String) map.get("zustd"));
     }
 
     public String getMatnr() {
@@ -60,5 +63,13 @@ public class Mch1Entity extends CommonEntity {
 
     public void setHsdat(String hsdat) {
         this.hsdat = hsdat;
+    }
+
+    public String getZustd() {
+        return zustd;
+    }
+
+    public void setZustd(String zustd) {
+        this.zustd = zustd;
     }
 }

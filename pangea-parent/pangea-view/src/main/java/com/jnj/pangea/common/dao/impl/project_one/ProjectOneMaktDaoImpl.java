@@ -28,4 +28,12 @@ public class ProjectOneMaktDaoImpl extends CommonDaoImpl {
         items = commonDao.queryForList(IConstant.REGION.PROJECT_ONE_MAKT, queryEnString, MaktEntity.class);
         return items;
     }
+
+    public MaktEntity getEntityWithMatnrAndSpras(String matnr, String spras){
+        List<MaktEntity> items = null;
+        String queryEnString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_MAKT.MATNR).is(matnr)
+                .and(IConstant.PROJECT_ONE_MAKT.SPRAS).is(spras).toQueryString();
+
+        return queryForObject(IConstant.REGION.PROJECT_ONE_MAKT, queryEnString, MaktEntity.class);
+    }
 }

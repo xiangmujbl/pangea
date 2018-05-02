@@ -1,6 +1,5 @@
 package com.jnj.pangea.common.controller;
 
-import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
@@ -24,13 +23,17 @@ public abstract class CommonController extends BaseController {
         List<ViewResultItem> result = new LinkedList<>();
         events.forEach(raw -> {
             ResultObject resultObject = process(raw);
-            if (resultObject.isSuccess()) {
-                BaseBo baseBo = resultObject.getBaseBo();
-                result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
-            } else {
-                if (null != resultObject.getFailData()) {
-                    FailData failData = resultObject.getFailData();
-                    result.add(ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap()));
+            if (null != resultObject){
+                if (resultObject.isSuccess()) {
+                    BaseBo baseBo = resultObject.getBaseBo();
+                    if (null != baseBo) {
+                        result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
+                    }
+                } else {
+                    if (null != resultObject.getFailData()) {
+                        FailData failData = resultObject.getFailData();
+                        result.add(ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap()));
+                    }
                 }
             }
         });

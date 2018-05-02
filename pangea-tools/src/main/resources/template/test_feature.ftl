@@ -1,5 +1,5 @@
 @pangea_test @${jira}
-Feature: ${jira} ${fullName}-Curation
+Feature: ${fullName} ${jira}
 
   Scenario: Full Load curation
 
@@ -7,6 +7,7 @@ Feature: ${jira} ${fullName}-Curation
     Given I import "${entity.path}" by keyFields ""
       |<#list entity.fields as field> ${field} |</#list>
     And I wait "${entity.path}" Async Queue complete
+
 </#list>
 
     When I submit task with xml file "xml/${system}/${fullName}.xml" and execute file "jar/pangea-view.jar"
@@ -23,5 +24,5 @@ Feature: ${jira} ${fullName}-Curation
 
     And I will remove all data with region "${view.path}"
 
-    And I will remove all data with region "${main.path}"
+    And I will remove all data with region "/plan/edm_failed_data"
 

@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1274
-Feature: EDMFranchise
+Feature: EDMFranchise AEAZ-1274
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation

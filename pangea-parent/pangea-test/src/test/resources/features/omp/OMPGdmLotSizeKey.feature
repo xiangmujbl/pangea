@@ -1,11 +1,16 @@
-@pangea_test
+@pangea_test @AEAZ-2378
 Feature:  OMPGdmLotSizeKey-Curation
 
   Scenario: Full Load curation
 
-    Given I import "/plan/cns_lot_size_key" by keyFields "sourceSystem,sourceSystem"
-      | lotSizeKey | comments | lotSizeKeyDescription | period | quantity |sourceSystem|localLotSizeKey|
-      |     WB       |  BtB Standard, used by all      |    Weekly lot size                   |   W     |       1   |     CONS_LATAM       |   AN            |
+    Given I import "/plan/cns_lot_size_key" by keyFields "lotSizeKey"
+      | lotSizeKey |          comments           | lotSizeKeyDescription           | period | quantity | sourceSystem | localLotSizeKey |
+      |     WB     |  Weekly lot                 | Weekly lot size                 |   W    |    1     | CONS_LATAM   |   AN            |
+      |     EX     |  Lot for Lot                | Lot-for-lot order quantity (JJ) |   E    |    0     | CONS_LATAM   |   AN            |
+      |     FX     |  Fixed Lot                  | Fixed order quantity (JJ)       |   F    |    0     | CONS_LATAM   |   AN            |
+      |     MB     |  Monthly Lot                | Monthly lot size (JJ)           |   M    |    1     | CONS_LATAM   |   AN            |
+      |     Z1     |  10 Day Lot                 | 10 Days                         |   T    |    10    | CONS_LATAM   |   AN            |
+
 
     And I wait "/plan/cns_lot_size_key" Async Queue complete
 
@@ -13,14 +18,13 @@ Feature:  OMPGdmLotSizeKey-Curation
 
     Then A file is found on sink application with name "LotSizeKey.tsv"
 
-    And I check file data for filename "gdmLotSizeKey.tsv" by keyFields "lotSizeKey"
-      | lotSizeKey |  activeOprerp |  activeSoperp |  comments                 |  description    |  period  |  quantity  |
-      |     WB     |        YES    |               | BtB Standard, used by all | Weekly lot size | W        | 1          |
-
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-
-#    And I compare the number of records between "/plan/cns_lot_size_key" and "/omp/lot_size_key,/plan/edm_failed_data"
+    And I check file data for filename "LotSizeKey.tsv" by keyFields "lotSizeKey"
+      |  activeOprerp |  period  |  comments   |  quantity  | lotSizeKey |  activeSoperp |   description                    |
+      |        YES    | F        | Fixed Lot   | 0          |     FX     |       NO      |  Fixed order quantity (JJ)       |
+      |        YES    | T        | 10 Day Lot  | 10         |     Z1     |       NO      |  10 Days                         |
+      |        YES    | M        | Monthly Lot | 1          |     MB     |       NO      |  Monthly lot size (JJ)           |
+      |        YES    | W        | Weekly lot  | 1          |     WB     |       NO      |  Weekly lot size                 |
+      |        YES    | E        | Lot for Lot | 0          |     EX     |       NO      |  Lot-for-lot order quantity (JJ) |
 
     And I delete the test data
 

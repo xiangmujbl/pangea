@@ -22,4 +22,9 @@ public class EDMGlobalBaseUnitV1DaoImpl extends CommonDaoImpl {
         //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         return null;
     }
+
+    public EDMGlobalBaseUnitV1Entity getEntityWithGbu(String globalBusinessUnit) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_GLOBAL_BASE_UNIT_V1.GBU).is(globalBusinessUnit).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_GLOBAL_BASE_UNIT_V1, queryString, EDMGlobalBaseUnitV1Entity.class);
+    }
 }
