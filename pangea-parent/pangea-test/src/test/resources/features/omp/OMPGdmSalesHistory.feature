@@ -116,6 +116,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530
     Then A file is found on sink application with name "GDMSaleshistory.tsv"
 
     Then I check file data for filename "GDMSaleshistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
+
       | salesHistoryId   | activeFCTERP | certaintyId | conversionFactorXx | currencyId | customerId | demandStreamId | dueDate           | forecastItemId | fromDueDate       | locationId      | orderReason | orderStatus | orderSubType | orderType | productId | quantity | salesUnit | unitId | validValueXx |
       | 0008288860000001 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
       | 0008288859000003 | YES          | FOC         |                    | ADP        | 76100008   |                | 20190201 00:00:00 |                | 20190201 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC02     | 2.0      | CA        |        |              |
@@ -124,8 +125,8 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | 0008288863000003 | YES          | FOC         |                    | ADP        | 76100011   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
       | 0008288864000004 | YES          | BASE        |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT4      | PPC03     | 2.0      | CA        |        |              |
 
-      | 0008288865000005 | YES          | BASE        |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT5      | PPC03     | 2.0      | CA        |        |              |
-      | 0008288866000006 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT6      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288865000005 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT5      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288866000006 | YES          | BASE        |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | LOT6      | PPC03     | 2.0      | CA        |        |              |
 
       | 0008288867000007 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 0        | CA        |        |              |
       | 0008288868000008 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 0        | CA        |        |              |
