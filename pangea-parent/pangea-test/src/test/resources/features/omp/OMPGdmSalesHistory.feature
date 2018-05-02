@@ -67,6 +67,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | FOC          | BR01     | ZSRT      | LIC5         |
       | FOC          | BR01     | LOT6      | ZSRT         |
     And I wait "/plan/cns_cert_deter" Async Queue complete
+    #
     Given I import "/edm/currency_v1" by keyFields "localCurrency"
       | currencyCode | localCurrency |
       | ADP          | BR08          |
@@ -118,7 +119,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530
 
     Then I check file data for filename "GDMSaleshistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
       | salesHistoryId   | activeFCTERP | certaintyId | conversionFactorXx | currencyId | customerId | demandStreamId | dueDate           | forecastItemId | fromDueDate       | locationId      | orderReason | orderStatus | orderSubType | orderType | productId | quantity | salesUnit | unitId | validValueXx |
-      | 0008288860000001 | YES          | FOC         |                    | ADP        | 76100010   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
+      | 0008288860000001 | YES          | FOC         |                    | ADP        | 76100009   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
       | 0008288859000003 | YES          | FOC         |                    | ADP        | 76100008   |                | 20190201 00:00:00 |                | 20190201 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC02     | 2.0      | CA        |        |              |
       | 0008288858000003 | YES          | FOC         |                    | ADP        | 76100007   |                | 20190303 00:00:00 |                | 20190303 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC01     | 1.0      | CA        |        |              |
       | 0008288862000002 | YES          | FOC         |                    | ADP        | 76100010   |                | 20190102 00:00:00 |                | 20190102 00:00:00 | CONS_LATAM_BR08 |             |             |              | ZSRT      | PPC03     | 2.0      | CA        |        |              |
