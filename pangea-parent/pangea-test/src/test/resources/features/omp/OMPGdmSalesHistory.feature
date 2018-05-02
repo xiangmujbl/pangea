@@ -60,6 +60,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530
       | BR08       | 000000000000085891  | X          |
       | BR08       | 000000000000081097  | X          |
       | BR08       | 000000000000081222  | X          |
+      | BR08       | 000000000000081223  | X          |
     And I wait "/plan/cns_material_plan_status" Async Queue complete
     Given I import "/plan/cns_cert_deter" by keyFields "salesOrg"
       | certaintyKey | salesOrg | orderType | itemCategory |
