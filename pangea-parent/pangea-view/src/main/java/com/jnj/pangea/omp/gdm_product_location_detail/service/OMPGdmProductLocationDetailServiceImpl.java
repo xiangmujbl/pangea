@@ -88,8 +88,8 @@ public class OMPGdmProductLocationDetailServiceImpl {
                         gdmProductLocationDetailBo.setName(name);
                         gdmProductLocationDetailBo.setValue(value);
                         //N2 N3
-                        gdmProductLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
-                        gdmProductLocationDetailBo.setActiveSoperp(IConstant.VALUE.NO);
+                        gdmProductLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
+                        gdmProductLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
                         resultObject.setBaseBo(gdmProductLocationDetailBo);
                         resultObjects.add(resultObject);
                     }

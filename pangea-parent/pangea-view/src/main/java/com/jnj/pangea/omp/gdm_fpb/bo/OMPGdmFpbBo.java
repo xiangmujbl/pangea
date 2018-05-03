@@ -86,4 +86,17 @@ public class OMPGdmFpbBo extends BaseBo {
         this.volume = volume;
     }
 
+    @Override
+    public String toString() {
+        return "OMPGdmFpbBo{" +
+                "fpbId='" + fpbId + '\'' +
+                ", countryId='" + countryId + '\'' +
+                ", currencyId='" + currencyId + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", fromDueDate='" + fromDueDate + '\'' +
+                ", productId='" + productId + '\'' +
+                ", value='" + value + '\'' +
+                ", volume='" + volume + '\'' +
+                '}';
+    }
 }

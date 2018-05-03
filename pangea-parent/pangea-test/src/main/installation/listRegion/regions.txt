@@ -17,6 +17,7 @@
 /project_one/t460t
 /project_one/eord
 /project_one/mch1
+
 /ngems/source_system
 /ngems/golden_material
 /ngems/material_linkage
@@ -139,9 +140,24 @@
 /project_one/afpo
 /edm/process_order_v1
 /omp/gdm_pos
+/project_one/eban
+/plan/cns_plan_object_filter
+/edm/material_global_v2
+/omp/gdm_location_detail
+/omp/gdm_location_type
+/plan/cns_plan_unit
+/omp/gdm_unit
+/omp/gdm_location
+/plan/cns_pln_spl_loc
+/omp/gdm_location_xref
+/omp/gdm_unit_evol
 
 /plan/cns_prod_loc_attrib
 /omp/gdm_product_location_detail
+
+
+/omp/gdm_conversion_storage
+
 
 
 /omp/gdm_unit_evol
@@ -150,4 +166,49 @@
 /omp/gdm_fpb
 
 
-/project_one/eban
+/plan/cns_prod_cty_affl
+
+
+/edm/sales_order_V1
+/edm/plant_V1
+/plan/cns_certainty_determine
+/edm/currency_V1
+/project_one/knvh
+/project_one/tvro
+/edm/material_global_V1
+/plan/cns_ord_rej
+/omp/gdm_sales_history
+
+
+
+/omp/product_detail
+
+
+/omp/gdm_customer
+
+
+
+
+
+
+
+
+/plan/cns_plan_region
+/omp/gdm_region
+
+
+
+
+/project_one/knvh
+/omp/gdm_pos
+/omp/gdm_conversion_storage
+
+
+
+
+
+
+
+
+/omp/gdm_lfu
+

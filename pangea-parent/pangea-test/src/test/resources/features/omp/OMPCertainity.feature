@@ -10,7 +10,9 @@ Feature: OMPCertainity AEAZ-2367
 
     When I submit task with xml file "xml/omp/OMPCertainity.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/certainity" by keyFields "certaintyId"
+    Then A file is found on sink application with name "OMPCertainity.tsv"
+
+    Then I check file data for filename "OMPCertainity.tsv" by keyFields "certaintyId"
       | certaintyId | activeFCTERP | activeOPRERP | activeSOPERP | label  |
       | 0001        | YES          | YES          | NO           | whl001 |
 
@@ -24,4 +26,6 @@ Feature: OMPCertainity AEAZ-2367
     And I will remove all data with region "/omp/certainity"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "OMPCertainity.tsv"
 

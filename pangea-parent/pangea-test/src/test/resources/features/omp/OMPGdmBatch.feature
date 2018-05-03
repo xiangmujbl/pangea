@@ -31,9 +31,9 @@ Feature: OMPGdmBatch AEAZ-2374
 
     When I submit task with xml file "xml/omp/OMPGdmBatch.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "PANGEA_V1_gdm_batch.tsv"
+    Then A file is found on sink application with name "GDMBatch.tsv"
 
-    Then I check file data for filename "/omp/gdm_batch" by keyFields "batchId,productId"
+    Then I check file data for filename "GDMBatch.tsv" by keyFields "batchId,productId"
       | batchId                                   | active | activeOPRERP | activeSOPERP | expirationDate | manufacturingDate | productId |
       | ZL041801/BA001_22041801_18041801/BA001    | YES    | YES          | NO           | 20150708       | 20180708          | ZL041801  |
       | ZL041804/BA004_22041804_18041804/BA004    | YES    | YES          | NO           | 20160908       | 20180708          | ZL041804  |
@@ -51,5 +51,5 @@ Feature: OMPGdmBatch AEAZ-2374
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "PANGEA_V1_gdm_batch.tsv"
+    And I will remove the test file on sink application "GDMBatch.tsv"
 

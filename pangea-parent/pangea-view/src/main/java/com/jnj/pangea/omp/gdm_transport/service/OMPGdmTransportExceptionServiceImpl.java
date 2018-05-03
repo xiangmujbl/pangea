@@ -212,7 +212,7 @@ LogUtil.getCoreLog().info(destSourceSystem);
             // if we have an entry for location
             if (entryExists) {
 
-                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = materialPlanStatusDao.getEntityWithMatNumPlantNumSourceSystem(localMatNum, originLocalPlantNum, originSourceSystem);
+                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = materialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(localMatNum, originLocalPlantNum, originSourceSystem);
 
                 //if material relevant
                 if (materialPlanStatusEntity.getSpRelevant().equals("X")) {
@@ -241,7 +241,7 @@ LogUtil.getCoreLog().info(destSourceSystem);
 
         //no rules
         if (!curationFail) {
-            CnsProcessTypeEntity processTypeEntity = processTypeDao.getCnsProcessTypeById(tlaneItemExEntity.getProcessTypeId());
+            PlanCnsProcessTypeEntity processTypeEntity = processTypeDao.getCnsProcessTypeById(tlaneItemExEntity.getProcessTypeId());
             gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
             gdmTransportBo.setEndEff(tlaneItemExEntity.getValidTo());
             gdmTransportBo.setStartEff(tlaneItemExEntity.getValidFrom());

@@ -45,6 +45,11 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
         Mch1Entity mch1Entity = (Mch1Entity) o;
         EDMBatchMasterBo eDMBatchMasterBo = new EDMBatchMasterBo();
 
+//        // TODO add logic
+//        //EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
+//        eDMBatchMasterBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
+//        processSystem(mch1Entity,eDMBatchMasterBo);
+//        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getEntityWithSourceSystemAndLocalMaterialNumber(edmSourceSystemV1Entity.getSourceSystem(),mch1Entity.getMatnr());
 
 
         // N4
@@ -96,6 +101,7 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
 
                 eDMBatchMasterBo.setMatlNum(mch1Entity.getMatnr());
                 eDMBatchMasterBo.setBtchNum(mch1Entity.getCharg());
+                eDMBatchMasterBo.setBtchStsCd(mch1Entity.getZustd());
                 SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
                 SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
 
@@ -117,5 +123,11 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
         }
 
         return resultObject;
+    }
+    private void processSystem(Mch1Entity mainData, EDMBatchMasterBo edmBatchMasterBo) {
+        edmBatchMasterBo.setBtchNum(mainData.getCharg());
+        edmBatchMasterBo.setBtchMfgDt(mainData.getHsdat());
+        edmBatchMasterBo.setMaterialNumber(mainData.getMatnr());
+        edmBatchMasterBo.setBtchExpDt(mainData.getVfdat());
     }
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 public class PlanCnsFinPlanQtyEntity extends CommonEntity {
 
     private String localMaterialNumber;
+    private String identifier;
     private String country;
     private String currency;
     private String unitId;
@@ -16,6 +17,7 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
         super(map);
 
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
+        setIdentifier((String) map.get("identifier"));
         setCountry((String) map.get("country"));
         setCurrency((String) map.get("currency"));
         setUnitId((String) map.get("unitId"));
@@ -28,6 +30,14 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
 
     public void setLocalMaterialNumber(String localMaterialNumber) {
         this.localMaterialNumber = localMaterialNumber;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getCountry() {

@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/unit_of_measure_v1" viewRegion="/omp/gdm_unit" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_unit_measurable.controller.OMPGdmUnitMeasurableController"
-              writeTo="all" topic="gdm_unit">
+              writeTo="all" topic="PANGEA_V1_gdm_unit_measure">
         <regions>
 
             <region path="/edm/unit_of_measure_v1">

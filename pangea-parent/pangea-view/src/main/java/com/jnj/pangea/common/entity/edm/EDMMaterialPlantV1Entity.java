@@ -1,9 +1,6 @@
 package com.jnj.pangea.common.entity.edm;
-
 import com.jnj.pangea.common.entity.CommonEntity;
-
 import java.util.Map;
-
 public class EDMMaterialPlantV1Entity extends CommonEntity{
 
     private String localMaterialNumber;
@@ -46,6 +43,7 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localConsumptionPeriodForward;
     private String localGoodsReceiptProcessingTimeInDays;
     private String localBatchManagementRequirementIndicator;
+    private String localPurchasingGroup;
     private String plantStatus;
     private String localPostToInspStk;
     private String localComponentScrap;
@@ -53,7 +51,6 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
 
 
 
-	private String localPurchasingGroup;
 
     public EDMMaterialPlantV1Entity(Map<String, Object> map) {
         super(map);
@@ -247,12 +244,12 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localRoundingValueForPoq = localRoundingValueForPoq;
     }
 
-    public String getLocalMrpController () {
+    public String getLocalMrpController() {
         return localMrpController;
     }
 
-    public void setLocalMrpController (String localMRPController) {
-        this.localMrpController = localMRPController;
+    public void setLocalMrpController(String localMrpController) {
+        this.localMrpController = localMrpController;
     }
 
     public String getLocalInHouseProcessingTime () {
@@ -423,43 +420,43 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         this.localBatchManagementRequirementIndicator = localBatchManagementRequirementIndicator;
     }
 
-    public String getPlantStatus () {
-        return plantStatus;
-    }
-
-    public void setPlantStatus (String plantStatus) {
-        this.plantStatus = plantStatus;
-    }
-
-    public String getLocalPostToInspStk () {
-        return localPostToInspStk;
-    }
-
-    public void setLocalPostToInspStk (String localPostToInspStk) {
-        this.localPostToInspStk = localPostToInspStk;
-    }
-
-    public String getLocalComponentScrap () {
-        return localComponentScrap;
-    }
-
-    public void setLocalComponentScrap (String localComponentScrap) {
-        this.localComponentScrap = localComponentScrap;
-    }
-
-    public String getPlant () {
-        return plant;
-    }
-
-    public void setPlant (String plant) {
-        this.plant = plant;
-    }
-
-    public String getLocalPurchasingGroup () {
+    public String getLocalPurchasingGroup() {
         return localPurchasingGroup;
     }
 
-    public void setLocalPurchasingGroup (String localPurchasingGroup) {
+    public void setLocalPurchasingGroup(String localPurchasingGroup) {
         this.localPurchasingGroup = localPurchasingGroup;
+    }
+
+    public String getPlantStatus() {
+        return plantStatus;
+    }
+
+    public void setPlantStatus(String plantStatus) {
+        this.plantStatus = plantStatus;
+    }
+
+    public String getLocalPostToInspStk() {
+        return localPostToInspStk;
+    }
+
+    public void setLocalPostToInspStk(String localPostToInspStk) {
+        this.localPostToInspStk = localPostToInspStk;
+    }
+
+    public String getLocalComponentScrap() {
+        return localComponentScrap;
+    }
+
+    public void setLocalComponentScrap(String localComponentScrap) {
+        this.localComponentScrap = localComponentScrap;
+    }
+
+    public String getPlant() {
+        return plant;
+    }
+
+    public void setPlant(String plant) {
+        this.plant = plant;
     }
 }

@@ -7,13 +7,13 @@ import java.util.Map;
 public class PlanCnsProcessTypeEntity extends CommonEntity {
 
     private String processTypeId;
-    private String processTypeDescription;
+    private String processTypeDesc;
 
     public PlanCnsProcessTypeEntity(Map<String, Object> map) {
         super(map);
 
         setProcessTypeId((String) map.get("processTypeId"));
-        setProcessTypeDescription((String) map.get("processTypeDescription"));
+        setProcessTypeDesc((String) map.get("processTypeDesc"));
     }
 
     public String getProcessTypeId() {
@@ -24,12 +24,14 @@ public class PlanCnsProcessTypeEntity extends CommonEntity {
         this.processTypeId = processTypeId;
     }
 
-    public String getProcessTypeDescription() {
-        return this.processTypeDescription;
+    public String getProcessTypeDesc() {
+        return this.processTypeDesc;
     }
 
-    public void setProcessTypeDescription(String processTypeDescription) {
-        this.processTypeDescription = processTypeDescription;
+    public void setProcessTypeDesc(String processTypeDesc) {
+        this.processTypeDesc = processTypeDesc;
     }
+
+
 
 }

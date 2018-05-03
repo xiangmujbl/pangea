@@ -68,8 +68,8 @@ public class OMPGdmLocationDetailServiceImpl {
             String CLASS = "";
             if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())){
                 CLASS = IConstant.VALUE.PGA;
-                gdmLocationDetailBo.setCLASS(CLASS);
             }
+            gdmLocationDetailBo.setCLASS(CLASS);
 
             // Rule C1
             String locationid = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
@@ -81,10 +81,6 @@ public class OMPGdmLocationDetailServiceImpl {
 
             // Rule N1
             gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
-
-            // No Rule
-//            gdmLocationDetailBo.setDescription(cnsPlantAttrEntity.getPlanLocTypeDesc());
-//            gdmLocationDetailBo.setDescription("Pangea");
 
             resultObject.setBaseBo(gdmLocationDetailBo);
             resultObjectList.add(resultObject);

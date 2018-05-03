@@ -6,6 +6,7 @@ import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMUnitOfMeasureV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_unit_measurable.bo.OMPGdmUnitMeasurableBo;
 import org.apache.commons.lang.StringUtils;
@@ -34,7 +35,7 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
         // rule F1
         String uom = unitOfMeasureV1Entity.getUom();
         if (StringUtils.isNotEmpty(uom)) {
-            CnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(uom);
+            PlanCnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(uom);
             if (null != cnsPlanUnitEntity) {
                 gdmUnitMeasurableBo.setUnitId(unitOfMeasureV1Entity.getUom());
                 gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);

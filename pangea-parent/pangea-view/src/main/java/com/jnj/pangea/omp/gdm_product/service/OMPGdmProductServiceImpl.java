@@ -25,6 +25,7 @@ import com.jnj.pangea.common.dao.impl.edm.EDMFranchiseV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMGlobalBaseUnitV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBaseUnitV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.omp.gdm_product.bo.OMPGdmProductBo;
 import org.apache.commons.lang.StringUtils;
 
@@ -181,7 +182,7 @@ public class OMPGdmProductServiceImpl {
 
                 String localBaseUom = materialGlobalV1Entity.getLocalBaseUom();
                 if (null != localBaseUom && !"".equals(localBaseUom)) {
-                    CnsPlanUnitEntity planUnitEntity = checkE9(materialPlanStatusEntity, localBaseUom);
+                    PlanCnsPlanUnitEntity planUnitEntity = checkE9(materialPlanStatusEntity, localBaseUom);
                     if (null != planUnitEntity) {
                         productBo.setUnitId(planUnitEntity.getUnit());
                     } else {
@@ -292,9 +293,9 @@ public class OMPGdmProductServiceImpl {
         return null;
     }
 
-    private CnsPlanUnitEntity checkE9(PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity, String localBaseUom) {
+    private PlanCnsPlanUnitEntity checkE9(PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity, String localBaseUom) {
         if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-            CnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
+            PlanCnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
             return planUnitEntity;
         }
         return null;
