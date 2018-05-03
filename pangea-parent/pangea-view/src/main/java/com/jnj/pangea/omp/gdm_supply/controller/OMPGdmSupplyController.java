@@ -1,11 +1,9 @@
 package com.jnj.pangea.omp.gdm_supply.controller;
 
 import com.jnj.adf.curation.logic.RawDataEvent;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsLocTypeEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_supply.service.OMPGdmSupplyServiceImpl;
 import com.jnj.pangea.util.BeanUtil;

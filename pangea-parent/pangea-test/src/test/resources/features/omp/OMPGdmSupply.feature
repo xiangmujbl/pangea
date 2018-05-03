@@ -11,13 +11,6 @@ Feature:  OMPGdmSupply-Curation
       | CONS_LATAM   | 6                   | VE01       | 3                             | 1331           | AR01  | 20030306       | CCASTRO1       | 20060910                       | 29991231                     | 8917                     |                  |                      | 0                  |                                        | VE00                                  |                            |                            | VE00                        |                                 | 4                               |                                         |
       | CONS_LATAM   | 7                   | MX02       | 4                             | 92129          | AR01  | 20030306       | CCASTRO1       | 20090508                       | 99991230                     | 6359                     |                  |                      | 0                  |                                        | MX01                                  |                            |                            | MX01                        |                                 | 5                               |                                         |
 
-#
-#  Yes	51178CONS_LATAM_MX02_6109	Yes	Yes	Yes	20120718	VENDORTRANSPORT	CONS_LATAM_MX02	INFINITE	SUPPLY	0		0		*	X	VendorTransport	51178	 	MX01	CONS_LATAM_MX02	          99991230	6109	DEFAULT
-#  Yes	945CONS_LATAM_BR16_2519	    Yes	Yes	Yes	20150731	VENDORTRANSPORT	CONS_LATAM_BR16	INFINITE	SUPPLY	0		0		*	X	VendorTransport	945		    BR00	CONS_LATAM_V_0000002519	  99991230	2519	DEFAULT
-#  No	71326CONS_LATAM_BR06_8917	Yes	Yes	Yes	20070108	VENDORTRANSPORT	CONS_LATAM_BR06	INFINITE	SUPPLY	0		0		*	X	VendorTransport	71325		BR00	CONS_LATAM_BR06	          29991231	8917	DEFAULT
-#  No	1331CONS_LATAM_VE01_8917	Yes	Yes	Yes	20060910	VENDORTRANSPORT	CONS_LATAM_VE01	INFINITE	SUPPLY	0		0		*	X	VendorTransport	1331		VE00	CONS_LATAM_VE01	          29991231	8917	DEFAULT
-#  No	92129CONS_LATAM_MX02_6359	Yes	Yes	Yes	20090508	VENDORTRANSPORT	CONS_LATAM_MX02	INFINITE	SUPPLY	0		0		*	X	VendorTransport	92129	 	MX01	CONS_LATAM_MX02	          99991230	6359	DEFAULT
-
     And I wait "/edm/source_list_v1" Async Queue complete
 
     Given I import "/edm/plant_v1" by keyFields "localPlant,sourceSystem"
