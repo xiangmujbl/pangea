@@ -41,7 +41,8 @@
 
                     <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
                         <expression>
-                            localNumber=/edm/source_list_v1.localVendorAccountNumber
+                            localNumber=/edm/source_list_v1.localVendorAccountNumber,
+                            sourceSystem=/edm/source_list_v1.sourceSystem
                         </expression>
                     </relation>
 
@@ -85,7 +86,7 @@
 
             <region path="/plan/cns_spl_pln_loc">
                 <columns>
-                    localNumber,vendorOrCustomer
+                    localNumber,vendorOrCustomer,sourceSystem
                 </columns>
             </region>
 
