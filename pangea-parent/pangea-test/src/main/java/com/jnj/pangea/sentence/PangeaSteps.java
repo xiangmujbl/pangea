@@ -111,17 +111,23 @@ public class PangeaSteps extends CommonSteps {
             int count = 0;
             // check headers
 
+            // for each line in the output file
             while ((line = bufferedReader.readLine()) != null) {
                 // check record
                 List<String> fileList = Arrays.asList(line.split("\t", -1));
                 Assert.assertEquals(fileList.size(), list.get(count).size());
                 // compare record ignore the order
                 boolean isContain = false;
+                //for current line in output file, check is it in the test data
                 for (List<String> target : list) {
                     isContain = target.containsAll(fileList);
                     if (isContain) {
                         break;
                     }
+                }
+
+                if (!isContain) {
+                    System.err.println("Record Doesn't Exist:\n"+Arrays.toString(fileList.toArray()));
                 }
                 Assert.assertTrue(isContain);
                 count++;
