@@ -28,12 +28,12 @@ public class EDMSourceListV1DaoImpl extends CommonDaoImpl {
         Date date = new Date();
         String localSystemDate = dateFormat.format(date);
 
-        //todo: check if 1) date and 2) is null conditions are working correctly
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_LIST_V1.SOURCE_SYSTEM).is(sourceSystem)
                 .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_PLANT).is(localPlantNumber)
                 .and(IConstant.EDM_SOURCE_LIST_V1.MATERIAL_NUMBER).is(materialNumber)
-//                .and(localSystemDate).between(IConstant.EDM_SOURCE_LIST_V1.LOCAL_SOURCE_LIST_RECORD_VALID_FROM,IConstant.EDM_SOURCE_LIST_V1.LOCAL_SOURCE_LIST_RECORD_VALID_TO)
-//                .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_BLOCKED_SOURCE_OF_SUPPLY).isNull()
+                .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_SOURCE_LIST_RECORD_VALID_FROM).lessThanEqual(localSystemDate)
+                .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_SOURCE_LIST_RECORD_VALID_TO).greaterThanEqual(localSystemDate)
+                .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_BLOCKED_SOURCE_OF_SUPPLY).isNull()
                 .toQueryString();
         return queryForObject(IConstant.REGION.EDM_SOURCE_LIST_V1, queryString, EDMSourceListV1Entity.class);
     }
