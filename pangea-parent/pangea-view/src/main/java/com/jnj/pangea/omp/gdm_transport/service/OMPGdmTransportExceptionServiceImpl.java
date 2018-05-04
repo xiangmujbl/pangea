@@ -17,7 +17,7 @@ import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
-import sun.rmi.runtime.Log;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,14 +41,13 @@ public class OMPGdmTransportExceptionServiceImpl {
     private PlanCnsMaterialPlanStatusDaoImpl materialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanCnsProcessTypeDaoImpl processTypeDao = PlanCnsProcessTypeDaoImpl.getInstance();
 
-    public ResultObject buildView(String key, Object o, Object o2) {
 
-        //todo: check properly if entities are empty
-        //todo: what to do if they come back with many records? is that possible?
+    public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
         CnsTlaneItemExceptionEntity tlaneItemExEntity = (CnsTlaneItemExceptionEntity) o;
         OMPGdmTransportBo gdmTransportBo = new OMPGdmTransportBo();
+
         boolean curationFail = false;
         String rule = null;
         String error = null;
@@ -75,10 +74,14 @@ public class OMPGdmTransportExceptionServiceImpl {
             // set materials entity
             materialGlobalV1Entity = materialGlobalDao.getEntityWithPrimaryPlanningCode(tlaneItemExEntity.getMaterialNumber());
 
-            if (materialGlobalV1Entity == null || materialGlobalV1Entity.getMaterialNumber() == null || materialGlobalV1Entity.getMaterialNumber().equals("")) {
+            if (materialGlobalV1Entity == null ||
+                    materialGlobalV1Entity.getMaterialNumber() == null ||
+                    materialGlobalV1Entity.getMaterialNumber().equals("")) {
                 materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(tlaneItemExEntity.getMaterialNumber());
 
-                if (materialGlobalV1Entity == null || materialGlobalV1Entity.getMaterialNumber() == null || materialGlobalV1Entity.getMaterialNumber().equals("")) {
+                if (materialGlobalV1Entity == null ||
+                        materialGlobalV1Entity.getMaterialNumber() == null ||
+                        materialGlobalV1Entity.getMaterialNumber().equals("")) {
                     curationFail = true;
                     rule = "NA";
                     error = "Material Number doesn't exist in region Global Material V1";
@@ -93,14 +96,14 @@ public class OMPGdmTransportExceptionServiceImpl {
         String destSourceSystem = null;
         String localMatNum = null;
 
-        if (tlaneItemExEntity.getOriginLocation() == null) {
+        if (tlaneItemExEntity.getOriginLocation() == null || tlaneItemExEntity.getOriginLocation().equals("")) {
             curationFail = true;
             rule = "NA";
             error = "tlaneItemExEntity.getOriginLocation() is empty";
         }
 
         // set source systems and locations
-        if (tlaneItemExEntity.getDestinationLocation() == null) {
+        if (tlaneItemExEntity.getDestinationLocation() == null || tlaneItemExEntity.getDestinationLocation().equals("")) {
             curationFail = true;
             rule = "NA";
             error = "tlaneItemExEntity.getDestinationLocation() is empty";
@@ -128,7 +131,6 @@ public class OMPGdmTransportExceptionServiceImpl {
             //N15
             gdmTransportBo.setActiveSOPERP(IConstant.VALUE.NO);
 
-            //N3
 
             //N4
             gdmTransportBo.setMachineTypeId(IConstant.VALUE.TRANSPORT);
@@ -140,27 +142,35 @@ public class OMPGdmTransportExceptionServiceImpl {
             //N6
             gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
 
-            //N7
-LogUtil.getCoreLog().info(localMatNum);
-LogUtil.getCoreLog().info(destLocalPlantNum);
-LogUtil.getCoreLog().info(destSourceSystem);
-            //N8 & N9 & N10
+
             EDMMaterialPlantV1Entity materialPlantV1Entity = materialPlantDao.getEntityWithMaterialNumberPlantNumberSourceSystem(localMatNum, destLocalPlantNum, destSourceSystem);
             EDMSourceListV1Entity sourceListV1Entity = sourceListDao.getEntityWithMaterialNumberPlantNumberSourceSystemLocalDateAndBlankLocalBlockedSourceOfSupply(localMatNum, destLocalPlantNum, destSourceSystem);
 
-            // if any records not found we cant continue, send fail data
+            //N8
             if (materialPlantV1Entity != null &&
-                    sourceListV1Entity != null) {
-
+                    materialPlantV1Entity.getLocalPurchasingGroup() != null &&
+                    !materialPlantV1Entity.getLocalPurchasingGroup().equals("")) {
                 gdmTransportBo.setPurchasingGroup(materialPlantV1Entity.getLocalPurchasingGroup());
+            } else {
+                curationFail = true;
+                rule = "N8";
+                error = "No Matching Record found in EDMMaterialPlantV1Entity";
+            }
+
+            if (sourceListV1Entity != null &&
+                    sourceListV1Entity.getLocalPurchasingOrganization() != null &&
+                    !sourceListV1Entity.getLocalPurchasingOrganization().equals("")) {
+                //N9
                 gdmTransportBo.setPurchasingOrganization(sourceListV1Entity.getLocalPurchasingOrganization());
+                //N10
                 gdmTransportBo.setVendorId(sourceListV1Entity.getLocalVendorAccountNumber());
 
             } else {
                 curationFail = true;
-                rule = "N8 & N9 & N10";
-                error = "No Matching Record found in EDMMaterialPlantV1Entity or EDMSourceListV1Entity";
+                rule = "N9 & N10";
+                error = "No Matching Record found in EDMSourceListV1Entity";
             }
+
         }
 
         //N11
@@ -181,7 +191,7 @@ LogUtil.getCoreLog().info(destSourceSystem);
         if (!curationFail) {
 
             if (this.locationExists(destSourceSystem, destLocalPlantNum)) {
-                //N11
+                //N13
                 String destLocation = destSourceSystem + "_V_" + destLocalPlantNum;
                 gdmTransportBo.setToLocationId(destLocation);
             } else {
@@ -215,7 +225,9 @@ LogUtil.getCoreLog().info(destSourceSystem);
                 PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = materialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(localMatNum, originLocalPlantNum, originSourceSystem);
 
                 //if material relevant
-                if (materialPlanStatusEntity.getSpRelevant().equals("X")) {
+                if (materialPlanStatusEntity != null &&
+                        materialPlanStatusEntity.getSpRelevant() != null &&
+                        materialPlanStatusEntity.getSpRelevant().equals("X")) {
 
                     String prodId = materialGlobalV1Entity.getPrimaryPlanningCode();
 
@@ -223,6 +235,7 @@ LogUtil.getCoreLog().info(destSourceSystem);
                             materialGlobalV1Entity.getPrimaryPlanningCode().equals("")) {
                         prodId = materialGlobalV1Entity.getMaterialNumber();
                     }
+
                     //N12 & N14 Finish
                     gdmTransportBo.setFromProductId(prodId);
                     gdmTransportBo.setToProductId(prodId);
@@ -250,13 +263,13 @@ LogUtil.getCoreLog().info(destSourceSystem);
             gdmTransportBo.setTransportType(tlaneItemExEntity.getMode());
         }
 
-
         // set as a fail or as a success
         if (curationFail) {
             resultObject.setFailData(this.writeFailDataToRegion(tlaneItemExEntity, rule, error));
-            LogUtil.getCoreLog().info("**FAILED**");
-            LogUtil.getCoreLog().info("RULE: " + rule);
-            LogUtil.getCoreLog().info("ERROR: " + error);
+//            LogUtil.getCoreLog().info("***************************************FAILED************************************");
+//            LogUtil.getCoreLog().info("RULE: " + rule);
+//            LogUtil.getCoreLog().info("ERROR: " + error);
+//            LogUtil.getCoreLog().info("***************************************FAILED************************************");
         } else {
             resultObject.setBaseBo(gdmTransportBo);
         }
@@ -274,7 +287,10 @@ LogUtil.getCoreLog().info(destSourceSystem);
         }
         else {
             EDMPlantV1Entity plantV1Entity = plantDao.getPlantWithSourceSystemAndLocalPlant(sourceSystem,localPlantNum);
-            if (plantV1Entity.getLocalPlanningRelevant().equals("X")) {
+
+            if (plantV1Entity != null &&
+                    plantV1Entity.getLocalPlanningRelevant() != null &&
+                    plantV1Entity.getLocalPlanningRelevant().equals("X")) {
                 entryExists = true;
             }
         }
@@ -284,16 +300,18 @@ LogUtil.getCoreLog().info(destSourceSystem);
 
     private ArrayList<String> getLocationStringArray (String location) {
         String[] locArray = location.split("_");
-        ArrayList<String> locArrayList = new ArrayList<>(Arrays.asList(locArray));
-        return locArrayList;
+        return new ArrayList<>(Arrays.asList(locArray));
     }
+
     private String getLocalPlantNum (String location) {
         ArrayList<String> locList = getLocationStringArray(location);
         return locList.get(locList.size() - 1);
     }
+
     private String getSourceSystem (String location) {
         ArrayList<String> locList = getLocationStringArray(location);
-        return String.join("_", locList.remove(locList.size() - 1));
+        locList.remove(locList.size() - 1);
+        return String.join("_", locList);
     }
 
     private FailData writeFailDataToRegion(CnsTlaneItemExceptionEntity cnsTlaneItemExceptionEntity, String ruleCode, String errorValue) {
@@ -310,6 +328,5 @@ LogUtil.getCoreLog().info(destSourceSystem);
         failData.setErrorValue(errorValue);
         return failData;
     }
-
 
 }
