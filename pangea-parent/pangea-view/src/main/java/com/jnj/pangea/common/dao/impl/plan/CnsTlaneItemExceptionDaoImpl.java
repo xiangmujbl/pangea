@@ -6,6 +6,8 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.CnsTlaneItemExceptionEntity;
 
+import java.util.List;
+
 public class CnsTlaneItemExceptionDaoImpl extends CommonDaoImpl {
 
     private static CnsTlaneItemExceptionDaoImpl instance;
@@ -17,9 +19,9 @@ public class CnsTlaneItemExceptionDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public CnsTlaneItemExceptionEntity getEntityWithRefSeqNumTlaneItem(String sequenceNumber) {
+    public List<CnsTlaneItemExceptionEntity> getEntitiesWithRefSeqNumTlaneItem(String sequenceNumber) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_TLANE_ITEM_EXCEPTION.REF_SEQ_NUM_TLANE_ITEM).is(sequenceNumber).toQueryString();
-        return queryForObject(IConstant.REGION.CNS_TLANE_ITEM_EXCEPTION,queryString,CnsTlaneItemExceptionEntity.class);
+        return queryForList(IConstant.REGION.CNS_TLANE_ITEM_EXCEPTION,queryString,CnsTlaneItemExceptionEntity.class);
     }
 }
 

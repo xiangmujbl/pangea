@@ -16,8 +16,7 @@ import com.jnj.pangea.common.entity.plan.CnsTlaneItemExceptionEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsProcessTypeEntity;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class OMPGdmTransportServiceImpl {
 
@@ -36,163 +35,193 @@ public class OMPGdmTransportServiceImpl {
 	private EDMMaterialGlobalDaoImpl materialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
 	private EDMMaterialPlantV1DaoImpl materialPlantDao = EDMMaterialPlantV1DaoImpl.getInstance();
 
-    private boolean curationFail = false;
-    private String rule = null;
-    private String error = null;
-
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-        CnsTlaneItemEntity tlaneItemEntity = (CnsTlaneItemEntity) o;
+		OMPGdmTransportBo gdmTransportBo = new OMPGdmTransportBo();
 
-        OMPGdmTransportBo gdmTransportBo = new OMPGdmTransportBo();
+		CnsTlaneItemEntity tlaneItemEntity = (CnsTlaneItemEntity) o;
 
-        //simple rules
-        gdmTransportBo.setActive(IConstant.VALUE.YES);
-        gdmTransportBo.setActiveOPRERP(IConstant.VALUE.YES);
-        gdmTransportBo.setActiveSOPERP(IConstant.VALUE.NO);
-        gdmTransportBo.setMachineTypeId(IConstant.VALUE.TRANSPORT);
-        gdmTransportBo.setMinQuantity("");
-        gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
-        gdmTransportBo.setRequirementOffset("");
+		boolean curationFail = false;
+		List<Map<String, String>> failedRules = new ArrayList<>();
 
-        //no rules
-        gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo());
-        gdmTransportBo.setFromLocationId(tlaneItemEntity.getOriginLocation());
-        gdmTransportBo.setFromProductId(tlaneItemEntity.getMaterialNumber());
-        gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
-        gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom());
-        gdmTransportBo.setToLocationId(tlaneItemEntity.getDestinationLocation());
-        gdmTransportBo.setToProductId(tlaneItemEntity.getMaterialNumber());
-        gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
-        gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
+		String transportId = "";
+		List<CnsTlaneItemExceptionEntity> tlaneItemExceptionEntities;
+		String destLocalPlantNum = null;
+		String destSourceSystem = null;
+		String localMatNum = null;
 
-        //N
+		//N....
         PlanCnsProcessTypeEntity processTypeEntity = this.processTypeDao.getCnsProcessTypeById(tlaneItemEntity.getProcessTypeId());
         if (processTypeEntity != null &&
                 processTypeEntity.getProcessTypeDesc() != null) {
             gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
         }
 
-        //N1
-        String transportId = "";
-        CnsTlaneItemExceptionEntity tlaneItemExceptionEntity;
-
         if (tlaneItemEntity.getSequenceNumber() == null ||
                 tlaneItemEntity.getSequenceNumber().equals("")) {
-            this.curationFail = true;
-            this.rule = "N1";
-            this.error = "Sequence number null";
+            curationFail = true;
+			Map<String,String> error = new HashMap<>();
+			error.put("rule", "N1");
+			error.put("error", "Sequence number null");
+			failedRules.add(error);
         }
 
-        if (!this.curationFail) {
-            tlaneItemExceptionEntity = this.tlaneExceptionDao.getEntityWithRefSeqNumTlaneItem(tlaneItemEntity.getSequenceNumber());
+        if (!curationFail) {
 
-            if (tlaneItemExceptionEntity != null &&
-                    tlaneItemExceptionEntity.getSequenceNumber() != null) {
-                if (!tlaneItemExceptionEntity.getDeletionIndicator().equals("X")) {
-                    transportId = this.doRuleN1(tlaneItemEntity);
-                } else {
-                    this.curationFail = true;
-                    this.rule = "N1";
-                    this.error = "Record found in tlane item exception but deletion indicator X";
-                }
-            } else {
+			//N1
+			tlaneItemExceptionEntities = this.tlaneExceptionDao.getEntitiesWithRefSeqNumTlaneItem(tlaneItemEntity.getSequenceNumber());
+
+            for (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity:tlaneItemExceptionEntities) {
+
+				if (tlaneItemExceptionEntity != null &&
+						tlaneItemExceptionEntity.getSequenceNumber() != null) {
+
+					if (tlaneItemExceptionEntity.getDeletionIndicator().equals("X")) {
+						curationFail = true;
+						Map<String,String> error = new HashMap<>();
+						error.put("rule", "N1");
+						error.put("error", "Record found in tlane item exception with deletion indicator X");
+						failedRules.add(error);
+					}
+				} else {
+					curationFail = true;
+					Map<String,String> error = new HashMap<>();
+					error.put("rule", "N1");
+					error.put("error", "Record found in tlane item exception");
+					failedRules.add(error);
+				}
+			}
+
+			if (!curationFail) {
+
                 transportId = this.doRuleN1(tlaneItemEntity);
-            }
+				gdmTransportBo.setTransportId(transportId);
+			}
         }
-        gdmTransportBo.setTransportId(transportId);
 
+		// check material no not null
 		if (tlaneItemEntity.getMaterialNumber() == null) {
-			this.curationFail = true;
-			this.rule = "NA";
-			this.error = "materialNumber null in CNS Tlane Item Exception";
+			curationFail = true;
+			Map<String,String> error = new HashMap<>();
+			error.put("rule", "N/A");
+			error.put("error", "materialNumber null in CNS Tlane Item Exception");
+			failedRules.add(error);
 		}
 
 		EDMMaterialGlobalV1Entity materialGlobalV1Entity = null;
 
-		if (!this.curationFail) {
-			// set materials entity
+		// set materials entity
+		if (!curationFail) {
 			materialGlobalV1Entity = this.materialGlobalDao.getEntityWithPrimaryPlanningCode(tlaneItemEntity.getMaterialNumber());
 
 			if (materialGlobalV1Entity == null ||
 					materialGlobalV1Entity.getMaterialNumber() == null ||
 					materialGlobalV1Entity.getMaterialNumber().equals("")) {
-				this.curationFail = true;
-				this.rule = "NA";
-				this.error = "Material Number doesn't exist in region Global Material V1";
+				curationFail = true;
+
+				Map<String,String> error = new HashMap<>();
+				error.put("rule", "N/A");
+				error.put("error", "Material Number doesn't exist in region Global Material V1");
+				failedRules.add(error);
 			}
 		}
 
-
-		String destLocalPlantNum = null;
-		String destSourceSystem = null;
-		String localMatNum = null;
-
-		if (tlaneItemEntity.getOriginLocation() == null || tlaneItemEntity.getOriginLocation().equals("")) {
-			this.curationFail = true;
-			this.rule = "NA";
-			this.error = "tlaneItemEntity.getOriginLocation() is empty";
+		// check dest location not null
+		if (tlaneItemEntity.getOriginLocation() == null ||
+				tlaneItemEntity.getOriginLocation().equals("")) {
+			curationFail = true;
+			Map<String,String> error = new HashMap<>();
+			error.put("rule", "N/A");
+			error.put("error", "tlaneItemEntity.getOriginLocation() is empty");
+			failedRules.add(error);
 		}
 
-		// set source systems and locations
-		if (tlaneItemEntity.getDestinationLocation() == null || tlaneItemEntity.getDestinationLocation().equals("")) {
-			this.curationFail = true;
-			this.rule = "NA";
-			this.error = "tlaneItemEntity.getDestinationLocation() is empty";
+		// check dest location not null
+		if (tlaneItemEntity.getDestinationLocation() == null ||
+				tlaneItemEntity.getDestinationLocation().equals("")) {
+			curationFail = true;
+			Map<String,String> error = new HashMap<>();
+			error.put("rule", "N/A");
+			error.put("error", "tlaneItemEntity.getDestinationLocation() is empty");
+			failedRules.add(error);
 		}
 
-		if (materialGlobalV1Entity == null ||
-				materialGlobalV1Entity.getMaterialNumber() == null ||
-					materialGlobalV1Entity.getMaterialNumber().equals("")) {
-			this.curationFail = true;
-			this.rule = "NA";
-			this.error = "materialNumber null in Material Global V1";
-		}
+		EDMSourceListV1Entity sourceListV1Entity = null;
+		EDMMaterialPlantV1Entity materialPlantV1Entity = null;
 
-		if (!this.curationFail) {
+		if (!curationFail) {
 			destLocalPlantNum = this.getLocalPlantNum(tlaneItemEntity.getDestinationLocation());
 			destSourceSystem = this.getSourceSystem(tlaneItemEntity.getDestinationLocation());
 
 			// get the mat num if curation hasn't failed (will fail if entity not found)
 			localMatNum = materialGlobalV1Entity.getMaterialNumber();
+
+			sourceListV1Entity = this.sourceListDao.getEntityWithMaterialNumberPlantNumberSourceSystemLocalDateAndBlankLocalBlockedSourceOfSupply(localMatNum, destLocalPlantNum, destSourceSystem);
+			materialPlantV1Entity = this.materialPlantDao.getEntityWithMaterialNumberPlantNumberSourceSystem(localMatNum, destLocalPlantNum, destSourceSystem);
 		}
 
-		EDMSourceListV1Entity sourceListV1Entity = this.sourceListDao.getEntityWithMaterialNumberPlantNumberSourceSystemLocalDateAndBlankLocalBlockedSourceOfSupply(localMatNum, destLocalPlantNum, destSourceSystem);
-		EDMMaterialPlantV1Entity materialPlantV1Entity = this.materialPlantDao.getEntityWithMaterialNumberPlantNumberSourceSystem(localMatNum, destLocalPlantNum, destSourceSystem);
+		if (materialPlantV1Entity == null ||
+				materialPlantV1Entity.getLocalPurchasingGroup() == null ||
+				materialPlantV1Entity.getLocalPurchasingGroup().equals(""))  {
 
-		//N8
-		if (materialPlantV1Entity != null &&
-				materialPlantV1Entity.getLocalPurchasingGroup() != null &&
-				!materialPlantV1Entity.getLocalPurchasingGroup().equals("")) {
+			curationFail = true;
+			Map<String,String> error = new HashMap<>();
+			error.put("rule", "N8");
+			error.put("error", "No Matching Record found in EDMMaterialPlantV1Entity");
+			failedRules.add(error);
+		}
+
+		if (sourceListV1Entity == null ||
+				sourceListV1Entity.getLocalPurchasingOrganization() == null ||
+				sourceListV1Entity.getLocalPurchasingOrganization().equals("")) {
+
+			curationFail = true;
+			Map<String,String> error = new HashMap<>();
+			error.put("rule", "N9 & N10");
+			error.put("error", "No Matching Record found in EDMSourceListV1Entity");
+			failedRules.add(error);
+		}
+
+		if (!curationFail) {
+
+			//N8
 			gdmTransportBo.setPurchasingGroup(materialPlantV1Entity.getLocalPurchasingGroup());
-		} else {
-			this.curationFail = true;
-			this.rule = "N8";
-			this.error = "No Matching Record found in EDMMaterialPlantV1Entity";
-		}
-
-		if (sourceListV1Entity != null &&
-				sourceListV1Entity.getLocalPurchasingOrganization() != null &&
-				!sourceListV1Entity.getLocalPurchasingOrganization().equals("")) {
 			//N9
 			gdmTransportBo.setPurchasingOrganization(sourceListV1Entity.getLocalPurchasingOrganization());
 			//N10
 			gdmTransportBo.setVendorId(sourceListV1Entity.getLocalVendorAccountNumber());
 
-		} else {
-			this.curationFail = true;
-			this.rule = "N9 & N10";
-			this.error = "No Matching Record found in EDMSourceListV1Entity";
+			//simple rules
+			gdmTransportBo.setActive(IConstant.VALUE.YES);
+			gdmTransportBo.setActiveOPRERP(IConstant.VALUE.YES);
+			gdmTransportBo.setActiveSOPERP(IConstant.VALUE.NO);
+			gdmTransportBo.setMachineTypeId(IConstant.VALUE.TRANSPORT);
+			gdmTransportBo.setMinQuantity("");
+			gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
+			gdmTransportBo.setRequirementOffset("");
+
+			//no rules
+			gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo());
+			gdmTransportBo.setFromLocationId(tlaneItemEntity.getOriginLocation());
+			gdmTransportBo.setFromProductId(tlaneItemEntity.getMaterialNumber());
+			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
+			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom());
+			gdmTransportBo.setToLocationId(tlaneItemEntity.getDestinationLocation());
+			gdmTransportBo.setToProductId(tlaneItemEntity.getMaterialNumber());
+			gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
+			gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
 		}
 
 		// set as a fail or as a success
-        if (this.curationFail) {
-            resultObject.setFailData(this.writeFailDataToRegion(tlaneItemEntity, this.rule, this.error));
-//            LogUtil.getCoreLog().info("***************************************FAILED************************************");
-//            LogUtil.getCoreLog().info("RULE: " + this.rule);
-//            LogUtil.getCoreLog().info("ERROR: " + this.error);
-//            LogUtil.getCoreLog().info("***************************************FAILED************************************");
+        if (curationFail) {
+			resultObject.setFailData(new FailData("SP", "OMPGdmTransport", failedRules.get(0).get("rule"), failedRules.get(0).get("error"),
+							this.getSourceSystem(tlaneItemEntity.getOriginLocation()),
+							this.getSourceSystem(tlaneItemEntity.getOriginLocation()),
+							this.getLocalPlantNum(tlaneItemEntity.getOriginLocation()),
+					tlaneItemEntity.getMaterialNumber()
+					)
+			);
         } else {
             resultObject.setBaseBo(gdmTransportBo);
         }
@@ -222,20 +251,4 @@ public class OMPGdmTransportServiceImpl {
 		locList.remove(locList.size() - 1);
 		return String.join("_", locList);
 	}
-
-    private FailData writeFailDataToRegion(CnsTlaneItemEntity cnsTlaneItemEntity, String ruleCode, String errorValue) {
-        FailData failData = new FailData();
-        failData.setFunctionalArea("SP");
-        failData.setInterfaceID("OMPGdmTransport");
-        failData.setErrorCode(ruleCode);
-        failData.setSourceSystem(this.getSourceSystem(cnsTlaneItemEntity.getOriginLocation()));
-        failData.setKey1(this.getSourceSystem(cnsTlaneItemEntity.getOriginLocation()));
-        failData.setKey2(this.getLocalPlantNum(cnsTlaneItemEntity.getOriginLocation()));
-        failData.setKey3(cnsTlaneItemEntity.getMaterialNumber());
-        failData.setKey4("");
-        failData.setKey5("");
-        failData.setErrorValue(errorValue);
-        return failData;
-    }
-
 }
