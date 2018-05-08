@@ -38,64 +38,68 @@ public class OMPGdmProductLocationDetailServiceImpl {
 
         if (IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getNoPlanRelevant())) {
 
-        String localMaterialNumber = cnsMaterialPlanStatusEntity.getLocalMaterialNumber();
-        String localPlant = cnsMaterialPlanStatusEntity.getLocalPlant();
-        String sourceSystem = cnsMaterialPlanStatusEntity.getSourceSystem();
+            String localMaterialNumber = cnsMaterialPlanStatusEntity.getLocalMaterialNumber();
+            LogUtil.getCoreLog().info("got cns_prod_loc_attr: " + "schdAttrbName1: " + localMaterialNumber);
 
-        PlanCnsProdLocAttribEntity prodLocAttribEntity = cnsProdLocAttribDao.getEntityWithConditions(sourceSystem, localMaterialNumber, localPlant);
-        LogUtil.getCoreLog().info("got cns_prod_loc_attr: " + "schdAttrbName1: " + prodLocAttribEntity.getSchdAttrbName1());
+            String localPlant = cnsMaterialPlanStatusEntity.getLocalPlant();
+            LogUtil.getCoreLog().info("got cns_prod_loc_attr: " + "schdAttrbName1: " + localPlant);
 
-        if (null != prodLocAttribEntity) {
-            String localMaterialNumberPr = prodLocAttribEntity.getLocalMaterialNumber();
-            String sourceSystemPr = prodLocAttribEntity.getSourceSystem();
-            EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystemPr, localMaterialNumberPr);
-            LogUtil.getCoreLog().info("got material global entity: " + "sourceSystem: " + materialGlobalV1Entity.getSourceSystem());
+            String sourceSystem = cnsMaterialPlanStatusEntity.getSourceSystem();
+            LogUtil.getCoreLog().info("got cns_prod_loc_attr: " + "getSourceSystem: " + sourceSystem);
 
-            if (null != materialGlobalV1Entity) {
-                String name = "";
-                String value = "";
-                LogUtil.getCoreLog().info("before loop");
-                for (int i = 0; i < 3; i++) {
-                    if (i == 0) {
-                        name = prodLocAttribEntity.getSchdAttrbName1();
-                        value = prodLocAttribEntity.getSchAttrbDesc1();
-                    } else if (i == 1) {
-                        name = prodLocAttribEntity.getSchdAttrbName2();
-                        value = prodLocAttribEntity.getSchAttrbDesc2();
-                    } else if (i == 2) {
-                        name = prodLocAttribEntity.getSchdAttrbName3();
-                        value = prodLocAttribEntity.getSchAttrbDesc3();
-                    }
+            PlanCnsProdLocAttribEntity prodLocAttribEntity = cnsProdLocAttribDao.getEntityWithConditions(sourceSystem, localMaterialNumber, localPlant);
+            LogUtil.getCoreLog().info("got cns_prod_loc_attr: " + "schdAttrbName1: " + prodLocAttribEntity.getSchdAttrbName1());
 
-                    LogUtil.getCoreLog().info("in loop");
-                    if (null != name && !"".equals(name)) {
-                        LogUtil.getCoreLog().info("name checked");
-                        OMPGdmProductLocationDetailBo gdmProductLocationDetailBo = new OMPGdmProductLocationDetailBo();
-                        ResultObject resultObject = new ResultObject();
-                        String CLASS = "";
-                        if (IConstant.VALUE.CONS_LATAM.equals(materialGlobalV1Entity.getSourceSystem())) {
-                            CLASS = IConstant.VALUE.PGA;
-                            gdmProductLocationDetailBo.setCLASS(CLASS);
-                            gdmProductLocationDetailBo.setDescription(IConstant.VALUE.PANGEA);
+            if (null != prodLocAttribEntity) {
+                String localMaterialNumberPr = prodLocAttribEntity.getLocalMaterialNumber();
+                String sourceSystemPr = prodLocAttribEntity.getSourceSystem();
+                EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getMaterialNumberWithLocalMaterialNumberAndSourceSystem(sourceSystemPr, localMaterialNumberPr);
+
+                if (null != materialGlobalV1Entity) {
+                    String name = "";
+                    String value = "";
+                    LogUtil.getCoreLog().info("before loop");
+                    for (int i = 0; i < 3; i++) {
+                        if (i == 0) {
+                            value = prodLocAttribEntity.getSchAttrbDesc1();
+                            name = prodLocAttribEntity.getSchdAttrbName1();
+                        } else if (i == 1) {
+                            name = prodLocAttribEntity.getSchdAttrbName2();
+                            value = prodLocAttribEntity.getSchAttrbDesc2();
+                        } else if (i == 2) {
+                            name = prodLocAttribEntity.getSchdAttrbName3();
+                            value = prodLocAttribEntity.getSchAttrbDesc3();
                         }
 
-                        String productLocationId = materialGlobalV1Entity.getPrimaryPlanningCode() + IConstant.VALUE.LINE + sourceSystemPr + IConstant.VALUE.UNDERLINE + prodLocAttribEntity.getLocalPlant();
-                        gdmProductLocationDetailBo.setProductLocationId(productLocationId);
+                        LogUtil.getCoreLog().info("in loop");
+                        if (null != name && !"".equals(name)) {
+                            LogUtil.getCoreLog().info("name checked");
+                            OMPGdmProductLocationDetailBo gdmProductLocationDetailBo = new OMPGdmProductLocationDetailBo();
+                            ResultObject resultObject = new ResultObject();
+                            String CLASS = "";
+                            if (IConstant.VALUE.CONS_LATAM.equals(materialGlobalV1Entity.getSourceSystem())) {
+                                CLASS = IConstant.VALUE.PGA;
+                                gdmProductLocationDetailBo.setCLASS(CLASS);
+                                gdmProductLocationDetailBo.setDescription(IConstant.VALUE.PANGEA);
+                            }
 
-                        String productLocationDetailId = productLocationId + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + name;
-                        gdmProductLocationDetailBo.setProductLocationDetailId(productLocationDetailId);
+                            String productLocationId = materialGlobalV1Entity.getPrimaryPlanningCode() + IConstant.VALUE.LINE + sourceSystemPr + IConstant.VALUE.UNDERLINE + prodLocAttribEntity.getLocalPlant();
+                            gdmProductLocationDetailBo.setProductLocationId(productLocationId);
 
-                        gdmProductLocationDetailBo.setName(name);
-                        gdmProductLocationDetailBo.setValue(value);
-                        //N2 N3
-                        gdmProductLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
-                        gdmProductLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
-                        resultObject.setBaseBo(gdmProductLocationDetailBo);
-                        resultObjects.add(resultObject);
+                            String productLocationDetailId = productLocationId + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + name;
+                            gdmProductLocationDetailBo.setProductLocationDetailId(productLocationDetailId);
+
+                            gdmProductLocationDetailBo.setName(name);
+                            gdmProductLocationDetailBo.setValue(value);
+                            //N2 N3
+                            gdmProductLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
+                            gdmProductLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
+                            resultObject.setBaseBo(gdmProductLocationDetailBo);
+                            resultObjects.add(resultObject);
+                        }
                     }
                 }
             }
-        }
 
         }
 
