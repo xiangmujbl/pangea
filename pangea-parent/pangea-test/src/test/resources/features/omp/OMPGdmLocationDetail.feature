@@ -16,7 +16,7 @@ Feature:  OMPGdmLocationDetail-Curation
     Then A file is found on sink application with name "LocationDetail.tsv"
 
     Then I check file data for filename "LocationDetail.tsv" by keyFields "locationDetailId"
-      | locationDetailId                     | activeOprerp | activeSoperp  | CLASS | comments | description | locationId      | name       | unit | value    |
+      | locationDetailId                     | activeOPRERP | activeSOPERP  | CLASS | comments | description | locationId      | name       | unit | value    |
       | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | YES          | NO            | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1    |      | VALUE1   |
       | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | YES          | NO            | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2    |      | VALUE2   |
       | CONS_LATAM_BR12/PGA/ATTRIB3/VALUE3   | YES          | NO            | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB3    |      | VALUE3   |

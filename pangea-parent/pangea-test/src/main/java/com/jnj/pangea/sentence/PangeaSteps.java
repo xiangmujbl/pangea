@@ -13,8 +13,7 @@ import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class PangeaSteps extends CommonSteps {
 
@@ -103,34 +102,82 @@ public class PangeaSteps extends CommonSteps {
         return file;
     }
 
-    private void checkFileData(List<List<String>> list, String[] keyFields, File file) {
+    private void checkFileData(List<List<String>> testDataList, String[] keyFields, File file) {
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             //updated to remove call to readline() before entering while loop - we were skipping the first line
             String line = null;
-            int count = 0;
-            // check headers
+            int[] headerMap = null;
+            boolean headersFound = false;
 
-            // for each line in the output file
+            // read first line from file to create header map.
             while ((line = bufferedReader.readLine()) != null) {
-                // check record
-                List<String> fileList = Arrays.asList(line.split("\t", -1));
-                Assert.assertEquals(fileList.size(), list.get(count).size());
-                // compare record ignore the order
-                boolean isContain = false;
-                //for current line in output file, check is it in the test data
-                for (List<String> target : list) {
-                    isContain = target.containsAll(fileList);
-                    if (isContain) {
-                        break;
+
+                List<String> targetLine = testDataList.get(0);
+                List<String> fileLine = Arrays.asList(line.split("\t", -1));
+                Assert.assertEquals(fileLine.size(), targetLine.size()); //check we have all columns
+
+                // all headers present
+                headersFound = targetLine.containsAll(fileLine);
+
+                if (headersFound) {
+
+                    headerMap = new int[fileLine.size()];
+
+                    for (int targetIndex=0; targetIndex<targetLine.size(); targetIndex++) {    // for each header in test data
+                        for (int fileIndex=0; fileIndex<fileLine.size(); fileIndex++) {     // for each header in file data
+                            if (targetLine.get(targetIndex).equals(fileLine.get(fileIndex))) {   // find the target header in the file headers
+                                headerMap[targetIndex] = fileIndex;
+                            }
+                        }
                     }
                 }
 
-                if (!isContain) {
-                    System.err.println("Record Doesn't Exist:\n"+Arrays.toString(fileList.toArray()));
+                if (!headersFound) {
+                    System.err.println("Headers Don't Match.\nExpected:"+Arrays.toString(targetLine.toArray())+"\nActual:"+Arrays.toString(fileLine.toArray()));
                 }
-                Assert.assertTrue(isContain);
-                count++;
+
+                Assert.assertTrue(headersFound);
+                break;
+            }
+
+            if (headersFound) {
+
+                // for each line in the output file
+                while ((line = bufferedReader.readLine()) != null) {
+
+                    List<String> fileLine = Arrays.asList(line.split("\t", -1));
+
+                    // compare record
+                    boolean recordFound = false;
+
+                    // for each line of test data
+                    for (int i=0; i<testDataList.size(); i++) {
+
+                        // for each column of test data line try to match the values of the record
+                        for (int x=0; x<testDataList.get(i).size(); x++) {
+
+                            String target = testDataList.get(i).get(x);
+                            String fileValue = fileLine.get(headerMap[x]);  // get mapped column from file
+
+                            recordFound = target.equals(fileValue);
+
+                            if (!recordFound) {    //if this line doesnt match file's line go to next line
+                                break;
+                            }
+                        }
+
+                        if (recordFound) {  // if file line matched continue to next file line
+                            break;
+                        }
+                    }
+
+                    if (!recordFound) {
+                        System.err.println("Record Not Found:\n"+Arrays.toString(fileLine.toArray()));
+                    }
+
+                    Assert.assertTrue(recordFound);
+                }
             }
 
         } catch (FileNotFoundException ex) {

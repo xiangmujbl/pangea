@@ -62,7 +62,7 @@ public class OMPGdmLocationDetailServiceImpl {
             gdmLocationDetailBo.setValue(value);
 
             // Rule N5
-            gdmLocationDetailBo.setActiveSoperp(IConstant.VALUE.NO);
+            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
 
             // Rule N3
             String CLASS = "";
@@ -72,15 +72,15 @@ public class OMPGdmLocationDetailServiceImpl {
             gdmLocationDetailBo.setCLASS(CLASS);
 
             // Rule C1
-            String locationid = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
-            gdmLocationDetailBo.setLocationid(locationid);
+            String locationId = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
+            gdmLocationDetailBo.setLocationId(locationId);
 
             // Rule C2
-            String locationDetailId = locationid+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
+            String locationDetailId = locationId+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
 
             // Rule N1
-            gdmLocationDetailBo.setActiveOprerp(IConstant.VALUE.YES);
+            gdmLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
 
             resultObject.setBaseBo(gdmLocationDetailBo);
             resultObjectList.add(resultObject);
