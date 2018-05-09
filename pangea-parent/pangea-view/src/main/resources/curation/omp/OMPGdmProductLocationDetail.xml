@@ -41,7 +41,7 @@
 
             <region path="/omp/gdm_product_location_detail">
                 <columns>
-                    productLocationDetailId,activeOprerp,activeSoperp,CLASS,comments,description,name,productLocationId,unit,value
+                    productLocationDetailId,activeOPRERP,activeSOPERP,CLASS,comments,description,name,productLocationId,unit,value
                 </columns>
             </region>
 

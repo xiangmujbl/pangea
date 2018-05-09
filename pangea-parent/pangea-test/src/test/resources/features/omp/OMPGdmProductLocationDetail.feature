@@ -11,14 +11,14 @@ Feature:  OMPGdmProductLocationDetail-Curation
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/plan/cns_prod_loc_attrib" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-      | sourceSystem | localMaterialNumber | localPlant | schdAttrbName1 | schdAttrbDesc1 | schedAttrbName2 | schdAttrbDesc2 | schedAttrbName3 | schdAttrbDesc3 |
-      | CONS_LATAM   | LT9999              | BR19       | ATTRB1         | VALUE1         | ATTRB2          | VALUE2         |                 |                |
+      | sourceSystem | localMaterialNumber | localPlant | schdAttrbName1 | schAttrbDesc1 | schdAttrbName2 | schAttrbDesc2 | schdAttrbName3 | schAttrbDesc3 |
+      | CONS_LATAM   | LT9999              | BR19       | ATTRB1         | VALUE1        | ATTRB2         | VALUE2        |                |               |
 
     And I wait "/plan/cns_prod_loc_attrib" Async Queue complete
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | materialNumber | primaryPlanningCode |
-      | CONS_LATAM   | LT9999              | EM9999         | EM9999              |
+      | CONS_LATAM   | LT9999              | 9862           | EM9999              |
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
@@ -27,9 +27,9 @@ Feature:  OMPGdmProductLocationDetail-Curation
     Then A file is found on sink application with name "ProductLocationDetail.tsv"
 
     And I check file data for filename "ProductLocationDetail.tsv" by keyFields "productLocationDetailId"
-      | activeOprerp |	unit |	comments  |	productLocationDetailId            | productLocationId      |	name	| activeSoperp	| description |	CLASS |  value  |
-      |    YES       |       |            | EM9999-CONS_LATAM_BR19/PGA/ATTRB1  | EM9999-CONS_LATAM_BR19 |  ATTRB1   |     NO        |  Pangea     |  PGA  |  VALUE1 |
-      |    YES       |       |            | EM9999-CONS_LATAM_BR19/PGA/ATTRB2  | EM9999-CONS_LATAM_BR19 |  ATTRB2   |     NO        |  Pangea     |  PGA  |  VALUE2 |
+      | unit | comments | productLocationDetailId           |	productLocationId    |	name   | description | CLASS | value  | activeOPRERP | activeSOPERP |
+      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | EM9999-CONS_LATAM_BR19 | ATTRB1  | Pangea      |  PGA  | VALUE1 |     YES      |     NO       |
+      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 | EM9999-CONS_LATAM_BR19 | ATTRB2  | Pangea      |  PGA  | VALUE2 |     YES      |     NO       |
 
     And I will remove all data with region "/plan/cns_material_plan_status"
 
@@ -37,4 +37,6 @@ Feature:  OMPGdmProductLocationDetail-Curation
 
     And I will remove all data with region "/edm/material_global_v1"
 
-    And I will remove the test file on sink application "ProductLocationDetail.tsv"
+    And I will remove all data with region "/omp/gdm_product_location_detail"
+
+  #  And I will remove the test file on sink application "ProductLocationDetail.tsv"
