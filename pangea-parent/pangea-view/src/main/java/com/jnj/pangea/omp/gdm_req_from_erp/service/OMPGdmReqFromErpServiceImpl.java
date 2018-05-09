@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -101,9 +100,9 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             //Step 1
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithMaterialNumberAndSourceSystem(edmPurchaseRequisitionV1Entity.getMatlNum(),edmPurchaseRequisitionV1Entity.getSourceSystem());
             //Step 2
-            if(materialGlobalV1Entity != null) {
-                if(!materialGlobalV1Entity.getLocalMaterialNumber().isEmpty() || materialGlobalV1Entity.getLocalMaterialNumber() != null) {
-                    PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
+            if(materialGlobalV1Entity != null && !materialGlobalV1Entity.getLocalMaterialNumber().isEmpty()) {
+                PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
+                if (planCnsMaterialPlanStatusEntity != null) {
                     if (planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
                         //Step 3
                         if (materialGlobalV1Entity.getMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum())) {
@@ -116,24 +115,22 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     }
                     //N7
                     PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
-                    if(cnsPlanUnitEntity != null){
-                        if (!cnsPlanUnitEntity.getUnit().isEmpty() || cnsPlanUnitEntity.getUnit() != null) {
-                            gdmReqFromErpBo.setUnitId(edmPurchaseRequisitionV1Entity.getPrLineUomCd());
+                    if (cnsPlanUnitEntity != null && !cnsPlanUnitEntity.getUnit().isEmpty()) {
+                        gdmReqFromErpBo.setUnitId(edmPurchaseRequisitionV1Entity.getPrLineUomCd());
 
-                            //N8
-                            gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
+                        //N8
+                        gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
 
-                            //N9
-                            if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
-                                PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
-                                if (planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
-                                        planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
-                                    if (planObjectFilterEntity.getSourceObjectAttribute2().equalsIgnoreCase("prTypeCd")
-                                            && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I") && !edmPurchaseRequisitionV1Entity.getPrTypeCd().isEmpty()) {
-                                        if (edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-                                            gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
-                                            resultObject.setBaseBo(gdmReqFromErpBo); //Skipped in doesn't get here
-                                        }
+                        //N9
+                        if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
+                            PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
+                            if (planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
+                                    planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
+                                if (planObjectFilterEntity.getSourceObjectAttribute2().equalsIgnoreCase("prTypeCd")
+                                        && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I") && !edmPurchaseRequisitionV1Entity.getPrTypeCd().isEmpty()) {
+                                    if (edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
+                                        gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
+                                        resultObject.setBaseBo(gdmReqFromErpBo); //Skipped in doesn't get here
                                     }
                                 }
                             }
@@ -147,9 +144,8 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                 FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N6", "Critical error - material_global_v1 - localMaterialNumber not found");
                 resultObject.setFailData(failData);
             }
-
         } else {
-            FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N4", "Critical error - blank values");
+            FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N4", "Critical error - Blank values of source system or plntCd in edmPurchaseRequisitionV1Entity");
             resultObject.setFailData(failData);
         }
         return resultObject;
