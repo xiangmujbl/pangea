@@ -84,21 +84,14 @@ public class OMPGdmProductLocationServiceImpl {
             boList = getFieldWithJ1(edmMaterialGlobalV1Entity, planStatusEntity);
         }
         if (boList == null || boList.isEmpty()) {
-            FailData failData = new FailData();
-            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
+            String errorString;
             if (edmMaterialGlobalV1Entity.getPrimaryPlanningCode() == null || "".equals(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
-                failData.setErrorValue("primaryPlanningCode is not available for SPRelevant material");
+                errorString = "primaryPlanningCode is not available for SPRelevant material";
             } else {
-                failData.setErrorValue("Unable to find DPParentCode");
+                errorString = "Unable to find DPParentCode";
             }
-            failData.setFunctionalArea("SP");
-            failData.setInterfaceID("OMPGdmProductLocation");
-            failData.setSourceSystem("omp");
-            failData.setKey1(materialPlantV1Entity.getLocalPlant());
-            failData.setKey2(materialPlantV1Entity.getLocalMaterialNumber());
-            failData.setKey3(materialPlantV1Entity.getSourceSystem());
-            failData.setKey4("");
-            failData.setKey5("");
+
+            FailData failData = new FailData("SP","OMPGdmProductLocation",IConstant.FAILED.ERROR_CODE.J1,errorString,"omp",materialPlantV1Entity.getLocalPlant(),materialPlantV1Entity.getLocalMaterialNumber(),materialPlantV1Entity.getSourceSystem());
             ResultObject resultObject = new ResultObject();
             resultObject.setFailData(failData);
             resultObjectList.add(resultObject);
@@ -243,17 +236,7 @@ public class OMPGdmProductLocationServiceImpl {
                 skip = false;
 
             } else {
-                FailData failData = new FailData();
-                failData.setErrorCode(IConstant.FAILED.ERROR_CODE.C1);
-                failData.setErrorValue("Unable to find assigned plant");
-                failData.setFunctionalArea("SP");
-                failData.setInterfaceID("OMPGdmProductLocation");
-                failData.setSourceSystem("omp");
-                failData.setKey1(materialPlantV1Entity.getSourceSystem());
-                failData.setKey2("");
-                failData.setKey3("");
-                failData.setKey4("");
-                failData.setKey5("");
+                FailData failData = new FailData("SP","OMPGdmProductLocation",IConstant.FAILED.ERROR_CODE.C1,"Unable to find assigned plant","omp",materialPlantV1Entity.getSourceSystem());
                 ResultObject resultObject = new ResultObject();
                 resultObject.setFailData(failData);
                 resultObjectList.add(resultObject);
