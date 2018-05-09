@@ -56,6 +56,7 @@ public class OMPGdmProductLocationServiceImpl {
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = null;
         PlanCnsMaterialPlanStatusEntity planStatusEntity = null;
         EDMMatPlantFiV1Entity matPlantFiV1Entity = null;
+        boolean skip = false;
 
         //rules J1
         String localMaterialNumber = materialPlantV1Entity.getLocalMaterialNumber();
@@ -85,7 +86,11 @@ public class OMPGdmProductLocationServiceImpl {
         if (boList == null || boList.isEmpty()) {
             FailData failData = new FailData();
             failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
-            failData.setErrorValue("Unable to find DPParentCode");
+            if (edmMaterialGlobalV1Entity.getPrimaryPlanningCode() == null || "".equals(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
+                failData.setErrorValue("primaryPlanningCode is not available for SPRelevant material");
+            } else {
+                failData.setErrorValue("Unable to find DPParentCode");
+            }
             failData.setFunctionalArea("SP");
             failData.setInterfaceID("OMPGdmProductLocation");
             failData.setSourceSystem("omp");
@@ -124,13 +129,21 @@ public class OMPGdmProductLocationServiceImpl {
                     //rules T1
                     if (IConstant.VALUE.X.equals(planStatusEntity.getDpRelevant())) {
                         bo.setActiveFCTERP(IConstant.VALUE.YES);
+                    } else {
+                        bo.setActiveFCTERP(IConstant.VALUE.NO);
                     }
 
                     //rules T2
                     if (IConstant.VALUE.X.equals(planStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(planStatusEntity.getNoPlanRelevant())) {
                         bo.setActiveOPRERP(IConstant.VALUE.YES);
+                    } else {
+                        //skip the record
+                        skip = true;
                     }
+
                 }
+                //rules T3
+                bo.setActiveSOPERP(IConstant.VALUE.NO);
 
                 //rules E1
                 PlanCnsProcTypeEntity planCnsProcTypeEntity = getFieldWithE1(materialPlantV1Entity.getLocalProcurementType(), materialPlantV1Entity.getSourceSystem());
@@ -224,7 +237,11 @@ public class OMPGdmProductLocationServiceImpl {
 
                 ResultObject resultObject = new ResultObject();
                 resultObject.setBaseBo(bo);
-                resultObjectList.add(resultObject);
+                if(!skip){
+                    resultObjectList.add(resultObject);
+                }
+                skip = false;
+
             } else {
                 FailData failData = new FailData();
                 failData.setErrorCode(IConstant.FAILED.ERROR_CODE.C1);
