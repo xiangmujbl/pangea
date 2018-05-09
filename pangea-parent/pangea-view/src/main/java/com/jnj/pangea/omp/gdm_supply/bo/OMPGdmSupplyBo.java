@@ -220,4 +220,5 @@ public class OMPGdmSupplyBo extends BaseBo {
     public void setVENDOR(String VENDOR) {
         this.VENDOR = VENDOR;
     }
+
 }

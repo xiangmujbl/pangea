@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -9,7 +10,6 @@ import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseRequisitionV1Entity;
-import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
@@ -57,28 +57,18 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSuplPlntCd());
 
         //N1
-        //Fake pr_doc_ic?
         gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrDocId());
 
         //N2
         try {
             String dateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
-            String year = dateToFormat.substring(0, 4);
-            String month = dateToFormat.substring(4,6);
-            String day = dateToFormat.substring(6,8);
-            if(dateToFormat.length() > 8) {
-                String hours = dateToFormat.substring(8,10);
-                String minutes = dateToFormat.substring(10,12);
-                String seconds = dateToFormat.substring(12,14);
-                dateToFormat = year+IConstant.VALUE.BACK_SLANT+month+IConstant.VALUE.BACK_SLANT+day+IConstant.VALUE.SPACE+hours+IConstant.VALUE.COLON+minutes+IConstant.VALUE.COLON+seconds;
-            } else {
+            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.MMDYYYY);
+            SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+            Date dFrom = sdfFrom.parse(dateToFormat);
 
-                dateToFormat = year + IConstant.VALUE.BACK_SLANT + month + IConstant.VALUE.BACK_SLANT + day+" 00:00:00";
-            }
             String timeToMove = edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays();
-            String deliveryDate = dateToFormat;
-            SimpleDateFormat sdf = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
-            Date date = sdf.parse(deliveryDate);
+            String deliveryDate = sdfTo.format(dFrom);
+            Date date = sdfTo.parse(deliveryDate);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
@@ -88,7 +78,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                 cal.add(Calendar.DATE, 1);
             }
             Date d2 = cal.getTime();
-            deliveryDate = sdf.format(d2);
+            deliveryDate = sdfTo.format(d2);
             gdmReqFromErpBo.setDeliveryDate(deliveryDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -109,10 +99,9 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
             //N6
             //Step 1
-            EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(edmPurchaseRequisitionV1Entity.getMatlNum(),edmPurchaseRequisitionV1Entity.getSourceSystem());
+            EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithMaterialNumberAndSourceSystem(edmPurchaseRequisitionV1Entity.getMatlNum(),edmPurchaseRequisitionV1Entity.getSourceSystem());
             //Step 2
             if(!materialGlobalV1Entity.getLocalMaterialNumber().isEmpty() || materialGlobalV1Entity.getLocalMaterialNumber() != null) {
-
                 PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
                 if (planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
                     //Step 3
@@ -127,7 +116,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                 //N7
                 PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
                 if (!cnsPlanUnitEntity.getUnit().isEmpty() || cnsPlanUnitEntity.getUnit() != null) {
-                    gdmReqFromErpBo.setUnitId(cnsPlanUnitEntity.getUnit());
+                    gdmReqFromErpBo.setUnitId(edmPurchaseRequisitionV1Entity.getPrLineUomCd());
 
                     //N8
                     gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
@@ -135,17 +124,17 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     //N9
                     boolean n9Success = false;
                     if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
-                         PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectPlantAttributeAndSourceFilterPlantValue(edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getPlntCd());
-                         if(planObjectFilterEntity.getSourceObjectPlantAttribute().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd()) &&
-                            planObjectFilterEntity.getSourceFilterPlantValue().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
-                             if(planObjectFilterEntity.getSourceFilterAttributeTechName().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPrTypeCd())
-                                     && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I")) {
-                                 if(edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-                                     gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
-                                     n9Success = true;
-                                 }
-                             }
-                         }
+                        PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
+                        if(planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
+                                planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
+                            if(planObjectFilterEntity.getSourceObjectAttribute2().equalsIgnoreCase("prTypeCd")
+                                    && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I") && !edmPurchaseRequisitionV1Entity.getPrTypeCd().isEmpty()) {
+                                if(edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
+                                    gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
+                                    n9Success = true;
+                                }
+                            }
+                        }
                     }
                     if(!n9Success) {
                         FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N9", "Skip");
