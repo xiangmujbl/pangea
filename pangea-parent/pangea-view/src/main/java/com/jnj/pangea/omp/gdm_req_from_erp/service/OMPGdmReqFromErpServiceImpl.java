@@ -122,7 +122,6 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
 
                     //N9
-                    boolean n9Success = false;
                     if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
                         PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
                         if(planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
@@ -131,14 +130,10 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                                     && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I") && !edmPurchaseRequisitionV1Entity.getPrTypeCd().isEmpty()) {
                                 if(edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
                                     gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
-                                    n9Success = true;
+                                    resultObject.setBaseBo(gdmReqFromErpBo); //Skipped in doesn't get here
                                 }
                             }
                         }
-                    }
-                    if(!n9Success) {
-                        FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N9", "Skip");
-                        resultObject.setFailData(failData);
                     }
                 } else {
                     FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N7", "Critical error - Cns Plan Unit - unit not found");
@@ -153,7 +148,6 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N4", "Critical error - blank values");
             resultObject.setFailData(failData);
         }
-        resultObject.setBaseBo(gdmReqFromErpBo);
         return resultObject;
     }
 

@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-2777
-Feature:  OMPGdmReqFromErp-Consumption
+Feature: OMPGdmReqFromErp-Consumption
 
   Scenario: Full Load Consumption
 
@@ -10,6 +10,9 @@ Feature:  OMPGdmReqFromErp-Consumption
       | CONS_LATAM   | 1734545852 |    10     | MX02   | 7047794 | EA          | NB       | B       |                 | Blank  | N       | R         | C17           | CSALGUER | 20050902 | FUENTE DE VOLTAJE |        |              | 95160000            |     MX01    | 4890      | 20050901 | 05/25/2019 | 20050901 | 0                     | 0           | K               | X          |             |   6109           |               |          |                | 00000              |                 |                |               | 000               | 111       |        | 3000153227         | 00010     | 20050916    | 4.000           |           | 0000000000       |           |       |                |                    |            |                   |                  |                    |                    |               |        |               | COP           |                    | 222        |                   |                    | 0        |                 | 05        |         |                   |                     |                 |                 | 00000             |                  |  1734545852 |
       | CONS_LATAM   | 1734545796 |    10     | MX02   | 7047795 | EA          | NB       | B       |                 | Blank  | N       | R         | C17           | CSALGUER | 20050902 | FUENTE DE VOLTAJE |        |              | 95160000            |     MX01    | 4728      | 20050901 | 01/8/2019  | 20050901 | 0                     | 0           | K               | X          |             |   6109           |               |          |                | 00000              |                 |                |               | 000               | 111       |        | 3000153227         | 00010     | 20050916    | 4.000           |           | 0000000000       |           |       |                |                    |            |                   |                  |                    |                    |               |        |               | COP           |                    | 222        |                   |                    | 0        |                 | 05        |         |                   |                     |                 |                 | 00000             |                  |  1734545796 |
       | CONS_LATAM   | 1734545850 |    10     | MX02   | 7047796 | EA          | NB       | B       |                 | Blank  | N       | R         | C17           | CSALGUER | 20050902 | FUENTE DE VOLTAJE |        |              | 95160000            |     MX01    | 4878      | 20050901 | 04/2/2019  | 20050901 | 0                     | 0           | K               | X          |             |   6109           |               |          |                | 00000              |                 |                |               | 000               | 111       |        | 3000153227         | 00010     | 20050916    | 4.000           |           | 0000000000       |           |       |                |                    |            |                   |                  |                    |                    |               |        |               | COP           |                    | 222        |                   |                    | 0        |                 | 05        |         |                   |                     |                 |                 | 00000             |                  |  1734545850 |
+      |              | 1734545850 |    10     | MX02   | 7047796 | EA          | NB       | B       |                 | Blank  | N       | R         | C17           | CSALGUER | 20050902 | FUENTE DE VOLTAJE |        |              | 95160000            |     MX01    | 4878      | 20050901 | 04/2/2019  | 20050901 | 0                     | 0           | K               | X          |             |   6109           |               |          |                | 00000              |                 |                |               | 000               | 111       |        | 3000153227         | 00010     | 20050916    | 4.000           |           | 0000000000       |           |       |                |                    |            |                   |                  |                    |                    |               |        |               | COP           |                    | 222        |                   |                    | 0        |                 | 05        |         |                   |                     |                 |                 | 00000             |                  |  1734545850 |
+      | CONS_LATAM   | 1734545850 |    10     | MX02   | 7047799 | EA          | NB       | B       |                 | Blank  | N       | R         | C17           | CSALGUER | 20050902 | FUENTE DE VOLTAJE |        |              | 95160000            |     MX01    | 4878      | 20050901 | 04/2/2019  | 20050901 | 0                     | 0           | K               | X          |             |   6109           |               |          |                | 00000              |                 |                |               | 000               | 111       |        | 3000153227         | 00010     | 20050916    | 4.000           |           | 0000000000       |           |       |                |                    |            |                   |                  |                    |                    |               |        |               | COP           |                    | 222        |                   |                    | 0        |                 | 05        |         |                   |                     |                 |                 | 00000             |                  |  1734545850 |
+      | CONS_LATAM   | 1734545850 |    10     | MX02   | 7047798 | EA          | NB       | B       |                 | Blank  | N       | R         | C17           | CSALGUER | 20050902 | FUENTE DE VOLTAJE |        |              | 95160000            |     MX01    | 4878      | 20050901 | 04/2/2019  | 20050901 | 0                     | 0           | K               | X          |             |   6109           |               |          |                | 00000              |                 |                |               | 000               | 111       |        | 3000153227         | 00010     | 20050916    | 4.000           |           | 0000000000       |           |       |                |                    |            |                   |                  |                    |                    |               |        |               | COP           |                    | 222        |                   |                    | 0        |                 | 05        |         |                   |                     |                 |                 | 00000             |                  |  1734545850 |
 
     And I wait "/edm/purchase_requisition_v1" Async Queue complete
 
@@ -20,6 +23,8 @@ Feature:  OMPGdmReqFromErp-Consumption
       | 000000000007047794  | 7047794        | CONS_LATAM   | 99059               | GS           |
       | 000000000007047795  | 7047795        | CONS_LATAM   | 99059               | ED           |
       | 000000000007047796  | 7047796        | CONS_LATAM   | 99059               | AS           |
+      |                     | 7047799        | CONS_LATAM   | 99059               | AS           |
+      | 000000000007047796  | 7047798        | CONS_LATAM   | 99059               | NN           |
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
@@ -61,7 +66,11 @@ Feature:  OMPGdmReqFromErp-Consumption
       |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059     | 2019/04/02   | 0     |  FALSE  | 1734545850 |  10   | 1734545850 |	 4878       |	 EA   |      | 6109    | CONS_LATAM/1734545850 |
       |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059     | 2018/09/18   | 0     |  FALSE  | 1734545719 |  10   | 1734545719 |	 5352       |	 EA   |      | 6109    | CONS_LATAM/1734545719 |
 
-    And I delete the test data
+#    Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
+#      | errorCode |              errorValue     | functionalArea |  interfaceID  | key1 | key2 | key3 | key4 | key5 | sourceSystem |
+#      |  J1       | Unable to find DPParentCode | SP             | OMPGdmProduct | BR04 |      |      |      |      | CONS_LATAM   |
+
+    #And I delete the test data
 
     And I will remove all data with region "/edm/purchase_requisition_v1"
 
@@ -73,5 +82,5 @@ Feature:  OMPGdmReqFromErp-Consumption
 
     And I will remove all data with region "/plan/cns_plan_object_filter"
 
-    And I will remove the test file on sink application "REQFROMERP.tsv"
+    #And I will remove the test file on sink application "REQFROMERP.tsv"
 
