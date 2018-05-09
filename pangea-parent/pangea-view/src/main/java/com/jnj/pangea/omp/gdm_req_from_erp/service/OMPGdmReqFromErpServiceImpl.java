@@ -101,43 +101,47 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             //Step 1
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithMaterialNumberAndSourceSystem(edmPurchaseRequisitionV1Entity.getMatlNum(),edmPurchaseRequisitionV1Entity.getSourceSystem());
             //Step 2
-            if(!materialGlobalV1Entity.getLocalMaterialNumber().isEmpty() || materialGlobalV1Entity.getLocalMaterialNumber() != null) {
-                PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
-                if (planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
-                    //Step 3
-                    if (materialGlobalV1Entity.getMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum())) {
-                        if (materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
-                            gdmReqFromErpBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
-                        } else {
-                            gdmReqFromErpBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
-                        }
-                    }
-                }
-                //N7
-                PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
-                if (!cnsPlanUnitEntity.getUnit().isEmpty() || cnsPlanUnitEntity.getUnit() != null) {
-                    gdmReqFromErpBo.setUnitId(edmPurchaseRequisitionV1Entity.getPrLineUomCd());
-
-                    //N8
-                    gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
-
-                    //N9
-                    if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
-                        PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
-                        if(planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
-                                planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
-                            if(planObjectFilterEntity.getSourceObjectAttribute2().equalsIgnoreCase("prTypeCd")
-                                    && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I") && !edmPurchaseRequisitionV1Entity.getPrTypeCd().isEmpty()) {
-                                if(edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-                                    gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
-                                    resultObject.setBaseBo(gdmReqFromErpBo); //Skipped in doesn't get here
-                                }
+            if(materialGlobalV1Entity != null) {
+                if(!materialGlobalV1Entity.getLocalMaterialNumber().isEmpty() || materialGlobalV1Entity.getLocalMaterialNumber() != null) {
+                    PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
+                    if (planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
+                        //Step 3
+                        if (materialGlobalV1Entity.getMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum())) {
+                            if (materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
+                                gdmReqFromErpBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
+                            } else {
+                                gdmReqFromErpBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
                             }
                         }
                     }
-                } else {
-                    FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N7", "Critical error - Cns Plan Unit - unit not found");
-                    resultObject.setFailData(failData);
+                    //N7
+                    PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
+                    if(cnsPlanUnitEntity != null){
+                        if (!cnsPlanUnitEntity.getUnit().isEmpty() || cnsPlanUnitEntity.getUnit() != null) {
+                            gdmReqFromErpBo.setUnitId(edmPurchaseRequisitionV1Entity.getPrLineUomCd());
+
+                            //N8
+                            gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
+
+                            //N9
+                            if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
+                                PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
+                                if (planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
+                                        planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
+                                    if (planObjectFilterEntity.getSourceObjectAttribute2().equalsIgnoreCase("prTypeCd")
+                                            && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I") && !edmPurchaseRequisitionV1Entity.getPrTypeCd().isEmpty()) {
+                                        if (edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
+                                            gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
+                                            resultObject.setBaseBo(gdmReqFromErpBo); //Skipped in doesn't get here
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N7", "Critical error - Cns Plan Unit - unit not found");
+                        resultObject.setFailData(failData);
+                    }
                 }
             } else {
                 FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N6", "Critical error - material_global_v1 - localMaterialNumber not found");
