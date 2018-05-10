@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-2712
-Feature: OMPGdmUnitEvol-Curation AEAZ-2712
+@pangea_test @AEAZ-3686
+Feature: OMPGdmUnitEvol-Curation AEAZ-3686
 
   Scenario: Full Load curation
   #  1. Get uniqueId from cons_time_dep_xchange-fromCurrency pluse next serial number in 000 format (Rule:C1)
@@ -23,44 +23,31 @@ Feature: OMPGdmUnitEvol-Curation AEAZ-2712
 
     When I submit task with xml file "xml/omp/OMPGdmUnitEvol.xml" and execute file "jar/pangea-view.jar"
 
-#    Then A file is found on sink application with name "GDMUnitEvol.tsv"
-#
-#    Then I check file data for filename "GDMUnitEvol.tsv" by keyFields "uniqueId"
-#      | uniqueId | activeFCTERP | unitId | startEff            | endEff              | factor             | preference |
-#      | ARS001   | YES          | ARS    | 2018/01/01 00:00:00 | 2019/01/01 00:00:00 | 17.27115716753020  | 100        |
-#      | ARS002   | YES          | ARS    | 2019/01/01 00:00:00 | 2010/01/01 00:00:00 | 17.27115716753020  | 100        |
-#      | ARS003   | YES          | ARS    | 2020/01/01 00:00:00 | 2021/01/01 00:00:00 | 17.27115716753020  | 100        |
-#      | ARS004   | YES          | ARS    | 2021/01/01 00:00:00 | 2022/01/01 00:00:00 | 17.27115716753020  | 100        |
-#      | ARS005   | YES          | ARS    | 2022/01/01 00:00:00 | 2023/01/01 00:00:00 | 17.27115716753020  | 100        |
-#      | CLP001   | YES          | CLP    | 2018/31/12 00:00:00 | 2019/01/01 00:00:00 | 624.53160129902600 | 100        |
-#      | CLP002   | YES          | CLP    | 2019/01/01 00:00:00 | 2019/12/31 00:00:00 | 624.53160129902600 | 100        |
-#      | CLP003   | YES          | CLP    | 2020/01/01 00:00:00 | 2021/01/01 00:00:00 | 624.53160129902600 | 100        |
-#      | CLP004   | YES          | CLP    | 2021/01/01 00:00:00 | 2022/01/01 00:00:00 | 624.53160129902600 | 100        |
-#      | CLP005   | YES          | CLP    | 2022/01/01 00:00:00 | 2023/01/01 00:00:00 | 624.53160129902600 | 100        |
+    Then A file is found on sink application with name "GDMUnitEvol.tsv"
 
-    Then I check region data "/omp/gdm_unit_evol" by keyFields "uniqueId"
+    Then I check file data for filename "GDMUnitEvol.tsv" by keyFields "uniqueId"
       | uniqueId | activeFCTERP | unitId | startEff            | endEff              | factor             | preference |
       | ARS001   | YES          | ARS    | 2018/01/01 00:00:00 | 2019/01/01 00:00:00 | 17.27115716753020  | 100        |
-      | ARS002   | YES          | ARS    | 2019/01/01 00:00:00 | 2010/01/01 00:00:00 | 17.27115716753020  | 100        |
-      | ARS003   | YES          | ARS    | 2020/01/01 00:00:00 | 2021/01/01 00:00:00 | 17.27115716753020  | 100        |
+      | ARS002   | YES          | ARS    | 2020/01/01 00:00:00 | 2021/01/01 00:00:00 | 17.27115716753020  | 100        |
+      | ARS003   | YES          | ARS    | 2022/01/01 00:00:00 | 2023/01/01 00:00:00 | 17.27115716753020  | 100        |
       | ARS004   | YES          | ARS    | 2021/01/01 00:00:00 | 2022/01/01 00:00:00 | 17.27115716753020  | 100        |
-      | ARS005   | YES          | ARS    | 2022/01/01 00:00:00 | 2023/01/01 00:00:00 | 17.27115716753020  | 100        |
-      | CLP001   | YES          | CLP    | 2018/31/12 00:00:00 | 2019/01/01 00:00:00 | 624.53160129902600 | 100        |
-      | CLP002   | YES          | CLP    | 2019/01/01 00:00:00 | 2019/12/31 00:00:00 | 624.53160129902600 | 100        |
-      | CLP003   | YES          | CLP    | 2020/01/01 00:00:00 | 2021/01/01 00:00:00 | 624.53160129902600 | 100        |
-      | CLP004   | YES          | CLP    | 2021/01/01 00:00:00 | 2022/01/01 00:00:00 | 624.53160129902600 | 100        |
-      | CLP005   | YES          | CLP    | 2022/01/01 00:00:00 | 2023/01/01 00:00:00 | 624.53160129902600 | 100        |
+      | ARS005   | YES          | ARS    | 2019/01/01 00:00:00 | 2020/01/01 00:00:00 | 17.27115716753020  | 100        |
+      | CLP001   | YES          | CLP    | 2019/01/01 00:00:00 | 2019/31/12 00:00:00 | 624.53160129902600 | 100        |
+      | CLP002   | YES          | CLP    | 2020/01/01 00:00:00 | 2021/01/01 00:00:00 | 624.53160129902600 | 100        |
+      | CLP003   | YES          | CLP    | 2021/01/01 00:00:00 | 2022/01/01 00:00:00 | 624.53160129902600 | 100        |
+      | CLP004   | YES          | CLP    | 2022/01/01 00:00:00 | 2023/01/01 00:00:00 | 624.53160129902600 | 100        |
+      | CLP005   | YES          | CLP    | 2018/01/01 00:00:00 | 2019/01/01 00:00:00 | 624.53160129902600 | 100        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1       | key2 | key3     | key4       | key5 | errorValue               | sourceSystem |
       | C1        | DP             | GDMUnitEvol | CONS_LATAM |      | 2018/1/1 | 31/12/2018 |      | All Key fields not Exist |              |
 
-    And I compare the number of records between "/plan/cons_time_dep_xchange" and "/omp/gdm_unit_evol,/plan/edm_failed_data"
+#    And I compare the number of records between "/plan/cons_time_dep_xchange" and "/omp/gdm_unit_evol,/plan/edm_failed_data"
 
     And I delete the test data
 
     And I will remove all data with region "/omp/gdm_unit_evol"
     And I will remove all data with region "/plan/edm_failed_data"
-#    And I will remove the test file on sink application "GDMUnitEvol.tsv"
+    And I will remove the test file on sink application "GDMUnitEvol.tsv"
 
 

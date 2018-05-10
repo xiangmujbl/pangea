@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_unit_evol.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -30,7 +29,7 @@ public class OMPGdmUnitEvolServiceImpl {
         List<ResultObject> list = new ArrayList<>();
         PlanConsTimeDepXchangeEntity consTimeDepXchangeEntity = (PlanConsTimeDepXchangeEntity) o;
         Map<String, Object> extraParam = (HashMap) o2;
-        OMPGdmUnitEvolBo gdmUnitEvolBo = new OMPGdmUnitEvolBo();
+
 
         // rules T3
         if (StringUtils.isNotEmpty(consTimeDepXchangeEntity.getFromCurrency())) {
@@ -42,25 +41,27 @@ public class OMPGdmUnitEvolServiceImpl {
 
             // currentTime
             Calendar current = Calendar.getInstance();
-            current.set(Calendar.YEAR, current.get(Calendar.YEAR) + 4);
-            int currentYear = current.get(Calendar.YEAR);
+            current.set(Calendar.YEAR,current.get(Calendar.YEAR) + 5);
+            int currentYear =current.get(Calendar.YEAR);
 
             // effectiveStartDate
             Calendar effectiveStartDate = Calendar.getInstance();
-            Date startDate = DateUtils.stringToDate(consTimeDepXchangeEntity.getEffectiveStartDate(), IConstant.VALUE.YYYYMMDD);
+            Date startDate = DateUtils.stringToDate(consTimeDepXchangeEntity.getEffectiveStartDate(),DateUtils.yyyy_MM_dd);
             effectiveStartDate.setTime(startDate);
 
             // effectiveEndDate
             Calendar effectiveEndDate = Calendar.getInstance();
-            Date latest = DateUtils.stringToDate(consTimeDepXchangeEntity.getEffectiveEndDate(), IConstant.VALUE.DDMMYYYY);
+            Date latest = DateUtils.stringToDate(consTimeDepXchangeEntity.getEffectiveEndDate(),DateUtils.dd_MM_yyyy);
             effectiveEndDate.setTime(latest);
-            int endYear = effectiveEndDate.get(Calendar.YEAR);
+            effectiveEndDate.set(Calendar.DAY_OF_MONTH,effectiveEndDate.get(Calendar.DAY_OF_MONTH) + 1);
+            int endYear =effectiveEndDate.get(Calendar.YEAR);
 
             if (Collections.max(effectiveEndDateList).equals(consTimeDepXchangeEntity.getEffectiveEndDate())) {
 
-                for (; endYear <= currentYear; endYear++) {
+                for (int i = 1 ;endYear <= currentYear; endYear++, i = 0) {
 
                     if (endYear == currentYear) {
+                        OMPGdmUnitEvolBo gdmUnitEvolBo = new OMPGdmUnitEvolBo();
                         ResultObject resultObject = new ResultObject();
                         String extraParamKey = consTimeDepXchangeEntity.getFromCurrency();
                         if (extraParam.containsKey(extraParamKey)) {
@@ -75,17 +76,18 @@ public class OMPGdmUnitEvolServiceImpl {
                         gdmUnitEvolBo.setActiveFCTERP(IConstant.VALUE.YES);
                         gdmUnitEvolBo.setUnitId(consTimeDepXchangeEntity.getFromCurrency());
 
-                        gdmUnitEvolBo.setStartEff(DateUtils.dateToString(effectiveStartDate.getTime(), IConstant.VALUE.YYYYDDMMHHMMSS));
-                        effectiveEndDate.set(Calendar.DATE, current.get(Calendar.DATE) + 1);
-                        gdmUnitEvolBo.setEndEff(DateUtils.dateToString(effectiveEndDate.getTime(), IConstant.VALUE.YYYYDDMMHHMMSS));
+                        effectiveStartDate.set(Calendar.YEAR,effectiveStartDate.get(Calendar.YEAR) + 1 - i);
+                        gdmUnitEvolBo.setStartEff(DateUtils.dateToString(effectiveStartDate.getTime(),DateUtils.yyyy_MM_dd_HHmmss));
+                        effectiveEndDate.set(Calendar.YEAR,effectiveEndDate.get(Calendar.YEAR) + 1 - i);
+                        gdmUnitEvolBo.setEndEff(DateUtils.dateToString(effectiveEndDate.getTime(),DateUtils.yyyy_MM_dd_HHmmss));
 
                         gdmUnitEvolBo.setFactor(consTimeDepXchangeEntity.getExchangeRate());
                         gdmUnitEvolBo.setPreference(consTimeDepXchangeEntity.getPreference());
                         resultObject.setBaseBo(gdmUnitEvolBo);
                         list.add(resultObject);
                     } else {
+                        OMPGdmUnitEvolBo gdmUnitEvolBo = new OMPGdmUnitEvolBo();
                         ResultObject resultObject = new ResultObject();
-                        LogUtil.getCoreLog().info("---------------------{}------------------", endYear);
                         String extraParamKey = consTimeDepXchangeEntity.getFromCurrency();
                         if (extraParam.containsKey(extraParamKey)) {
                             String extraParamValue = String.format("%03d", Integer.parseInt(extraParam.get(extraParamKey).toString()) + 1);
@@ -99,11 +101,11 @@ public class OMPGdmUnitEvolServiceImpl {
                         gdmUnitEvolBo.setActiveFCTERP(IConstant.VALUE.YES);
                         gdmUnitEvolBo.setUnitId(consTimeDepXchangeEntity.getFromCurrency());
 
-                        effectiveStartDate.set(Calendar.YEAR, current.get(Calendar.YEAR) + 1);
-                        gdmUnitEvolBo.setStartEff(DateUtils.dateToString(effectiveStartDate.getTime(), IConstant.VALUE.YYYYDDMMHHMMSS));
-                        effectiveEndDate.set(Calendar.YEAR, current.get(Calendar.YEAR) + 1);
-                        effectiveEndDate.set(Calendar.DATE, current.get(Calendar.DATE) + 1);
-                        gdmUnitEvolBo.setEndEff(DateUtils.dateToString(effectiveEndDate.getTime(), IConstant.VALUE.YYYYDDMMHHMMSS));
+                        effectiveStartDate.set(Calendar.YEAR,effectiveStartDate.get(Calendar.YEAR) + 1 - i);
+                        gdmUnitEvolBo.setStartEff(DateUtils.dateToString(effectiveStartDate.getTime(),DateUtils.yyyy_MM_dd_HHmmss));
+                        effectiveEndDate.set(Calendar.YEAR,effectiveEndDate.get(Calendar.YEAR) + 1 - i);
+
+                        gdmUnitEvolBo.setEndEff(DateUtils.dateToString(effectiveEndDate.getTime(),DateUtils.yyyy_MM_dd_HHmmss));
 
                         gdmUnitEvolBo.setFactor(consTimeDepXchangeEntity.getExchangeRate());
                         gdmUnitEvolBo.setPreference(consTimeDepXchangeEntity.getPreference());
@@ -112,6 +114,7 @@ public class OMPGdmUnitEvolServiceImpl {
                     }
                 }
             } else {
+                OMPGdmUnitEvolBo gdmUnitEvolBo = new OMPGdmUnitEvolBo();
                 ResultObject resultObject = new ResultObject();
                 String extraParamKey = consTimeDepXchangeEntity.getFromCurrency();
                 if (extraParam.containsKey(extraParamKey)) {
@@ -126,9 +129,8 @@ public class OMPGdmUnitEvolServiceImpl {
                 gdmUnitEvolBo.setActiveFCTERP(IConstant.VALUE.YES);
                 gdmUnitEvolBo.setUnitId(consTimeDepXchangeEntity.getFromCurrency());
 
-                gdmUnitEvolBo.setStartEff(DateUtils.dateToString(effectiveStartDate.getTime(), IConstant.VALUE.YYYYDDMMHHMMSS));
-                effectiveEndDate.set(Calendar.DATE, current.get(Calendar.DATE) + 1);
-                gdmUnitEvolBo.setEndEff(DateUtils.dateToString(effectiveEndDate.getTime(), IConstant.VALUE.YYYYDDMMHHMMSS));
+                gdmUnitEvolBo.setStartEff(DateUtils.dateToString(effectiveStartDate.getTime(),DateUtils.yyyy_MM_dd_HHmmss));
+                gdmUnitEvolBo.setEndEff(DateUtils.dateToString(effectiveEndDate.getTime(),DateUtils.yyyy_MM_dd_HHmmss));
 
                 gdmUnitEvolBo.setFactor(consTimeDepXchangeEntity.getExchangeRate());
                 gdmUnitEvolBo.setPreference(consTimeDepXchangeEntity.getPreference());
@@ -140,7 +142,7 @@ public class OMPGdmUnitEvolServiceImpl {
             ResultObject resultObject = new ResultObject();
             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_EVOL, IConstant.FAILED.ERROR_CODE.C1,
                     "All Key fields not Exist", "", consTimeDepXchangeEntity.getSourceSystem(),
-                    consTimeDepXchangeEntity.getFromCurrency(), consTimeDepXchangeEntity.getEffectiveStartDate(),
+                    consTimeDepXchangeEntity.getFromCurrency(),consTimeDepXchangeEntity.getEffectiveStartDate(),
                     consTimeDepXchangeEntity.getEffectiveEndDate()));
             list.add(resultObject);
         }
