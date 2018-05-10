@@ -21,14 +21,14 @@ Feature: OMPGdmReqFromErp-Consumption
 
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
       | localMaterialNumber | materialNumber | sourceSystem | primaryPlanningCode | localBaseUom |
-      | 000000000007047792  | 7047792        | CONS_LATAM   | 99059               | CS           |
-      | 000000000007047791  | 7047791        | CONS_LATAM   |                     | GH           |
-      | 000000000007047793  | 7047793        | CONS_LATAM   | 99059               | EA           |
-      | 000000000007047794  | 7047794        | CONS_LATAM   | 99059               | GS           |
-      | 000000000007047795  | 7047795        | CONS_LATAM   | 99059               | ED           |
-      | 000000000007047796  | 7047796        | CONS_LATAM   | 99059               | AS           |
+      | 7047792             | 7047792        | CONS_LATAM   | 99059               | CS           |
+      | 7047791             | 7047791        | CONS_LATAM   |                     | GH           |
+      | 7047793             | 7047793        | CONS_LATAM   | 99059               | EA           |
+      | 7047794             | 7047794        | CONS_LATAM   | 99059               | GS           |
+      | 7047795             | 7047795        | CONS_LATAM   | 99059               | ED           |
+      | 7047796             | 7047796        | CONS_LATAM   | 99059               | AS           |
       |                     | 7047799        | CONS_LATAM   | 99059               | AS           |
-      | 000000000007047798  | 7047798        | CONS_LATAM   | 99059               | NN           |
+      | 7047798             | 7047798        | CONS_LATAM   | 99059               | NN           |
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
@@ -46,13 +46,13 @@ Feature: OMPGdmReqFromErp-Consumption
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant,spRelevant"
       | sourceSystem | localPlant   |   localMaterialNumber | spRelevant |
-      | CONS_LATAM   |   MX02       |   000000000007047792  |      X     |
-      | CONS_LATAM   |   MX02       |   000000000007047791  |      X     |
-      | CONS_LATAM   |   MX02       |   000000000007047793  |      X     |
-      | CONS_LATAM   |   MX02       |   000000000007047794  |      X     |
-      | CONS_LATAM   |   MX02       |   000000000007047795  |      X     |
-      | CONS_LATAM   |   MX02       |   000000000007047796  |      X     |
-      | CONS_LATAM   |   MX02       |   000000000007047798  |      X     |
+      | CONS_LATAM   |   MX02       |              7047792  |      X     |
+      | CONS_LATAM   |   MX02       |              7047791  |      X     |
+      | CONS_LATAM   |   MX02       |              7047793  |      X     |
+      | CONS_LATAM   |   MX02       |              7047794  |      X     |
+      | CONS_LATAM   |   MX02       |              7047795  |      X     |
+      | CONS_LATAM   |   MX02       |              7047796  |      X     |
+      | CONS_LATAM   |   MX02       |              7047798  |      X     |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -68,10 +68,10 @@ Feature: OMPGdmReqFromErp-Consumption
 
     And I check file data for filename "REQFROMERP.tsv" by keyFields "REQFromERPId"
       | ManualOffset | REQType |	VERID |	WRK02  |	DELKZ  | BLCKT | PRIO_URG | LocationId      | ProductId   | DeliveryDate | PLIFZ | DELETED | ERPId      | DELPS | DELNR      | TotalQuantity | UnitId | BLCKD| FLIEF   |  REQFromERPId       |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2018/04/03   | 0     |  FALSE  | 1734545711 |  10   | 1734545711 |	 4692         |	 DPSP   |      | 6109    | CONS_LATAM/1734545711 |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 7047791     | 2018/04/05   | 0     |  FALSE  | 1734545712 |  10   | 1734545712 |	 4692         |	 DPSG   |      | 6109    | CONS_LATAM/1734545712 |
       |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/05/27   | 0     |  FALSE  | 1734545852 |  10   | 1734545852 |	 4890         |	 DPST   |      | 6109    | CONS_LATAM/1734545852 |
       |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/04/02   | 0     |  FALSE  | 1734545850 |  10   | 1734545850 |	 4878         |	 DPSU   |      | 6109    | CONS_LATAM/1734545850 |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2018/04/03   | 0     |  FALSE  | 1734545711 |  10   | 1734545711 |	 4692         |	 DPSP   |      | 6109    | CONS_LATAM/1734545711 |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 7047791     | 2018/04/05   | 0     |  FALSE  | 1734545712 |  10   | 1734545712 |	 4692         |	 DPSG   |      | 6109    | CONS_LATAM/1734545712 |
       |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2018/09/18   | 0     |  FALSE  | 1734545719 |  10   | 1734545719 |	 5352         |	 DPSR   |      | 6109    | CONS_LATAM/1734545719 |
       |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/01/08   | 0     |  FALSE	| 1734545796 |  10   | 1734545796 |	 4728         |	 DPSY   |      | 6109    | CONS_LATAM/1734545796 |
 
