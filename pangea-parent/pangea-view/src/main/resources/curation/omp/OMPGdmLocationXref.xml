@@ -1,12 +1,12 @@
 <adf-curation>
-    <curation mainRegion="/plan/cns_pln_spl_loc" viewRegion="/omp/gdm_location" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/plan/cns_spl_pln_loc" viewRegion="/omp/gdm_location" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_location_xref.controller.OMPGdmLocationXrefController"
-              writeTo="all" topic="omp_gdm_location">
+              writeTo="all" topic="PANGEA_V1_omp_gdm_location_xref">
         <regions>
 
-            <region path="/plan/cns_pln_spl_loc">
+            <region path="/plan/cns_spl_pln_loc">
                 <columns>
-                    sourceSystem,vendorOrCustomer,localNumber,localCountry,localCurrency,localNumber,localName,planLocTypeId,localRegion
+                    sourceSystem,vendorOrCustomer,localNumber,localCountry,localCurrency,localNumber,localName,planLocTypeId,localRegion,localPlant
                 </columns>
                 <relations>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">

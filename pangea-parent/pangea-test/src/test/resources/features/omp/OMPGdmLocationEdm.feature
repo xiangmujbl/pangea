@@ -44,9 +44,9 @@ Feature: OMPGdmLocationEdm AEAZ-1764
 
     When I submit task with xml file "xml/omp/OMPGdmLocationEdm.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "gdmLocationEdm.tsv"
+    Then A file is found on sink application with name "GDMLocation_edm.tsv"
 
-    And I check file data for filename "gdmLocationEdm.tsv" by keyFields "locationId"
+    Then I check file data for filename "GDMLocation_edm.tsv" by keyFields "locationId"
       | locationId      | active | activeFCTERP | activeOPRERP | activeSOPERP | countryId | currencyId | customerId | label       | locationTypeId | regionId | vendorId |
       | CONS_LATAM_AR01 | YES    | NO           | YES          | NO           | 00        | code001    |            | Pilar Plant | typeid001      | regin001 |          |
 
@@ -55,10 +55,13 @@ Feature: OMPGdmLocationEdm AEAZ-1764
       | SP             | OMPGdmLocationEdm | T8        | omp          |              | AR02 | CONS_LATAM02 |      |      |      | Missing Location Type Id |
       | SP             | OMPGdmLocationEdm | T10       | omp          |              | AR03 | CONS_LATAM03 |      |      |      | Missing Country          |
 
+    And I compare the number of records between "/edm/plant_v1" and "/omp/gdm_location,/plan/edm_failed_data"
+
     And I delete the test data
 
     And I will remove all data with region "/omp/gdm_location"
 
-    And I will remove all data with region "/edm/edm_failed_data"
+    And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "gdmLocationEdm.tsv"
+    And I will remove the test file on sink application "GDMLocation_edm.tsv"
+

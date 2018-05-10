@@ -86,6 +86,8 @@ public interface IConstant {
         String PLAN_CNS_PLN_SPL_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
         String PLAN_CNS_PLAN_OBJECT_FILTER = "/plan/cns_plan_object_filter";
+        String PLAN_CNS_SPL_PLN_LOC ="/plan/cns_spl_pln_loc";
+
     }
 
 
@@ -156,6 +158,8 @@ public interface IConstant {
         String LOCAL_BLOCKED_SOURCE_OF_SUPPLY = "localBlockedSourceOfSupply";
         String LOCAL_SOURCE_LIST_RECORD_VALID_FROM = "localSourceListRecordValidFrom";
         String LOCAL_SOURCE_LIST_RECORD_VALID_TO = "localSourceListRecordValidTo";
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_BLOCKED_SOURCEOF_SUPPLY = "localBlockedSourceofSupply";
     }
 
 
@@ -432,9 +436,12 @@ public interface IConstant {
     }
 
     interface  PLAN_CNS_PLAN_OBJECT_FILTER {
+        String SOURCE_OBJECT_TECH_NAME = "sourceObjectTechName";
         String SOURCE_SYSTEM = "sourceSystem";
         String SOURCE_OBJECT_ATTRIBUTE1 = "sourceObjectAttribute1";
         String SOURCE_OBJECT_ATTRIBUTE1_VALUE = "sourceObjectAttribute1Value";
+        String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
+        String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
     }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
@@ -491,6 +498,12 @@ public interface IConstant {
         String ORDER_TYPE = "orderType";
     }
 
+    interface PLAN_CNS_SPL_PLN_LOC {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCALNUMBER = "localNumber";
+        String VENDORORCUSTOMER = "vendorOrCustomer";
+    }
+
 
     // -----region attribute value
     interface VALUE {
@@ -534,11 +547,13 @@ public interface IConstant {
         String SPRAS_EN = "EN";
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";
+        String YYYY_MM_DD = "yyyy/MM/dd";
+        String YYYYMMDD_ZERO = "00000000";
+        String YYYY_MM_DD_ZERO = "0000/00/00";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
-        String YYYYMMDDBS = "yyyy/MM/dd";
         String MMDYYYY = "MM/d/yyyy";
         String N = "N";
-        String BLANK = "Blank";
+        String BLANK = "";
         String OR = "OR";
         String SPACE = " ";
         String CURRENCY = "CURRENCY";
@@ -546,6 +561,7 @@ public interface IConstant {
         String BA = "BA";
         String FALSE = "FALSE";
         String COLON = ":";
+        String YYYYMMDDBS = "yyyy/MM/dd";
         String TRANSPORT = "TRANSPORT";
         String STAR = "*";
         String LFU = "LFU";

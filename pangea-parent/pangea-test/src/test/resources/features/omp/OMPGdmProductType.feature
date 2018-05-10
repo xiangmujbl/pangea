@@ -11,12 +11,12 @@ Feature: OMPProductType AEAZ-1981
 
     When I submit task with xml file "xml/omp/OMPGdmProductType.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "ProductType.tsv"
+    Then A file is found on sink application with name "GDMProductType.tsv"
 
-#    Then I check file data for filename "GDMProductType.tsv" by keyFields "productTypeId"
-#      | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
-#      | DIEN          | YES          | YES          | NO           | Service          |
-#      | FERT          | YES          | YES          | NO           | Finished Product |
+    Then I check file data for filename "GDMProductType.tsv" by keyFields "productTypeId"
+      | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
+      | DIEN          | YES          | YES          | NO           | Service          |
+      | FERT          | YES          | YES          | NO           | Finished Product |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -29,4 +29,4 @@ Feature: OMPProductType AEAZ-1981
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will remove the test file on sink application "product_type.tsv"
+    And I will remove the test file on sink application "GDMProductType.tsv"

@@ -38,8 +38,8 @@ public class OMPGdmUnitCurrencyServiceImpl implements ICommonService {
                 gdmUnitCurrencyBo.setActiveSOPERP(IConstant.VALUE.NO);
                 gdmUnitCurrencyBo.setFactor("");
                 gdmUnitCurrencyBo.setIsoCode(currencyV1Entity.getIsoNumeric());
-                gdmUnitCurrencyBo.setMeasure(IConstant.VALUE.CURRENCY);
-                gdmUnitCurrencyBo.setPrecision(IConstant.VALUE.ZERO);
+                gdmUnitCurrencyBo.setMeasure("");
+                gdmUnitCurrencyBo.setPrecision("");
                 gdmUnitCurrencyBo.setLongDescription(currencyV1Entity.getCurrencyName());
                 gdmUnitCurrencyBo.setShortDescription(currencyV1Entity.getCurrencyName());
                 resultObject.setBaseBo(gdmUnitCurrencyBo);
@@ -47,7 +47,7 @@ public class OMPGdmUnitCurrencyServiceImpl implements ICommonService {
 
                 resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_CURRENCY, IConstant.FAILED.ERROR_CODE.E1,
                         "", "omp", currencyV1Entity.getSourceSystem(),
-                        currencyV1Entity.getLocalCountry()));
+                        currencyV1Entity.getLocalCurrency()));
             }
         }
 

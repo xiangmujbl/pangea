@@ -14,6 +14,7 @@ public class PlanCnsPlnSplLocEntity extends CommonEntity {
     private String localName;
     private String planLocTypeId;
     private String localRegion;
+    private String localPlant;
 
     public PlanCnsPlnSplLocEntity(Map<String, Object> map) {
         super(map);
@@ -26,6 +27,7 @@ public class PlanCnsPlnSplLocEntity extends CommonEntity {
         setLocalName((String) map.get("localName"));
         setPlanLocTypeId((String) map.get("planLocTypeId"));
         setLocalRegion((String) map.get("localRegion"));
+        setLocalPlant((String) map.get("localPlant"));
     }
 
     public String getSourceSystem() {
@@ -92,4 +94,11 @@ public class PlanCnsPlnSplLocEntity extends CommonEntity {
         this.localRegion = localRegion;
     }
 
+    public String getLocalPlant() {
+        return localPlant;
+    }
+
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
+    }
 }

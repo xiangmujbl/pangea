@@ -5,9 +5,9 @@ Feature: OMPProcessType AEAZ-2375
     # 1. get record from cns_process_type
 
     Given I import "/plan/cns_process_type" by keyFields "processTypeId"
-      | processTypeId | processTypeDescription |
-      | 1             | subcontracting         |
-      | 2             | Inter Plant            |
+      | processTypeId | processTypeDesc |
+      | 1             | subcontracting  |
+      | 2             | Inter Plant     |
 
     And I wait "/plan/cns_process_type" Async Queue complete
 

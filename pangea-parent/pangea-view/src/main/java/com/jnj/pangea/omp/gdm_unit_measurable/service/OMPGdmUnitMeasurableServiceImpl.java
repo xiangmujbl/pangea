@@ -32,32 +32,32 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
 
         OMPGdmUnitMeasurableBo gdmUnitMeasurableBo = new OMPGdmUnitMeasurableBo();
 
-        // rule F1
-        String uom = unitOfMeasureV1Entity.getUom();
-        if (StringUtils.isNotEmpty(uom)) {
-            PlanCnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(uom);
+        // rule T1
+        String localUom = unitOfMeasureV1Entity.getLocalUom();
+        if (StringUtils.isNotEmpty(localUom)) {
+            PlanCnsPlanUnitEntity cnsPlanUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localUom);
             if (null != cnsPlanUnitEntity) {
-                gdmUnitMeasurableBo.setUnitId(unitOfMeasureV1Entity.getUom());
-                gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);
-                gdmUnitMeasurableBo.setActiveFCTERP(IConstant.VALUE.YES);
-                gdmUnitMeasurableBo.setActiveOPRERP(IConstant.VALUE.YES);
-                gdmUnitMeasurableBo.setActiveSOPERP(IConstant.VALUE.NO);
-                gdmUnitMeasurableBo.setFactor(unitOfMeasureV1Entity.getFactor());
-                gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
-                gdmUnitMeasurableBo.setMeasure(unitOfMeasureV1Entity.getMeasure());
-                gdmUnitMeasurableBo.setPrecision(unitOfMeasureV1Entity.getRoundingDecimal());
-
-                // rule E1
-                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getUomName())) {
+                if (StringUtils.isNotEmpty(cnsPlanUnitEntity.getUnit())) {
+                    gdmUnitMeasurableBo.setUnitId(cnsPlanUnitEntity.getUnit());
+                    // rules D1
+                    gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);
+                    gdmUnitMeasurableBo.setActiveFCTERP(IConstant.VALUE.YES);
+                    gdmUnitMeasurableBo.setActiveOPRERP(IConstant.VALUE.YES);
+                    // rules D2
+                    gdmUnitMeasurableBo.setActiveSOPERP(IConstant.VALUE.NO);
+                    gdmUnitMeasurableBo.setFactor(unitOfMeasureV1Entity.getFactor());
+                    gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
+                    gdmUnitMeasurableBo.setMeasure(unitOfMeasureV1Entity.getMeasure());
+                    gdmUnitMeasurableBo.setPrecision(unitOfMeasureV1Entity.getRoundingDecimal());
                     gdmUnitMeasurableBo.setLongDescription(unitOfMeasureV1Entity.getUomName());
                     gdmUnitMeasurableBo.setShortDescription(unitOfMeasureV1Entity.getUomName());
                     resultObject.setBaseBo(gdmUnitMeasurableBo);
-                } else {
-
-                    resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_MEASURABLE, IConstant.FAILED.ERROR_CODE.E1,
-                            "", "omp", unitOfMeasureV1Entity.getLocalUom(),
-                            unitOfMeasureV1Entity.getSourceSystem()));
                 }
+            } else {
+
+                resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_MEASURABLE, IConstant.FAILED.ERROR_CODE.E1,
+                        "Enterprise UOM is missing for local UOM", "omp", unitOfMeasureV1Entity.getLocalUom(),
+                        unitOfMeasureV1Entity.getSourceSystem()));
             }
         }
         return resultObject;
