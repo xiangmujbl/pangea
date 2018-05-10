@@ -48,4 +48,20 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
                 .and(IConstant.CNS_PLAN_PARAMETER.INCL_EXCL).is(inclExcl).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
+
+    public PlanCnsPlanParameterEntity getEntityWithConditions(String sourceSystem,String dataObject) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
+
+    public PlanCnsPlanParameterEntity getEntityWithAttribute(String attribute) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(attribute).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
+
+    public List<PlanCnsPlanParameterEntity> getEntityWithAttributeList(String attribute) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(attribute).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
 }

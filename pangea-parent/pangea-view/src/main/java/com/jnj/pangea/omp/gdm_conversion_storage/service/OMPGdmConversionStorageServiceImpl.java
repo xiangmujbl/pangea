@@ -4,19 +4,21 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMJNJCalendarV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustChannelDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsDpPriceDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
+import com.jnj.pangea.common.entity.edm.EDMJNJCalendarV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsCustChannelEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsDpPriceEntity;
 import com.jnj.pangea.omp.gdm_conversion_storage.bo.OMPGdmConversionStorageBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,145 +40,68 @@ public class OMPGdmConversionStorageServiceImpl {
     private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private PlanCnsCustChannelDaoImpl cnsCustChannelDao = PlanCnsCustChannelDaoImpl.getInstance();
     private PlanCnsDpPriceDaoImpl cnsDpPriceDao = PlanCnsDpPriceDaoImpl.getInstance();
-
+    private EDMJNJCalendarV1DaoImpl edmJNJCalendarV1Dao= EDMJNJCalendarV1DaoImpl.getInstance();
     public List<ResultObject> buildView(String key, Object o, Object o2) {
-
         List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
         PlanCnsDpPriceEntity cnsDpPriceEntity = (PlanCnsDpPriceEntity) o;
-
-        // J1
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(cnsDpPriceEntity.getLocalMaterialNumber(), cnsDpPriceEntity.getSourceSystem());
-        if (edmMaterialGlobalV1Entity == null) {
-            FailData failData = new FailData();
-            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
-            failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
-            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CONVERSION_STORAGE);
-            failData.setSourceSystem(IConstant.VALUE.OMP);
-            failData.setKey1(cnsDpPriceEntity.getLocalMaterialNumber());
-            failData.setKey2(cnsDpPriceEntity.getSourceSystem());
-            failData.setKey3(cnsDpPriceEntity.getCurrency());
-            failData.setKey4(cnsDpPriceEntity.getCountry());
-            failData.setKey5(cnsDpPriceEntity.getFromDate());
-            ResultObject resultObject = new ResultObject();
-            resultObject.setFailData(failData);
-            resultObjectList.add(resultObject);
-            return resultObjectList;
-        }
-        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getEntityWithSourceSystem(edmMaterialGlobalV1Entity.getSourceSystem());
-
-        if (sourceSystemV1Entity == null) {
-            FailData failData = new FailData();
-            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
-            failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
-            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CONVERSION_STORAGE);
-            failData.setSourceSystem(IConstant.VALUE.OMP);
-            failData.setKey1(cnsDpPriceEntity.getLocalMaterialNumber());
-            failData.setKey2(cnsDpPriceEntity.getSourceSystem());
-            failData.setKey3(cnsDpPriceEntity.getCurrency());
-            failData.setKey4(cnsDpPriceEntity.getCountry());
-            failData.setKey5(cnsDpPriceEntity.getFromDate());
-            ResultObject resultObject = new ResultObject();
-            resultObject.setFailData(failData);
-            resultObjectList.add(resultObject);
-            return resultObjectList;
-        }
-        List<EDMCountryEntity> edmCountryEntityList = countryV1Dao.getEntityWithLocalCountryList(cnsDpPriceEntity.getCountry());
-        if (edmCountryEntityList == null || edmCountryEntityList.size() < 1) {
-            FailData failData = new FailData();
-            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
-            failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
-            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CONVERSION_STORAGE);
-            failData.setSourceSystem(IConstant.VALUE.OMP);
-            failData.setKey1(cnsDpPriceEntity.getLocalMaterialNumber());
-            failData.setKey2(cnsDpPriceEntity.getSourceSystem());
-            failData.setKey3(cnsDpPriceEntity.getCurrency());
-            failData.setKey4(cnsDpPriceEntity.getCountry());
-            failData.setKey5(cnsDpPriceEntity.getFromDate());
-            ResultObject resultObject = new ResultObject();
-            resultObject.setFailData(failData);
-            resultObjectList.add(resultObject);
-            return resultObjectList;
-        }
-        List<PlanCnsCustChannelEntity> planCnsCustChannelEntities = null;
-        for (EDMCountryEntity edmCountryEntity : edmCountryEntityList) {
-            if (edmCountryEntity != null) {
-
-                String countryCode = edmCountryEntity.getCountryCode();
-                if (StringUtils.isEmpty(countryCode)) {
-                    FailData failData = new FailData();
-                    failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
-                    failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
-                    failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-                    failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CONVERSION_STORAGE);
-                    failData.setSourceSystem(IConstant.VALUE.OMP);
-                    failData.setKey1(cnsDpPriceEntity.getLocalMaterialNumber());
-                    failData.setKey2(cnsDpPriceEntity.getSourceSystem());
-                    failData.setKey3(cnsDpPriceEntity.getCurrency());
-                    failData.setKey4(cnsDpPriceEntity.getCountry());
-                    failData.setKey5(cnsDpPriceEntity.getFromDate());
-                    ResultObject resultObject = new ResultObject();
-                    resultObject.setFailData(failData);
-                    resultObjectList.add(resultObject);
-                    return resultObjectList;
-                }
-                planCnsCustChannelEntities = cnsCustChannelDao.getEntitiesWithStartCharInSalesOrg(edmCountryEntity.getCountryCode());
-                if (planCnsCustChannelEntities.isEmpty()) {
-                    FailData failData = new FailData();
-                    failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
-                    failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
-                    failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-                    failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CONVERSION_STORAGE);
-                    failData.setSourceSystem(IConstant.VALUE.OMP);
-                    failData.setKey1(cnsDpPriceEntity.getLocalMaterialNumber());
-                    failData.setKey2(cnsDpPriceEntity.getSourceSystem());
-                    failData.setKey3(cnsDpPriceEntity.getCurrency());
-                    failData.setKey4(cnsDpPriceEntity.getCountry());
-                    failData.setKey5(cnsDpPriceEntity.getFromDate());
-                    ResultObject resultObject = new ResultObject();
-                    resultObject.setFailData(failData);
-                    resultObjectList.add(resultObject);
-                    return resultObjectList;
-                }
-
-                for (PlanCnsCustChannelEntity pccc : planCnsCustChannelEntities) {
-
-                    //C1
-                    String aggregationId = sourceSystemV1Entity.getSourceSystem() + "-" + edmMaterialGlobalV1Entity.getLocalDpParentCode() + "-" + pccc.getChannel() + "-" + edmCountryEntity.getCountryCode();
-
-                    OMPGdmConversionStorageBo gdmConversionStorageBo = new OMPGdmConversionStorageBo();
-
-                    gdmConversionStorageBo.setSourceSystem(sourceSystemV1Entity.getSourceSystem());
-
-                    gdmConversionStorageBo.setAggregationId(aggregationId);
-
-                    gdmConversionStorageBo.setCurrencyId(cnsDpPriceEntity.getCurrency());
-
-                    //C2
-                    Date startDate = DateUtils.stringToDate(cnsDpPriceEntity.getFromDate(), DateUtils.J_yyyyWW);
-                    gdmConversionStorageBo.setDueDate(DateUtils.dateToString(DateUtils.offsetDate(startDate, 7), DateUtils.F_yyyyMMddHHmmss_));
-                    // C3
-                    gdmConversionStorageBo.setFromDueDate(DateUtils.dateToString(startDate, DateUtils.F_yyyyMMddHHmmss_));
-
-                    // C4
-                    gdmConversionStorageBo.setForecastUploadId(aggregationId + "-" + gdmConversionStorageBo.getDueDate());
-                    //C5
-                    gdmConversionStorageBo.setSalesPrice(getFieldWithC5(cnsDpPriceEntity.getLocalMaterialNumber()));
-                    // D3
-                    gdmConversionStorageBo.setUnitId("");
-
-                    ResultObject resultObject = new ResultObject();
-                    resultObject.setBaseBo(gdmConversionStorageBo);
-                    resultObjectList.add(resultObject);
+        List<EDMJNJCalendarV1Entity> edmJNJCalendarV1EntityList = edmJNJCalendarV1Dao.getEntityWithFiscalPeriod(cnsDpPriceEntity.getFromDate());
+        if(edmJNJCalendarV1EntityList != null && edmJNJCalendarV1EntityList.size() > 0){
+            for(EDMJNJCalendarV1Entity edmjnjCalendarV1Entity:edmJNJCalendarV1EntityList){
+                List<EDMCountryEntity> edmCountryEntityList = countryV1Dao.getEntityWithLocalCountryList(cnsDpPriceEntity.getCountry());
+                List<PlanCnsCustChannelEntity> planCnsCustChannelEntities = null;
+                for (EDMCountryEntity edmCountryEntity : edmCountryEntityList) {
+                    if (edmCountryEntity != null) {
+                        planCnsCustChannelEntities = cnsCustChannelDao.getEntitiesWithStartCharInSalesOrg(edmCountryEntity.getCountryCode());
+                        for (PlanCnsCustChannelEntity pccc : planCnsCustChannelEntities) {
+                            //C1
+                            OMPGdmConversionStorageBo gdmConversionStorageBo = new OMPGdmConversionStorageBo();
+                            if(edmMaterialGlobalV1Entity != null){
+                                String aggregationId = IConstant.VALUE.LA_ + edmMaterialGlobalV1Entity.getLocalDpParentCode() + "-" + pccc.getChannel() + "-" + edmCountryEntity.getCountryCode();
+                                gdmConversionStorageBo.setAggregationId(aggregationId);
+                            }
+                            gdmConversionStorageBo.setCurrencyId(cnsDpPriceEntity.getCurrency());
+                            //C2
+                            Date dueDate = DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekToDate(), DateUtils.DATE_FORMAT_1);
+                            gdmConversionStorageBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.J_yyyyMMdd_HHmmss));
+                            // C3
+                            Date fromDueDate = DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekFromDate(), DateUtils.DATE_FORMAT_1);
+                            gdmConversionStorageBo.setFromDueDate(DateUtils.dateToString(fromDueDate, DateUtils.J_yyyyMMdd_HHmmss));
+                            //C5
+                            String salesPrice=cnsDpPriceEntity.getSalesPrice();
+                            if(StringUtils.isNotBlank(salesPrice) && !IConstant.VALUE.ZERO.equals(salesPrice)){
+                                gdmConversionStorageBo.setValue(getFieldWithC5(cnsDpPriceEntity.getLocalMaterialNumber()));
+                            }else if(!isMathC5(salesPrice)){
+                                FailData failData = new FailData();
+                                failData.setErrorCode(IConstant.FAILED.ERROR_CODE.C5);
+                                failData.setErrorValue("Sales price is non-numeric");
+                                failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+                                failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CONVERSION_STORAGE);
+                                failData.setSourceSystem(IConstant.VALUE.OMP);
+                                failData.setKey1(cnsDpPriceEntity.getLocalMaterialNumber());
+                                failData.setKey2(cnsDpPriceEntity.getSourceSystem());
+                                failData.setKey3(cnsDpPriceEntity.getCurrency());
+                                failData.setKey4(cnsDpPriceEntity.getCountry());
+                                failData.setKey5(cnsDpPriceEntity.getFromDate());
+                                ResultObject resultObject = new ResultObject();
+                                resultObject.setFailData(failData);
+                                resultObjectList.add(resultObject);
+                                return resultObjectList;
+                            }
+                            //D1
+                            gdmConversionStorageBo.setConversionFactor(IConstant.VALUE.SALESPRICE);
+                            // D3
+                            gdmConversionStorageBo.setUnitId("");
+                            ResultObject resultObject = new ResultObject();
+                            resultObject.setBaseBo(gdmConversionStorageBo);
+                            resultObjectList.add(resultObject);
+                        }
+                    }
                 }
             }
         }
         return resultObjectList;
     }
-
-
     private String getFieldWithC5(String localMaterialNumber) {
 
         String dpParentCode = null;
@@ -193,7 +118,9 @@ public class OMPGdmConversionStorageServiceImpl {
                 List<Double> salesPrices = cnsDpPriceEntities.stream().map(entity -> Double.parseDouble(entity.getSalesPrice())).collect(Collectors.toList());
                 // calculate the avg
                 Double avg = salesPrices.stream().filter(price -> price != 0).mapToDouble(price -> price).summaryStatistics().getAverage();
-                return avg + "";
+                DecimalFormat Format=new DecimalFormat("#.000");
+                return  Double.valueOf(Format.format(avg)) + "";
+                //return avg +"";
             } else {
                 return null;
             }
@@ -201,6 +128,28 @@ public class OMPGdmConversionStorageServiceImpl {
             return null;
         }
     }
+    public static boolean isMathC5(String s){
+        if(StringUtils.isBlank(s)){
+            return true;
+        }else{
+            String regex = "^[1-9][0-9]*\\.[0-9]+$|^[1-9][0-9]*$|^0+\\.[0-9]+$";
+            char c = s.charAt(0);
+            boolean bool;
+            if(c=='+'|c=='-'){
+                bool = s.substring(1).matches(regex);
+            }else{
+                bool = s.matches(regex);
+            }
+            if(bool){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
 
+    public static void main(String[] args){
+       System.out.print(isMathC5(null));
+    }
 
 }

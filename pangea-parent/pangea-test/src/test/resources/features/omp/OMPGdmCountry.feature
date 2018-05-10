@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-1614
 Feature: OMPGdmCountry AEAZ-1614
 
-  Scenario: Full Load curation
+ Scenario: Full Load curation
 
     Given I import "/edm/country_v1" by keyFields "localCountry,sourceSystem"
       | countryName | countryCode | localCountry | sourceSystem |
@@ -21,8 +21,8 @@ Feature: OMPGdmCountry AEAZ-1614
     Then A file is found on sink application with name "GDMCountry.tsv"
 
     Then I check file data for filename "GDMCountry.tsv" by keyFields "countryId"
-      | countryId | activeFCTERP | activeOPRERP | activeSOPERP | countryDescription | mrc |
-      | ZW        | YES          | YES          | NO           | Zimbabwe1          |     |
+      | countryId | activeFCTERP | activeOPRERP | activeSOPERP | countryDescription |
+      | ZW         | YES           | YES           | NO            | Zimbabwe1           |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

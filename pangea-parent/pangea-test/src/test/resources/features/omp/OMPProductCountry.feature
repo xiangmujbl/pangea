@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-1615
-Feature: OMPProductCountry AEAZ-1615
+@pangea_test @AEAZ-3218
+Feature: OMPProductCountry AEAZ-3218
 
   Scenario: Full Load curation
 
@@ -16,16 +16,26 @@ Feature: OMPProductCountry AEAZ-1615
 
     And I wait "/plan/cns_prod_cty_affl" Async Queue complete
 
+    Given I import "/plan/cns_material_plan_status" by keyFields "localParentCode"
+      | dpRelevant | localParentCode        |
+      | X          | 0000000000000517180241 |
+      | X          | 0000000000000517180242 |
+      | X          | 0000000000000517180244 |
+      | X          | 0000000000000517180245 |
+      |            | 0000000000000517180246 |
+      | X          | 0000000000000517180247 |
+    And I wait "/plan/cns_material_plan_status" Async Queue complete
+
     When I submit task with xml file "xml/omp/OMPProductCountry.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMProductCountry.tsv"
 
     Then I check file data for filename "GDMProductCountry.tsv" by keyFields "uniqueId"
-      | uniqueId                    | activeFCTERP | countryGroup | countryId | dpPlannerId | dpSegmentation | productClassification | productId              | productStatus | rootSize | segmentation |
-      | LA_0000000000000517180241BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | 0000000000000517180241 | INACTIVE      |          |              |
-      | LA_0000000000000517180242BR | YES          | SUNFRESH     | BR        | DP004       |                | SAMPLE                | 0000000000000517180242 | INACTIVE      |          |              |
-      | LA_0000000000000517180244BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | 0000000000000517180244 | INACTIVE      |          |              |
-      | LA_0000000000000517180245BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | 0000000000000517180245 | SAMPLE        |          |              |
+      | uniqueId                    | activeFCTERP | countryGroup | countryId | dpPlannerId | dpSegmentation | productClassification | productId                 | productStatus | rootSize | segmentation |
+      | LA_0000000000000517180241BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | LA_0000000000000517180241 | INACTIVE      |          |              |
+      | LA_0000000000000517180242BR | YES          | SUNFRESH     | BR        | DP004       |                | SAMPLE                | LA_0000000000000517180242 | INACTIVE      |          |              |
+      | LA_0000000000000517180244BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | LA_0000000000000517180244 | INACTIVE      |          |              |
+      | LA_0000000000000517180245BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | LA_0000000000000517180245 | SAMPLE        |          |              |
 
 #    Then I check region data "/omp/product_country" by keyFields "uniqueId"
 #      | uniqueId                    | activeFCTERP | countryGroup | countryId | dpPlannerId | dpSegmentation | productClassification | productId              | productStatus | rootSize | segmentation |
@@ -41,12 +51,13 @@ Feature: OMPProductCountry AEAZ-1615
       | DP             | GDMProductCountry | C1        |              |              | CONS_LATAM |                        | BR   |      |      | All Key fields not Exist |
       | DP             | GDMProductCountry | T1        |              |              | CONS_LATAM | 0000000000000517180243 | BR   |      |      | All Key fields not Exist |
       | DP             | GDMProductCountry | T2        |              |              | CONS_LATAM | 0000000000000517180246 | BR   |      |      | All Key fields not Exist |
-
     And I compare the number of records between "/plan/cns_prod_cty_affl" and "/omp/product_country,/plan/edm_failed_data"
 
     And I delete the test data
 
     And I will remove all data with region "/omp/product_country"
+
+    And I will remove all data with region "/plant/cns_material_plan_status"
 
     And I will remove all data with region "/plan/edm_failed_data"
 

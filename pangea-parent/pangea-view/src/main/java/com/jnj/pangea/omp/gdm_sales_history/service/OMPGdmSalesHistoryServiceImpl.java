@@ -23,6 +23,8 @@ import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
@@ -54,8 +56,13 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
         EDMSalesOrderV1Entity salesOrderV1Entity = (EDMSalesOrderV1Entity) o;
+        Set<String> scheduleLineItemSet = (Set<String>) o2;
 
         OMPGdmSalesHistoryBo gdmSalesHistoryBo = new OMPGdmSalesHistoryBo();
+
+        if (scheduleLineItemSet.contains(salesOrderV1Entity.getScheduleLineItem())){
+            return null;
+        }
 
         if (!checkJ1(salesOrderV1Entity)) {
             return null;
@@ -97,8 +104,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         String locationId = salesOrderV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + salesOrderV1Entity.getLocalPlant();
         gdmSalesHistoryBo.setLocationId(locationId);
 
-        gdmSalesHistoryBo.setOrderType(salesOrderV1Entity.getLocalOrderType());
-
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(salesOrderV1Entity.getLocalMaterialNumber());
         if (null != materialGlobalV1Entity) {
             gdmSalesHistoryBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
@@ -125,7 +130,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     }
 
     private PlanCnsCustExclEntity checkF1(String localSalesOrg, String localShipToParty) {
-        return cnsCustExclDao.getEntityWithSalesOrgAndCustomerShipTo(localSalesOrg, localShipToParty);
+        return cnsCustExclDao.getEntityWithSalesOrgAndNotCustomerShipTo(localSalesOrg, localShipToParty);
     }
 
     private String checkT2(String localSalesOrg, String localOrderType, String localItemCategory) {
@@ -196,13 +201,13 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         TvroEntity tvroEntity = tvroDao.getEntityWithRoute(localRoute);
         if (null != tvroEntity) {
-            String trazt = tvroEntity.getTrazt();
-            if (StringUtils.isNotEmpty(trazt) && StringUtils.isNotEmpty(localRequestedDate)) {
+            String traztd = tvroEntity.getTraztd();
+            if (StringUtils.isNotEmpty(traztd) && StringUtils.isNotEmpty(localRequestedDate)) {
 
-                int traztLong = (int) Double.parseDouble(trazt);
+                int traztdNum = Integer.parseInt(traztd);
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
-                Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztLong);
-                return DateUtils.dateToString(fromDueDate, DateUtils.F_yyyy_MM_dd_HHmmss);
+                Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztdNum);
+                return DateUtils.dateToString(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
             }
         }
         return null;
@@ -214,7 +219,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             Date presentDate = new Date();
             int parameterValueLong = (int) Double.parseDouble(parameterValue);
             Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueLong);
-            Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.F_yyyy_MM_dd_HHmmss);
+            Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
             if (dueDateFormat.getTime() >= resultDate.getTime()) {
                 return fromDueDate;
             }

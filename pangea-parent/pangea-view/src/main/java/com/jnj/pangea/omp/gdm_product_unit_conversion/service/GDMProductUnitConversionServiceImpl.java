@@ -8,6 +8,7 @@ import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialAuomV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_product_unit_conversion.bo.GDMProductUnitConversionBo;
 import org.apache.commons.lang.StringUtils;
@@ -42,7 +43,7 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
 
         String localBaseUOM = edmMaterialGlobalV1Entity.getLocalBaseUom();
         if (StringUtils.isNotEmpty(localBaseUOM)) { //J1
-            CnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUOM);
+            PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUOM);
             String gdmProductUnitConversionId = "";
             if (StringUtils.isNotEmpty(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
                 gdmProductUnitConversionId += edmMaterialGlobalV1Entity.getPrimaryPlanningCode();

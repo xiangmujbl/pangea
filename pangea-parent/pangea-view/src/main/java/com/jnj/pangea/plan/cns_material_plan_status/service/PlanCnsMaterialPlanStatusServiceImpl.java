@@ -5,6 +5,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialInclDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
@@ -27,23 +28,23 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
 
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
+    private PlanCnsMaterialInclDaoImpl materialInclDao = PlanCnsMaterialInclDaoImpl.getInstance();
 
-    public ResultObject buildView(String key, Object o, Set<String> f1Set, Set<String> f2ASet, Set<String> f2BSet, Set<String> f3ASet, Set<String> f3BSet) {
+    public ResultObject buildView(String key, Object o, Set<String> f1LocalMaterialTypeSet, Set<String> f1LocalMaterialTypeNotSet, Set<String> f1DivisionSet, Set<String> f1DivisionNotSet,
+                                  Set<String> f2LocalPlantSet, Set<String> f2LocalPlantNotSet, Set<String> f2LocalMRPTypeNotSet, Set<String> f2LocalPlantStatusSet, Set<String> f2LocalPlantStatusNotSet, Set<String> f2LocalMrpControllerSet, Set<String> f2LocalMrpControllerNotSet,
+                                  Set<String> f3LocalPlantSet, Set<String> f3LocalPlantNotSet, Set<String> f3LocalMRPTypeSet, Set<String> f3LocalPlantStatusSet, Set<String> f3LocalPlantStatusNotSet, Set<String> f3LocalMrpControllerSet, Set<String> f3LocalMrpControllerNotSet) {
         ResultObject resultObject = new ResultObject();
 
         EDMMaterialPlantV1Entity materialPlantV1Entity = (EDMMaterialPlantV1Entity) o;
 
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
 
-        String localPlant = StringUtils.trim(materialPlantV1Entity.getLocalPlant());
-        String localMrpType = StringUtils.trim(materialPlantV1Entity.getLocalMrpType());
+        boolean checkF1 = checkF1(materialPlantV1Entity, f1LocalMaterialTypeSet, f1LocalMaterialTypeNotSet, f1DivisionSet, f1DivisionNotSet);
+        boolean checkF2 = checkF2(materialPlantV1Entity,f2LocalPlantSet,f2LocalPlantNotSet,f2LocalMRPTypeNotSet,f2LocalPlantStatusSet,f2LocalPlantStatusNotSet,f2LocalMrpControllerSet,f2LocalMrpControllerNotSet);
+        boolean checkF3 = checkF3(materialPlantV1Entity,f3LocalPlantSet,f3LocalPlantNotSet,f3LocalMRPTypeSet,f3LocalPlantStatusSet,f3LocalPlantStatusNotSet,f3LocalMrpControllerSet,f3LocalMrpControllerNotSet);
 
-        boolean f2A = f2ASet.contains(localPlant);
-        boolean f2B = !f2BSet.contains(localMrpType);
-        boolean f3A = f3ASet.contains(localPlant);
-        boolean f3B = f3BSet.contains(localMrpType);
-        if ((f2A && f2B) || (f3A && f3B)) {
-            // T1
+        if (checkF1 && (checkF2 || checkF3)) {
+
             materialPlanStatusBo.setSourceSystem(getFieldWithT1());
 
             materialPlanStatusBo.setLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
@@ -52,57 +53,91 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
 
             EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
             if (null != materialGlobalV1Entity) {
-                if (f1Set.contains(StringUtils.trim(materialGlobalV1Entity.getMaterialType()))) {
-                    String localParentCode = StringUtils.trim(materialGlobalV1Entity.getLocalDpParentCode());
-                    materialPlanStatusBo.setLocalParentCode(localParentCode);
-                    materialPlanStatusBo.setPpc(StringUtils.trim(materialGlobalV1Entity.getPrimaryPlanningCode()));
-                }
+                materialPlanStatusBo.setLocalParentCode(materialGlobalV1Entity.getLocalDpParentCode());
+                materialPlanStatusBo.setPpc(StringUtils.trim(materialGlobalV1Entity.getPrimaryPlanningCode()));
             }
-            if (f2A && f2B) {
+
+            if (checkF2) {
                 materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
             }
-            if (f3A && f3B) {
+            if (checkF3) {
                 materialPlanStatusBo.setSpRelevant(IConstant.VALUE.X);
             }
 
-            if (null != materialPlanStatusBo.getLocalParentCode() && !"".equals(materialPlanStatusBo.getLocalParentCode())) {
+            if (StringUtils.isNotEmpty(materialPlanStatusBo.getLocalParentCode())) {
                 materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
             }
 
-            //T7
-            getFieldWithT7(materialPlanStatusBo);
+            CnsMaterialInclEntity materialInclEntity = materialInclDao.getEntityWithLocalMaterialNumberAndPlanningType(materialPlantV1Entity.getLocalMaterialNumber(), IConstant.VALUE.NP);
+            if(null != materialInclEntity){
+                materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
+            }
+            getFieldWithT6(materialPlanStatusBo);
 
             resultObject.setBaseBo(materialPlanStatusBo);
-        } else {
-            FailData failData = checkFailData(materialPlantV1Entity, IConstant.FAILED.ERROR_CODE.F2F3);
-            resultObject.setFailData(failData);
             return resultObject;
         }
 
-        return resultObject;
+        return null;
     }
 
-    public ResultObject materialInclBuildView(CnsMaterialInclEntity materialInclEntity) {
+    private boolean checkF1(EDMMaterialPlantV1Entity materialPlantV1Entity, Set<String> f1LocalMaterialTypeSet, Set<String> f1LocalMaterialTypeNotSet, Set<String> f1DivisionSet, Set<String> f1DivisionNotSet) {
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalDao.getEntityWithLocalMaterialNumber(materialPlantV1Entity.getLocalMaterialNumber());
+        if (null != materialGlobalV1Entity) {
+            String flagForDeletion = StringUtils.trim(materialGlobalV1Entity.getFlagForDeletion());
+            boolean f1LocalMaterialType = f1LocalMaterialTypeSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()));
+            boolean f1LocalMaterialTypeNot = !f1LocalMaterialTypeNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()));
+            boolean f1Division = f1DivisionSet.contains(StringUtils.trim(materialGlobalV1Entity.getDivision()));
+            boolean f1DivisionNot = !f1DivisionNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getDivision()));
 
-        ResultObject resultObject = new ResultObject();
-
-        PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
-
-        // T1
-        materialPlanStatusBo.setSourceSystem(getFieldWithT1());
-
-        materialPlanStatusBo.setLocalMaterialNumber(StringUtils.trim(materialInclEntity.getLocalMaterialNumber()));
-        materialPlanStatusBo.setLocalPlant(StringUtils.trim(materialInclEntity.getLocalPlant()));
-
-        if (IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())) {
-            materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
+            if (f1LocalMaterialType && f1LocalMaterialTypeNot && f1Division && f1DivisionNot && !IConstant.VALUE.X.equals(flagForDeletion)) {
+                return true;
+            }
         }
+        return false;
+    }
 
-        //T7
-        getFieldWithT7(materialPlanStatusBo);
+    private boolean checkF2(EDMMaterialPlantV1Entity materialPlantV1Entity, Set<String> f2LocalPlantSet, Set<String> f2LocalPlantNotSet, Set<String> f2LocalMRPTypeNotSet, Set<String> f2LocalPlantStatusSet, Set<String> f2LocalPlantStatusNotSet, Set<String> f2LocalMrpControllerSet, Set<String> f2LocalMrpControllerNotSet) {
 
-        resultObject.setBaseBo(materialPlanStatusBo);
-        return resultObject;
+        String localPlant = StringUtils.trim(materialPlantV1Entity.getLocalPlant());
+        String localMrpType = StringUtils.trim(materialPlantV1Entity.getLocalMrpType());
+        String localPlantStatus = StringUtils.trim(materialPlantV1Entity.getLocalPlantStatus());
+        String localMrpController = StringUtils.trim(materialPlantV1Entity.getLocalMrpController());
+
+        boolean f2LocalPlant = f2LocalPlantSet.contains(localPlant);
+        boolean f2LocalPlantNot = !f2LocalPlantNotSet.contains(localPlant);
+        boolean f2LocalMRPTypeNot = !f2LocalMRPTypeNotSet.contains(localMrpType);
+        boolean f2LocalPlantStatus = f2LocalPlantStatusSet.contains(localPlantStatus);
+        boolean f2LocalPlantStatusNot = !f2LocalPlantStatusNotSet.contains(localPlantStatus);
+        boolean f2LocalMrpController = f2LocalMrpControllerSet.contains(localMrpController);
+        boolean f2LocalMrpControllerNot = !f2LocalMrpControllerNotSet.contains(localMrpController);
+
+        if (f2LocalPlant && f2LocalPlantNot && f2LocalMRPTypeNot && f2LocalPlantStatus && f2LocalPlantStatusNot && f2LocalMrpController && f2LocalMrpControllerNot) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkF3(EDMMaterialPlantV1Entity materialPlantV1Entity, Set<String> f3LocalPlantSet, Set<String> f3LocalPlantNotSet, Set<String> f3LocalMRPTypeSet, Set<String> f3LocalPlantStatusSet, Set<String> f3LocalPlantStatusNotSet, Set<String> f3LocalMrpControllerSet, Set<String> f3LocalMrpControllerNotSet) {
+        String localPlant = StringUtils.trim(materialPlantV1Entity.getLocalPlant());
+        String localMrpType = StringUtils.trim(materialPlantV1Entity.getLocalMrpType());
+        String localPlantStatus = StringUtils.trim(materialPlantV1Entity.getLocalPlantStatus());
+        String localMrpController = StringUtils.trim(materialPlantV1Entity.getLocalMrpController());
+
+        CnsMaterialInclEntity cnsMaterialInclEntity = materialInclDao.getEntityWithConditions(materialPlantV1Entity.getLocalMaterialNumber(), localPlant, IConstant.VALUE.CRITICAL_ROH, IConstant.VALUE.SP1);
+
+        boolean f3LocalPlant = f3LocalPlantSet.contains(localPlant);
+        boolean f3LocalPlantNot = !f3LocalPlantNotSet.contains(localPlant);
+        boolean f3LocalMRPType = f3LocalMRPTypeSet.contains(localMrpType);
+        boolean f3LocalPlantStatus = f3LocalPlantStatusSet.contains(localPlantStatus);
+        boolean f3LocalPlantStatusNot = !f3LocalPlantStatusNotSet.contains(localPlantStatus);
+        boolean f3LocalMrpController = f3LocalMrpControllerSet.contains(localMrpController);
+        boolean f3LocalMrpControllerNot = !f3LocalMrpControllerNotSet.contains(localMrpController);
+
+        if (null != cnsMaterialInclEntity && f3LocalPlant && f3LocalPlantNot && f3LocalMRPType && f3LocalPlantStatus && f3LocalPlantStatusNot && f3LocalMrpController && f3LocalMrpControllerNot) {
+            return true;
+        }
+        return false;
     }
 
     private String getFieldWithT1() {
@@ -113,7 +148,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl {
         return null;
     }
 
-    private void getFieldWithT7(PlanCnsMaterialPlanStatusBo materialPlanStatusBo) {
+    private void getFieldWithT6(PlanCnsMaterialPlanStatusBo materialPlanStatusBo) {
         if (null != materialPlanStatusBo) {
             if (IConstant.VALUE.X.equals(materialPlanStatusBo.getDpRelevant())) {
                 materialPlanStatusBo.setActive(IConstant.VALUE.X);

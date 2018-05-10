@@ -1,10 +1,18 @@
 <adf-curation>
     <curation mainRegion="/plan/cons_time_dep_xchange" viewRegion="/omp/gdm_unit_evol" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_unit_evol.controller.OMPGdmUnitEvolController"
-              writeTo="all" topic="PANGEA_V1_omp_gdm_unit_evol" >
+              executionClassName="com.jnj.pangea.omp.gdm_unit_evol.controller.OMPGdmUnitEvolController">
         <regions>
 
             <region path="/plan/cons_time_dep_xchange">
+                <columns>uniqueId,sourceSystem,fromCurrency,effectiveEndDate,effectiveStartDate,exchangeRate,preference</columns>
+                <relations>
+                    <relation path="/plan/cons_time_dep_xchange_clone" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cons_time_dep_xchange" alias="/plan/cons_time_dep_xchange_clone">
                 <columns>uniqueId,sourceSystem,fromCurrency,effectiveEndDate,effectiveStartDate,exchangeRate,preference</columns>
             </region>
 

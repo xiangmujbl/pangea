@@ -1,0 +1,30 @@
+<adf-curation>
+    <curation mainRegion="/plan/cns_material_incl" viewRegion="/plan/cns_material_plan_status" chunkSize="1000"
+              chunkBytes="4096"
+              partitionPerServer="2" parallelism="2"
+              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatus_2Controller"
+              writeTo="all" topic="PANGEA_V1_plan_cns_material_plan_status">
+    <regions>
+            <region path="/plan/cns_material_incl">
+                <columns>sourceSystem,localMaterialNumber,localPlant,planningType</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1">
+                        <expression>localSourceSystem =/plan/cns_material_incl.sourceSystem</expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1">
+                        <expression>localMaterialNumber=/plan/cns_material_incl.localMaterialNumber</expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem</columns>
+            </region>
+            <region path="/edm/material_global_v1">
+                <columns>localMaterialNumber,sourceSystem,materialNumber,localDpParentCode,primaryPlanningCode</columns>
+            </region>
+            <region path="/plan/cns_material_plan_status">
+                <columns>sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant</columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

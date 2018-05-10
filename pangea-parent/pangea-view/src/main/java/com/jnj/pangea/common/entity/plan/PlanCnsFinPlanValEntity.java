@@ -9,6 +9,24 @@ public class PlanCnsFinPlanValEntity extends CommonEntity {
     private String localMaterialNumber;
     private String identifier;
     private String value;
+    private String yearMonth;
+    private String currency;
+
+    public String getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public PlanCnsFinPlanValEntity(Map<String, Object> map) {
         super(map);
@@ -16,6 +34,8 @@ public class PlanCnsFinPlanValEntity extends CommonEntity {
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
         setIdentifier((String) map.get("identifier"));
         setValue((String) map.get("value"));
+        setYearMonth((String) map.get("yearMonth"));
+        setCurrency((String) map.get("currency"));
     }
 
     public String getLocalMaterialNumber() {
