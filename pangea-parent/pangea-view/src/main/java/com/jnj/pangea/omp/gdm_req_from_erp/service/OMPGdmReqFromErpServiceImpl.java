@@ -116,13 +116,13 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     //N7
                     PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
                     if (cnsPlanUnitEntity != null && !cnsPlanUnitEntity.getUnit().isEmpty()) {
-                        gdmReqFromErpBo.setUnitId(edmPurchaseRequisitionV1Entity.getPrLineUomCd());
+                        gdmReqFromErpBo.setUnitId(cnsPlanUnitEntity.getUnit());
 
                         //N8
                         gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
 
                         //N9
-                        if (!edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
+                        if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
                             PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
                             if (planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
                                     planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
