@@ -1,7 +1,9 @@
 package com.jnj.pangea.edm.purchase_order_oa_v1.service;
 
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.entity.project_one.EkpoEntity;
 import com.jnj.pangea.common.service.ICommonService;
+import com.jnj.pangea.edm.purchase_order_oa_v1.bo.EDMPurchaseOrderOABo;
 
 public class EDMPurchaseOrderOAServiceImpl implements ICommonService {
 
@@ -16,6 +18,12 @@ public class EDMPurchaseOrderOAServiceImpl implements ICommonService {
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
-        return null;
+        ResultObject resultObject = new ResultObject();
+        EkpoEntity ekpoEntity = (EkpoEntity) o;
+
+        EDMPurchaseOrderOABo purchaseOrderOABo = new EDMPurchaseOrderOABo();
+
+        resultObject.setBaseBo(purchaseOrderOABo);
+        return resultObject;
     }
 }

@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-3175
-Feature: EDMPurchaseOrderOA AEAZ-3175
+Feature: EDMPurchaseOrderOA
 
   Scenario: Full Load curation
 
