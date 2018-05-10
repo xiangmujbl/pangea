@@ -4,6 +4,7 @@ import com.jnj.adf.cucumber.sentence.CommonSteps;
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
+import com.jnj.pangea.sentence.utils.XdJobLaunch;
 import cucumber.api.DataTable;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,13 +15,18 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PangeaSteps extends CommonSteps {
 
     private static String computingNode = "";
     private static Integer computingPartition = 1;
     private static String mboxSink = "";
+
+    private static String mergeJobDefinition = "xd/fileMerger.xml";
+    private static String mergeJobParameter = "xd/context.properties";
 
     static {
         computingNode = ADFConfigHelper.getProperty("computingNode");
@@ -63,7 +69,11 @@ public class PangeaSteps extends CommonSteps {
         });
 
         And("^I check file data for filename \"([^\"]*)\" by keyFields \"([^\"]*)\"$", (String fileName, String keyFields, DataTable table) -> {
-            File file = retrieveFile(fileName);
+
+            File file = new File(fileName);
+            if (!file.exists()) {
+                file = retrieveFile(fileName);
+            }
             this.checkFileData(table.raw(), keyFields.split(","), file);
         });
 
@@ -71,6 +81,23 @@ public class PangeaSteps extends CommonSteps {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.delete("http://" + mboxSink + "/api/file/" + fileName);
         });
+
+        And("^I execute xd job to merge file \"([^\"]*)\" to \"([^\"]*)\" by keyFields \"([^\"]*)\"$",
+                (String filePattern, String targetFileName, String keys) -> {
+
+                    Map<String, String> param = new HashMap<>();
+
+                    String path = System.getProperty("user.dir") + "/";
+                    param.put("tSourceLocation", path);
+                    param.put("mLocation", path);
+                    param.put("outputDirectory", path);
+                    param.put("sPattern", filePattern);
+                    param.put("tFileName", targetFileName);
+                    param.put("outputFileName", targetFileName);
+                    param.put("keyString", keys);
+
+                    XdJobLaunch.run(mergeJobParameter, param, mergeJobDefinition);
+                });
     }
 
     private File retrieveFile(String fileName) {
