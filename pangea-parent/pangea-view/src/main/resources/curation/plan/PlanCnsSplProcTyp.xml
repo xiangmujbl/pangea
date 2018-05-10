@@ -1,0 +1,40 @@
+<adf-curation>
+    <curation mainRegion="/project_one/t460a" viewRegion="/plan/cns_spl_proc_typ" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.plan.cns_spl_proc_typ.controller.PlanCnsSplProcTypController">
+        <regions>
+
+            <region path="/project_one/t460a">
+                <columns>
+                    sobsl
+                </columns>
+                <relations>
+                    <relation path="/project_one/t460t" isPrimaryKey="false">
+                        <expression>sobsl=/project_one/t460t.sobsl</expression>
+                    </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="true">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    sourceSystem,localSourceSystem
+                </columns>
+            </region>
+
+            <region path="/project_one/t460t">
+                <columns>
+                    ltext,sobsl,spras
+                </columns>
+            </region>
+
+            <region path="/plan/cns_spl_proc_typ">
+                <columns>
+                    sourceSystem,localSplProcType,localSplProcTypeDesc,splProcType,splProcTypeDesc
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
