@@ -90,12 +90,12 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
                         materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
 
                         // rules J3
-                        if (StringUtils.isEmpty(goldenMaterialEntity.getGlobalDpParentCode()) && StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
+                        if (StringUtils.isNotEmpty(goldenMaterialEntity.getGlobalDpParentCode())) {
+                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getGlobalDpParentCode());
+                        } else if (StringUtils.isEmpty(goldenMaterialEntity.getGlobalDpParentCode()) && StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
                             materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getParentCode());
                         } else if (StringUtils.isEmpty(goldenMaterialEntity.getParentCode())) {
                             materialGlobalBo.setGlobalDpParentCode("");
-                        } else {
-                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getGlobalDpParentCode());
                         }
                     }
                 }
