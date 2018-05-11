@@ -45,7 +45,7 @@ public class OMPGdmProductLocationV2Controller extends BaseController {
                 } else {
                     if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

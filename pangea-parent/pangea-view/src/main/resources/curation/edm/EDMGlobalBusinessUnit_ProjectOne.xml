@@ -1,13 +1,13 @@
 <adf-curation>
-    <curation mainRegion="/ngems/global_base_unit_v1" viewRegion="/edm/global_base_unit_v1" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/ngems/global_business_unit_v1" viewRegion="/edm/global_business_unit_v1" chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.common.controller.CopyController">
         <regions>
 
-            <region path="/ngems/global_base_unit_v1">
+            <region path="/ngems/global_business_unit_v1">
                 <columns>gbu,gbuName</columns>
             </region>
 
-            <region path="/edm/global_base_unit_v1">
+            <region path="/edm/global_business_unit_v1">
                 <columns>gbu,gbuName</columns>
             </region>
 

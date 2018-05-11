@@ -1,10 +1,10 @@
 package com.jnj.pangea.sentence;
 
-import com.jnj.adf.cucumber.sentence.CommonSteps;
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
-import com.jnj.pangea.sentence.utils.XdJobLaunch;
+import com.jnj.pangea.common.CommonSteps;
+import com.jnj.pangea.common.utils.XdJobLaunch;
 import cucumber.api.DataTable;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +24,7 @@ public class PangeaSteps extends CommonSteps {
     private static String computingNode = "";
     private static Integer computingPartition = 1;
     private static String mboxSink = "";
+    private static String ceRegionAlias = "";
 
     private static String mergeJobDefinition = "xd/fileMerger.xml";
     private static String mergeJobParameter = "xd/context.properties";
@@ -34,6 +35,7 @@ public class PangeaSteps extends CommonSteps {
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
         mboxSink = ADFConfigHelper.getProperty("mboxSink");
+        ceRegionAlias = ADFConfigHelper.getProperty("ceRegionAlias");
     }
 
     public PangeaSteps() {
@@ -48,19 +50,19 @@ public class PangeaSteps extends CommonSteps {
             long count1 = 0;
             String[] region1 = compare1.split(",");
             for (String region : region1) {
-                count1 += adfService.onPath(region).queryOql("select * from " + region).size();
+                count1 += adfService.onPath(getRealRegionPath(region)).queryOql("select * from " + getRealRegionPath(region)).size();
             }
 
             long count2 = 0;
             String[] region2 = compare2.split(",");
             for (String region : region2) {
-                count2 += adfService.onPath(region).queryOql("select * from " + region).size();
+                count2 += adfService.onPath(getRealRegionPath(region)).queryOql("select * from " + getRealRegionPath(region)).size();
             }
             Assert.assertEquals(count1, count2);
         });
 
         And("^I will remove all data with region \"([^\"]*)\"$", (String region) -> {
-            adfService.onPath(region).removeAll();
+            adfService.onPath(getRealRegionPath(region)).removeAll();
         });
 
 
@@ -154,7 +156,7 @@ public class PangeaSteps extends CommonSteps {
                 }
 
                 if (!isContain) {
-                    System.err.println("Record Doesn't Exist:\n"+Arrays.toString(fileList.toArray()));
+                    System.err.println("Record Doesn't Exist:\n" + Arrays.toString(fileList.toArray()));
                 }
                 Assert.assertTrue(isContain);
                 count++;
@@ -168,6 +170,7 @@ public class PangeaSteps extends CommonSteps {
     }
 
     private void submitComputeTask(String xml, String drl) {
+
         ComputeClient client = null;
         String name = "";
         if (xml.contains("/")) {
@@ -186,7 +189,12 @@ public class PangeaSteps extends CommonSteps {
 
             client = new ComputeClient();
             client.connect(computingNode);
-            client.submitTask(taskId, xml, drl, commandString, computingPartition);
+
+            if (StringUtils.isNotEmpty(ENV) && StringUtils.isNotEmpty(ceRegionAlias)) {
+                client.submitTask(taskId, xml, drl, commandString, ceRegionAlias, computingPartition);
+            } else {
+                client.submitTask(taskId, xml, drl, commandString, computingPartition);
+            }
 
             boolean done = false;
             String status = null;

@@ -40,7 +40,7 @@ public class OMPGdmSalesHistoryController extends BaseController {
                 } else {
                     if (null != resultObject.getFailData()) {
                         FailData failData = resultObject.getFailData();
-                        result.add(ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap()));
+                        result.add(ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap()));
                     }
                 }
             }

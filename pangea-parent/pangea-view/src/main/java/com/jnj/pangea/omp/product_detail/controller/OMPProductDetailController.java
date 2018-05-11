@@ -23,7 +23,6 @@ public class OMPProductDetailController extends BaseController {
 
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
-        LogUtil.getCoreLog().info("================Rawlist===={}==============",list.size());
         List<ViewResultItem> result = new ArrayList<>();
         list.forEach(raw -> {
 
@@ -41,14 +40,13 @@ public class OMPProductDetailController extends BaseController {
                 } else {
                     if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }
             }
 
         });
-        LogUtil.getCoreLog().info("================result===={}==============",result.size());
         return result;
     }
 }

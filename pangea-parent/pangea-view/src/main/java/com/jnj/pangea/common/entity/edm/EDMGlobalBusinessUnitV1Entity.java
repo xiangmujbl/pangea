@@ -4,12 +4,12 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class EDMGlobalBaseUnitV1Entity extends CommonEntity {
+public class EDMGlobalBusinessUnitV1Entity extends CommonEntity {
 
     private String gbu;
     private String gbuName;
 
-    public EDMGlobalBaseUnitV1Entity(Map<String, Object> map) {
+    public EDMGlobalBusinessUnitV1Entity(Map<String, Object> map) {
         super(map);
 
         setGbu((String) map.get("gbu"));

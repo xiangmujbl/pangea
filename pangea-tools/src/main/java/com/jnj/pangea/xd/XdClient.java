@@ -47,13 +47,21 @@ public class XdClient {
         }
     }
 
+    public void deploy(String name, String definition){
+        System.out.println("deploy job: " + name);
+        deleteIfExist(name);
+        template.jobOperations().createJob(name, definition, true);
+    }
+
     public void runSny(String name, String definition) {
+        System.out.println("launch job: " + name);
         deleteIfExist(name);
         template.jobOperations().createJob(name, definition, true);
         template.jobOperations().launchJob(name, null);
     }
 
     public boolean runAsny(String name, String definition) {
+        System.out.println("launch job: " + name);
         deleteIfExist(name);
         template.jobOperations().createJob(name, definition, true);
         template.jobOperations().launchJob(name, null);

@@ -1,4 +1,4 @@
-package com.jnj.pangea.sentence.utils;
+package com.jnj.pangea.common.utils;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Assert;
