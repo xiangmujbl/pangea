@@ -6,9 +6,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/omp/OMPGdmUnitCurrency.feature"},
+        features = {"src/test/resources/features/omp/OMPGdmUnit.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-1980 OMPGdmUnitCurrency.json"})
-public class OMPGdmUnitCurrency {
+        plugin = {"pretty", "json:target/reports/json/AEAZ-3683 OMPGdmUnit.json"})
+public class OMPGdmUnit {
 }

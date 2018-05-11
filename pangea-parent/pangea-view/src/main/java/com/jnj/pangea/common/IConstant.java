@@ -89,6 +89,7 @@ public interface IConstant {
         String PLAN_CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CONS_TIME_DEP_XCHANGE_CLONE = "/plan/cons_time_dep_xchange_clone";
         String EDM_JNJ_CALENDAR_V1 = "/edm/jnj_calendar_v1";
+        String EDM_UNIT_OF_MEASURE_V1 = "/edm/unit_of_measure_v1";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -511,6 +512,9 @@ public interface IConstant {
         String VENDORORCUSTOMER = "vendorOrCustomer";
     }
 
+    interface EDM_UNIT_OF_MEASURE_V1 {
+        String UOM = "uom";
+    }
 
     // -----region attribute value
     interface VALUE {
@@ -591,6 +595,9 @@ public interface IConstant {
         String MRP_CONTROLLER = "MrpController";
         String SEND_TO_OMP = "SEND_TO_OMP";
         String CRITICAL_ROH = "Critical-ROH";
+        String CURRENCY_V = "1.0";
+        String ONE = "1";
+        String AAAADL = "AAAADL";
     }
 
 
