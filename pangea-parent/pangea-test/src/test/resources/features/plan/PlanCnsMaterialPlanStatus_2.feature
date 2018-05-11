@@ -80,4 +80,4 @@ Feature: CnsMaterialPlanStatus_2 AEAZ-3216
     And I will remove all data with region "/plan/cns_material_plan_status"
     And I will remove all data with region "/plan/edm_failed_data"
 
-#    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_2.tsv"
+    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_2.tsv"
