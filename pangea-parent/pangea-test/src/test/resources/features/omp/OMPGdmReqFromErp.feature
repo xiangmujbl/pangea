@@ -64,8 +64,22 @@ Feature: OMPGdmReqFromErp-Consumption
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectTechName,sourceSystem"
-      | sourceObjectTechName | sourceSystem | inclusion_Exclusion | sourceObjectAttribute1Value | sourceObjectAttribute1 | sourceObjectAttribute2Value | sourceObjectAttribute2 |
-      |         PM           |   CONS_LATAM |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | sourceObjectTechName | sourceSystem            | inclusion_Exclusion | sourceObjectAttribute1Value | sourceObjectAttribute1 | sourceObjectAttribute2Value | sourceObjectAttribute2 |
+      | purchase_requisition |   CONS_LATAM/1734545711 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545712 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545719 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545852 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545796 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545850 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545857 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545861 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545858 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545859 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545860 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545862 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545863 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+      | purchase_requisition |   CONS_LATAM/1734545864 |          I          |          MX02               |          plntCd        |            PM               |          prTypeCd      |
+
 
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
 

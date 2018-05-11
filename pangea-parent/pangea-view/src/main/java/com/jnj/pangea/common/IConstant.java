@@ -433,7 +433,7 @@ public interface IConstant {
 
     interface  PLAN_CNS_PLAN_OBJECT_FILTER {
         String SOURCE_SYSTEM = "sourceSystem";
-        String SOURCE_OBJECT_ATTRIBUTE1 = "sourceObjectAttribute1";
+        String SOURCE_OBJECT_TECHNAME = "sourceObjectTechName";
         String SOURCE_OBJECT_ATTRIBUTE1_VALUE = "sourceObjectAttribute1Value";
     }
 

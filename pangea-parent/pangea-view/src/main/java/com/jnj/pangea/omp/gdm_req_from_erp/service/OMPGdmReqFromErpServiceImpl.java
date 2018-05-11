@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -122,9 +123,10 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                             //N8
                             gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
 
+                            LogUtil.getCoreLog().info("\n\n\n"+gdmReqFromErpBo.getREQFromERPId());
                             //N9
                             if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
-                                PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem("plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), edmPurchaseRequisitionV1Entity.getSourceSystem());
+                                PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystem("purchase_requisition", gdmReqFromErpBo.getREQFromERPId());
                                 if (planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
                                         planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
                                     if (planObjectFilterEntity.getSourceObjectAttribute2().equalsIgnoreCase("prTypeCd")
