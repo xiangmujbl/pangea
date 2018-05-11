@@ -143,7 +143,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                     }
                 }
             } else {
-                FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N6", "Critical error - material_global_v1 - localMaterialNumber not found");
+                FailData failData = writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N6", "Critical error - material_global_v1 null or localMaterialNumber not found");
                 resultObject.setFailData(failData);
             }
         } else {
