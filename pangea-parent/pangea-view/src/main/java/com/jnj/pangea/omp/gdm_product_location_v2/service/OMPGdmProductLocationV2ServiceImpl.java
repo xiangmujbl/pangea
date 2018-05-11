@@ -255,10 +255,10 @@ public class OMPGdmProductLocationV2ServiceImpl {
                 return null;
             }
             if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
-                ompGdmProductLocationV2Bo.setProductId(edmMaterialGlobalV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getMaterialNumber());
+                ompGdmProductLocationV2Bo.setProductId(materialPlantV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getMaterialNumber());
             } else {
                 OMPGdmProductLocationV2Bo OMPGdmProductLocationV2Bo = new OMPGdmProductLocationV2Bo();
-                OMPGdmProductLocationV2Bo.setProductId(edmMaterialGlobalV1Entity.getSourceSystem() + "_" + edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
+                OMPGdmProductLocationV2Bo.setProductId(materialPlantV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
             }
             List<EDMSourceListV1Entity> sourceListV1Entries = sourceListDao.getEntityListWithConditions(materialPlantV1Entity.getSourceSystem(), materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
             if (null != sourceListV1Entries) {
@@ -277,7 +277,6 @@ public class OMPGdmProductLocationV2ServiceImpl {
                         }
                     }
                     List<PlanSplPlnLocEntity> splPlnLocEntries = splPlnLocDao.getEntityListWithConditions(sourceListV1Entity.getSourceSystem(), sourceListV1Entity.getLocalVendorAccountNumber());
-                    //LogUtil.getCoreLog().info("splPlnLocEntries{}",splPlnLocEntries);
                     if (splPlnLocEntries.size() > 0) {
                         //rules C1
                         ompGdmProductLocationV2Bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + planSplPlnLocEntity.getVendorOrCustomer() + "_" + planSplPlnLocEntity.getLocalNumber());
