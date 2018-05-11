@@ -1,4 +1,4 @@
-@pangea_test @AEAZ-2716
+@pangea_test @AEAZ-3216
 Feature: CnsMaterialPlanStatus AEAZ-2716
 
   Scenario: Full Load curation
