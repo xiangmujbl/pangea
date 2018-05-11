@@ -63,6 +63,12 @@ Feature: EDMPurchaseOrderOA
 
     And I wait "/project_one/ekpv" Async Queue complete
 
+    Given I import "/edm/source_system_v1" by keyFields "sourceSystem,localSourceSystem"
+      | sourceSystem  |    localSourceSystem   |
+      | project_one   |       Project_One      |
+
+    And I wait "/edm/source_system_v1" Async Queue complete
+
 
     When I submit task with xml file "xml/edm/EDMPurchaseOrderOA.xml" and execute file "jar/pangea-view.jar"
 
