@@ -1,7 +1,6 @@
 <adf-curation>
     <curation mainRegion="/project_one/ekko" viewRegion="/edm/purchase_order_oa_v1" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.edm.purchase_requisition_v1.controller.EDMPurchaseRequisitionController"
-                writeTo="all" topic="PANGEA_V1_purchase_order_oa_v1">
+              executionClassName="com.jnj.pangea.edm.purchase_requisition_v1.controller.EDMPurchaseRequisitionController">
         <regions>
 
             <region path="/project_one/ekko">
