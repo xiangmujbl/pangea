@@ -6,8 +6,18 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
       | localMaterialNumber   | localPlant | materialNumber | localMrpType | localPlantStatus | localMrpController |
       | 000000000000203700_F1 | BR12       | -              | PD           |                  | 999                |
-      | 000000000000213997_F2 | BR12       | -              | PD           | 9                | 111                |
-      | 000000000000213998_F3 | BR12       | -              | PD           | 11               | 222                |
+      | 000000000000203701_F1 | BR12       | -              | PD           |                  | 999                |
+      | 000000000000203702_F1 | BR12       | -              | PD           |                  | 999                |
+      | 000000000000203703_F1 | BR12       | -              | PD           |                  | 999                |
+      | 000000000000203704_F2 | BR08       | -              | PD           | 9                | 999                |
+      | 000000000000203705_F2 | BR12       | -              | ND           | 9                | 999                |
+      | 000000000000203706_F2 | BR12       | -              | PD           | 8                | 999                |
+      | 000000000000203707_F2 | BR12       | -              | PD           | 9                | 222                |
+      | 000000000000203708_F3 | BR08       | -              | PD           | 11               | 111                |
+      | 000000000000203709_F3 | BR12       | -              | ND           | 11               | 111                |
+      | 000000000000203710_F3 | BR12       | -              | PD           | 8                | 111                |
+      | 000000000000203711_F3 | BR12       | -              | PD           | 11               | 222                |
+      | 000000000000203712_F3 | BR12       | -              | PD           | 11               | 111                |
       | 000000000000214001_T1 | BR12       | -              | PD           | 9                | 999                |
       | 000000000000214002_T2 | BR12       | -              | PD           | 9                | 999                |
       | 000000000000214003_T3 | BR12       | -              | PD           | 9                | 999                |
@@ -25,9 +35,19 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
     And I import "/edm/material_global_v1" by keyFields "localMaterialNumber"
       | localMaterialType | localMaterialNumber   | localDpParentCode  | primaryPlanningCode | division | flagForDeletion |
-      | SAPR              | 000000000000203700_F1 | 178962124094540036 | 4007                | 5        |                 |
-      | SAPR              | 000000000000213997_F2 | 178962124094540036 | 4008                | 10       |                 |
-      | SAPR              | 000000000000213998_F3 | 178962124094540036 | 4000                | 10       |                 |
+      | HAWA              | 000000000000203700_F1 | 178962124094540036 | 4007                | 10       |                 |
+      | FERT              | 000000000000203701_F1 | 178962124094540036 | 4007                | 10       |                 |
+      | SAPR              | 000000000000203702_F1 | 178962124094540036 | 4007                | 5        |                 |
+      | SAPR              | 000000000000203703_F1 | 178962124094540036 | 4007                | 20       |                 |
+      | SAPR              | 000000000000203704_F2 | 178962124094540036 | 4008                | 10       |                 |
+      | SAPR              | 000000000000203705_F2 | 178962124094540036 | 4008                | 10       |                 |
+      | SAPR              | 000000000000203706_F2 | 178962124094540036 | 4008                | 10       |                 |
+      | SAPR              | 000000000000203707_F2 | 178962124094540036 | 4008                | 10       |                 |
+      | SAPR              | 000000000000203708_F3 | 178962124094540036 | 4000                | 10       |                 |
+      | SAPR              | 000000000000203709_F3 | 178962124094540036 | 4000                | 10       |                 |
+      | SAPR              | 000000000000203710_F3 | 178962124094540036 | 4000                | 10       |                 |
+      | SAPR              | 000000000000203711_F3 | 178962124094540036 | 4000                | 10       |                 |
+      | SAPR              | 000000000000203712_F3 | 178962124094540036 | 4000                | 10       |                 |
       | SAPR              | 000000000000214001_T1 | 178910100400070072 | 4001                | 10       |                 |
       | SAPR              | 000000000000214002_T2 | 178910100400070072 | 4002                | 10       |                 |
       | SAPR              | 000000000000214003_T3 | 178910100400070072 | 4003                | 10       |                 |
@@ -39,12 +59,12 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     And I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter"
       | sourceSystem | dataObject               | attribute  | parameter     | inclExcl | parameterValue |
       | CONS_LATAM   | cns_material_plan_status | DPRelevant | MaterialType  | I        | SAPR           |
-      | CONS_LATAM   | cns_material_plan_status | SPRelevant | MaterialType  | I        | FERT           |
+      | CONS_LATAM   | cns_material_plan_status | SPRelevant | MaterialType  | E        | FERT           |
       | CONS_LATAM   | cns_material_plan_status | DPRelevant | Division      | I        | 10             |
-      | CONS_LATAM   | cns_material_plan_status | SPRelevant | Division      | I        | 10             |
+      | CONS_LATAM   | cns_material_plan_status | SPRelevant | Division      | E        | 20             |
       | CONS_LATAM   | cns_material_plan_status | DPRelevant | Plant         | I        | BR12           |
       | CONS_LATAM   | cns_material_plan_status | SPRelevant | Plant         | I        | BR12           |
-      | CONS_LATAM   | cns_material_plan_status | DPRelevant | MRPType       | I        | PD             |
+      | CONS_LATAM   | cns_material_plan_status | DPRelevant | MRPType       | E        | ND             |
       | CONS_LATAM   | cns_material_plan_status | SPRelevant | MRPType       | I        | PD             |
       | CONS_LATAM   | cns_material_plan_status | DPRelevant | PSMSStatus    | I        | 9              |
       | CONS_LATAM   | cns_material_plan_status | SPRelevant | PSMSStatus    | I        | 11             |
@@ -56,8 +76,18 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     And I import "/plan/cns_material_incl" by keyFields "localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber   | planningType | localPlant | inclusionType |
       | CONS_LATAM   | 000000000000203700_F1 | SP           | BR12       | Critical-ROH  |
-      | CONS_LATAM   | 000000000000213997_F2 | SP           | BR12       | Critical-ROH  |
-      | CONS_LATAM   | 000000000000213998_F3 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203701_F1 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203702_F1 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203703_F1 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203704_F2 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203705_F2 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203706_F2 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203707_F2 | SP           | BR12       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203708_F3 | SP           | BR08       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203709_F3 | SP           | BR08       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203710_F3 | SP           | BR08       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203711_F3 | SP           | BR08       | Critical-ROH  |
+      | CONS_LATAM   | 000000000000203712_F3 | SP           | BR08       | Critical-ROH  |
       | CONS_LATAM   | 000000000000214001_T1 | SP           | BR12       | Critical-ROH  |
       | CONS_LATAM   | 000000000000214002_T2 | SP           | BR12       | Critical-ROH  |
       | CONS_LATAM   | 000000000000214003_T3 | SP           | BR12       | Critical-ROH  |
