@@ -591,6 +591,9 @@ public interface IConstant {
         String MRP_CONTROLLER = "MrpController";
         String SEND_TO_OMP = "SEND_TO_OMP";
         String CRITICAL_ROH = "Critical-ROH";
+        String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
+        String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
+        String LESS_DAYS = "LessDays";
     }
 
 

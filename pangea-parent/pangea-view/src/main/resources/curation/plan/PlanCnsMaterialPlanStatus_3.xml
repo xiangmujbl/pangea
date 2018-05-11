@@ -1,0 +1,76 @@
+<adf-curation>
+    <curation mainRegion="/edm/sales_order_v1" viewRegion="/plan/cns_material_plan_status" chunkSize="1000"
+              chunkBytes="40096"
+              partitionPerServer="2" parallelism="2"
+              executionClassName="com.jnj.pangea.plan.cns_material_plan_status_3.controller.PlanCnsMaterialPlanStatusController"
+              writeTo="all" topic="PANGEA_V1_plan_cns_material_plan_status_3">
+        <regions>
+            <region path="/edm/sales_order_v1">
+                <columns>salesOrderItem,salesOrderNo,scheduleLineItem,sourceSystem,localPlant,localMaterialNumber,localSalesOrg ,localOrderType,localShipToParty,localOrderCreateDt  </columns>
+                <relations>
+                    <relation path="/plan/cns_plan_parameter">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_plant_v1">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_cust_excl">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/edm/source_system_v1">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/edm/material_global_v1">
+                        <expression>localMaterialNumber=/edm/sales_order_v1.localMaterialNumber</expression>
+                    </relation>
+
+                    <relation path="/plan/cns_so_type_incl">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/plant_v1">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status">
+                        <expression>localMaterialNumber=/edm/sales_order_v1.localMaterialNumber</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cns_plan_parameter">
+                <columns>sourceSystem,dataObject,attribute,parameter,inclExcl,parameterValue</columns>
+            </region>
+
+            <region path="/edm/material_plant_v1">
+                <columns>localMaterialNumber,localPlant,materialNumber,localMrpType</columns>
+            </region>
+
+            <region path="/plan/cns_cust_excl">
+                <columns>country,customerShipTo,salesOrg,sourceSystem</columns>
+            </region>
+
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>localMaterialType,localMaterialNumber,localDpParentCode,primaryPlanningCode,materialNumber</columns>
+            </region>
+
+            <region path="/plan/cns_so_type_incl">
+                <columns>country,orderType,salesOrg,sourceSystem</columns>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>localPlant,sourceSystem,country</columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
