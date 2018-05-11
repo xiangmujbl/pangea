@@ -1,6 +1,7 @@
 @pangea_test @AEAZ-3216
 Feature: CnsMaterialPlanStatus AEAZ-2716
 
+
   Scenario: Full Load curation
       And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_3.tsv"
 
