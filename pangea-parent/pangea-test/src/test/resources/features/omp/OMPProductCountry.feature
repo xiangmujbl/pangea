@@ -13,6 +13,7 @@ Feature: OMPProductCountry AEAZ-3218
       | CONS_LATAM   | 0000000000000517180244 | BR      | SAMPLE             | SAMPLE     | INACTIVE    | INACTIVE   |                | DP004       |          | SUNFRESH   |
       | CONS_LATAM   | 0000000000000517180245 | BR      | SAMPLE             | SAMPLE     | INACTIVE    |            |                | DP004       |          | SUNFRESH   |
       | CONS_LATAM   | 0000000000000517180246 | BR      | SAMPLE             |            | INACTIVE    |            |                | DP004       |          | SUNFRESH   |
+      | CONS_LATAM   | 0000000000000517180247 | BR      | SAMPLE             | SAMPLE     | INACTIVE    | INACTIVE   |                | DP004       |          | SUNFRESH   |
 
     And I wait "/plan/cns_prod_cty_affl" Async Queue complete
 
@@ -22,8 +23,8 @@ Feature: OMPProductCountry AEAZ-3218
       | X          | 0000000000000517180242 |
       | X          | 0000000000000517180244 |
       | X          | 0000000000000517180245 |
-      |            | 0000000000000517180246 |
-      | X          | 0000000000000517180247 |
+      | X          | 0000000000000517180246 |
+      |            | 0000000000000517180247 |
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPProductCountry.xml" and execute file "jar/pangea-view.jar"
@@ -51,7 +52,7 @@ Feature: OMPProductCountry AEAZ-3218
       | DP             | GDMProductCountry | C1        |              |              | CONS_LATAM |                        | BR   |      |      | All Key fields not Exist |
       | DP             | GDMProductCountry | T1        |              |              | CONS_LATAM | 0000000000000517180243 | BR   |      |      | All Key fields not Exist |
       | DP             | GDMProductCountry | T2        |              |              | CONS_LATAM | 0000000000000517180246 | BR   |      |      | All Key fields not Exist |
-    And I compare the number of records between "/plan/cns_prod_cty_affl" and "/omp/product_country,/plan/edm_failed_data"
+#    And I compare the number of records between "/plan/cns_prod_cty_affl" and "/omp/product_country,/plan/edm_failed_data"
 
     And I delete the test data
 
