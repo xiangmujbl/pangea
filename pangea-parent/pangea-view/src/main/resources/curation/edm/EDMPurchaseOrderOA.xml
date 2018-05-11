@@ -1,43 +1,80 @@
 <adf-curation>
-    <curation mainRegion="/project_one/ekpo" viewRegion="/edm/purchase_order_oa_v1" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/project_one/ekko" viewRegion="/edm/purchase_order_oa_v1" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.edm.purchase_requisition_v1.controller.EDMPurchaseRequisitionController"
                 writeTo="all" topic="PANGEA_V1_purchase_order_oa_v1">
         <regions>
-
-            <region path="/project_one/ekpo">
-                <columns>
-                    ebelp,loekz,matnr,werks,lgort,bednr,menge,meins,umrez,umren,insmk,elikz,pstyp,knttp,konnr,ktpnr,lmein,adrnr,plifz,sobkz,bstae,lblkz,adrn2,banfn,bnfpo,j1bnbm,reslo,webaz
-                </columns>
-            </region>
 
             <region path="/project_one/ekko">
                 <columns>
                     ebeln,bstyp,bsart,aedat,lifnr,ekorg,ekgrp,bukrs,waers,bedat,kdatb,kdate,llief,reswk,frgrl,lphis
                 </columns>
+
+                <relations>
+                    <relation path="/project_one/ekpo" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekko.ebeln
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/ekpo">
+                <columns>
+                    ebeln,ebelp,loekz,matnr,werks,lgort,bednr,menge,meins,umrez,umren,insmk,elikz,pstyp,knttp,konnr,ktpnr,lmein,adrnr,plifz,sobkz,bstae,lblkz,adrn2,banfn,bnfpo,j1bnbm,reslo,webaz
+                </columns>
+
+                <relations>
+                    <relation path="/project_one/ekbe" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+
+                    <relation path="/project_one/ekes" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+
+                    <relation path="/project_one/eket" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+
+                    <relation path="/project_one/ekpv" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/project_one/ekbe">
                 <columns>
-                    vgabe,gjahr,belnr,buzei,bewtp,bwart,budat,menge
-
+                    vgabe,gjahr,belnr,buzei,bewtp,bwart,budat,menge,ebeln,ebelp,mandt,zekkn
                 </columns>
             </region>
 
             <region path="/project_one/ekes">
                 <columns>
-                    ebtyp,eindt,erdat,menge,dabmg,estkz,vbeln,vbelp,charg
+                    ebtyp,eindt,erdat,menge,dabmg,estkz,vbeln,vbelp,charg,ebeln,ebelp,etens,mandt
                 </columns>
             </region>
 
             <region path="/project_one/eket">
                 <columns>
-                    eindt,menge,wemng,banfn,bnfpo,glmng,dabmg,etenr
+                    eindt,menge,wemng,banfn,bnfpo,glmng,dabmg,etenr,ebeln,ebelp,mandt
                 </columns>
             </region>
 
             <region path="/project_one/ekpv">
                 <columns>
-                    kunnr
+                    kunnr,ebeln,ebelp,mandt
                 </columns>
             </region>
 
