@@ -14,7 +14,7 @@
 
     <properties>
         <adf.version>0.3.04</adf.version>
-        <adf.compute.version>0.3.04-0.4</adf.compute.version>
+        <adf.compute.version>0.3.04-0.5</adf.compute.version>
     </properties>
 
     <dependencies>
@@ -34,10 +34,20 @@
             <version>${adf.compute.version}</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.jnj.adf</groupId>-->
+            <!--<artifactId>adf-test-framework</artifactId>-->
+            <!--<version>${adf.version}</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>com.jnj.adf</groupId>
-            <artifactId>adf-test-framework</artifactId>
-            <version>${adf.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.1.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
         </dependency>
 
         <dependency>

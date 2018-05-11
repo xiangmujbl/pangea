@@ -7,7 +7,7 @@ public interface IConstant {
 
     interface REGION {
         // ------fail region
-        String FAIL_DATA = "/plan/edm_failed_data";
+//        String FAIL_DATA = "/plan/edm_failed_data";
         // -----region
         String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
         String EDM_SOURCE_LIST_V1 = "/edm/source_list_v1";
