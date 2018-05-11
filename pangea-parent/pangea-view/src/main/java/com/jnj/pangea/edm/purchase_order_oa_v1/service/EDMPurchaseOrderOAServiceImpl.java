@@ -62,8 +62,8 @@ public class EDMPurchaseOrderOAServiceImpl{
                 resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, null, eketEntity, null));
             }
 
-            for(EkpvEntity ekpvEntityy:ekpvEntities){
-                resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, null, null, ekpvEntityy));
+            for(EkpvEntity ekpvEntity:ekpvEntities){
+                resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, null, null, ekpvEntity));
             }
         }
         return resultObjects;
@@ -208,7 +208,7 @@ public class EDMPurchaseOrderOAServiceImpl{
         if(eketEntity != null)
             purchaseOrderOABo.setLocaldelvDt(eketEntity.getEindt());
         else
-
+            purchaseOrderOABo.setLocaldelvDt("");
 
         if(eketEntity != null)
             purchaseOrderOABo.setSchdQty(eketEntity.getMenge());
