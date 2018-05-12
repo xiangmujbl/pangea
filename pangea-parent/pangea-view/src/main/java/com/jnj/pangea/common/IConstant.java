@@ -335,6 +335,7 @@ public interface IConstant {
         String ATTRIBUTE = "attribute";
         String PARAMETER = "parameter";
         String INCL_EXCL = "inclExcl";
+        String PARAMETER_VALUE ="parameterValue";
     }
 
     interface CNS_MATERIAL_INCL {

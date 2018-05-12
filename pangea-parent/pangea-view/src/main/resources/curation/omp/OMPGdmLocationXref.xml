@@ -6,7 +6,7 @@
 
             <region path="/plan/cns_spl_pln_loc">
                 <columns>
-                    sourceSystem,vendorOrCustomer,localNumber,localCountry,localCurrency,localNumber,localName,planLocTypeId,localRegion,localPlant
+                    sourceSystem,vendororCustomer,localNumber,localCountry,localCurrency,localNumber,localName,planLocTypeId,localRegion,localPlant
                 </columns>
                 <relations>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
