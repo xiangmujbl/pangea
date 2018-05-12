@@ -8,9 +8,6 @@ public class OMPGdmClusterBo extends BaseBo {
     private String clusterId;
     private String  activeFCTERP;
     private String  clusterDescription;
-    private String  clusterNr;
-    private String  countryId;
-    private String  subFranchise;
 
     @Override
     public String getKey() {
@@ -43,27 +40,4 @@ public class OMPGdmClusterBo extends BaseBo {
         this.clusterDescription = clusterDescription;
     }
 
-    public String getClusterNr() {
-        return clusterNr;
-    }
-
-    public void setClusterNr(String clusterNr) {
-        this.clusterNr = clusterNr;
-    }
-
-    public String getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(String countryId) {
-        this.countryId = countryId;
-    }
-
-    public String getSubFranchise() {
-        return subFranchise;
-    }
-
-    public void setSubFranchise(String subFranchise) {
-        this.subFranchise = subFranchise;
-    }
 }
