@@ -11,15 +11,15 @@ import com.jnj.pangea.common.controller.BaseController;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
-import com.jnj.pangea.plan.cns_material_plan_status.service.PlanCnsMaterialPlanStatusServiceImpl;
+import com.jnj.pangea.plan.cns_material_plan_status.service.PlanCnsMaterialPlanStatusServiceImpl1;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.*;
 
 
-public class PlanCnsMaterialPlanStatusController extends BaseController {
+public class PlanCnsMaterialPlanStatusController1 extends BaseController {
 
-    private PlanCnsMaterialPlanStatusServiceImpl cnsMaterialPlanStatusService = PlanCnsMaterialPlanStatusServiceImpl.getInstance();
+    private PlanCnsMaterialPlanStatusServiceImpl1 cnsMaterialPlanStatusService = PlanCnsMaterialPlanStatusServiceImpl1.getInstance();
     private PlanCnsPlanParameterDaoImpl planParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
 
     @Override

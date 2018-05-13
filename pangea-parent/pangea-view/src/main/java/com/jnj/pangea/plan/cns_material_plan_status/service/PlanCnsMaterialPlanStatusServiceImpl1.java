@@ -15,13 +15,13 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.Set;
 
-public class PlanCnsMaterialPlanStatusServiceImpl {
+public class PlanCnsMaterialPlanStatusServiceImpl1 {
 
-    private static PlanCnsMaterialPlanStatusServiceImpl instance;
+    private static PlanCnsMaterialPlanStatusServiceImpl1 instance;
 
-    public static PlanCnsMaterialPlanStatusServiceImpl getInstance() {
+    public static PlanCnsMaterialPlanStatusServiceImpl1 getInstance() {
         if (instance == null) {
-            instance = new PlanCnsMaterialPlanStatusServiceImpl();
+            instance = new PlanCnsMaterialPlanStatusServiceImpl1();
         }
         return instance;
     }

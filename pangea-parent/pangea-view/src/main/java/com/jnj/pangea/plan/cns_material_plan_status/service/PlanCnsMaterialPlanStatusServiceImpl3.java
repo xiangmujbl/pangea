@@ -20,13 +20,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
-public class PlanCnsMaterialPlanStatus_3ServiceImpl {
+public class PlanCnsMaterialPlanStatusServiceImpl3 {
 
-    private static PlanCnsMaterialPlanStatus_3ServiceImpl instance;
+    private static PlanCnsMaterialPlanStatusServiceImpl3 instance;
 
-    public static PlanCnsMaterialPlanStatus_3ServiceImpl getInstance() {
+    public static PlanCnsMaterialPlanStatusServiceImpl3 getInstance() {
         if (instance == null) {
-            instance = new PlanCnsMaterialPlanStatus_3ServiceImpl();
+            instance = new PlanCnsMaterialPlanStatusServiceImpl3();
         }
         return instance;
     }
@@ -180,7 +180,7 @@ public class PlanCnsMaterialPlanStatus_3ServiceImpl {
         }
         if(entityWithSalesOrgAndCustomerShipTo!=null){
             String localShipToParty = edmSalesOrderV1Entity.getLocalShipToParty();
-            if(localShipToParty.equalsIgnoreCase(entityWithSalesOrgAndCustomerShipTo.getCustomerShipTo())){
+            if(null!=localShipToParty && localShipToParty.equalsIgnoreCase(entityWithSalesOrgAndCustomerShipTo.getCustomerShipTo())){
                 return true;
             }
         }

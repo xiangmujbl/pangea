@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-3216
 Feature: CnsMaterialPlanStatus AEAZ-3216
 
-  Scenario: Full Load curation - 1
+  Scenario: Full Load curation
 
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
       | localMaterialNumber   | localPlant | materialNumber | localMrpType | localPlantStatus | localMrpController |
@@ -97,9 +97,11 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
     And I wait "/plan/cns_material_incl" Async Queue complete
 
-    When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus_1.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+    Then A file is found on sink application with name "PlanCnsMaterialPlanStatus_1.tsv"
+
+    Then I check file data for filename "PlanCnsMaterialPlanStatus_1.tsv" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber   | localPlant | materialNumber | localParentCode    | ppc  | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
       | CONS_LATAM   | 000000000000214001_T1 | BR12       | -              | 178910100400070072 | 4001 | X      | X          |            | X            | X              |
       | CONS_LATAM   | 000000000000214002_T2 | BR12       | -              | 178910100400070072 | 4002 | X      | X          |            | X            | X              |
@@ -113,24 +115,15 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
 #    And I compare the number of records between "/edm/material_plant_v1" and "/plan/cns_material_plan_status,/plan/edm_failed_data"
 
-  Scenario: delete all test data
-
-    Then I delete the test data
+    And I delete the test data
 
     And I will remove all data with region "/plan/cns_material_plan_status"
-
     And I will remove all data with region "/plan/edm_failed_data"
+    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_1.tsv"
 
-  Scenario: Full Load curation - 2
-    #1.get sourceSystem from cns_material_incl (rule J1)
-    #2.get localMaterialNumber and localPlant from cns_material_incl (rule T1)
-    #3.get materialNumber from material_global_v1 (rule J2)
-    #4.get localParentCode from material_global_v1 (rule T2)
-    #5.get ppc from material_global_v1 (rule T3)
-    #6.get active by rule T6
-    #7.get dpRelevant and spRelevant by rule D1
-    #8.get parentActive by rule T4
-    #9.get noPlanRelevant by rule T5
+  Scenario: Full Load curation
+
+    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_2.tsv"
 
     Given I import "/plan/cns_material_incl" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber   | localPlant | planningType |
@@ -164,11 +157,14 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | CONS_LATAM   | 000000000000087910_D1 | 56908          |                    | -                   |
 #      | CONS_LATAM   | 000000000000087906_J2 | 56909          |                    | -                   |
       | CONS_LATAM   | 000000000000087920    | 56910          |                    | -                   |
+
     And I wait "/edm/material_global_v1" Async Queue complete
 
     When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus_2.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+    Then A file is found on sink application with name "PlanCnsMaterialPlanStatus_2.tsv"
+
+    Then I check file data for filename "PlanCnsMaterialPlanStatus_2.tsv" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber   | localPlant | materialNumber | localParentCode    | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
 #      | CONS_LATAM   | 000000000000087901_J1 | BR12       | 56901          |                    | -   | X      |            |            |              | X              |
       | CONS_LATAM   | 000000000000087903_T1 | BR12       | 56902          |                    | -   | X      |            |            |              | X              |
@@ -178,22 +174,23 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | CONS_LATAM   | 000000000000087908_T5 | BR12       | 56906          |                    | -   | X      |            |            |              | X              |
       | CONS_LATAM   | 000000000000087909_T6 | BR12       | 56907          |                    | -   | X      |            |            |              | X              |
       | CONS_LATAM   | 000000000000087910_D1 | BR12       | 56908          |                    | -   |        |            |            |              |                |
-#      | CONS_LATAM   | 000000000000087906_J2 | BR12       | 56909          |                    | -   | X      |            |            |              | X              |
+  #      | CONS_LATAM   | 000000000000087906_J2 | BR12       | 56909          |                    | -   | X      |            |            |              | X              |
+
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-#    And I compare the number of records between "/plan/cns_material_incl" and "/plan/cns_material_plan_status,/plan/edm_failed_data"
+  #    And I compare the number of records between "/plan/cns_material_incl" and "/plan/cns_material_plan_status,/plan/edm_failed_data"
 
-  Scenario: delete all test data
-
-    Then I delete the test data
+    And I delete the test data
 
     And I will remove all data with region "/plan/cns_material_plan_status"
-
     And I will remove all data with region "/plan/edm_failed_data"
 
-  Scenario: Full Load curation - 3
+    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_2.tsv"
+
+  Scenario: Full Load curation
+    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_3.tsv"
 
     Given I import "/edm/sales_order_v1" by keyFields "salesOrderItem,salesOrderNo,scheduleLineItem,sourceSystem"
       | salesOrderItem | salesOrderNo | scheduleLineItem | sourceSystem | localPlant | localMaterialNumber       | localSalesOrg | localOrderType | localShipToParty | localOrderCreateDt |
@@ -248,6 +245,7 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
     And I wait "/edm/source_system_v1" Async Queue complete
 
+
     And I import "/edm/material_global_v1" by keyFields "localMaterialNumber"
       | localMaterialType | localMaterialNumber       | materialNumber | localDpParentCode  | primaryPlanningCode |
       | ROH               | 000000000000056504        | 11111          | 178962124094540036 | 945                 |
@@ -263,6 +261,7 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | CN      | ZBEF      | BR01     | CONS_LATAM   |
       | BC      | ZBEF      | BR01_J1  | CONS_LATAM   |
       | JN      | EDCD      | ED01     | CONS_LATAM   |
+
     And I wait "/plan/cns_so_type_incl" Async Queue complete
 
     And I import "/edm/plant_v1" by keyFields "localPlant,sourceSystem"
@@ -285,7 +284,9 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
     When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus_3.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+    Then A file is found on sink application with name "PlanCnsMaterialPlanStatus_3.tsv"
+
+    Then I check file data for filename "PlanCnsMaterialPlanStatus_3.tsv" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber       | localPlant | materialNumber | localParentCode    | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
       | CONS_LATAM   | 000000000000056504        | VE06       | 11111          | 178962124094540036 | 945 | X      | X          |            | X            |                |
       | CONS_LATAM   | 111111111111122222        | VE07       | 22222          | 27896212           | 978 | X      | X          |            | X            |                |
@@ -293,6 +294,7 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | CONS_LATAM   | 162312313231112312_J2     | VE09       |                |                    |     | X      | X          |            |              |                |
       | CONS_LATAM   | 162312313231112312_T2&&T3 | VE10       | 5555           |                    |     | X      | X          |            |              |                |
 
+<<<<<<< Updated upstream
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
@@ -305,3 +307,46 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     And I will remove all data with region "/plan/cns_material_plan_status"
 
     And I will remove all data with region "/plan/edm_failed_data"
+=======
+
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+
+  #    And I compare the number of records between "/edm/plant_v1" and "/plan/cns_plant_attr,/plan/edm_failed_data"
+
+    And I delete the test data
+
+    And I will remove all data with region "/plan/cns_material_plan_status"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_3.tsv"
+
+  Scenario: merge file
+
+    When I execute xd job to merge file "PlanCnsMaterialPlanStatus_*" to "PlanCnsMaterialPlanStatus.tsv" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+
+    Then I check file data for filename "PlanCnsMaterialPlanStatus_Merge.tsv" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+      | sourceSystem | localMaterialNumber       | localPlant | materialNumber | localParentCode    | ppc  | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
+      | CONS_LATAM   | 000000000000214001_T1     | BR12       | -              | 178910100400070072 | 4001 | X      | X          |            | X            | X              |
+      | CONS_LATAM   | 000000000000214002_T2     | BR12       | -              | 178910100400070072 | 4002 | X      | X          |            | X            | X              |
+      | CONS_LATAM   | 000000000000214003_T3     | BR12       | -              | 178910100400070072 | 4003 | X      | X          |            | X            | X              |
+      | CONS_LATAM   | 000000000000214004_T4     | BR12       | -              | 178910100400070072 | 4004 | X      | X          |            | X            | X              |
+      | CONS_LATAM   | 000000000000214005_T5     | BR12       | -              | 178910100400070072 | 4005 | X      | X          |            | X            | X              |
+      | CONS_LATAM   | 000000000000214006_T6     | BR12       | -              | 178910100400070072 | 4006 | X      | X          |            | X            | X              |
+
+#      | CONS_LATAM   | 000000000000087901_J1 | BR12       | 56901          |                    | -   | X      |            |            |              | X              |
+      | CONS_LATAM   | 000000000000087903_T1     | BR12       | 56902          |                    | -    | X      |            |            |              | X              |
+      | CONS_LATAM   | 000000000000087904_T4     | BR12       | 56903          | 178962124094540035 | -    | X      |            |            | X            | X              |
+      | CONS_LATAM   | 000000000000087906_T2     | BR12       | 56904          | 178962124094540036 | -    |        |            |            | X            |                |
+      | CONS_LATAM   | 000000000000087907_T3     | BR12       | 56905          |                    | T3   |        |            |            |              |                |
+      | CONS_LATAM   | 000000000000087908_T5     | BR12       | 56906          |                    | -    | X      |            |            |              | X              |
+      | CONS_LATAM   | 000000000000087909_T6     | BR12       | 56907          |                    | -    | X      |            |            |              | X              |
+      | CONS_LATAM   | 000000000000087910_D1     | BR12       | 56908          |                    | -    |        |            |            |              |                |
+#      | CONS_LATAM   | 000000000000087906_J2 | BR12       | 56909          |                    | -   | X      |            |            |              | X              |
+
+      | CONS_LATAM   | 000000000000056504        | VE06       | 11111          | 178962124094540036 | 945  | X      | X          |            | X            |                |
+      | CONS_LATAM   | 111111111111122222        | VE07       | 22222          | 27896212           | 978  | X      | X          |            | X            |                |
+      | CONS_LATAM   | 162312313231112312        | VE08       | 44444          | 37896212           | 990  | X      | X          |            | X            |                |
+      | CONS_LATAM   | 162312313231112312_J2     | VE09       |                |                    |      | X      | X          |            |              |                |
+      | CONS_LATAM   | 162312313231112312_T2&&T3 | VE10       | 5555           |                    |      | X      | X          |            |              |                |
+>>>>>>> Stashed changes

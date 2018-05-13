@@ -4,27 +4,20 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialInclDaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
-import com.jnj.pangea.plan.cns_material_plan_status.service.PlanCnsMaterialPlanStatusServiceImpl;
-import com.jnj.pangea.plan.cns_material_plan_status.service.PlanCnsMaterialPlanStatus_2ServiceImpl;
+import com.jnj.pangea.plan.cns_material_plan_status.service.PlanCnsMaterialPlanStatusServiceImpl2;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.*;
 
 
-public class PlanCnsMaterialPlanStatus_2Controller extends BaseController {
+public class PlanCnsMaterialPlanStatusController2 extends BaseController {
 
-    private PlanCnsMaterialPlanStatus_2ServiceImpl cnsMaterialPlanStatusService = PlanCnsMaterialPlanStatus_2ServiceImpl.getInstance();
+    private PlanCnsMaterialPlanStatusServiceImpl2 cnsMaterialPlanStatusService = PlanCnsMaterialPlanStatusServiceImpl2.getInstance();
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {

@@ -9,13 +9,13 @@ import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
 import org.apache.commons.lang.StringUtils;
 
-public class PlanCnsMaterialPlanStatus_2ServiceImpl {
+public class PlanCnsMaterialPlanStatusServiceImpl2 {
 
-    private static PlanCnsMaterialPlanStatus_2ServiceImpl instance;
+    private static PlanCnsMaterialPlanStatusServiceImpl2 instance;
 
-    public static PlanCnsMaterialPlanStatus_2ServiceImpl getInstance() {
+    public static PlanCnsMaterialPlanStatusServiceImpl2 getInstance() {
         if (instance == null) {
-            instance = new PlanCnsMaterialPlanStatus_2ServiceImpl();
+            instance = new PlanCnsMaterialPlanStatusServiceImpl2();
         }
         return instance;
     }
