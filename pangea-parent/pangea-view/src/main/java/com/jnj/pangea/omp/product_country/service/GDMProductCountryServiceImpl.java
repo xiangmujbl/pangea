@@ -11,7 +11,6 @@ import com.jnj.pangea.common.entity.plan.CnsProdCtyAffEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_country.bo.GDMProductCountryBo;
-import com.jnj.pangea.plan.cns_material_plan_status.service.PlanCnsMaterialPlanStatusServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 
 public class GDMProductCountryServiceImpl implements ICommonService {
