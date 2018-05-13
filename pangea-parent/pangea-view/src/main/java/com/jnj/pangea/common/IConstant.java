@@ -61,7 +61,7 @@ public interface IConstant {
         String EDM_SUB_BRAND_V1 = "/edm/sub_brand_v1";
         String EDM_BRAND_V1 = "/edm/brand_v1";
         String EDM_FRANCHISE_V1 = "/edm/franchise_v1";
-        String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_base_unit_v1";
+        String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_business_unit_v1";
         String EDM_MAT_PLANT_FI_V1 = "/edm/mat_plant_fi_v1";
         String PLAN_CONS_TIME_DEP_XCHANGE = "/plan/cons_time_dep_xchange";
         String PLAN_CNS_PROC_TYP = "/plan/cns_proc_type";

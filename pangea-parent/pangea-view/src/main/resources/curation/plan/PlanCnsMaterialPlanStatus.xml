@@ -1,9 +1,6 @@
 <adf-curation>
-    <curation mainRegion="/edm/material_plant_v1" viewRegion="/plan/cns_material_plan_status" chunkSize="1000"
-              chunkBytes="40096"
-              partitionPerServer="2" parallelism="2"
-              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatusController"
-              writeTo="all" topic="PANGEA_V1_plan_cns_material_plan_status">
+    <curation mainRegion="/edm/material_plant_v1" viewRegion="/plan/cns_material_plan_status" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatusController">
         <regions>
 
             <region path="/edm/material_plant_v1">

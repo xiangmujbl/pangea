@@ -140,8 +140,7 @@ public class PangeaSteps extends CommonSteps {
             int count = 0;
             // check headers
 
-            // for each line in the output file
-            while ((line = bufferedReader.readLine()) != null) {
+            while (StringUtils.isNotEmpty(StringUtils.trim(line = bufferedReader.readLine()))) {
                 // check record
                 List<String> fileList = Arrays.asList(line.split("\t", -1));
                 Assert.assertEquals(fileList.size(), list.get(count).size());
@@ -154,7 +153,6 @@ public class PangeaSteps extends CommonSteps {
                         break;
                     }
                 }
-
                 if (!isContain) {
                     System.err.println("Record Doesn't Exist:\n" + Arrays.toString(fileList.toArray()));
                 }
@@ -162,9 +160,7 @@ public class PangeaSteps extends CommonSteps {
                 count++;
             }
 
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

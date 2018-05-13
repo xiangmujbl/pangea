@@ -3,6 +3,8 @@ Feature: OMPProductType AEAZ-1981
 
   Scenario: Full Load curation
 
+    And I will remove the test file on sink application "GDMProductType.tsv"
+
     Given I import "/edm/material_type_v1" by keyFields "materialType"
       | materialType | materialTypeName |
       | DIEN         | Service          |
@@ -23,10 +25,11 @@ Feature: OMPProductType AEAZ-1981
 
     And I compare the number of records between "/edm/material_type_v1" and "/omp/product_type,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/product_type"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMProductType.tsv"

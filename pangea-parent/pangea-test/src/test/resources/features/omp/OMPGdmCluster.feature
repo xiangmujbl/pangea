@@ -6,6 +6,8 @@ Feature: OMPGdmCluster AEAZ-3679
     #2. Skip if cns_clusters-sourceSystem AND cns_clusters-cluster sent once (rule C1)
     #3. Skip if  cns_clusters-sourceSystem <> cns_plan_parameter-sourceSystem (rule C1)
 
+    And I will remove the test file on sink application "GDMCluster.tsv"
+
     Given I import "/plan/cns_clusters" by keyFields "sourceSystem,countryId,cluster,subCluster,clusterDesc,subClusterDesc"
       | sourceSystem | countryId | cluster | subCluster | clusterDesc                | subClusterDesc     |
       | CONS_LATAM   | CO        | ANDEAN  | Andean     | Andean Cluster             | Andean Sub Cluster |
@@ -35,9 +37,11 @@ Feature: OMPGdmCluster AEAZ-3679
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I delete the test data
-
-    And I will remove all data with region "/plan/edm_failed_data"
-
-    And I will remove the test file on sink application "GDMCluster.tsv"
+#  Scenario: delete all test data
+#
+#    Then I delete the test data
+#
+#    And I will remove all data with region "/omp/gdm_cluster"
+#
+#    And I will remove all data with region "/plan/edm_failed_data"
 

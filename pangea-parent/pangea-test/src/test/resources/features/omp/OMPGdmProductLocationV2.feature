@@ -7,6 +7,9 @@ Feature: OMPGdmProductLocationV2-Curation AEAZ-2827
    # 3. get atrributes from cns_material_plan_status If cns_material_plan_status (rule D1,T1,T2,)
    # 4. get atrributes from cns_proc_type-procurementType If cns_proc_type-procurementType (rule E1)
    # 5. get atrributes from cns_prod_loc_attrib If cns_prod_loc_attrib (rule E5)
+
+    And I will remove the test file on sink application "GDMProductLocation.tsv"
+
     Given I import "/edm/material_plant_v1" by keyFields "localPlant,localMaterialNumber,sourceSystem"
       | localMaterialNumber | localPlant | sourceSystem | localProcurementType | localAbcIndicator | localSpecialProcurementType | localPlanningStrategyGroup | localConsumptionMode | localLotSize | localBaseQuantity | localFixedLotSize | localMaximumLotSize | localMinimumLotSize | localRoundingValueForPoq | localMrpType | localMrpController | localInHouseProcessingTime | localSafetyStock | localMinimumSafetyStock | localProductionSupervisor | localPlanningTimeFence | localProductionUnit | localPostToInspectionStock | localComponentScrapInPercent | localCriticalPart | localPlannedDeliveryTimeInDays | localMaximumStockLevel | localPlantStatus | localCheckingGroupForAvailabilityCheck | localInstalledReplenishmentLotSize | localDependentRequirements | localSafetyTimeIndicator | localSafetyTime | localConsumptionPeriodBackward | localConsumptionPeriodForward | localGoodsReceiptProcessingTimeInDays | localBatchManagementRequirementIndicator |
       | 000000000000000001  | BR01       | CON_LATAM    | F                    | C                 | 30                          | 40                         | 2                    | EX           | 0.000             | 0.000             | 0.000               | 0.000               | 1                        | PD           | 606                | 1                          | 0.000            | 0.000                   | 007                       | 000                    | 1                   |                            | 0.00                         | 1                 | 0                              | 0.000                  | 05               | 02                                     |                                    | 2                          |                          | 00              | 045                            | 007                           | 0                                     | X                                        |
@@ -36,15 +39,12 @@ Feature: OMPGdmProductLocationV2-Curation AEAZ-2827
     Given I import "/plan/cns_spl_pln_loc" by keyFields "sourceSystem,localNumber"
       | sourceSystem | localNumber | vendororCustomer |
       | CON_LATAM    | LN06        | V                |
-
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete
 
     Given I import "/plan/cons_time_dep_xchange" by keyFields "uniqueId"
       | uniqueId | sourceSystem | fromCurrency | effectiveEndDate | effectiveStartDate | exchangeRate | preference |
       | BRL      | CON_LATAM    |              |                  |                    |              |            |
-
     And I wait "/plan/cons_time_dep_xchange" Async Queue complete
-
 
     Given I import "/edm/plant_v1" by keyFields "sourceSystem,localPlant"
       | localPlant | localCurrency | sourceSystem |
@@ -102,7 +102,6 @@ Feature: OMPGdmProductLocationV2-Curation AEAZ-2827
       | 000000000000000005  |            |            | X              | X          |        |
       | 000000000000000006  | BR05       |            |                |            |        |
       | 000000000000000007  | BR04       |            | X              |            |        |
-
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/plan/cns_plng_strat_grp" by keyFields "sourceSystem"
@@ -145,17 +144,17 @@ Feature: OMPGdmProductLocationV2-Curation AEAZ-2827
       | CON_LATAM_114 | YES    | NO           | YES          | NO           | 0.000 | PE    | 0.000 | 0.000 | 0.000 | 4     | 300  | EX    | PD    | 606   | 1     | 0.000 | 0.000 | 007   | 000          | 4     |       |                      | 0.00  | 4     | JS COTTON BALLS 50 GRX20 T50P35 | 0        | CON_LATAM_BR04 |       | 0.000 |         | 150                   | 05    | 02    | 1     | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   | 40    | SG1         |              | 1825           | 4     | 045   | 007   |       | 2     | 0     | X     | 300          |
       | CON_LATAM_117 | YES    | NO           | YES          | NO           | 0.000 | PE    | 0.000 | 0.000 | 0.000 | 4     | 300  | EX    | PD    | 606   | 1     | 0.000 | 0.000 | 007   | 000          | 4     |       |                      | 0.00  | 4     | JS COTTON BALLS 50 GRX20 T50P35 | 0        | CON_LATAM_BR04 |       | 0.000 |         | 150                   | 05    | 02    | 1     | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   | 40    | SG1         |              | 1825           | 4     | 045   | 007   |       | 2     | 0     | X     | 300          |
 
-
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID           | errorCode | sourceSystem | businessArea | key1 | key2               | key3      | key4 | key5 | errorValue                    |
       | SP             | OMPGdmProductLocation | J1        | omp          |              | BR02 | 000000000000000002 | CON_LATAM |      |      | Unable to find DPParentCode   |
       | SP             | OMPGdmProductLocation | C1        | omp          |              |      | 000000000000000005 | CON_LATAM |      |      | Unable to find assigned plant |
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_product_location_v2"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMProductLocation.tsv"
 

@@ -1,10 +1,12 @@
 @pangea_test @AEAZ-3683
-Feature: OMPGdmUnitCurrency AEAZ-3683
+Feature: OMPGdmUnit AEAZ-3683
 
   Scenario: Full Load curation for currency
     #  1. If no records found from currency_v1, skip insertion (rule E1)
     #  2. Send as "YES" when sourced from edm currency_v1 (rule D1)
     #  3. when sourced from edm currency_v1 populate 1.0 (rule D2)
+
+    And I will remove the test file on sink application "GDMUnit_currency.tsv"
 
     Given I import "/edm/currency_v1" by keyFields "localCurrency,sourceSystem"
       | localCurrency | sourceSystem | isoNumeric | currencyName | currencyCode |
@@ -26,13 +28,13 @@ Feature: OMPGdmUnitCurrency AEAZ-3683
 
 #    And I compare the number of records between "/edm/currency_v1" and "/omp/gdm_unit,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_unit"
 
     And I will remove all data with region "/plan/edm_failed_data"
-
-    And I will remove the test file on sink application "GDMUnit_currency.tsv"
 
   Scenario: Full Load curation for measure
     # 1. Get atrribute from cns_plan_unit-factor when cns_plan_unit-unit in (unit_of_measure_V1-uom) (rule F1)
@@ -50,6 +52,8 @@ Feature: OMPGdmUnitCurrency AEAZ-3683
     # 13.Send as cns_plan_unit-rounding decimal when unit of measure_V1-roundingDecimal is blank and cns_plan_unit-unit = unit_of_measure_V1-uom (rule T4)
     # 14.Get unit_of_measure_v1-uomName when cns_plan_unit-unit = unit_of_measure_V1-uom (rule T5)
     # 15.Get cns_plan_unit-localUomName when unit_of_measure_v1-uomName is blank and cns_plan_unit-unit = unit_of_measure_V1-uom (rule T5)
+
+    And I will remove the test file on sink application "GDMUnit_measure.tsv"
 
     Given I import "/plan/cns_plan_unit" by keyFields "localUom,localUomName,plantFlag,sourceSystem,unit"
       | localUom | localUomName        | plantFlag | sourceSystem | unit   | factor | roundingDecimal |
@@ -102,13 +106,13 @@ Feature: OMPGdmUnitCurrency AEAZ-3683
 
 #    And I compare the number of records between "/edm/unit_of_measure_v1" and "/omp/gdm_unit,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_unit"
 
     And I will remove all data with region "/plan/edm_failed_data"
-
-    And I will remove the test file on sink application "GDMUnit_measure.tsv"
 
   Scenario: merge file
 

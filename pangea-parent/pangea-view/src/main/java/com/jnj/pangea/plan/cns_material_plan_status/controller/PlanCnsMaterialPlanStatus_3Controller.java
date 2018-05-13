@@ -1,4 +1,4 @@
-package com.jnj.pangea.plan.cns_material_plan_status_3.controller;
+package com.jnj.pangea.plan.cns_material_plan_status.controller;
 
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
@@ -12,15 +12,15 @@ import com.jnj.pangea.common.controller.BaseController;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSalesOrderV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
-import com.jnj.pangea.plan.cns_material_plan_status_3.service.PlanCnsMaterialPlanStatusServiceImpl;
+import com.jnj.pangea.plan.cns_material_plan_status.service.PlanCnsMaterialPlanStatus_3ServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.*;
 
 
-public class PlanCnsMaterialPlanStatusController extends BaseController {
+public class PlanCnsMaterialPlanStatus_3Controller extends BaseController {
 
-    private PlanCnsMaterialPlanStatusServiceImpl cnsMaterialPlanStatusService = PlanCnsMaterialPlanStatusServiceImpl.getInstance();
+    private PlanCnsMaterialPlanStatus_3ServiceImpl cnsMaterialPlanStatusService = PlanCnsMaterialPlanStatus_3ServiceImpl.getInstance();
 
     private PlanCnsPlanParameterDaoImpl planParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
 

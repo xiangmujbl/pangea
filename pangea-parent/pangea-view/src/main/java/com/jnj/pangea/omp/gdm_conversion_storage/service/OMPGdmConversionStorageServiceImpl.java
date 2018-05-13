@@ -40,14 +40,15 @@ public class OMPGdmConversionStorageServiceImpl {
     private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private PlanCnsCustChannelDaoImpl cnsCustChannelDao = PlanCnsCustChannelDaoImpl.getInstance();
     private PlanCnsDpPriceDaoImpl cnsDpPriceDao = PlanCnsDpPriceDaoImpl.getInstance();
-    private EDMJNJCalendarV1DaoImpl edmJNJCalendarV1Dao= EDMJNJCalendarV1DaoImpl.getInstance();
+    private EDMJNJCalendarV1DaoImpl edmJNJCalendarV1Dao = EDMJNJCalendarV1DaoImpl.getInstance();
+
     public List<ResultObject> buildView(String key, Object o, Object o2) {
         List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
         PlanCnsDpPriceEntity cnsDpPriceEntity = (PlanCnsDpPriceEntity) o;
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(cnsDpPriceEntity.getLocalMaterialNumber(), cnsDpPriceEntity.getSourceSystem());
         List<EDMJNJCalendarV1Entity> edmJNJCalendarV1EntityList = edmJNJCalendarV1Dao.getEntityWithFiscalPeriod(cnsDpPriceEntity.getFromDate());
-        if(edmJNJCalendarV1EntityList != null && edmJNJCalendarV1EntityList.size() > 0){
-            for(EDMJNJCalendarV1Entity edmjnjCalendarV1Entity:edmJNJCalendarV1EntityList){
+        if (edmJNJCalendarV1EntityList != null && edmJNJCalendarV1EntityList.size() > 0) {
+            for (EDMJNJCalendarV1Entity edmjnjCalendarV1Entity : edmJNJCalendarV1EntityList) {
                 List<EDMCountryEntity> edmCountryEntityList = countryV1Dao.getEntityWithLocalCountryList(cnsDpPriceEntity.getCountry());
                 List<PlanCnsCustChannelEntity> planCnsCustChannelEntities = null;
                 for (EDMCountryEntity edmCountryEntity : edmCountryEntityList) {
@@ -56,7 +57,7 @@ public class OMPGdmConversionStorageServiceImpl {
                         for (PlanCnsCustChannelEntity pccc : planCnsCustChannelEntities) {
                             //C1
                             OMPGdmConversionStorageBo gdmConversionStorageBo = new OMPGdmConversionStorageBo();
-                            if(edmMaterialGlobalV1Entity != null){
+                            if (edmMaterialGlobalV1Entity != null) {
                                 String aggregationId = IConstant.VALUE.LA_ + edmMaterialGlobalV1Entity.getLocalDpParentCode() + "-" + pccc.getChannel() + "-" + edmCountryEntity.getCountryCode();
                                 gdmConversionStorageBo.setAggregationId(aggregationId);
                             }
@@ -68,10 +69,10 @@ public class OMPGdmConversionStorageServiceImpl {
                             Date fromDueDate = DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekFromDate(), DateUtils.DATE_FORMAT_1);
                             gdmConversionStorageBo.setFromDueDate(DateUtils.dateToString(fromDueDate, DateUtils.J_yyyyMMdd_HHmmss));
                             //C5
-                            String salesPrice=cnsDpPriceEntity.getSalesPrice();
-                            if(StringUtils.isNotBlank(salesPrice) && !IConstant.VALUE.ZERO.equals(salesPrice)){
+                            String salesPrice = cnsDpPriceEntity.getSalesPrice();
+                            if (StringUtils.isNotBlank(salesPrice) && !IConstant.VALUE.ZERO.equals(salesPrice)) {
                                 gdmConversionStorageBo.setValue(getFieldWithC5(cnsDpPriceEntity.getLocalMaterialNumber()));
-                            }else if(!isMathC5(salesPrice)){
+                            } else if (!isMathC5(salesPrice)) {
                                 FailData failData = new FailData();
                                 failData.setErrorCode(IConstant.FAILED.ERROR_CODE.C5);
                                 failData.setErrorValue("Sales price is non-numeric");
@@ -102,6 +103,7 @@ public class OMPGdmConversionStorageServiceImpl {
         }
         return resultObjectList;
     }
+
     private String getFieldWithC5(String localMaterialNumber) {
 
         String dpParentCode = null;
@@ -115,11 +117,16 @@ public class OMPGdmConversionStorageServiceImpl {
                 List<String> localMaterialNumbers = materialGlobalV1Entities.stream().map(EDMMaterialGlobalV1Entity::getLocalMaterialNumber).collect(Collectors.toList());
                 // get all the salesPrice
                 List<PlanCnsDpPriceEntity> cnsDpPriceEntities = cnsDpPriceDao.getEntitiesWithLocalMaterialNumbers(localMaterialNumbers);
-                List<Double> salesPrices = cnsDpPriceEntities.stream().map(entity -> Double.parseDouble(entity.getSalesPrice())).collect(Collectors.toList());
+                List<Double> salesPrices = cnsDpPriceEntities.stream().map(entity -> {
+                    if (StringUtils.isNotEmpty(entity.getSalesPrice())) {
+                        return Double.parseDouble(entity.getSalesPrice());
+                    }
+                    return 0.0;
+                }).collect(Collectors.toList());
                 // calculate the avg
                 Double avg = salesPrices.stream().filter(price -> price != 0).mapToDouble(price -> price).summaryStatistics().getAverage();
-                DecimalFormat Format=new DecimalFormat("#.000");
-                return  Double.valueOf(Format.format(avg)) + "";
+                DecimalFormat Format = new DecimalFormat("#.000");
+                return Double.valueOf(Format.format(avg)) + "";
                 //return avg +"";
             } else {
                 return null;
@@ -128,28 +135,29 @@ public class OMPGdmConversionStorageServiceImpl {
             return null;
         }
     }
-    public static boolean isMathC5(String s){
-        if(StringUtils.isBlank(s)){
+
+    public static boolean isMathC5(String s) {
+        if (StringUtils.isBlank(s)) {
             return true;
-        }else{
+        } else {
             String regex = "^[1-9][0-9]*\\.[0-9]+$|^[1-9][0-9]*$|^0+\\.[0-9]+$";
             char c = s.charAt(0);
             boolean bool;
-            if(c=='+'|c=='-'){
+            if (c == '+' | c == '-') {
                 bool = s.substring(1).matches(regex);
-            }else{
+            } else {
                 bool = s.matches(regex);
             }
-            if(bool){
+            if (bool) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
     }
 
-    public static void main(String[] args){
-       System.out.print(isMathC5(null));
+    public static void main(String[] args) {
+        System.out.print(isMathC5(null));
     }
 
 }

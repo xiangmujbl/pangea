@@ -8,6 +8,8 @@ Feature: OMPGdmUnitEvol-Curation AEAZ-3686
   #  4. Get EndEff from 'cons_time_dep_xchange-effectiveEndDate' + 1 in YYYY/DD/MM HH:NN:SS format (Rule:T2)
   #  5. Insert missing records for currency to ensure current year + 4 years data is available for the currency (Rule:T3)
 
+    And I will remove the test file on sink application "GDMUnitEvol.tsv"
+
     Given I import "/plan/cons_time_dep_xchange" by keyFields "sourceSystem,fromCurrency,effectiveStartDate,effectiveEndDate"
       | uniqueId | sourceSystem | fromCurrency | effectiveStartDate | effectiveEndDate | exchangeRate       | preference |
       | -        | CONS_LATAM   | ARS          | 2018/1/1           | 31/12/2018       | 17.27115716753020  | 100        |
@@ -44,10 +46,13 @@ Feature: OMPGdmUnitEvol-Curation AEAZ-3686
 
 #    And I compare the number of records between "/plan/cons_time_dep_xchange" and "/omp/gdm_unit_evol,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_unit_evol"
+
     And I will remove all data with region "/plan/edm_failed_data"
-    And I will remove the test file on sink application "GDMUnitEvol.tsv"
+
 
 

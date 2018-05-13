@@ -3,6 +3,8 @@ Feature:  OMPGdmLotSizeKey-Curation
 
   Scenario: Full Load curation
 
+    And I will remove the test file on sink application "LotSizeKey.tsv"
+
     Given I import "/plan/cns_lot_size_key" by keyFields "lotSizeKey"
       | lotSizeKey |          comments           | lotSizeKeyDescription           | period | quantity | sourceSystem | localLotSizeKey |
       |     WB     |  Weekly lot                 | Weekly lot size                 |   W    |    1     | CONS_LATAM   |   AN            |
@@ -31,6 +33,3 @@ Feature:  OMPGdmLotSizeKey-Curation
     And I will remove all data with region "/omp/gdm_lot_size_key"
 
     And I will remove all data with region "/plan/cns_lot_size_key"
-
-    And I will remove the test file on sink application "LotSizeKey.tsv"
-

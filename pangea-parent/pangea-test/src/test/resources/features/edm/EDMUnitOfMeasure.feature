@@ -32,7 +32,9 @@ Feature: EDMUnitOfMeasure AEAZ-491
 
 #    And I compare the number of records between "/ems/ems_f_mdm_units" and "/edm/unit_of_measure_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/unit_of_measure_v1"
 

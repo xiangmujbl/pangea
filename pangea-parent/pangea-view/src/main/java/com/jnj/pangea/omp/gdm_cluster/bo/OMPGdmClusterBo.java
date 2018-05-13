@@ -6,8 +6,8 @@ import com.jnj.pangea.common.BaseBo;
 public class OMPGdmClusterBo extends BaseBo {
 
     private String clusterId;
-    private String  activeFCTERP;
-    private String  clusterDescription;
+    private String activeFCTERP;
+    private String clusterDescription;
 
     @Override
     public String getKey() {

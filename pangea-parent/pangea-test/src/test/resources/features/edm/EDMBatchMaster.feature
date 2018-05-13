@@ -64,7 +64,9 @@ Feature: EDMBatchMaster AEAZ-2368
 
     And I compare the number of records between "/project_one/mch1" and "/edm/batch_master_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/batch_master_v1"
 

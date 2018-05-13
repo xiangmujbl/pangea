@@ -1,4 +1,4 @@
-package com.jnj.pangea.plan.cns_material_plan_status_3.service;
+package com.jnj.pangea.plan.cns_material_plan_status.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -20,13 +20,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
-public class PlanCnsMaterialPlanStatusServiceImpl {
+public class PlanCnsMaterialPlanStatus_3ServiceImpl {
 
-    private static PlanCnsMaterialPlanStatusServiceImpl instance;
+    private static PlanCnsMaterialPlanStatus_3ServiceImpl instance;
 
-    public static PlanCnsMaterialPlanStatusServiceImpl getInstance() {
+    public static PlanCnsMaterialPlanStatus_3ServiceImpl getInstance() {
         if (instance == null) {
-            instance = new PlanCnsMaterialPlanStatusServiceImpl();
+            instance = new PlanCnsMaterialPlanStatus_3ServiceImpl();
         }
         return instance;
     }
