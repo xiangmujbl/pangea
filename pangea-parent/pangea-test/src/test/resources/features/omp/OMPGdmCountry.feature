@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-1614
-Feature: OMPGdmCountry AEAZ-1614
+@pangea_test @AEAZ-3690
+Feature: OMPGdmCountry AEAZ-3690
 
  Scenario: Full Load curation
 
@@ -7,8 +7,11 @@ Feature: OMPGdmCountry AEAZ-1614
 
    Given I import "/edm/country_v1" by keyFields "localCountry,sourceSystem"
       | countryName | countryCode | localCountry | sourceSystem |
-      | Zimbabwe1   | ZW          | ZW           | CONS_LATAM   |
-      | Zimbabwe2   | ZR          | ZR           | MDDePuy      |
+      | Zimbabwe1   | ZW           | ZW             | CONS_LATAM   |
+      | Zimbabwe2   | ZR           | ZR             | CONS_LATAM   |
+      | Zimbabwe2   |              | ZR             | MDDePuy      |
+      |              | ZR           | ZR             | MDDePuy      |
+
     And I wait "/edm/country_v1" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter"
@@ -23,6 +26,7 @@ Feature: OMPGdmCountry AEAZ-1614
     Then I check file data for filename "GDMCountry.tsv" by keyFields "countryId"
       | countryId | activeFCTERP | activeOPRERP | activeSOPERP | countryDescription |
       | ZW         | YES           | YES           | NO            | Zimbabwe1           |
+      | ZR         | YES           | YES           | NO            | Zimbabwe2           |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
