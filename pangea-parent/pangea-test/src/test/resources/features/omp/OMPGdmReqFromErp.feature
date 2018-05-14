@@ -98,11 +98,11 @@ Feature: OMPGdmReqFromErp-Consumption
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode |              errorValue                                                                    | functionalArea |  interfaceID     | key1       | key2  | key3 | key4 | key5 | sourceSystem |
+      |  N4       | Critical error - Blank values of source system or plntCd in edmPurchaseRequisitionV1Entity | SP             | OMPGdmReqFromErp |            |7047796|      |      |      | CONS_LATAM   |
       |  N6       | Critical error - material_global_v1 null or localMaterialNumber not found                  | SP             | OMPGdmReqFromErp | CONS_LATAM |7047799|      |      |      | CONS_LATAM   |
       |  N7       | Critical error - Cns Plan Unit - unit not found                                            | SP             | OMPGdmReqFromErp | CONS_LATAM |7047798|      |      |      | CONS_LATAM   |
-      |  N6       | Critical error - material_global_v1 null or localMaterialNumber not found                  | SP             | OMPGdmReqFromErp | CONS_LATAM |7047799|      |      |      | CONS_LATAM   |
       |  N4       | Critical error - Blank values of source system or plntCd in edmPurchaseRequisitionV1Entity | SP             | OMPGdmReqFromErp | CONS_LATAM |7047786|      |      |      | CONS_LATAM   |
-      |  N4       | Critical error - Blank values of source system or plntCd in edmPurchaseRequisitionV1Entity | SP             | OMPGdmReqFromErp |            |7047796|      |      |      | CONS_LATAM   |
+      |  N6       | Critical error - material_global_v1 null or localMaterialNumber not found                  | SP             | OMPGdmReqFromErp | CONS_LATAM |7047799|      |      |      | CONS_LATAM   |
 
     And I will remove all data with region "/edm/purchase_requisition_v1"
 
