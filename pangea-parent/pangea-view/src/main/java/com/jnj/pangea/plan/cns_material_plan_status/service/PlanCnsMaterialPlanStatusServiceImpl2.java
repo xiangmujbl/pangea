@@ -3,8 +3,10 @@ package com.jnj.pangea.plan.cns_material_plan_status.service;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialInclDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.CnsMaterialInclEntity;
 import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +23,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl2 {
     }
 
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private PlanCnsMaterialInclDaoImpl cnsMaterialInclDao = PlanCnsMaterialInclDaoImpl.getInstance();
 
     public ResultObject buildView(String key, Object o) {
@@ -83,12 +86,18 @@ public class PlanCnsMaterialPlanStatusServiceImpl2 {
         return resultObject;
     }
 
-    private String getFieldWithJ1(String sourceSystem) {
-        CnsMaterialInclEntity cnsMaterialInclEntity = cnsMaterialInclDao.getEntityWithLocalSourceSystem(sourceSystem);
-        if (null != cnsMaterialInclEntity) {
-            return sourceSystem;
+    private String getFieldWithJ1(String localSourceSystem) {
+        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
+        if (null != sourceSystemV1Entity) {
+            return sourceSystemV1Entity.getSourceSystem();
         }
         return null;
+
+//        CnsMaterialInclEntity cnsMaterialInclEntity = cnsMaterialInclDao.getEntityWithLocalSourceSystem(sourceSystem);
+//        if (null != cnsMaterialInclEntity) {
+//            return sourceSystem;
+//        }
+//        return null;
     }
 
     private void getFieldWithT6(PlanCnsMaterialPlanStatusBo materialPlanStatusBo) {

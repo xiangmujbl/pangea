@@ -31,8 +31,8 @@ Feature: CnsMaterialPlanStatus_2 AEAZ-3216
 
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
-      | localSourceSystem |
-      | CONS_LATAM        |
+      | localSourceSystem |sourceSystem|
+      | CONS_LATAM        |project_one |
     And I wait "/edm/source_system_v1" Async Queue complete
 
 

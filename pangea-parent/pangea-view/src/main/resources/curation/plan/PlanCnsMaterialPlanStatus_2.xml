@@ -17,7 +17,7 @@
                 </relations>
             </region>
             <region path="/edm/source_system_v1">
-                <columns>localSourceSystem</columns>
+                <columns>localSourceSystem,sourceSystem</columns>
             </region>
             <region path="/edm/material_global_v1">
                 <columns>localMaterialNumber,sourceSystem,materialNumber,localDpParentCode,primaryPlanningCode</columns>
