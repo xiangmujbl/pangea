@@ -1,6 +1,7 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.query.QueryHelper;
+
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanSplPlnLocEntity;
@@ -27,6 +28,7 @@ public class PlanSplPlnLocDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PLAN_CNS_SPL_PLN_LOC.LOCALNUMBER).is(localVendorAccountNumber)
                 .and(IConstant.PLAN_CNS_SPL_PLN_LOC.VENDORORCUSTOMER).is("V")
                 .toQueryString();
+
         return queryForList(IConstant.REGION.PLAN_CNS_SPL_PLN_LOC, queryString, PlanSplPlnLocEntity.class);
     }
 }

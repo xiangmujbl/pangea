@@ -400,6 +400,8 @@ public interface IConstant {
 
     interface PLAN_CONS_TIME_DEP_XCHANGE {
         String UNIT_ID = "unitId";
+        String FROM_CURRENCY ="fromCurrency";
+        String TO_CURRENCY ="toCurrency";
     }
 
     interface PROJECT_ONE_PLAF {
