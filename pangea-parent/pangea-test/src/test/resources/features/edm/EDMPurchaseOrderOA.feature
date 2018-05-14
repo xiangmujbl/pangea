@@ -66,8 +66,8 @@ Feature: EDMPurchaseOrderOA
     And I wait "/project_one/ekpv" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields "sourceSystem,localSourceSystem"
-      | sourceSystem  |    localSourceSystem   |
-      | project_one   |       Project_One      |
+    | sourceSystem  |    localSourceSystem   |
+    | project_one   |       Project_One      |
 
     And I wait "/edm/source_system_v1" Async Queue complete
 
@@ -90,5 +90,5 @@ Feature: EDMPurchaseOrderOA
 
     And I will remove all data with region "/project_one/ekpv"
 
-    And I will remove all data with region "/plan/edm_failed_data"
+    And I will remove all data with region "/edm/purchase_order_oa_v1"
 

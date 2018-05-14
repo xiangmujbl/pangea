@@ -98,7 +98,7 @@ public class EDMPurchaseOrderOAServiceImpl{
         else
             purchaseOrderOABo.setMatlMvmtSeqNbr("");
 
-        if(ekbeEntity != null)
+        if(eketEntity != null)
             purchaseOrderOABo.setDelvSchedCntNbr(eketEntity.getEtenr());
         else
             purchaseOrderOABo.setDelvSchedCntNbr("");

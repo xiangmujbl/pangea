@@ -27,22 +27,22 @@ public class EkkoEntity extends CommonEntity {
     public EkkoEntity(Map<String, Object> map) {
         super(map);
         setBedat((String)map.get("bedat"));
-        setBedat((String)map.get("bstyp"));
-        setBedat((String)map.get("bukrs"));
-        setBedat((String)map.get("reswk"));
-        setBedat((String)map.get("kdatb"));
-        setBedat((String)map.get("waers"));
-        setBedat((String)map.get("frgrl"));
-        setBedat((String)map.get("mandt"));
-        setBedat((String)map.get("bsart"));
-        setBedat((String)map.get("lphis"));
-        setBedat((String)map.get("kdate"));
-        setBedat((String)map.get("lifnr"));
-        setBedat((String)map.get("llief"));
-        setBedat((String)map.get("aedat"));
-        setBedat((String)map.get("ebeln"));
-        setBedat((String)map.get("ekgrp"));
-        setBedat((String)map.get("ekorg"));
+        setBstyp((String)map.get("bstyp"));
+        setBukrs((String)map.get("bukrs"));
+        setReswk((String)map.get("reswk"));
+        setKdatb((String)map.get("kdatb"));
+        setWaers((String)map.get("waers"));
+        setFrgrl((String)map.get("frgrl"));
+        setMandt((String)map.get("mandt"));
+        setBsart((String)map.get("bsart"));
+        setLphis((String)map.get("lphis"));
+        setKdate((String)map.get("kdate"));
+        setLifnr((String)map.get("lifnr"));
+        setLlief((String)map.get("llief"));
+        setAedat((String)map.get("aedat"));
+        setEbeln((String)map.get("ebeln"));
+        setEkgrp((String)map.get("ekgrp"));
+        setEkorg((String)map.get("ekorg"));
     }
 
     public String getBedat() {

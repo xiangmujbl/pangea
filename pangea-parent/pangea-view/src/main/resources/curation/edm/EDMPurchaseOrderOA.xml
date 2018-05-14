@@ -1,13 +1,12 @@
 <adf-curation>
     <curation mainRegion="/project_one/ekko" viewRegion="/edm/purchase_order_oa_v1" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.edm.purchase_requisition_v1.controller.EDMPurchaseRequisitionController">
+              executionClassName="com.jnj.pangea.edm.purchase_order_oa_v1.controller.EDMPurchaseOrderOAController">
         <regions>
 
             <region path="/project_one/ekko">
                 <columns>
                     ebeln,bstyp,bsart,aedat,lifnr,ekorg,ekgrp,bukrs,waers,bedat,kdatb,kdate,llief,reswk,frgrl,lphis
                 </columns>
-
                 <relations>
                     <relation path="/project_one/ekpo" isPrimaryKey="false">
                         <expression>
@@ -21,7 +20,6 @@
                 <columns>
                     ebeln,ebelp,loekz,matnr,werks,lgort,bednr,menge,meins,umrez,umren,insmk,elikz,pstyp,knttp,konnr,ktpnr,lmein,adrnr,plifz,sobkz,bstae,lblkz,adrn2,banfn,bnfpo,j1bnbm,reslo,webaz
                 </columns>
-
                 <relations>
                     <relation path="/project_one/ekbe" isPrimaryKey="false">
                         <expression>
@@ -57,24 +55,44 @@
                 <columns>
                     vgabe,gjahr,belnr,buzei,bewtp,bwart,budat,menge,ebeln,ebelp,mandt,zekkn
                 </columns>
+                <relations>
+                    <relation path="/project_one/ekes" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/project_one/ekes">
                 <columns>
                     ebtyp,eindt,erdat,menge,dabmg,estkz,vbeln,vbelp,charg,ebeln,ebelp,etens,mandt
                 </columns>
+                <relations>
+                    <relation path="/project_one/eket" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/project_one/eket">
                 <columns>
                     eindt,menge,wemng,banfn,bnfpo,glmng,dabmg,etenr,ebeln,ebelp,mandt
                 </columns>
+                <relations>
+                    <relation path="/project_one/ekpv" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/project_one/ekpv">
                 <columns>
                     kunnr,ebeln,ebelp,mandt
                 </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/edm/source_system_v1">
