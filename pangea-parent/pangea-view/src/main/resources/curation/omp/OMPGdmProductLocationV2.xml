@@ -57,7 +57,7 @@
                     </relation>
 
                     <relation path="/edm/mat_plant_fi_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/edm/material_plant_v1.localMaterialNumber</expression>
+                        <expression>localMaterialNumber=/edm/material_plant_v1.localMaterialNumber,localPlant=/edm/material_plant_v1.localPlant</expression>
                     </relation>
 
                     <relation path="/plan/cns_spl_proc_typ" isPrimaryKey="false">
@@ -92,12 +92,8 @@
                         <expression>sourceSystem=/edm/material_plant_v1.sourceSystem</expression>
                     </relation>
 
-                    <relation path="/plan/cons_time_dep_xchange" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-
                     <relation path="/edm/plant_v1" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>localPlant=/edm/material_plant_v1.localPlant</expression>
                     </relation>
 
                 </relations>
@@ -223,6 +219,7 @@
                     uniqueId,
                     sourceSystem,
                     fromCurrency,
+                    toCurrency,
                     effectiveEndDate,
                     effectiveStartDate,
                     exchangeRate,
@@ -234,6 +231,13 @@
                 <columns>
                     localPlant,localCurrency,sourceSystem
                 </columns>
+                <relations>
+                    <relation path="/plan/cons_time_dep_xchange" isPrimaryKey="false">
+                        <expression>
+                            fromCurrency=/edm/plant_v1.localCurrency
+                        </expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/omp/gdm_product_location_v2">

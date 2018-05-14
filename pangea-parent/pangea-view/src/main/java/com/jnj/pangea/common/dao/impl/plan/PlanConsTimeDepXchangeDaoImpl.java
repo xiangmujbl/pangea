@@ -1,6 +1,7 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
@@ -17,6 +18,13 @@ public class PlanConsTimeDepXchangeDaoImpl extends CommonDaoImpl {
             instance = new PlanConsTimeDepXchangeDaoImpl();
         }
         return instance;
+    }
+
+    public List<PlanConsTimeDepXchangeEntity> getEntityList(String localCurrency) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CONS_TIME_DEP_XCHANGE.FROM_CURRENCY).is(localCurrency)
+                .and(IConstant.PLAN_CONS_TIME_DEP_XCHANGE.TO_CURRENCY).is("USD")
+                .toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CONS_TIME_DEP_XCHANGE, queryString, PlanConsTimeDepXchangeEntity.class);
     }
 
     public List<PlanConsTimeDepXchangeEntity> getEntityListWithUnitId(String localCurrency) {

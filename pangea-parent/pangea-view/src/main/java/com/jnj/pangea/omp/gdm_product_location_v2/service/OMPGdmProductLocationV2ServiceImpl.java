@@ -1,6 +1,7 @@
 package com.jnj.pangea.omp.gdm_product_location_v2.service;
 
 import com.jnj.adf.grid.utils.DateUtil;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -66,18 +67,6 @@ public class OMPGdmProductLocationV2ServiceImpl {
             edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
 
         }
-//        String sourceSystem = edmMaterialGlobalV1Entity.getSourceSystem();
-//        if ("".equals(sourceSystem)){
-//            ResultObject resultObject = new ResultObject();
-//            OMPGdmProductLocationV2Bo OMPGdmProductLocationV2Bo = new OMPGdmProductLocationV2Bo();
-//            resultObject.setBaseBo(OMPGdmProductLocationV2Bo);
-//            resultObjectList.add(resultObject);
-//            return resultObjectList;
-//        }
-//        EDMSourceSystemV1Entity edmSourceSystemV1Entity = systemV1Dao.getEntityWithSourceSystem(sourceSystem);
-//        if (edmSourceSystemV1Entity == null) {
-//            return resultObjectList;
-//        }
         String localPlant = materialPlantV1Entity.getLocalPlant();
         if (null != localPlant && !"".equals(localPlant)) {
             planStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(localMaterialNumber, localPlant);
@@ -121,18 +110,9 @@ public class OMPGdmProductLocationV2ServiceImpl {
 
         //rules J2
         if (materialPlantV1Entity != null) {
-            matPlantFiV1Entity = getFieldWithJ2(materialPlantV1Entity);
+            getFieldWithJ2(materialPlantV1Entity, boList);
         }
         for (OMPGdmProductLocationV2Bo bo : boList) {
-            if (matPlantFiV1Entity != null) {
-                bo.setCost(matPlantFiV1Entity.getLocalStandardPrice());
-                bo.setProductValue(matPlantFiV1Entity.getLocalStandardPrice());
-                bo.setStprs(matPlantFiV1Entity.getLocalStandardPrice());
-                bo.setVerpr(matPlantFiV1Entity.getLocalMovingAverage());
-                bo.setVprsv(matPlantFiV1Entity.getLocalPriceControlIndicator());
-                bo.setPeinh(matPlantFiV1Entity.getLocalPriceUnit());
-
-            }
             //rules D1
             bo.setActive(IConstant.VALUE.YES);
 
@@ -240,10 +220,12 @@ public class OMPGdmProductLocationV2ServiceImpl {
         return resultObjectList;
     }
 
+
     //rules J1
     public List<OMPGdmProductLocationV2Bo> getFieldWithJ1(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, PlanSplPlnLocEntity planSplPlnLocEntity, EDMMaterialPlantV1Entity materialPlantV1Entity, PlanCnsMaterialPlanStatusEntity planStatusEntity) {
         List<OMPGdmProductLocationV2Bo> boList = new ArrayList<OMPGdmProductLocationV2Bo>();
         OMPGdmProductLocationV2Bo ompGdmProductLocationV2Bo = new OMPGdmProductLocationV2Bo();
+
         if (edmMaterialGlobalV1Entity == null) {
             return new ArrayList<OMPGdmProductLocationV2Bo>();
         }
@@ -299,74 +281,91 @@ public class OMPGdmProductLocationV2ServiceImpl {
      * @param materialPlantV1Entity
      * @return
      */
-    public EDMMatPlantFiV1Entity getFieldWithJ2(EDMMaterialPlantV1Entity materialPlantV1Entity) {
+    public void getFieldWithJ2(EDMMaterialPlantV1Entity materialPlantV1Entity, List<OMPGdmProductLocationV2Bo> boList) {
+        OMPGdmProductLocationV2Bo ompGdmProductLocationV2Bo = new OMPGdmProductLocationV2Bo();
         EDMMatPlantFiV1Entity edmMaterialPlantFinV1Entity = matPlantFinV1Dao.getEntityWithLocalMaterialNumberAndLocalPlant(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant());
         if (edmMaterialPlantFinV1Entity == null) {
-            return null;
+            return;
         }
         EDMPlantV1Entity edmPlantV1Entity = plantV1Dao.getEntityWithLocalPlant(materialPlantV1Entity.getLocalPlant());
         if (edmPlantV1Entity == null) {
-            return null;
+            return;
         }
-        if (IConstant.VALUE.V.equals(edmMaterialPlantFinV1Entity.getPriceControl())) {
-            if (!IConstant.VALUE.USD.equals(edmPlantV1Entity.getLocalCurrency())) {
-                String localCurrency = edmPlantV1Entity.getLocalCurrency();
-                if (StringUtils.isEmpty(localCurrency)) {
-                    return null;
-                }
-                List<PlanConsTimeDepXchangeEntity> entities = planConsTimeDepXchangeDao.getEntityListWithUnitId(localCurrency);
-                if (entities == null || entities.size() == 0) {
-                    return null;
-                }
+        for (OMPGdmProductLocationV2Bo bo : boList) {
+            bo.setStprs(edmMaterialPlantFinV1Entity.getLocalStandardPrice());
+            bo.setVerpr(edmMaterialPlantFinV1Entity.getLocalMovingAverage());
+            bo.setVprsv(edmMaterialPlantFinV1Entity.getLocalPriceControlIndicator());
+            bo.setPeinh(edmMaterialPlantFinV1Entity.getLocalPriceUnit());
+            String localCurrency = edmPlantV1Entity.getLocalCurrency();
+            if (IConstant.VALUE.V.equals(edmMaterialPlantFinV1Entity.getPriceControl())) {
+
+                List<PlanConsTimeDepXchangeEntity> entities = planConsTimeDepXchangeDao.getEntityList(localCurrency);
+                LogUtil.getCoreLog().info("entities{}", entities);
                 for (PlanConsTimeDepXchangeEntity entity : entities) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
                     try {
-                        Date end = format.parse(entity.getEffectiveEndDate());
-                        Date start = format.parse(entity.getEffectiveStartDate());
+                        Long end = format2.parse(entity.getEffectiveEndDate()).getTime();
+                        Long start = format1.parse(entity.getEffectiveStartDate()).getTime();
                         Date date = new Date();
-                        if (date.compareTo(end) <= 0 && date.compareTo(start) >= 0) {
-                            if (edmMaterialPlantFinV1Entity.getLocalMvp() != null || "".equals(edmMaterialPlantFinV1Entity.getLocalMvp())) {
-                                edmMaterialPlantFinV1Entity.setLocalStandardPrice(new BigDecimal(edmMaterialPlantFinV1Entity.getLocalMvp()).multiply(new BigDecimal(entity.getExchangeRate())).toString());
+                        if (date.getTime() >= start && date.getTime() <= end) {
+                            if (!IConstant.VALUE.USD.equals(edmPlantV1Entity.getLocalCurrency())) {
+                                if (StringUtils.isBlank(entity.getExchangeRate())) {
+                                    bo.setCost("");
+                                    bo.setProductValue("");
+                                } else {
+                                    bo.setCost(new BigDecimal(edmMaterialPlantFinV1Entity.getLocalMvp()).multiply(new BigDecimal(entity.getExchangeRate())).toString());
+                                    bo.setProductValue(new BigDecimal(edmMaterialPlantFinV1Entity.getLocalMvp()).multiply(new BigDecimal(entity.getExchangeRate())).toString());
+                                }
                             } else {
-                                edmMaterialPlantFinV1Entity.setLocalStandardPrice("0");
+                                bo.setCost(edmMaterialPlantFinV1Entity.getLocalMvp());
+                                bo.setProductValue(edmMaterialPlantFinV1Entity.getLocalMvp());
                             }
+
+                        }else{
+                            bo.setCost("");
+                            bo.setProductValue("");
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
                 }
             }
-        }
-        if (IConstant.VALUE.S.equals(edmMaterialPlantFinV1Entity.getPriceControl())) {
-            if (!IConstant.VALUE.USD.equals(edmPlantV1Entity.getLocalCurrency())) {
-                String localCurrency = edmPlantV1Entity.getLocalCurrency();
-                if (StringUtils.isEmpty(localCurrency)) {
-                    return null;
-                }
-                List<PlanConsTimeDepXchangeEntity> entities = planConsTimeDepXchangeDao.getEntityListWithUnitId(localCurrency);
-                if (entities == null || entities.size() == 0) {
-                    return null;
-                }
+            if (IConstant.VALUE.S.equals(edmMaterialPlantFinV1Entity.getPriceControl())) {
+
+                List<PlanConsTimeDepXchangeEntity> entities = planConsTimeDepXchangeDao.getEntityList(localCurrency);
                 for (PlanConsTimeDepXchangeEntity entity : entities) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
                     try {
-                        Date end = format.parse(entity.getEffectiveEndDate());
-                        Date start = format.parse(entity.getEffectiveStartDate());
+                        Long end = format2.parse(entity.getEffectiveEndDate()).getTime();
+                        Long start = format1.parse(entity.getEffectiveStartDate()).getTime();
                         Date date = new Date();
-                        if (date.compareTo(end) <= 0 && date.compareTo(start) >= 0) {
-                            if (edmMaterialPlantFinV1Entity.getLocalStandardPrice() != null || "".equals(edmMaterialPlantFinV1Entity.getLocalStandardPrice())) {
-                                edmMaterialPlantFinV1Entity.setLocalStandardPrice(new BigDecimal(edmMaterialPlantFinV1Entity.getLocalStandardPrice()).multiply(new BigDecimal(entity.getExchangeRate())).toString());
+                        if (date.getTime() >= start && date.getTime() <= end) {
+                            if (!IConstant.VALUE.USD.equals(edmPlantV1Entity.getLocalCurrency())) {
+                                if (StringUtils.isBlank(entity.getExchangeRate())) {
+                                    bo.setCost("");
+                                    bo.setProductValue("");
+                                } else {
+                                    bo.setCost(new BigDecimal(edmMaterialPlantFinV1Entity.getLocalStandardPrice()).multiply(new BigDecimal(entity.getExchangeRate())).toString());
+                                    bo.setProductValue(new BigDecimal(edmMaterialPlantFinV1Entity.getLocalStandardPrice()).multiply(new BigDecimal(entity.getExchangeRate())).toString());
+                                }
                             } else {
-                                edmMaterialPlantFinV1Entity.setLocalStandardPrice("0");
+                                bo.setCost(edmMaterialPlantFinV1Entity.getLocalStandardPrice());
+                                bo.setProductValue(edmMaterialPlantFinV1Entity.getLocalStandardPrice());
                             }
+                        }else{
+                            bo.setCost("");
+                            bo.setProductValue("");
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
                 }
             }
         }
-        return edmMaterialPlantFinV1Entity;
     }
 
 
