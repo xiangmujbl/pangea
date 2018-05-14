@@ -3,13 +3,10 @@ package com.jnj.pangea.omp.gdm_product.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.edm.*;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
-import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMProductFamilyV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMProductFamilyV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMFormV1Entity;
@@ -22,9 +19,8 @@ import com.jnj.pangea.common.entity.edm.EDMBrandV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMBrandV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMFranchiseV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMFranchiseV1DaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMGlobalBaseUnitV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBaseUnitV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMGlobalBusinessUnitV1Entity;
+import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBusinessUnitV1DaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.omp.gdm_product.bo.OMPGdmProductBo;
 import org.apache.commons.lang.StringUtils;
@@ -51,7 +47,7 @@ public class OMPGdmProductServiceImpl {
     private EDMSubBrandV1DaoImpl subBrandV1Dao = EDMSubBrandV1DaoImpl.getInstance();
     private EDMBrandV1DaoImpl brandV1Dao = EDMBrandV1DaoImpl.getInstance();
     private EDMFranchiseV1DaoImpl franchiseV1Dao = EDMFranchiseV1DaoImpl.getInstance();
-    private EDMGlobalBaseUnitV1DaoImpl globalBaseUnitV1Dao = EDMGlobalBaseUnitV1DaoImpl.getInstance();
+    private EDMGlobalBusinessUnitV1DaoImpl globalBaseUnitV1Dao = EDMGlobalBusinessUnitV1DaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl cnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
@@ -285,7 +281,7 @@ public class OMPGdmProductServiceImpl {
 
     private String checkE8(String globalBusinessUnit) {
         if (null != globalBusinessUnit && !"".equals(globalBusinessUnit)) {
-            EDMGlobalBaseUnitV1Entity globalBaseUnitV1Entity = globalBaseUnitV1Dao.getEntityWithGbu(globalBusinessUnit);
+            EDMGlobalBusinessUnitV1Entity globalBaseUnitV1Entity = globalBaseUnitV1Dao.getEntityWithGbu(globalBusinessUnit);
             if (null != globalBaseUnitV1Entity) {
                 return globalBaseUnitV1Entity.getGbuName();
             }

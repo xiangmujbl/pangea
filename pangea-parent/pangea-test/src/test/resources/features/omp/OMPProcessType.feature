@@ -4,10 +4,12 @@ Feature: OMPProcessType AEAZ-2375
   Scenario: Full Load curation
     # 1. get record from cns_process_type
 
+    And I will remove the test file on sink application "GDMProcessType.tsv"
+
     Given I import "/plan/cns_process_type" by keyFields "processTypeId"
-      | processTypeId | processTypeDescription |
-      | 1             | subcontracting         |
-      | 2             | Inter Plant            |
+      | processTypeId | processTypeDesc |
+      | 1             | subcontracting  |
+      | 2             | Inter Plant     |
 
     And I wait "/plan/cns_process_type" Async Queue complete
 
@@ -25,11 +27,12 @@ Feature: OMPProcessType AEAZ-2375
 
     And I compare the number of records between "/plan/cns_process_type" and "/omp/process_type,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/process_type"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMProcessType.tsv"
 

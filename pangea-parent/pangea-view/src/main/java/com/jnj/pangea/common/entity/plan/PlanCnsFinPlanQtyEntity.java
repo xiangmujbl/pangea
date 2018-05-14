@@ -13,6 +13,17 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
     private String unitId;
     private String quantity;
 
+    public String getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
+
+    private String yearMonth;
+
+
     public PlanCnsFinPlanQtyEntity(Map<String, Object> map) {
         super(map);
 
@@ -22,6 +33,7 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
         setCurrency((String) map.get("currency"));
         setUnitId((String) map.get("unitId"));
         setQuantity((String) map.get("quantity"));
+        setYearMonth((String) map.get("yearMonth"));
     }
 
     public String getLocalMaterialNumber() {

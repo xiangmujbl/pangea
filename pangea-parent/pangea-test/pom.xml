@@ -14,7 +14,7 @@
 
     <properties>
         <adf.version>0.3.04</adf.version>
-        <adf.compute.version>0.3.04-0.4</adf.compute.version>
+        <adf.compute.version>0.3.04-0.5</adf.compute.version>
     </properties>
 
     <dependencies>
@@ -34,10 +34,20 @@
             <version>${adf.compute.version}</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.jnj.adf</groupId>-->
+            <!--<artifactId>adf-test-framework</artifactId>-->
+            <!--<version>${adf.version}</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>com.jnj.adf</groupId>
-            <artifactId>adf-test-framework</artifactId>
-            <version>${adf.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.1.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
         </dependency>
 
         <dependency>
@@ -70,6 +80,30 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>1.0.0-cp1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-test</artifactId>
+            <version>3.0.7.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jnj</groupId>
+            <artifactId>job-file-merger</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

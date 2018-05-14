@@ -29,25 +29,27 @@ public class OMPGdmUnitCurrencyServiceImpl implements ICommonService {
         OMPGdmUnitCurrencyBo gdmUnitCurrencyBo = new OMPGdmUnitCurrencyBo();
         if (null != currencyV1Entity){
 
+            // rules E1
             if (StringUtils.isNotEmpty(currencyV1Entity.getCurrencyCode())) {
 
                 gdmUnitCurrencyBo.setUnitId(currencyV1Entity.getCurrencyCode());
+                // rules D1
                 gdmUnitCurrencyBo.setActive(IConstant.VALUE.YES);
                 gdmUnitCurrencyBo.setActiveFCTERP(IConstant.VALUE.YES);
                 gdmUnitCurrencyBo.setActiveOPRERP(IConstant.VALUE.YES);
+                // rules D3
                 gdmUnitCurrencyBo.setActiveSOPERP(IConstant.VALUE.NO);
-                gdmUnitCurrencyBo.setFactor("");
-                gdmUnitCurrencyBo.setIsoCode(currencyV1Entity.getIsoNumeric());
+                // rules D2
+                gdmUnitCurrencyBo.setFactor(IConstant.VALUE.CURRENCY_V);
+                // rules D6
+                gdmUnitCurrencyBo.setIsoCode(IConstant.VALUE.BLANK);
+                // rules D4
                 gdmUnitCurrencyBo.setMeasure(IConstant.VALUE.CURRENCY);
+                // rules D5
                 gdmUnitCurrencyBo.setPrecision(IConstant.VALUE.ZERO);
                 gdmUnitCurrencyBo.setLongDescription(currencyV1Entity.getCurrencyName());
                 gdmUnitCurrencyBo.setShortDescription(currencyV1Entity.getCurrencyName());
                 resultObject.setBaseBo(gdmUnitCurrencyBo);
-            } else {
-
-                resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.GDM_UNIT_CURRENCY, IConstant.FAILED.ERROR_CODE.E1,
-                        "", "omp", currencyV1Entity.getSourceSystem(),
-                        currencyV1Entity.getLocalCountry()));
             }
         }
 

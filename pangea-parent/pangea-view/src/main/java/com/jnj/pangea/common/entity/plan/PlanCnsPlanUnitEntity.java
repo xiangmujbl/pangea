@@ -6,25 +6,25 @@ import java.util.Map;
 
 public class PlanCnsPlanUnitEntity extends CommonEntity {
 
-
-
-    private String sourceSystem;
     private String localUom;
     private String localUomName;
-    private String planFlag;
+    private String plantFlag;
+    private String sourceSystem;
     private String unit;
+    private String factor;
+    private String roundingDecimal;
 
     public PlanCnsPlanUnitEntity(Map<String, Object> map) {
         super(map);
 
-        setSourceSystem((String) map.get("sourceSystem"));
         setLocalUom((String) map.get("localUom"));
         setLocalUomName((String) map.get("localUomName"));
-        setPlanFlag((String) map.get("planFlag"));
+        setPlantFlag((String) map.get("plantFlag"));
+        setSourceSystem((String) map.get("sourceSystem"));
         setUnit((String) map.get("unit"));
-        setLocalUom((String) map.get("localUom"));
+        setFactor((String) map.get("factor"));
+        setRoundingDecimal((String) map.get("roundingDecimal"));
     }
-
 
     public String getLocalUom() {
         return this.localUom;
@@ -42,12 +42,20 @@ public class PlanCnsPlanUnitEntity extends CommonEntity {
         this.localUomName = localUomName;
     }
 
-    public String getPlanFlag() {
-        return planFlag;
+    public String getPlantFlag() {
+        return this.plantFlag;
     }
 
-    public void setPlanFlag(String planFlag) {
-        this.planFlag = planFlag;
+    public void setPlantFlag(String plantFlag) {
+        this.plantFlag = plantFlag;
+    }
+
+    public String getSourceSystem() {
+        return this.sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
     }
 
     public String getUnit() {
@@ -58,12 +66,20 @@ public class PlanCnsPlanUnitEntity extends CommonEntity {
         this.unit = unit;
     }
 
-    public String getSourceSystem() {
-        return sourceSystem;
+    public String getFactor() {
+        return this.factor;
     }
 
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
+    public void setFactor(String factor) {
+        this.factor = factor;
+    }
+
+    public String getRoundingDecimal() {
+        return this.roundingDecimal;
+    }
+
+    public void setRoundingDecimal(String roundingDecimal) {
+        this.roundingDecimal = roundingDecimal;
     }
 
 }

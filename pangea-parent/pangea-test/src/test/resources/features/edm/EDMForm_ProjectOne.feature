@@ -10,7 +10,6 @@ Feature: EDMForm AEAZ-1276
       | 102      | C&C CLEANSERS           |
       | 103      | C&C FACIAL MOISTURIZERS |
       | 104      | SUNDOWN SUNCARE REGULAR |
-
     And I wait "/ngems/form_v1" Async Queue complete
 
     When I submit task with xml file "xml/edm/EDMForm_ProjectOne.xml" and execute file "jar/pangea-view.jar"
@@ -27,7 +26,10 @@ Feature: EDMForm AEAZ-1276
 
     And I compare the number of records between "/ngems/form_v1" and "/edm/form_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/form_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"

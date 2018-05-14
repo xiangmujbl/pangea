@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_location_edm.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -47,17 +48,11 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
 
 
         //rules T2
-        gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.NO);
-        List<PlanCnsPlanParameterEntity> entities = parameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT);
+        List<PlanCnsPlanParameterEntity> entities = parameterDao.getEntriessWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT, plantV1Entity.getLocalPlant());
         if (entities != null && entities.size() > 0) {
-            for (PlanCnsPlanParameterEntity cnsPlanParameterEntity : entities) {
-                if (cnsPlanParameterEntity != null) {
-                    if (cnsPlanParameterEntity.getParameterValue().equals(plantV1Entity.getLocalPlant())) {
-                        gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
-                        break;
-                    }
-                }
-            }
+            gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
+        } else {
+            gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.NO);
         }
 
         //rules T7

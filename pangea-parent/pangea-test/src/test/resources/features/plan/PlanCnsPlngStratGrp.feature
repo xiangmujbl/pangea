@@ -8,7 +8,6 @@ Feature: CnsPlngStratGrp AEAZ-1483
       | EH    |
       | EC    |
       | EA    |
-
     And I wait "/project_one/t461p" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -37,7 +36,10 @@ Feature: CnsPlngStratGrp AEAZ-1483
 
     And I compare the number of records between "/project_one/t461p" and "/plan/cns_plng_strat_grp,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/plan/cns_plng_strat_grp"
+
     And I will remove all data with region "/plan/edm_failed_data"

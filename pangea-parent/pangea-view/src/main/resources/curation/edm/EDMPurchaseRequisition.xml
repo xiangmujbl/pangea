@@ -7,6 +7,7 @@
                 <columns>
                     banfn, bnfpo, werks, matnr, meins, bsart, bstyp, bsakz, loekz, statu, estkz, ekgrp, ernam, erdat, txz01, ematn, lgort, bednr, matkl, reswk, menge, badat, lfdat, frgdt, webaz, pstyp, knttp, wepos, lifnr, flief, ekorg, vrtyp, konnr, ktpnr, infnr, zugba, qunum, qupos, dispo, sernr, ebeln, ebelp, bedat, bsmng, ebakz, rsnum, sobkz, fixkz, bmein, frgrl, charg, umsok, verid, adrnr, adrn2, kunnr, emlif, lblkz, waers, gsfrg, mfrpn, mfrnr, emnfr, plifz, berid, memory, banpr, blckd, blckt, beswk, reslo, banfnCs, bnfpoCs, itemCs
                 </columns>
+                <filter>statu:N</filter>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>

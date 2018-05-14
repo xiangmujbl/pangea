@@ -1,9 +1,10 @@
 package com.jnj.pangea.sentence;
 
-import com.jnj.adf.cucumber.sentence.CommonSteps;
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
+import com.jnj.pangea.common.CommonSteps;
+import com.jnj.pangea.common.utils.XdJobLaunch;
 import cucumber.api.DataTable;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,13 +15,19 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PangeaSteps extends CommonSteps {
 
     private static String computingNode = "";
     private static Integer computingPartition = 1;
     private static String mboxSink = "";
+    private static String ceRegionAlias = "";
+
+    private static String mergeJobDefinition = "xd/fileMerger.xml";
+    private static String mergeJobParameter = "xd/context.properties";
 
     static {
         computingNode = ADFConfigHelper.getProperty("computingNode");
@@ -28,6 +35,7 @@ public class PangeaSteps extends CommonSteps {
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
         mboxSink = ADFConfigHelper.getProperty("mboxSink");
+        ceRegionAlias = ADFConfigHelper.getProperty("ceRegionAlias");
     }
 
     public PangeaSteps() {
@@ -42,19 +50,19 @@ public class PangeaSteps extends CommonSteps {
             long count1 = 0;
             String[] region1 = compare1.split(",");
             for (String region : region1) {
-                count1 += adfService.onPath(region).queryOql("select * from " + region).size();
+                count1 += adfService.onPath(getRealRegionPath(region)).queryOql("select * from " + getRealRegionPath(region)).size();
             }
 
             long count2 = 0;
             String[] region2 = compare2.split(",");
             for (String region : region2) {
-                count2 += adfService.onPath(region).queryOql("select * from " + region).size();
+                count2 += adfService.onPath(getRealRegionPath(region)).queryOql("select * from " + getRealRegionPath(region)).size();
             }
             Assert.assertEquals(count1, count2);
         });
 
         And("^I will remove all data with region \"([^\"]*)\"$", (String region) -> {
-            adfService.onPath(region).removeAll();
+            adfService.onPath(getRealRegionPath(region)).removeAll();
         });
 
 
@@ -63,7 +71,11 @@ public class PangeaSteps extends CommonSteps {
         });
 
         And("^I check file data for filename \"([^\"]*)\" by keyFields \"([^\"]*)\"$", (String fileName, String keyFields, DataTable table) -> {
-            File file = retrieveFile(fileName);
+
+            File file = new File(fileName);
+            if (!file.exists()) {
+                file = retrieveFile(fileName);
+            }
             this.checkFileData(table.raw(), keyFields.split(","), file);
         });
 
@@ -71,6 +83,23 @@ public class PangeaSteps extends CommonSteps {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.delete("http://" + mboxSink + "/api/file/" + fileName);
         });
+
+        And("^I execute xd job to merge file \"([^\"]*)\" to \"([^\"]*)\" by keyFields \"([^\"]*)\"$",
+                (String filePattern, String targetFileName, String keys) -> {
+
+                    Map<String, String> param = new HashMap<>();
+
+                    String path = System.getProperty("user.dir") + "/";
+                    param.put("tSourceLocation", path);
+                    param.put("mLocation", path);
+                    param.put("outputDirectory", path);
+                    param.put("sPattern", filePattern);
+                    param.put("tFileName", targetFileName);
+                    param.put("outputFileName", targetFileName);
+                    param.put("keyString", keys);
+
+                    XdJobLaunch.run(mergeJobParameter, param, mergeJobDefinition);
+                });
     }
 
     private File retrieveFile(String fileName) {
@@ -111,8 +140,7 @@ public class PangeaSteps extends CommonSteps {
             int count = 0;
             // check headers
 
-            // for each line in the output file
-            while ((line = bufferedReader.readLine()) != null) {
+            while (StringUtils.isNotEmpty(StringUtils.trim(line = bufferedReader.readLine()))) {
                 // check record
                 List<String> fileList = Arrays.asList(line.split("\t", -1));
                 Assert.assertEquals(fileList.size(), list.get(count).size());
@@ -125,22 +153,20 @@ public class PangeaSteps extends CommonSteps {
                         break;
                     }
                 }
-
                 if (!isContain) {
-                    System.err.println("Record Doesn't Exist:\n"+Arrays.toString(fileList.toArray()));
+                    System.err.println("Record Doesn't Exist:\n" + Arrays.toString(fileList.toArray()));
                 }
                 Assert.assertTrue(isContain);
                 count++;
             }
 
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     private void submitComputeTask(String xml, String drl) {
+
         ComputeClient client = null;
         String name = "";
         if (xml.contains("/")) {
@@ -159,7 +185,12 @@ public class PangeaSteps extends CommonSteps {
 
             client = new ComputeClient();
             client.connect(computingNode);
-            client.submitTask(taskId, xml, drl, commandString, computingPartition);
+
+            if (StringUtils.isNotEmpty(ENV) && StringUtils.isNotEmpty(ceRegionAlias)) {
+                client.submitTask(taskId, xml, drl, commandString, ceRegionAlias, computingPartition);
+            } else {
+                client.submitTask(taskId, xml, drl, commandString, computingPartition);
+            }
 
             boolean done = false;
             String status = null;

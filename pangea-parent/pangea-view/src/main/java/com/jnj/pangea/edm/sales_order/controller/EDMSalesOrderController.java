@@ -4,16 +4,11 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.controller.CommonController;
-import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.project_one.VbakEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.sales_order.service.EDMSalesOrderServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -27,7 +22,6 @@ public class EDMSalesOrderController extends BaseController {
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
         List<ViewResultItem> result = new ArrayList<>();
-        LogUtil.getLogger().info("------list size------{}---------------",list.size());
         list.forEach(raw -> {
 
             RawDataValue rawValue = raw.getValue();
@@ -44,14 +38,13 @@ public class EDMSalesOrderController extends BaseController {
                 } else {
                     if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }
             }
 
         });
-        LogUtil.getLogger().info("------result size------{}---------------",result.size());
         return result;
     }
 }

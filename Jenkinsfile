@@ -49,40 +49,16 @@ node ('ADFSlaveLarge'){
 			 ) {
 				// Run the maven build
 				// rtMaven.run pom:'pangea-parent/pom.xml',goals:'clean install -Dmaven.test.skip=true'
-        
+
+        		sh 'mvn clean install -Dmaven.test.skip=true -f job-file-merger/pom.xml'
+
 				sh 'rm -rf ${WORKSPACE}/pangea-parent/target'
 			    
 				sh 'mvn clean install -Dmaven.test.skip=true -f pangea-parent/pom.xml'
         
 			}
-			
-			
-		    sshagent (credentials: ['sa-its-adaas']) {
-              sh '''
-              ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com "
-                 cd /app/cur_install/bin && 
-                 ./stopserver.sh &&
-                 ./delete.sh all" 
-			   sleep 10
-				 
-				 '''
-				 
-			 
-            }
-			
 		}
-		
-		
-        stage('deploy cluster'){
-            sshagent (credentials: ['sa-its-adaas']) {
 
-              sh "ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com 'cd /app/cur_install/bin && ./deploy.sh && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster-protocol/0.3.04-0.4/adf-compute-cluster-protocol-0.3.04-0.4.jar /app/adf/compute/lib0 && cp ${WORKSPACE}/pangea-parent/pangea-test/src/test/resources/grid-server.xml /app/adf/curation/conf && ./startserver.sh curation && ./startserver.sh cachegrid && ./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar &&./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4-wan-shuffle-function.jar && ./hotdeploy.sh all /app/cur_install/source/extension/adf-topic-queue-0.3-v1-1121.jar && ./hotdeploy.sh all /home/sa-itsus-taan-ciuser/.m2/repository/com/jnj/adf/DI-plugin/0.3.04-SNAPSHOT/DI-plugin-0.3.04-SNAPSHOT.jar &&./startserver.sh computer' "
-              //sh "ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com 'cd /app/cur_install/bin && ./deploy.sh && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4.jar /app/adf/compute/lib0 && cp /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster-protocol/0.3.04-0.4/adf-compute-cluster-protocol-0.3.04-0.4.jar /app/adf/compute/lib0 && cp ${WORKSPACE}/pangea-parent/pangea-test/src/test/resources/grid-server.xml /app/adf/curation/conf && ./startserver.sh curation && ./startserver.sh cachegrid && ./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute-cluster/0.3.04-0.4/adf-compute-cluster-0.3.04-0.4-function.jar &&./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/adf-compute/0.3.04-0.4/adf-compute-0.3.04-0.4-wan-shuffle-function.jar && ./hotdeploy.sh all /app/cur_install/source/extension/adf-topic-queue-0.3-v1-1121.jar && ./hotdeploy.sh all /home/sa-its-eap-jenkins/.m2/repository/com/jnj/adf/DI-plugin/0.3.04-SNAPSHOT/DI-plugin-0.3.04-SNAPSHOT.jar &&./startserver.sh computer' "
-
-			  }
-        }		
-		
-		
     	stage('test and report') {
             echo '====stage est and report===='
 			withMaven(
@@ -92,7 +68,7 @@ node ('ADFSlaveLarge'){
 				//rtMaven.run pom:'pangea-parent/pangea-test/pom.xml',goals:'-Dtest=BaseFlowTest -DgridName=grid -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsacinva1110[15006] -Dgs.bind.ip=localhost -Dnaming.server._COMPUTING=awsacinva1110[15007] -Dsecurity-service-account-username=SA-ITS-UNITYRestUser -Dsecurity-service-account-password=khtYa7I3wRfkVEzyuP+mkg== -Dmaven.test.skip=false -Dtesting.compute.seedNode=awsacinva1110:2551 -Dtesting.compute.remote=true clean verify'
 				//sh 'mvn -DgridName=atom -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsacinva1110[15006] -Dgs.bind.ip=localhost -Dnaming.server._COMPUTING=awsacinva1110[15007] -Dsecurity-service-account-username=SA-ITS-UNITYRestUser -Dsecurity-service-account-password=khtYa7I3wRfkVEzyuP+mkg== -Dmaven.test.skip=false -Dtesting.compute.seedNode=awsacinva1110:2551 -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
 				//sh 'mvn -DgridName=grid -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsacinva1110[15006] -Dgs.bind.ip=localhost -Dnaming.server._COMPUTING=awsacinva1110[15007] -Dlogin.name=SA-ITS-ADFXD_TST -Dlogin.password=encrypted(3F91D85500E1FA91571CD8BAF47B592F) -Dmaven.test.skip=false -DcomputingNode=awsacinva1110:2551 -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
-				sh 'mvn -DgridName=grid -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsacinva1110[15006] -Dgs.bind.ip=localhost -Dnaming.server._COMPUTING=awsacinva1110[15007] -Dlogin.name=pulse -Dlogin.password=QL0AFWMIX8NRZTKeof9cXsvbvu8= -Dmaven.test.skip=false -DcomputingNode=awsacinva1110:2551 -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
+				sh 'mvn -DgridName=EDGAD101 -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsamenva1179[14000],awsamenva1180[14000] -Dlogin.name=pulse -Dlogin.password=QL0AFWMIX8NRZTKeof9cXsvbvu8= -Dmaven.test.skip=false -DcomputingNode=awsamenva3010:2551,awsamenva3011:2551 -DmboxSink=awsamenva3025:8099 -Denv=dev -DceRegionAlias=dev_region_alias.properties -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
 
 				junit 'pangea-parent/pangea-test/target/surefire-reports/*.xml'
 				cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'pangea-parent/pangea-test/target/Destination', sortingMethod: 'ALPHABETICAL'
@@ -101,85 +77,66 @@ node ('ADFSlaveLarge'){
 					updateJiraComment(uploadReport,"${JOB_NAME}",snapOrRels,prjVersionNo)
 				}
 			}
-    				
-    	}		
 
-  
-        if(uploadJar){		
+    	}
+
+
+        if(uploadJar){
 		    stage('deploy jar') {
 			echo    '====stage 6:install jar===='
 			  rtMaven.run pom:'pangea-parent/pom.xml',goals:'install -Dmaven.test.skip=true',buildInfo: buildInfo
 			  rtMaven.deployer.deployArtifacts buildInfo
-			} 
+			}
 		}
-		
-	
-		
+
+
+
 		if(uploadReport){
-		
+
 		    stage('upload data and report') {
 			    echo '====stage 8:upload Test data to Artifactory===='
 				//	sh "zip -r -o ${WORKSPACE}/pangea-parent/pangea-test/src/test/resources/features/testData.zip ${WORKSPACE}/pangea-parent/src/test/resources/features/ -i '*.xlsx'  -x '${WORKSPACE}/pangea-parent/adf-test-framework/src/test/resources/features/view3/viewDefineTest.xlsx' -x '${WORKSPACE}/pangea-parent/adf-test-framework/src/test/resources/features/sample/readExcelSample.xlsx' "
-				//		
-				//	def uploadExcelData = """{ 
+				//
+				//	def uploadExcelData = """{
 				//	"files": [
 				//	  {
 				//	    "pattern": "pangea-parent/pangea-test/src/test/resources/features/testData.zip",
 				//        "props": "groupId=com.jnj.pangea.pangea-test;artifactId=TestData",
 				//        "target": "taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/TestData/testData_${BUILD_NUMBER}.zip",
-				//        "flat": "false"   
+				//        "flat": "false"
 				//      }]
 				//	}"""
-				//    
+				//
 				//	server.upload(uploadExcelData)
-				
+
 				node ('master'){
 				  withEnv(["snapOrRels=${snapOrRels}","prjVersionNo=${prjVersionNo}"]) {
 				  sh '''
 					cd $JENKINS_HOME/jobs/${JOB_NAME}/lastSuccessful
 					tar cvf ./cucumber.tar ./cucumber-html-reports/
-				  '''    
-				
-				  def uploadTestResult = """{ 
+				  '''
+
+				  def uploadTestResult = """{
 				  "files": [
 				  {
 				    "pattern": "$JENKINS_HOME/jobs/${JOB_NAME}/lastSuccessful/cucumber.tar",
                     "props": "groupId=com.jnj.pangea.pangea-test/;artifactId=CucumberReportHTML",
                     "target": "taan-maven-${snapOrRels}/com/jnj/pangea/pangea-test/${prjVersionNo}/CucumberReportHTML/cucumberReport_${BUILD_NUMBER}.tar",
-                    "flat": "false" 
+                    "flat": "false"
                   }]
 				 }"""
-				 
-				 server.upload(uploadTestResult)		
-				}  
+
+				 server.upload(uploadTestResult)
+				}
 			  }
 			}
 		}
-			 
-    	 stage('destroy test env'){
-    	    sshagent (credentials: ['sa-its-adaas']) {
-              sh '''
-              ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com "
-                 cd /app/cur_install/bin && 
-                 ./stopserver.sh &&
-                 ./delete.sh all" '''
-            }
-        }			 
-		
-		  
 	} catch(ex){
-		echo "enter into Exception" 
+		echo "enter into Exception"
         currentBuild.result = 'FAILURE'
 		junit 'pangea-parent/pangea-test/target/surefire-reports/*.xml'
 		cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'pangea-parent/pangea-test/target/Destination', sortingMethod: 'ALPHABETICAL'
 
-		sshagent (credentials: ['sa-its-adaas']) {
-		  sh '''
-		  ssh -o StrictHostKeyChecking=no -l sa-its-adaas awsacinva1110.jnj.com "
-			 cd /app/cur_install/bin && 
-			 ./stopserver.sh &&
-			 ./delete.sh all" '''
-		}
         throw ex
     }finally{
 		echo "currentBuild.result = ${currentBuild.result}"

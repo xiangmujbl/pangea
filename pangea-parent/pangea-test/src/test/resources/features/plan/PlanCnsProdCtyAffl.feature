@@ -15,7 +15,6 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-2531
       | project_one  | BR01                | FERT              |
       | project_one  | BR02                | SAPR              |
       | project_one  | NP                  | FERT              |
-
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
@@ -23,7 +22,6 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-2531
       | project_one  | BR01                | BR12       | X          | 7320133000740000  |
       | project_one  | BR02                | BR12       | X          | 975760150         |
       | project_one  | NP                  | BR12       |            | 78910106115210000 |
-
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -36,7 +34,6 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-2531
       | sourceSystem | localPlant | country |
       | project_one  | BR12       | BR      |
       | project_two  | BR12       | BR      |
-
     And I wait "/edm/plant_v1" Async Queue complete
 
     When I submit task with xml file "xml/plan/PlanCnsProdCtyAffl.xml" and execute file "jar/pangea-view.jar"
@@ -51,10 +48,11 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-2531
 
 #    And I compare the number of records between "/edm/material_global_v1" and "/plan/cns_prod_cty_affl,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/plan/cns_prod_cty_affl"
 
-    And I will remove all data with region "/edm/material_global_v1"
     And I will remove all data with region "/plan/edm_failed_data"
 

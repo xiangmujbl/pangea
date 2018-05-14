@@ -10,7 +10,6 @@ Feature: EDMPlannedOrder AEAZ-2370
       | 0000267326 | BR02  | BR02  | 000000000000002021 | KI    | E     | E     | 00    | LA    | 2016.000 | 0.000 | 0.000 | 20000918 | 000000 | 20000919 | 000000 | 0     |       | BR02  | V001  | 00000000 | 00000000 | 251   | 000   |
       | 0000267327 | BR03  | BR02  | 000000000000002022 | KI    | E     | E     | 00    | LA    | 2016.000 | 0.000 | 0.000 | 20000918 | 000000 | 20000919 | 000000 | 0     |       | BR02  | V001  | 00000000 | 00000000 | 251   | 009   |
       | 0000273372 | BR02  | BR02  | 000000000000000767 | KI    | F     | 3     | 00    | NB    | 2018.000 | 0.000 | 0.000 | 20001023 | 000000 | 20001023 | 000000 | 0     |       | BR02  |       | 00000000 | 00000000 | 301   | 000   |
-
     And I wait "/project_one/plaf" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -31,7 +30,9 @@ Feature: EDMPlannedOrder AEAZ-2370
 
 #    And I compare the number of records between "/project_one/plaf" and "/edm/planned_order_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/planned_order_v1"
 

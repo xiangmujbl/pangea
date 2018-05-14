@@ -8,12 +8,14 @@ public class TvroEntity extends CommonEntity {
 
     private String trazt;
     private String route;
+    private String traztd;
 
     public TvroEntity(Map<String, Object> map) {
         super(map);
 
         setTrazt((String) map.get("trazt"));
         setRoute((String) map.get("route"));
+        setTraztd((String) map.get("traztd"));
     }
 
     public String getTrazt() {
@@ -32,4 +34,11 @@ public class TvroEntity extends CommonEntity {
         this.route = route;
     }
 
+    public String getTraztd() {
+        return traztd;
+    }
+
+    public void setTraztd(String traztd) {
+        this.traztd = traztd;
+    }
 }

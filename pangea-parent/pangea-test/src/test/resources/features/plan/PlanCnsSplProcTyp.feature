@@ -41,7 +41,10 @@ Feature: PlanCnsSplProcTyp AEAZ-1482
 
     And I compare the number of records between "/project_one/t460a" and "/plan/cns_spl_proc_typ,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/plan/cns_spl_proc_typ"
+
     And I will remove all data with region "/plan/edm_failed_data"
