@@ -399,7 +399,7 @@ public interface IConstant {
 
 
     interface PLAN_CONS_TIME_DEP_XCHANGE {
-        String UNIT_ID = "UnitId";
+        String UNIT_ID = "unitId";
     }
 
     interface PROJECT_ONE_PLAF {
