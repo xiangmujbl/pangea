@@ -11,7 +11,10 @@ public class OMPGdmLocationDetailBo extends BaseBo {
     private String CLASS;
     private String comments;
     private String description;
-    private String locationid;
+
+
+
+    private String locationId;
     private String name;
     private String unit;
     private String value;
@@ -72,12 +75,12 @@ public class OMPGdmLocationDetailBo extends BaseBo {
         this.description = description;
     }
 
-    public String getLocationid() {
-        return this.locationid;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setLocationid(String locationid) {
-        this.locationid = locationid;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
     }
 
     public String getName() {
