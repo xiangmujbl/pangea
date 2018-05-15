@@ -3,7 +3,6 @@ package com.jnj.pangea.plan.cns_material_plan_status.controller;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
@@ -30,15 +29,6 @@ public class PlanCnsMaterialPlanStatusController3 extends BaseController {
         Set<String> f1ASet = getF1Set(IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT,IConstant.VALUE.I);
         Set<String> f1BSet = getF1Set(IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT,IConstant.VALUE.EN);
         Set<String> f1CSet = getF1Set(IConstant.VALUE.CNS_PRODUCT_INCLUSION, IConstant.VALUE.LOCAL_MATERIAL_NUMBER, IConstant.VALUE.MRP_TYPE,IConstant.VALUE.I);
-        for (String f1A:f1ASet) {
-            LogUtil.getCoreLog().info("f1A:"+f1A);
-        }
-        for (String f1B:f1BSet) {
-            LogUtil.getCoreLog().info("f1B:"+f1B);
-        }
-        for (String f1C:f1CSet) {
-            LogUtil.getCoreLog().info("f1C:"+f1C);
-        }
 
         String time = getTime();
         events.forEach(raw -> {
@@ -46,8 +36,6 @@ public class PlanCnsMaterialPlanStatusController3 extends BaseController {
                if (resultObject!=null&&resultObject.isSuccess()) {
                    BaseBo baseBo = resultObject.getBaseBo();
                    result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
-                   LogUtil.getLogger().info("-----------------BaseKey:"+baseBo.toMap());
-
                } else {
                    if (resultObject!=null&&null != resultObject.getFailData()) {
                        FailData failData = resultObject.getFailData();
@@ -56,7 +44,6 @@ public class PlanCnsMaterialPlanStatusController3 extends BaseController {
                }
 
         });
-        LogUtil.getLogger().info("-----------------result:"+result.size());
         return result;
     }
 
