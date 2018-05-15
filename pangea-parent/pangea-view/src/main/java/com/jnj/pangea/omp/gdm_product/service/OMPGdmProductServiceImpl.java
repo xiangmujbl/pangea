@@ -4,6 +4,7 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
@@ -21,6 +22,7 @@ import com.jnj.pangea.common.entity.edm.EDMFranchiseV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMFranchiseV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMGlobalBusinessUnitV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBusinessUnitV1DaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.omp.gdm_product.bo.OMPGdmProductBo;
 import org.apache.commons.lang.StringUtils;
@@ -49,6 +51,7 @@ public class OMPGdmProductServiceImpl {
     private EDMFranchiseV1DaoImpl franchiseV1Dao = EDMFranchiseV1DaoImpl.getInstance();
     private EDMGlobalBusinessUnitV1DaoImpl globalBaseUnitV1Dao = EDMGlobalBusinessUnitV1DaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl cnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
+    private PlanCnsPlanParameterDaoImpl planParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
@@ -61,21 +64,24 @@ public class OMPGdmProductServiceImpl {
 
         PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(materialGlobalV1Entity.getSourceSystem(), materialGlobalV1Entity.getLocalMaterialNumber());
 
-        if (null != materialPlanStatusEntity && (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant()))) {
+        if (null != materialPlanStatusEntity && (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant())) && IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
 
             List<OMPGdmProductBo> productBos = new ArrayList<>();
 
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-                if (null != primaryPlanningCode && !"".equals(primaryPlanningCode)) {
+                if (StringUtils.isNotEmpty(primaryPlanningCode)) {
                     OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                     gdmProductBo.setProductId(primaryPlanningCode);
                     productBos.add(gdmProductBo);
                 }
             }
+
+            String parameterValue = getParameterValue(sourceSystem);
+
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
-                if (null != localDPParentCode && !"".equals(localDPParentCode)) {
+                if (StringUtils.isNotEmpty(localDPParentCode) && StringUtils.isNotEmpty(parameterValue)) {
                     OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-                    gdmProductBo.setProductId(sourceSystem + IConstant.VALUE.UNDERLINE + localDPParentCode);
+                    gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
                     productBos.add(gdmProductBo);
                 }
             }
@@ -204,6 +210,14 @@ public class OMPGdmProductServiceImpl {
             return resultObjects;
         }
         return resultObjects;
+    }
+
+    private String getParameterValue (String sourceSystem) {
+        PlanCnsPlanParameterEntity planCnsPlanParameterEntity = planParameterDao.getEntityWithSourceSystemAndDataObject(sourceSystem,IConstant.VALUE.SEND_TO_OMP);
+        if (null!=planCnsPlanParameterEntity){
+            return planCnsPlanParameterEntity.getParameterValue();
+        }
+        return null;
     }
 
     private OMPGdmProductBo checkE1(OMPGdmProductBo productBo, PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity) {

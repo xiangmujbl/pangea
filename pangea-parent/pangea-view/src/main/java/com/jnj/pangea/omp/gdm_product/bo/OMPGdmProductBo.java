@@ -12,9 +12,6 @@ public class OMPGdmProductBo extends BaseBo {
     private String activeSOPERP;
     private String color;
     private String description;
-    private String groes;
-    private String isRoot;
-    private String isSku;
     private String label;
     private String matkl;
     private String planningHierarchy1;
@@ -99,30 +96,6 @@ public class OMPGdmProductBo extends BaseBo {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getGroes() {
-        return this.groes;
-    }
-
-    public void setGroes(String groes) {
-        this.groes = groes;
-    }
-
-    public String getIsRoot() {
-        return isRoot;
-    }
-
-    public void setIsRoot(String isRoot) {
-        this.isRoot = isRoot;
-    }
-
-    public String getIsSku() {
-        return isSku;
-    }
-
-    public void setIsSku(String isSku) {
-        this.isSku = isSku;
     }
 
     public String getLabel() {
