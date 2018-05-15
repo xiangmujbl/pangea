@@ -1,21 +1,20 @@
 package com.jnj.pangea.omp.gdm_conversion_storage.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMJNJCalendarV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustChannelDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsDpPriceDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
 import com.jnj.pangea.common.entity.edm.EDMJNJCalendarV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsCustChannelEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsDpPriceEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.omp.gdm_conversion_storage.bo.OMPGdmConversionStorageBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,12 +36,12 @@ public class OMPGdmConversionStorageServiceImpl {
         return instance;
     }
 
-//    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
     private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private PlanCnsCustChannelDaoImpl cnsCustChannelDao = PlanCnsCustChannelDaoImpl.getInstance();
     private PlanCnsDpPriceDaoImpl cnsDpPriceDao = PlanCnsDpPriceDaoImpl.getInstance();
     private EDMJNJCalendarV1DaoImpl edmJNJCalendarV1Dao = EDMJNJCalendarV1DaoImpl.getInstance();
+    private PlanCnsPlanUnitDaoImpl planCnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
         List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
@@ -67,7 +66,7 @@ public class OMPGdmConversionStorageServiceImpl {
             resultObjectList.add(resultObject);
             return resultObjectList;
         }
-        if(StringUtils.isBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode())){
+        if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode())) {
             FailData failData = new FailData();
             failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
             failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
@@ -92,7 +91,7 @@ public class OMPGdmConversionStorageServiceImpl {
                 //source_system_v1 -localSourceSystem = material_global_v1-sourceSystem
                 //cn_dp_price-country =  country_v1-localCountry
                 List<EDMCountryEntity> edmCountryEntityList = countryV1Dao.getEntityWithLocalCountryList(cnsDpPriceEntity.getCountry());
-                if (edmCountryEntityList==null || edmCountryEntityList.size()==0) {
+                if (edmCountryEntityList == null || edmCountryEntityList.size() == 0) {
                     FailData failData = new FailData();
                     failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
                     failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
@@ -151,7 +150,7 @@ public class OMPGdmConversionStorageServiceImpl {
 
                         for (PlanCnsCustChannelEntity pccc : planCnsCustChannelEntities) {
                             //C1
-                            if(StringUtils.isBlank(pccc.getChannel())){
+                            if (StringUtils.isBlank(pccc.getChannel())) {
                                 FailData failData = new FailData();
                                 failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
                                 failData.setErrorValue("sourceSystem / dpParent code / channel / countryCode do not exist");
@@ -206,7 +205,7 @@ public class OMPGdmConversionStorageServiceImpl {
                             //D1
                             gdmConversionStorageBo.setConversionFactor(IConstant.VALUE.SALESPRICE);
                             // D3
-                            gdmConversionStorageBo.setUnitId("");
+                            gdmConversionStorageBo.setUnitId(getFieldWithC6(edmMaterialGlobalV1Entity.getLocalBaseUom()));
                             ResultObject resultObject = new ResultObject();
                             resultObject.setBaseBo(gdmConversionStorageBo);
                             resultObjectList.add(resultObject);
@@ -248,6 +247,16 @@ public class OMPGdmConversionStorageServiceImpl {
         } else {
             return null;
         }
+    }
+
+    private String getFieldWithC6(String localBaseUOM) {
+        if (StringUtils.isNotEmpty(localBaseUOM)) {
+            PlanCnsPlanUnitEntity planUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUOM);
+            if (null != planUnitEntity) {
+                return planUnitEntity.getUnit();
+            }
+        }
+        return "";
     }
 
     public static boolean isMathC5(String s) {

@@ -29,7 +29,12 @@
                 <columns>countryCode,localCountry</columns>
             </region>
             <region path="/edm/material_global_v1">
-                <columns>localMaterialNumber,sourceSystem,localDpParentCode</columns>
+                <columns>localMaterialNumber,sourceSystem,localDpParentCode,localBaseUom</columns>
+                <relations>
+                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
+                        <expression>localBaseUom=/plan/cns_plan_unit.localUom</expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/plan/cns_cust_channel">
@@ -47,8 +52,15 @@
                     fiscalPeriod,weekFromDate,weekToDate
                 </columns>
             </region>
+
+            <region path="/plan/cns_plan_unit" >
+                <columns>
+                    localUom,unit
+                </columns>
+            </region>
+
             <region path="/omp/gdm_conversion_storage">
-                <columns>aggregationId ,conversionFactor,currencyId,dueDate,fromDueDate,value,unitId</columns>
+                <columns>aggregationId,conversionFactor,currencyId,dueDate,fromDueDate,value,unitId</columns>
             </region>
 
         </regions>
