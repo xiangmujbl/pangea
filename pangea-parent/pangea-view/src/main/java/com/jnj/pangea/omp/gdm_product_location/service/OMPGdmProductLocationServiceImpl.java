@@ -318,10 +318,11 @@ public class OMPGdmProductLocationServiceImpl {
                         Date start = format.parse(entity.getEffectiveStartDate());
                         Date date = new Date();
                         if (date.compareTo(end) <= 0 && date.compareTo(start) >= 0) {
-                            if (edmMaterialPlantFinV1Entity.getLocalMvp()!=null||"".equals(edmMaterialPlantFinV1Entity.getLocalMvp())){
+                            if (edmMaterialPlantFinV1Entity.getLocalMvp()!=null && !edmMaterialPlantFinV1Entity.getLocalMvp().isEmpty() &&
+                                    entity.getExchangeRate()!=null && !entity.getExchangeRate().isEmpty()){
                                 return (new BigDecimal(edmMaterialPlantFinV1Entity.getLocalMvp()).multiply(new BigDecimal(entity.getExchangeRate()))).toString();
                             }else{
-                                return "0";
+                                return "";
                             }
                         }
                     } catch (ParseException e) {
@@ -345,10 +346,11 @@ public class OMPGdmProductLocationServiceImpl {
                         Date start = format.parse(entity.getEffectiveStartDate());
                         Date date = new Date();
                         if (date.compareTo(end) <= 0 && date.compareTo(start) >= 0) {
-                            if (edmMaterialPlantFinV1Entity.getLocalStandardPrice()!=null||"".equals(edmMaterialPlantFinV1Entity.getLocalStandardPrice())){
+                            if (edmMaterialPlantFinV1Entity.getLocalStandardPrice()!=null && !edmMaterialPlantFinV1Entity.getLocalStandardPrice().isEmpty() &&
+                                    entity.getExchangeRate()!=null && !entity.getExchangeRate().isEmpty()){
                                return (new BigDecimal(edmMaterialPlantFinV1Entity.getLocalStandardPrice()).multiply(new BigDecimal(entity.getExchangeRate()))).toString();
                             }else{
-                                return "0";
+                                return "";
                             }
                         }
                     } catch (ParseException e) {
