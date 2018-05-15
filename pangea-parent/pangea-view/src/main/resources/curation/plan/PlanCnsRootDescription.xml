@@ -1,0 +1,40 @@
+<adf-curation>
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/plan/cns_root_description" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.plan.cns_root_description.controller.PlanCnsRootDescriptionController">
+        <regions>
+
+            <region path="/edm/material_global_v1">
+                <columns>localMaterialNumber,localDpParentCode,refDescription</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="true">
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1_clone" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,sourceSystem</columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>localMaterialNumber,localPlant,dpRelevant,localParentCode</columns>
+                <filter>dpRelevant:X</filter>
+            </region>
+
+            <region path="/edm/material_global_v1" alias="/edm/material_global_v1_clone">
+                <columns>localMaterialNumber,localDpParentCode,refDescription</columns>
+            </region>
+
+            <region path="/plan/cns_root_description">
+                <columns>sourceSystem,localDpParentCode,rootDesc,ovrRootDesc</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

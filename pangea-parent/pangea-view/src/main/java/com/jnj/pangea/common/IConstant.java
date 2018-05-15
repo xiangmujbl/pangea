@@ -90,6 +90,7 @@ public interface IConstant {
         String PLAN_CONS_TIME_DEP_XCHANGE_CLONE = "/plan/cons_time_dep_xchange_clone";
         String EDM_JNJ_CALENDAR_V1 = "/edm/jnj_calendar_v1";
         String EDM_UNIT_OF_MEASURE_V1 = "/edm/unit_of_measure_v1";
+        String EDM_MATERIAL_GLOBAL_V1_CLONE = "/edm/material_global_v1_clone";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -515,6 +516,10 @@ public interface IConstant {
 
     interface EDM_UNIT_OF_MEASURE_V1 {
         String UOM = "uom";
+    }
+
+    interface EDM_MATERIAL_GLOBAL_V1_CLONE {
+        String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
 
     // -----region attribute value
