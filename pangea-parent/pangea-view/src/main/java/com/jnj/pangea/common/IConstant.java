@@ -84,6 +84,7 @@ public interface IConstant {
         String PROJECT_ONE_JEST = "/project_one/jest";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
         String PROJECT_ONE_STKO="/project_one/stko";
+        String PROJECT_ONE_STKO_CLONE="/project_one/stko_clone";
         String CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PLN_SPL_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";

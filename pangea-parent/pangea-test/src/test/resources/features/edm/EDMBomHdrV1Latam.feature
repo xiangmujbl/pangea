@@ -18,7 +18,6 @@ Feature: EDMBomHdr AEAZ-3269
 
     And I wait "/edm/source_system_v1" Async Queue complete
 
-
     When I submit task with xml file "xml/edm/EDMBomHdrV1Latam.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/bom_hdr" by keyFields "srcSysCd,bomCatCd,bomNum,altBomNum,bomCntrNbr"
