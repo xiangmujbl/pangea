@@ -3,7 +3,6 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
 
   Scenario: Full Load curation
-    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_3.tsv"
 
     Given I import "/edm/sales_order_v1" by keyFields "salesOrderItem,salesOrderNo,scheduleLineItem,sourceSystem"
       | salesOrderItem | salesOrderNo | scheduleLineItem | sourceSystem | localPlant | localMaterialNumber       | localSalesOrg | localOrderType | localShipToParty | localOrderCreateDt |
@@ -97,9 +96,7 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
     When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus_3.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "PlanCnsMaterialPlanStatus_3.tsv"
-
-    Then I check file data for filename "PlanCnsMaterialPlanStatus_3.tsv" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+    Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber       | localPlant | materialNumber | localParentCode    | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
       | CONS_LATAM   | 000000000000056504        | VE06       | 11111          | 178962124094540036 | 945 | X      | X          |            | X            |                |
       | CONS_LATAM   | 111111111111122222        | VE07       | 22222          | 27896212           | 978 | X      | X          |            | X            |                |
@@ -118,4 +115,3 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     And I will remove all data with region "/plan/cns_material_plan_status"
 
     And I will remove all data with region "/plan/edm_failed_data"
-    And I will remove the test file on sink application "PlanCnsMaterialPlanStatus_3.tsv"

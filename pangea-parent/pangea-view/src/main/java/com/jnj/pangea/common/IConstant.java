@@ -655,6 +655,8 @@ public interface IConstant {
             String N2 = "N2";
             String N1 = "N1";
             String N4 = "N4";
+            String F1 = "F1";
+            String F2 = "F2";
             String F2F3 = "F2F3";
         }
 
