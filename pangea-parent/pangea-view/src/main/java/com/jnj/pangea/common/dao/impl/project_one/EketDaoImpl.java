@@ -19,6 +19,6 @@ public class EketDaoImpl extends CommonDaoImpl {
 
     public List<EketEntity> getEketEntitiesByEbelnAndEbelp(String ebeln, String ebelp) {
         String queryString= QueryHelper.buildCriteria(IConstant.PROJECT_ONE_EKBE.EBELN).is(ebeln).and(IConstant.PROJECT_ONE_EKBE.EBELP).is(ebelp).toQueryString();
-        return queryForList(IConstant.REGION.PROJECT_ONE_EKBE, queryString, EketEntity.class);
+        return queryForList(IConstant.REGION.PROJECT_ONE_EKET, queryString, EketEntity.class);
     }
 }
