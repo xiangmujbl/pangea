@@ -146,3 +146,6 @@
 /edm/brand_v1
 /edm/batch_master_v1
 /edm/jnj_calendar_v1
+
+/project_one/stas
+/edm/bom_item_node
