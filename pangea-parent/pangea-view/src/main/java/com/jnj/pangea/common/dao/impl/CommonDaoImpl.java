@@ -47,7 +47,11 @@ public class CommonDaoImpl implements ICommonDao {
         List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, -1);
         return mapsToObjects(sourceSystemList, clazz);
     }
-
+    @Override
+    public <T> List<T> queryForList(String region, String queryString, Class<? extends CommonEntity> clazz,String orderBys) {
+        List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, null,-1,orderBys);
+        return mapsToObjects(sourceSystemList, clazz);
+    }
     @Override
     public <T> T queryForObject(String region, String queryString, Class<? extends CommonEntity> resultType) {
         T entry = null;
