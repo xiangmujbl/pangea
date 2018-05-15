@@ -1,8 +1,8 @@
 package com.jnj.pangea.omp.gdm_product_unit_conversion.service;
 
-import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialAuomDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialAuomV1Entity;
@@ -83,6 +83,7 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
         return resultObject;
     }
 
+
     private void processSystem(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, GDMProductUnitConversionBo gdmProductUnitConversionBo) {
         gdmProductUnitConversionBo.setProductId(edmMaterialGlobalV1Entity.getLocalDpParentCode());
         gdmProductUnitConversionBo.setActive(IConstant.VALUE.YES); //D1
@@ -96,7 +97,7 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
         failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
         failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_PRODUCT_UNIT_CONVERSION);
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem(materialGlobalV1Entity.getSourceSystem());
+        failData.setSourceSystem(IConstant.VALUE.OMP);
         failData.setKey1(materialGlobalV1Entity.getLocalMaterialNumber());
         failData.setKey2("");
         failData.setKey3("");

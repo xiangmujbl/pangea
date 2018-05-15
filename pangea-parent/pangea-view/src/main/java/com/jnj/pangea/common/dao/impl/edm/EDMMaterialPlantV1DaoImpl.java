@@ -4,6 +4,9 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
     private static EDMMaterialPlantV1DaoImpl instance;
@@ -33,4 +36,11 @@ public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
     }
 
+    public List<EDMMaterialPlantV1Entity> getEntityWithLocalMaterialNumber(String localMaterialNumber) {
+        if (StringUtils.isNotEmpty(localMaterialNumber)){
+            String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
+            return queryForList(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+        }
+        return null;
+    }
 }

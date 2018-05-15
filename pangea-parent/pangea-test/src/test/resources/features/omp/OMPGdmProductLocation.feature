@@ -7,9 +7,6 @@ Feature: OMPGdmProductLocation-Curation AEAZ-1979
    # 3. get atrributes from cns_material_plan_status If cns_material_plan_status (rule D1,T1,T2,)
    # 4. get atrributes from cns_proc_type-procurementType If cns_proc_type-procurementType (rule E1)
    # 5. get atrributes from cns_prod_loc_attrib If cns_prod_loc_attrib (rule E5)
-
-    And I will remove the test file on sink application "GDMProductLocation.tsv"
-
     Given I import "/edm/material_plant_v1" by keyFields "localPlant,localMaterialNumber,sourceSystem"
       | localMaterialNumber | localPlant | sourceSystem     | localProcurementType | localAbcIndicator | localSpecialProcurementType | localPlanningStrategyGroup | localConsumptionMode | localLotSize | localBaseQuantity | localFixedLotSize | localMaximumLotSize | localMinimumLotSize | localRoundingValueForPoq | localMrpType | localMrpController | localInHouseProcessingTime | localSafetyStock | localMinimumSafetyStock | localProductionSupervisor | localPlanningTimeFence | localProductionUnit | localPostToInspectionStock | localComponentScrapInPercent | localCriticalPart | localPlannedDeliveryTimeInDays | localMaximumStockLevel | localPlantStatus | localCheckingGroupForAvailabilityCheck | localInstalledReplenishmentLotSize | localDependentRequirements | localSafetyTimeIndicator | localSafetyTime | localConsumptionPeriodBackward | localConsumptionPeriodForward | localGoodsReceiptProcessingTimeInDays | localBatchManagementRequirementIndicator |
       | 000000000000000001  | BR02       | [Consumer LATAM] | F                    | C                 | 30                          | 40                         | 2                    | EX           | 0.000             | 0.000             | 0.000               | 0.000               |                          | PD           | 606                | 1                          | 0.000            | 0.000                   | 007                       | 000                    |                     |                            | 0.00                         |                   | 0                              | 0.000                  | 05               | 02                                     |                                    | 2                          |                          | 00              | 045                            | 007                           | 0                                     | X                                        |
@@ -30,7 +27,7 @@ Feature: OMPGdmProductLocation-Curation AEAZ-1979
       | preference | unitId | endEff     | factor      | uniqueId | startEff   | exchangeRate |
       | 100        | BRL    | 2018/12/31 | 300         | 1        | 2017/12/31 | 3            |
       | 100        | VEF    | 2019/1/1   | 700         | 2        | 2017/12/31 | 7            |
-      | 100        | UYU    | 2019/1/1   | 28.90172958 | 2        | 2017/12/31 | 0.28         |
+      | 100        | UYU    | 2019/1/1   | 28.90172958 | 3        | 2017/12/31 | 0.28         |
     And I wait "/plan/cons_time_dep_xchange" Async Queue complete
 
 
@@ -52,10 +49,10 @@ Feature: OMPGdmProductLocation-Curation AEAZ-1979
 
     Given I import "/edm/mat_plant_fi_v1" by keyFields "localMaterialNumber"
       | localMaterialNumber | localPlant | priceControl | localStandardPrice | localPriceUnit | localMovingAverage | localPriceControlIndicator | localMvp |
-      | 000000000000000001  | BR02       | v            | 300                |                |                    |                            | 300      |
-      | 000000000000000002  | BR02       | v            | 300                |                |                    |                            | 300      |
-      | 000000000000000003  | BR02       | v            | 300                |                |                    |                            | 300      |
-      | 000000000000000004  | BR02       | v            | 300                |                |                    |                            | 300      |
+      | 000000000000000001  | BR02       | V            | 300                |                |                    |                            | 300      |
+      | 000000000000000002  | BR02       | V            | 300                |                |                    |                            | 300      |
+      | 000000000000000003  | BR02       | V            | 300                |                |                    |                            | 300      |
+      | 000000000000000004  | BR02       | V            | 300                |                |                    |                            | 300      |
     And I wait "/edm/mat_plant_fi_v1" Async Queue complete
 
     Given I import "/plan/cns_spl_proc_typ" by keyFields "sourceSystem"
@@ -128,20 +125,20 @@ Feature: OMPGdmProductLocation-Curation AEAZ-1979
 
     Then I check file data for filename "GDMProductLocation.tsv" by keyFields "productId,locationId"
       | productId | active | activeFCTERP | activeOPRERP | activeSOPERP | basmg | beskz | bstfe | bstma | bstmi | bstrf | cost | disls | dismm | dispo | dzeit | eisbe | eislo | fevor | fixedHorizon | frtme | insmk | itemPlanningCategory | kausf | kzkri | label                           | leadTime | locationId            | maabc | mabst | minmrsl | minRemainingShelfLife | mmsta | mtvfp | peinh | plifz | productTypeId | replenishmentLotSize | sbdkz | shelfLifeProductTypeId | shflg | shzet | sobsl | stprs | strgr | supplyGroup | supplySource | totalShelfLife | verpr | vint1 | vint2 | vprsv | vrmod | webaz | xchpf | productValue |
-      | w         | YES    |              | YES          |              | 0.000 | PE    | 0.000 | 0.000 | 0.000 |       | 300  |       | PD    | 606   | 1     | 0.000 | 0.000 | 007   | 000          |       |       |                      | 0.00  |       | JS COTTON BALLS 50 GRX20 T50P35 | 0        | [Consumer LATAM]_BR02 |       | 0.000 |         | 180                   | 05    | 02    |       | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   |       | SG1         |              | 1825           |       | 045   | 007   |       | 2     | 0     | X     | 300          |
-      | x         | YES    |              | YES          |              | 0.000 | PE    | 0.000 | 0.000 | 0.000 |       | 300  |       | PD    | 606   | 1     | 0.000 | 0.000 | 007   | 000          |       |       |                      | 0.00  |       | JS COTTON BALLS 50 GRX20 T50P35 | 0        | [Consumer LATAM]_BR02 |       | 0.000 |         | 180                   | 05    | 02    |       | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   |       | SG1         |              | 1825           |       | 045   | 007   |       | 2     | 0     | X     | 300          |
-      | z         | YES    |              | YES          |              | 0.000 | PE    | 0.000 | 0.000 | 0.000 |       | 300  |       | PD    | 606   | 1     | 0.000 | 0.000 | 007   | 000          |       |       |                      | 0.00  |       | JS COTTON BALLS 50 GRX20 T50P35 | 0        | [Consumer LATAM]_BR02 |       | 0.000 |         | 150                   | 05    | 02    |       | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   |       | SG1         |              | 1825           |       | 045   | 007   |       | 2     | 0     | X     | 300          |
+      | w         | YES    | NO           | YES          | NO           | 0.000 | PE    | 0.000 | 0.000 | 0.000 |       | 900  |       |  PD   | 606   | 1     | 0.000 | 0.000 | 007   | 000          |       |       |                      | 0.00  |       | JS COTTON BALLS 50 GRX20 T50P35 | 0        | [Consumer LATAM]_BR02 |       | 0.000 |         | 180                   | 05    | 02    |       | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   |       | SG1         |              | 1825           |       | 045   | 007   |       | 2     | 0     | X     | 300          |
+      | x         | YES    | NO           | YES          | NO           | 0.000 | PE    | 0.000 | 0.000 | 0.000 |       | 900  |       |  PD   | 606   | 1     | 0.000 | 0.000 | 007   | 000          |       |       |                      | 0.00  |       | JS COTTON BALLS 50 GRX20 T50P35 | 0        | [Consumer LATAM]_BR02 |       | 0.000 |         | 180                   | 05    | 02    |       | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   |       | SG1         |              | 1825           |       | 045   | 007   |       | 2     | 0     | X     | 300          |
+      | z         | YES    | NO           | YES          | NO           | 0.000 | PE    | 0.000 | 0.000 | 0.000 |       | 900  |       |  PD   | 606   | 1     | 0.000 | 0.000 | 007   | 000          |       |       |                      | 0.00  |       | JS COTTON BALLS 50 GRX20 T50P35 | 0        | [Consumer LATAM]_BR02 |       | 0.000 |         | 150                   | 05    | 02    |       | 0     | FERT          |                      | 2     |                        |       | 00    |       | 300   |       | SG1         |              | 1825           |       | 045   | 007   |       | 2     | 0     | X     | 300          |
+
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID           | errorCode | sourceSystem | businessArea | key1 | key2               | key3             | key4 | key5 | errorValue                  |
-      | SP             | OMPGdmProductLocation | J1        | omp          |              | BR02 | 000000000000000002 | [Consumer LATAM] |      |      | Unable to find DPParentCode |
+       |  errorCode |           errorValue                                         | functionalArea |         interfaceID         | key1 | key2               | key3             | key4 | key5 | sourceSystem |
+       | J1         | primaryPlanningCode is not available for SPRelevant material | SP             | OMPGdmProductLocation       | BR02 | 000000000000000002 | [Consumer LATAM] |      |      | omp          |
 
-  Scenario: delete all test data
-
-    Then I delete the test data
+    And I delete the test data
 
     And I will remove all data with region "/omp/gdm_product_location"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
+#    And I will remove the test file on sink application "GDMProductLocation.tsv"
 

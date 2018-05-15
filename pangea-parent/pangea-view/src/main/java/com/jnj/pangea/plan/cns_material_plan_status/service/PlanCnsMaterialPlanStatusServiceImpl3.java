@@ -1,5 +1,6 @@
 package com.jnj.pangea.plan.cns_material_plan_status.service;
 
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
@@ -16,8 +17,9 @@ import com.jnj.pangea.common.entity.plan.PlanCnsSoTypeInclEntity;
 import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public class PlanCnsMaterialPlanStatusServiceImpl3 {
@@ -31,7 +33,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         return instance;
     }
 
-    private  PlanCnsCustExclDaoImpl planCnsCustExclDao = PlanCnsCustExclDaoImpl.getInstance();
+    private PlanCnsCustExclDaoImpl planCnsCustExclDao = PlanCnsCustExclDaoImpl.getInstance();
 
     private EDMSourceSystemV1DaoImpl edmSourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
@@ -45,153 +47,187 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
 
     private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
 
-    public ResultObject buildView(String key, Object o, Set<String> f1Set,Set<String> f2Set,String time) {
+    public ResultObject buildView(String key, Object o, Set<String> f1ASet, Set<String> f1BSet, Set<String> f1CSet, String time) {
         ResultObject resultObject = new ResultObject();
         EDMSalesOrderV1Entity edmSalesOrderV1Entity = (EDMSalesOrderV1Entity) o;
-        //F2 filter
-        boolean F2 = reluesTwo(edmSalesOrderV1Entity);
-        if(F2==true){
-            return null;
+
+        boolean checkF1 = checkF1(edmSalesOrderV1Entity, f1ASet, f1BSet, f1CSet);
+        boolean checkF2 = checkF2(edmSalesOrderV1Entity);
+        if (!checkF1) {
+            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F1, "");
+            resultObject.setFailData(failData);
+            return resultObject;
         }
 
-        //F1 filter
-        String localPlant = StringUtils.trim(edmSalesOrderV1Entity.getLocalPlant());
-
-        boolean F1A = f1Set.contains(localPlant);
-
-        if(F1A!=true){
-            return null;
-        }
-        //F1 filter
-        EDMMaterialPlantV1Entity eDMMaterialPlantV1Entity = null;
-        if(edmSalesOrderV1Entity.getLocalMaterialNumber()!=null&&!edmSalesOrderV1Entity.getLocalMaterialNumber().equals("")){
-            eDMMaterialPlantV1Entity = edmMaterialPlantV1Dao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSalesOrderV1Entity.getLocalMaterialNumber());
-        }
-        if(eDMMaterialPlantV1Entity!=null && !eDMMaterialPlantV1Entity.equals("")){
-            String localMaterialType = StringUtils.trim(eDMMaterialPlantV1Entity.getLocalMrpType());
-            boolean F1B = f2Set.contains(localMaterialType);
-            if(F1B!=true){
-                return null;
-            }
+        if (!checkF2) {
+            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F2, "");
+            resultObject.setFailData(failData);
+            return resultObject;
         }
 
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
         //J1
-        boolean flag = false;
-        if(time!=null&&!time.equals("")){
-            flag  = Determine(time,edmSalesOrderV1Entity);
-        }
-        boolean flagTwo = false;
-        PlanCnsSoTypeInclEntity entityWithSalesOrgAndOrderType = null;
-        if(!edmSalesOrderV1Entity.getLocalSalesOrg().equals("")&&!edmSalesOrderV1Entity.getLocalOrderType().equals("")){
-            entityWithSalesOrgAndOrderType =  planCnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
-            if(entityWithSalesOrgAndOrderType!=null){
-                EDMPlantV1Entity plantWithLocalPlantAndCountry = edmPlantV1Dao.getPlantWithLocalPlantAndCountry(edmSalesOrderV1Entity.getLocalPlant(), entityWithSalesOrgAndOrderType.getCountry());
-                if(plantWithLocalPlantAndCountry!=null&&!plantWithLocalPlantAndCountry.equals("")){
-                    flagTwo = true;
-                }
-            }
-        }
-        boolean flagThree = false;
-        if(edmSalesOrderV1Entity.getLocalPlant()!=null&&edmSalesOrderV1Entity.getLocalMaterialNumber()!=null){
-            PlanCnsMaterialPlanStatusEntity entityWithLocalMaterialNumberAndlLocalPlant = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(edmSalesOrderV1Entity.getLocalMaterialNumber(), edmSalesOrderV1Entity.getLocalPlant());
-            if(entityWithLocalMaterialNumberAndlLocalPlant!=null){
-                String dpRelevant = entityWithLocalMaterialNumberAndlLocalPlant.getDpRelevant();
-                if(dpRelevant.equals("X")){
-                    flagThree = true;
-                }
-            }
-
-        }
-        if(flag&&flagTwo&& flagThree){
+        if (checkJ1(time, edmSalesOrderV1Entity)) {
             materialPlanStatusBo.setLocalPlant(edmSalesOrderV1Entity.getLocalPlant());
             materialPlanStatusBo.setLocalMaterialNumber(edmSalesOrderV1Entity.getLocalMaterialNumber());
-        }else{
-            return null;
+        } else {
+            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.J1, "");
+            resultObject.setFailData(failData);
+            return resultObject;
         }
         //D1
         materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
 
         //T1
         EDMSourceSystemV1Entity entityWithLocalSourceSystem = edmSourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
-        if(entityWithLocalSourceSystem!=null&&!entityWithLocalSourceSystem.equals("")){
+        if (entityWithLocalSourceSystem != null) {
             materialPlanStatusBo.setSourceSystem(entityWithLocalSourceSystem.getSourceSystem());
         }
+
         //J2
-        String MaterialNumber = getMaterialNumber(edmSalesOrderV1Entity);
-        if(MaterialNumber!=null&&!MaterialNumber.equals("")){
-            materialPlanStatusBo.setMaterialNumber(MaterialNumber);
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumber(edmSalesOrderV1Entity.getLocalMaterialNumber());
+        if (null != materialGlobalV1Entity) {
+            materialPlanStatusBo.setMaterialNumber(materialGlobalV1Entity.getMaterialNumber());
+            materialPlanStatusBo.setLocalParentCode(materialGlobalV1Entity.getLocalDpParentCode());
+            materialPlanStatusBo.setPpc(materialGlobalV1Entity.getPrimaryPlanningCode());
+        } else {
+            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.J2, "");
+            resultObject.setFailData(failData);
+            return resultObject;
         }
-        //T2&&T3
-        EDMMaterialGlobalV1Entity global = getGlobal(eDMMaterialPlantV1Entity);
-        if(global!=null&&!global.equals("")){
-            //T4
-            if(global.getLocalDpParentCode()!=null&&!global.getLocalDpParentCode().equals("")){
-                materialPlanStatusBo.setLocalParentCode(global.getLocalDpParentCode());
-                materialPlanStatusBo.setParentActive("X");
-            }
-            if(global.getPrimaryPlanningCode()!=null&&!global.getPrimaryPlanningCode().equals("")){
-                materialPlanStatusBo.setPpc(global.getPrimaryPlanningCode());
-            }
-        }
-        //D2
-        materialPlanStatusBo.setSpRelevant("");
-        materialPlanStatusBo.setNoPlanRelevant("");
+
         //T5
-        if(materialPlanStatusBo.getDpRelevant().equals("X")||materialPlanStatusBo.getDpRelevant().equals("X")||materialPlanStatusBo.getNoPlanRelevant().equals("X")){
-            materialPlanStatusBo.setActive("X");
+        if (checkT5(materialPlanStatusBo)) {
+            materialPlanStatusBo.setActive(IConstant.VALUE.X);
+        }
+
+        if (StringUtils.isNotEmpty(materialPlanStatusBo.getLocalParentCode())) {
+            materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
         }
 
         resultObject.setBaseBo(materialPlanStatusBo);
         return resultObject;
     }
 
+
+    private boolean checkF1(EDMSalesOrderV1Entity salesOrderV1Entity, Set<String> f1ASet, Set<String> f1BSet, Set<String> f1CSet) {
+        String localPlant = salesOrderV1Entity.getLocalPlant();
+        boolean f1A = (f1ASet.isEmpty() || f1ASet.contains(StringUtils.trim(localPlant)));
+        boolean f1B = (f1BSet.isEmpty() || !f1BSet.contains(StringUtils.trim(localPlant)));
+        if (f1A && f1B) {
+            String localMaterialNumber = salesOrderV1Entity.getLocalMaterialNumber();
+            List<EDMMaterialPlantV1Entity> materialPlantV1EntityList = edmMaterialPlantV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+            for (EDMMaterialPlantV1Entity materialPlantV1Entity : materialPlantV1EntityList) {
+                String localMrpType = materialPlantV1Entity.getLocalMrpType();
+                boolean f1C = (f1CSet.isEmpty() || !f1CSet.contains(StringUtils.trim(localMrpType)));
+                if (f1C) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean checkF2(EDMSalesOrderV1Entity salesOrderV1Entity) {
+        PlanCnsCustExclEntity cnsCustExclEntity = planCnsCustExclDao.getEntityWithSalesOrgAndNotCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
+        if (null != cnsCustExclEntity) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkJ1(String time, EDMSalesOrderV1Entity edmSalesOrderV1Entity) {
+        boolean flag = false;
+        if (StringUtils.isNotEmpty(time)) {
+            flag = Determine(time, edmSalesOrderV1Entity);
+        }
+        boolean flagTwo = false;
+        if (StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalSalesOrg()) && StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalOrderType())) {
+            PlanCnsSoTypeInclEntity entityWithSalesOrgAndOrderType = planCnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
+            if (entityWithSalesOrgAndOrderType != null) {
+                EDMPlantV1Entity plantWithLocalPlantAndCountry = edmPlantV1Dao.getPlantWithLocalPlantAndCountry(edmSalesOrderV1Entity.getLocalPlant(), entityWithSalesOrgAndOrderType.getCountry());
+                if (plantWithLocalPlantAndCountry != null) {
+                    flagTwo = true;
+                }
+            }
+        }
+        boolean flagThree = false;
+        if (StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalPlant()) && StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalMaterialNumber())) {
+            PlanCnsMaterialPlanStatusEntity entityWithLocalMaterialNumberAndlLocalPlant = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(edmSalesOrderV1Entity.getLocalMaterialNumber(), edmSalesOrderV1Entity.getLocalPlant());
+            if (entityWithLocalMaterialNumberAndlLocalPlant != null) {
+                String dpRelevant = entityWithLocalMaterialNumberAndlLocalPlant.getDpRelevant();
+                if (IConstant.VALUE.X.equals(dpRelevant)) {
+                    flagThree = true;
+                }
+            }
+
+        }
+        return flag && flagTwo && flagThree;
+    }
+
     private boolean Determine(String time, EDMSalesOrderV1Entity edmSalesOrderV1Entity) {
-        int traztLong = (int) Double.parseDouble(time);
+        Date localOrderCreateDate = DateUtils.stringToDate(edmSalesOrderV1Entity.getLocalOrderCreateDt(), DateUtils.F_yyyyMMdd);
+        int timeNum = Integer.parseInt(time);
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        String format = sdf.format(date);
-        Date localRequestedDateFormat = DateUtils.stringToDate(format, DateUtils.F_yyyyMMdd);
-        Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztLong);
-        String s = DateUtils.dateToString(fromDueDate, DateUtils.F_yyyyMMdd);
-        int LocalOrderCreateDt = Integer.parseInt(edmSalesOrderV1Entity.getLocalOrderCreateDt());
-        int SS =Integer.parseInt(s);
-        if(LocalOrderCreateDt>SS){
+        Date offDate = DateUtils.offsetDate(date, -timeNum);
+        if (localOrderCreateDate.getTime() >= offDate.getTime()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkT5(PlanCnsMaterialPlanStatusBo materialPlanStatusBo) {
+        if (IConstant.VALUE.X.equals(materialPlanStatusBo.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusBo.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusBo.getNoPlanRelevant())) {
             return true;
         }
         return false;
     }
 
     public String getMaterialNumber(EDMSalesOrderV1Entity edmSalesOrderV1Entity) {
-        if(edmSalesOrderV1Entity.getLocalMaterialNumber()!=null&&!edmSalesOrderV1Entity.getLocalMaterialNumber().equals("")){
+        if (StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalMaterialNumber())) {
             EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumber(edmSalesOrderV1Entity.getLocalMaterialNumber());
-           if(entityWithLocalMaterialNumber!=null&&!entityWithLocalMaterialNumber.equals("")){
-               return  entityWithLocalMaterialNumber.getMaterialNumber();
-           }
+            if (entityWithLocalMaterialNumber != null) {
+                return entityWithLocalMaterialNumber.getMaterialNumber();
+            }
         }
         return null;
     }
 
-    public boolean  reluesTwo(EDMSalesOrderV1Entity edmSalesOrderV1Entity){
+    public boolean reluesTwo(EDMSalesOrderV1Entity edmSalesOrderV1Entity) {
         PlanCnsCustExclEntity entityWithSalesOrgAndCustomerShipTo = null;
         //F2 rules
-        if(edmSalesOrderV1Entity.getLocalSalesOrg()!=null && !edmSalesOrderV1Entity.getLocalSalesOrg().equals("")){
+        if (edmSalesOrderV1Entity.getLocalSalesOrg() != null && !edmSalesOrderV1Entity.getLocalSalesOrg().equals("")) {
             entityWithSalesOrgAndCustomerShipTo = planCnsCustExclDao.getEntityWithSalesOrgAndCustomerShipTo(edmSalesOrderV1Entity.getLocalSalesOrg());
         }
-        if(entityWithSalesOrgAndCustomerShipTo!=null){
+        if (entityWithSalesOrgAndCustomerShipTo != null) {
             String localShipToParty = edmSalesOrderV1Entity.getLocalShipToParty();
-            if(null!=localShipToParty && localShipToParty.equalsIgnoreCase(entityWithSalesOrgAndCustomerShipTo.getCustomerShipTo())){
+            if (null != localShipToParty && localShipToParty.equalsIgnoreCase(entityWithSalesOrgAndCustomerShipTo.getCustomerShipTo())) {
                 return true;
             }
         }
-        return  false;
+        return false;
     }
-    public EDMMaterialGlobalV1Entity getGlobal(EDMMaterialPlantV1Entity eDMMaterialPlantV1Entity){
-        if(eDMMaterialPlantV1Entity!=null&&!eDMMaterialPlantV1Entity.equals("")){
-           EDMMaterialGlobalV1Entity entityWithLocalMaterialNumber = edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumber(eDMMaterialPlantV1Entity.getLocalMaterialNumber());
-            return  entityWithLocalMaterialNumber;
-       }
+
+    public EDMMaterialGlobalV1Entity getGlobal(String localMaterialNumber) {
+        if (StringUtils.isNotEmpty(localMaterialNumber)) {
+            EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+            return materialGlobalV1Entity;
+        }
         return null;
     }
 
+    private FailData writeFailData(EDMSalesOrderV1Entity salesOrderV1Entity, String errorCode, String errorValue) {
+        FailData failData = new FailData();
+        failData.setErrorCode(errorCode);
+        failData.setErrorValue(errorValue);
+        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.PLAN_CNS_MATERIAL_PLAN_STATUS);
+        failData.setSourceSystem(salesOrderV1Entity.getSourceSystem());
+        failData.setKey1(salesOrderV1Entity.getSalesOrderNo());
+        failData.setKey2(salesOrderV1Entity.getSalesOrderItem());
+        failData.setKey3(salesOrderV1Entity.getScheduleLineItem());
+        failData.setKey4("");
+        failData.setKey5("");
+        return failData;
+    }
 }

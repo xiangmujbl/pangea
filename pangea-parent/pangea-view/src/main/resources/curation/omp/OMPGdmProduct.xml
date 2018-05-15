@@ -91,7 +91,7 @@
 
             <region path="/omp/gdm_product">
                 <columns>
-                    productId,active,activeFCTERP,activeOPRERP,activeSOPERP,color,description,groes,isRoot,isSku,label,matkl,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,prdha,shortDescription,sourceLocationId,subFranchise,technology,unitId
+                    productId,active,activeFCTERP,activeOPRERP,activeSOPERP,color,description,label,matkl,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,prdha,shortDescription,sourceLocationId,subFranchise,technology,unitId
                 </columns>
             </region>
 

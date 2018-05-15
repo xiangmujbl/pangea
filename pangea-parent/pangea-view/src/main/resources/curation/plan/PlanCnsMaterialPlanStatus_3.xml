@@ -2,8 +2,7 @@
     <curation mainRegion="/edm/sales_order_v1" viewRegion="/plan/cns_material_plan_status" chunkSize="1000"
               chunkBytes="40096"
               partitionPerServer="2" parallelism="2"
-              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatusController3"
-              writeTo="all" topic="PANGEA_V1_plan_cns_material_plan_status_3">
+              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatusController3">
         <regions>
             <region path="/edm/sales_order_v1">
                 <columns>salesOrderItem,salesOrderNo,scheduleLineItem,sourceSystem,localPlant,localMaterialNumber,localSalesOrg ,localOrderType,localShipToParty,localOrderCreateDt  </columns>

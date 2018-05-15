@@ -35,6 +35,7 @@
 /project_one/mch1
 /project_one/eban
 /project_one/aufk
+/project_one/stko
 /ems/ems_f_z_enterprise_plants
 /ems/ems_f_z_currencies
 /ems/ems_f_mdm_units
@@ -146,6 +147,10 @@
 /edm/brand_v1
 /edm/batch_master_v1
 /edm/jnj_calendar_v1
+/edm/bom_hdr
+
+/project_one/stas
+/edm/bom_item_node
 
 /plan/cns_root_description
 
