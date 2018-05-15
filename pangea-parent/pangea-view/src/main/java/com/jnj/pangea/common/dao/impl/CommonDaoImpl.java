@@ -7,6 +7,7 @@ import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.pangea.common.dao.ICommonDao;
 import com.jnj.pangea.common.entity.CommonEntity;
 import com.jnj.pangea.util.BeanUtil;
+import com.google.common.collect.Lists;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -60,6 +61,33 @@ public class CommonDaoImpl implements ICommonDao {
         if (null != result && null != result.getValue()) {
             try {
                 entry = (T) BeanUtil.mapToBean(result.getValue(), resultType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return entry;
+    }
+	
+	@Override
+    public <T> List<T> queryForList(String region, String queryString, String orderBys,  Class<? extends CommonEntity>  clazz) {
+        List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, null, Integer.MAX_VALUE, orderBys);
+        return mapsToObjects(sourceSystemList, clazz);
+    }
+
+    @Override
+    public long queryForCount(String region, String queryString) {
+        List<Map.Entry<String, String>> sourceSystemList = AdfViewHelper.queryForList(region, queryString, -1);
+        return sourceSystemList.size();
+    }
+
+    @Override
+    public <T> T maxRec(String region, String queryString, String maxField, Class<? extends CommonEntity> clazz) {
+        T entry = null;
+
+        Map.Entry<String, Map<String, Object>> result = AdfViewHelper.maxRec(region, queryString, maxField);
+        if (null != result && null != result.getValue()) {
+            try {
+                entry = (T) clazz.getDeclaredConstructor(Map.class).newInstance(result.getValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }

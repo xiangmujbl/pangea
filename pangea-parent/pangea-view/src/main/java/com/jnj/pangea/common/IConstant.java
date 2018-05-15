@@ -94,6 +94,10 @@ public interface IConstant {
         String EDM_JNJ_CALENDAR_V1 = "/edm/jnj_calendar_v1";
         String EDM_UNIT_OF_MEASURE_V1 = "/edm/unit_of_measure_v1";
         String EDM_MATERIAL_GLOBAL_V1_CLONE = "/edm/material_global_v1_clone";
+		String PROJECT_ONE_MAPL_CLONE = "/project_one/mapl_clone";
+        String PROJECT_ONE_STAS = "/project_one/stas";
+        String PROJECT_ONE_PLAB_CLONE = "/project_one/plab_clone";
+        String PROJECT_ONE_PLKO_CLONE = "/project_one/plko_clone";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -543,6 +547,51 @@ public interface IConstant {
     interface EDM_MATERIAL_GLOBAL_V1_CLONE {
         String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
+	
+	interface MATL_MFG_RTNG {
+        String FIELD_LOEKZ_VALUE_X="x";
+        String FIELD_MATLRTNGVALID_TO="9999/12/31";
+        String FIELD_NAME_PLNNR="plnnr";
+        String FIELD_NAME_PLNTY="plnty";
+        String FIELD_NAME_PLNAL="plnal";
+        String FIELD_NAME_ZKRIZ="zkriz";
+    }
+
+    interface BOM_ITEM {
+        String FIELD_STAS_STLTY_VALUE="stlty";
+        String FIELD_MATLRTNGVALID_TO="9999/12/31";
+        String FIELD_STAS_STLNR_VALUE="stlnr";
+        String FIELD_STAS_STLKN_VALUE="stlkn";
+        String FIELD_STAS_STASZ_VALUE="stasz";
+        String FIELD_LEKNZ_VALUE_X="x";
+
+    }
+
+    interface MFG_RTNG_RLTNSHP {
+        String FIELD_LOEKZ_VALUE_X="x";
+        String FIELD_MATLRTNGVALID_TO="9999/12/31";
+        String FIELD_NAME_PLNNR="plnnr";
+        String FIELD_NAME_PLNTY="plnty";
+        String FIELD_NAME_PLNAL="plnal";
+        String FIELD_NAME_PLNKN="plnkn";
+        String FIELD_NAME_KNNRN="knnrn";
+        String FIELD_PLNTY_VALUE_2="2";
+        String FIELD_PLNTY_VALUE_N="N";
+        String SOFT_ZAEHL_VALUE="zaehl";
+    }
+
+    interface MFG_RTNG_HDR {
+        String FIELD_LOEKZ_VALUE_X="x";
+        String FIELD_MATLRTNGVALID_TO="9999/12/31";
+        String FIELD_NAME_PLNNR="plnnr";
+        String FIELD_NAME_PLNTY="plnty";
+        String FIELD_NAME_PLNAL="plnal";
+        String FIELD_NAME_PLNKN="plnkn";
+        String FIELD_NAME_KNNRN="knnrn";
+        String FIELD_PLNTY_VALUE_2="2";
+        String FIELD_PLNTY_VALUE_N="N";
+        String SOFT_ZAEHL_VALUE="zaehl";
+    }
 
     // -----region attribute value
     interface VALUE {
@@ -631,6 +680,7 @@ public interface IConstant {
         String LESS_DAYS = "LessDays";
         String BOM_VlD_ToDt ="9999/12/31";
     }
+
 
 
     interface FAILED {
