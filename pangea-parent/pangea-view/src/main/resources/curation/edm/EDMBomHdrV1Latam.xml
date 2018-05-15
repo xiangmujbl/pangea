@@ -1,0 +1,28 @@
+<adf-curation>
+    <curation mainRegion="/project_one/stko" viewRegion="/edm/bom_hdr" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.bom_hdr.controller.EDMBomHdrController"
+              writeTo="all" topic="PANGEA_V1_bom_hdr_v1_latam">
+        <regions>
+            <region path="/project_one/stko">
+                <columns>
+                    mandt,stlty,stlnr,stlal,stkoz,datuv,aennr,loekz,vgkzl,andat,aedat,bmein,bmeng,stktx,stlst
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                </columns>
+            </region>
+            <region path="/edm/bom_hdr">
+                <columns>
+                    srcSysCd,bomCatCd,bomNum,altBomNum,bomCntrNbr,bomVldFromDt,chgNum,delInd,prvCntrNbr,crtDttm,chgDttm,bomUomCd,bomBaseQty,bomTxt,bomStsCd,bomVld_ToDt
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

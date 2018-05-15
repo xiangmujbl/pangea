@@ -61,6 +61,7 @@ public interface IConstant {
         String EDM_SUB_BRAND_V1 = "/edm/sub_brand_v1";
         String EDM_BRAND_V1 = "/edm/brand_v1";
         String EDM_FRANCHISE_V1 = "/edm/franchise_v1";
+        String EDM_BOM_HDR = "/edm/bom_hdr";
         String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_business_unit_v1";
         String EDM_MAT_PLANT_FI_V1 = "/edm/mat_plant_fi_v1";
         String PLAN_CONS_TIME_DEP_XCHANGE = "/plan/cons_time_dep_xchange";
@@ -82,6 +83,7 @@ public interface IConstant {
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
+        String PROJECT_ONE_STKO="/project_one/stko";
         String CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PLN_SPL_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
@@ -518,6 +520,23 @@ public interface IConstant {
     interface EDM_UNIT_OF_MEASURE_V1 {
         String UOM = "uom";
     }
+    interface PROJECT_ONE_STKO{
+         String MANDT = "mandt";
+         String STLTY = "stlty";
+         String STLNR = "stlnr";
+         String STLAL = "stlal";
+         String STKOZ = "stkoz";
+         String DATUV = "datuv";
+         String AENNR = "aennr";
+         String LOEKZ = "loekz";
+         String VGKZL = "vgkzl";
+         String ANDAT = "andat";
+         String AEDAT = "aedat";
+         String BMEIN = "bmein";
+         String BMENG = "bmeng";
+         String STKTX = "stktx";
+         String STLST = "stlst";
+    }
 
     // -----region attribute value
     interface VALUE {
@@ -604,6 +623,7 @@ public interface IConstant {
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
+        String BOM_VlD_ToDt ="9999/12/31";
     }
 
 
