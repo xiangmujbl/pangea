@@ -1,14 +1,15 @@
 package com.jnj.pangea.edm;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-import org.junit.runner.RunWith;
+        import cucumber.api.CucumberOptions;
+        import cucumber.api.junit.Cucumber;
+        import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/edm/EDMSourceList.feature"},
+        features = {"src/test/resources/features/edm/EDMAdvancedShipNotification.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-2369 EDMSourceList.json"})
-public class EDMSourceListTest {
+        plugin = {"pretty", "json:target/reports/json/AEAZ-3174 EDMAdvancedShipNotification.json"})
+public class EDMAdvancedShipNotification {
 }
+

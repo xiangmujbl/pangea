@@ -1,52 +1,33 @@
 <adf-curation>
-    <curation mainRegion="/project_one/likp" viewRegion="/edm/advanced_shipping_notification" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_supply.controller.OMPGdmSupplyController"
-              writeTo="all" topic="edm_advance_ship_notification">
+    <curation mainRegion="/project_one/likp" viewRegion="/edm/advanced_ship_notification_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.advanced_ship_notification_v1.controller.EDMAdvancedShipNotificationController" >
 
         <regions>
+
+            <region path="/project_one/likp">
+                <columns>vbeln,erdat,bolnr,lfdat,lfart,vstel,lifex,wadatist,lifnr,werks</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/lips" isPrimaryKey="true">
+                        <expression>vbeln=/project_one/likp.vbeln</expression>
+                    </relation>
+                </relations>
+            </region>
+
             <region path="/edm/source_system_v1">
                 <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
-        </regions>
 
-        <regions>
-            <region path="/project_one/likp">
-                <columns>
-                    <!--spechngsys,grulg,voleh,borgrgrp,netwr,vlstk,sdabw,dirta,lgnum,contdg,aulwe,speredind,tzonrc,erdat,vsbed,kunnr,tzonis,vbund,lstel,xabln,kzwab,trmtyp,erzet,pioiv,volum,vkbur,berot,anzpk,zukrl,bev1rpkist,spegtsrel,handle,tmctrlkey,lifnr,verur,lispl,lprio,vsart,route,vganz,bev1rpcont,bev1rpfaess,exnum,bev1rpflgnr,bev1luleinh,ternr,wadat,kkber,speretcanc,spelescenario,lddat,routa,kouhr,commn,tpsid,mandt,ablad,fkarv,speaccappsts,stwae,tpqua,akkur,spaiv,tragr,bolnr,btgew,speorigsys,tduhr,fkdiv,stafo,gewei,podat,potim,spegtsrtcde,stgelocchange,traid,spelocseq,kuniv,specarrierind,bev1rpsonst,kunag,spegeoroute,speinvbfrgi,werks,aedat,spelifextype,fkdat,tpgrp,spereltmstmp,knump,lifsk,verursys,spewauhrist,lfart,ernam,vstel,expkz,grupp,knumv,lcnum,vbeak,wauhr,kzazu,tsegfl,msractive,bzirk,cmngv,cmwae,ntgew,amtbl,spegeorouteind,bldat,lgbzo,sperevvlstk,kalsm,kalsp,faksk,kodat,spebillingind,fkaiv,lfuhr,prvbe,prtnr,sbgrp,proli,stcur,imwrk,spepronumber,speshpinfsts,tddat,vkoiv,autlf,vkorg,stzzu,xwoff,abssc,akprz,wadatist,cmfre,sakes,speunitsystem,speqistatus,xblnr,printerprofile,stzkl,vtwiv,spettype,vbeln,knfak,lgtor,klief,lifex,folar,lduhr,ctlpc,locguid,speloekz,tsegtp,waerk,aenam,tcode,knkli,vbtyp,trspg,akwae,inco2,spewazoneist,inco1,perfk,lfdat,kalsmch,kdgrp,traty-->
-                    <!--ablad,abssc,aedat,aenam,akkur,akprz,akwae,amtbl,anzpk,aulwe,autlf,berot,bev1luleinh,bev1rpcont,bev1rpfaess,bev1rpflgnr,bev1rpkist,bev1rpsonst,bldat,bolnr,borgrgrp,btgew,bzirk,cmfre,cmngv,cmwae,commn,contdg,ctlpc,dirta,erdat,ernam,erzet,exnum,expkz,faksk,fkaiv,fkarv,fkdat,fkdiv,folar,gewei,grulg,grupp,handle,imwrk,inco1,inco2,kalsm,kalsmch,kalsp,kdgrp,kkber,klief,knfak,knkli,knump,knumv,kodat,kouhr,kunag,kuniv,kunnr,kzazu,kzwab,lcnum,lddat,lduhr,lfart,lfdat,lfuhr,lgbzo,lgnum,lgtor,lifex,lifnr,lifsk,lispl,locguid,lprio,lstel,mandt,msractive,netwr,ntgew,perfk,pioiv,podat,potim,printerprofile,proli,prtnr,prvbe,routa,route,sakes,sbgrp,sdabw,spaiv,speaccappsts,spebillingind,specarrierind,spechngsys,spegeoroute,spegeorouteind,spegtsrel,spegtsrtcde,speinvbfrgi,spelescenario,spelifextype,spelocseq,speloekz,speorigsys,spepronumber,speqistatus,speredind,spereltmstmp,speretcanc,sperevvlstk,speshpinfsts,spettype,speunitsystem,spewauhrist,spewazoneist,stafo,stcur,stgelocchange,stwae,stzkl,stzzu,tcode,tddat,tduhr,ternr,tmctrlkey,tpgrp,tpqua,tpsid,tragr,traid,traty,trmtyp,trspg,tsegfl,tsegtp,tzonis,tzonrc,vbeak,vbeln,vbtyp,vbund,verur,verursys,vganz,vkbur,vkoiv,vkorg,vlstk,voleh,volum,vsart,vsbed,vstel,vtwiv,wadat,wadatist,waerk,wauhr,werks,xabln,xblnr,xwoff,zukrl-->
-                    vbeln,erdat,bolnr,lfdat,lfart,vstel,lifex,wadatist,lifnr,werks
-                </columns>
-                <relations>
-                    <relation path="/project_one/lips">
-                        <expression>
-                            vbeln=/project_one/lips.vbeln
-                        </expression>
-                    </relation>
-                </relations>
-            </region>
-        </regions>
-
-        <regions>
             <region path="/project_one/lips">
-                <columns>
-                    <!--VBELN,POSNR,PSTYV,ERNAM,ERZET,ERDAT,MATNR,MATWA,MATKL,WERKS,LGORT,CHARG,LICHN,KDMAT,PRODH,LFIMG,MEINS,VRKME,UMVKZ,UMVKN,NTGEW,BRGEW,GEWEI,VOLUM,VOLEH,KZTLF,UEBTK,UEBTO,UNTTO,CHSPL,FAKSP,MBDAT,LGMNG,ARKTX,LGPBE,VBELV,POSNV,VBTYV,VGSYS,VGBEL,VGPOS,UPFLU,UEPOS,FKREL,LADGR,TRAGR,KOMKZ,LGNUM,LISPL,LGTYP,LGPLA,BWTEX,BWART,BWLVS,KZDLG,BDART,PLART,MTART,XCHPF,XCHAR,VGREF,POSAR,BWTAR,SUMBD,MTVFP,EANNR,GSBER,VKBUR,VKGRP,VTWEG,SPART,GRKOR,FMENG,ANTLF,VBEAF,VBEAV,STAFO,WAVWR,KZWI1,KZWI2,KZWI3,KZWI4,KZWI5,KZWI6,SOBKZ,AEDAT,EAN11,KVGR1,KVGR2,KVGR3,KVGR4,KVGR5,MVGR1,MVGR2,MVGR3,MVGR4,MVGR5,VPZUO,VGTYP,RFVGTYP,KOSTL,KOKRS,PAOBJNR,PRCTR,PS_PSP_PNR,AUFNR,POSNR_PP,KDAUF,KDPOS,VPMAT,VPWRK,PRBME,UMREF,KNTTP,KZVBR,FIPOS,FISTL,GEBER,PCKPF,BEDAR_LF,CMPNT,KCMENG,KCBRGEW,KCNTGEW,KCVOLUM,UECHA,CUOBJ,CUOBJ_CH,ANZSN,SERAIL,KCGEWEI,KCVOLEH,SERNR,ABRLI,ABART,ABRVW,QPLOS,QTLOS,NACHL,MAGRV,OBJKO,OBJPO,AESKD,SHKZG,PROSA,UEPVW,EMPST,ABTNR,KOQUI,STADAT,AKTNR,KNUMH_CH,PREFE,EXART,CLINT,CHMVS,ABELN,ABELP,LFIMG_FLO,LGMNG_FLO,KCMENG_FLO,KZUMW,KMPMG,AUREL,KPEIN,KMEIN,NETPR,NETWR,KOWRR,KZBEW,MFRGR,CHHPV,ABFOR,ABGES,MBUHR,WKTNR,WKTPS,J_1BCFOP,J_1BTAXLW1,J_1BTAXLW2,J_1BTXSDC,SITUA,RSNUM,RSPOS,RSART,KANNR,KZFME,PROFL,KCMENGVME,KCMENGVMEF,KZBWS,PSPNR,EPRIO,RULES,KZBEF,MPROF,EMATN,LGBZO,HANDLE,VERURPOS,LIFEXPOS,NOATP,NOPCK,RBLVS,BERID,BESTQ,UMBSQ,UMMAT,UMWRK,UMLGO,UMCHA,UMBAR,UMSOK,SONUM,USONU,AKKUR,AKMNG,VKGRU,SHKZG_UM,INSMK,KZECH,FLGWM,BERKZ,HUPOS,NOWAB,KONTO,KZEAR,HSDAT,VFDAT,LFGJA,LFBNR,LFPOS,GRUND,FOBWA,DLVTP,EXBWR,BPMNG,EXVKW,CMPRE_FLT,KZPOD,LFDEZ,UMREV,PODREL,KZUML,FKBER,GRANT_NBR,KZWSO,GMCONTROL,POSTING_CHANGE,UM_PS_PSP_PNR,PRE_VL_ETENS,SPE_GEN_ELIKZ,SPE_SCRAP_IND,SPE_AUTH_NUMBER,SPE_INSPOUT_GUID,SPE_FOLLOW_UP,SPE_EXP_DATE_EXT,SPE_EXP_DATE_INT,SPE_AUTH_COMPLET	ORMNG,SPE_ATP_TMSTMP,SPE_ORIG_SYS,SPE_LIEFFZ,SPE_IMWRK,SPE_LIFEXPOS2,SPE_EXCEPT_CODE,SPE_KEEP_QTY,SPE_ALTERNATE	SPE_MAT_SUBST,SPE_STRUC,SPE_APO_QNTYFAC,SPE_APO_QNTYDIV,SPE_HERKL,SPE_BXP_DATE_EXT,SPE_VERSION,SPE_COMPL_MVT,J_1BTAXLW4,J_1BTAXLW5,J_1BTAXLW3,BUDGET_PD,KBNKZ,SITKZ,CONS_ORDER-->
-                    <!--uepvw,voleh,lfgja,matwa,lgnum,kcmengvme,speexpdateint,umbsq,erdat,rspos,abges,budgetpd,spestruc,untto,kcntgew,volum,speinspoutguid,kokrs,umlgo,qtlos,bwlvs,consorder,lfimg,cmpnt,spegenelikz,abrli,antlf,bwtex,lichn,nachl,vbelv,spealternate,bpmng,prevletens,spelifexpos2,kdpos,vfdat,chhpv,sitkz,speapoqntydiv,mvgr5,akkur,mvgr4,speexceptcode,dlvtp,kostl,umref,kcgewei,netpr,stafo,j1btaxlw2,cmpreflt,fkber,j1btaxlw1,umvkn,gewei,prbme,aurel,mvgr3,j1btaxlw5,mvgr2,umvkz,j1btaxlw4,kzpod,mvgr1,j1btaxlw3,profl,kcmengflo,spart,spefollowup,bwart,charg,ormng,kcbrgew,vbeln,fkrel,wavwr,berid,lfdez,prctr,anzsn,ernam,rules,abfor,chspl,mtvfp,cuobjch,fobwa,brgew,mfrgr,kcmeng,vgtyp,pckpf,gmcontrol,vgbel,bestq,lifexpos,wktps,spematsubst,sernr,vkgrp,mbuhr,vkgru,ladgr,faksp,kzbef,lgpla,kdauf,bwtar,uecha,vgpos,komkz,kzfme,j1bcfop,lfpos,plart,qplos,chmvs,speapoqntyfac,vbtyv,spebxpdateext,objko,vgsys,vpmat,vbeln,umbar,kzbew,postingchange,kpein,serail,shkzg,empst,cuobj,matkl,exbwr,vgref,umpspsppnr,j1btxsdc,abtnr,kzbws,koqui,speexpdateext,magrv,prefe,rsart,kztlf,netwr,xchar,exvkw,matnr,kowrr,kzdlg,kzumw,lgtyp,specomplmvt,exart,erzet,kzuml,verurpos,vkbur,paobjnr,knumhch,lgmngflo,sonum,grkor,abart,flgwm,vpzuo,handle,eannr,geber,ematn,lispl,pspnr,nopck,nowab,spescrapind,shkzgum,speauthcomplet,kvgr1,posnv,clint,hsdat,kvgr5,kvgr4,vpwrk,fistl,kvgr3,posnr,sumbd,aktnr,bedarlf,kvgr2,mandt,grantnbr,speauthnumber,eprio,ean11,upflu,umsok,kzwso,tragr,xchpf,wktnr,speorigsys,podrel,speatptmstmp,abeln,uepos,fmeng,uebtk,kzvbr,mtart,ummat,abelp,situa,uebto,vtweg,werks,bdart,mprof,spekeepqty,aedat,kdmat,abrvw,meins,lgpbe,objpo,noatp,fipos,kmpmg,vbeav,kcvoleh,spelieffz,speversion,kannr,rblvs,kcvolum,speimwrk,konto,pspsppnr,ntgew,kzear,lgbzo,kzech,umcha,lgmng,berkz,speherkl,prodh,umrev,vbeaf,vrkme,kbnkz,lgort,posnrpp,kcmengvmef,knttp,stadat,kmein,usonu,grund,gsber,rfvgtyp,kzwi6,kzwi5,kzwi2,mbdat,kzwi1,lfbnr,kzwi4,pstyv,kzwi3,arktx,hupos,lfimgflo,werks,posar,prosa,aeskd,akmng,insmk,umwrk,sobkz,uepvw,voleh,lfgja,matwa,lgnum,kcm-->
-                    posnr,matnr,werks,charg,lichn,meins,lgmng,vgbel,vgpos
-                </columns>
-                <relations>
-                    <relation path="/project_one/likp">
-                        <expression>
-                            vbeln=/project_one/likp.vbeln
-                        </expression>
-                    </relation>
-                </relations>
+                <columns>vbeln,posnr,matnr,werks,charg,lichn,meins,lgmng,vgbel,vgpos</columns>
             </region>
-        </regions>
 
-        <regions>
             <region path="/edm/advanced_ship_notification_v1">
-                <columns></columns>
+                <columns>srcSysCd,delvDocID,receivingPtID,localdeliveryType,localdeliveryCatg,localdeliveryDate,localcreatedDate,localbillOfLading,localExternalId,actGRDt,vendorID,localShippingPlant,delvLineNbr,matlNum,localbatchNo,localvendorBatchNo,localReceivingPlant,baseUnitOfMeasureCd,actlSkuDelvQty,localRefDocNum,locRefDocLineNum</columns>
             </region>
+
         </regions>
 
     </curation>

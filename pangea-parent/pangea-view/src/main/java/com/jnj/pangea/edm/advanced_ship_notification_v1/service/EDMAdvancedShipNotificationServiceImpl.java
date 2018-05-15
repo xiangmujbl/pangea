@@ -24,7 +24,6 @@ public class EDMAdvancedShipNotificationServiceImpl implements ICommonService {
 
 
     private static ICommonService instance;
-
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
     public static ICommonService getInstance() {
@@ -46,7 +45,7 @@ public class EDMAdvancedShipNotificationServiceImpl implements ICommonService {
         // T1
         // Get sourceSystem from source_system_v1 using below condition:
         // source_system_v1-localSourceSystem = "project_one"
-        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
+        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
 
         if(edmSourceSystemV1Entity != null){
             edmAdvancedShipNotificationBo.setSrcSysCd(edmSourceSystemV1Entity.getLocalSourceSystem());
@@ -56,6 +55,7 @@ public class EDMAdvancedShipNotificationServiceImpl implements ICommonService {
         // Select only when LIKP-LFART= 7
         if(likpEntity.getLfart().equals("7")) {
             edmAdvancedShipNotificationBo.setLocaldeliveryType(likpEntity.getLfart());
+
         }
 
         // J1
