@@ -42,7 +42,7 @@ public class OMPGdmClusterServiceImpl implements ICommonService {
                 String extraParamKey = cnsClustersEntity.getSourceSystem() + cnsClustersEntity.getCluster();
                 if (!extraParam.containsKey(extraParamKey)) {
                     extraParam.put(extraParamKey, null);
-                    gdmClusterBo.setClusterId(extraParamKey);
+                    gdmClusterBo.setClusterId(cnsClustersEntity.getCluster());
                     gdmClusterBo.setActiveFCTERP(IConstant.VALUE.YES);
                     gdmClusterBo.setClusterDescription(cnsClustersEntity.getClusterDesc());
                     resultObject.setBaseBo(gdmClusterBo);

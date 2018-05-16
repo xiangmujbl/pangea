@@ -555,6 +555,7 @@ public interface IConstant {
         String YYYY_MM_DD = "yyyy/MM/dd";
         String YYYYMMDD_ZERO = "00000000";
         String YYYY_MM_DD_ZERO = "0000/00/00";
+        String  HH_NN_SS_ZERO = " 00:00:00";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
         String YYYYDDMMHHMMSS = "yyyy/DD/mm HH:mm:ss";
         String MMDYYYY = "MM/d/yyyy";
