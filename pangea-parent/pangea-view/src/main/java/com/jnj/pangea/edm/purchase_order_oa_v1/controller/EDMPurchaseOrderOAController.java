@@ -10,10 +10,7 @@ import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.project_one.EkkoEntity;
-import com.jnj.pangea.common.entity.project_one.EkpoEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.purchase_order_oa_v1.service.EDMPurchaseOrderOAServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -24,6 +21,7 @@ public class EDMPurchaseOrderOAController extends BaseController {
 
     private EDMPurchaseOrderOAServiceImpl service = EDMPurchaseOrderOAServiceImpl.getInstance();
 
+    @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
         List<ViewResultItem> result = new ArrayList<>();
