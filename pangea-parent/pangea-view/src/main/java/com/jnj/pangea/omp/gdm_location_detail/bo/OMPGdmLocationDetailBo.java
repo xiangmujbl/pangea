@@ -6,14 +6,11 @@ import com.jnj.pangea.common.BaseBo;
 public class OMPGdmLocationDetailBo extends BaseBo {
 
     private String locationDetailId;
-    private String activeOprerp;
-    private String activeSoperp;
+    private String activeOPRERP;
+    private String activeSOPERP;
     private String CLASS;
     private String comments;
     private String description;
-
-
-
     private String locationId;
     private String name;
     private String unit;
@@ -35,20 +32,20 @@ public class OMPGdmLocationDetailBo extends BaseBo {
         this.locationDetailId = locationDetailId;
     }
 
-    public String getActiveOprerp() {
-        return this.activeOprerp;
+    public String getActiveOPRERP () {
+        return this.activeOPRERP;
     }
 
-    public void setActiveOprerp(String activeOprerp) {
-        this.activeOprerp = activeOprerp;
+    public void setActiveOPRERP (String activeOPRERP) {
+        this.activeOPRERP = activeOPRERP;
     }
 
-    public String getActiveSoperp() {
-        return this.activeSoperp;
+    public String getActiveSOPERP () {
+        return this.activeSOPERP;
     }
 
-    public void setActiveSoperp(String activeSoperp) {
-        this.activeSoperp = activeSoperp;
+    public void setActiveSOPERP (String activeSOPERP) {
+        this.activeSOPERP = activeSOPERP;
     }
 
     public String getCLASS() {
@@ -76,7 +73,7 @@ public class OMPGdmLocationDetailBo extends BaseBo {
     }
 
     public String getLocationId() {
-        return locationId;
+        return this.locationId;
     }
 
     public void setLocationId(String locationId) {
