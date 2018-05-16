@@ -1,23 +1,23 @@
 <adf-curation>
-    <curation mainRegion="/edm/unit_of_measure_v1" viewRegion="/omp/gdm_unit" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/plan/cns_plan_unit" viewRegion="/omp/gdm_unit" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_unit_measurable.controller.OMPGdmUnitMeasurableController"
               writeTo="all" topic="PANGEA_V1_gdm_unit_measure">
         <regions>
 
-            <region path="/edm/unit_of_measure_v1">
+            <region path="/plan/cns_plan_unit">
                 <columns>
-                    uom,factor,isoCode,uomName,measure,roundingDecimal,localUom,sourceSystem
+                    localUom,localUomName,plantFlag,sourceSystem,unit,factor,roundingDecimal
                 </columns>
                 <relations>
-                    <relation path="/plan/cns_plan_unit" isPrimaryKey="true">
-                        <expression>localUom=/edm/unit_of_measure_v1.localUom</expression>
+                    <relation path="/edm/unit_of_measure_v1" isPrimaryKey="true">
+                        <expression>uom=/plan/cns_plan_unit.unit</expression>
                     </relation>
                 </relations>
             </region>
 
-            <region path="/plan/cns_plan_unit">
+            <region path="/edm/unit_of_measure_v1">
                 <columns>
-                    localUom,localUomName,plantFlag,sourceSystem,unit
+                    uom,factor,isoCode,uomName,measure,roundingDecimal,localUom,sourceSystem
                 </columns>
             </region>
 

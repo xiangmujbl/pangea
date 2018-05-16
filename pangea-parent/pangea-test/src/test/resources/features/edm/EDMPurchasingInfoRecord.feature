@@ -40,7 +40,9 @@ Feature: EDMPurchasingInfoRecord AEAZ-2371
 
 #    And I compare the number of records between "/project_one/eina" and "/edm/purchasing_info_record_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/purchasing_info_record_v1"
 

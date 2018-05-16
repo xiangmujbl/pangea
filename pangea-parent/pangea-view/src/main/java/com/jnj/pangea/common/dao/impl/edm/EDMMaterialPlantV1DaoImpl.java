@@ -28,5 +28,9 @@ public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
                 .and(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
     }
+    public EDMMaterialPlantV1Entity getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber( String localMaterialNumber) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+    }
 
 }

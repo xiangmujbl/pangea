@@ -7,6 +7,7 @@ import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_location_xref.bo.OMPGdmLocationXrefBo;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
@@ -35,15 +36,19 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
             return resultObject;
         }
         // rules C1
-        gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorOrCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
+        if(StringUtils.isBlank(cnsPlnSplLocEntity.getLocalPlant())) {
+            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendororCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
+        }else{
+            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getLocalPlant() + "$" + cnsPlnSplLocEntity.getLocalNumber());
+        }
 
         //rules C3
-        if (IConstant.VALUE.C.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
+        if (IConstant.VALUE.C.equals(cnsPlnSplLocEntity.getVendororCustomer())) {
             gdmLocationXrefBo.setCustomerId(cnsPlnSplLocEntity.getLocalNumber());
         }
 
         //rules C4
-        if (IConstant.VALUE.V.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
+        if (IConstant.VALUE.V.equals(cnsPlnSplLocEntity.getVendororCustomer())) {
             gdmLocationXrefBo.setVendorId(cnsPlnSplLocEntity.getLocalNumber());
         }
 

@@ -8,7 +8,6 @@ Feature: EDMMatPlantFi AEAZ-1431
       | 000000000000000016 | AR01  |       | S     | 16.62 | 1     | 13.51 |
       | 000000000000000021 | AR01  |       | S     | 55.09 | 1     | 55.09 |
       | 000000000000000029 | AR01  |       | S     | 1.23  | 1     | 1.23  |
-
     And I wait "/project_one/mbew" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -36,7 +35,10 @@ Feature: EDMMatPlantFi AEAZ-1431
 
     And I compare the number of records between "/project_one/mbew" and "/edm/mat_plant_fi_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/mat_plant_fi_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"

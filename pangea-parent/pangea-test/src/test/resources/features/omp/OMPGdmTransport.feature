@@ -74,7 +74,7 @@ Feature:  OMPGdmTransport
 			| machineTypeId	| processTypeId		| transportId							| requirementOffset	| purchasingOrganization	| active	| vendorId	| purchasingGroup	| label				| toLocationId		| fromLocationId	| planLevelId	| activeOPRERP	| activeSOPERP	| minQuantity	| transportOffset	| toProductId	| transportType	| endEff	| fromProductId	| startEff	|
 			| TRANSPORT		| INTERNALTRANSPORT	| 59816/CONS_LATAM_BR07/CONS_LATAM_BR12	| 					| BR00						| YES		| 8917		| BA0				| INTERNALTRANSPORT	| CONS_LATAM_V_BR12	| CONS_LATAM_V_BR07	| *				| YES			| NO			| 				| 5					| 59816			| Ship			| 12312018	| 59816			| 1012018	|
 
-		Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+		Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
 			| key1			| key2	| businessArea	| key5	| functionalArea	| key3	| sourceSystem	| errorValue													| key4	| errorCode	| interfaceID		|
 			| CONS_LATAM	| BR08	| 				| 		| SP				| 59816	| CONS_LATAM	| Deletion Indicator not Blank									| 		| N1		| OMPGdmTransport	|
 			| CONS_LATAM	| BR09	| 				| 		| SP				| 		| CONS_LATAM	| Material Number null in CNS Tlane Item Exception 				| 		| N/A		| OMPGdmTransport	|
@@ -84,7 +84,7 @@ Feature:  OMPGdmTransport
 			| CONS_LATAM	| BR12	| 				| 		| SP				| 59817	| CONS_LATAM	| No Matching Record found in EDMMaterialPlantV1Entity	 		| 		| N8		| OMPGdmTransport	|
 			| CONS_LATAM	| BR13	| 				| 		| SP				| 59818	| CONS_LATAM	| No Matching Record found in EDMSourceListV1Entity		 		| 		| N9 & N10	| OMPGdmTransport	|
 
-		And I will remove all data with region "/plan/edm_failed_data"
+		And I will remove all data with region "/dev/plan/edm_failed_data"
 
 	    When I submit task with xml file "xml/omp/OMPGdmTransport.xml" and execute file "jar/pangea-view.jar"
 
@@ -94,10 +94,10 @@ Feature:  OMPGdmTransport
 			| machineTypeId	| processTypeId		| transportId							| requirementOffset	| purchasingOrganization	| active	| vendorId			| purchasingGroup	| label				| toLocationId		| fromLocationId	| planLevelId	| activeOPRERP	| activeSOPERP	| minQuantity	| transportOffset	| toProductId	| transportType	| endEff	| fromProductId	| startEff	|
 			| TRANSPORT		| INTERNALTRANSPORT	| 59816/CONS_LATAM_BR07/CONS_LATAM_BR12	| 					| BR00						| YES		| 8917				| BA0				| INTERNALTRANSPORT	| CONS_LATAM_BR12	| CONS_LATAM_BR07	| *				| YES			| NO			| 				| 7					| 59816			| Ship			| 20181231	| 59816			| 20180101	|
 
-		Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+		Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
 			| key1			| key2	| businessArea	| key5	| functionalArea	| key3	| sourceSystem	| errorValue				| key4	| errorCode	| interfaceID		|
 
-#		And I will remove all data with region "/plan/edm_failed_data"
+#		And I will remove all data with region "/dev/plan/edm_failed_data"
 
 		And I delete the test data
 

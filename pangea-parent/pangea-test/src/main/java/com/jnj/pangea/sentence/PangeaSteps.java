@@ -1,9 +1,10 @@
 package com.jnj.pangea.sentence;
 
-import com.jnj.adf.cucumber.sentence.CommonSteps;
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
+import com.jnj.pangea.common.CommonSteps;
+import com.jnj.pangea.common.utils.XdJobLaunch;
 import cucumber.api.DataTable;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -19,14 +20,19 @@ public class PangeaSteps extends CommonSteps {
 
     private static String computingNode = "";
     private static Integer computingPartition = 1;
-    private static String mboxSink = "";
+    private static String kafkaSink = "";
+    private static String ceRegionAlias = "";
+
+    private static String mergeJobDefinition = "xd/fileMerger.xml";
+    private static String mergeJobParameter = "xd/context.properties";
 
     static {
         computingNode = ADFConfigHelper.getProperty("computingNode");
         String partition = ADFConfigHelper.getProperty("computingPartition");
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
-        mboxSink = ADFConfigHelper.getProperty("mboxSink");
+        kafkaSink = ADFConfigHelper.getProperty("kafkaSink");
+        ceRegionAlias = ADFConfigHelper.getProperty("ceRegionAlias");
     }
 
     public PangeaSteps() {
@@ -41,19 +47,19 @@ public class PangeaSteps extends CommonSteps {
             long count1 = 0;
             String[] region1 = compare1.split(",");
             for (String region : region1) {
-                count1 += adfService.onPath(region).queryOql("select * from " + region).size();
+                count1 += adfService.onPath(getRealRegionPath(region)).queryOql("select * from " + getRealRegionPath(region)).size();
             }
 
             long count2 = 0;
             String[] region2 = compare2.split(",");
             for (String region : region2) {
-                count2 += adfService.onPath(region).queryOql("select * from " + region).size();
+                count2 += adfService.onPath(getRealRegionPath(region)).queryOql("select * from " + getRealRegionPath(region)).size();
             }
             Assert.assertEquals(count1, count2);
         });
 
         And("^I will remove all data with region \"([^\"]*)\"$", (String region) -> {
-            adfService.onPath(region).removeAll();
+            adfService.onPath(getRealRegionPath(region)).removeAll();
         });
 
 
@@ -62,14 +68,35 @@ public class PangeaSteps extends CommonSteps {
         });
 
         And("^I check file data for filename \"([^\"]*)\" by keyFields \"([^\"]*)\"$", (String fileName, String keyFields, DataTable table) -> {
-            File file = retrieveFile(fileName);
+
+            File file = new File(fileName);
+            if (!file.exists()) {
+                file = retrieveFile(fileName);
+            }
             this.checkFileData(table.raw(), keyFields.split(","), file);
         });
 
         And("^I will remove the test file on sink application \"([^\"]*)\"$", (fileName) -> {
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.delete("http://" + mboxSink + "/api/file/" + fileName);
+            restTemplate.delete("http://" + kafkaSink + "/api/file/" + fileName);
         });
+
+        And("^I execute xd job to merge file \"([^\"]*)\" to \"([^\"]*)\" by keyFields \"([^\"]*)\"$",
+                (String filePattern, String targetFileName, String keys) -> {
+
+                    Map<String, String> param = new HashMap<>();
+
+                    String path = System.getProperty("user.dir") + "/";
+                    param.put("tSourceLocation", path);
+                    param.put("mLocation", path);
+                    param.put("outputDirectory", path);
+                    param.put("sPattern", filePattern);
+                    param.put("tFileName", targetFileName);
+                    param.put("outputFileName", targetFileName);
+                    param.put("keyString", keys);
+
+                    XdJobLaunch.run(mergeJobParameter, param, mergeJobDefinition);
+                });
     }
 
     private File retrieveFile(String fileName) {
@@ -79,7 +106,7 @@ public class PangeaSteps extends CommonSteps {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        ResponseEntity<byte[]> response = restTemplate.exchange("http://" + mboxSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
+        ResponseEntity<byte[]> response = restTemplate.exchange("http://" + kafkaSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
 
         File file = new File(fileName);
         FileOutputStream output = null;
@@ -115,7 +142,10 @@ public class PangeaSteps extends CommonSteps {
 
                 List<String> targetLine = testDataList.get(0);
                 List<String> fileLine = Arrays.asList(line.split("\t", -1));
-                Assert.assertEquals(fileLine.size(), targetLine.size()); //check we have all columns
+                if (fileLine.size() != targetLine.size()) {
+                    System.err.println("Column Count Doesn't Match.\nExpected:"+targetLine.size()+"\nActual:"+fileLine.size());
+                }
+                Assert.assertEquals(targetLine.size(), fileLine.size()); //check we have all columns
 
                 // all headers present
                 headersFound = targetLine.containsAll(fileLine);
@@ -184,10 +214,13 @@ public class PangeaSteps extends CommonSteps {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     private void submitComputeTask(String xml, String drl) {
+
         ComputeClient client = null;
         String name = "";
         if (xml.contains("/")) {
@@ -206,7 +239,12 @@ public class PangeaSteps extends CommonSteps {
 
             client = new ComputeClient();
             client.connect(computingNode);
-            client.submitTask(taskId, xml, drl, commandString, computingPartition);
+
+            if (StringUtils.isNotEmpty(ENV) && StringUtils.isNotEmpty(ceRegionAlias)) {
+                client.submitTask(taskId, xml, drl, commandString, ceRegionAlias, computingPartition);
+            } else {
+                client.submitTask(taskId, xml, drl, commandString, computingPartition);
+            }
 
             boolean done = false;
             String status = null;

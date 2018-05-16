@@ -27,18 +27,14 @@ Feature: EDMUnitOfMeasure AEAZ-491
       | CONS_LATAM   | %0       | Per 1000                 | %O2 | %LC, %label clm |         |         |        |                 |
       | CONS_LATAM   | %LC      | %LC, Percent label claim | N/A |                 |         |         |        |                 |
 
-
-#    Then I check region data "/plan/unit_of_measure_v1_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-#      | functionalArea | interfaceID      | errorCode                                   | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-#      |               | | z_source_system value is not [EMS] and rule T1|       |            |  [EMS] |    %O2  |      |      |      |            |
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID      | errorCode                                      | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
-      | DP             | EDMUnitOfMeasure | z_source_system value is not [EMS] and rule T1 | [EMS]        |              | [EMS] | %O2  |      |      |      |            |
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
+#    And I compare the number of records between "/ems/ems_f_mdm_units" and "/edm/unit_of_measure_v1,/plan/edm_failed_data"
 
-    And I compare the number of records between "/ems/ems_f_mdm_units" and "/edm/unit_of_measure_v1,/plan/edm_failed_data"
+  Scenario: delete all test data
 
-    And I delete the test data
+    Then I delete the test data
 
     And I will remove all data with region "/edm/unit_of_measure_v1"
 

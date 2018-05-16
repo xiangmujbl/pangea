@@ -1,6 +1,7 @@
 package com.jnj.pangea.common;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +10,16 @@ import java.util.Date;
  * Created by XZhan290 on 2018/3/6.
  */
 public class FailData extends BaseBo {
+
+    public static String ENV = "";
+    private static String FAIL_REGION = "/plan/edm_failed_data";
+
+    public String getFailRegion() {
+        if (StringUtils.isNotEmpty(ENV)) {
+            return "/" + ENV + FAIL_REGION;
+        }
+        return FAIL_REGION;
+    }
 
     public FailData() {
     }

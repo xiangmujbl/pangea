@@ -6,7 +6,7 @@
 
             <region path="/plan/cns_process_type">
                 <columns>
-                    processTypeId,processTypeDescription
+                    processTypeId,processTypeDesc
                 </columns>
             </region>
 

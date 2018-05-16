@@ -13,17 +13,11 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
     private String customerId;
     private String demandStreamId;
     private String dueDate;
-    private String forecastItemId;
     private String fromDueDate;
     private String locationId;
-    private String orderReason;
-    private String orderStatus;
-    private String orderSubType;
-    private String orderType;
     private String productId;
     private String quantity;
     private String salesUnit;
-    private String unitId;
     private String validValueXx;
 
     @Override
@@ -98,14 +92,6 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
         this.dueDate = dueDate;
     }
 
-    public String getForecastItemId() {
-        return this.forecastItemId;
-    }
-
-    public void setForecastItemId(String forecastItemId) {
-        this.forecastItemId = forecastItemId;
-    }
-
     public String getFromDueDate() {
         return this.fromDueDate;
     }
@@ -120,38 +106,6 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
 
     public void setLocationId(String locationId) {
         this.locationId = locationId;
-    }
-
-    public String getOrderReason() {
-        return this.orderReason;
-    }
-
-    public void setOrderReason(String orderReason) {
-        this.orderReason = orderReason;
-    }
-
-    public String getOrderStatus() {
-        return this.orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public String getOrderSubType() {
-        return this.orderSubType;
-    }
-
-    public void setOrderSubType(String orderSubType) {
-        this.orderSubType = orderSubType;
-    }
-
-    public String getOrderType() {
-        return this.orderType;
-    }
-
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
     }
 
     public String getProductId() {
@@ -176,14 +130,6 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
 
     public void setSalesUnit(String salesUnit) {
         this.salesUnit = salesUnit;
-    }
-
-    public String getUnitId() {
-        return this.unitId;
-    }
-
-    public void setUnitId(String unitId) {
-        this.unitId = unitId;
     }
 
     public String getValidValueXx() {

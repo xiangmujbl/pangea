@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class EDMSourceListV1DaoImpl extends CommonDaoImpl {
 
@@ -36,5 +37,15 @@ public class EDMSourceListV1DaoImpl extends CommonDaoImpl {
                 .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_BLOCKED_SOURCE_OF_SUPPLY).isNull()
                 .toQueryString();
         return queryForObject(IConstant.REGION.EDM_SOURCE_LIST_V1, queryString, EDMSourceListV1Entity.class);
+    }
+
+    public List<EDMSourceListV1Entity> getEntityListWithConditions(String sourceSystem, String localMaterialNumber, String localPlant) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_LIST_V1.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+                .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_PLANT).is(localPlant)
+                .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_BLOCKED_SOURCEOF_SUPPLY).isNull()
+                .toQueryString();
+        return queryForList(IConstant.REGION.EDM_SOURCE_LIST_V1, queryString, EDMSourceListV1Entity.class);
     }
 }

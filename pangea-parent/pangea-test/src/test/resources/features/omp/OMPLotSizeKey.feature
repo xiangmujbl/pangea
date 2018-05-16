@@ -20,7 +20,9 @@ Feature: OMPLotSizeKey AEAZ-2378
 
     And I compare the number of records between "/plan/cns_lot_size_key" and "/omp/lot_size_key,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/lot_size_key"
 

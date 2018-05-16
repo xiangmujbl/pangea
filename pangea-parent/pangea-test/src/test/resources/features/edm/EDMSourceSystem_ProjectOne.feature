@@ -26,7 +26,10 @@ Feature: EDMSourceSystem AEAZ-868
 
     And I compare the number of records between "/ngems/source_system" and "/edm/source_system_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/source_system_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"
