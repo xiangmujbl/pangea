@@ -146,7 +146,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl1 {
         boolean f3LocalMrpController =(f3LocalMrpControllerSet.isEmpty()    || f3LocalMrpControllerSet.contains(localMrpController));
         boolean f3LocalMrpControllerNot =(f3LocalMrpControllerNotSet.isEmpty()    || !f3LocalMrpControllerNotSet.contains(localMrpController));
         
-        if (null != cnsMaterialInclEntity && f3LocalPlant && f3LocalPlantNot && f3LocalMRPType && f3LocalPlantStatus && f3LocalPlantStatusNot && f3LocalMrpController && f3LocalMrpControllerNot) {
+      //  if (null != cnsMaterialInclEntity && 
+        		if( f3LocalPlant && f3LocalPlantNot && f3LocalMRPType && f3LocalPlantStatus && f3LocalPlantStatusNot && f3LocalMrpController && f3LocalMrpControllerNot) {
             return true;
         }
         return false;

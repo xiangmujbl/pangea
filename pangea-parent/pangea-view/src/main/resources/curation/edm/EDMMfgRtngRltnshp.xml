@@ -1,0 +1,38 @@
+<adf-curation>
+    <curation mainRegion="/project_one/plab" viewRegion="/edm/mfg_rtng_rltnshp" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.mfg_rtng_rltnshp.controller.EDMMfgRtngRltnshpController">
+        <regions>
+
+            <region path="/project_one/plab">
+                <columns>plnty,plnnr,plnal,plnkn,plnrn,alnrn,knnrn,aobar,mimax,zaehl,datuv,aennr,zeinh,dauer,daukz,kalid,werks,andat,aedat,loekz</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/plab" alias="/project_one/plab_clone" isPrimaryKey="false">
+                        <expression>plnty=/project_one/plab.plnty,plnnr=/project_one/plab.plnnr,plnal=/project_one/plab.plnal,plnkn=/project_one/plab.plnkn,knnrn=/project_one/plab.knnrn</expression>
+                    </relation>
+                </relations>
+                <filter>plnty:2 OR plnty:N</filter>
+            </region>
+
+
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/project_one/plab" alias="/project_one/plab_clone">
+                <columns>plnty,plnnr,plnal,plnkn,plnrn,alnrn,knnrn,aobar,mimax,zaehl,datuv,aennr,zeinh,dauer,daukz,kalid,werks,andat,aedat,loekz</columns>
+                <filter>plnty:2 OR plnty:N</filter>
+            </region>
+
+            <region path="/edm/mfg_rtng_rltnshp">
+                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngNdeNum,rtngScndGrpCd,rtngScndGrpCntrNbr,rtngScndNdeNum,rltnshpTypCd,rltnshpMxIntrvlCd,rltnshpVrsnCntrNbr,valFromDt,chgNum,rltnshpIntrvlUomCd,rltnshpIntrvl,rltsnhpDrtnInd,fctryClndrCd,plntCd,crtDttm,chgDttm,rltnshpValidEnd</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

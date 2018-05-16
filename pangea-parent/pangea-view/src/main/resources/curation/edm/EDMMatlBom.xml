@@ -1,0 +1,25 @@
+<adf-curation>
+    <curation mainRegion="/project_one/mast" viewRegion="/edm/matl_bom" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.matl_bom.controller.EDMMatlBomController">
+        <regions>
+
+            <region path="/project_one/mast">
+                <columns>mandt,matnr,stlal,stlan,stlnr,werks,losvn,losbs,andat,aedat</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+
+            <region path="/edm/matl_bom">
+                <columns>srcSysCd,matlNum,plntCd,bomUsgCd,bomNum,altBomNum,fromLotSizeQty,toLotSizeQty,crtDttm,chgDttm</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

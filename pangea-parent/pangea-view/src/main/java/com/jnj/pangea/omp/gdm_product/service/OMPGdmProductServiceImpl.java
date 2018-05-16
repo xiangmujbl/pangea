@@ -62,12 +62,10 @@ public class OMPGdmProductServiceImpl {
         String localDPParentCode = materialGlobalV1Entity.getLocalDpParentCode();
         String sourceSystem = materialGlobalV1Entity.getSourceSystem();
 
-        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(materialGlobalV1Entity.getSourceSystem(), materialGlobalV1Entity.getLocalMaterialNumber());
+        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(sourceSystem, materialGlobalV1Entity.getLocalMaterialNumber());
 
-        if (null != materialPlanStatusEntity && (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant())) && IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-
+        if (null != materialPlanStatusEntity && (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) && IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
             List<OMPGdmProductBo> productBos = new ArrayList<>();
-
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
                 if (StringUtils.isNotEmpty(primaryPlanningCode)) {
                     OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
@@ -77,7 +75,6 @@ public class OMPGdmProductServiceImpl {
             }
 
             String parameterValue = getParameterValue(sourceSystem);
-
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
                 if (StringUtils.isNotEmpty(localDPParentCode) && StringUtils.isNotEmpty(parameterValue)) {
                     OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
@@ -209,12 +206,13 @@ public class OMPGdmProductServiceImpl {
             resultObjects.add(resultObject);
             return resultObjects;
         }
+
         return resultObjects;
     }
 
-    private String getParameterValue (String sourceSystem) {
-        PlanCnsPlanParameterEntity planCnsPlanParameterEntity = planParameterDao.getEntityWithSourceSystemAndDataObject(sourceSystem,IConstant.VALUE.SEND_TO_OMP);
-        if (null!=planCnsPlanParameterEntity){
+    private String getParameterValue(String sourceSystem) {
+        PlanCnsPlanParameterEntity planCnsPlanParameterEntity = planParameterDao.getEntityWithSourceSystemAndDataObject(sourceSystem, IConstant.VALUE.SEND_TO_OMP);
+        if (null != planCnsPlanParameterEntity) {
             return planCnsPlanParameterEntity.getParameterValue();
         }
         return null;

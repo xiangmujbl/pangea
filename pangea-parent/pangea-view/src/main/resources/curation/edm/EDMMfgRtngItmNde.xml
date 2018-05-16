@@ -1,0 +1,27 @@
+<adf-curation>
+    <curation mainRegion="/project_one/plas" viewRegion="/edm/mfg_rtng_itm_nde" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.mfg_rtng_itm_nde.controller.EDMMfgRtngItmNdeController">
+        <regions>
+
+            <region path="/project_one/plas">
+                <columns>plnty,plnnr,plnal,plnfl,plnkn,zaehl,datuv,aennr,loekz,andat,aedat</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+
+            <region path="/edm/mfg_rtng_itm_nde">
+                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr,
+                    ValidFromDate,chgNum,delInd,CreateDttm,chgDttm
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

@@ -24,7 +24,8 @@ public class ProjectOneStkoDaoImpl extends CommonDaoImpl {
             String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_STKO.STLNR).is(stlnr).
                     and(IConstant.PROJECT_ONE_STKO.STLAL).is(stlal).toQueryString();
             LogUtil.getCoreLog().info("----------queryString---------"+queryString);
-            return queryForList(IConstant.REGION.PROJECT_ONE_STKO, queryString, StkoEntity.class);
+//            return queryForList(IConstant.REGION.PROJECT_ONE_STKO, queryString, StkoEntity.class,IConstant.PROJECT_ONE_STKO.STKOZ);
+            return queryForList(IConstant.REGION.PROJECT_ONE_STKO_CLONE, queryString, StkoEntity.class);
         }
         return null;
     }

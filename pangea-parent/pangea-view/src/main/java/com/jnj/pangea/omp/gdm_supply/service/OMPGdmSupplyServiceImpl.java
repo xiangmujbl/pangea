@@ -177,7 +177,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                             }
                             else
                             {
-                                gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + "_" + planCnsPlnSplLocEntity_1.getVendororCustomer() + "_" + planCnsPlnSplLocEntity_1.getLocalNumber());
+                                gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + "_" + planCnsPlnSplLocEntity_1.getVendorOrCustomer() + "_" + planCnsPlnSplLocEntity_1.getLocalNumber());
 
                             }
 

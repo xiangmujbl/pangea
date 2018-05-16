@@ -79,9 +79,9 @@ job create --name Pangea_Dev_Trigger_Omp_gdm_unit_currency --definition 'trigger
 
 job create --name Pangea_Dev_Trigger_Omp_gdm_unit_measure --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmUnitMeasurable.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
-job create --name Pangea_Dev_Trigger_Omp_gdm_location_xref --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLocationXref.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_Dev_Trigger_Omp_gdm_location_xref --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLocationXref.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva3010:2551,awsamenva3011:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
-job create --name Pangea_Dev_Trigger_Omp_gdm_location_edm --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLocationEdm.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_Dev_Trigger_Omp_gdm_location_edm --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLocationEdm.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva3010:2551,awsamenva3011:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_Dev_Trigger_Omp_location_type --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPLocationType.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
