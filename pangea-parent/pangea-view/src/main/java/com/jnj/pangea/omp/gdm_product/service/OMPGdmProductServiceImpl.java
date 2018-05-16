@@ -64,7 +64,7 @@ public class OMPGdmProductServiceImpl {
 
         PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(sourceSystem, materialGlobalV1Entity.getLocalMaterialNumber());
 
-        if (null != materialPlanStatusEntity && (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) && IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
+        if (null != materialPlanStatusEntity) {
             List<OMPGdmProductBo> productBos = new ArrayList<>();
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
                 if (StringUtils.isNotEmpty(primaryPlanningCode)) {
@@ -81,6 +81,14 @@ public class OMPGdmProductServiceImpl {
                     gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
                     productBos.add(gdmProductBo);
                 }
+            }
+
+            if (0 == productBos.size()) {
+                ResultObject resultObject = new ResultObject();
+                FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1, "Unable to find DPParentCode");
+                resultObject.setFailData(failData);
+                resultObjects.add(resultObject);
+                return resultObjects;
             }
 
             for (OMPGdmProductBo productBo : productBos) {
