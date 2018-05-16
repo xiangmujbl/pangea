@@ -100,11 +100,11 @@
             <version>3.0.7.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.jnj</groupId>
-            <artifactId>job-file-merger</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.jnj</groupId>-->
+            <!--<artifactId>job-file-merger</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
