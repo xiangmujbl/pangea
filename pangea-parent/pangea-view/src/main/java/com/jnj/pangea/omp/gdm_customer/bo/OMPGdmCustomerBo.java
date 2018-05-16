@@ -10,15 +10,14 @@ public class OMPGdmCustomerBo extends BaseBo {
     private String activeFCTERP;
     private String activeOPRERP;
     private String activeSOPERP;
-    private String aggrSoldTo;
     private String channel;
     private String channelDescription;
     private String countryId;
     private String custCluster;
     private String distributionChannel;
     private String distributor;
-    private String division;
     private String eCommerce;
+    private String forecastSource;
     private String globalCustomerId;
     private String name;
     private String partner;
@@ -26,13 +25,12 @@ public class OMPGdmCustomerBo extends BaseBo {
     private String partnerName;
     private String partnerRegion;
     private String partnerRole;
-    private String planningCustomerGroupId;
+    private String planningCustomerGroupID;
     private String regionId;
     private String salesOrganization;
     private String soldTo;
     private String sourceLocationId;
     private String subCluster;
-    private String ucn;
 
     @Override
     public String getKey() {
@@ -79,14 +77,6 @@ public class OMPGdmCustomerBo extends BaseBo {
 
     public void setActiveSOPERP(String activeSOPERP) {
         this.activeSOPERP = activeSOPERP;
-    }
-
-    public String getAggrSoldTo() {
-        return this.aggrSoldTo;
-    }
-
-    public void setAggrSoldTo(String aggrSoldTo) {
-        this.aggrSoldTo = aggrSoldTo;
     }
 
     public String getChannel() {
@@ -137,20 +127,20 @@ public class OMPGdmCustomerBo extends BaseBo {
         this.distributor = distributor;
     }
 
-    public String getDivision() {
-        return this.division;
-    }
-
-    public void setDivision(String division) {
-        this.division = division;
-    }
-
     public String getECommerce() {
         return this.eCommerce;
     }
 
     public void setECommerce(String eCommerce) {
         this.eCommerce = eCommerce;
+    }
+
+    public String getForecastSource() {
+        return this.forecastSource;
+    }
+
+    public void setForecastSource(String forecastSource) {
+        this.forecastSource = forecastSource;
     }
 
     public String getGlobalCustomerId() {
@@ -209,12 +199,12 @@ public class OMPGdmCustomerBo extends BaseBo {
         this.partnerRole = partnerRole;
     }
 
-    public String getPlanningCustomerGroupId() {
-        return this.planningCustomerGroupId;
+    public String getPlanningCustomerGroupID() {
+        return this.planningCustomerGroupID;
     }
 
-    public void setPlanningCustomerGroupId(String planningCustomerGroupId) {
-        this.planningCustomerGroupId = planningCustomerGroupId;
+    public void setPlanningCustomerGroupID(String planningCustomerGroupID) {
+        this.planningCustomerGroupID = planningCustomerGroupID;
     }
 
     public String getRegionId() {
@@ -255,14 +245,6 @@ public class OMPGdmCustomerBo extends BaseBo {
 
     public void setSubCluster(String subCluster) {
         this.subCluster = subCluster;
-    }
-
-    public String getUcn() {
-        return this.ucn;
-    }
-
-    public void setUcn(String ucn) {
-        this.ucn = ucn;
     }
 
 }

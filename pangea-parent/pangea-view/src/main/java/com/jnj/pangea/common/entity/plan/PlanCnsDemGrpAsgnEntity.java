@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
 
+    private String sourceSystem;
     private String countryAffiliate;
     private String customerId;
     private String demandGroup;
@@ -19,6 +20,7 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
     public PlanCnsDemGrpAsgnEntity(Map<String, Object> map) {
         super(map);
 
+        setSourceSystem((String) map.get("sourceSystem"));
         setCountryAffiliate((String) map.get("countryAffiliate"));
         setCustomerId((String) map.get("customerId"));
         setDemandGroup((String) map.get("demandGroup"));
@@ -28,6 +30,14 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
         setCustomerShipTo((String) map.get("customerShipTo"));
         setGroup((String) map.get("group"));
         setSalesOrganization((String) map.get("salesOrganization"));
+    }
+
+    public String getSourceSystem() {
+        return this.sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
     }
 
     public String getCountryAffiliate() {

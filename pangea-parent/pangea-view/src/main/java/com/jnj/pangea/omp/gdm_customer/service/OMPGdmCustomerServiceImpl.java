@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_customer.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
@@ -33,21 +32,21 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
         PlanCnsDemGrpAsgnEntity cnsDemGrpAsgnEntity = (PlanCnsDemGrpAsgnEntity) o;
         OMPGdmCustomerBo gdmCustomerBo = new OMPGdmCustomerBo();
 
-        // J1
+        // J1,J3
         String countryID = cnsDemGrpAsgnEntity.getCountryAffiliate();
-        if (StringUtils.isNotEmpty(countryID)) {
+        String sourceSystem = cnsDemGrpAsgnEntity.getSourceSystem();
+        if (StringUtils.isNotEmpty(countryID) && StringUtils.isNotEmpty(sourceSystem)) {
 
-            PlanCnsClustersEntity planCnsClustersEntity = cnsClustersDao.getEntityWithCountryID(countryID);
+            PlanCnsClustersEntity planCnsClustersEntity = cnsClustersDao.getEntityWithCountryIdAndSourceSystem(countryID, sourceSystem);
             if (null != planCnsClustersEntity) {
-                gdmCustomerBo.setCustCluster(planCnsClustersEntity.getCountryId());
-                gdmCustomerBo.setSalesOrganization(planCnsClustersEntity.getCluster());
+                gdmCustomerBo.setCustCluster(planCnsClustersEntity.getCluster());
                 gdmCustomerBo.setSubCluster(planCnsClustersEntity.getSubCluster());
 
                 // J2
                 String localCountry = cnsDemGrpAsgnEntity.getCountryAffiliate();
                 if (StringUtils.isNotEmpty(localCountry)) {
 
-                    EDMCountryEntity eDMCountryEntity = countryV1Dao.getEntityWithLocalCountry(localCountry);
+                    EDMCountryEntity eDMCountryEntity = countryV1Dao.getEntityWithLocalCountryAndSourceSystem(localCountry, sourceSystem);
                     if (null != eDMCountryEntity) {
                         gdmCustomerBo.setRegionId(eDMCountryEntity.getConsumerPlanningRegion());
 
@@ -56,26 +55,23 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
                         gdmCustomerBo.setActiveFCTERP(IConstant.VALUE.YES);
                         gdmCustomerBo.setActiveOPRERP(IConstant.VALUE.NO);
                         gdmCustomerBo.setActiveSOPERP(IConstant.VALUE.NO);
-                        gdmCustomerBo.setAggrSoldTo(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setChannel(cnsDemGrpAsgnEntity.getChannel());
                         gdmCustomerBo.setChannelDescription(cnsDemGrpAsgnEntity.getChannelDescription());
                         gdmCustomerBo.setCountryId(cnsDemGrpAsgnEntity.getCountryAffiliate());
                         gdmCustomerBo.setDistributionChannel(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setDistributor(IConstant.VALUE.NO);
-                        gdmCustomerBo.setDivision(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setECommerce(IConstant.VALUE.NO);
+                        gdmCustomerBo.setForecastSource(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setGlobalCustomerId(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setName(cnsDemGrpAsgnEntity.getCustomerName());
                         gdmCustomerBo.setPartner(IConstant.VALUE.BLANK);
-                        gdmCustomerBo.setPlanningCustomerGroupId(IConstant.VALUE.BLANK);
-                        gdmCustomerBo.setSourceLocationId(IConstant.VALUE.BLANK);
-                        gdmCustomerBo.setUcn(IConstant.VALUE.ZERO);
-
                         gdmCustomerBo.setPartnerCountry(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setPartnerName(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setPartnerRegion(IConstant.VALUE.BLANK);
                         gdmCustomerBo.setPartnerRole(IConstant.VALUE.BLANK);
-                        gdmCustomerBo.setSoldTo(IConstant.VALUE.BLANK);
+                        gdmCustomerBo.setPlanningCustomerGroupID(IConstant.VALUE.BLANK);
+                        gdmCustomerBo.setSalesOrganization(cnsDemGrpAsgnEntity.getSalesOrganization());
+                        gdmCustomerBo.setSourceLocationId(IConstant.VALUE.BLANK);
 
                         resultObject.setBaseBo(gdmCustomerBo);
                     }

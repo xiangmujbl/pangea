@@ -475,6 +475,7 @@ public interface IConstant {
 
     interface PLAN_CNS_CLUSTERS {
         String COUNTRY_ID = "countryId";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface PLAN_CNS_DEM_GRP_ASGN {
