@@ -114,7 +114,7 @@ public class FailData extends BaseBo {
     private String key3;
     private String key4;
     private String key5;
-    private String timeStamp;// = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    private String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
     private String errorValue;
 
     public String getBusinessArea() {
