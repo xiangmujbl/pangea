@@ -28,7 +28,6 @@ Feature: E.2.1.4 EDMBOM-BOM_ITEM - curation
 
     And I wait "/project_one/stas" Async Queue complete
 
-
     And I import "/project_one/stas" by keyFields "stlty,stlnr,stlal,stlkn,stasz,datuv,aennr,leknz"
       | stlty | stlnr    | stlal | stlkn | stasz | datuv      | aennr        | leknz |
       | M     | 00020130 | 1     | 1     | 3     | 2018/04/19 |              |       |
@@ -46,10 +45,7 @@ Feature: E.2.1.4 EDMBOM-BOM_ITEM - curation
 
     And I wait "/project_one/stpo" Async Queue complete
 
-
-
-    When I submit task with xml file "xml/edm/EDMBOM_ITEM.xml" and execute file "jar/pangea-view.jar"
-
+    When I submit task with xml file "xml/edm/EDMBomItem.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum,bomItmNdeNum,bomItmCntrNbr"
       | srcSysCd   | bomCatCd | bomNum   | bomItmNdeNum | bomItmCntrNbr | bomItmVldFromDt | bomChgNum    | bomDelInd | bomPreItmNdeNum | bomPreItmCntrNbr | crtDttm    | chgDttm    | cmpntNum | bomItmCatCd | bomItmNum | cmpntUomCd | cmpntQty | fxQtyInd    | cmpntScrapPct | bomItmBulkInd | leadTimeOffst | dstrbtnKeyCd | bomItmTxt               | coProdInd   | bomItmVldToDt | altItmGrpCd | altItmPct | altItmInd   | altItmStratCd | altItmRankNbr |

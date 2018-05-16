@@ -30,7 +30,7 @@ Feature: E.2.1.1 EDMRouting-MATL_MFG_RTNG - Curation
     And I wait "/project_one/mapl" Async Queue complete
 
 
-    When I submit task with xml file "xml/edm/EDMMatl_mfg_rtng.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/EDMMatlMfgRtng.xml" and execute file "jar/pangea-view.jar"
 
 
     Then I check region data "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr"
