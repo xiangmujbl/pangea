@@ -45,12 +45,12 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
         Mch1Entity mch1Entity = (Mch1Entity) o;
         EDMBatchMasterBo eDMBatchMasterBo = new EDMBatchMasterBo();
 
-//        // TODO add logic
-//        //EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
-//        eDMBatchMasterBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
-//        processSystem(mch1Entity,eDMBatchMasterBo);
-//        EDMMaterialGlobalV1Entity materialGlobalV1Entity =  materialGlobalV1Dao.getEntityWithSourceSystemAndLocalMaterialNumber(edmSourceSystemV1Entity.getSourceSystem(),mch1Entity.getMatnr());
 
+        // rules N1
+        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
+        if (null != sourceSystemV1Entity) {
+            eDMBatchMasterBo.setSrcSysCd(sourceSystemV1Entity.getSourceSystem());
+        }
 
         // N4
         String localMaterialNumber = mch1Entity.getMatnr();
@@ -66,15 +66,6 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
 
                 if (null != mchaEntity) {
 
-                    String mandt = mchaEntity.getMandt();
-                    if (StringUtils.isNotEmpty(mandt)) {
-
-                        EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(mandt);
-                        if (null != edmSourceSystemV1Entity) {
-                            eDMBatchMasterBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
-                        }
-                    }
-
                     eDMBatchMasterBo.setLocalPlant(mchaEntity.getWerks());
 
                     String charg = mchaEntity.getCharg();
@@ -87,7 +78,7 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
                         }
                     }
 
-                    // N2
+                    // rules N2
                     String localPlant = mchaEntity.getWerks();
                     if (StringUtils.isNotEmpty(localPlant)) {
 
@@ -99,15 +90,25 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
                     }
                 }
 
+                // rules N3
                 eDMBatchMasterBo.setMatlNum(mch1Entity.getMatnr());
                 eDMBatchMasterBo.setBtchNum(mch1Entity.getCharg());
                 eDMBatchMasterBo.setBtchStsCd(mch1Entity.getZustd());
                 SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-                SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
+                SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYY_MM_DD);
 
                 try {
-                    eDMBatchMasterBo.setBtchExpDt(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
-                    eDMBatchMasterBo.setBtchMfgDt(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
+                    if (IConstant.VALUE.YYYYMMDD_ZERO.equals(mch1Entity.getVfdat())) {
+                        eDMBatchMasterBo.setBtchExpDt(IConstant.VALUE.YYYY_MM_DD_ZERO);
+                    } else {
+                        eDMBatchMasterBo.setBtchExpDt(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
+                    }
+
+                    if (IConstant.VALUE.YYYYMMDD_ZERO.equals(mch1Entity.getHsdat())) {
+                        eDMBatchMasterBo.setBtchMfgDt(IConstant.VALUE.YYYY_MM_DD_ZERO);
+                    } else {
+                        eDMBatchMasterBo.setBtchMfgDt(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -123,11 +124,5 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
         }
 
         return resultObject;
-    }
-    private void processSystem(Mch1Entity mainData, EDMBatchMasterBo edmBatchMasterBo) {
-        edmBatchMasterBo.setBtchNum(mainData.getCharg());
-        edmBatchMasterBo.setBtchMfgDt(mainData.getHsdat());
-        edmBatchMasterBo.setMaterialNumber(mainData.getMatnr());
-        edmBatchMasterBo.setBtchExpDt(mainData.getVfdat());
     }
 }

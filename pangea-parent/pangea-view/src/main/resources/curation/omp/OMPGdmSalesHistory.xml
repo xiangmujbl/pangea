@@ -91,7 +91,7 @@
                 <columns>kunnr,vkorg,datbi,hkunnr</columns>
             </region>
             <region path="/project_one/tvro">
-                <columns>trazt,route</columns>
+                <columns>traztd,route</columns>
             </region>
             <region path="/edm/material_global_v1">
                 <columns>localMaterialNumber,primaryPlanningCode,localBaseUom</columns>
@@ -109,7 +109,7 @@
             </region>
 
             <region path="/omp/gdm_sales_history">
-                <columns>salesHistoryId,activeFCTERP,certaintyId,conversionFactorXx,currencyId,customerId,demandStreamId,dueDate,forecastItemId,fromDueDate,locationId,orderReason,orderStatus,orderSubType,orderType,productId,quantity,salesUnit,unitId,validValueXx</columns>
+                <columns>salesHistoryId,activeFCTERP,certaintyId,conversionFactorXx,currencyId,customerId,demandStreamId,dueDate,fromDueDate,locationId,productId,quantity,salesUnit,validValueXx</columns>
             </region>
 
         </regions>

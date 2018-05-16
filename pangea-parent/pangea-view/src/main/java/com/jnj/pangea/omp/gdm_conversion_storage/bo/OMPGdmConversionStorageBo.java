@@ -7,11 +7,12 @@ public class OMPGdmConversionStorageBo extends BaseBo {
 
     private String sourceSystem;
     private String aggregationId;
+    private String conversionFactor;
     private String currencyId;
     private String dueDate;
     private String forecastUploadId;
     private String fromDueDate;
-    private String salesPrice;
+    private String value;
     private String unitId;
 
     @Override
@@ -74,12 +75,12 @@ public class OMPGdmConversionStorageBo extends BaseBo {
         this.fromDueDate = fromDueDate;
     }
 
-    public String getSalesPrice() {
-        return this.salesPrice;
+    public String getValue() {
+        return value;
     }
 
-    public void setSalesPrice(String salesPrice) {
-        this.salesPrice = salesPrice;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getUnitId() {
@@ -88,6 +89,14 @@ public class OMPGdmConversionStorageBo extends BaseBo {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
+    }
+
+    public String getConversionFactor() {
+        return conversionFactor;
+    }
+
+    public void setConversionFactor(String conversionFactor) {
+        this.conversionFactor = conversionFactor;
     }
 
 }

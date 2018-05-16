@@ -30,13 +30,15 @@ Feature: EDMCurrency AEAZ-498
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
 
-#    Then I check region data "/plan/currency_v1_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-#      | functionalArea | interfaceID | errorCode                                        | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+    Then I check region data "/plan/currency_v1_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 #      |                |   | z_source_system value is not [EMS] and rule T1   |       |               |  [EMS] |  AED|    |      |      |           |
 
 #    And I compare the number of records between "/ems/ems_f_z_currencies" and "/edm/currency_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/currency_v1"
 

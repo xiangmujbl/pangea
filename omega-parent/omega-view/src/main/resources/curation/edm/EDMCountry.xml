@@ -1,0 +1,33 @@
+<adf-curation>
+    <curation mainRegion="/ems/ems_f_mdm_countries" viewRegion="/edm/country_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.omp.edm.country.controller.EDMCountryController">
+        <regions>
+
+            <region path="/ems/ems_f_mdm_countries">
+                <columns>zSourceSystem,mdmCode,zEntCodeIso3166Alpha2,mdmName</columns>
+                <filter>(*:* -zSourceSystem:\[EMS\])</filter>
+                <relations>
+                    <relation path="/edm/source_system_v1">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/ems/ems_f_mdm_countries_clone">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+            <region path="/ems/ems_f_mdm_countries" alias="/ems/ems_f_mdm_countries_clone">
+                <columns>zSourceSystem,mdmCode,zEntCodeIso3166Alpha2,mdmName</columns>
+
+            </region>
+
+            <region path="/edm/country_v1">
+                <columns>sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion,consumerPlannRegDesc</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

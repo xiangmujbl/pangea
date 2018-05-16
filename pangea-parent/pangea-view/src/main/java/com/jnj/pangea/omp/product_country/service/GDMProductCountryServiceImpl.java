@@ -1,15 +1,23 @@
 package com.jnj.pangea.omp.product_country.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialInclDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.entity.plan.CnsProdCtyAffEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.product_country.bo.GDMProductCountryBo;
 import org.apache.commons.lang3.StringUtils;
 
 public class GDMProductCountryServiceImpl implements ICommonService {
+
     private static GDMProductCountryServiceImpl instance;
+
+    private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
 
     public static GDMProductCountryServiceImpl getInstance() {
         if (instance == null) {
@@ -22,7 +30,6 @@ public class GDMProductCountryServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
         CnsProdCtyAffEntity prodCtyAfflEntity = (CnsProdCtyAffEntity) o;
-
         GDMProductCountryBo productCountryBo = new GDMProductCountryBo();
 
         String dpParentCode = prodCtyAfflEntity.getDpParentCode();
@@ -47,7 +54,6 @@ public class GDMProductCountryServiceImpl implements ICommonService {
                 resultObject.setFailData(failData);
                 return resultObject;
             }
-            productCountryBo.setProductId(prodCtyAfflEntity.getDpParentCode());
             // T2
             if (StringUtils.isNotEmpty(prodCtyAfflEntity.getOvrPrdStat())) {
                 productCountryBo.setProductStatus(prodCtyAfflEntity.getOvrPrdStat());
@@ -58,10 +64,18 @@ public class GDMProductCountryServiceImpl implements ICommonService {
                 resultObject.setFailData(failData);
                 return resultObject;
             }
-
+            //T3
+            PlanCnsMaterialPlanStatusEntity entityWithLocalParentCode = planCnsMaterialPlanStatusDao.getEntityWithLocalParentCode(dpParentCode);
+            if(entityWithLocalParentCode != null){
+                if(!entityWithLocalParentCode.getDpRelevant().equals(IConstant.VALUE.X)){
+                    return resultObject;
+                }else{
+                    String productId = IConstant.VALUE.LA_ + prodCtyAfflEntity.getDpParentCode();
+                    productCountryBo.setProductId(productId);
+                }
+            }
             productCountryBo.setRootSize(prodCtyAfflEntity.getRootSize());
             productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
-
             resultObject.setBaseBo(productCountryBo);
         } else {
             FailData failData = writeFailDataToRegion(prodCtyAfflEntity, IConstant.FAILED.ERROR_CODE.C1, "All Key fields not Exist");

@@ -23,7 +23,6 @@ Feature: EDMSalesOrder AEAZ-493
       | 0000001981 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
       | 0000001982 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
       | 0000001989 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
-
     And I wait "/project_one/vbak" Async Queue complete
 
     And I import "/project_one/vbap" by keyFields "posnr,vbeln"
@@ -34,8 +33,6 @@ Feature: EDMSalesOrder AEAZ-493
       | 0000001981 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
       | 0000001982 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
       | 0000001989 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
-
-
     And I wait "/project_one/vbap" Async Queue complete
 
     And I import "/project_one/vbep" by keyFields "posnr,vbeln,etenr"
@@ -45,8 +42,6 @@ Feature: EDMSalesOrder AEAZ-493
       | 0000001983 |        | 0001  | 20001005 | 110.000 | 0.000 |
       | 0000001979 | 000001 | 0001  | 20001005 | 110.000 | 0.000 |
       | 0000001988 |        | 0001  | 20001005 | 110.000 | 0.000 |
-
-
     And I wait "/project_one/vbep" Async Queue complete
 
     And I import "/project_one/vbpa" by keyFields "posnr,vbeln,parvw"
@@ -63,11 +58,9 @@ Feature: EDMSalesOrder AEAZ-493
 
     When I submit task with xml file "xml/edm/EDMSalesOrder.xml" and execute file "jar/pangea-view.jar"
 
-
     Then I check region data "/edm/sales_order_v1" by keyFields "sourceSystem,salesOrderNo,salesOrderItem,scheduleLineItem"
       | sourceSystem | salesOrderNo | salesOrderItem | scheduleLineItem | localOrderCreateDt | localOrderDate | localValidFromDt | localValidToDt | localDocumentCateg | localOrderType | localOrderReason | localDeliveryBlock | localBillingBlock | localSalesOrg | localDistrChannel | localDivision | localSalesGroup | localSalesOffice | localRequestedDate | localCustomerPO | localSoldToParty | localShipToParty | localChangeDt | localMaterialNumber | localPlant | localItemCategory | localItemDlvRlvnt | localItemBillRlvnt | localRejReason | salesOrderQty | localSalesUnit | localNumtoBase | localDentoBase | localBillingBlockItem | localSDItemValue | localSDItemCurrency | localStorageLocation | localShippingPoint | localRoute | localScheduleLineDate | localSchLineQty | localSchLineConfimQty | localCustomerGroup | localPricingProcedure | localIncoTerms1 | localIncoTerms2 |
       | CONS_LATAM   | 0000001250   |                | 0001             | 20001005           | 20001005       | 00000000         | 00000000       | I                  | ZSR            | 311              |                    |                   | 000000        | 10                | 10            | B99             | BR90             | 20001010           | 1250            | 0000113212       | 0000003883       | 20001005      | 000000000000005911  | 0.0        | 0.00              |                   |                    |                | 2.000         | 0.00           |                | 1              |                       |                  |                     | KI                   | 2.000              | BR2042     | 20001005              | 110.000         | 0.000                 |                    | ZSREMT                | CIF             | CIF             |
-
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1       | key2 | key3 | key4 | key5 | errorValue          |
@@ -77,10 +70,11 @@ Feature: EDMSalesOrder AEAZ-493
       | DP             | EDMSalesOrder | J2        |              |              | 0000001982 |      |      |      |      | No Schedule lines Found |
       | DP             | EDMSalesOrder | J2        |              |              | 0000001989 |      |      |      |      | No Schedule lines Found |
 
-
     And I compare the number of records between "/project_one/vbak" and "/edm/sales_order_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/sales_order_v1"
 
