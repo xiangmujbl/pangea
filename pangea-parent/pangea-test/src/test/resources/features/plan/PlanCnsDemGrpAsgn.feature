@@ -1,5 +1,5 @@
 @pangea_test
-Feature: PlanCnsDemGrpAsgn-Curation
+Feature: PlanCnsDemGrpAsgn AEAZ-505
 
   Scenario: Full Load curation
 
@@ -23,7 +23,9 @@ Feature: PlanCnsDemGrpAsgn-Curation
 
     And I compare the number of records between "/ems/customer_group" and "/plan/cns_dem_grp_asgn,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/plan/cns_dem_grp_asgn"
 

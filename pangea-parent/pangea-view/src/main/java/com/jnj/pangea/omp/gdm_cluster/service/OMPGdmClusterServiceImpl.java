@@ -3,9 +3,16 @@ package com.jnj.pangea.omp.gdm_cluster.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsClustersEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_cluster.bo.OMPGdmClusterBo;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OMPGdmClusterServiceImpl implements ICommonService {
 
@@ -18,36 +25,30 @@ public class OMPGdmClusterServiceImpl implements ICommonService {
         return instance;
     }
 
+    private PlanCnsPlanParameterDaoImpl cnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
         PlanCnsClustersEntity cnsClustersEntity = (PlanCnsClustersEntity) o;
+        Map<String, Object> extraParam = (HashMap) o2;
 
         OMPGdmClusterBo gdmClusterBo = new OMPGdmClusterBo();
-        if (null == cnsClustersEntity || "".equals(cnsClustersEntity.getCluster()) || "".equals(cnsClustersEntity.getCountryId()) || "".equals(cnsClustersEntity.getSubCluster())) {
-            FailData failData = new FailData();
-            failData.setErrorCode(IConstant.FAILED.ERROR_CODE.C1);
-            failData.setErrorValue("All Key fields not Exist");
-            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_CLUSTER);
-            failData.setSourceSystem("");
-            failData.setKey1(cnsClustersEntity.getCluster());
-            failData.setKey2(cnsClustersEntity.getCountryId());
-            failData.setKey3(cnsClustersEntity.getSubCluster());
-            failData.setKey4("");
-            failData.setKey5("");
-            resultObject.setFailData(failData);
-            return resultObject;
+
+        if (StringUtils.isNotEmpty(cnsClustersEntity.getSourceSystem())) {
+            List<PlanCnsPlanParameterEntity> cnsPlanParameterEntityList = cnsPlanParameterDao.getEntitiesWithSourceSystem(cnsClustersEntity.getSourceSystem());
+            if (cnsPlanParameterEntityList.size() > 0) {
+                String extraParamKey = cnsClustersEntity.getSourceSystem() + cnsClustersEntity.getCluster();
+                if (!extraParam.containsKey(extraParamKey)) {
+                    extraParam.put(extraParamKey, null);
+                    gdmClusterBo.setClusterId(extraParamKey);
+                    gdmClusterBo.setActiveFCTERP(IConstant.VALUE.YES);
+                    gdmClusterBo.setClusterDescription(cnsClustersEntity.getClusterDesc());
+                    resultObject.setBaseBo(gdmClusterBo);
+                }
+            }
         }
-        gdmClusterBo.setClusterId(cnsClustersEntity.getCountryId() + cnsClustersEntity.getCluster() + cnsClustersEntity.getSubCluster());
-        gdmClusterBo.setActiveFCTERP(IConstant.VALUE.YES);
-        gdmClusterBo.setClusterDescription(cnsClustersEntity.getCluster());
-        gdmClusterBo.setClusterNr(cnsClustersEntity.getCluster());
-        gdmClusterBo.setCountryId(cnsClustersEntity.getCountryId());
-        gdmClusterBo.setSubFranchise(cnsClustersEntity.getSubCluster());
-        resultObject.setBaseBo(gdmClusterBo);
         return resultObject;
     }
 }

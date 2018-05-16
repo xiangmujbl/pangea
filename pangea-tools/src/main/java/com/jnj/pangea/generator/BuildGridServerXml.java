@@ -9,7 +9,7 @@ import java.util.Set;
 public class BuildGridServerXml {
 
     public static void main(String[] args) throws Exception {
-        build("C:\\work\\workspace\\pangea\\pangea-parent\\pangea-test\\src\\main\\installation\\listRegion\\regions.txt", "C:\\work\\workspace\\pangea\\pangea-parent\\pangea-test\\src\\test\\resources\\grid-server.xml");
+        build("C:\\WorkSpace\\IdeaProjects\\pangea\\pangea-parent\\pangea-test\\src\\main\\installation\\listRegion\\regions.txt", "C:\\WorkSpace\\IdeaProjects\\pangea\\pangea-parent\\pangea-test\\src\\test\\resources\\grid-server.xml");
     }
 
     public static void build(String sourceFile, String targetFile) throws Exception {

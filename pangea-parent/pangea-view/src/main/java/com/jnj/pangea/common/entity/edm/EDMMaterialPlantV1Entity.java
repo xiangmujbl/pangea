@@ -49,9 +49,6 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localComponentScrap;
     private String plant;
 
-
-
-
     public EDMMaterialPlantV1Entity(Map<String, Object> map) {
         super(map);
         setLocalMaterialNumber((String)map.get("localMaterialNumber"));

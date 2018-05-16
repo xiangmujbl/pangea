@@ -209,6 +209,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                                     return resultObject;
                                 }
 
+
                                 // N13
                                 if(edmSourceListV1Entity.getLocalPurchasingOrganization() != null && (!(edmSourceListV1Entity.getLocalPurchasingOrganization().equals("")))) {
                                     gdmSupplyBo.setPURCHASINGORGANIZATION(edmSourceListV1Entity.getLocalPurchasingOrganization());
@@ -223,18 +224,14 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                                 if (planCnsPlnSplLocEntity_1 == null){
                                     gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + "_" + edmSourceListV1Entity.getLocalPlant());
                                 } else {
-                                    if(planCnsPlnSplLocEntity_1.getVendorOrCustomer() != null && (!(planCnsPlnSplLocEntity_1.getVendorOrCustomer().equals("")))) {
+                                    if(planCnsPlnSplLocEntity_1.getVendororCustomer() != null && (!(planCnsPlnSplLocEntity_1.getVendororCustomer().equals("")))) {
                                         if(planCnsPlnSplLocEntity_1.getLocalNumber() != null && (!(planCnsPlnSplLocEntity_1.getLocalNumber().equals("")))) {
-                                            gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + "_" + planCnsPlnSplLocEntity_1.getVendorOrCustomer() + "_" + planCnsPlnSplLocEntity_1.getLocalNumber());
+                                            gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + "_" + planCnsPlnSplLocEntity_1.getVendororCustomer() + "_" + planCnsPlnSplLocEntity_1.getLocalNumber());
                                         } else {
-                                            FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N14", "PlanCnsPlnSplLoc local number is blank");
-                                            resultObject.setFailData(failData);
-                                            return resultObject;
+
                                         }
                                     } else {
-                                        FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N14", "PlanCnsPlnSplLoc local vendor or customer is blank");
-                                        resultObject.setFailData(failData);
-                                        return resultObject;
+
                                     }
                                 }
 

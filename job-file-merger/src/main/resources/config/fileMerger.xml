@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
+    <!--<adf:annotation-driven property-generator="propertyGenerator"/>-->
+
+    <batch:job id="read_merge_write">
+
+        <batch:step id="copy_files">
+            <!--<batch:tasklet ref="readFTP"></batch:tasklet>-->
+            <!--<batch:next on="COMPLETED DownLoad" to=""/>-->
+            <!--<batch:next on="COMPLETED" to="merge_files"/>-->
+            <batch:tasklet ref="mergeFiles"/>
+            <batch:next on="COMPLETED" to="send_file"/>
+            <batch:listeners>
+                <batch:listener>
+                    <bean id="promotionListener"
+                          class="org.springframework.batch.core.listener.ExecutionContextPromotionListener">
+                        <property name="keys" value="fileList"/>
+                    </bean>
+                </batch:listener>
+                <!--<batch:listener>-->
+                <!--<bean id="exitStatusListener"-->
+                <!--class="com.jnj.files.merger.listener.ExecutionContextExitStatusListener">-->
+                <!--<property name="onlyDownLoadFlag" value="${onlyDownLoadFlag}"/>-->
+                <!--</bean>-->
+                <!--</batch:listener>-->
+            </batch:listeners>
+        </batch:step>
+
+        <!--<batch:step id="merge_files" next="send_file">-->
+        <!--<batch:tasklet ref="mergeFiles">-->
+        <!--</batch:tasklet>-->
+        <!--</batch:step>-->
+        <batch:step id="send_file">
+            <batch:tasklet ref="writeFTP">
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <!--<bean id="readFTP" class="com.jnj.files.merger.reader.FTPReader"-->
+    <!--scope="step">-->
+    <!--<property name="sLocation" value="${sLocation}"></property>-->
+    <!--<property name="sPattern" value="${sPattern}"></property>-->
+    <!--<property name="sHost" value="${sHost}"></property>-->
+    <!--<property name="sUsername" value="${sUsername}"></property>-->
+    <!--<property name="sSaveLocation" value="${sSaveLocation}"/>-->
+    <!--<property name="sPassword" value="${sPassword}"/>-->
+    <!--</bean>-->
+
+    <bean id="mergeFiles" class="com.jnj.files.merger.Merge" scope="step">
+        <property name="sPattern" value="file:///${mLocation}/${sPattern}"/>
+        <property name="mLocation" value="${mLocation}"/>
+        <property name="outputDirectory" value="${outputDirectory}"/>
+        <property name="outputFileName" value="${outputFileName}"/>
+        <property name="toCompress" value="${toCompress}"/>
+        <property name="zipFileName" value="${zipFileName}"/>
+        <property name="keyString" value="${keyString}"/>
+        <property name="duplicationFlag" value="${duplicationFlag}"/>
+    </bean>
+
+    <bean id="writeFTP" class="com.jnj.files.merger.writer.FTPWriter"
+          scope="step">
+        <property name="tLocation" value="${tLocation}"/>
+        <property name="tHost" value="${tHost}"/>
+        <property name="tUsername" value="${tUsername}"/>
+        <property name="tFileName" value="${tFileName}"/>
+        <property name="tSourceLocation" value="${tSourceLocation}"/>
+        <property name="tPassword" value="${tPassword}"/>
+    </bean>
+
+</beans>

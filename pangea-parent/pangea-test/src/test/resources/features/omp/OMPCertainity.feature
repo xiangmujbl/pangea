@@ -3,6 +3,9 @@ Feature: OMPCertainity AEAZ-2367
 
   Scenario: Full Load curation
     #test rule N1
+
+    And I will remove the test file on sink application "OMPCertainity.tsv"
+
     Given I import "/plan/cns_cert_key" by keyFields "certainityKey"
       | certainityKey | certainityKeyDesc |
       | 0001          | whl001            |
@@ -21,11 +24,12 @@ Feature: OMPCertainity AEAZ-2367
 
     And I compare the number of records between "/plan/cns_cert_key" and "/omp/certainity,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/certainity"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "OMPCertainity.tsv"
 

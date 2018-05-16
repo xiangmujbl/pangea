@@ -25,12 +25,15 @@ Feature: OMPGdmProductUnitConversion AEAZ-1815
 
     Then A file is found on sink application with name "GDMProductUnitConversion.tsv"
 
-#    Then I check file data for filename "gdm_product_unit_conversion.tsv" by keyFields "gdmProductUnitConversionId"
-#      | gdmProductUnitConversionId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | productId | unitId |
-#      | 1DPSP                      | YES    | YES          | YES          | NO           | 0.10   | -         | DPSP   |
+    Then I check file data for filename "GDMProductUnitConversion.tsv" by keyFields "gdmProductUnitConversionId"
+      | gdmProductUnitConversionId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | productId | unitId |
+      | 1DPSP                      | YES    | YES          | YES          | NO           | 0.10   | -         | DPSP   |
 
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+    Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
+#      | functionalArea | interfaceID                            | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue | timeStamp |
+#      | SP             | OMPGdmProductUnitConversion            | E1        | omp          |              | 1    |      |      |      |      | No Enterprise UOM is maintained           | |
+       |  errorCode |           errorValue            | functionalArea |         interfaceID         | key1 | key2 | key3 | key4 | key5 | sourceSystem |
+       |  E1        | No Enterprise UOM is maintained | SP             | OMPGdmProductUnitConversion | 1    |      |      |      |      | omp          |
 
     And I delete the test data
 
@@ -39,4 +42,3 @@ Feature: OMPGdmProductUnitConversion AEAZ-1815
     And I will remove all data with region "/plan/edm_failed_data"
 
 #    And I will remove the test file on sink application "GDMProductUnitConversion.tsv"
-

@@ -5,26 +5,25 @@ Feature: OMPGdmCustomer AEAZ-2710
     # 1. get attributes from cns_clusters if no record found then skip that record (J1)
     # 2. get attributes from country_v1 if no record found then skip that record (J2)
 
+    And I will remove the test file on sink application "GDMCustomer.tsv"
+
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "countryAffiliate,customerId"
       | countryAffiliate | customerId | demandGroup | channel | channelDescription      | customerName                        |
       | BR               | 323        | 76100001    | CH006   | Distributor Traditional | GRUPO SCAPOL COM DIST.PRODS.HIG.LTD |
       | CH               | 5          | 76100003    | CH005   | Modern Trade            | GRUPO WM VAREJO                     |
       | CO               | 9290       | 76100004    | CH008   | Clubs/Cash & Carry      | GRUPO WMSE ATACADO SAMS             |
-
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
     Given I import "/plan/cns_clusters" by keyFields "countryId,cluster,subCluster"
       | countryId | cluster | subCluster |
       | BR        | BRAZIL  | Brazil     |
       | CO        | ANDEAN  | Andean     |
-
     And I wait "/plan/cns_clusters" Async Queue complete
 
     Given I import "/edm/country_v1" by keyFields "localCountry,sourceSystem"
       | localCountry | sourceSystem | countryCode | countryName   | consumerPlanningRegion |
       | BR           | project_one  | -           | All Countries | BR1                    |
       | CH           | project_one  | -           | All Countries | CH1                    |
-
     And I wait "/edm/country_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmCustomer.xml" and execute file "jar/pangea-view.jar"
@@ -40,11 +39,13 @@ Feature: OMPGdmCustomer AEAZ-2710
 
 #    And I compare the number of records between "/plan/cns_dem_grp_asgn" and "/omp/gdm_customer,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_customer"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMCustomer.tsv"
+
 

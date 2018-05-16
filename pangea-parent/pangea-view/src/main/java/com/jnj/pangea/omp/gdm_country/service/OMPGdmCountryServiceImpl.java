@@ -30,21 +30,21 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
         EDMCountryV1Entity countryV1Entity = (EDMCountryV1Entity) o;
         OMPGdmCountryBo gdmCountryBo = new OMPGdmCountryBo();
         if (null != countryV1Entity) {
-
+        if (StringUtils.isNotEmpty(countryV1Entity.getCountryCode()) && StringUtils.isNotEmpty(countryV1Entity.getCountryName())){
             String sourceSystem = countryV1Entity.getSourceSystem();
             if (StringUtils.isNotEmpty(sourceSystem)) {
 
                 List<PlanCnsPlanParameterEntity> planCnsPlanParameterEntityList = planCnsPlanParameterDao.getEntitiesWithSourceSystem(sourceSystem);
 
                 if (planCnsPlanParameterEntityList.size() > 0) {
-
                     // rules T1
                     for (PlanCnsPlanParameterEntity entity:planCnsPlanParameterEntityList) {
-                        if (countryV1Entity.getSourceSystem().equals(entity.getSourceSystem())){
+                        if (countryV1Entity.getSourceSystem().equals(entity.getSourceSystem()) ){
                             gdmCountryBo.setCountryId(countryV1Entity.getCountryCode());
                             break;
                         }
                     }
+
                     gdmCountryBo.setCountryDescription(countryV1Entity.getCountryName());
 
                     // rules D1
@@ -53,10 +53,13 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
 
                     // rules D2
                     gdmCountryBo.setActiveSOPERP(IConstant.VALUE.NO);
-                    gdmCountryBo.setMrc("");
                 }
                 resultObject.setBaseBo(gdmCountryBo);
             }
+        }else{
+            return null;
+        }
+
         }
         return resultObject;
     }
