@@ -3,6 +3,8 @@ Feature: OMPGdmConversionStorage AEAZ-2759
 
   Scenario: Full Load curation
 
+    And I will remove the test file on sink application "GDMConversionStorage.tsv"
+
     Given I import "/plan/cns_dp_price" by keyFields "sourceSystem,localMaterialNumber,currency,country,fromDate"
       | localMaterialNumber | currency | country | fromDate | salesPrice  | sourceSystem  |
       | 000000000000002885  | BRL      | AT      | 201801   | 1286.604828 | sourceSystem1 |
@@ -13,8 +15,6 @@ Feature: OMPGdmConversionStorage AEAZ-2759
       | 000000000000002890  | BRL      | AX      | 201804   | 1265.2345   | sourceSystem2 |
       | 000000000000002891  | BRL      | AH      | 201804   | 1265.2345   | sourceSystem2 |
       | 000000000000002892  | BRL      | AK      | 201804   | 1265.2345   | sourceSystem3 |
-
-
     And I wait "/plan/cns_dp_price" Async Queue complete
 
     Given I import "/edm/country_v1" by keyFields "localCountry"
@@ -46,7 +46,6 @@ Feature: OMPGdmConversionStorage AEAZ-2759
       | 201804       | 2018-04-16   | 2018-04-23 | 016     | 4        |
       | 201804       | 2018-04-23   | 2018-04-30 | 017     | 4        |
       | 201805       | 2018-05-02   | 2018-05-09 | 018     | 4        |
-
     And I wait "/edm/jnj_calendar_v1" Async Queue complete
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -59,7 +58,6 @@ Feature: OMPGdmConversionStorage AEAZ-2759
       | 000000000000002891  | sourceSystem2 | 123ABC            | BaseUom2     |
       | 000000000000002892  | sourceSystem3 | 123ABC            | BaseUom1     |
       | 000000000000002893  | sourceSystem3 | 123ABC            | BaseUom1     |
-
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_cust_channel" by keyFields "salesOrg"
@@ -99,6 +97,7 @@ Feature: OMPGdmConversionStorage AEAZ-2759
       | LA_456DEF-AX004-AX | SALESPRICE       | BRL        | 2018/04/09 00:00:00 | 2018/04/16 00:00:00 | 1265.235 | unit2  |
       | LA_456DEF-AX004-AX | SALESPRICE       | BRL        | 2018/04/16 00:00:00 | 2018/04/23 00:00:00 | 1265.235 | unit2  |
       | LA_456DEF-AX004-AX | SALESPRICE       | BRL        | 2018/04/23 00:00:00 | 2018/04/30 00:00:00 | 1265.235 | unit2  |
+
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID             | errorCode | sourceSystem | businessArea | key1               | key2          | key3 | key4 | key5   | errorValue                                                        |
       | DP             | OMPGdmConversionStorage | J1        | omp          |              | 000000000000002889 | sourceSystem2 | BRL  | AX   | 201804 | sourceSystem / dpParent code / channel / countryCode do not exist |
@@ -108,11 +107,11 @@ Feature: OMPGdmConversionStorage AEAZ-2759
 
 #    And I compare the number of records between "/plan/cns_dp_price" and "/omp/gdm_conversion_storage,/plan/edm_failed_data"
 
+  Scenario: delete all test data
+
     And I delete the test data
 
     And I will remove all data with region "/omp/gdm_conversion_storage"
 
     And I will remove all data with region "/plan/edm_failed_data"
-
-#    And I will remove the test file on sink application "GDMConversionStorage.tsv"
 

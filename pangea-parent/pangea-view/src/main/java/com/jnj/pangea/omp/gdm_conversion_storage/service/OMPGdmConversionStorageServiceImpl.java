@@ -279,8 +279,4 @@ public class OMPGdmConversionStorageServiceImpl {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.print(isMathC5("1265.234b"));
-    }
-
 }
