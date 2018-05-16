@@ -595,6 +595,11 @@ public interface IConstant {
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
+        String VENDOR_TRANSPORT = "VendorTransport";
+        String SUPPLY = "SUPPLY";
+        String INFINITE = "INFINITE";
+        String ASTERIX = "*";
+        String DEFAULT = "DEFAULT";
     }
 
     interface FAILED {
