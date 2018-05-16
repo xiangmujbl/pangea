@@ -9,6 +9,7 @@ import java.util.Map.Entry;
  * Created by XZhan290 on 2018/3/2.
  */
 public class DateUtils {
+
     public final static String DATE_FORMAT_1 = "yyyy-MM-dd";
     public final static String F_yyyyMMdd = "yyyyMMdd";
     public final static String F_yyyyMM = "yyyyMM";
@@ -24,6 +25,11 @@ public class DateUtils {
     public final static String F_dd_MM_yyyy_HHmmss = "dd-MM-yyyy HH:mm:ss";
     public final static String F_yyyy_MM_dd_HHmmss = "yyyyMMdd HH:mm:ss";
     public final static String J_yyyyWW = "yyyyWW";
+    public final static String yyyy_MM_dd_HHmmss = "yyyy/dd/MM HH:mm:ss";
+    public final static String yyyy_MM_dd = "yyyy/MM/dd";
+    public final static String dd_MM_yyyy = "dd/MM/yyyy";
+
+    public final static String J_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
@@ -61,7 +67,7 @@ public class DateUtils {
             calendar.set(Integer.parseInt(year), Calendar.JANUARY, 0, 0, 0, 0);
             calendar.set(Calendar.MILLISECOND, 0);
             calendar.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(week));
-            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE));
             return calendar.getTime();
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format, locale);

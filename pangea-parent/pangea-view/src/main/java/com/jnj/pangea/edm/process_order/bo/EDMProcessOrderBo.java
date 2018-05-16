@@ -52,10 +52,6 @@ public class EDMProcessOrderBo extends BaseBo {
     private String prdntVrsnNum;
     private String btchNum;
     private String ordrStts;
-    private String localSystemStatus;
-    private String localLanguage;
-    private String localStatus1;
-    private String localStatus2;
     private String fctrNmrtrMeas;
     private String fctrDnmntrMeas;
     private String goodRcptLdDaysQty;
@@ -443,38 +439,6 @@ public class EDMProcessOrderBo extends BaseBo {
 
     public void setOrdrStts(String ordrStts) {
         this.ordrStts = ordrStts;
-    }
-
-    public String getLocalSystemStatus() {
-        return this.localSystemStatus;
-    }
-
-    public void setLocalSystemStatus(String localSystemStatus) {
-        this.localSystemStatus = localSystemStatus;
-    }
-
-    public String getLocalLanguage() {
-        return this.localLanguage;
-    }
-
-    public void setLocalLanguage(String localLanguage) {
-        this.localLanguage = localLanguage;
-    }
-
-    public String getLocalStatus1() {
-        return this.localStatus1;
-    }
-
-    public void setLocalStatus1(String localStatus1) {
-        this.localStatus1 = localStatus1;
-    }
-
-    public String getLocalStatus2() {
-        return this.localStatus2;
-    }
-
-    public void setLocalStatus2(String localStatus2) {
-        this.localStatus2 = localStatus2;
     }
 
     public String getFctrNmrtrMeas() {

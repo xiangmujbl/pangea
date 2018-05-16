@@ -6,7 +6,7 @@
 
             <region path="/edm/currency_v1">
                 <columns>
-                    localCountry,sourceSystem,isoNumeric,currencyName,currencyCode
+                    localCurrency,sourceSystem,isoNumeric,currencyName,currencyCode
                 </columns>
             </region>
 

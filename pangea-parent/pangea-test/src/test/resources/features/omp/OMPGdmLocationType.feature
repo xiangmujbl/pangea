@@ -3,6 +3,8 @@ Feature:  OMPGdmLocationType-Curation
 
   Scenario: Full Load consumption
 
+    And I will remove the test file on sink application "LocationType.tsv"
+
     Given I import "/plan/cns_loc_type" by keyFields "planLocTypeId"
       | planLocTypeId | planLocTypeDesc              | planLocTypeComments |
       | CO01          | Internal Manufacturing Plant |                     |
@@ -16,9 +18,10 @@ Feature:  OMPGdmLocationType-Curation
       | ActiveOPRERP | LocationTypeId | ActiveSOPERP | LABEL                        | ActiveFCTERP |
       | YES          | CO01           | NO           | Internal Manufacturing Plant | YES          |
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/plan/cns_loc_type"
 
-    And I will remove the test file on sink application "LocationType.tsv"
 

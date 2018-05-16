@@ -4,6 +4,8 @@ Feature: OMPGdmRegion AEAZ-2711
   Scenario: Full Load curation
     # 1. get attributes from cns_plan_region
 
+    And I will remove the test file on sink application "GDMRegion.tsv"
+
     Given I import "/plan/cns_plan_region" by keyFields "planningRegionId"
       | planningRegionId | planningRegionDesc         |
       | NORTHREG         | South America North Region |
@@ -25,11 +27,12 @@ Feature: OMPGdmRegion AEAZ-2711
 
     And I compare the number of records between "/plan/cns_plan_region" and "/omp/gdm_region,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_region"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMRegion.tsv"
 

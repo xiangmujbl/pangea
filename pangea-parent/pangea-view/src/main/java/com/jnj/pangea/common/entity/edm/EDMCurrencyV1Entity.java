@@ -6,9 +6,6 @@ import java.util.Map;
 
 public class EDMCurrencyV1Entity extends CommonEntity {
 
-
-
-    private String localCountry;
     private String localCurrency;
     private String sourceSystem;
     private String isoNumeric;
@@ -63,14 +60,6 @@ public class EDMCurrencyV1Entity extends CommonEntity {
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
-    }
-
-    public String getLocalCountry() {
-        return localCountry;
-    }
-
-    public void setLocalCountry(String localCountry) {
-        this.localCountry = localCountry;
     }
 
 }

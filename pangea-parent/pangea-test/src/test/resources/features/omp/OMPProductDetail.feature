@@ -5,10 +5,11 @@ Feature:  OMPProductDetail AEAZ-2713
 
   #1.test get attributes from cns_material_plan_status and source_system_v1(rule J1,T1,T2,T3,T4,T5)
 
+    And I will remove the test file on sink application "ProductDetail.tsv"
+
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
       | localMaterialNumber | primaryPlanningCode | localDpParentCode | sourceSystem | localManufacturingTechnology |
       | 97568               | 1233                | 111               | CONS_LATAM   | WWWW                         |
-
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_material_plan_status" by keyFields "localMaterialNumber"
@@ -38,10 +39,11 @@ Feature:  OMPProductDetail AEAZ-2713
 
    # And I compare the number of records between "/edm/material_global_v1" and "/omp/product_detail,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/product_detail"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "ProductDetail.tsv"

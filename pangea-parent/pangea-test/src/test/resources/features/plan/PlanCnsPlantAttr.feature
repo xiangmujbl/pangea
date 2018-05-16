@@ -8,7 +8,6 @@ Feature: PlanCnsPlantAttr AEAZ-1480
       | sourceSystem     | localPlant | localPlantName | localPlantType | plant | plantType | localPlanningRelevant |
       | [Consumer LATAM] | BR02       | A              | 00             |       | 00        | Y                     |
       | [Consumer LATAM] | BR06       | B              | 01             |       | 01        | N                     |
-
     And I wait "/edm/plant_v1" Async Queue complete
 
     When I submit task with xml file "xml/plan/PlanCnsPlantAttr.xml" and execute file "jar/pangea-view.jar"
@@ -22,8 +21,11 @@ Feature: PlanCnsPlantAttr AEAZ-1480
 
 #    And I compare the number of records between "/edm/plant_v1" and "/plan/cns_plant_attr,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/plan/cns_plant_attr"
+
     And I will remove all data with region "/plan/edm_failed_data"
 

@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;

@@ -15,9 +15,11 @@ import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
-import com.jnj.pangea.common.entity.plan.*;
+import com.jnj.pangea.common.entity.plan.CnsTlaneItemExceptionEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsProcessTypeEntity;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -141,9 +143,9 @@ public class OMPGdmTransportExceptionServiceImpl {
             gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
 
             //N7
-LogUtil.getCoreLog().info(localMatNum);
-LogUtil.getCoreLog().info(destLocalPlantNum);
-LogUtil.getCoreLog().info(destSourceSystem);
+            LogUtil.getCoreLog().info(localMatNum);
+            LogUtil.getCoreLog().info(destLocalPlantNum);
+            LogUtil.getCoreLog().info(destSourceSystem);
             //N8 & N9 & N10
             EDMMaterialPlantV1Entity materialPlantV1Entity = materialPlantDao.getEntityWithMaterialNumberPlantNumberSourceSystem(localMatNum, destLocalPlantNum, destSourceSystem);
             EDMSourceListV1Entity sourceListV1Entity = sourceListDao.getEntityWithMaterialNumberPlantNumberSourceSystemLocalDateAndBlankLocalBlockedSourceOfSupply(localMatNum, destLocalPlantNum, destSourceSystem);
@@ -264,16 +266,15 @@ LogUtil.getCoreLog().info(destSourceSystem);
         return resultObject;
     }
 
-    private boolean locationExists (String sourceSystem, String localPlantNum) {
-        PlanCnsPlnSplLocEntity plnSplLocEntity = plnSplLocDao.getEntityWithSourceSystemAndLocalNumber(sourceSystem,localPlantNum);
+    private boolean locationExists(String sourceSystem, String localPlantNum) {
+        PlanCnsPlnSplLocEntity plnSplLocEntity = plnSplLocDao.getEntityWithSourceSystemAndLocalNumber(sourceSystem, localPlantNum);
 
         boolean entryExists = false;
 
         if (plnSplLocEntity != null) {
             entryExists = true;
-        }
-        else {
-            EDMPlantV1Entity plantV1Entity = plantDao.getPlantWithSourceSystemAndLocalPlant(sourceSystem,localPlantNum);
+        } else {
+            EDMPlantV1Entity plantV1Entity = plantDao.getPlantWithSourceSystemAndLocalPlant(sourceSystem, localPlantNum);
             if (plantV1Entity.getLocalPlanningRelevant().equals("X")) {
                 entryExists = true;
             }
@@ -282,16 +283,18 @@ LogUtil.getCoreLog().info(destSourceSystem);
         return entryExists;
     }
 
-    private ArrayList<String> getLocationStringArray (String location) {
+    private ArrayList<String> getLocationStringArray(String location) {
         String[] locArray = location.split("_");
         ArrayList<String> locArrayList = new ArrayList<>(Arrays.asList(locArray));
         return locArrayList;
     }
-    private String getLocalPlantNum (String location) {
+
+    private String getLocalPlantNum(String location) {
         ArrayList<String> locList = getLocationStringArray(location);
         return locList.get(locList.size() - 1);
     }
-    private String getSourceSystem (String location) {
+
+    private String getSourceSystem(String location) {
         ArrayList<String> locList = getLocationStringArray(location);
         return String.join("_", locList.remove(locList.size() - 1));
     }

@@ -5,7 +5,6 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.ICommonDao;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
@@ -23,7 +22,7 @@ public abstract class CommonController extends BaseController {
         List<ViewResultItem> result = new LinkedList<>();
         events.forEach(raw -> {
             ResultObject resultObject = process(raw);
-            if (null != resultObject){
+            if (null != resultObject) {
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = resultObject.getBaseBo();
                     if (null != baseBo) {
@@ -32,7 +31,7 @@ public abstract class CommonController extends BaseController {
                 } else {
                     if (null != resultObject.getFailData()) {
                         FailData failData = resultObject.getFailData();
-                        result.add(ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap()));
+                        result.add(ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap()));
                     }
                 }
             }

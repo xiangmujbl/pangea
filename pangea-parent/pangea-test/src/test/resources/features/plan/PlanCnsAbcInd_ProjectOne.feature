@@ -9,7 +9,6 @@ Feature: PlanCnsAbcInd AEAZ-1481
       | 10002 |
       | 10003 |
       | 10004 |
-
     And I wait "/project_one/tmabc" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -39,7 +38,10 @@ Feature: PlanCnsAbcInd AEAZ-1481
 
     And I compare the number of records between "/project_one/tmabc" and "/plan/cns_abc_ind,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/plan/cns_abc_ind"
+
     And I will remove all data with region "/plan/edm_failed_data"
