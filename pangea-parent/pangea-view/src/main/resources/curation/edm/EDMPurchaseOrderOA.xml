@@ -18,7 +18,7 @@
 
             <region path="/project_one/ekpo">
                 <columns>
-                    ebeln,ebelp,loekz,matnr,werks,lgort,bednr,menge,meins,umrez,umren,insmk,elikz,pstyp,knttp,konnr,ktpnr,lmein,adrnr,plifz,sobkz,bstae,lblkz,adrn2,banfn,bnfpo,j1bnbm,reslo,webaz
+                    mandt,ebeln,ebelp,loekz,matnr,werks,lgort,bednr,menge,meins,umrez,umren,insmk,elikz,pstyp,knttp,konnr,ktpnr,lmein,adrnr,plifz,sobkz,bstae,lblkz,adrn2,banfn,bnfpo,j1bnbm,reslo,webaz
                 </columns>
                 <relations>
                     <relation path="/project_one/ekbe" isPrimaryKey="false">
@@ -53,7 +53,7 @@
 
             <region path="/project_one/ekbe">
                 <columns>
-                    vgabe,gjahr,belnr,buzei,bewtp,bwart,budat,menge,ebeln,ebelp,mandt,zekkn
+                    mandt,ebeln,ebelp,zekkn,vgabe,gjahr,belnr,buzei,bewtp,bwart,budat,menge
                 </columns>
                 <relations>
                     <relation path="/project_one/ekes" isPrimaryKey="false">
@@ -64,7 +64,7 @@
 
             <region path="/project_one/ekes">
                 <columns>
-                    ebtyp,eindt,erdat,menge,dabmg,estkz,vbeln,vbelp,charg,ebeln,ebelp,etens,mandt
+                    charg,dabmg,ebeln,ebelp,ebtyp,eindt,ematn,erdat,estkz,etens,ezeit,imwrk,kzdis,loekz,lpein,mahnz,mandt,menge,mprof,refEtens,uecha,uzeit,vbeln,vbelp,xblnr
                 </columns>
                 <relations>
                     <relation path="/project_one/eket" isPrimaryKey="false">
@@ -75,7 +75,7 @@
 
             <region path="/project_one/eket">
                 <columns>
-                    eindt,menge,wemng,banfn,bnfpo,glmng,dabmg,etenr,ebeln,ebelp,mandt
+                    mandt,ebeln,ebelp,etenr,eindt,menge,wemng,banfn,bnfpo,glmng,dabmg
                 </columns>
                 <relations>
                     <relation path="/project_one/ekpv" isPrimaryKey="false">

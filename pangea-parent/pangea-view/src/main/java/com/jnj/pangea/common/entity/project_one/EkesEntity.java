@@ -19,6 +19,19 @@ public class EkesEntity extends CommonEntity {
     private String vbeln;
     private String vbelp;
     private String charg;
+    private String ematn;
+    private String ezeit;
+    private String imwrk;
+    private String kzdis;
+    private String loekz;
+    private String lpein;
+    private String mahnz;
+    private String mprof;
+    private String refEtens;
+    private String uecha;
+    private String uzeit;
+    private String xblnr;
+
 
     public EkesEntity(Map<String, Object> map) {
         super(map);
@@ -35,6 +48,18 @@ public class EkesEntity extends CommonEntity {
         setVbeln((String)map.get("vbeln"));
         setVbelp((String)map.get("vbelp"));
         setCharg((String)map.get("charg"));
+        setEmatn((String)map.get("ematn"));
+        setEzeit((String)map.get("ezeit"));
+        setImwrk((String)map.get("imwrk"));
+        setKzdis((String)map.get("kzdis"));
+        setLoekz((String)map.get("loekz"));
+        setLpein((String)map.get("lpein"));
+        setMahnz((String)map.get("mahnz"));
+        setMprof((String)map.get("mprof"));
+        setRefEtens((String)map.get("refEtens"));
+        setUecha((String)map.get("uecha"));
+        setUzeit((String)map.get("uzeit"));
+        setXblnr((String)map.get("xblnr"));
     }
 
     public String getEbeln() {
@@ -139,5 +164,101 @@ public class EkesEntity extends CommonEntity {
 
     public void setCharg(String charg) {
         this.charg = charg;
+    }
+
+    public String getEmatn() {
+        return ematn;
+    }
+
+    public void setEmatn(String ematn) {
+        this.ematn = ematn;
+    }
+
+    public String getEzeit() {
+        return ezeit;
+    }
+
+    public void setEzeit(String ezeit) {
+        this.ezeit = ezeit;
+    }
+
+    public String getImwrk() {
+        return imwrk;
+    }
+
+    public void setImwrk(String imwrk) {
+        this.imwrk = imwrk;
+    }
+
+    public String getKzdis() {
+        return kzdis;
+    }
+
+    public void setKzdis(String kzdis) {
+        this.kzdis = kzdis;
+    }
+
+    public String getLoekz() {
+        return loekz;
+    }
+
+    public void setLoekz(String loekz) {
+        this.loekz = loekz;
+    }
+
+    public String getLpein() {
+        return lpein;
+    }
+
+    public void setLpein(String lpein) {
+        this.lpein = lpein;
+    }
+
+    public String getMahnz() {
+        return mahnz;
+    }
+
+    public void setMahnz(String mahnz) {
+        this.mahnz = mahnz;
+    }
+
+    public String getMprof() {
+        return mprof;
+    }
+
+    public void setMprof(String mprof) {
+        this.mprof = mprof;
+    }
+
+    public String getRefEtens() {
+        return refEtens;
+    }
+
+    public void setRefEtens(String refEtens) {
+        this.refEtens = refEtens;
+    }
+
+    public String getUecha() {
+        return uecha;
+    }
+
+    public void setUecha(String uecha) {
+        this.uecha = uecha;
+    }
+
+    public String getUzeit() {
+        return uzeit;
+    }
+
+    public void setUzeit(String uzeit) {
+        this.uzeit = uzeit;
+    }
+
+    public String getXblnr() {
+        return xblnr;
+    }
+
+    public void setXblnr(String xblnr) {
+        this.xblnr = xblnr;
     }
 }

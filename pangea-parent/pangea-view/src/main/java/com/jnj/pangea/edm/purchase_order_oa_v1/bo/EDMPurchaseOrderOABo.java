@@ -83,6 +83,11 @@ public class EDMPurchaseOrderOABo extends BaseBo {
                 .makeJsonObject("sourceSystem",this.sourceSystem)
                 .add("poNum",this.poNum)
                 .add("poLineNbr",this.poLineNbr)
+                .add("evTypeCd",this.evTypeCd)
+                .add("matlMvmttYr",this.matlMvmttYr)
+                .add("matlMvmtNum",this.matlMvmtNum)
+                .add("matlMvmtSeqNbr",this.matlMvmtSeqNbr)
+                .add("delvSchedCntNbr",this.delvSchedCntNbr)
                 .toJsonString();
     }
 

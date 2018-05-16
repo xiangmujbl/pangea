@@ -363,6 +363,8 @@
 
 		<adf-grid:partitioned-region name="material_global_v2" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
+		<adf-grid:partitioned-region name="purchase_order_oa_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
 	</adf-grid:replicated-region>
 
 

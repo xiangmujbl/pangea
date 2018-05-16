@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.purchase_order_oa_v1.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.*;
@@ -34,36 +35,45 @@ public class EDMPurchaseOrderOAServiceImpl{
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
 
         //T1
-        String sourceSystem = "";
         if(sourceSystemV1Entity != null) {
-            sourceSystem = sourceSystemV1Entity.getSourceSystem();
-        }
+            String sourceSystem = sourceSystemV1Entity.getSourceSystem();
+            //N1
+            List<EkpoEntity> ekpoEntities = ekpoDao.getEkpoEntitiesByEbeln(ekkoEntity.getEbeln());
 
-        //N1
-        List<EkpoEntity> ekpoEntities = ekpoDao.getEkpoEntitiesByEbeln(ekkoEntity.getEbeln());
-        for(EkpoEntity ekpoEntity:ekpoEntities) {
-            //N2
-            String ebeln = ekpoEntity.getEbeln();
-            String ebelp = ekpoEntity.getEbelp();
-            List<EkbeEntity> ekbeEntities = ekbeDao.getEkbeEntitiesByEbelnAndEbelp(ebeln, ebelp);
-            List<EkesEntity> ekesEntities = ekesDao.getEkesEntitiesByEbelnAndEbelp(ebeln, ebelp);
-            List<EketEntity> eketEntities = eketDao.getEketEntitiesByEbelnAndEbelp(ebeln, ebelp);
-            List<EkpvEntity> ekpvEntities = ekpvDao.getEkpvEntitiesByEbelnAndEbelp(ebeln, ebelp);
+            if(ekpoEntities != null) {
+                for (EkpoEntity ekpoEntity : ekpoEntities) {
+                    //N2
+                    String ebeln = ekpoEntity.getEbeln();
+                    String ebelp = ekpoEntity.getEbelp();
+                    List<EkbeEntity> ekbeEntities = ekbeDao.getEkbeEntitiesByEbelnAndEbelp(ebeln, ebelp);
+                    List<EkesEntity> ekesEntities = ekesDao.getEkesEntitiesByEbelnAndEbelp(ebeln, ebelp);
+                    List<EketEntity> eketEntities = eketDao.getEketEntitiesByEbelnAndEbelp(ebeln, ebelp);
+                    List<EkpvEntity> ekpvEntities = ekpvDao.getEkpvEntitiesByEbelnAndEbelp(ebeln, ebelp);
 
-            for(EkbeEntity ekbeEntity:ekbeEntities){
-                resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, ekbeEntity, null, null, null));
-            }
+                    if(ekbeEntities != null) {
+                        for (EkbeEntity ekbeEntity : ekbeEntities) {
+                            resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, ekbeEntity, null, null, null));
+                        }
+                    }
 
-            for(EkesEntity ekesEntity:ekesEntities){
-                resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, ekesEntity, null, null));
-            }
+                    if(ekesEntities != null) {
+                        for (EkesEntity ekesEntity : ekesEntities) {
+                            resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, ekesEntity, null, null));
+                        }
+                    }
 
-            for(EketEntity eketEntity:eketEntities){
-                resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, null, eketEntity, null));
-            }
+                    if(eketEntities != null) {
+                        for (EketEntity eketEntity : eketEntities) {
+                            resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, null, eketEntity, null));
+                        }
+                    }
 
-            for(EkpvEntity ekpvEntity:ekpvEntities){
-                resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, null, null, ekpvEntity));
+                    if(ekpvEntities != null) {
+                        for (EkpvEntity ekpvEntity : ekpvEntities) {
+                            resultObjects.add(setObjectByEntity(sourceSystem, ekkoEntity, ekpoEntity, null, null, null, ekpvEntity));
+                        }
+                    }
+                }
             }
         }
         return resultObjects;
