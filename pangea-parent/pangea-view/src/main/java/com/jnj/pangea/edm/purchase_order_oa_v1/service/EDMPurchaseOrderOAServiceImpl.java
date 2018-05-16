@@ -101,7 +101,7 @@ public class EDMPurchaseOrderOAServiceImpl{
         if(ekbeEntity != null)
             purchaseOrderOABo.setMatlMvmtNum(ekbeEntity.getBelnr());
         else
-            purchaseOrderOABo.setMatlMvmtSeqNbr("");
+            purchaseOrderOABo.setMatlMvmtNum("");
 
         if(ekbeEntity != null)
             purchaseOrderOABo.setMatlMvmtSeqNbr(ekbeEntity.getBuzei());
