@@ -22,7 +22,7 @@ public class EDMMaterialGlobalDaoImpl extends CommonDaoImpl {
     }
 
     public EDMMaterialGlobalV1Entity getMaterialNumberWithLocalMaterialNumberAndSourceSystem(String sourceSystem, String matnr) {
-        if (null != sourceSystem && (!(sourceSystem.equals(""))) && null != matnr && (!(matnr.equals("")))) {
+        if (null != sourceSystem && (!(sourceSystem.isEmpty())) && null != matnr && (!(matnr.isEmpty()))) {
             String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.SOURCE_SYSTEM).is(sourceSystem).and(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).is(matnr).toQueryString();
             return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
         }
@@ -30,7 +30,7 @@ public class EDMMaterialGlobalDaoImpl extends CommonDaoImpl {
     }
 
     public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialNumber(String localMaterialNumber){
-        if (null != localMaterialNumber && (!(localMaterialNumber.equals("")))){
+        if (null != localMaterialNumber && (!(localMaterialNumber.isEmpty()))){
             String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
             return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1,queryString,EDMMaterialGlobalV1Entity.class);
         }
