@@ -14,16 +14,13 @@ import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PangeaSteps extends CommonSteps {
 
     private static String computingNode = "";
     private static Integer computingPartition = 1;
-    private static String mboxSink = "";
+    private static String kafkaSink = "";
     private static String ceRegionAlias = "";
 
     private static String mergeJobDefinition = "xd/fileMerger.xml";
@@ -34,7 +31,7 @@ public class PangeaSteps extends CommonSteps {
         String partition = ADFConfigHelper.getProperty("computingPartition");
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
-        mboxSink = ADFConfigHelper.getProperty("mboxSink");
+        kafkaSink = ADFConfigHelper.getProperty("kafkaSink");
         ceRegionAlias = ADFConfigHelper.getProperty("ceRegionAlias");
     }
 
@@ -81,7 +78,7 @@ public class PangeaSteps extends CommonSteps {
 
         And("^I will remove the test file on sink application \"([^\"]*)\"$", (fileName) -> {
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.delete("http://" + mboxSink + "/api/file/" + fileName);
+            restTemplate.delete("http://" + kafkaSink + "/api/file/" + fileName);
         });
 
         And("^I execute xd job to merge file \"([^\"]*)\" to \"([^\"]*)\" by keyFields \"([^\"]*)\"$",
@@ -109,7 +106,7 @@ public class PangeaSteps extends CommonSteps {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        ResponseEntity<byte[]> response = restTemplate.exchange("http://" + mboxSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
+        ResponseEntity<byte[]> response = restTemplate.exchange("http://" + kafkaSink + "/api/file/" + fileName, HttpMethod.GET, entity, byte[].class, "1");
 
         File file = new File(fileName);
         FileOutputStream output = null;
@@ -132,34 +129,91 @@ public class PangeaSteps extends CommonSteps {
         return file;
     }
 
-    private void checkFileData(List<List<String>> list, String[] keyFields, File file) {
+    private void checkFileData(List<List<String>> testDataList, String[] keyFields, File file) {
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             //updated to remove call to readline() before entering while loop - we were skipping the first line
             String line = null;
-            int count = 0;
-            // check headers
+            int[] headerMap = null;
+            boolean headersFound = false;
 
-            while (StringUtils.isNotEmpty(StringUtils.trim(line = bufferedReader.readLine()))) {
-                // check record
-                List<String> fileList = Arrays.asList(line.split("\t", -1));
-                Assert.assertEquals(fileList.size(), list.get(count).size());
-                // compare record ignore the order
-                boolean isContain = false;
-                //for current line in output file, check is it in the test data
-                for (List<String> target : list) {
-                    isContain = target.containsAll(fileList);
-                    if (isContain) {
-                        break;
+            // read first line from file to create header map.
+            while ((line = bufferedReader.readLine()) != null) {
+
+                List<String> targetLine = testDataList.get(0);
+                List<String> fileLine = Arrays.asList(line.split("\t", -1));
+                if (fileLine.size() != targetLine.size()) {
+                    System.err.println("Column Count Doesn't Match.\nExpected:"+targetLine.size()+"\nActual:"+fileLine.size());
+                }
+                Assert.assertEquals(targetLine.size(), fileLine.size()); //check we have all columns
+
+                // all headers present
+                headersFound = targetLine.containsAll(fileLine);
+
+                if (headersFound) {
+
+                    headerMap = new int[fileLine.size()];
+
+                    for (int targetIndex=0; targetIndex<targetLine.size(); targetIndex++) {    // for each header in test data
+                        for (int fileIndex=0; fileIndex<fileLine.size(); fileIndex++) {     // for each header in file data
+                            if (targetLine.get(targetIndex).equals(fileLine.get(fileIndex))) {   // find the target header in the file headers
+                                headerMap[targetIndex] = fileIndex;
+                            }
+                        }
                     }
                 }
-                if (!isContain) {
-                    System.err.println("Record Doesn't Exist:\n" + Arrays.toString(fileList.toArray()));
+
+                if (!headersFound) {
+                    System.err.println("Headers Don't Match.\nExpected:"+Arrays.toString(targetLine.toArray())+"\nActual:"+Arrays.toString(fileLine.toArray()));
                 }
-                Assert.assertTrue(isContain);
-                count++;
+
+                Assert.assertTrue(headersFound);
+                break;
             }
 
+            if (headersFound) {
+
+                // for each line in the output file
+                while ((line = bufferedReader.readLine()) != null) {
+
+                    List<String> fileLine = Arrays.asList(line.split("\t", -1));
+
+                    // compare record
+                    boolean recordFound = false;
+
+                    // for each line of test data
+                    for (int i=0; i<testDataList.size(); i++) {
+
+                        // for each column of test data line try to match the values of the record
+                        for (int x=0; x<testDataList.get(i).size(); x++) {
+
+                            String target = testDataList.get(i).get(x);
+                            String fileValue = fileLine.get(headerMap[x]);  // get mapped column from file
+
+                            recordFound = target.equals(fileValue);
+
+                            if (!recordFound) {    //if this line doesnt match file's line go to next line
+                                break;
+                            }
+                        }
+
+                        if (recordFound) {  // if file line matched continue to next file line
+                            break;
+                        }
+                    }
+
+                    if (!recordFound) {
+                        System.err.println("Record Not Found:\n"+Arrays.toString(fileLine.toArray()));
+                    }
+
+                    Assert.assertTrue(recordFound);
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

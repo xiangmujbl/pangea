@@ -49,9 +49,6 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localComponentScrap;
     private String plant;
 
-
-
-
     public EDMMaterialPlantV1Entity(Map<String, Object> map) {
         super(map);
         setLocalMaterialNumber((String)map.get("localMaterialNumber"));
@@ -96,7 +93,7 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         setLocalGoodsReceiptProcessingTimeInDays((String) map.get("localGoodsReceiptProcessingTimeInDays"));
         setLocalBatchManagementRequirementIndicator((String) map.get("localBatchManagementRequirementIndicator"));
 
-        setLocalMaterialType((String)map.get("localPurchasingGroup"));
+        setLocalPurchasingGroup((String)map.get("localPurchasingGroup"));
     }
 
 

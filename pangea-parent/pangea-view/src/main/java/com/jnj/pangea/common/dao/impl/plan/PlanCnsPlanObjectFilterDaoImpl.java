@@ -16,9 +16,8 @@ public class PlanCnsPlanObjectFilterDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsPlanObjectFilterEntity getEntityWithSourceObjectAttribute1AndSourceObjectAttribute1ValueAndSourceSystem(String sourceObjectPlantAttribute, String sourceFilterPlantValue, String sourceSystem) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE1).is(sourceObjectPlantAttribute)
-                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE1_VALUE).is(sourceFilterPlantValue)
+    public PlanCnsPlanObjectFilterEntity getEntityWithSourceObjectTechNameAndSourceSystem(String sourceObjectTechName, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_TECHNAME).is(sourceObjectTechName)
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER,queryString,PlanCnsPlanObjectFilterEntity.class);
     }

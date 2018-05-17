@@ -94,6 +94,8 @@ public interface IConstant {
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
         String PLAN_CNS_PLAN_OBJECT_FILTER = "/plan/cns_plan_object_filter";
         String PLAN_CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
+        String CNS_TLANE_ITEM_EXCEPTION = "/plan/cns_tlane_item_exception";
+        String CNS_TLANE_ITEM = "/plan/cns_tlane_item";
         String PLAN_CONS_TIME_DEP_XCHANGE_CLONE = "/plan/cons_time_dep_xchange_clone";
         String EDM_JNJ_CALENDAR_V1 = "/edm/jnj_calendar_v1";
         String EDM_UNIT_OF_MEASURE_V1 = "/edm/unit_of_measure_v1";
@@ -131,14 +133,12 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
-
     interface PLAN_CNS_FIN_PLAN_VAL {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
         String SP_RELEVANT = "sPRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
         String IDENTIFIER = "identifier";
-
     }
 
     interface EDM_MATERIAL_PLANT_V1 {
@@ -157,7 +157,6 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String IDENTIFIER = "identifier";
     }
-
 
     interface PLAN_CNS_PLANT_ATTR {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -178,14 +177,13 @@ public interface IConstant {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PLANT = "localPlant";
-        String MATERIAL_NUMBER = "manterialNumber";
-        String LOCAL_BLOCKED_SOURCE_OF_SUPPLY = "localBlockedSourceOfSupply";
+        String MATERIAL_NUMBER = "materialNumber";
+        String LOCAL_BLOCKED_SOURCE_OF_SUPPLY = "localBlockedSourceofSupply";
         String LOCAL_SOURCE_LIST_RECORD_VALID_FROM = "localSourceListRecordValidFrom";
         String LOCAL_SOURCE_LIST_RECORD_VALID_TO = "localSourceListRecordValidTo";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_BLOCKED_SOURCEOF_SUPPLY = "localBlockedSourceofSupply";
     }
-
 
     interface PLAN_CNS_PLNG_STRAT_GRP {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -201,7 +199,6 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
-
     interface PLAN_CNS_ABC_IND {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_ABC_INDICATOR = "localAbcIndicator";
@@ -211,7 +208,6 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PROCUREMENT_TYPE = "localProcurementType";
     }
-
 
     interface PROJECT_ONE_TMABCT {
         String MAABC = "maabc";
@@ -225,7 +221,6 @@ public interface IConstant {
     interface PROJECT_ONE_T001W {
         String WERKS = "werks";
     }
-
 
     interface EDM_COUNTRY_V1 {
         String LOCAL_COUNTRY = "localCountry";
@@ -298,7 +293,6 @@ public interface IConstant {
         String MDM_SAP_CODE = "mdmSapCode";
     }
 
-
     interface EMS_F_MDM_COUNTRIES {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
         String MDM_CODE = "mdmCode";
@@ -320,7 +314,6 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
-
     interface EDM_MATERIAL_GLOBAL_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
@@ -341,7 +334,6 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
     }
-
 
     interface CNS_PLAN_PARAMETER {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -411,7 +403,6 @@ public interface IConstant {
         String GBU = "gbu";
     }
 
-
     interface PLAN_CONS_TIME_DEP_XCHANGE {
         String UNIT_ID = "unitId";
         String FROM_CURRENCY ="fromCurrency";
@@ -463,6 +454,7 @@ public interface IConstant {
     interface PLAN_CNS_PLAN_OBJECT_FILTER {
         String SOURCE_OBJECT_TECH_NAME = "sourceObjectTechName";
         String SOURCE_SYSTEM = "sourceSystem";
+        String SOURCE_OBJECT_TECHNAME = "sourceObjectTechName";
         String SOURCE_OBJECT_ATTRIBUTE1 = "sourceObjectAttribute1";
         String SOURCE_OBJECT_ATTRIBUTE1_VALUE = "sourceObjectAttribute1Value";
         String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
@@ -524,15 +516,23 @@ public interface IConstant {
         String ORDER_TYPE = "orderType";
     }
 
+    interface CNS_TLANE_ITEM_EXCEPTION {
+        String REF_SEQ_NUM_TLANE_ITEM = "refSeqNumTlaneItem";
+    }
     interface PLAN_CNS_SPL_PLN_LOC {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCALNUMBER = "localNumber";
         String VENDORORCUSTOMER = "vendorOrCustomer";
     }
 
+    interface CNS_TLANE_ITEM {
+
+    }
+
     interface EDM_UNIT_OF_MEASURE_V1 {
         String UOM = "uom";
     }
+
     interface PROJECT_ONE_STKO{
          String MANDT = "mandt";
          String STLTY = "stlty";
@@ -571,7 +571,7 @@ public interface IConstant {
     interface EDM_MATERIAL_GLOBAL_V1_CLONE {
         String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
-	
+
 	interface MATL_MFG_RTNG {
         String FIELD_LOEKZ_VALUE_X="x";
         String FIELD_MATLRTNGVALID_TO="9999/12/31";
@@ -664,6 +664,7 @@ public interface IConstant {
         String YYYY_MM_DD = "yyyy/MM/dd";
         String YYYYMMDD_ZERO = "00000000";
         String YYYY_MM_DD_ZERO = "0000/00/00";
+        String  HH_NN_SS_ZERO = " 00:00:00";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
         String YYYYDDMMHHMMSS = "yyyy/DD/mm HH:mm:ss";
         String MMDYYYY = "MM/d/yyyy";
@@ -706,8 +707,6 @@ public interface IConstant {
         String LESS_DAYS = "LessDays";
         String BOM_VlD_ToDt ="9999/12/31";
     }
-
-
 
     interface FAILED {
 
