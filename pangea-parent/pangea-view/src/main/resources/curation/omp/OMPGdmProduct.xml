@@ -32,7 +32,7 @@
                     <relation path="/edm/franchise_v1" isPrimaryKey="false">
                         <expression>franchise=/edm/material_global_v1.franchise</expression>
                     </relation>
-                    <relation path="/edm/global_base_unit_v1" isPrimaryKey="false">
+                    <relation path="/edm/global_business_unit_v1" isPrimaryKey="false">
                         <expression>gbu=/edm/material_global_v1.globalBusinessUnit</expression>
                     </relation>
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
@@ -77,7 +77,7 @@
                     franchise,franchiseDescription
                 </columns>
             </region>
-            <region path="/edm/global_base_unit_v1">
+            <region path="/edm/global_business_unit_v1">
                 <columns>
                     gbu,gbuName
                 </columns>

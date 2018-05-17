@@ -4,6 +4,8 @@ Feature: OMPGdmBatch AEAZ-2374
   Scenario: Full Load curation
     #1. get atrributes from material_global_v1(rule N2)
 
+    And I will remove the test file on sink application "GDMBatch.tsv"
+
     Given I import "/edm/batch_master_v1" by keyFields "localBatchNumber"
       | localBatchNumber   | localBatchExpDate | localBatchMfgDate | srcSysCd  | matlId     | locPrtyId        |
       | BA001              | 20150708          | 20180708          | 18041801  | 22041801   | BA001_22041801   |
@@ -45,11 +47,12 @@ Feature: OMPGdmBatch AEAZ-2374
 
     And I compare the number of records between "/edm/batch_master_v1" and "/omp/gdm_batch,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_batch"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMBatch.tsv"
 

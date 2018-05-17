@@ -15,7 +15,6 @@ Feature: EDMPlant AEAZ-495
       | [EMS]              | [Consumer LATAM], AR06, J&J BR-Alhandra PB-Com&Distrib | 00              | ET    | All Countries | fase     |
     And I wait "/ems/ems_f_z_enterprise_plants" Async Queue complete
 
-
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
       | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
@@ -62,7 +61,10 @@ Feature: EDMPlant AEAZ-495
 
 #    And I compare the number of records between "/ems/ems_f_z_enterprise_plants" and "/edm/plant_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/plant_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"

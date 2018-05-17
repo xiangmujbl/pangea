@@ -30,10 +30,10 @@ public class CnsTlaneItemExceptionEntity extends CommonEntity {
         setDestinationLocation((String) map.get("destinationLocation"));
         setLeadTime((String) map.get("leadTime"));
         setMode((String) map.get("mode"));
-        setMode((String) map.get("sequenceNumber"));
-        setMode((String) map.get("tlaneName"));
-        setMode((String) map.get("deletionIndicator"));
-        setMode((String) map.get("refSeqNumTlaneItem"));
+        setSequenceNumber((String) map.get("sequenceNumber"));
+        setTlaneName((String) map.get("tlaneName"));
+        setDeletionIndicator((String) map.get("deletionIndicator"));
+        setRefSeqNumTlaneItem((String) map.get("refSeqNumTlaneItem"));
     }
 
     public String getDeletionIndicator () {
