@@ -95,7 +95,7 @@ public class OMPProductDetailServiceImpl {
             OMPProductDetailBo productDetailBo1 = new OMPProductDetailBo();
             if (edmSourceSystemV1Entity != null) {
                 productDetailBo1.setProductDetailId(edmSourceSystemV1Entity.getLocalSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.PGA + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.LATAM_SKU);
-                productDetailBo1.setProductId(edmSourceSystemV1Entity.getSourceSystem() + "_" + materialGlobalV1Entity.getPrimaryPlanningCode());
+                productDetailBo1.setProductId(edmSourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
             }
             productDetailBo1.setName(IConstant.VALUE.LATAM_SKU);
             productDetailBo1.setValue(materialGlobalV1Entity.getLocalMaterialNumber());

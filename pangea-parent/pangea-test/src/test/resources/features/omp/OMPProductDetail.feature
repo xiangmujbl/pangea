@@ -1,11 +1,11 @@
-@pangea_test @AEAZ-2713
-Feature:  OMPProductDetail AEAZ-2713
+@pangea_test @AEAZ-2713 @AEAZ-4064
+Feature:  OMPProductDetail AEAZ-2713 AEAZ-4064
 
   Scenario: Full Load curation
 
   #1.test get attributes from cns_material_plan_status and source_system_v1(rule J1,T1,T2,T3,T4,T5)
 
-    And I will remove the test file on sink application "ProductDetail.tsv"
+    And I will remove the test file on sink application "GDMProductDetail.tsv"
 
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
       | localMaterialNumber | primaryPlanningCode | localDpParentCode | sourceSystem | localManufacturingTechnology |
@@ -24,15 +24,15 @@ Feature:  OMPProductDetail AEAZ-2713
 
     When I submit task with xml file "xml/omp/OMPProductDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "ProductDetail.tsv"
+    Then A file is found on sink application with name "GDMProductDetail.tsv"
 
     Then I check file data for filename "ProductDetail.tsv" by keyFields "productDetailId"
-      | productDetailId               | activeFCTERP | activeOPRERP | activeSOPERP | CLASS | comments | description | name       | productId        | unit | value           |
-      | 1233/PGA/LATAM_ROOT           | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | 1233             |      | project_one_111 |
-      | 1233/PGA/LATAM_SKU            | NO           | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | 1233             |      | 97568           |
-      | 1233/PGA/LATAM_TECH           | NO           | YES          |              | PGA   |          | Pangea      | LATAM_TECH | 1233             |      | WWWW            |
-      | CONS_LATAM_111/PGA/LATAM_ROOT | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | project_one_111  |      | project_one_111 |
-      | CONS_LATAM_111/PGA/LATAM_SKU  | YES          | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | project_one_1233 |      | 97568           |
+      | productDetailId               | activeFCTERP | activeOPRERP | activeSOPERP | CLASS | comments | description | name       | productId       | unit | value           |
+      | 1233/PGA/LATAM_ROOT           | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | 1233            |      | project_one_111 |
+      | 1233/PGA/LATAM_SKU            | NO           | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | 1233            |      | 97568           |
+      | 1233/PGA/LATAM_TECH           | NO           | YES          |              | PGA   |          | Pangea      | LATAM_TECH | 1233            |      | WWWW            |
+      | CONS_LATAM_111/PGA/LATAM_ROOT | YES          | YES          |              | PGA   |          | Pangea      | LATAM_ROOT | project_one_111 |      | project_one_111 |
+      | CONS_LATAM_111/PGA/LATAM_SKU  | YES          | YES          |              | PGA   |          | Pangea      | LATAM_SKU  | project_one_111 |      | 97568           |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
