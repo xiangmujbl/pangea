@@ -5,97 +5,97 @@ import com.jnj.pangea.common.BaseBo;
 
 public class OMPGdmLfuBo extends BaseBo {
 
-    private String lfuId;
-    private String countryId;
-    private String currencyId;
-    private String dueDate;
-    private String fromDueDate;
-    private String productId;
-    private String value;
-    private String volume;
+    private String LFUId ;
+    private String CountryId ;
+    private String CurrencyId ;
+    private String DueDate ;
+    private String FromDueDate ;
+    private String ProductId ;
+    private String Value ;
+    private String Volume ;
 
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("lfuId", this.lfuId)
+                .makeJsonObject("LFUId", this.LFUId)
                 .toJsonString();
     }
 
-    public String getLfuId() {
-        return this.lfuId;
+    public String getLFUId() {
+        return LFUId;
     }
 
-    public void setLfuId(String lfuId) {
-        this.lfuId = lfuId;
+    public void setLFUId(String LFUId) {
+        this.LFUId = LFUId;
     }
 
     public String getCountryId() {
-        return this.countryId;
+        return CountryId;
     }
 
     public void setCountryId(String countryId) {
-        this.countryId = countryId;
+        CountryId = countryId;
     }
 
     public String getCurrencyId() {
-        return this.currencyId;
+        return CurrencyId;
     }
 
     public void setCurrencyId(String currencyId) {
-        this.currencyId = currencyId;
+        CurrencyId = currencyId;
     }
 
     public String getDueDate() {
-        return this.dueDate;
+        return DueDate;
     }
 
     public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+        DueDate = dueDate;
     }
 
     public String getFromDueDate() {
-        return this.fromDueDate;
+        return FromDueDate;
     }
 
     public void setFromDueDate(String fromDueDate) {
-        this.fromDueDate = fromDueDate;
+        FromDueDate = fromDueDate;
     }
 
     public String getProductId() {
-        return this.productId;
+        return ProductId;
     }
 
     public void setProductId(String productId) {
-        this.productId = productId;
+        ProductId = productId;
     }
 
     public String getValue() {
-        return this.value;
+        return Value;
     }
 
     public void setValue(String value) {
-        this.value = value;
+        Value = value;
     }
 
     public String getVolume() {
-        return this.volume;
+        return Volume;
     }
 
     public void setVolume(String volume) {
-        this.volume = volume;
+        Volume = volume;
     }
 
     @Override
     public String toString() {
         return "OMPGdmLfuBo{" +
-                "lfuId='" + lfuId + '\'' +
-                ", countryId='" + countryId + '\'' +
-                ", currencyId='" + currencyId + '\'' +
-                ", dueDate='" + dueDate + '\'' +
-                ", fromDueDate='" + fromDueDate + '\'' +
-                ", productId='" + productId + '\'' +
-                ", value='" + value + '\'' +
-                ", volume='" + volume + '\'' +
+                "LFUId='" + LFUId + '\'' +
+                ", CountryId='" + CountryId + '\'' +
+                ", CurrencyId='" + CurrencyId + '\'' +
+                ", DueDate='" + DueDate + '\'' +
+                ", FromDueDate='" + FromDueDate + '\'' +
+                ", ProductId='" + ProductId + '\'' +
+                ", Value='" + Value + '\'' +
+                ", Volume='" + Volume + '\'' +
                 '}';
     }
 }
