@@ -76,6 +76,7 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
     private String localmrpAdjQty;
     private String grLeadTimeDays;
     private String custNum;
+    private String outbDelvCmpltInd;
 
     public EDMPurchaseOrderOAV1Entity(Map<String, Object> map) {
         super(map);
@@ -149,6 +150,7 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
         setLocalmrpAdjQty((String)map.get("localmrpAdjQty"));
         setGrLeadTimeDays((String)map.get("grLeadTimeDays"));
         setCustNum((String)map.get("custNum"));
+        setOutbDelvCmpltInd((String)map.get("outbDelvCmpltInd"));
     }
 
     public String getSourceSystem() {
@@ -709,5 +711,13 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
 
     public void setCustNum(String custNum) {
         this.custNum = custNum;
+    }
+
+    public String getOutbDelvCmpltInd() {
+        return outbDelvCmpltInd;
+    }
+
+    public void setOutbDelvCmpltInd(String outbDelvCmpltInd) {
+        this.outbDelvCmpltInd = outbDelvCmpltInd;
     }
 }

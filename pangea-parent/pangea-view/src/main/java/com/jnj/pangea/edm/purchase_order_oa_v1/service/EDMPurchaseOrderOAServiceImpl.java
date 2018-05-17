@@ -1,6 +1,5 @@
 package com.jnj.pangea.edm.purchase_order_oa_v1.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.*;
@@ -87,32 +86,6 @@ public class EDMPurchaseOrderOAServiceImpl{
         purchaseOrderOABo.setSourceSystem(sourceSystem);
         purchaseOrderOABo.setPoNum(ekkoEntity.getEbeln());
         purchaseOrderOABo.setPoLineNbr(ekpoEntity.getEbelp());
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setEvTypeCd(ekbeEntity.getVgabe());
-        else
-            purchaseOrderOABo.setEvTypeCd("");
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setMatlMvmttYr(ekbeEntity.getGjahr());
-        else
-            purchaseOrderOABo.setMatlMvmttYr("");
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setMatlMvmtNum(ekbeEntity.getBelnr());
-        else
-            purchaseOrderOABo.setMatlMvmtNum("");
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setMatlMvmtSeqNbr(ekbeEntity.getBuzei());
-        else
-            purchaseOrderOABo.setMatlMvmtSeqNbr("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setDelvSchedCntNbr(eketEntity.getEtenr());
-        else
-            purchaseOrderOABo.setDelvSchedCntNbr("");
-
         purchaseOrderOABo.setPoCatTypeCd(ekkoEntity.getBstyp());
         purchaseOrderOABo.setPoTypeCd(ekkoEntity.getBsart());
         purchaseOrderOABo.setCrtOnDt(ekkoEntity.getAedat());
@@ -154,108 +127,77 @@ public class EDMPurchaseOrderOAServiceImpl{
         purchaseOrderOABo.setPrLineNbr(ekpoEntity.getBnfpo());
         purchaseOrderOABo.setLocalBrazilianNCMCode(ekpoEntity.getJ1bnbm());
         purchaseOrderOABo.setIsuSlocCd(ekpoEntity.getReslo());
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setPoHistCatCd(ekbeEntity.getBewtp());
-        else
-            purchaseOrderOABo.setPoHistCatCd("");
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setLocalMovementType(ekbeEntity.getBwart());
-        else
-            purchaseOrderOABo.setLocalMovementType("");
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setLocalPostingDate(ekbeEntity.getBudat());
-        else
-            purchaseOrderOABo.setLocalPostingDate("");
-
-        if(ekbeEntity != null)
-            purchaseOrderOABo.setRecvQty(ekbeEntity.getMenge());
-        else
-            purchaseOrderOABo.setRecvQty("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setCnfrmSeqNbr(ekesEntity.getEbtyp());
-        else
-            purchaseOrderOABo.setCnfrmSeqNbr("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setDelvDt(ekesEntity.getEindt());
-        else
-            purchaseOrderOABo.setDelvDt("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setCnfrmQty(ekesEntity.getMenge());
-        else
-            purchaseOrderOABo.setCnfrmQty("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setMrpAdjQty(ekesEntity.getDabmg());
-        else
-            purchaseOrderOABo.setMrpAdjQty("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setLocalCreationIndVendorConf(ekesEntity.getEstkz());
-        else
-            purchaseOrderOABo.setLocalCreationIndVendorConf("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setSlsOrdrNum(ekesEntity.getVbeln());
-        else
-            purchaseOrderOABo.setSlsOrdrNum("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setSlsOrdrLineNbr(ekesEntity.getVbelp());
-        else
-            purchaseOrderOABo.setSlsOrdrLineNbr("");
-
-        if(ekesEntity != null)
-            purchaseOrderOABo.setVendBtchNum(ekesEntity.getCharg());
-        else
-            purchaseOrderOABo.setVendBtchNum("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setLocaldelvDt(eketEntity.getEindt());
-        else
-            purchaseOrderOABo.setLocaldelvDt("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setSchdQty(eketEntity.getMenge());
-        else
-            purchaseOrderOABo.setSchdQty("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setRecvQty(eketEntity.getWemng());
-        else
-            purchaseOrderOABo.setRecvQty("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setLocalPurchaseReq(eketEntity.getBanfn());
-        else
-            purchaseOrderOABo.setLocalPurchaseReq("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setLocalPurchaseReqItem(eketEntity.getBnfpo());
-        else
-            purchaseOrderOABo.setLocalPurchaseReqItem("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setStkTfrRecvQty(eketEntity.getGlmng());
-        else
-            purchaseOrderOABo.setStkTfrRecvQty("");
-
-        if(eketEntity != null)
-            purchaseOrderOABo.setLocalmrpAdjQty(eketEntity.getDabmg());
-        else
-            purchaseOrderOABo.setLocalmrpAdjQty("");
-
         purchaseOrderOABo.setGrLeadTimeDays(ekpoEntity.getWebaz());
 
-        if(ekpvEntity != null)
+        if(ekbeEntity != null) {
+            purchaseOrderOABo.setEvTypeCd(ekbeEntity.getVgabe());
+            purchaseOrderOABo.setMatlMvmttYr(ekbeEntity.getGjahr());
+            purchaseOrderOABo.setMatlMvmtNum(ekbeEntity.getBelnr());
+            purchaseOrderOABo.setMatlMvmtSeqNbr(ekbeEntity.getBuzei());
+            purchaseOrderOABo.setPoHistCatCd(ekbeEntity.getBewtp());
+            purchaseOrderOABo.setLocalMovementType(ekbeEntity.getBwart());
+            purchaseOrderOABo.setLocalPostingDate(ekbeEntity.getBudat());
+            purchaseOrderOABo.setRecvEaQty(ekbeEntity.getMenge());
+        }
+        else {
+            purchaseOrderOABo.setEvTypeCd("");
+            purchaseOrderOABo.setMatlMvmttYr("");
+            purchaseOrderOABo.setMatlMvmtNum("");
+            purchaseOrderOABo.setMatlMvmtSeqNbr("");
+            purchaseOrderOABo.setPoHistCatCd("");
+            purchaseOrderOABo.setLocalMovementType("");
+            purchaseOrderOABo.setLocalPostingDate("");
+            purchaseOrderOABo.setRecvEaQty("");
+        }
+
+        if(ekesEntity != null) {
+            purchaseOrderOABo.setCnfrmSeqNbr(ekesEntity.getEbtyp());
+            purchaseOrderOABo.setDelvDt(ekesEntity.getEindt());
+            purchaseOrderOABo.setCnfrmQty(ekesEntity.getMenge());
+            purchaseOrderOABo.setMrpAdjQty(ekesEntity.getDabmg());
+            purchaseOrderOABo.setLocalCreationIndVendorConf(ekesEntity.getEstkz());
+            purchaseOrderOABo.setSlsOrdrNum(ekesEntity.getVbeln());
+            purchaseOrderOABo.setSlsOrdrLineNbr(ekesEntity.getVbelp());
+            purchaseOrderOABo.setVendBtchNum(ekesEntity.getCharg());
+        }
+        else {
+            purchaseOrderOABo.setCnfrmSeqNbr("");
+            purchaseOrderOABo.setDelvDt("");
+            purchaseOrderOABo.setCnfrmQty("");
+            purchaseOrderOABo.setMrpAdjQty("");
+            purchaseOrderOABo.setLocalCreationIndVendorConf("");
+            purchaseOrderOABo.setSlsOrdrNum("");
+            purchaseOrderOABo.setSlsOrdrLineNbr("");
+            purchaseOrderOABo.setVendBtchNum("");
+        }
+
+        if(eketEntity != null) {
+            purchaseOrderOABo.setDelvSchedCntNbr(eketEntity.getEtenr());
+            purchaseOrderOABo.setLocaldelvDt(eketEntity.getEindt());
+            purchaseOrderOABo.setSchdQty(eketEntity.getMenge());
+            purchaseOrderOABo.setRecvQty(eketEntity.getWemng());
+            purchaseOrderOABo.setLocalPurchaseReq(eketEntity.getBanfn());
+            purchaseOrderOABo.setLocalPurchaseReqItem(eketEntity.getBnfpo());
+            purchaseOrderOABo.setStkTfrRecvQty(eketEntity.getGlmng());
+            purchaseOrderOABo.setLocalmrpAdjQty(eketEntity.getDabmg());
+        }
+        else {
+            purchaseOrderOABo.setDelvSchedCntNbr("");
+            purchaseOrderOABo.setLocaldelvDt("");
+            purchaseOrderOABo.setSchdQty("");
+            purchaseOrderOABo.setRecvQty("");
+            purchaseOrderOABo.setLocalPurchaseReq("");
+            purchaseOrderOABo.setLocalPurchaseReqItem("");
+            purchaseOrderOABo.setStkTfrRecvQty("");
+            purchaseOrderOABo.setLocalmrpAdjQty("");
+        }
+
+        if(ekpvEntity != null) {
             purchaseOrderOABo.setCustNum(ekpvEntity.getKunnr());
-        else
+        }
+        else {
             purchaseOrderOABo.setCustNum("");
+        }
 
         resultObject.setBaseBo(purchaseOrderOABo);
         return resultObject;

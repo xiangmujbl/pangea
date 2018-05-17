@@ -75,6 +75,7 @@ public class EDMPurchaseOrderOABo extends BaseBo {
     private String localmrpAdjQty;
     private String grLeadTimeDays;
     private String custNum;
+    private String outbDelvCmpltInd;
 
 
     @Override
@@ -649,5 +650,13 @@ public class EDMPurchaseOrderOABo extends BaseBo {
 
     public void setDelvDt(String delvDt) {
         this.delvDt = delvDt;
+    }
+
+    public String getOutbDelvCmpltInd() {
+        return outbDelvCmpltInd;
+    }
+
+    public void setOutbDelvCmpltInd(String outbDelvCmpltInd) {
+        this.outbDelvCmpltInd = outbDelvCmpltInd;
     }
 }
