@@ -66,7 +66,7 @@ public class GDMProductCountryServiceImpl implements ICommonService {
             }
             //T3
             PlanCnsMaterialPlanStatusEntity entityWithLocalParentCode = planCnsMaterialPlanStatusDao.getEntityWithLocalParentCode(dpParentCode);
-            if(entityWithLocalParentCode != null){
+            if(entityWithLocalParentCode != null && entityWithLocalParentCode.getDpRelevant() != null ){
                 if(!entityWithLocalParentCode.getDpRelevant().equals(IConstant.VALUE.X)){
                     return resultObject;
                 }else{
