@@ -24,52 +24,33 @@ public class OMPGdmLocationDetailServiceImpl {
         List<ResultObject> resultObjectList = new LinkedList<>();
         PlanCnsPlantAttrEntity cnsPlantAttrEntity = (PlanCnsPlantAttrEntity) o;
 
-        String name1 = cnsPlantAttrEntity.getLocationAttribute1Desc();
-        String name2 = cnsPlantAttrEntity.getLocationAttribute2Desc();
-        String name3 = cnsPlantAttrEntity.getLocationAttribute3Desc();
-        String name4 = cnsPlantAttrEntity.getLocationAttribute4Desc();
+        String[] names = new String[4];
+        String[] values = new String[4];;
 
-        String value1 = cnsPlantAttrEntity.getLocationAttribute1Value();
-        String value2 = cnsPlantAttrEntity.getLocationAttribute2Value();
-        String value3 = cnsPlantAttrEntity.getLocationAttribute3Value();
-        String value4 = cnsPlantAttrEntity.getLocationAttribute4Value();
+        names[0] = cnsPlantAttrEntity.getLocationAttribute1Desc();
+        names[1] = cnsPlantAttrEntity.getLocationAttribute2Desc();
+        names[2] = cnsPlantAttrEntity.getLocationAttribute3Desc();
+        names[3] = cnsPlantAttrEntity.getLocationAttribute4Desc();
 
-        String name = "";
-        String value = "";
-
-
-
+        values[0] = cnsPlantAttrEntity.getLocationAttribute1Value();
+        values[1] = cnsPlantAttrEntity.getLocationAttribute2Value();
+        values[2] = cnsPlantAttrEntity.getLocationAttribute3Value();
+        values[3] = cnsPlantAttrEntity.getLocationAttribute4Value();
 
         // T1 - create multi records per attr
         for (int i=0;i<4;i++){
 
             ResultObject resultObject = new ResultObject();
 
-            if (i == 0){
-                name = name1;
-                value = value1;
-            }else if (i == 1){
-                name = name2;
-                value = value2;
-            }else if (i==2){
-                name = name3;
-                value = value3;
-            }else if (i==3){
-                name = name4;
-                value = value4;
+            if (names[i] == null) {
+                names[i] = "";
             }
-
-            if (name == null || "".equals(name.trim()))
-                continue;
 
             OMPGdmLocationDetailBo gdmLocationDetailBo = new OMPGdmLocationDetailBo();
 
             // Rule T1/T2
-            gdmLocationDetailBo.setName(name);
-            gdmLocationDetailBo.setValue(value);
-
-            // Rule N5
-            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
+            gdmLocationDetailBo.setName(names[i]);
+            gdmLocationDetailBo.setValue(values[i]);
 
             // Rule N3
             String CLASS = "";
@@ -78,16 +59,25 @@ public class OMPGdmLocationDetailServiceImpl {
             }
             gdmLocationDetailBo.setCLASS(CLASS);
 
+
             // Rule C1
-            String locationId = cnsPlantAttrEntity.getSourceSystem()+ IConstant.VALUE.UNDERLINE+cnsPlantAttrEntity.getLocalPlant();
-            gdmLocationDetailBo.setLocationId(locationId);
+            String locationid = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
+            gdmLocationDetailBo.setLocationId(locationid);
 
             // Rule C2
-            String locationDetailId = locationId+IConstant.VALUE.BACK_SLANT+CLASS+IConstant.VALUE.BACK_SLANT+name+IConstant.VALUE.BACK_SLANT+value;
+            String locationDetailId = locationid + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + names[i];// + IConstant.VALUE.BACK_SLANT + values[i];
             gdmLocationDetailBo.setLocationDetailId(locationDetailId);
+
 
             // Rule N1
             gdmLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
+
+            // Rule N4
+            gdmLocationDetailBo.setComments("");
+            gdmLocationDetailBo.setUnit("");
+
+            // Rule N5
+            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
 
             resultObject.setBaseBo(gdmLocationDetailBo);
             resultObjectList.add(resultObject);
