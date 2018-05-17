@@ -31,7 +31,7 @@ public class OMPGdmRegionServiceImpl implements ICommonService {
 
         gdmRegionBo.setActiveFCTERP(IConstant.VALUE.YES);
         gdmRegionBo.setActiveOPRERP(IConstant.VALUE.YES);
-        gdmRegionBo.setActiveSOPERP(IConstant.VALUE.YES);
+        gdmRegionBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         resultObject.setBaseBo(gdmRegionBo);
         return resultObject;
