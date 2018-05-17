@@ -1,0 +1,112 @@
+<adf-curation>
+    <curation mainRegion="/project_one/ekko" viewRegion="/edm/purchase_order_oa_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.purchase_order_oa_v1.controller.EDMPurchaseOrderOAController">
+        <regions>
+
+            <region path="/project_one/ekko">
+                <columns>
+                    ebeln,bstyp,bsart,aedat,lifnr,ekorg,ekgrp,bukrs,waers,bedat,kdatb,kdate,llief,reswk,frgrl,lphis
+                </columns>
+                <relations>
+                    <relation path="/project_one/ekpo" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekko.ebeln
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/ekpo">
+                <columns>
+                    mandt,ebeln,ebelp,loekz,matnr,werks,lgort,bednr,menge,meins,umrez,umren,insmk,elikz,pstyp,knttp,konnr,ktpnr,lmein,adrnr,plifz,sobkz,bstae,lblkz,adrn2,banfn,bnfpo,j1bnbm,reslo,webaz
+                </columns>
+                <relations>
+                    <relation path="/project_one/ekbe" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+
+                    <relation path="/project_one/ekes" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+
+                    <relation path="/project_one/eket" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+
+                    <relation path="/project_one/ekpv" isPrimaryKey="false">
+                        <expression>
+                            ebeln=/project_one/ekpo.ebeln,
+                            ebelp=/project_one/ekpo.ebelp
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/ekbe">
+                <columns>
+                    mandt,ebeln,ebelp,zekkn,vgabe,gjahr,belnr,buzei,bewtp,bwart,budat,menge
+                </columns>
+                <relations>
+                    <relation path="/project_one/ekes" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/ekes">
+                <columns>
+                    charg,dabmg,ebeln,ebelp,ebtyp,eindt,ematn,erdat,estkz,etens,ezeit,imwrk,kzdis,loekz,lpein,mahnz,mandt,menge,mprof,refEtens,uecha,uzeit,vbeln,vbelp,xblnr
+                </columns>
+                <relations>
+                    <relation path="/project_one/eket" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/eket">
+                <columns>
+                    mandt,ebeln,ebelp,etenr,eindt,menge,wemng,banfn,bnfpo,glmng,dabmg
+                </columns>
+                <relations>
+                    <relation path="/project_one/ekpv" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/ekpv">
+                <columns>
+                    kunnr,ebeln,ebelp,mandt
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    sourceSystem,localSourceSystem
+                </columns>
+            </region>
+
+            <region path="/edm/purchase_order_oa_v1">
+                <columns>
+                    sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,crtOnDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
