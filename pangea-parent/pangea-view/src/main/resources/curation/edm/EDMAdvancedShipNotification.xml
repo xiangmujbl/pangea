@@ -5,7 +5,7 @@
         <regions>
 
             <region path="/project_one/likp">
-                <columns>vbeln,erdat,bolnr,lfdat,lfart,vstel,lifex,wadatist,lifnr,werks</columns>
+                <columns>vbeln,erdat,bolnr,lfdat,lfart,vstel,lifex,wadatist,lifnr,werks,vbtyp</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>

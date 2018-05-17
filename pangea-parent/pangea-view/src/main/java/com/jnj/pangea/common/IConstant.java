@@ -86,6 +86,8 @@ public interface IConstant {
         String PLAN_CNS_PLN_SPL_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
         String PLAN_CNS_PLAN_OBJECT_FILTER = "/plan/cns_plan_object_filter";
+        String PROJECT_ONE_LIKP = "/project_one/likp";
+        String PROJECT_ONE_LIPS = "/project_one/lips";
     }
 
 
@@ -185,10 +187,13 @@ public interface IConstant {
         String LOCAL_PROCUREMENT_TYPE = "localProcurementType";
     }
 
+    interface PROJECT_ONE_LIKP {
+        String VBELN = "vbeln";
+    }
 
-
-
-
+    interface PROJECT_ONE_LIPS {
+        String VBELN = "vbeln";
+    }
 
     interface PROJECT_ONE_TMABCT {
         String MAABC = "maabc";
@@ -536,6 +541,7 @@ public interface IConstant {
         String YYYYMMDD = "yyyyMMdd";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
         String YYYYMMDDBS = "yyyy/MM/dd";
+        String YYYYMMDD_WITH_DASH = "yyyy-MM-dd";
         String MMDYYYY = "MM/d/yyyy";
         String N = "N";
         String BLANK = "Blank";
@@ -560,6 +566,7 @@ public interface IConstant {
         String RESTRICT_SELECT = "restrictSelect";
         String INITIAL_SELECT = "initialSelect";
         String LESS_MONTH = "lessMonth";
+        String SEVEN = "7";
     }
 
 

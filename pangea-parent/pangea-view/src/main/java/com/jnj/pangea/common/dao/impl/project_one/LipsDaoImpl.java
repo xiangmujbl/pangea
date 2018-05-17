@@ -1,26 +1,25 @@
 package com.jnj.pangea.common.dao.impl.project_one;
 
-import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.entity.project_one.LikpEntity;
-import com.jnj.pangea.common.entity.project_one.VbapEntity;
-import com.jnj.pangea.common.entity.project_one.VbpaEntity;
+import com.jnj.pangea.common.entity.project_one.LipsEntity;
 
-public class LikpDaoImpl extends CommonDaoImpl {
+import java.util.List;
 
-    private static LikpDaoImpl instance;
+public class LipsDaoImpl extends CommonDaoImpl {
 
-    public static LikpDaoImpl getInstance() {
+    private static LipsDaoImpl instance;
+
+    public static LipsDaoImpl getInstance() {
         if (instance == null) {
-            instance = new LikpDaoImpl();
+            instance = new LipsDaoImpl();
         }
         return instance;
     }
 
-    public LikpEntity getLikpEntityWithVbeln(String vbeln) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_LIKP.VBELN).is(vbeln).toQueryString();
-        return queryForObject(IConstant.REGION.PROJECT_ONE_LIKP, queryString, LikpEntity.class);
+    public List<LipsEntity> getLipsEntityWithVbeln(String vbeln) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_LIPS.VBELN).is(vbeln).toQueryString();
+        return (queryForList(IConstant.REGION.PROJECT_ONE_LIPS, queryString, LipsEntity.class));
     }
 }

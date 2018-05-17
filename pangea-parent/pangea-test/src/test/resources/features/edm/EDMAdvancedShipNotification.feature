@@ -16,13 +16,13 @@ Feature: EDMAdvancedShippingNotification AEAZ-3174
     And I wait "/edm/source_system_v1" Async Queue complete
 
     And I import "/project_one/likp" by keyFields "vbeln"
-      | vbeln     | erdat    |  bolnr       | lfdat    | lfart | vstel | lifex       | wadatist  | lifnr | werks |
-      | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       |
-      | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       |
-      | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       |
-      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       |
-      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       |
-      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       |
+      | vbeln     | erdat    |  bolnr       | lfdat    | lfart | vstel | lifex       | wadatist  | lifnr | werks | vbtyp |
+      | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       | 7     |
+      | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       | 7     |
+      | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       | 7     |
+      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
+      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
+      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
 
     And I wait "/project_one/likp" Async Queue complete
 
@@ -39,16 +39,12 @@ Feature: EDMAdvancedShippingNotification AEAZ-3174
 
     When I submit task with xml file "xml/edm/EDMAdvancedShipNotification.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/edm/advanced_ship_notification_v1" by keyFields "srcSysCd"
-      | srcSysCd   | delvDocID | receivingPtID | localdeliveryType | localdeliveryCatg | localdeliveryDate | localcreatedDate | localbillOfLading | localExternalId | actGRDt  | vendorID | localShippingPlant | delvLineNbr | matlNum | localbatchNo | localvendorBatchNo | localReceivingPlant | baseUnitOfMeasureCd | actlSkuDelvQty | localRefDocNum | locRefDocLineNum |
-      | CONS_LATAM | 180005489 |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     | 20160422 | 8917     |                    | 000010      | 68874   |              |                    | BR19                | EA                  | 0.000          | 3000753622     | 190              |
-      | CONS_LATAM | 180005489 |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     | 20160422 | 8917     |                    | 900001      | 68874   | 0086B02      |                    | BR19                | EA                  | 2592.000       | 3000753622     | 190              |
-      | CONS_LATAM | 180005489 |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     | 20160422 | 8917     |                    | 900002      | 68874   | 0216B03      |                    | BR19                | EA                  | 2592.000       | 3000753622     | 190              |
-      | CONS_LATAM | 180021108 | BR07          | EL                | 7                 | 20161128          | 20161128         | 001137503-1       | 001137503-1     | 20161205 | 8917     |                    | 000010      | 87046   |              |                    | BR07                | EA                  | 0.000          | 3000789748     | 220              |
-      | CONS_LATAM | 180021108 | BR07          | EL                | 7                 | 20161128          | 20161128         | 001137503-1       | 001137503-1     | 20161205 | 8917     |                    | 900001      | 87046   | 2286B02      |                    | BR07                | EA                  | 2124.000       | 3000789748     | 220              |
-      | CONS_LATAM | 180021108 | BR07          | EL                | 7                 | 20161128          | 20161128         | 001137503-1       | 001137503-1     | 20161205 | 8917     |                    | 900002      | 87046   | 2436B04      |                    | BR07                | EA                  | 2484.000       | 3000789748     | 220              |
+    Then I check region data "/edm/advanced_ship_notification_v1" by keyFields "delvDocID,srcSysCd"
+      | localdeliveryType | localdeliveryCatg | localExternalId | delvLineNbr | actlSkuDelvQty | localcreatedDate | locRefDocLineNum | delvDocID    | localShippingPlant | vendorID     | localvendorBatchNo | srcSysCd    |  baseUnitOfMeasureCd | receivingPtID | localReceivingPlant |  localbillOfLading |   localbatchNo     | matlNum   			| localdeliveryDate |  actGRDt   | localRefDocNum |
+      | 	7	          |		EL		      |	001041960-1     | 900002      |	2592.000       |	2016-11-28    | 190              |	180005489	|			         |	8917		|   	             | Project_One |        EA  		  |		 	      | BR19     			|	001041960-1      |   0216B03     	  | 000000000000068874  |	2016-04-21      | 2016-04-22 | 3000753622 	  |
+      | 	7             |		EL		      |	001137503-1	    | 900002      |	2484.000       |	2016-04-21    | 220              |	180021108	|	     	         |	8917	    |	             	 | Project_One |        EA 			  |	 BR07	      | BR07     			|	001137503-1	     |   2436B04 		  | 000000000000087046  |	2016-11-28      | 2016-12-05 | 3000789748     |
 
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
     And I will remove all data with region "/edm/source_system_v1"
