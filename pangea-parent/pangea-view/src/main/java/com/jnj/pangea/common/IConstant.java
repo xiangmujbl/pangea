@@ -579,7 +579,6 @@ public interface IConstant {
         String BA = "BA";
         String FALSE = "FALSE";
         String COLON = ":";
-        String YYYYMMDDBS = "yyyy/MM/dd";
         String TRANSPORT = "TRANSPORT";
         String STAR = "*";
         String LFU = "LFU";
