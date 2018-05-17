@@ -8,10 +8,10 @@
                 <columns>sourceSystem,countryAffiliate,customerId,demandGroup,channel,channelDescription,customerName,salesOrganization</columns>
                 <relations>
                     <relation path="/plan/cns_clusters" isPrimaryKey="false">
-                        <expression>countryID=/plan/cns_dem_grp_asgn.affiliateCountry</expression>
+                        <expression>countryId=/plan/cns_dem_grp_asgn.countryAffiliate</expression>
                     </relation>
                     <relation path="/edm/country_v1" isPrimaryKey="false">
-                        <expression>localCountry=/plan/cns_dem_grp_asgn.affiliateCountry</expression>
+                        <expression>localCountry=/plan/cns_dem_grp_asgn.countryAffiliate</expression>
                     </relation>
                 </relations>
             </region>

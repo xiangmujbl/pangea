@@ -19,7 +19,7 @@ public class XDTool {
 
     private static String USER_NAME = "";
     private static String PASSWORD = "";
-    private static String HOST = "awsamenva1175.jnj.com";
+    private static String HOST = "awsamenva3025.jnj.com";
 
     public static void main(String[] args) {
 
@@ -27,7 +27,6 @@ public class XDTool {
 
         XdClient xdClient = new XdClient(HOST, USER_NAME, PASSWORD);
         job2Run.forEach((name, definition) -> {
-            System.out.println("launch job: " + name);
             if (xdClient.runAsny(name, definition)) {
                 System.out.println("execute success: " + name);
             } else {
