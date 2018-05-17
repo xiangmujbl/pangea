@@ -92,7 +92,6 @@ public interface IConstant {
         String PROJECT_ONE_EKET = "/project_one/eket";
         String PROJECT_ONE_EKPV = "/project_one/ekpv";
         String PROJECT_ONE_EKBE = "/project_one/ekbe";
-        String PLAN_CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
         String CNS_TLANE_ITEM_EXCEPTION = "/plan/cns_tlane_item_exception";
         String CNS_TLANE_ITEM = "/plan/cns_tlane_item";
         String PLAN_CONS_TIME_DEP_XCHANGE_CLONE = "/plan/cons_time_dep_xchange_clone";
