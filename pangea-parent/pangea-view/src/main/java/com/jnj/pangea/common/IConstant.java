@@ -6,6 +6,7 @@ package com.jnj.pangea.common;
 public interface IConstant {
 
     interface REGION {
+        String PROJECT_ONE_Qave = "/project_one/qave";
         // ------fail region
         String FAIL_DATA = "/plan/edm_failed_data";
         // -----region
@@ -273,7 +274,9 @@ public interface IConstant {
         String POSNR = "posnr";
         String PARVW = "parvw";
     }
-
+    interface PROJECT_ONE_Qave{
+        String PRUEFLOS = "prueflos";
+    }
     interface PROJECT_ONE_VBKD {
         String VBELN = "vbeln";
         String POSNR = "posnr";
