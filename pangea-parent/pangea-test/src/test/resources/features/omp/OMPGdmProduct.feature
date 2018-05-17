@@ -141,10 +141,10 @@ Feature:  OMPGdmProduct AEAZ-3689
       | SP             | OMPGdmProduct | E9        | CONS_LATAM   |              | 000000000000000119_E9 |      |      |      |      | No Plannable Enterprise UOM has been assigned to the local Unit |
 #     And I compare the number of records between "/edm/material_global_v1" and "/omp/gdm_product,/plan/edm_failed_data"
 
-#  Scenario: delete all test data
-#
-#    Then I delete the test data
-#
-#    And I will remove all data with region "/omp/gdm_product"
-#
-#    And I will remove all data with region "/plan/edm_failed_data"
+  Scenario: delete all test data
+
+    Then I delete the test data
+
+    And I will remove all data with region "/omp/gdm_product"
+
+    And I will remove all data with region "/plan/edm_failed_data"
