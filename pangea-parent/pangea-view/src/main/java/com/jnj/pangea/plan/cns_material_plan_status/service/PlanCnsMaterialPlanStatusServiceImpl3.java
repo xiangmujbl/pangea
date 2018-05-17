@@ -66,9 +66,6 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             return resultObject;
         }
 
-        LogUtil.getCoreLog().info("------------------------pass F1 F2------------------------------------------");
-        LogUtil.getCoreLog().info("edmSalesOrderV1Entity:" + edmSalesOrderV1Entity.getSalesOrderItem() + "," + edmSalesOrderV1Entity.getSalesOrderNo() + "," + edmSalesOrderV1Entity.getScheduleLineItem());
-
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
         //J1
         if (checkJ1(time, edmSalesOrderV1Entity)) {
@@ -79,8 +76,6 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             resultObject.setFailData(failData);
             return resultObject;
         }
-
-        LogUtil.getCoreLog().info("------------------------pass J1------------------------------------------");
 
         //D1
         materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
@@ -104,6 +99,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         }
 
         LogUtil.getCoreLog().info("------------------------pass J2------------------------------------------");
+        LogUtil.getCoreLog().info("edmSalesOrderV1Entity:" + edmSalesOrderV1Entity.getSalesOrderItem() + "," + edmSalesOrderV1Entity.getSalesOrderNo() + "," + edmSalesOrderV1Entity.getScheduleLineItem());
 
         //T5
         if (checkT5(materialPlanStatusBo)) {
