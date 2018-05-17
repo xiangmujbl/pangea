@@ -1,16 +1,14 @@
 package com.jnj.pangea.edm.capy_hdr.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneKaktDaoImpl;
 import com.jnj.pangea.common.entity.projectOne.ProjectOneKakoEntity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.projectOne.ProjectOneKaktEntity;
-import com.jnj.pangea.common.dao.impl.projectOne.ProjectOneKaktDaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.capy_hdr.bo.EDMCapyHdrBo;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
