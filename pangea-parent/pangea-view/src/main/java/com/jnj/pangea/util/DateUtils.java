@@ -31,6 +31,7 @@ public class DateUtils {
     public final static String dd_MM_yyyy = "dd/MM/yyyy";
 
     public final static String J_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
+    public final static String J_yyyy_MM_dd_HHmmss = "yyyy-MM-dd HH:mm:ss";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
