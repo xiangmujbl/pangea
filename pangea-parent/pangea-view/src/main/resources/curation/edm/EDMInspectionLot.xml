@@ -1,0 +1,52 @@
+<adf-curation>
+    <curation mainRegion="/project_one/qals" viewRegion="/edm/inspection_lot_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.inspection_lot.controller.EDMInspectionLotController"
+    >
+        <regions>
+
+            <region path="/project_one/qals">
+                <columns>mandt,prueflos,werk,matnr,art,herkunft,objnr,stsma,stat35,enstehdat,entstezeit,ersteldat,aenderdat,pastrterm,pastrzeit,paendterm,paendzeit,aufnr,kunnr,lifnr,charg,lagortchrg,ebeln,ebelp,mjahr,mblnr,werkvorg,lagortvorg,losmenge,mengeneinh,lmengezub,lmengeist</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/project_one/jest" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/tj02t" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/project_one/qave" isPrimaryKey="false">
+                        <expression>prueflos=/project_one/qals.prueflos</expression>
+                    </relation>
+
+                </relations>
+            </region>
+
+            <region path="/edm/inspection_lot_v1">
+                <columns>srcSysCd,lotNum,PlntCd,matlId,baseUom,lotVerifTypeCd,lotOrigCd,localObjectNumber,stsPrfl,usgDecInd,localDateOfLotCreation,localTimeOfLotCreation,crtDttm,chgDttm,inspStrtDt,inspStrtTm,inspEndDt,inspEndTm,cstmNum,vndrNum,btchNum,stgLocCd,mfgOrdrDoc,poDocNum,poDocLineNbr,matlMvmtDocYr,matlMvmtDocNum,stckPlntCd,stckSLocCd,inspLotQty,actlLotQty,toBePostedQty,qcStsCd,usgDcsnCd,qcDcsnDttm</columns>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+
+
+            <region path="/project_one/jest">
+                <columns>mandt,objnr,stat,inact</columns>
+            </region>
+
+            <region path="/project_one/qave">
+                <columns>dbewertung,kzart,ltextkz,mandant,prueflos,qkennzahl,stafo,teillos,vaedatum,vaename,vauswahlmg,vbewertung,vcode,vcodegrp,vdatum,versionam,versioncd,vezeitaen,vezeiterf,vfolgeakti,vkatart,vname,vorglfnr,vwerks,zaehler</columns>
+            </region>
+
+            <region path="/project_one/tj02t">
+                <columns>istat,spras,txt04,txt30</columns>
+            </region>
+
+        </regions>
+
+
+    </curation>
+</adf-curation>
