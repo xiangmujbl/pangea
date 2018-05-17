@@ -82,6 +82,9 @@ public interface IConstant {
         String PROJECT_ONE_AFPO = "/project_one/afpo";
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
+        String PROJECT_ONE_PLAS ="/project_one/plas";
+        String PROJECT_ONE_PLPO ="/project_one/plpo";
+        String PROJECT_ONE_PLPO_CLONE ="/project_one/plpo_clone";
         String PROJECT_ONE_TJ02T = "/project_one/tj02t";
         String PROJECT_ONE_STKO="/project_one/stko";
         String PROJECT_ONE_STKO_CLONE="/project_one/stko_clone";
@@ -544,7 +547,24 @@ public interface IConstant {
          String STKTX = "stktx";
          String STLST = "stlst";
     }
+    interface PROJECT_ONE_PLAS{
+        String PLNTY ="plnty";
+        String PLNNR ="plnnr";
+        String PLNAL ="plnal";
+        String PLNFL ="plnfl";
+        String PLNKN ="plnkn";
+        String ZAEHL ="zaehl";
+        String DATUV ="datuv";
+        String LOEKZ ="loekz";
+        String ARNNR ="arnnr";
+    }
 
+    interface PROJECT_ONE_PLPO{
+        String PLNTY ="plnty";
+        String PLNNR ="plnnr";
+        String PLNKN ="plnkn";
+        String ZAEHL ="zaehl";
+    }
     interface EDM_MATERIAL_GLOBAL_V1_CLONE {
         String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
@@ -580,6 +600,8 @@ public interface IConstant {
         String FIELD_PLNTY_VALUE_N="N";
         String SOFT_ZAEHL_VALUE="zaehl";
     }
+
+
 
     interface MFG_RTNG_HDR {
         String FIELD_LOEKZ_VALUE_X="x";

@@ -154,3 +154,7 @@
 
 /plan/cns_root_description
 
+
+/project_one/plpo
+/project_one/plas
+/edm/mfg_rtng_itm

@@ -13,7 +13,7 @@
                         <expression>plnty=/project_one/plpo.plnty,plnnr=/project_one/plpo.plnnr,plnkn=/project_one/plpo.plnkn</expression>
                     </relation>
                     <relation path="/project_one/plpo" alias="/project_one/plpo_clone">
-                        <expression>plnty=/project_one/plpo.plnty,plnnr=/project_one/plpo.plnnr,plnkn=/project_one/plpo.plnkn</expression>
+                        <expression></expression>
                     </relation>
                 </relations>
             </region>
@@ -26,14 +26,12 @@
             <region path="/project_one/plpo" alias="/project_one/plpo_clone">
                 <columns>plnty,plnnr,plnkn,zaehl,datuv,aennr,loekz,andat,aedat,sumnr,vornr,steus,arbid,werks,ltxa1,meinh,bmsch,lar01,vge01,vgw01,lar02,vge02,vgw02,lar03,vge03,vgw03,lar04,vge04,vgw04,lar05,vge05,vgw05,lar06,vge06,vgw06,dauno,daune,daumi,daume,phflg</columns>
             </region>
-
-
             <region path="/project_one/plas">
                 <columns>plnty,plnnr,plnal,plnfl,plnkn,zaehl,datuv,loekz,arnnr</columns>
             </region>
 
             <region path="/edm/mfg_rtng_itm">
-                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum,operNum,operCd,wrkCntrCd,plntCd,operDesc,operUom,bsQty,act1Cd,act1UomCd,act1Qty,act2Cd,act2UomCd,act2Qty,act3Cd,act3UomCd,act3Qty,act4Cd,act4UomCd,act4Qty,act5Cd,act5UomCd,act5Qty,act6Cd,act6UomCd,act6Qty,operDurtnQty,operDurtnUomCd,minOperDurtnQty,minOperDurtnUomCd,PhsInd,rtgItemEndDate</columns>
+                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum,operNum,operCd,wrkCntrCd,plntCd,operDesc,operUom,bsQty,act1Cd,act1UomCd,act1Qty,act2Cd,act2UomCd,act2Qty,act3Cd,act3UomCd,act3Qty,act4Cd,act4UomCd,act4Qty,act5Cd,act5UomCd,act5Qty,act6Cd,act6UomCd,act6Qty,operDurtnQty,operDurtnUomCd,minOperDurtnQty,minOperDurtnUomCd,phsInd,rtgItemEndDate</columns>
             </region>
 
         </regions>

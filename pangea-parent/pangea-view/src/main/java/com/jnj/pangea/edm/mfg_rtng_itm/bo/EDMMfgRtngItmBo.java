@@ -45,14 +45,18 @@ public class EDMMfgRtngItmBo extends BaseBo {
     private String operDurtnUomCd;
     private String minOperDurtnQty;
     private String minOperDurtnUomCd;
-    private String PhsInd;
+    private String phsInd;
     private String rtgItemEndDate;
 
     // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("", "")
+                .makeJsonObject("srcSysCd", srcSysCd)
+                .add("rtngTypCd",rtngTypCd)
+                .add("rtngGrpCd",rtngGrpCd)
+                .add("rtngItmNum",rtngItmNum)
+                .add("rtngItmVersnCntrNbr",rtngItmVersnCntrNbr)
                 .toJsonString();
     }
 
@@ -377,11 +381,11 @@ public class EDMMfgRtngItmBo extends BaseBo {
     }
 
     public String getPhsInd() {
-        return this.PhsInd;
+        return phsInd;
     }
 
     public void setPhsInd(String phsInd) {
-        this.PhsInd = phsInd;
+        this.phsInd = phsInd;
     }
 
     public String getRtgItemEndDate() {
@@ -392,4 +396,51 @@ public class EDMMfgRtngItmBo extends BaseBo {
         this.rtgItemEndDate = rtgItemEndDate;
     }
 
+    @Override
+    public String toString() {
+        return "EDMMfgRtngItmBo{" +
+                "srcSysCd='" + srcSysCd + '\'' +
+                ", rtngTypCd='" + rtngTypCd + '\'' +
+                ", rtngGrpCd='" + rtngGrpCd + '\'' +
+                ", rtngItmNum='" + rtngItmNum + '\'' +
+                ", rtngItmVersnCntrNbr='" + rtngItmVersnCntrNbr + '\'' +
+                ", valFromDt='" + valFromDt + '\'' +
+                ", chgNum='" + chgNum + '\'' +
+                ", delInd='" + delInd + '\'' +
+                ", crtDttm='" + crtDttm + '\'' +
+                ", chgDttm='" + chgDttm + '\'' +
+                ", rtngSupNdeNum='" + rtngSupNdeNum + '\'' +
+                ", operNum='" + operNum + '\'' +
+                ", operCd='" + operCd + '\'' +
+                ", wrkCntrCd='" + wrkCntrCd + '\'' +
+                ", plntCd='" + plntCd + '\'' +
+                ", operDesc='" + operDesc + '\'' +
+                ", operUom='" + operUom + '\'' +
+                ", bsQty='" + bsQty + '\'' +
+                ", act1Cd='" + act1Cd + '\'' +
+                ", act1UomCd='" + act1UomCd + '\'' +
+                ", act1Qty='" + act1Qty + '\'' +
+                ", act2Cd='" + act2Cd + '\'' +
+                ", act2UomCd='" + act2UomCd + '\'' +
+                ", act2Qty='" + act2Qty + '\'' +
+                ", act3Cd='" + act3Cd + '\'' +
+                ", act3UomCd='" + act3UomCd + '\'' +
+                ", act3Qty='" + act3Qty + '\'' +
+                ", act4Cd='" + act4Cd + '\'' +
+                ", act4UomCd='" + act4UomCd + '\'' +
+                ", act4Qty='" + act4Qty + '\'' +
+                ", act5Cd='" + act5Cd + '\'' +
+                ", act5UomCd='" + act5UomCd + '\'' +
+                ", act5Qty='" + act5Qty + '\'' +
+                ", act6Cd='" + act6Cd + '\'' +
+                ", act6UomCd='" + act6UomCd + '\'' +
+                ", act6Qty='" + act6Qty + '\'' +
+                ", operDurtnQty='" + operDurtnQty + '\'' +
+                ", operDurtnUomCd='" + operDurtnUomCd + '\'' +
+                ", minOperDurtnQty='" + minOperDurtnQty + '\'' +
+                ", minOperDurtnUomCd='" + minOperDurtnUomCd + '\'' +
+                ", phsInd='" + phsInd + '\'' +
+                ", rtgItemEndDate='" + rtgItemEndDate + '\'' +
+                '}';
+    }
 }

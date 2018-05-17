@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/omp/OMPGdmConversionStorage.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-2759 OMPGdmConversionStorage.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-3288 OMPGdmConversionStorage.json"})
 public class OMPGdmConversionStorageTest {
 
 }
