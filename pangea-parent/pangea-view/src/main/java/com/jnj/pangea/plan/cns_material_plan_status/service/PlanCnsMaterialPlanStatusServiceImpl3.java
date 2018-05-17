@@ -1,5 +1,6 @@
 package com.jnj.pangea.plan.cns_material_plan_status.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -65,6 +66,9 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             return resultObject;
         }
 
+        LogUtil.getCoreLog().info("------------------------pass F1 F2------------------------------------------");
+        LogUtil.getCoreLog().info("edmSalesOrderV1Entity:" + edmSalesOrderV1Entity.getSalesOrderItem() + "," + edmSalesOrderV1Entity.getSalesOrderNo() + "," + edmSalesOrderV1Entity.getScheduleLineItem());
+
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
         //J1
         if (checkJ1(time, edmSalesOrderV1Entity)) {
@@ -75,6 +79,9 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             resultObject.setFailData(failData);
             return resultObject;
         }
+
+        LogUtil.getCoreLog().info("------------------------pass J1------------------------------------------");
+
         //D1
         materialPlanStatusBo.setDpRelevant(IConstant.VALUE.X);
 
@@ -95,6 +102,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             resultObject.setFailData(failData);
             return resultObject;
         }
+
+        LogUtil.getCoreLog().info("------------------------pass J2------------------------------------------");
 
         //T5
         if (checkT5(materialPlanStatusBo)) {
@@ -119,7 +128,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             List<EDMMaterialPlantV1Entity> materialPlantV1EntityList = edmMaterialPlantV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
             for (EDMMaterialPlantV1Entity materialPlantV1Entity : materialPlantV1EntityList) {
                 String localMrpType = materialPlantV1Entity.getLocalMrpType();
-                boolean f1C = (f1CSet.isEmpty() || !f1CSet.contains(StringUtils.trim(localMrpType)));
+                boolean f1C = (f1CSet.isEmpty() || f1CSet.contains(StringUtils.trim(localMrpType)));
                 if (f1C) {
                     return true;
                 }
@@ -154,13 +163,9 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         boolean flagThree = false;
         if (StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalPlant()) && StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalMaterialNumber())) {
             PlanCnsMaterialPlanStatusEntity entityWithLocalMaterialNumberAndlLocalPlant = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(edmSalesOrderV1Entity.getLocalMaterialNumber(), edmSalesOrderV1Entity.getLocalPlant());
-            if (entityWithLocalMaterialNumberAndlLocalPlant != null) {
-                String dpRelevant = entityWithLocalMaterialNumberAndlLocalPlant.getDpRelevant();
-                if (IConstant.VALUE.X.equals(dpRelevant)) {
-                    flagThree = true;
-                }
+            if (entityWithLocalMaterialNumberAndlLocalPlant == null || !IConstant.VALUE.X.equals(entityWithLocalMaterialNumberAndlLocalPlant.getDpRelevant())) {
+                flagThree = true;
             }
-
         }
         return flag && flagTwo && flagThree;
     }
