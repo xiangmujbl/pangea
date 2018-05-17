@@ -30,9 +30,9 @@ Feature: OMPGdmCluster AEAZ-3679
     Then A file is found on sink application with name "GDMCluster.tsv"
 
     Then I check file data for filename "GDMCluster.tsv" by keyFields "clusterId"
-      | clusterId        | activeFCTERP | clusterDescription |
-      | CONS_LATAMANDEAN | YES          | Andean Cluster     |
-      | CONS_LATAMBRAZIL | YES          | Brazil             |
+      | clusterId | activeFCTERP | clusterDescription |
+      | ANDEAN    | YES          | Andean Cluster     |
+      | BRAZIL    | YES          | Brazil             |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
