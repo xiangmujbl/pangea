@@ -170,3 +170,4 @@
 /edm/jnj_calendar_v1
 /omp/gdm_country
 /omp/gdm_lfu
+/edm/outbound_delivery_header_v1
