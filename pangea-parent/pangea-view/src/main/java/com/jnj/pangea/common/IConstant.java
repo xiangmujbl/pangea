@@ -108,6 +108,7 @@ public interface IConstant {
         String PROJECT_ONE_PLFL_CLONE = "/project_one/plfl_clone";
         String PROJECT_ONE_KAKT = "/project_one/kakt";
         String PROJECT_ONE_KAKO = "/project_one/kako";
+        String PROJECT_ONE_CRTX="/project_one/crtx";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -611,6 +612,9 @@ public interface IConstant {
 
     }
 
+    interface PROJECT_ONE_CRTX{
+        String OBJID ="objid";
+    }
     interface MFG_RTNG_RLTNSHP {
         String FIELD_LOEKZ_VALUE_X = "x";
         String FIELD_MATLRTNGVALID_TO = "9999/12/31";

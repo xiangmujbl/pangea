@@ -152,9 +152,6 @@
 /project_one/stas
 /edm/bom_item_node
 
-/project_one/plfl
-/edm/mfg_rtng_seq
-
 /plan/cns_root_description
 
 
@@ -168,3 +165,7 @@
 
 /project_one/resb
 /edm/reserv_itm
+
+/project_one/crhd
+/project_one/crtx
+/edm/wrk_ctr
