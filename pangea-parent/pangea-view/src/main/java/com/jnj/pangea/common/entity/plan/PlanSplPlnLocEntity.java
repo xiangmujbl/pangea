@@ -24,6 +24,8 @@ public class PlanSplPlnLocEntity extends CommonEntity {
     private String _1specLocAtt;
     private String localCountry;
     private String localRegion;
+    private String localPlant;
+
 
     public PlanSplPlnLocEntity(Map<String, Object> map) {
         super(map);
@@ -42,6 +44,15 @@ public class PlanSplPlnLocEntity extends CommonEntity {
         set_1specLocAtt((String) map.get("_1specLocAtt"));
         setLocalCountry((String) map.get("localCountry"));
         setLocalRegion((String) map.get("localRegion"));
+        setLocalPlant((String) map.get("localPlant"));
+    }
+
+    public String getLocalPlant() {
+        return localPlant;
+    }
+
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
     }
 
     public String getPlanLocTypeDes() {

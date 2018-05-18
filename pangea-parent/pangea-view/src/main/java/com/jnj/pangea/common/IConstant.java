@@ -34,6 +34,7 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
+        String PLAN_PROD_LOC_MIN_SHELF ="/plan/prod_loc_min_shelf";
         String PROJECT_ONE_VBEP = "/project_one/vbep";
         String PROJECT_ONE_VBAP = "/project_one/vbap";
         String PROJECT_ONE_VBPA = "/project_one/vbpa";
@@ -125,6 +126,11 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PLANT = "localPlant";
         String LOCAL_PARENT_CODE = "localParentCode";
+    }
+
+   interface PLAN_PROD_LOC_MIN_SHELF {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface PLAN_CNS_PLN_SPL_LOC {
@@ -405,6 +411,7 @@ public interface IConstant {
     interface PLAN_CNS_PROD_LOC_ATTRIB {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface EDM_FRANCHISE_V1 {
