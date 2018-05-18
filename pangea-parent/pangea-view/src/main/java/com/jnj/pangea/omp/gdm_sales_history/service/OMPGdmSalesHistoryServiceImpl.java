@@ -99,7 +99,11 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         String fromDueDate = checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate());
         if (StringUtils.isNotEmpty(fromDueDate)) {
             gdmSalesHistoryBo.setFromDueDate(fromDueDate);
-            gdmSalesHistoryBo.setDueDate(checkF2T6(fromDueDate));
+            if(checkF2T6(fromDueDate)){
+                gdmSalesHistoryBo.setDueDate(fromDueDate);
+            }else{
+                return null;
+            }
         }
         String locationId = salesOrderV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + salesOrderV1Entity.getLocalPlant();
         gdmSalesHistoryBo.setLocationId(locationId);
@@ -116,7 +120,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         gdmSalesHistoryBo.setQuantity(checkJ2T9(salesOrderV1Entity));
 
-        LogUtil.getCoreLog().info("gdmSalesHistoryBo:"+gdmSalesHistoryBo.toMap());
         resultObject.setBaseBo(gdmSalesHistoryBo);
         return resultObject;
     }
@@ -204,7 +207,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             String traztd = tvroEntity.getTraztd();
             if (StringUtils.isNotEmpty(traztd) && StringUtils.isNotEmpty(localRequestedDate)) {
 
-                int traztdNum = Integer.parseInt(traztd);
+                int traztdNum = Integer.parseInt(traztd)/240000;
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
                 Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztdNum);
                 return DateUtils.dateToString(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
@@ -213,7 +216,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         return null;
     }
 
-    private String checkF2T6(String fromDueDate) {
+    private boolean checkF2T6(String fromDueDate) {
         String parameterValue = getParameterValue(IConstant.VALUE.RESTRICT_SELECT);
         if (StringUtils.isNotEmpty(fromDueDate) && StringUtils.isNotEmpty(StringUtils.trim(parameterValue))) {
             Date presentDate = new Date();
@@ -221,10 +224,10 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueLong);
             Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
             if (dueDateFormat.getTime() >= resultDate.getTime()) {
-                return fromDueDate;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     private boolean checkJ1(EDMSalesOrderV1Entity salesOrderV1Entity) {
