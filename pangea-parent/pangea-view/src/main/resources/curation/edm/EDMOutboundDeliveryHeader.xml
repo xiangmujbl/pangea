@@ -7,6 +7,11 @@
                 <columns>
                     vbeln,erdat,vstel,lfart,lfdat,vbtyp,vsbed,kunnr,kunag,bolnr,lifnr,wadatist,lifex,werks,wadat
                 </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/edm/source_system_v1">
