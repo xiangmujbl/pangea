@@ -36,6 +36,7 @@ public class EkpoEntity extends CommonEntity {
     private String knttp;
     private String bstae;
     private String sobkz;
+    private String eglkz;
 
     public EkpoEntity(Map<String, Object> map) {
         super(map);
@@ -69,6 +70,7 @@ public class EkpoEntity extends CommonEntity {
         setKnttp((String)map.get("knttp"));
         setBstae((String)map.get("bstae"));
         setSobkz((String)map.get("sobkz"));
+        setEglkz((String)map.get("eglkz"));
     }
 
     public String getBnfpo() {
@@ -309,5 +311,13 @@ public class EkpoEntity extends CommonEntity {
 
     public void setSobkz(String sobkz) {
         this.sobkz = sobkz;
+    }
+
+    public String getEglkz() {
+        return eglkz;
+    }
+
+    public void setEglkz(String eglkz) {
+        this.eglkz = eglkz;
     }
 }
