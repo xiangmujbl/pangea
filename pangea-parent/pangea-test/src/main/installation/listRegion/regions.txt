@@ -117,7 +117,7 @@
 /omp/gdm_conversion_storage
 /omp/gdm_cluster
 /omp/gdm_batch
-/omp/certainity
+/omp/GDMCertainity
 /omp/gdm_product_location_v2
 /edm/unit_of_measure_v1
 /edm/sub_brand_v1

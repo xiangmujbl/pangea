@@ -1,18 +1,18 @@
-package com.jnj.pangea.omp.certainity.service;
+package com.jnj.pangea.omp.gdm_certainity.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.plan.PlanCnsCertKeyEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.omp.certainity.bo.OMPCertainityBo;
+import com.jnj.pangea.omp.gdm_certainity.bo.OMPGdmCertainityBo;
 
-public class OMPCertainityServiceImpl implements ICommonService {
+public class OMPGdmCertainityServiceImpl implements ICommonService {
 
-    private static OMPCertainityServiceImpl instance;
+    private static OMPGdmCertainityServiceImpl instance;
 
-    public static OMPCertainityServiceImpl getInstance() {
+    public static OMPGdmCertainityServiceImpl getInstance() {
         if (instance == null) {
-            instance = new OMPCertainityServiceImpl();
+            instance = new OMPGdmCertainityServiceImpl();
         }
         return instance;
     }
@@ -23,7 +23,7 @@ public class OMPCertainityServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         PlanCnsCertKeyEntity cnsCertKeyEntity = (PlanCnsCertKeyEntity) o;
 
-        OMPCertainityBo certainityBo = new OMPCertainityBo();
+        OMPGdmCertainityBo certainityBo = new OMPGdmCertainityBo();
 
         if (cnsCertKeyEntity==null){
             return resultObject;
