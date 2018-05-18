@@ -94,6 +94,7 @@
 /omp/product_detail
 /omp/product_country
 /omp/product
+/omp/process_type
 /omp/lot_size_key
 /omp/location_type
 /omp/gdm_unit_evol
@@ -111,6 +112,25 @@
 /omp/gdm_location
 /omp/gdm_lfu
 /omp/gdm_fbp
+/plan/cns_pln_spl_loc
+/omp/gdm_location_xref
+/omp/gdm_unit_evol
+/plan/cns_prod_loc_attrib
+/omp/gdm_product_location_detail
+/omp/gdm_conversion_storage
+/omp/gdm_unit_evol
+/omp/gdm_fpb
+/plan/cns_prod_cty_affl
+/edm/sales_order_V1
+/edm/plant_V1
+/plan/cns_certainty_determine
+/edm/currency_V1
+/project_one/knvh
+/project_one/tvro
+/edm/material_global_V1
+/plan/cns_ord_rej
+/omp/gdm_sales_history
+/omp/product_detail
 /omp/gdm_customer
 /omp/gdm_country
 /omp/gdm_conversion_storage
@@ -174,3 +194,12 @@
 
 /project_one/affl
 /edm/mfg_order_seq
+/omp/gdm_country
+/omp/gdm_lfu
+/plan/cns_plan_region
+/omp/gdm_region
+/project_one/knvh
+/omp/gdm_pos
+/omp/gdm_conversion_storage
+/omp/gdm_lfu
+/edm/purchase_order_oa_v1
