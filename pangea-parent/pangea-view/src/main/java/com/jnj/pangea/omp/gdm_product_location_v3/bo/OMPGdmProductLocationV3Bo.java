@@ -10,6 +10,7 @@ public class OMPGdmProductLocationV3Bo extends BaseBo {
     private String activeFCTERP;
     private String activeOPRERP;
     private String activeSOPERP;
+    private String ProductTypeId;
     private String beskz;
     private String bstfe;
     private String bstma;
@@ -55,6 +56,14 @@ public class OMPGdmProductLocationV3Bo extends BaseBo {
         return RawDataHelper.getInstance()
                 .makeJsonObject("productId", this.productId).add("locationId",this.locationId)
                 .toJsonString();
+    }
+
+    public String getProductTypeId() {
+        return ProductTypeId;
+    }
+
+    public void setProductTypeId(String productTypeId) {
+        ProductTypeId = productTypeId;
     }
 
     public String getProductId() {
