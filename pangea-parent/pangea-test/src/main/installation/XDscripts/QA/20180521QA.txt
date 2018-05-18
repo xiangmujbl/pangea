@@ -21,8 +21,6 @@ CR: put pangea to na qa env
 
 		2-5. create springXD job by 20180521QA_job_steps.txt file.
 
-		2-6. deploy springXD stream by 20180521QA_job_steps.txt file.
-
 ---------------------------Heartbeat team:--------------------------------------------
 
     1. launch job to import files
