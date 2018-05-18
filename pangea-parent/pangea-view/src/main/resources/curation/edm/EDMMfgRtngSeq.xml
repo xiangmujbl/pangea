@@ -4,7 +4,9 @@
         <regions>
 
             <region path="/project_one/plfl">
-                <columns>plnty,plnnr,plnal,plnfl,zaehl,datuv,aennr,loekz,andat,aedat,flgat,ltxa1,losvn,losbs,bschl1,bschl2,bknt1,bknt2</columns>
+                <columns>
+                    plnty,plnnr,plnal,plnfl,zaehl,datuv,aennr,loekz,andat,aedat,flgat,ltxa1,losvn,losbs,bschl1,bschl2,bknt1,bknt2
+                </columns>
                 <relations>
                     <relation path="/project_one/plfl" alias="/project_one/plfl_clone" isPrimaryKey="false">
                         <expression>plnnr=/project_one/plfl.plnnr,plnal=/project_one/plfl.plnal,plnfl=/project_one/plfl.plnfl</expression>
@@ -14,7 +16,11 @@
                     </relation>
                 </relations>
             </region>
-
+            <region  path="/project_one/plfl" alias="/project_one/plfl_clone">
+                <columns>
+                    plnty,plnnr,plnal,plnfl,zaehl,datuv,aennr,loekz,andat,aedat,flgat,ltxa1,losvn,losbs,bschl1,bschl2,bknt1,bknt2
+                </columns>
+            </region>
             <region path="/edm/source_system_v1">
                 <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>

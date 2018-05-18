@@ -25,8 +25,8 @@ Feature: EDMMfgRtngSeq AEAZ-3277
       | CONS_LATAM | N         | 997        | 1               | 1             | 1                     | 2018/4/30 | 50000000003 |        | andat   | aedat    | 0            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1               | 1            | 9999/12/31 |
       | CONS_LATAM | N         | 997        | 1               | 2             | 2                     | 2018/8/25 | 50000000005 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 2018/8/31 |
       | CONS_LATAM | N         | 997        | 1               | 3             | 4                     | 2018/8/31 | 50000000006 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 9999/12/31 |
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+#    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+#      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
     #And I compare the number of records between "/project_one/plfl" and "/edm/mfg_rtng_seq,/plan/edm_failed_data"
 
