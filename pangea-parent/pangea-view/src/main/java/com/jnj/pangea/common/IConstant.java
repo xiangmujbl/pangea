@@ -723,6 +723,9 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
         String BOM_VlD_ToDt = "9999/12/31";
+        String EN_CAPY="EN";
+        String ES_CAPY="ES";
+        String PT_CAPY="PT";
     }
 
     interface FAILED {

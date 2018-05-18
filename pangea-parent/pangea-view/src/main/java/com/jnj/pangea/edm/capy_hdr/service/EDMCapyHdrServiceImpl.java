@@ -64,13 +64,13 @@ public class EDMCapyHdrServiceImpl implements ICommonService {
             String capyDesc = "";
             String[] strArray = new String[3];
             for (ProjectOneKaktEntity entity : kaptEntityList) {
-                if (entity.getSpras().equals("EN")) {
+                if (entity.getSpras().equals(IConstant.VALUE.EN_CAPY)) {
                         strArray[0] = entity.getKtext() + "/";
                 }
-                if (entity.getSpras().equals("ES")) {
+                if (entity.getSpras().equals(IConstant.VALUE.ES_CAPY)) {
                         strArray[1] = entity.getKtext() + "/";
                 }
-                if (entity.getSpras().equals("PT")) {
+                if (entity.getSpras().equals(IConstant.VALUE.PT_CAPY)) {
                         strArray[2] = entity.getKtext() + "/";
                 }
             }
