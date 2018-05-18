@@ -35,13 +35,13 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
         // rules D1
         gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);
         // rules D3
-        if (IConstant.VALUE.DP.equals(cnsPlanUnitEntity.getPlantFlag()) || IConstant.VALUE.DPSP.equals(cnsPlanUnitEntity.getPlantFlag())) {
+        if (IConstant.VALUE.DP.equals(cnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(cnsPlanUnitEntity.getPlanFlag())) {
             gdmUnitMeasurableBo.setActiveFCTERP(IConstant.VALUE.YES);
         } else {
             gdmUnitMeasurableBo.setActiveFCTERP(IConstant.VALUE.NO);
         }
         // rules D4
-        if (IConstant.VALUE.SP1.equals(cnsPlanUnitEntity.getPlantFlag()) || IConstant.VALUE.DPSP.equals(cnsPlanUnitEntity.getPlantFlag())) {
+        if (IConstant.VALUE.SP1.equals(cnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(cnsPlanUnitEntity.getPlanFlag())) {
             gdmUnitMeasurableBo.setActiveOPRERP(IConstant.VALUE.YES);
         } else {
             gdmUnitMeasurableBo.setActiveOPRERP(IConstant.VALUE.NO);
@@ -65,7 +65,7 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
                 if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getIsoCode())) {
                     gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
                 } else {
-                    gdmUnitMeasurableBo.setFactor(IConstant.VALUE.BLANK);
+                    gdmUnitMeasurableBo.setIsoCode(IConstant.VALUE.BLANK);
                 }
 
                 // rules T2
