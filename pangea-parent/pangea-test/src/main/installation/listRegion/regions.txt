@@ -111,7 +111,7 @@
 /omp/gdm_location_detail
 /omp/gdm_location
 /omp/gdm_lfu
-/omp/gdm_fpb
+/omp/gdm_fbp
 /omp/gdm_customer
 /omp/gdm_country
 /omp/gdm_conversion_storage
@@ -152,6 +152,9 @@
 /project_one/stas
 /edm/bom_item_node
 
+/project_one/plfl
+/edm/mfg_rtng_seq
+
 /plan/cns_root_description
 
 
@@ -162,3 +165,6 @@
 /project_one/kako
 /project_one/kakt
 /edm/capy_hdr
+
+/project_one/resb
+/edm/reserv_itm

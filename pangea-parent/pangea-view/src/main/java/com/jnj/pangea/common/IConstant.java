@@ -104,6 +104,8 @@ public interface IConstant {
         String PROJECT_ONE_STAS = "/project_one/stas";
         String PROJECT_ONE_PLAB_CLONE = "/project_one/plab_clone";
         String PROJECT_ONE_PLKO_CLONE = "/project_one/plko_clone";
+        String PROJECT_ONE_PLFL = "/project_one/plfl";
+        String PROJECT_ONE_PLFL_CLONE = "/project_one/plfl_clone";
         String PROJECT_ONE_KAKT = "/project_one/kakt";
         String PROJECT_ONE_KAKO = "/project_one/kako";
     }
@@ -542,6 +544,12 @@ public interface IConstant {
     interface EDM_UNIT_OF_MEASURE_V1 {
         String UOM = "uom";
     }
+    interface PROJECT_ONE_PLFL{
+        String PLNNR = "plnnr";
+        String PLNAL = "plnal";
+        String PLNFL = "plnfl";
+        String ZAEHL = "zaehl";
+    }
 
     interface PROJECT_ONE_STKO {
         String MANDT = "mandt";
@@ -726,6 +734,7 @@ public interface IConstant {
         String EN_CAPY="EN";
         String ES_CAPY="ES";
         String PT_CAPY="PT";
+        String FBP = "FBP";
     }
 
     interface FAILED {
