@@ -29,4 +29,12 @@ public class PlanCnsProdLocAttribDaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROD_LOC_ATTRIB.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).and(IConstant.PLAN_CNS_PROD_LOC_ATTRIB.LOCAL_PLANT).is(localPlant).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PROD_LOC_ATTRIB, queryString, PlanCnsProdLocAttribEntity.class);
     }
+
+    public PlanCnsProdLocAttribEntity getEntityWithLocalMaterialNumberAndLocalPlantAndSourceSystem(String localMaterialNumber, String localPlant ,String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROD_LOC_ATTRIB.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+                .and(IConstant.PLAN_CNS_PROD_LOC_ATTRIB.LOCAL_PLANT).is(localPlant)
+                .and(IConstant.PLAN_CNS_PROD_LOC_ATTRIB.SOURCE_SYSTEM).is(sourceSystem)
+                .toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PROD_LOC_ATTRIB, queryString, PlanCnsProdLocAttribEntity.class);
+    }
 }

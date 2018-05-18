@@ -1,5 +1,5 @@
 package com.jnj.pangea.util;
-
+import com.jnj.pangea.common.IConstant;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,6 +29,9 @@ public class DateUtils {
     public final static String yyyy_MM_dd_HHmmss_TRUE = "yyyy/MM/dd HH:mm:ss";
     public final static String yyyy_MM_dd = "yyyy/MM/dd";
     public final static String dd_MM_yyyy = "dd/MM/yyyy";
+    public final static String yyyy_MM_ddTHHmmss = "yyyy-MM-dd'T'HH:mm:ss";
+    public final static String ISO_8601 = "yyyy-mm-ddThh:mm:ss.ffffff";
+    public final static String ISO_8602 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
     public final static String J_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
     public final static String J_yyyy_MM_dd_HHmmss = "yyyy-MM-dd HH:mm:ss";

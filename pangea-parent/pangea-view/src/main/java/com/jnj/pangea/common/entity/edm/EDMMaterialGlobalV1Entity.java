@@ -293,4 +293,38 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
     public void setMaterialGroup(String materialGroup) {
         this.materialGroup = materialGroup;
     }
+
+    @Override
+    public String toString() {
+        return "EDMMaterialGlobalV1Entity{" +
+                "productFamily='" + productFamily + '\'' +
+                ", franchise='" + franchise + '\'' +
+                ", manufacturingTechnology='" + manufacturingTechnology + '\'' +
+                ", sourceSystem='" + sourceSystem + '\'' +
+                ", materialType='" + materialType + '\'' +
+                ", localMaterialType='" + localMaterialType + '\'' +
+                ", baseUom='" + baseUom + '\'' +
+                ", localMaterialNumber='" + localMaterialNumber + '\'' +
+                ", localBaseUnit='" + localBaseUnit + '\'' +
+                ", form='" + form + '\'' +
+                ", localManufacturingTechnology='" + localManufacturingTechnology + '\'' +
+                ", materialNumber='" + materialNumber + '\'' +
+                ", parentCode='" + parentCode + '\'' +
+                ", refDescription='" + refDescription + '\'' +
+                ", subBrand='" + subBrand + '\'' +
+                ", localRefDescription='" + localRefDescription + '\'' +
+                ", globalDpParentCode='" + globalDpParentCode + '\'' +
+                ", globalBusinessUnit='" + globalBusinessUnit + '\'' +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", localDpParentCode='" + localDpParentCode + '\'' +
+                ", primaryPlanningCode='" + primaryPlanningCode + '\'' +
+                ", materialGroup='" + materialGroup + '\'' +
+                ", minRemShelfLife='" + minRemShelfLife + '\'' +
+                ", totalShelfLife='" + totalShelfLife + '\'' +
+                ", localBaseUom='" + localBaseUom + '\'' +
+                ", division='" + division + '\'' +
+                ", flagForDeletion='" + flagForDeletion + '\'' +
+                '}';
+    }
 }

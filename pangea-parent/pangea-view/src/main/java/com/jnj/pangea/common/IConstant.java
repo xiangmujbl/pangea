@@ -27,6 +27,7 @@ public interface IConstant {
         String PROJECT_ONE_T001K = "/project_one/t001k";
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
+        String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
@@ -34,6 +35,7 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
+        String PLAN_PROD_LOC_MIN_SHELF ="/plan/prod_loc_min_shelf";
         String PROJECT_ONE_VBEP = "/project_one/vbep";
         String PROJECT_ONE_VBAP = "/project_one/vbap";
         String PROJECT_ONE_VBPA = "/project_one/vbpa";
@@ -104,8 +106,11 @@ public interface IConstant {
         String PROJECT_ONE_STAS = "/project_one/stas";
         String PROJECT_ONE_PLAB_CLONE = "/project_one/plab_clone";
         String PROJECT_ONE_PLKO_CLONE = "/project_one/plko_clone";
+        String PROJECT_ONE_PLFL = "/project_one/plfl";
+        String PROJECT_ONE_PLFL_CLONE = "/project_one/plfl_clone";
         String PROJECT_ONE_KAKT = "/project_one/kakt";
         String PROJECT_ONE_KAKO = "/project_one/kako";
+        String PROJECT_ONE_CRTX="/project_one/crtx";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -122,6 +127,11 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PLANT = "localPlant";
         String LOCAL_PARENT_CODE = "localParentCode";
+    }
+
+    interface PLAN_PROD_LOC_MIN_SHELF {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface PLAN_CNS_PLN_SPL_LOC {
@@ -153,6 +163,13 @@ public interface IConstant {
     interface EDM_CURRENCY_V1 {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_CURRENCY = "localCurrency";
+    }
+
+    interface MKAL_AEND {
+        String FIELD_MATNR = "matnr";
+        String FIELD_WERKS = "werks";
+        String FIELD_VERID = "verid";
+
     }
 
     interface PLAN_CNS_FIN_PLAN_QTY {
@@ -402,6 +419,7 @@ public interface IConstant {
     interface PLAN_CNS_PROD_LOC_ATTRIB {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface EDM_FRANCHISE_V1 {
@@ -542,6 +560,12 @@ public interface IConstant {
     interface EDM_UNIT_OF_MEASURE_V1 {
         String UOM = "uom";
     }
+    interface PROJECT_ONE_PLFL{
+        String PLNNR = "plnnr";
+        String PLNAL = "plnal";
+        String PLNFL = "plnfl";
+        String ZAEHL = "zaehl";
+    }
 
     interface PROJECT_ONE_STKO {
         String MANDT = "mandt";
@@ -603,6 +627,9 @@ public interface IConstant {
 
     }
 
+    interface PROJECT_ONE_CRTX{
+        String OBJID ="objid";
+    }
     interface MFG_RTNG_RLTNSHP {
         String FIELD_LOEKZ_VALUE_X = "x";
         String FIELD_MATLRTNGVALID_TO = "9999/12/31";
@@ -726,6 +753,7 @@ public interface IConstant {
         String EN_CAPY="EN";
         String ES_CAPY="ES";
         String PT_CAPY="PT";
+        String FBP = "FBP";
     }
 
     interface FAILED {
@@ -782,4 +810,9 @@ public interface IConstant {
         }
 
     }
+
+    interface RKPF{
+        String regex="^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
+    }
+
 }

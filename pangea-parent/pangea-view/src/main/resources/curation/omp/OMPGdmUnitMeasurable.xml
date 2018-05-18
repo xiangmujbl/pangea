@@ -6,7 +6,7 @@
 
             <region path="/plan/cns_plan_unit">
                 <columns>
-                    localUom,localUomName,plantFlag,sourceSystem,unit,factor,roundingDecimal
+                    localUom,localUomName,planFlag,sourceSystem,unit,factor,roundingDecimal
                 </columns>
                 <relations>
                     <relation path="/edm/unit_of_measure_v1" isPrimaryKey="true">
