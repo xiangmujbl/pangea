@@ -28,6 +28,8 @@ public class EDMPurchaseOrderOAServiceImpl{
     EketDaoImpl eketDao = EketDaoImpl.getInstance();
     EkpvDaoImpl ekpvDao = EkpvDaoImpl.getInstance();
 
+    int sequenceNumber = 0;
+
     public List<ResultObject> buildView(String key, Object o, Object o2) {
         List<ResultObject> resultObjects = new ArrayList<>();
         EkkoEntity ekkoEntity = (EkkoEntity) o;
@@ -87,6 +89,7 @@ public class EDMPurchaseOrderOAServiceImpl{
         purchaseOrderOABo.setPoNum(ekkoEntity.getEbeln());
         purchaseOrderOABo.setPoLineNbr(ekpoEntity.getEbelp());
         purchaseOrderOABo.setPoCatTypeCd(ekkoEntity.getBstyp());
+        purchaseOrderOABo.setSequenceNumber(Integer.toString(sequenceNumber));
         purchaseOrderOABo.setPoTypeCd(ekkoEntity.getBsart());
         purchaseOrderOABo.setCrtOnDt(ekkoEntity.getAedat());
         purchaseOrderOABo.setSupNum(ekkoEntity.getLifnr());
@@ -128,6 +131,7 @@ public class EDMPurchaseOrderOAServiceImpl{
         purchaseOrderOABo.setLocalBrazilianNCMCode(ekpoEntity.getJ1bnbm());
         purchaseOrderOABo.setIsuSlocCd(ekpoEntity.getReslo());
         purchaseOrderOABo.setGrLeadTimeDays(ekpoEntity.getWebaz());
+        purchaseOrderOABo.setOutbDelvCmpltInd(ekpoEntity.getEglkz());
 
         if(ekbeEntity != null) {
             purchaseOrderOABo.setEvTypeCd(ekbeEntity.getVgabe());
@@ -200,6 +204,7 @@ public class EDMPurchaseOrderOAServiceImpl{
         }
 
         resultObject.setBaseBo(purchaseOrderOABo);
+        sequenceNumber++;
         return resultObject;
     }
 }
