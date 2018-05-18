@@ -48,6 +48,7 @@
 
 		<adf-grid:partitioned-region name="gdm_location" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
+
 		<adf-grid:partitioned-region name="location_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="gdm_location_xref" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
@@ -66,11 +67,11 @@
 
 		<adf-grid:partitioned-region name="gdm_fpb" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
-		<adf-grid:partitioned-region name="GDMCertainity" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="gdm_certainity" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="gdm_batch" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
-		<adf-grid:partitioned-region name="process_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="gdm_process_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="gdm_product_unit_conversion" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
