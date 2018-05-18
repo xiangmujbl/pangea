@@ -169,3 +169,6 @@
 /project_one/crhd
 /project_one/crtx
 /edm/wrk_ctr
+
+/project_one/affl
+/edm/mfg_order_seq

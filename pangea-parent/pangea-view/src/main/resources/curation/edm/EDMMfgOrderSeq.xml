@@ -1,0 +1,30 @@
+<adf-curation>
+    <curation mainRegion="/project_one/affl" viewRegion="/edm/mfg_order_seq" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.mfg_order_seq.controller.EDMMfgOrderSeqController">
+        <regions>
+
+            <region path="/project_one/affl">
+                <columns>
+                    aufpl,aplzl,plnty,plnnr,plnal,plnfl,zaehl,aennr,flgat,bknt1,bknt2,losvn,losbs,bschl1,bschl2
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+            <region path="/edm/mfg_order_seq">
+                <columns>
+                    srcSysCd,ordrRtngNum,ordrRtngCtrNum,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rtngSqncNum,rtngSqncVrsnCntrNbr,chgNum,rtngSqncCtgryCd,strtNdeNum,endNdeNum,fromLtSzQty,toLtSzQty,brnchOperNum,retrnOperNum
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
