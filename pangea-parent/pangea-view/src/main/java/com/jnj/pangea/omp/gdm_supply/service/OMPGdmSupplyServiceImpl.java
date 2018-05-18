@@ -206,10 +206,10 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                             if (planCnsPlnSplLocEntity_1 == null) {
                                 gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() +  IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
                             } else {
-                                if (planCnsPlnSplLocEntity_1.getVendororCustomer() != null && (!(planCnsPlnSplLocEntity_1.getVendororCustomer().isEmpty()))) {
+                                if (planCnsPlnSplLocEntity_1.getVendorOrCustomer() != null && (!(planCnsPlnSplLocEntity_1.getVendorOrCustomer().isEmpty()))) {
                                     if (planCnsPlnSplLocEntity_1.getLocalNumber() != null && (!(planCnsPlnSplLocEntity_1.getLocalNumber().isEmpty()))) {
                                         gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() +
-                                                IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getVendororCustomer()
+                                                IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getVendorOrCustomer()
                                                     + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getLocalNumber());
                                     } else {
                                         return null;
