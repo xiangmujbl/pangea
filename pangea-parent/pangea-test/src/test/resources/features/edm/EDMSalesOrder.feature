@@ -25,7 +25,7 @@ Feature: EDMSalesOrder AEAZ-493
       | 0000001989 | 20001005 | 20001005 | 00000000 | 00000000 | C     | ZSR   | 311   |       |       | 000000 | 10    | 10    | B99   | BR90  | 20001010 | 1250  | 0000113212 | 20001005 | ZSREMT |
     And I wait "/project_one/vbak" Async Queue complete
 
-    And I import "/project_one/vbap" by keyFields "posnr,vbeln"
+    And I import "/project_one/lips" by keyFields "posnr,vbeln"
       | vbeln      | posnr  | matnr              | werks | pstyv | lfrel | fkrel | abgru | kwmeng | vrkme | umvkz | umvkn | faksp | netwr | waerk | lgort | vstel | route  |
       | 0000001250 |        | 000000000000005911 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
       | 0000001946 | 000001 | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
