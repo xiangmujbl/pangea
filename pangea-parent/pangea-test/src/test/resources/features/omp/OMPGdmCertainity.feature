@@ -4,7 +4,7 @@ Feature: OMPGdmCertainity AEAZ-4483
   Scenario: Full Load curation
     #test rule N1
 
-    And I will remove the test file on sink application "OMPGdmCertainity.tsv"
+    And I will remove the test file on sink application "OMPCertainity.tsv"
 
     Given I import "/plan/cns_cert_key" by keyFields "certainityKey"
       | certainityKey | certainityKeyDesc |
@@ -13,9 +13,9 @@ Feature: OMPGdmCertainity AEAZ-4483
 
     When I submit task with xml file "xml/omp/OMPGdmCertainity.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "OMPGdmCertainity.tsv"
+    Then A file is found on sink application with name "OMPCertainity.tsv"
 
-    Then I check file data for filename "OMPGdmCertainity.tsv" by keyFields "certaintyId"
+    Then I check file data for filename "OMPCertainity.tsv" by keyFields "certaintyId"
       | certaintyId | activeFCTERP | activeOPRERP | activeSOPERP | label  |
       | 0001        | YES          | YES          | NO           | whl001 |
 
