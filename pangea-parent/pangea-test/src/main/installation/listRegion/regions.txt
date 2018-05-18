@@ -162,3 +162,7 @@
 /project_one/kako
 /project_one/kakt
 /edm/capy_hdr
+
+/project_one/crhd
+/project_one/crtx
+/edm/wrk_ctr
