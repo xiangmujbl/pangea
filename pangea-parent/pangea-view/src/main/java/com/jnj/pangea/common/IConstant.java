@@ -841,6 +841,11 @@ public interface IConstant {
             String F2F3 = "F2F3";
         }
 
+        interface ERROR_VALUE {
+
+            String OMP_GDM_PRODUCT_LOCATION_DETAIL_N2 = "Not Planning Relevant";
+        }
+
     }
 
     interface RKPF{
