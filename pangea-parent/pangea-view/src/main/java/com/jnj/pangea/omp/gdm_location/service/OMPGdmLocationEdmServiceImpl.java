@@ -1,6 +1,5 @@
-package com.jnj.pangea.omp.gdm_location_edm.service;
+package com.jnj.pangea.omp.gdm_location.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -14,7 +13,7 @@ import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlantAttrEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.omp.gdm_location_edm.bo.OMPGdmLocationEdmBo;
+import com.jnj.pangea.omp.gdm_location.bo.OMPGdmLocationBo;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         EDMPlantV1Entity plantV1Entity = (EDMPlantV1Entity) o;
 
-        OMPGdmLocationEdmBo gdmLocationEdmBo = new OMPGdmLocationEdmBo();
+        OMPGdmLocationBo gdmLocationEdmBo = new OMPGdmLocationBo();
 
         //rules C1
         gdmLocationEdmBo.setLocationId(plantV1Entity.getSourceSystem() + "_" + plantV1Entity.getLocalPlant());

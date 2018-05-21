@@ -1,9 +1,9 @@
-package com.jnj.pangea.omp.gdm_location_edm.bo;
+package com.jnj.pangea.omp.gdm_location.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class OMPGdmLocationEdmBo extends BaseBo {
+public class OMPGdmLocationBo extends BaseBo {
 
     private String locationId;
     private String  active;

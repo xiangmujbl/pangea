@@ -1,15 +1,12 @@
-package com.jnj.pangea.omp.gdm_location_xref.service;
+package com.jnj.pangea.omp.gdm_location.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.omp.gdm_location_xref.bo.OMPGdmLocationXrefBo;
+import com.jnj.pangea.omp.gdm_location.bo.OMPGdmLocationBo;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.List;
 
 public class OMPGdmLocationXrefServiceImpl implements ICommonService {
 
@@ -30,7 +27,7 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         PlanCnsPlnSplLocEntity cnsPlnSplLocEntity = (PlanCnsPlnSplLocEntity) o;
 
-        OMPGdmLocationXrefBo gdmLocationXrefBo = new OMPGdmLocationXrefBo();
+        OMPGdmLocationBo gdmLocationXrefBo = new OMPGdmLocationBo();
 
         if (cnsPlnSplLocEntity == null) {
             return resultObject;
