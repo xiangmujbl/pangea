@@ -22,8 +22,8 @@ public abstract class CommonListController extends BaseController {
         List<ViewResultItem> result = new LinkedList<>();
         events.forEach(raw -> {
             List<ResultObject> list = process(raw);
-            if(list!=null&&list.size()>0){
-                for(ResultObject resultObject:list){
+            if (list != null && list.size() > 0) {
+                for (ResultObject resultObject : list) {
                     if (null != resultObject) {
                         if (resultObject.isSuccess()) {
                             BaseBo baseBo = resultObject.getBaseBo();
