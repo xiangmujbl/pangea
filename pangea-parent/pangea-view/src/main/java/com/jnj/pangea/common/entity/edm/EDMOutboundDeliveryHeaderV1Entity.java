@@ -22,6 +22,7 @@ public class EDMOutboundDeliveryHeaderV1Entity extends CommonEntity {
     private String shippingCondCd;
     private String supNum;
     private String plntCd;
+    private String localSalesOrg;
 
     public EDMOutboundDeliveryHeaderV1Entity(Map<String, Object> map) {
         super(map);
@@ -41,6 +42,7 @@ public class EDMOutboundDeliveryHeaderV1Entity extends CommonEntity {
         setShippingCondCd((String)map.get("shippingCondCd"));
         setSupNum((String)map.get("supNum"));
         setPlntCd((String)map.get("plntCd"));
+        setLocalSalesOrg((String)map.get("localSalesOrg"));
     }
 
     public String getSrcSysCd() {
@@ -169,5 +171,13 @@ public class EDMOutboundDeliveryHeaderV1Entity extends CommonEntity {
 
     public void setShippingCondCd(String shippingCondCd) {
         this.shippingCondCd = shippingCondCd;
+    }
+
+    public String getLocalSalesOrg() {
+        return localSalesOrg;
+    }
+
+    public void setLocalSalesOrg(String localSalesOrg) {
+        this.localSalesOrg = localSalesOrg;
     }
 }

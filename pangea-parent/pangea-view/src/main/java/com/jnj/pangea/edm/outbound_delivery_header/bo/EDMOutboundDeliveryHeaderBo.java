@@ -21,6 +21,7 @@ public class EDMOutboundDeliveryHeaderBo extends BaseBo {
     private String shippingCondCd;
     private String supNum;
     private String plntCd;
+    private String localSalesOrg;
 
     @Override
     public String getKey() {
@@ -156,5 +157,13 @@ public class EDMOutboundDeliveryHeaderBo extends BaseBo {
 
     public void setPlntCd(String plntCd) {
         this.plntCd = plntCd;
+    }
+
+    public String getLocalSalesOrg() {
+        return localSalesOrg;
+    }
+
+    public void setLocalSalesOrg(String localSalesOrg) {
+        this.localSalesOrg = localSalesOrg;
     }
 }

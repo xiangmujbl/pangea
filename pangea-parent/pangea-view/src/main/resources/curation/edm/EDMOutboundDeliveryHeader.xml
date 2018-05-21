@@ -5,7 +5,7 @@
 
             <region path="/project_one/likp">
                 <columns>
-                    vbeln,erdat,vstel,lfart,lfdat,vbtyp,vsbed,kunnr,kunag,bolnr,lifnr,wadatist,lifex,werks,wadat
+                    vbeln,erdat,vstel,lfart,lfdat,vbtyp,vsbed,kunnr,kunag,bolnr,lifnr,wadatist,lifex,werks,wadat,vkorg
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -22,7 +22,7 @@
 
             <region path="/edm/outbound_delivery_header_v1">
                 <columns>
-                    srcSysCd,delvDocId,shippingPtNum,delvTypeCd,slsOrdrCarCd,delvDt,crtDttm,soldToCustNum,shipToCustNum,billOfLdngNum,delvNum,planGiDt,actlGiDt,shippingCondCd,shippingPtNum,supNum,plntCd
+                    srcSysCd,delvDocId,shippingPtNum,delvTypeCd,slsOrdrCarCd,delvDt,crtDttm,soldToCustNum,shipToCustNum,billOfLdngNum,delvNum,planGiDt,actlGiDt,shippingCondCd,shippingPtNum,supNum,plntCd,localSalesOrg
                 </columns>
             </region>
 

@@ -71,6 +71,7 @@ public class EDMOutboundDeliveryHeaderServiceImpl implements ICommonService{
             outboundDeliveryHeaderBo.setShippingCondCd(likpEntity.getVsbed());
             outboundDeliveryHeaderBo.setSupNum(likpEntity.getLifnr());
             outboundDeliveryHeaderBo.setPlntCd(likpEntity.getWerks());
+            outboundDeliveryHeaderBo.setLocalSalesOrg(likpEntity.getVkorg());
         }
         resultObject.setBaseBo(outboundDeliveryHeaderBo);
         return resultObject;

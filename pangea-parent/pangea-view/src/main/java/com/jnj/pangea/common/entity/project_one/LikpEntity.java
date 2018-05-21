@@ -22,6 +22,7 @@ public class LikpEntity extends CommonEntity {
     private String kunnr;
     private String kunag;
     private String wadat;
+    private String vkorg;
 
     public LikpEntity(Map<String, Object> map) {
         super(map);
@@ -42,6 +43,7 @@ public class LikpEntity extends CommonEntity {
         setKunnr((String) map.get("kunnr"));
         setKunag((String) map.get("kunag"));
         setWadat((String) map.get("wadat"));
+        setVkorg((String) map.get("vkorg"));
     }
 
     public String getVbeln() {
@@ -168,5 +170,13 @@ public class LikpEntity extends CommonEntity {
 
     public void setWadat(String wadat) {
         this.wadat = wadat;
+    }
+
+    public String getVkorg() {
+        return vkorg;
+    }
+
+    public void setVkorg(String vkorg) {
+        this.vkorg = vkorg;
     }
 }
