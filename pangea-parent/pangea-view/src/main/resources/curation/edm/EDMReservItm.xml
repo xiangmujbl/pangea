@@ -1,0 +1,27 @@
+<adf-curation>
+    <curation mainRegion="/project_one/resb" viewRegion="/edm/reserv_itm" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.reserv_itm.controller.EDMReservItmController">
+        <regions>
+
+            <region path="/project_one/resb">
+                <columns>
+                    rsnum,rspos,rsart,bdart,aufnr,posnr,xloek,kzear,matnr,werks,lgort,charg,bdter,bdmng,shkzg,fmeng,enmng,erfmg,erfme,plnum,banfn,bnfpo,kdauf,kdpos,bwart,umwrk,umlgo,postp,ausch,nlfzt,umrez,umren,aufps,ebeln,ebelp,rgekz,kzkup,webaz,lifnr
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+            <region path="/edm/reserv_itm">
+                <columns>
+                    sourceSysCd,rsrvtnNum,rsrvtnItmNum,rsrvtnRcrdTypCd,rsrvtnRqrmntTypCd,mfgOrdrNum,bomItmNum,delInd,finIssind,matlNum,plntCd,sLocCd,btchNum,rqmtDt,rqmtQty,debCrdInd,qtyFxInd,wthdrnQty,entryQty,entryUomCd,mfgPlanOrdrDocNum,prNum,prLineNbr,slsOrdrDocNum,slsOrdrLineNbr,mvmtTyp,rcvngIssngPlntCd,rcvngIssngSLocCd,itmCatCd,cmpntScrapPct,leadTimeOffset,fctrNmrtrMeas,fctrDnmntrMeas,lnItmNbr,purchsOrdrNum,poLineNbr,bckflushInd,coProdInd,grProcTime,vndNum
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
