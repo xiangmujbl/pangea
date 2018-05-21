@@ -234,7 +234,7 @@ def String getJenkinsConfigurationId (){
     def configurationId = ''
     if (ws.find('/sa-itsus-taan-ciuser/')) {		
         echo 'Matched taan-ci-build Jenkins'
-        configurationId = '34ebbea8-f90f-4c87-83ca-9f0523f11bf6'
+        configurationId = '8b87f930-ab20-4da8-a22e-4398a7f66c65'
     } else if (ws.find('/sa-itsus-taan-cduser/')) {
         echo 'Matched taan-cd-deploy Jenkins'
         configurationId = '*****TODO'
