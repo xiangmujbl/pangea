@@ -135,6 +135,8 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PLANT = "localPlant";
         String LOCAL_PARENT_CODE = "localParentCode";
+        String MATERIAL_NUMBER = "materialNumber";
+        String ACTIVE = "active";
     }
 
     interface PLAN_PROD_LOC_MIN_SHELF {
@@ -368,6 +370,7 @@ public interface IConstant {
 
     interface EDM_MATERIAL_AUOM_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String MATERIAL_NUMBER = "materialNumber";
         String LOCAL_AUOM = "localAuom";
     }
 
@@ -780,6 +783,7 @@ public interface IConstant {
         String ES_CAPY="ES";
         String PT_CAPY="PT";
         String FBP = "FBP";
+        String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
         String SEVEN = "7";
         String VENDOR_TRANSPORT = "VendorTransport";
         String SUPPLY = "SUPPLY";
