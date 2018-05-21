@@ -118,7 +118,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
 
         if(edmSourceSystemV1Entity != null){
-            edmAdvancedShipNotificationBo.setSrcSysCd(edmSourceSystemV1Entity.getLocalSourceSystem());
+            edmAdvancedShipNotificationBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
         }
 
         // N1

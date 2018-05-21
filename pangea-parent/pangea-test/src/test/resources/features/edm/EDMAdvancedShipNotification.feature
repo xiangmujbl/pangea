@@ -20,9 +20,9 @@ Feature: EDMAdvancedShippingNotification AEAZ-3174
       | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       | 7     |
       | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       | 7     |
       | 180005489 | 20161128 | 001041960-1  | 20160421 | EL    |       | 001041960-1 | 20160422  | 8917  |       | 7     |
-      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
-      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
-      | 180021108 | 20160421 | 001137503-1  | 20161128 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
+      | 180021108 | 20160420 | 001137503-1  | 20161129 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
+      | 180021108 | 20160420 | 001137503-1  | 20161129 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
+      | 180021108 | 20160420 | 001137503-1  | 20161129 | EL    | BR07  | 001137503-1 | 20161205  | 8917  |       | 7     |
 
     And I wait "/project_one/likp" Async Queue complete
 
@@ -41,8 +41,8 @@ Feature: EDMAdvancedShippingNotification AEAZ-3174
 
     Then I check region data "/edm/advanced_ship_notification_v1" by keyFields "delvDocID,srcSysCd"
       | localdeliveryType | localdeliveryCatg | localExternalId | delvLineNbr | actlSkuDelvQty | localcreatedDate | locRefDocLineNum | delvDocID    | localShippingPlant | vendorID     | localvendorBatchNo | srcSysCd    |  baseUnitOfMeasureCd | receivingPtID | localReceivingPlant |  localbillOfLading |   localbatchNo     | matlNum   			| localdeliveryDate |  actGRDt   | localRefDocNum |
-      | 	EL	          |			7	      |	001041960-1     | 900002      |	2592.000       |	2016-11-28    | 190              |	180005489	|			         |	8917		|   	             | Project_One |        EA  		  |		 	      | BR19     			|	001041960-1      |   0216B03     	  | 000000000000068874  |  2016-04-21       | 2016-04-22 | 3000753622 	  |
-      |     EL            |         7         | 001137503-1     | 900002      | 2484.000       |  2016-04-21      | 220              |  180021108   |                    |  8917        |                    | Project_One |        EA            |   BR07        | BR07                |  001137503-1       |   2436B04          | 000000000000087046  |  2016-11-28       | 2016-12-05 | 3000789748     |
+      | 	EL	          |			7	      |	001041960-1     | 900002      |	2592.000       |  2016-11-28      | 190              |	180005489	|			         |	8917		|   	             | CONS_LATAM  |        EA  		  |		 	      | BR19     			|  001041960-1       |   0216B03     	  | 000000000000068874  |  2016-04-21       | 2016-04-22 | 3000753622 	  |
+      |     EL            |         7         | 001137503-1     | 900002      | 2484.000       |  2016-04-20      | 220              |  180021108   |                    |  8917        |                    | CONS_LATAM  |        EA            |   BR07        | BR07                |  001137503-1       |   2436B04          | 000000000000087046  |  2016-11-29       | 2016-12-05 | 3000789748     |
 
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
