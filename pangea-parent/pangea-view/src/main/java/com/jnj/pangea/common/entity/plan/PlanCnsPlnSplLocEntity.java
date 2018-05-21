@@ -7,7 +7,7 @@ import java.util.Map;
 public class PlanCnsPlnSplLocEntity extends CommonEntity {
 
     private String sourceSystem;
-    private String vendororCustomer;
+    private String vendorOrCustomer;
     private String localNumber;
     private String localCountry;
     private String localCurrency;
@@ -20,7 +20,7 @@ public class PlanCnsPlnSplLocEntity extends CommonEntity {
         super(map);
 
         setSourceSystem((String) map.get("sourceSystem"));
-        setVendororCustomer((String) map.get("vendororCustomer"));
+        setVendorOrCustomer((String) map.get("vendorOrCustomer"));
         setLocalNumber((String) map.get("localNumber"));
         setLocalCountry((String) map.get("localCountry"));
         setLocalCurrency((String) map.get("localCurrency"));
@@ -38,12 +38,12 @@ public class PlanCnsPlnSplLocEntity extends CommonEntity {
         this.sourceSystem = sourceSystem;
     }
 
-    public String getVendororCustomer() {
-        return vendororCustomer;
+    public String getVendorOrCustomer() {
+        return vendorOrCustomer;
     }
 
-    public void setVendororCustomer(String vendororCustomer) {
-        this.vendororCustomer = vendororCustomer;
+    public void setVendorOrCustomer(String vendorOrCustomer) {
+        this.vendorOrCustomer = vendorOrCustomer;
     }
 
     public String getLocalCountry() {

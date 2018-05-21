@@ -37,18 +37,18 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         }
         // rules C1
         if(StringUtils.isBlank(cnsPlnSplLocEntity.getLocalPlant())) {
-            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendororCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
+            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorOrCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
         }else{
             gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getLocalPlant() + "$" + cnsPlnSplLocEntity.getLocalNumber());
         }
 
         //rules C3
-        if (IConstant.VALUE.C.equals(cnsPlnSplLocEntity.getVendororCustomer())) {
+        if (IConstant.VALUE.C.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
             gdmLocationXrefBo.setCustomerId(cnsPlnSplLocEntity.getLocalNumber());
         }
 
         //rules C4
-        if (IConstant.VALUE.V.equals(cnsPlnSplLocEntity.getVendororCustomer())) {
+        if (IConstant.VALUE.V.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
             gdmLocationXrefBo.setVendorId(cnsPlnSplLocEntity.getLocalNumber());
         }
 

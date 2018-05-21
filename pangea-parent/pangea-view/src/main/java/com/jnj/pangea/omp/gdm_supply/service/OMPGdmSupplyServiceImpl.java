@@ -1,4 +1,5 @@
 package com.jnj.pangea.omp.gdm_supply.service;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -113,42 +114,23 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
 
                         gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
 
-                        // N4
-                        gdmSupplyBo.setMACHINECAPACITY(IConstant.VALUE.INFINITE);
-
-                        // N5
-                        gdmSupplyBo.setMACHINETYPEID(IConstant.VALUE.SUPPLY);
 
                         // N6
                         EDMMaterialPlantV1Entity edmMaterialPlantV1Entity = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
 
                         if (edmMaterialPlantV1Entity != null) {
                             gdmSupplyBo.setMaxQuantity(edmMaterialPlantV1Entity.getLocalMaximumLotSize());
-                        } else {
-                            gdmSupplyBo.setMaxQuantity("");
-                        }
-
-                        // N7
-                        gdmSupplyBo.setMaxQuantityType("");
-
-                        // N8
-                        if (edmMaterialPlantV1Entity != null) {
                             gdmSupplyBo.setMinQuantity(edmMaterialPlantV1Entity.getLocalMinimumLotSize());
                         } else {
+                            gdmSupplyBo.setMaxQuantity("");
                             gdmSupplyBo.setMinQuantity("");
                         }
 
-                        // N9
-                        gdmSupplyBo.setPLANLEVELID(IConstant.VALUE.ASTERIX);
-
                         // N10
                         if (!(edmSourceListV1Entity.getLocalFixedvendor().isEmpty()) || (!(edmSourceListV1Entity.getLocalFixedOutlinePurchaseAgreementItem().isEmpty()))) {
-                                if(edmSourceListV1Entity.getLocalFixedvendor().equals(IConstant.VALUE.ONE)
-                                        || edmSourceListV1Entity.getLocalFixedOutlinePurchaseAgreementItem().equals(IConstant.VALUE.ONE)) {
-                                    gdmSupplyBo.setPreference(IConstant.VALUE.ONE);
-                                }
+                            gdmSupplyBo.setPreference(IConstant.VALUE.ZERO);
                         } else {
-                            gdmSupplyBo.setPreference("");
+                            gdmSupplyBo.setPreference(IConstant.VALUE.ONE);
                         }
 
                         // N18
@@ -206,23 +188,16 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                             if (planCnsPlnSplLocEntity_1 == null) {
                                 gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() +  IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
                             } else {
-                                if (planCnsPlnSplLocEntity_1.getVendororCustomer() != null && (!(planCnsPlnSplLocEntity_1.getVendororCustomer().isEmpty()))) {
-                                    if (planCnsPlnSplLocEntity_1.getLocalNumber() != null && (!(planCnsPlnSplLocEntity_1.getLocalNumber().isEmpty()))) {
-                                        gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() +
-                                                IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getVendororCustomer()
-                                                    + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getLocalNumber());
-                                    } else {
-                                        return null;
-                                    }
-                                } else {
-                                    return null;
-                                }
+                                gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() +
+                                        IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getVendorOrCustomer()
+                                            + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getLocalNumber());
                             }
+
 
                             // N15
                             String dateToFormat = edmSourceListV1Entity.getLocalSourceListRecordValidFrom();
                             SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-                            SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+                            SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
 
                             Date dFrom = null;
                             try {
@@ -237,10 +212,15 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                             // N17
                             gdmSupplyBo.setTransportType(IConstant.VALUE.DEFAULT);
 
+                            // New Rule
+                            if(edmMaterialPlantV1Entity != null) {
+                                gdmSupplyBo.setINCQuantity(edmMaterialPlantV1Entity.getLocalRoundingValueForPoq());
+                            }
+
                             // N16
                             PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
                             if (planCnsPlnSplLocEntity == null) {
-                                gdmSupplyBo.setVENDOR(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
                             } else {
                                     if (edmMaterialPlantV1Entity != null) {
                                     String localSpecialProcurementType = edmMaterialPlantV1Entity.getLocalSpecialProcurementType();
@@ -253,7 +233,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                                             return null;
                                         } else {
                                             // set Vendor to EDM Source List V1 local vendor account number
-                                            gdmSupplyBo.setVENDOR(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                            gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
                                         }
                                     }
                                 }
