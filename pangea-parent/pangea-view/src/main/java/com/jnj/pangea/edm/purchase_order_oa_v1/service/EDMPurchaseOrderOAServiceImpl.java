@@ -163,6 +163,7 @@ public class EDMPurchaseOrderOAServiceImpl{
             purchaseOrderOABo.setSlsOrdrNum(ekesEntity.getVbeln());
             purchaseOrderOABo.setSlsOrdrLineNbr(ekesEntity.getVbelp());
             purchaseOrderOABo.setVendBtchNum(ekesEntity.getCharg());
+            purchaseOrderOABo.setLocalConfCrtOnDt(ekesEntity.getErdat());
         }
         else {
             purchaseOrderOABo.setCnfrmSeqNbr("");
@@ -173,6 +174,7 @@ public class EDMPurchaseOrderOAServiceImpl{
             purchaseOrderOABo.setSlsOrdrNum("");
             purchaseOrderOABo.setSlsOrdrLineNbr("");
             purchaseOrderOABo.setVendBtchNum("");
+            purchaseOrderOABo.setLocalConfCrtOnDt("");
         }
 
         if(eketEntity != null) {
