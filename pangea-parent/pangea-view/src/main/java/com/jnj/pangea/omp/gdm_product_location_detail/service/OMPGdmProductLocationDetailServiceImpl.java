@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_product_location_detail.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -67,17 +66,17 @@ public class OMPGdmProductLocationDetailServiceImpl {
                         if (null != name && !"".equals(name)) {
                             OMPGdmProductLocationDetailBo gdmProductLocationDetailBo = new OMPGdmProductLocationDetailBo();
                             ResultObject resultObject = new ResultObject();
-                            String CLASS = "";
+                            String classStr = "";
                             if (IConstant.VALUE.CONS_LATAM.equals(materialGlobalV1Entity.getSourceSystem())) {
-                                CLASS = IConstant.VALUE.PGA;
-                                gdmProductLocationDetailBo.setCLASS(CLASS);
+                                classStr = IConstant.VALUE.PGA;
+                                gdmProductLocationDetailBo.setCLASS(classStr);
                                 gdmProductLocationDetailBo.setDescription(IConstant.VALUE.PANGEA);
                             }
 
                             String productLocationId = materialGlobalV1Entity.getPrimaryPlanningCode() + IConstant.VALUE.LINE + sourceSystemPr + IConstant.VALUE.UNDERLINE + prodLocAttribEntity.getLocalPlant();
                             gdmProductLocationDetailBo.setProductLocationId(productLocationId);
 
-                            String productLocationDetailId = productLocationId + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + name;
+                            String productLocationDetailId = productLocationId + IConstant.VALUE.BACK_SLANT + classStr + IConstant.VALUE.BACK_SLANT + name;
                             gdmProductLocationDetailBo.setProductLocationDetailId(productLocationDetailId);
 
                             gdmProductLocationDetailBo.setName(name);

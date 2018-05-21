@@ -38,7 +38,7 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         edmCurrencyBo.setSourceSystem(sourceSystem);
 
         processSystem(mainData, edmCurrencyBo);
-        EMSFMdmCurrenciesEntity emsfMdmCurrenciesEntity = emsfMdmCurrenciesDao.getZnameWithzSourceSystemAndZcode(IConstant.VALUE.EMS, mainData.getzCode());
+        EMSFMdmCurrenciesEntity emsfMdmCurrenciesEntity = emsfMdmCurrenciesDao.getZnameWithzSourceSystemAndZcode(IConstant.VALUE.EMS, mainData.getzEntCodeIso4217Alpha());
         if (emsfMdmCurrenciesEntity != null) {
             edmCurrencyBo.setCurrencyName(emsfMdmCurrenciesEntity.getzName());
         }

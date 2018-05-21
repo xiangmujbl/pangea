@@ -33,7 +33,6 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
     private PlanCnsPlantAttrDaoImpl cnsPlantAttrDaoImpl = PlanCnsPlantAttrDaoImpl.getInstance();
     private EDMCurrencyV1DaoImpl currencyV1DaoImpl = EDMCurrencyV1DaoImpl.getInstance();
 
-
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -48,7 +47,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
 
         //rules T2
         List<PlanCnsPlanParameterEntity> entities = parameterDao.getEntriessWithConditions(IConstant.VALUE.CONS_LATAM, IConstant.VALUE.CNS_MATERIAL_PLAN_STATUS, IConstant.VALUE.DP_RELEVANT, IConstant.VALUE.PLANT, plantV1Entity.getLocalPlant());
-        if (entities != null && entities.size() > 0) {
+        if (!entities.isEmpty()) {
             gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.YES);
         } else {
             gdmLocationEdmBo.setActiveFCTERP(IConstant.VALUE.NO);
@@ -75,18 +74,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         //rules T8
         PlanCnsPlantAttrEntity cnsPlantAttrEntity = cnsPlantAttrDaoImpl.getEntityWithLocalPlantAndSourceSystem(plantV1Entity.getLocalPlant(), plantV1Entity.getSourceSystem());
         if (cnsPlantAttrEntity == null) {
-            FailData failData = new FailData();
-            failData.setErrorCode("T8");
-            failData.setErrorValue("Missing Location Type Id");
-            failData.setFunctionalArea("SP");
-            failData.setInterfaceID("OMPGdmLocationEdm");
-            failData.setSourceSystem("omp");
-            failData.setKey1(plantV1Entity.getLocalPlant());
-            failData.setKey2(plantV1Entity.getSourceSystem());
-            failData.setKey3("");
-            failData.setKey4("");
-            failData.setKey5("");
-            resultObject.setFailData(failData);
+            resultObject.setFailData(buildFailedData(IConstant.FAILED.ERROR_CODE.T8, "Missing Location Type Id", plantV1Entity));
             return resultObject;
 
         }
@@ -95,18 +83,7 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
         //rules T10
         String countryId = plantV1Entity.getCountry();
         if ("".equals(countryId)) {
-            FailData failData = new FailData();
-            failData.setErrorCode("T10");
-            failData.setErrorValue("Missing Country");
-            failData.setFunctionalArea("SP");
-            failData.setInterfaceID("OMPGdmLocationEdm");
-            failData.setSourceSystem("omp");
-            failData.setKey1(plantV1Entity.getLocalPlant());
-            failData.setKey2(plantV1Entity.getSourceSystem());
-            failData.setKey3("");
-            failData.setKey4("");
-            failData.setKey5("");
-            resultObject.setFailData(failData);
+            resultObject.setFailData(buildFailedData(IConstant.FAILED.ERROR_CODE.T10, "Missing Country", plantV1Entity));
             return resultObject;
 
         }
@@ -128,6 +105,21 @@ public class OMPGdmLocationEdmServiceImpl implements ICommonService {
 
         resultObject.setBaseBo(gdmLocationEdmBo);
         return resultObject;
+    }
+
+    private FailData buildFailedData(String errorCode, String errorValue, EDMPlantV1Entity plantV1Entity) {
+        FailData failData = new FailData();
+        failData.setErrorCode(errorCode);
+        failData.setErrorValue(errorValue);
+        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
+        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_LOCATION_EDM);
+        failData.setSourceSystem(IConstant.FAILED.SOURCE_SYSTEM.PROJECT_ONE);
+        failData.setKey1(plantV1Entity.getLocalPlant());
+        failData.setKey2(plantV1Entity.getSourceSystem());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
+        return failData;
     }
 
 }

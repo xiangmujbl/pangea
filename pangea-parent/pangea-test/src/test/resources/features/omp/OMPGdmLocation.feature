@@ -72,8 +72,8 @@ Feature: OMPGdmLocation AEAZ-3685
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID       | errorCode | sourceSystem | businessArea | key1    | key2       | key3 | key4 | key5 | errorValue               |
-      | SP             | OMPGdmLocationEdm | T8        | omp          |              | AR1_T8  | CONS_LATAM |      |      |      | Missing Location Type Id |
-      | SP             | OMPGdmLocationEdm | T10       | omp          |              | AR1_T10 | CONS_LATAM |      |      |      | Missing Country          |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | AR1_T8  | CONS_LATAM |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T10       | project_one  |              | AR1_T10 | CONS_LATAM |      |      |      | Missing Country          |
 
     And I compare the number of records between "/edm/plant_v1" and "/omp/gdm_location,/plan/edm_failed_data"
 
