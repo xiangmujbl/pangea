@@ -35,7 +35,7 @@ public interface IConstant {
         String PROJECT_ONE_TMABCT = "/project_one/tmabct";
         String PLAN_CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
         String PLAN_CNS_MATERIAL_INCL = "/plan/cns_material_incl";
-        String PLAN_PROD_LOC_MIN_SHELF ="/plan/prod_loc_min_shelf";
+        String PLAN_PROD_LOC_MIN_SHELF = "/plan/prod_loc_min_shelf";
         String PROJECT_ONE_VBEP = "/project_one/vbep";
         String PROJECT_ONE_VBAP = "/project_one/vbap";
         String PROJECT_ONE_VBPA = "/project_one/vbpa";
@@ -118,7 +118,7 @@ public interface IConstant {
         String PROJECT_ONE_PLFL_CLONE = "/project_one/plfl_clone";
         String PROJECT_ONE_KAKT = "/project_one/kakt";
         String PROJECT_ONE_KAKO = "/project_one/kako";
-        String PROJECT_ONE_CRTX="/project_one/crtx";
+        String PROJECT_ONE_CRTX = "/project_one/crtx";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -588,7 +588,8 @@ public interface IConstant {
     interface EDM_UNIT_OF_MEASURE_V1 {
         String UOM = "uom";
     }
-    interface PROJECT_ONE_PLFL{
+
+    interface PROJECT_ONE_PLFL {
         String PLNNR = "plnnr";
         String PLNAL = "plnal";
         String PLNFL = "plnfl";
@@ -655,9 +656,10 @@ public interface IConstant {
 
     }
 
-    interface PROJECT_ONE_CRTX{
-        String OBJID ="objid";
+    interface PROJECT_ONE_CRTX {
+        String OBJID = "objid";
     }
+
     interface MFG_RTNG_RLTNSHP {
         String FIELD_LOEKZ_VALUE_X = "x";
         String FIELD_MATLRTNGVALID_TO = "9999/12/31";
@@ -685,10 +687,10 @@ public interface IConstant {
         String SOFT_ZAEHL_VALUE = "zaehl";
     }
 
-    interface LFU{
-        String DATA_OBJECT="dataObject";
-        String SPLIT="-";
-        String CHCEK_TIME="^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
+    interface LFU {
+        String DATA_OBJECT = "dataObject";
+        String SPLIT = "-";
+        String CHCEK_TIME = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
     }
 
     // -----region attribute value
@@ -736,7 +738,7 @@ public interface IConstant {
         String YYYY_MM_DD = "yyyy/MM/dd";
         String YYYYMMDD_ZERO = "00000000";
         String YYYY_MM_DD_ZERO = "0000/00/00";
-        String  HH_NN_SS_ZERO = " 00:00:00";
+        String HH_NN_SS_ZERO = " 00:00:00";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
         String YYYYDDMMHHMMSS = "yyyy/DD/mm HH:mm:ss";
         String YYYYMMDDBS = "yyyy/MM/dd";
@@ -779,9 +781,9 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
         String BOM_VlD_ToDt = "9999/12/31";
-        String EN_CAPY="EN";
-        String ES_CAPY="ES";
-        String PT_CAPY="PT";
+        String EN_CAPY = "EN";
+        String ES_CAPY = "ES";
+        String PT_CAPY = "PT";
         String FBP = "FBP";
         String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
         String SEVEN = "7";
@@ -816,6 +818,7 @@ public interface IConstant {
             String PLAN_CNS_MATERIAL_PLAN_STATUS = "PlanCnsMaterialPlanStatus";
             String OMP_GDM_SALES_HISTORY = "OMPGdmSalesHistory";
             String OMP_GDM_CONVERSION_STORAGE = "OMPGdmConversionStorage";
+            String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
         }
 
         interface ERROR_CODE {
@@ -843,6 +846,7 @@ public interface IConstant {
             String F1 = "F1";
             String F2 = "F2";
             String F2F3 = "F2F3";
+            String T10 = "T10";
         }
 
         interface ERROR_VALUE {
@@ -850,10 +854,14 @@ public interface IConstant {
             String OMP_GDM_PRODUCT_LOCATION_DETAIL_N2 = "Not Planning Relevant";
         }
 
+        interface SOURCE_SYSTEM {
+
+            String PROJECT_ONE = "project_one";
+        }
     }
 
-    interface RKPF{
-        String regex="^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
+    interface RKPF {
+        String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
     }
 
 }

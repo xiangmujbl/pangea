@@ -6,22 +6,22 @@ import com.jnj.pangea.common.BaseBo;
 public class OMPGdmLocationBo extends BaseBo {
 
     private String locationId;
-    private String  active;
-    private String  activeFCTERP;
-    private String  activeOPRERP;
-    private String  activeSOPERP;
-    private String  countryId;
-    private String  currencyId;
-    private String  customerId;
-    private String  label;
-    private String  locationTypeId;
-    private String  regionId;
-    private String  vendorId;
+    private String active;
+    private String activeFCTERP;
+    private String activeOPRERP;
+    private String activeSOPERP;
+    private String countryId;
+    private String currencyId;
+    private String customerId;
+    private String label;
+    private String locationTypeId;
+    private String regionId;
+    private String vendorId;
 
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("locationId",locationId)
+                .makeJsonObject("locationId", locationId)
                 .toJsonString();
     }
 

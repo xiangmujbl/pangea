@@ -2,7 +2,6 @@ package com.jnj.pangea.omp.gdm_location.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_location.bo.OMPGdmLocationBo;
@@ -19,8 +18,6 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         return instance;
     }
 
-    private PlanCnsPlanParameterDaoImpl cnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
-
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -33,9 +30,9 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
             return resultObject;
         }
         // rules C1
-        if(StringUtils.isBlank(cnsPlnSplLocEntity.getLocalPlant())) {
+        if (StringUtils.isBlank(cnsPlnSplLocEntity.getLocalPlant())) {
             gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorOrCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
-        }else{
+        } else {
             gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getLocalPlant() + "$" + cnsPlnSplLocEntity.getLocalNumber());
         }
 
