@@ -30,7 +30,7 @@ Feature: EDMBomItemNode AEAZ-3270
 
     And I delete the test data
 
-    #And I will remove all data with region "/edm/bom_item_node"
+    And I will remove all data with region "/edm/bom_item_node"
 
     And I will remove all data with region "/plan/edm_failed_data"
 

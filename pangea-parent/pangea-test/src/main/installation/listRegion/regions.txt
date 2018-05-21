@@ -167,3 +167,6 @@
 /project_one/affl
 /edm/mfg_order_seq
 /edm/purchase_order_oa_v1
+
+/project_one/crco
+/edm/wrk_ctr_cc
