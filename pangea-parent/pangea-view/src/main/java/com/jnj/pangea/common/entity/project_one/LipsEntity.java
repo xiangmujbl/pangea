@@ -6,7 +6,9 @@ import java.util.Map;
 
 public class LipsEntity extends CommonEntity {
 
+    private String mandt;
     private String vbeln;
+    private String lfimg;
     private String posnr;
     private String matnr;
     private String charg;
@@ -20,6 +22,8 @@ public class LipsEntity extends CommonEntity {
     public LipsEntity(Map<String, Object> map) {
         super(map);
 
+        setMandt((String) map.get("mandt"));
+        setLfimg((String) map.get("lfimg"));
         setVbeln((String) map.get("vbeln"));
         setPosnr((String) map.get("posnr"));
         setMatnr((String) map.get("matnr"));
@@ -31,6 +35,14 @@ public class LipsEntity extends CommonEntity {
         setVgbel((String) map.get("vgbel"));
         setVgpos((String) map.get("vgpos"));
     }
+
+    public String getMandt() { return mandt; }
+
+    public void setMandt(String mandt) { this.mandt = mandt; }
+
+    public String getLfimg() { return lfimg; }
+
+    public void setLfimg(String lfimg) { this.lfimg = lfimg; }
 
     public String getVbeln() { return vbeln; }
 
