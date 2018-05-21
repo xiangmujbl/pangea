@@ -119,6 +119,15 @@ public interface IConstant {
         String PROJECT_ONE_KAKT = "/project_one/kakt";
         String PROJECT_ONE_KAKO = "/project_one/kako";
         String PROJECT_ONE_CRTX = "/project_one/crtx";
+        String PLAN_CNS_ROOT_DESCRIPTION="/plan/cns_root_description";
+        String PLAN_USER_OVERRIDE="/plan/user_override";
+    }
+
+    interface PLAN_USER_OVERRIDE {
+        String TARGET = "target";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String KEY1 = "key1";
+        String KEY2 = "key2";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {

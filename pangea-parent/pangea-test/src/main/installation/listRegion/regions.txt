@@ -169,3 +169,11 @@
 /edm/bom_item_node
 /edm/bom_hdr
 /edm/batch_master_v1
+/plan/user_override
+
+
+
+
+
+
+
