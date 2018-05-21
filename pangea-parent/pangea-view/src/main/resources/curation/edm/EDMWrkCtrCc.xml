@@ -1,0 +1,28 @@
+<adf-curation>
+    <curation mainRegion="/project_one/crco" viewRegion="/edm/wrk_ctr_cc" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.wrk_ctr_cc.controller.EDMWrkCtrCcController">
+        <regions>
+
+            <region path="/project_one/crco">
+                <columns>
+                    objty,objid,laset,endda,lanum,begda,aedatKost,kokrs,kostl,lstar
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+            <region path="/edm/wrk_ctr_cc">
+                <columns>
+                    srcSysCd,wrkCtrTypeCd,wrkCtrNum,actvTypeSetCd,vldToDt,actvTypeNbr,vldFromDt,chgDttm,cntlAreaCd,ccCd,actvCd
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
