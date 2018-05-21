@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class PlanCnsFinPlanQtyEntity extends CommonEntity {
 
+    private String sourceSystem;
     private String localMaterialNumber;
     private String identifier;
     private String country;
@@ -16,6 +17,7 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
 
     public PlanCnsFinPlanQtyEntity(Map<String, Object> map) {
         super(map);
+        setSourceSystem((String) map.get("sourceSystem"));
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
         setIdentifier((String) map.get("identifier"));
         setCountry((String) map.get("country"));
@@ -24,6 +26,15 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
         setQuantity((String) map.get("quantity"));
         setYearMonth((String) map.get("yearMonth"));
     }
+
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
+    }
+
     public String getYearMonth() {
         return yearMonth;
     }

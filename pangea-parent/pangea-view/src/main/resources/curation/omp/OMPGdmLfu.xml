@@ -37,11 +37,19 @@
 
             <region path="/plan/cns_fin_plan_qty">
                 <columns>
-                    localMaterialNumber,identifier,country,currency,unitId,quantity,yearMonth
+                    localMaterialNumber,identifier,country,currency,unitId,quantity,yearMonth,sourceSystem
                 </columns>
+                <relations>
+                    <relation path="/edm/material_auom_v1" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/plan/cns_fin_plan_qty.localMaterialNumber,localAuom=/plan/cns_fin_plan_qty.unitId,sourceSystem=/plan/cns_fin_plan_qty.sourceSystem</expression>
+                    </relation>
+                </relations>
                 <filter>identifier:LFU</filter>
             </region>
 
+            <region path="/edm/material_auom_v1">
+                <columns>localMaterialNumber,localAuom,sourceSystem,localNumerator,localDenominator</columns>
+            </region>
 
             <region path="/plan/cns_fin_plan_val">
                 <columns>

@@ -12,13 +12,11 @@ import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanValEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanValDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonListService;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_lfu.bo.OMPGdmLfuBo;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static com.jnj.pangea.util.DateUtils.*;
@@ -40,6 +38,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
     private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
     private EDMCurrencyV1DaoImpl currencyV1Dao = EDMCurrencyV1DaoImpl.getInstance();
     private EDMJNJCalendarV1DaoImpl edmjnjCalendarV1Dao = EDMJNJCalendarV1DaoImpl.getInstance();
+    private EDMMaterialAuomV1DaoImpl edmMaterialAuomV1Dao = EDMMaterialAuomV1DaoImpl.getInstance();
 
 
     @Override
@@ -49,7 +48,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
         if(StringUtils.isBlank(materialGlobalV1Entity.getLocalDpParentCode())){
             return list;
         }
-        List<PlanCnsPlanParameterEntity> PlanCnsPlanParameterEntityList = planCnsPlanParameterDao.getEntityWithAttributeListForLFU(materialGlobalV1Entity.getSourceSystem());
+        List<PlanCnsPlanParameterEntity> PlanCnsPlanParameterEntityList=    planCnsPlanParameterDao.getEntityWithAttributeListForLFU(materialGlobalV1Entity.getSourceSystem());
         if(PlanCnsPlanParameterEntityList==null||PlanCnsPlanParameterEntityList.size()==0){
             return list;
         }
@@ -60,6 +59,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
         String country="";
         String currency="";
         String yearMonth="";
+        String qty="";
         if(finPlanValEntity!=null){
             country=finPlanValEntity.getCountry();
             currency=finPlanValEntity.getCurrency();
@@ -69,8 +69,20 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
         if(finPlanQtyEntity!=null){
             country=finPlanQtyEntity.getCountry();
             currency=finPlanQtyEntity.getCurrency();
-            gdmLfuBo.setVolume(finPlanQtyEntity.getQuantity());
             yearMonth=finPlanQtyEntity.getYearMonth();
+            EDMMaterialAuomV1Entity edmMaterialAuomV1Entity=edmMaterialAuomV1Dao.getEntityWithConditions(finPlanQtyEntity.getLocalMaterialNumber(),finPlanQtyEntity.getUnitId(),finPlanQtyEntity.getSourceSystem());
+            if(edmMaterialAuomV1Entity!=null){
+                try {
+                    int quantity=Integer.parseInt(finPlanQtyEntity.getQuantity());
+                    int localNumerator=Integer.parseInt(edmMaterialAuomV1Entity.getLocalNumerator());
+                    int localDenominator=Integer.parseInt(edmMaterialAuomV1Entity.getLocalDenominator());
+                    qty=quantity*localNumerator/localDenominator+"";
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                LogUtil.getCoreLog().info("edmMaterialAuomV1Entity"+edmMaterialAuomV1Entity.toString());
+            }
+            gdmLfuBo.setVolume(qty);
         }
         List<EDMJNJCalendarV1Entity>  EDMJNJCalendarV1EntityList= edmjnjCalendarV1Dao.getEntityWithFiscalPeriod(yearMonth);
         if(EDMJNJCalendarV1EntityList==null||EDMJNJCalendarV1EntityList.size()==0){
@@ -108,6 +120,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
                     gdmLfuBoV1.setFromDueDate(dateFrom);
                     gdmLfuBoV1.setDueDate(dateTo);
                     gdmLfuBoV1.setLFUId(gdmLfuBoV1.getProductId()+IConstant.LFU.SPLIT+gdmLfuBoV1.getFromDueDate());
+                    LogUtil.getCoreLog().info("gdmLfuBoV1  "+gdmLfuBoV1.toString());
                     resultObject.setBaseBo(gdmLfuBoV1);
                     list.add(resultObject);
                 }
