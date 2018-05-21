@@ -15,7 +15,6 @@ public class PlanCnsRootDescriptionBo extends BaseBo {
         return RawDataHelper.getInstance()
                 .makeJsonObject("sourceSystem", this.sourceSystem)
                 .add("localDpParentCode", this.localDpParentCode)
-                .add("ovrRootDesc", this.ovrRootDesc)
                 .toJsonString();
     }
 
