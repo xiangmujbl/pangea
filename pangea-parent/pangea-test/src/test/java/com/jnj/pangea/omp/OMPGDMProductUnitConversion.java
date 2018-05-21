@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"src/test/resources/features/omp/OMPGdmProductUnitConversion.feature"},
-        tags = {"@Scenario1"},
+        tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "json:target/reports/json/AEAZ-1815 OMPGdmProductUnitConversion.json"})
 public class OMPGDMProductUnitConversion {
