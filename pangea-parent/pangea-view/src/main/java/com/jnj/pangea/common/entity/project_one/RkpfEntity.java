@@ -1,17 +1,17 @@
-package com.jnj.pangea.common.entity.projectOne;
+package com.jnj.pangea.common.entity.project_one;
 
 import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class ProjectOneRkpfEntity extends CommonEntity {
+public class RkpfEntity extends CommonEntity {
 
     private String rsnum;
     private String kzver;
     private String xcale;
     private String rsdat;
 
-    public ProjectOneRkpfEntity(Map<String, Object> map) {
+    public RkpfEntity(Map<String, Object> map) {
         super(map);
 
         setRsnum((String) map.get("rsnum"));

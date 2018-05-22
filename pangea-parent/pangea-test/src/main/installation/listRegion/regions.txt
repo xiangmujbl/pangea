@@ -174,3 +174,5 @@
 /project_one/lips
 /edm/outbound_delivery_line_v1
 
+
+/edm/mfg_order

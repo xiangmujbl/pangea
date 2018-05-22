@@ -2,12 +2,11 @@ package com.jnj.pangea.edm.reserv_hdr.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.projectOne.ProjectOneRkpfEntity;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entity.project_one.RkpfEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.reserv_hdr.bo.EDMReservHdrBo;
-import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Pattern;
@@ -31,10 +30,9 @@ public class EDMReservHdrServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-        ProjectOneRkpfEntity rkpfEntity = (ProjectOneRkpfEntity) o;
+        RkpfEntity rkpfEntity = (RkpfEntity) o;
 
         EDMReservHdrBo reservHdrBo = new EDMReservHdrBo();
-        // TODO add logic
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
         if (null != sourceSystemV1Entity) {
             reservHdrBo.setSourceSysCd(sourceSystemV1Entity.getSourceSystem());
