@@ -103,10 +103,9 @@ public class OMPGdmFbpServiceImpl {
         PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.FBP);
         PlanCnsFinPlanValEntity finPlanValEntity = cnsFinPlanValDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.FBP);
         LogUtil.getCoreLog().info("=======111111111111111===="+sourceSystem );
-        String localMaterialNumberQty =finPlanQtyEntity.getLocalMaterialNumber();
-        String unitIdQty =finPlanQtyEntity.getUnitId();
-        String sourceSystemQty = finPlanQtyEntity.getSourceSystem();
-        EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = materialAuomV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumberQty,unitIdQty,sourceSystemQty);
+
+
+
 
 
 
@@ -145,7 +144,7 @@ public class OMPGdmFbpServiceImpl {
                 List<EDMJNJCalendarV1Entity> edmjnjCalendarV1Entities = edmjnjCalendarV1Dao.getEntityWithFiscalPeriod(yearMonth);
                 if (null!=edmjnjCalendarV1Entities && edmjnjCalendarV1Entities.size()>0) {
                     for (EDMJNJCalendarV1Entity entity:edmjnjCalendarV1Entities) {
-                        LogUtil.getCoreLog().info("++++++++++++++++"+entity );
+                        LogUtil.getCoreLog().info("++++++++++++++++" + entity);
                         OMPGdmFbpBo gdmfbpBo = new OMPGdmFbpBo();
                         Date dueDate = DateUtils.stringToDate(entity.getWeekToDate(), DateUtils.DATE_FORMAT_1);
                         gdmfbpBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.J_yyyyMMdd_HHmmss));
@@ -153,40 +152,46 @@ public class OMPGdmFbpServiceImpl {
                         Date weekFromDate = DateUtils.stringToDate(entity.getWeekFromDate(), DateUtils.DATE_FORMAT_1);
                         gdmfbpBo.setFromDueDate(DateUtils.dateToString(weekFromDate, DateUtils.J_yyyyMMdd_HHmmss));
 
-                        gdmfbpBo.setfbpId(productId+"-"+gdmfbpBo.getFromDueDate());
+                        gdmfbpBo.setfbpId(productId + "-" + gdmfbpBo.getFromDueDate());
 
                         //rules T7,T8
                         gdmfbpBo.setValue(entity.getNoOfWeek());
 
-                        if (null!=edmMaterialAuomV1Entity){
+                        if (null != finPlanQtyEntity) {
+                            String localMaterialNumberQty = finPlanQtyEntity.getLocalMaterialNumber();
+                            String unitIdQty = finPlanQtyEntity.getUnitId();
+                            String sourceSystemQty = finPlanQtyEntity.getSourceSystem();
+                            EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = materialAuomV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumberQty, unitIdQty, sourceSystemQty);
+
+                        if (null != edmMaterialAuomV1Entity) {
                             LogUtil.getCoreLog().info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                             //gdmfbpBo.setVolume(entity.getNoOfWeek());
                             try {
                                 double quantity = Double.parseDouble(finPlanQtyEntity.getQuantity());
                                 double localNumerator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalNumerator());
                                 double localDenominator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
-                                if (0.0!=quantity && 0!=localNumerator && 0!=localDenominator){
-                                    double result = quantity*(localNumerator/localDenominator);
+                                if (0.0 != quantity && 0 != localNumerator && 0 != localDenominator) {
+                                    double result = quantity * (localNumerator / localDenominator);
                                     BigDecimal a = new BigDecimal(result);
-                                   // BigDecimal b = new BigDecimal(localNumerator);
-                                   // BigDecimal c = new BigDecimal(localDenominator);
-                                    LogUtil.getCoreLog().info("CCCCCCCCCCCCCCCCCCCCCCC"+a);
+                                    // BigDecimal b = new BigDecimal(localNumerator);
+                                    // BigDecimal c = new BigDecimal(localDenominator);
+                                    LogUtil.getCoreLog().info("CCCCCCCCCCCCCCCCCCCCCCC" + a);
 //                                    BigDecimal v = b.divide(c);
 //                                    LogUtil.getCoreLog().info("VVVVVVVVVVVVVVVVVVVV"+v);
 //                                    BigDecimal n = a.multiply(v);
 //                                    LogUtil.getCoreLog().info("NNNNNNNNNNNNNNNNNNNN"+n);
-                                   // a.multiply(b.divide(c));
+                                    // a.multiply(b.divide(c));
                                     double df = a.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-                                    String volume = df+"";
+                                    String volume = df + "";
                                     gdmfbpBo.setVolume(volume);
-                                    LogUtil.getCoreLog().info(quantity+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+localNumerator+"BBBBBBBBB"+localDenominator);
-                            }
-                    }catch (NumberFormatException e) {
+                                    LogUtil.getCoreLog().info(quantity + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + localNumerator + "BBBBBBBBB" + localDenominator);
+                                }
+                            } catch (NumberFormatException e) {
                                 e.printStackTrace();
 
+                            }
                         }
-                        }
-
+                    }
                         LogUtil.getCoreLog().info(entity.getNoOfWeek()+"!!!!!!!!!!!!!!!)))))))" +entity.getNoOfWeek());
                         gdmfbpBos.add(gdmfbpBo);
                     }
