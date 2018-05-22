@@ -15,6 +15,9 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
     private String quantity;
     private String yearMonth;
 
+
+
+
     public PlanCnsFinPlanQtyEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("sourceSystem"));
@@ -25,6 +28,7 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
         setUnitId((String) map.get("unitId"));
         setQuantity((String) map.get("quantity"));
         setYearMonth((String) map.get("yearMonth"));
+
     }
 
     public String getSourceSystem() {

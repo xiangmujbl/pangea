@@ -25,4 +25,5 @@ public class EDMJNJCalendarV1DaoImpl extends CommonDaoImpl {
         }
         return null;
     }
+
 }

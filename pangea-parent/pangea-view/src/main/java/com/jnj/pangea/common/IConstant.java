@@ -381,6 +381,7 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String MATERIAL_NUMBER = "materialNumber";
         String LOCAL_AUOM = "localAuom";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface EDM_PLANT_V1 {
