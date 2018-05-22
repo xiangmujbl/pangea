@@ -50,6 +50,7 @@ Feature: EDMProcessOrder AEAZ-2373
       | I0340 | EN    | MACM  | Material committed             |
       | I0361 | EN    | NEWQ  | New quantity calculation       |
       | I0369 | EN    | BCRQ  | Order to be handled in batches |
+
     And I wait "/project_one/tj02t" Async Queue complete
 
     Given I import "/project_one/afpo" by keyFields "aufnr,posnr"

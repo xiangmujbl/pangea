@@ -33,4 +33,9 @@ public class ProjectOneJestDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PROJECT_ONE_JEST.INACT).is(IConstant.VALUE.X).not().toQueryString();
         return queryForList(IConstant.REGION.PROJECT_ONE_JEST, queryString, JestEntity.class);
     }
+    public List<JestEntity> getEntityByObjnrAndStat(String objnr) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_JEST.OBJNR).is(objnr)
+                .and(IConstant.PROJECT_ONE_JEST.INACT).is(IConstant.VALUE.X).not().toQueryString();
+        return queryForList(IConstant.REGION.PROJECT_ONE_JEST, queryString, JestEntity.class);
+    }
 }
