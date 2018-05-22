@@ -206,31 +206,13 @@ Feature:  OMPGdmSupply-Curation
     And I check file data for filename "GDMSupply.tsv" by keyFields "SupplyId"
       | PROCESSTYPEID   | PURCHASINGORGANIZATION | PURCHASINGGROUP | LocationId      | INCQuantity | ProductId | MinQuantity | ActiveSOPERP |   SupplierId         | Active  | VENDORID | Preference   | ActiveOPRERP | LABEL           |  FromDate            | ToDate     | MaxQuantity | TransportType | SupplyId                  |
       | VendorTransport | BR00                   |                 | CONS_LATAM_BR06 |             | 71325     |             | NO           | CONS_LATAM_V_8917    | YES     |          | 1            | YES          | VENDORTRANSPORT |  2007/01/08 00:00:00 | 2999/12/31 |             | DEFAULT       | 71325CONS_LATAM_BR06_8917 |
-      | VendorTransport | VE00                   | VE00            | CONS_LATAM_VE01 | 500.000     | 1331      |             | NO           | CONS_LATAM_VE01      | YES     | 8917     | 0            | YES          | VENDORTRANSPORT |  2006/09/10 00:00:00 | 2999/12/31 | 20          | DEFAULT       | 1331CONS_LATAM_VE01_8917  |
       | VendorTransport | MX01                   | VE00            | CONS_LATAM_MX02 | 0.001       | 92129     |             | NO           | CONS_LATAM_MX02      | YES     | 6359     | 0            | YES          | VENDORTRANSPORT |  2009/05/08 00:00:00 | 9999/12/30 |             | DEFAULT       | 92129CONS_LATAM_MX02_6359 |
-      | VendorTransport | BR00                   | BR00            | CONS_LATAM_BR06 | 1000.000    | 71325     | 3           | NO           | CONS_LATAM_BR06      | YES     | 8917     | 0            | YES          | VENDORTRANSPORT |  2007/01/08 00:00:00 | 2999/12/31 | 1000        | DEFAULT       | 71325CONS_LATAM_BR06_8917 |
       | VendorTransport | MX01                   | MX01            | CONS_LATAM_MX02 | 500.000     | 92129     | 10          | NO           | CONS_LATAM_MX02      | YES     | 6359     | 0            | YES          | VENDORTRANSPORT |  2009/05/08 00:00:00 | 9999/12/30 | 15          | DEFAULT       | 92129CONS_LATAM_MX02_6359 |
       | VendorTransport | MX01                   | MX01            | CONS_LATAM_MX02 | 100.000     | 92129     |             | NO           | CONS_LATAM_MX02      | YES     | 6359     | 1            | YES          | VENDORTRANSPORT |  2009/05/08 00:00:00 | 9999/12/30 | 50          | DEFAULT       | 92129CONS_LATAM_MX02_6359 |
-      | VendorTransport |                        | VE00            | CONS_LATAM_VE01 | 1000.000    | 1331      | 9           | NO           | CONS_LATAM_VE01      | YES     | 8917     | 1            | YES          | VENDORTRANSPORT |  2006/09/10 00:00:00 | 2999/12/31 |             | DEFAULT       | 1331CONS_LATAM_VE01_8917  |
 
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
-      | errorCode | errorValue                                             | functionalArea | interfaceID	| key1        | key2    | key3 |    key4    |    key5    | sourceSystem |
-      | N11       | Plan Cns Material Plan Status Entity is blank          | SP             | OMPGdmSupply  | CONS_LATAM  | 18      | BR16 |            |            | CONS_LATAM   |
-      | N11       | Plan Cns Material Plan Status Entity is blank          | SP             | OMPGdmSupply  | CONS_LATAM  | 19      | BR06 |            |            | CONS_LATAM   |
-      | N11       | Plan Cns Material Plan Status Entity is blank          | SP             | OMPGdmSupply  | CONS_LATAM  | 20      | VE01 |            |            | CONS_LATAM   |
-      | N11       | Plan Cns Material Plan Status Entity is blank          | SP             | OMPGdmSupply  | CONS_LATAM  | 21      | MX02 |            |            | CONS_LATAM   |
-      | N11       | Plan Cns Material Plan Status Entity is blank          | SP             | OMPGdmSupply  | CONS_LATAM  | 22      | BR16 |            |            | CONS_LATAM   |
-      | N11       | Plan Cns Material Plan Status Entity is blank          | SP             | OMPGdmSupply  | CONS_LATAM  | 24      | VE01 |            |            | CONS_LATAM   |
-      | N11       | Plan Cns Material Plan Status Entity is blank          | SP             | OMPGdmSupply  | CONS_LATAM  | 25      | MX02 |            |            | CONS_LATAM   |
-      | N1        | Primary planning Code and Material Number do not match | SP             | OMPGdmSupply  | CONS_LATAM  | 14      | BR16 |            |            | CONS_LATAM   |
-      | N1        | Primary planning Code and Material Number do not match | SP             | OMPGdmSupply  | CONS_LATAM  | 15      | BR06 |            |            | CONS_LATAM   |
-      | N1        | Primary planning Code and Material Number do not match | SP             | OMPGdmSupply  | CONS_LATAM  | 16      | VE01 |            |            | CONS_LATAM   |
-      | N1        | Material Global V1 Entity is blank                     | SP             | OMPGdmSupply  | CONS_LATAM  | 27      | BR16 |            |            | CONS_LATAM   |
-      | N1        | Material Global V1 Entity is blank                     | SP             | OMPGdmSupply  | CONS_LATAM  | 28      | BR06 |            |            | CONS_LATAM   |
-      | N1        | Material Global V1 Entity is blank                     | SP             | OMPGdmSupply  | CONS_LATAM  | 29      | MX02 |            |            | CONS_LATAM   |
-      | N1        | Material Global V1 Entity is blank                     | SP             | OMPGdmSupply  | CONS_LATAM  | 30      | VE01 |            |            | CONS_LATAM   |
-      | N1        | Material Global V1 Entity is blank                     | SP             | OMPGdmSupply  | CONS_LATAM  | 31      | VE01 |            |            | CONS_LATAM   |
-      | N1        | Material Global V1 Entity is blank                     | SP             | OMPGdmSupply  | CONS_LATAM  |         | MX02 |            |            | CONS_LATAM   |
+      | errorCode | errorValue                                                              | functionalArea | interfaceID	| key1        | key2    | key3 |    key4    |    key5    | sourceSystem |
+      | N1        | Material Global V1 Primary planning code and Material Number are blank  | SP             | OMPGdmSupply | CONS_LATAM  | 32      | MX02 |            |            | CONS_LATAM   |
 
     And I will remove all data with region "/edm/source_list_v1"
 
