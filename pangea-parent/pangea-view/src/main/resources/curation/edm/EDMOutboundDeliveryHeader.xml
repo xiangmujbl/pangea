@@ -1,0 +1,31 @@
+<adf-curation>
+    <curation mainRegion="/project_one/likp" viewRegion="/edm/outbound_delivery_header_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.outbound_delivery_header.controller.EDMOutboundDeliveryHeaderController">
+        <regions>
+
+            <region path="/project_one/likp">
+                <columns>
+                    vbeln,erdat,vstel,lfart,lfdat,vbtyp,vsbed,kunnr,kunag,bolnr,lifnr,wadatist,lifex,werks,wadat,vkorg
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    sourceSystem,localSourceSystem
+                </columns>
+            </region>
+
+            <region path="/edm/outbound_delivery_header_v1">
+                <columns>
+                    srcSysCd,delvDocId,shippingPtNum,delvTypeCd,slsOrdrCarCd,delvDt,crtDttm,soldToCustNum,shipToCustNum,billOfLdngNum,delvNum,planGiDt,actlGiDt,shippingCondCd,shippingPtNum,supNum,plntCd,localSalesOrg
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

@@ -377,6 +377,8 @@
 
 		<adf-grid:partitioned-region name="purchase_order_oa_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
+		<adf-grid:partitioned-region name="outbound_delivery_header_v1" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+
 	</adf-grid:replicated-region>
 
 
