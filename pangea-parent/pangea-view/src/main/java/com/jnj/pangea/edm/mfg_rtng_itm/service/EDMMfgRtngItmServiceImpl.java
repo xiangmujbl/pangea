@@ -1,16 +1,13 @@
 package com.jnj.pangea.edm.mfg_rtng_itm.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOnePlpoDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entity.project_one.ProjectOnePlpoEntity;
-import com.jnj.pangea.common.entity.project_one.ProjectOnePlpoEntity;
+import com.jnj.pangea.common.entity.project_one.PlpoEntity;
 import com.jnj.pangea.common.entity.project_one.ProjectOnePlasEntity;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOnePlasDaoImpl;
-import com.jnj.pangea.common.entity.project_one.StkoEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mfg_rtng_itm.bo.EDMMfgRtngItmBo;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +36,7 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-        ProjectOnePlpoEntity plpoEntity = (ProjectOnePlpoEntity) o;
+        PlpoEntity plpoEntity = (PlpoEntity) o;
 
         EDMMfgRtngItmBo mfgRtngItmBo = new EDMMfgRtngItmBo();
         //T1
@@ -93,7 +90,7 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
         mfgRtngItmBo.setPhsInd(plpoEntity.getPhflg());
         //T2
         String zaehl = plpoEntity.getZaehl();
-        List<ProjectOnePlpoEntity> plpoEntityList= plpoDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(),plpoEntity.getPlnnr(),plpoEntity.getPlnkn());
+        List<PlpoEntity> plpoEntityList= plpoDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(),plpoEntity.getPlnnr(),plpoEntity.getPlnkn());
         if(plpoEntityList !=null && plpoEntityList.size()>0){
             if(plpoEntityList.size() == 1){
                 List<ProjectOnePlasEntity> plasEntityList1 = plasDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
@@ -115,7 +112,7 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
                 if((plpoEntityList.get(plpoEntityList.size()-1).getZaehl().equals(zaehl))){
                     mfgRtngItmBo.setRtgItemEndDate(IConstant.VALUE.BOM_VlD_ToDt);
                 }
-                for(ProjectOnePlpoEntity pp:plpoEntityList){
+                for(PlpoEntity pp:plpoEntityList){
                     if(Integer.parseInt(pp.getZaehl())>Integer.parseInt(zaehl)){
                         mfgRtngItmBo.setRtgItemEndDate(pp.getDatuv());
                         break;

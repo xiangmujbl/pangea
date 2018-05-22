@@ -4,8 +4,7 @@ import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.entity.project_one.ProjectOnePlabEntity;
-import com.jnj.pangea.common.entity.project_one.ProjectOnePlkoEntity;
+import com.jnj.pangea.common.entity.project_one.PlkoEntity;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class ProjectOnePlkoDaoImpl  extends CommonDaoImpl {
         return instance;
     }
 
-    public List<ProjectOnePlkoEntity> getProjectOneMaplClone(String PLNTY, String PLNNR, String PLNAL){
+    public List<PlkoEntity> getProjectOneMaplClone(String PLNTY, String PLNNR, String PLNAL){
         ADFCriteria aDFCriteria=QueryHelper.buildCriteria(IConstant.MFG_RTNG_RLTNSHP.FIELD_NAME_PLNNR);
         if(StringUtils.isNotBlank(PLNNR)){
             aDFCriteria.is(PLNNR);
@@ -37,7 +36,7 @@ public class ProjectOnePlkoDaoImpl  extends CommonDaoImpl {
         }else{
             aDFCriteria.isNull();
         }
-        return queryForList(IConstant.REGION.PROJECT_ONE_PLKO_CLONE,aDFCriteria.toQueryString(),IConstant.MFG_RTNG_RLTNSHP.SOFT_ZAEHL_VALUE,ProjectOnePlkoEntity.class);
+        return queryForList(IConstant.REGION.PROJECT_ONE_PLKO_CLONE,aDFCriteria.toQueryString(),IConstant.MFG_RTNG_RLTNSHP.SOFT_ZAEHL_VALUE,PlkoEntity.class);
     }
 
 }

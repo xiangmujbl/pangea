@@ -4,7 +4,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class ProjectOnePlkoEntity extends CommonEntity {
+public class PlkoEntity extends CommonEntity {
 
     private String plnty;
     private String plnnr;
@@ -25,7 +25,7 @@ public class ProjectOnePlkoEntity extends CommonEntity {
     private String ktext;
     private String profidnetz;
 
-    public ProjectOnePlkoEntity(Map<String, Object> map) {
+    public PlkoEntity(Map<String, Object> map) {
         super(map);
 
         setPlnty((String) map.get("plnty"));

@@ -41,7 +41,7 @@
                     localSafetyTime,
                     localConsumptionPeriodBackward,
                     localConsumptionPeriodForward,
-                    localGoodsReceiptProcessingTimeInDays,
+                    localGoodsReceiptProcessingTimeInDay`s,
                     localBatchManagementRequirementIndicator
                 </columns>
                 <relations>

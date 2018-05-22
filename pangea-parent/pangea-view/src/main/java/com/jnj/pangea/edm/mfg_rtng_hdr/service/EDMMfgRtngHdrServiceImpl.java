@@ -4,7 +4,7 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOnePlkoDaoImpl;
-import com.jnj.pangea.common.entity.project_one.ProjectOnePlkoEntity;
+import com.jnj.pangea.common.entity.project_one.PlkoEntity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
@@ -31,7 +31,7 @@ public class EDMMfgRtngHdrServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-        ProjectOnePlkoEntity plkoEntity = (ProjectOnePlkoEntity) o;
+        PlkoEntity plkoEntity = (PlkoEntity) o;
 
         EDMMfgRtngHdrBo mfgRtngHdrBo = new EDMMfgRtngHdrBo();
         // TODO add logic
@@ -66,9 +66,9 @@ public class EDMMfgRtngHdrServiceImpl implements ICommonService {
             mfgRtngHdrBo.setSrcSysCd(sourceSystemV1Entity.getSourceSystem());
         }
 
-        List<ProjectOnePlkoEntity> list= projectOnePlkoDao.getProjectOneMaplClone(plkoEntity.getPlnty(),plkoEntity.getPlnnr(),plkoEntity.getPlnal());
+        List<PlkoEntity> list= projectOnePlkoDao.getProjectOneMaplClone(plkoEntity.getPlnty(),plkoEntity.getPlnnr(),plkoEntity.getPlnal());
         if(list!=null&&list.size()>1){
-            ProjectOnePlkoEntity projectOneplkoEntity=getNextRecord(list,plkoEntity.getZaehl());
+            PlkoEntity projectOneplkoEntity=getNextRecord(list,plkoEntity.getZaehl());
             if(projectOneplkoEntity!=null){
                 mfgRtngHdrBo.setRtgVld_ToDt(projectOneplkoEntity.getDatuv());
             }else{
@@ -82,11 +82,11 @@ public class EDMMfgRtngHdrServiceImpl implements ICommonService {
         return resultObject;
     }
 
-    public ProjectOnePlkoEntity getNextRecord(List<ProjectOnePlkoEntity> list, String zaehl){
-        Iterator<ProjectOnePlkoEntity> iterable=list.iterator();
+    public PlkoEntity getNextRecord(List<PlkoEntity> list, String zaehl){
+        Iterator<PlkoEntity> iterable=list.iterator();
         try {
             while (iterable.hasNext()){
-                ProjectOnePlkoEntity ProjectOnePlkoEntity=  iterable.next();
+                PlkoEntity ProjectOnePlkoEntity=  iterable.next();
                 LogUtil.getCoreLog().info("==========="+zaehl+ProjectOnePlkoEntity.toString());
                 if(ProjectOnePlkoEntity.getZaehl().equalsIgnoreCase(zaehl)){
                     if(iterable.hasNext()){
