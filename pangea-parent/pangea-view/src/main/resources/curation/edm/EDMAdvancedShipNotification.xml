@@ -1,0 +1,40 @@
+<adf-curation>
+    <curation mainRegion="/project_one/likp" viewRegion="/edm/advanced_ship_notification_v1" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.advanced_ship_notification_v1.controller.EDMAdvancedShipNotificationController" >
+
+        <regions>
+
+            <region path="/project_one/likp">
+
+
+                spechngsys,grulg,voleh,borgrgrp,netwr,vlstk,sdabw,dirta,lgnum,contdg,aulwe,speredind,tzonrc,erdat,vsbed,kunnr,tzonis,vbund,lstel,xabln,kzwab,trmtyp,erzet,pioiv,volum,vkbur,berot,anzpk,zukrl,bev1rpkist,spegtsrel,handle,tmctrlkey,lifnr,verur,lispl,lprio,vsart,route,vganz,bev1rpcont,bev1rpfaess,exnum,bev1rpflgnr,bev1luleinh,ternr,wadat,kkber,speretcanc,spelescenario,lddat,routa,kouhr,commn,tpsid,mandt,ablad,fkarv,speaccappsts,stwae,tpqua,akkur,spaiv,tragr,bolnr,btgew,speorigsys,tduhr,fkdiv,stafo,gewei,podat,potim,spegtsrtcde,stgelocchange,traid,spelocseq,kuniv,specarrierind,bev1rpsonst,kunag,spegeoroute,speinvbfrgi,werks,aedat,spelifextype,fkdat,tpgrp,spereltmstmp,knump,lifsk,verursys,spewauhrist,lfart,ernam,vstel,expkz,grupp,knumv,lcnum,vbeak,wauhr,kzazu,tsegfl,msractive,bzirk,cmngv,cmwae,ntgew,amtbl,spegeorouteind,bldat,lgbzo,sperevvlstk,kalsm,kalsp,faksk,kodat,spebillingind,fkaiv,lfuhr,prvbe,prtnr,sbgrp,proli,stcur,imwrk,spepronumber,speshpinfsts,tddat,vkoiv,autlf,vkorg,stzzu,xwoff,abssc,akprz,wadatist,cmfre,sakes,speunitsystem,speqistatus,xblnr,printerprofile,stzkl,vtwiv,spettype,vbeln,knfak,lgtor,klief,lifex,folar,lduhr,ctlpc,locguid,speloekz,tsegtp,waerk,aenam,tcode,knkli,vbtyp,trspg,akwae,inco2,spewazoneist,inco1,perfk,lfdat,kalsmch,kdgrp,traty
+                <!--ablad,abssc,aedat,aenam,akkur,akprz,akwae,amtbl,anzpk,aulwe,autlf,berot,bev1luleinh,bev1rpcont,bev1rpfaess,bev1rpflgnr,bev1rpkist,bev1rpsonst,bldat,bolnr,borgrgrp,btgew,bzirk,cmfre,cmngv,cmwae,commn,contdg,ctlpc,dirta,erdat,ernam,erzet,exnum,expkz,faksk,fkaiv,fkarv,fkdat,fkdiv,folar,gewei,grulg,grupp,handle,imwrk,inco1,inco2,kalsm,kalsmch,kalsp,kdgrp,kkber,klief,knfak,knkli,knump,knumv,kodat,kouhr,kunag,kuniv,kunnr,kzazu,kzwab,lcnum,lddat,lduhr,lfart,lfdat,lfuhr,lgbzo,lgnum,lgtor,lifex,lifnr,lifsk,lispl,locguid,lprio,lstel,mandt,msractive,netwr,ntgew,perfk,pioiv,podat,potim,printerprofile,proli,prtnr,prvbe,routa,route,sakes,sbgrp,sdabw,spaiv,speaccappsts,spebillingind,specarrierind,spechngsys,spegeoroute,spegeorouteind,spegtsrel,spegtsrtcde,speinvbfrgi,spelescenario,spelifextype,spelocseq,speloekz,speorigsys,spepronumber,speqistatus,speredind,spereltmstmp,speretcanc,sperevvlstk,speshpinfsts,spettype,speunitsystem,spewauhrist,spewazoneist,stafo,stcur,stgelocchange,stwae,stzkl,stzzu,tcode,tddat,tduhr,ternr,tmctrlkey,tpgrp,tpqua,tpsid,tragr,traid,traty,trmtyp,trspg,tsegfl,tsegtp,tzonis,tzonrc,vbeak,vbeln,vbtyp,vbund,verur,verursys,vganz,vkbur,vkoiv,vkorg,vlstk,voleh,volum,vsart,vsbed,vstel,vtwiv,wadat,wadatist,waerk,wauhr,werks,xabln,xblnr,xwoff,zukrl-->
+
+
+                <columns>vbeln,erdat,bolnr,lfdat,lfart,vstel,lifex,wadatist,lifnr,werks,vbtyp</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/lips" isPrimaryKey="true">
+                        <expression>vbeln=/project_one/likp.vbeln</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+
+            <region path="/project_one/lips">
+                <columns>vbeln,posnr,matnr,werks,charg,lichn,meins,lgmng,vgbel,vgpos</columns>
+            </region>
+
+            <region path="/edm/advanced_ship_notification_v1">
+                <columns>srcSysCd,delvDocID,receivingPtID,localdeliveryType,localdeliveryCatg,localdeliveryDate,localcreatedDate,localbillOfLading,localExternalId,actGRDt,vendorID,localShippingPlant,delvLineNbr,matlNum,localbatchNo,localvendorBatchNo,localReceivingPlant,baseUnitOfMeasureCd,actlSkuDelvQty,localRefDocNum,locRefDocLineNum</columns>
+            </region>
+
+        </regions>
+
+    </curation>
+</adf-curation>
