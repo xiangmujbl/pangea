@@ -45,42 +45,51 @@ public class OMPGdmLocationDetailServiceImpl {
             if (names[i] == null) {
                 names[i] = "";
             }
-
-            OMPGdmLocationDetailBo gdmLocationDetailBo = new OMPGdmLocationDetailBo();
-
-            // Rule T1/T2
-            gdmLocationDetailBo.setName(names[i]);
-            gdmLocationDetailBo.setValue(values[i]);
-
-            // Rule N3
-            String CLASS = "";
-            if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())) {
-                CLASS = IConstant.VALUE.PGA;
+            if (values[i] == null) {
+                values[i] = "";
             }
-            gdmLocationDetailBo.setCLASS(CLASS);
+
+            //if both are empty, nothing to do.
+            if(!(names[i].isEmpty() && values[i].isEmpty())) {
+
+                OMPGdmLocationDetailBo gdmLocationDetailBo = new OMPGdmLocationDetailBo();
+
+                // Rule T1/T2
+                gdmLocationDetailBo.setName(names[i]);
+                gdmLocationDetailBo.setValue(values[i]);
+
+                // Rule N3
+                String CLASS = "";
+                if (IConstant.VALUE.CONS_LATAM.equals(cnsPlantAttrEntity.getSourceSystem())) {
+                    CLASS = IConstant.VALUE.PGA;
+                }
+                gdmLocationDetailBo.setCLASS(CLASS);
 
 
-            // Rule C1
-            String locationid = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
-            gdmLocationDetailBo.setLocationId(locationid);
+                // Rule C1
+                String locationid = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
+                gdmLocationDetailBo.setLocationId(locationid);
 
-            // Rule C2
-            String locationDetailId = locationid + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + names[i];// + IConstant.VALUE.BACK_SLANT + values[i];
-            gdmLocationDetailBo.setLocationDetailId(locationDetailId);
+                // Rule C2
+                String locationDetailId = locationid + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + names[i] + IConstant.VALUE.BACK_SLANT + values[i];
+                gdmLocationDetailBo.setLocationDetailId(locationDetailId);
 
 
-            // Rule N1
-            gdmLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
+                // Rule N1
+                gdmLocationDetailBo.setActiveOPRERP(IConstant.VALUE.YES);
 
-            // Rule N4
-            gdmLocationDetailBo.setComments("");
-            gdmLocationDetailBo.setUnit("");
+                // Rule N4
+                gdmLocationDetailBo.setComments("");
+                gdmLocationDetailBo.setUnit("");
 
-            // Rule N5
-            gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
+                // Rule N5
+                gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
 
-            resultObject.setBaseBo(gdmLocationDetailBo);
-            resultObjectList.add(resultObject);
+                gdmLocationDetailBo.setDescription(IConstant.VALUE.PANGEA);
+
+                resultObject.setBaseBo(gdmLocationDetailBo);
+                resultObjectList.add(resultObject);
+            }
 
         }
 
