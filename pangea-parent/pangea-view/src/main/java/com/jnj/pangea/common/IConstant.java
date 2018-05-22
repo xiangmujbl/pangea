@@ -119,8 +119,9 @@ public interface IConstant {
         String PROJECT_ONE_KAKT = "/project_one/kakt";
         String PROJECT_ONE_KAKO = "/project_one/kako";
         String PROJECT_ONE_CRTX = "/project_one/crtx";
-        String PLAN_CNS_ROOT_DESCRIPTION="/plan/cns_root_description";
-        String PLAN_USER_OVERRIDE="/plan/user_override";
+        String PLAN_CNS_ROOT_DESCRIPTION = "/plan/cns_root_description";
+        String PLAN_USER_OVERRIDE = "/plan/user_override";
+        String MATL_PROD_VERSN = "/edm/matl_prod_versn";
     }
 
     interface PLAN_USER_OVERRIDE {
@@ -170,6 +171,13 @@ public interface IConstant {
         String SP_RELEVANT = "sPRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
         String IDENTIFIER = "identifier";
+    }
+
+    interface MATL_PROD_VERSN {
+        String SRCSYSCD = "srcSysCd";
+        String PLNTCD = "plntCd";
+        String MATLNUM = "matlNum";
+        String ALTBOMNUM = "altBomNum";
     }
 
     interface EDM_MATERIAL_PLANT_V1 {

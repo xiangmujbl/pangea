@@ -5,13 +5,13 @@
 
             <region path="/edm/matl_bom">
                 <columns>
-                    srcSysCd,matlNum,plntCd,altBomNum,sourceSystem,bomNum,bomUsgCd
+                    srcSysCd,matlNum,plntCd,altBomNum,sourceSystem,bomNum,bomUsgCd,attribute
                 </columns>
                 <relations>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
                         <expression>
                             sourceSystem=/edm/matl_bom.sourceSystem,
-                            attribute=/edm/matl_bom.sourceSystem
+                            attribute=/edm/matl_bom.attribute
                         </expression>
                     </relation>
                     <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
@@ -38,7 +38,11 @@
                 </relations>
                 <relations>
                     <relation path="/edm/material_plant_v1">
-                        <expression></expression>
+                        <expression>
+                            sourceSystem=/edm/matl_bom.sourceSystem,
+                            localMaterialNumber=/edm/matl_bom.matlNum,
+                            localPlant=/edm/matl_bom.plntCd
+                        </expression>
                     </relation>
                 </relations>
             </region>
@@ -51,13 +55,13 @@
             <region path="/edm/bom_item">
                 <columns>
                     bomNum,srcSysCd,bomCatCd, cmpntNum, bomItmNum, bomItmVldFromDt, dstrbtnKeyCd, fxQtyInd,
-                    bomItmVldToDt, leadTimeOffst,cmpntQty,cmpntScrap_Pct, cmpntUomCd, bomItmVldFromDt
+                    bomItmVldToDt, leadTimeOffst,cmpntQty,cmpntScrap_Pct, cmpntUomCd
                 </columns>
             </region>
 
             <region path="/edm/bom_hdr">
                 <columns>
-                    srcSysCd,altBomNum,bomNum,bomCatCd, bomVldFromDt, bomBaseQty, bomUomCd, bomVldFromDt
+                    srcSysCd,altBomNum,bomNum,bomCatCd, bomVldFromDt, bomBaseQty, bomUomCd
                 </columns>
                 <relations>
                     <relation path="/edm/bom_item">

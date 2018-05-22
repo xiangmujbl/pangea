@@ -67,8 +67,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return null;
         }
 
-        LogUtil.getCoreLog().info("-------------------------pass J1-----------------------------------------");
-
         String localSalesOrg = salesOrderV1Entity.getLocalSalesOrg();
         String localShipToParty = salesOrderV1Entity.getLocalShipToParty();
         String localOrderType = salesOrderV1Entity.getLocalOrderType();
@@ -89,8 +87,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        LogUtil.getCoreLog().info("-------------------------PASS T4-----------------------------------------");
-
         String customerId = checkT5(localShipToParty, localSalesOrg, salesOrderV1Entity.getLocalRequestedDate());
         if (StringUtils.isNotEmpty(customerId)) {
             gdmSalesHistoryBo.setCustomerId(customerId);
@@ -100,26 +96,17 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        LogUtil.getCoreLog().info("PASS T5 gdmSalesHistoryBo:" + gdmSalesHistoryBo.toMap());
-
         String fromDueDate = checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate());
         if (StringUtils.isNotEmpty(fromDueDate)) {
             gdmSalesHistoryBo.setFromDueDate(fromDueDate);
             if (checkF2T6(fromDueDate)) {
                 gdmSalesHistoryBo.setDueDate(fromDueDate);
             } else {
-                FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F2, "Demand group can not be determined");
+                FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F2, "");
                 resultObject.setFailData(failData);
                 return resultObject;
             }
-        }else {
-            FailData failData = writeFailData(salesOrderV1Entity, "T6", "Demand group can not be determined");
-            resultObject.setFailData(failData);
-            return resultObject;
         }
-        LogUtil.getCoreLog().info("-------------------------PASS T6-----------------------------------------");
-
-        LogUtil.getCoreLog().info("PASS F2 gdmSalesHistoryBo:" + gdmSalesHistoryBo.toMap());
 
         String locationId = salesOrderV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + salesOrderV1Entity.getLocalPlant();
         gdmSalesHistoryBo.setLocationId(locationId);
@@ -133,14 +120,11 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             resultObject.setFailData(failData);
             return resultObject;
         }
-        LogUtil.getCoreLog().info("-------------------------PASS T8-----------------------------------------");
-        LogUtil.getCoreLog().info("PASS T8 gdmSalesHistoryBo:" + gdmSalesHistoryBo.toMap());
 
         gdmSalesHistoryBo.setQuantity(checkJ2T9(salesOrderV1Entity));
 
         scheduleLineItemSet.add(salesOrderV1Entity.getScheduleLineItem());
 
-        LogUtil.getCoreLog().info("gdmSalesHistoryBo:" + gdmSalesHistoryBo.toMap());
         resultObject.setBaseBo(gdmSalesHistoryBo);
         return resultObject;
     }
@@ -187,10 +171,8 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     private String checkT5(String localShipToParty, String localSalesOrg, String localRequestedDate) {
         String checkT5Part1 = checkT5Part1(localShipToParty, localSalesOrg);
         if (null != checkT5Part1) {
-            LogUtil.getCoreLog().info("PASS T5Part1");
             return checkT5Part1;
         } else {
-            LogUtil.getCoreLog().info("check T5Part2AndPart3");
             return checkT5Part2AndPart3(localShipToParty, localSalesOrg, localRequestedDate);
         }
     }
@@ -211,12 +193,10 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             if (null != knvhEntity) {
                 String hkunnr = knvhEntity.getHkunnr();
                 String datbi = knvhEntity.getDatbi();
-                if (StringUtils.isNotEmpty(datbi) && StringUtils.isNotEmpty(hkunnr)) {
-                    if (Integer.parseInt(localRequestedDate) <= Integer.parseInt(datbi)) {
-                        PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(hkunnr);
-                        if (null != demGrpAsgnEntity && StringUtils.isNotEmpty(demGrpAsgnEntity.getDemandGroup())) {
-                            return demGrpAsgnEntity.getDemandGroup();
-                        }
+                if (StringUtils.isNotEmpty(datbi) && StringUtils.isNotEmpty(hkunnr) && Integer.parseInt(localRequestedDate) <= Integer.parseInt(datbi)) {
+                    PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(hkunnr);
+                    if (null != demGrpAsgnEntity && StringUtils.isNotEmpty(demGrpAsgnEntity.getDemandGroup())) {
+                        return demGrpAsgnEntity.getDemandGroup();
                     }
                 }
 
@@ -266,7 +246,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         Date presentDate = new Date();
         Date localOrderCreateDateFormat = DateUtils.stringToDate(salesOrderV1Entity.getLocalOrderCreateDt(), DateUtils.F_yyyyMMdd);
         String parameterValue = getParameterValue(IConstant.VALUE.INITIAL_SELECT);
-        if (StringUtils.isNotEmpty(parameterValue)){
+        if (StringUtils.isNotEmpty(parameterValue)) {
             int parameterValueInt = Integer.parseInt(parameterValue);
             Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueInt);
             if (localOrderCreateDateFormat.getTime() >= resultDate.getTime()) {

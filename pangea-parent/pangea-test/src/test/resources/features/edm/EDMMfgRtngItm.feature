@@ -47,10 +47,10 @@ Feature: E.2.1.9 EDMRouting-MFG_RTNG_ITEM - Curation 3276
       | CONS_LATAM | 2         | 998       | 4          | 4                   | 2018/04/24 |              | loekz  | andat   | aedat   | sumnr         | 0025    | steus  | arbid     | werks  | ltxa1    | meinh   | bmsch | lar01  | vge01     | vgw01   | lar02  | vge02     | vgw02   | lar03  | vge03     | vgw03   | lar04  | vge04     | vgw04   | lar05  | vge05     | vgw05   | lar06  | vge06     | vgw06   | dauno        | daune          | daumi           | daume             | phflg  | 2018/08/31     |
       | CONS_LATAM | 2         | 998       | 5          | 5                   | 2018/08/25 | 500000000003 | loekz  | andat   | aedat   | sumnr         | 0026    | steus  | arbid     | werks  | ltxa1    | meinh   | bmsch | lar01  | vge01     | vgw01   | lar02  | vge02     | vgw02   | lar03  | vge03     | vgw03   | lar04  | vge04     | vgw04   | lar05  | vge05     | vgw05   | lar06  | vge06     | vgw06   | dauno        | daune          | daumi           | daume             | phflg  | 9999/12/31     |
 
-#  Scenario: delete all test data
-#    And I will remove all data with region "/edm/source_system_v1"
-#    And I will remove all data with region "/project_one/plpo"
-#    And I will remove all data with region "/project_one/plas"
-#    And I will remove all data with region "/edm/mfg_rtng_itm"
+  Scenario: delete all test data
+    And I will remove all data with region "/edm/source_system_v1"
+    And I will remove all data with region "/project_one/plpo"
+    And I will remove all data with region "/project_one/plas"
+    And I will remove all data with region "/edm/mfg_rtng_itm"
 
 

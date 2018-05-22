@@ -144,7 +144,6 @@ Feature: OMPGdmConversionStorage AEAZ-3688
     And I will remove all data with region "/omp/gdm_conversion_storage"
     And I will remove all data with region "/plan/edm_failed_data"
 
-#--------------------------------------------------------------------------------------------------------------------------
   @Scenario3
   Scenario: C5 & C6
     And I will remove the test file on sink application "GDMConversionStorage.tsv"
