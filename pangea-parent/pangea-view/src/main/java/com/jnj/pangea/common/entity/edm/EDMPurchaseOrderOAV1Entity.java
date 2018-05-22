@@ -15,6 +15,7 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
     private String matlMvmtSeqNbr;
     private String delvSchedCntNbr;
     private String poCatTypeCd;
+    private String sequenceNumber;
     private String poTypeCd;
     private String crtOnDt;
     private String supNum;
@@ -76,6 +77,7 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
     private String localmrpAdjQty;
     private String grLeadTimeDays;
     private String custNum;
+    private String outbDelvCmpltInd;
 
     public EDMPurchaseOrderOAV1Entity(Map<String, Object> map) {
         super(map);
@@ -88,6 +90,7 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
         setMatlMvmtSeqNbr((String)map.get("matlMvmtSeqNbr"));
         setDelvSchedCntNbr((String)map.get("delvSchedCntNbr"));
         setPoCatTypeCd((String)map.get("poCatTypeCd"));
+        setSequenceNumber((String)map.get("sequenceNumber"));
         setPoTypeCd((String)map.get("poTypeCd"));
         setCrtOnDt((String)map.get("crtOnDt"));
         setSupNum((String)map.get("supNum"));
@@ -149,6 +152,7 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
         setLocalmrpAdjQty((String)map.get("localmrpAdjQty"));
         setGrLeadTimeDays((String)map.get("grLeadTimeDays"));
         setCustNum((String)map.get("custNum"));
+        setOutbDelvCmpltInd((String)map.get("outbDelvCmpltInd"));
     }
 
     public String getSourceSystem() {
@@ -221,6 +225,14 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
 
     public void setPoCatTypeCd(String poCatTypeCd) {
         this.poCatTypeCd = poCatTypeCd;
+    }
+
+    public String getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(String sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
     public String getPoTypeCd() {
@@ -709,5 +721,13 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
 
     public void setCustNum(String custNum) {
         this.custNum = custNum;
+    }
+
+    public String getOutbDelvCmpltInd() {
+        return outbDelvCmpltInd;
+    }
+
+    public void setOutbDelvCmpltInd(String outbDelvCmpltInd) {
+        this.outbDelvCmpltInd = outbDelvCmpltInd;
     }
 }

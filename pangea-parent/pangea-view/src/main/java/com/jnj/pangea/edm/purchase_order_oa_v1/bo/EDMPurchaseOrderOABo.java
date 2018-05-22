@@ -14,6 +14,7 @@ public class EDMPurchaseOrderOABo extends BaseBo {
     private String matlMvmtSeqNbr;
     private String delvSchedCntNbr;
     private String poCatTypeCd;
+    private String sequenceNumber;
     private String poTypeCd;
     private String crtOnDt;
     private String supNum;
@@ -75,6 +76,7 @@ public class EDMPurchaseOrderOABo extends BaseBo {
     private String localmrpAdjQty;
     private String grLeadTimeDays;
     private String custNum;
+    private String outbDelvCmpltInd;
 
 
     @Override
@@ -88,6 +90,7 @@ public class EDMPurchaseOrderOABo extends BaseBo {
                 .add("matlMvmtNum",this.matlMvmtNum)
                 .add("matlMvmtSeqNbr",this.matlMvmtSeqNbr)
                 .add("delvSchedCntNbr",this.delvSchedCntNbr)
+                .add("sequenceNumber",this.sequenceNumber)
                 .toJsonString();
     }
 
@@ -161,6 +164,14 @@ public class EDMPurchaseOrderOABo extends BaseBo {
 
     public void setPoCatTypeCd(String poCatTypeCd) {
         this.poCatTypeCd = poCatTypeCd;
+    }
+
+    public String getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(String sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
     public String getPoTypeCd() {
@@ -649,5 +660,13 @@ public class EDMPurchaseOrderOABo extends BaseBo {
 
     public void setDelvDt(String delvDt) {
         this.delvDt = delvDt;
+    }
+
+    public String getOutbDelvCmpltInd() {
+        return outbDelvCmpltInd;
+    }
+
+    public void setOutbDelvCmpltInd(String outbDelvCmpltInd) {
+        this.outbDelvCmpltInd = outbDelvCmpltInd;
     }
 }
