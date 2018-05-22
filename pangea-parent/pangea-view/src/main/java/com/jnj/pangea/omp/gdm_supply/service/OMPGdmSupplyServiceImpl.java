@@ -1,5 +1,4 @@
 package com.jnj.pangea.omp.gdm_supply.service;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -51,11 +50,8 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
         // N1
         String partA = null;
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(edmSourceListV1Entity.getLocalMaterialNumber());
-        if(materialGlobalV1Entity == null)
-        {
-            FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N1", "Material Global V1 Entity is blank");
-            resultObject.setFailData(failData);
-            return resultObject;
+        if(materialGlobalV1Entity == null) {
+            return null;
         }
         else if(!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty() && materialGlobalV1Entity.getMaterialNumber().isEmpty())) {
             if (materialGlobalV1Entity.getPrimaryPlanningCode() != null && (!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()))) {
@@ -63,8 +59,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
             } else {
                 partA = materialGlobalV1Entity.getMaterialNumber();
             }
-            if (!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty() && materialGlobalV1Entity.getMaterialNumber().isEmpty())
-                    && (materialGlobalV1Entity.getPrimaryPlanningCode().equals(materialGlobalV1Entity.getMaterialNumber()))) {
+            if (materialGlobalV1Entity.getPrimaryPlanningCode().equals(materialGlobalV1Entity.getMaterialNumber())) {
 
                 if(edmSourceListV1Entity.getLocalPlant() != null && (!(edmSourceListV1Entity.getLocalPlant().isEmpty()))) {
                     if(edmSourceListV1Entity.getLocalVendorAccountNumber() != null && (!(edmSourceListV1Entity.getLocalVendorAccountNumber().isEmpty()))) {
@@ -146,23 +141,24 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
 
                         // N11
                         PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithSourceSystemAndLocalMaterialNumberAndLocalPlant(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalMaterialNumber(), edmSourceListV1Entity.getLocalPlant());
-                        if(planCnsMaterialPlanStatusEntity == null)
-                        {
-                            FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N11", "Plan Cns Material Plan Status Entity is blank");
-                            resultObject.setFailData(failData);
-                            return resultObject;
+                        if(planCnsMaterialPlanStatusEntity == null) {
+                            return null;
                         }
                         else {
-                            if (planCnsMaterialPlanStatusEntity.getSpRelevant() != null && (!(planCnsMaterialPlanStatusEntity.getSpRelevant().isEmpty()))) {
+                            if (planCnsMaterialPlanStatusEntity.getSpRelevant() != null && (!(planCnsMaterialPlanStatusEntity.getSpRelevant().isEmpty())) && planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
                                 String primaryPlanningCode = materialGlobalV1Entity.getPrimaryPlanningCode();
                                 String materialNumber = materialGlobalV1Entity.getMaterialNumber();
+                                if(materialNumber != null && (!(materialNumber.isEmpty())) && primaryPlanningCode != null && (!(primaryPlanningCode.isEmpty()))) {
 
-                                if (primaryPlanningCode == null && primaryPlanningCode.isEmpty()) {
-                                    gdmSupplyBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
-                                } else if (primaryPlanningCode.equals(materialNumber)) {
-                                    gdmSupplyBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+                                    if (primaryPlanningCode == null && primaryPlanningCode.isEmpty()) {
+                                        gdmSupplyBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
+                                    } else if (primaryPlanningCode.equals(materialNumber)) {
+                                        gdmSupplyBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+                                    } else {
+                                        return null;
+                                    }
                                 } else {
-                                    FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N11", "Primary planning code is blank");
+                                    FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N11", "Material Global V1 Primary planning code and Material Number are blank");
                                     resultObject.setFailData(failData);
                                     return resultObject;
                                 }
@@ -239,20 +235,20 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                                 }
                             }
                         } else {
-                            FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N11", "Plan Cns Material Plan Status Entity SP relevant is blank");
-                            resultObject.setFailData(failData);
-                            return resultObject;
+                           return null;
                         }
                     }
                 } else {
                 return null;
             }
         } else {
-            FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N1", "Primary planning Code and Material Number do not match");
-            resultObject.setFailData(failData);
-            return resultObject;
+            return null;
         }
         resultObject.setBaseBo(gdmSupplyBo);
+    } else {
+        FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N1", "Material Global V1 Primary planning code and Material Number are blank");
+        resultObject.setFailData(failData);
+        return resultObject;
     }
     return resultObject;
 }
