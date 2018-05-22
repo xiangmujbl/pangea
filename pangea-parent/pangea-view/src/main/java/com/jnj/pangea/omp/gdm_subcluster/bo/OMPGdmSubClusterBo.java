@@ -12,7 +12,7 @@ public class OMPGdmSubClusterBo extends BaseBo {
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("clusterId", this.subClusterId)
+                .makeJsonObject("subClusterId", this.subClusterId)
                 .toJsonString();
     }
 

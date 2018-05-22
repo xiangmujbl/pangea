@@ -34,9 +34,9 @@ public class OMPGdmSubClusterController extends CommonController{
                 if(resultObject.isSuccess()){
                     //Rule R1
                     HashMap<String,Object> myBo = new HashMap(resultObject.getBaseBo().toMap());
-                    String cid = (String) myBo.get("clusterId");
+                   String cid = (String) myBo.get("clusterId");
                     String subCid = (String) myBo.get("subClusterId");
-                    if(null == existing.get(subCid) || !existing.get(subCid).equals(cid)){
+                    if(null == existing.get(subCid)){
                         existing.put(subCid,cid);
                         result.add(ViewResultBuilder.newResultItem(resultObject.getBaseBo().getKey(), resultObject.getBaseBo().toMap()));
                     }
