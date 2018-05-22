@@ -78,7 +78,7 @@ public class PlanCnsRootDescriptionServiceImpl implements ICommonService {
         return resultObject;
     }
 
-    public String setOvrRootDesc (EDMSourceSystemV1Entity sourceSystemV1Entity, String localParentCode) {
+    private String setOvrRootDesc (EDMSourceSystemV1Entity sourceSystemV1Entity, String localParentCode) {
 
         String ovrRootDesc = "";
         if (StringUtils.isNotEmpty(sourceSystemV1Entity.getSourceSystem())) {

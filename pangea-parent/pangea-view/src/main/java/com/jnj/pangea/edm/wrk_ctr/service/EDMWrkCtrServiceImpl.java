@@ -5,7 +5,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneCrtxDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
-import com.jnj.pangea.common.entity.project_one.ProjectOneCrhdEntity;
+import com.jnj.pangea.common.entity.project_one.CrhdEntity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.project_one.ProjectOneCrtxEntity;
 import com.jnj.pangea.common.service.ICommonService;
@@ -31,7 +31,7 @@ public class EDMWrkCtrServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-        ProjectOneCrhdEntity crhdEntity = (ProjectOneCrhdEntity) o;
+        CrhdEntity crhdEntity = (CrhdEntity) o;
 
         EDMWrkCtrBo wrkCtrBo = new EDMWrkCtrBo();
         //T1

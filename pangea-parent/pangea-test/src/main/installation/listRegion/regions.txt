@@ -170,10 +170,6 @@
 /edm/bom_hdr
 /edm/batch_master_v1
 /plan/user_override
-
-
-
-
-
-
+/project_one/lips
+/edm/outbound_delivery_line_v1
 

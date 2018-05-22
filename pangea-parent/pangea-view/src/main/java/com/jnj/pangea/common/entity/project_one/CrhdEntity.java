@@ -4,7 +4,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class ProjectOneCrhdEntity extends CommonEntity {
+public class CrhdEntity extends CommonEntity {
 
     private String objty;
     private String objid;
@@ -34,7 +34,7 @@ public class ProjectOneCrhdEntity extends CommonEntity {
     private String lgort_res;
     private String mixmat;
 
-    public ProjectOneCrhdEntity(Map<String, Object> map) {
+    public CrhdEntity(Map<String, Object> map) {
         super(map);
 
         setObjty((String) map.get("objty"));
