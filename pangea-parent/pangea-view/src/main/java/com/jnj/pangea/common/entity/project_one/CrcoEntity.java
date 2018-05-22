@@ -1,10 +1,10 @@
-package com.jnj.pangea.common.entity.projectOne;
+package com.jnj.pangea.common.entity.project_one;
 
 import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class ProjectOneCrcoEntity extends CommonEntity {
+public class CrcoEntity extends CommonEntity {
 
     private String objty;
     private String objid;
@@ -17,7 +17,7 @@ public class ProjectOneCrcoEntity extends CommonEntity {
     private String kostl;
     private String lstar;
 
-    public ProjectOneCrcoEntity(Map<String, Object> map) {
+    public CrcoEntity(Map<String, Object> map) {
         super(map);
 
         setObjty((String) map.get("objty"));
