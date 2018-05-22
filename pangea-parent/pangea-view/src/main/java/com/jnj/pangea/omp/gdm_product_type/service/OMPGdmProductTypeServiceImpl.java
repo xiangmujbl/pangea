@@ -24,6 +24,10 @@ public class OMPGdmProductTypeServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         EDMMaterialTypeV1Entity EDMMaterialTypeV1Entity = (EDMMaterialTypeV1Entity) o;
         OMPGdmProductTypeBo productTypeBo = new OMPGdmProductTypeBo();
+        boolean empty = StringUtils.isEmpty(EDMMaterialTypeV1Entity.getMaterialType());
+        if(empty){
+            return null;
+        }else{
         productTypeBo.setProductTypeId(EDMMaterialTypeV1Entity.getMaterialType());
         productTypeBo.setLabel(EDMMaterialTypeV1Entity.getMaterialTypeName());
         productTypeBo.setActiveFCTERP(IConstant.VALUE.YES);
@@ -31,5 +35,6 @@ public class OMPGdmProductTypeServiceImpl implements ICommonService {
         productTypeBo.setActiveSOPERP(IConstant.VALUE.NO);
         resultObject.setBaseBo(productTypeBo);
         return resultObject;
+        }
     }
 }
