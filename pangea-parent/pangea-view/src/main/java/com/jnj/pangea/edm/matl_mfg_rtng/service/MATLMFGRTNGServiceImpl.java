@@ -4,9 +4,6 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMProjectOneMaplDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.ngems.NgemsGoldenMaterialDaoImpl;
-import com.jnj.pangea.common.dao.impl.ngems.NgemsMaterialLinkageDaoImpl;
-import com.jnj.pangea.common.dao.impl.project_one.ProjectOneMaktDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMProjectOneMAPLEntity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.service.ICommonService;
@@ -14,10 +11,6 @@ import com.jnj.pangea.edm.matl_mfg_rtng.bo.MATLMFGRTNGBo;
 
 import java.util.List;
 
-/**
- * E.2.1.1 EDMRouting-MATL_MFG_RTNG - Curation
- * AEAZ-3268
- */
 public class MATLMFGRTNGServiceImpl implements ICommonService {
 
     private static MATLMFGRTNGServiceImpl instance;

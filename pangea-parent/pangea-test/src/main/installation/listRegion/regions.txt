@@ -116,6 +116,7 @@
 /omp/gdm_cluster
 /omp/gdm_certainity
 /omp/gdm_batch
+/omp/gdm_product_type
 /ngems/sub_brand_v1
 /ngems/source_system
 /ngems/product_family_v1
@@ -173,3 +174,5 @@
 /project_one/lips
 /edm/outbound_delivery_line_v1
 
+
+/edm/mfg_order

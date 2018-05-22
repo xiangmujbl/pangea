@@ -98,8 +98,6 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             return resultObject;
         }
 
-        LogUtil.getCoreLog().info("------------------------pass J2------------------------------------------");
-        LogUtil.getCoreLog().info("edmSalesOrderV1Entity:" + edmSalesOrderV1Entity.getSalesOrderItem() + "," + edmSalesOrderV1Entity.getSalesOrderNo() + "," + edmSalesOrderV1Entity.getScheduleLineItem());
 
         //T5
         if (checkT5(materialPlanStatusBo)) {
