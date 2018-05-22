@@ -24,12 +24,12 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
         }
         return instance;
     }
+
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
     private ProjectOnePlasDaoImpl plasDao = ProjectOnePlasDaoImpl.getInstance();
 
     private ProjectOnePlpoDaoImpl plpoDao = ProjectOnePlpoDaoImpl.getInstance();
-
 
 
     @Override
@@ -41,12 +41,14 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
         EDMMfgRtngItmBo mfgRtngItmBo = new EDMMfgRtngItmBo();
         //T1
         EDMSourceSystemV1Entity entityWithLocalSourceSystem = sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
-        if(entityWithLocalSourceSystem != null){
+        if (entityWithLocalSourceSystem != null) {
             mfgRtngItmBo.setSrcSysCd(entityWithLocalSourceSystem.getSourceSystem());
         }
         //J1
         List<ProjectOnePlasEntity> plasEntityList = plasDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
-        if(plasEntityList != null && plasEntityList.size()>0){
+        if (plasEntityList == null || plasEntityList.size() == 0) {
+            return resultObject;
+        } else {
             mfgRtngItmBo.setRtngTypCd(plpoEntity.getPlnty());
         }
         mfgRtngItmBo.setRtngGrpCd(plpoEntity.getPlnnr());
@@ -90,30 +92,30 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
         mfgRtngItmBo.setPhsInd(plpoEntity.getPhflg());
         //T2
         String zaehl = plpoEntity.getZaehl();
-        List<PlpoEntity> plpoEntityList= plpoDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(),plpoEntity.getPlnnr(),plpoEntity.getPlnkn());
-        if(plpoEntityList !=null && plpoEntityList.size()>0){
-            if(plpoEntityList.size() == 1){
+        List<PlpoEntity> plpoEntityList = plpoDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
+        if (plpoEntityList != null && plpoEntityList.size() > 0) {
+            if (plpoEntityList.size() == 1) {
                 List<ProjectOnePlasEntity> plasEntityList1 = plasDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
-                if(plasEntityList1!=null && plasEntityList1.size()>0){
-                    if(plasEntityList1.size()==1){
+                if (plasEntityList1 != null && plasEntityList1.size() > 0) {
+                    if (plasEntityList1.size() == 1) {
                         mfgRtngItmBo.setRtgItemEndDate(IConstant.VALUE.BOM_VlD_ToDt);
-                    }else if(plasEntityList1.size() > 1){
-                        for(ProjectOnePlasEntity plasEntity:plasEntityList1){
-                            if(plasEntity.getLoekz().equals(IConstant.VALUE.X)){
+                    } else if (plasEntityList1.size() > 1) {
+                        for (ProjectOnePlasEntity plasEntity : plasEntityList1) {
+                            if (plasEntity.getLoekz().equals(IConstant.VALUE.X)) {
                                 mfgRtngItmBo.setRtgItemEndDate(plasEntity.getDatuv());
                                 break;
-                            }else if(StringUtils.isBlank(plasEntity.getLoekz())){
-                                    continue;
+                            } else if (StringUtils.isBlank(plasEntity.getLoekz())) {
+                                continue;
                             }
                         }
                     }
                 }
-            }else if(plpoEntityList.size() > 1){
-                if((plpoEntityList.get(plpoEntityList.size()-1).getZaehl().equals(zaehl))){
+            } else if (plpoEntityList.size() > 1) {
+                if ((plpoEntityList.get(plpoEntityList.size() - 1).getZaehl().equals(zaehl))) {
                     mfgRtngItmBo.setRtgItemEndDate(IConstant.VALUE.BOM_VlD_ToDt);
                 }
-                for(PlpoEntity pp:plpoEntityList){
-                    if(Integer.parseInt(pp.getZaehl())>Integer.parseInt(zaehl)){
+                for (PlpoEntity pp : plpoEntityList) {
+                    if (Integer.parseInt(pp.getZaehl()) > Integer.parseInt(zaehl)) {
                         mfgRtngItmBo.setRtgItemEndDate(pp.getDatuv());
                         break;
                     }
