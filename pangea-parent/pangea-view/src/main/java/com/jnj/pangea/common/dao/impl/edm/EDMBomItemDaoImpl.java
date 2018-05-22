@@ -4,6 +4,7 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMBomItemEntity;
+import org.apache.commons.lang3.StringUtils;
 
 public class EDMBomItemDaoImpl extends CommonDaoImpl {
 
@@ -16,10 +17,13 @@ public class EDMBomItemDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMBomItemEntity getEntityWithConditions(String param) {
-
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+    public EDMBomItemEntity getEntityWithConditions(String bomNum, String srcSysCd) {
+        if (StringUtils.isNotBlank(bomNum) && StringUtils.isNotBlank(srcSysCd)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.BOM_ITEM.BOMNUM).is(bomNum)
+                    .and(IConstant.BOM_ITEM.SRCSYSCD).is(srcSysCd)
+                    .toQueryString();
+            return queryForObject(IConstant.REGION.BOM_ITEM, queryString, EDMBomItemEntity.class);
+        }
         return null;
     }
 }

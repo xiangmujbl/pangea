@@ -19,14 +19,14 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<EDMMatlProdVersnEntity> getEntityWithConditions(String srcSysCd, String plantCd, String matlNum, String altBomNum) {
+    public List<EDMMatlProdVersnEntity> getEntityWithFourConditions(String srcSysCd, String plantCd, String matlNum, String altBomNum) {
         if (StringUtils.isNotBlank(srcSysCd)&&StringUtils.isNotBlank(plantCd)&&StringUtils.isNotBlank(matlNum)&&StringUtils.isNotBlank(altBomNum)) {
             String queryString = QueryHelper.buildCriteria(IConstant.MATL_PROD_VERSN.SRCSYSCD).is(srcSysCd)
                     .and(IConstant.MATL_PROD_VERSN.PLNTCD).is(plantCd)
                     .and(IConstant.MATL_PROD_VERSN.MATLNUM).is(matlNum)
                     .and(IConstant.MATL_PROD_VERSN.ALTBOMNUM).is(altBomNum)
                     .toQueryString();
-            return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, queryString, EDMMatlProdVersnEntity.class);
+            return queryForList(IConstant.REGION.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
 
         }
         return null;

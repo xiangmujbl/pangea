@@ -122,6 +122,38 @@ public interface IConstant {
         String PLAN_CNS_ROOT_DESCRIPTION = "/plan/cns_root_description";
         String PLAN_USER_OVERRIDE = "/plan/user_override";
         String MATL_PROD_VERSN = "/edm/matl_prod_versn";
+        String MATL_BOM = "/edm/matl_bom";
+        String MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
+        String BOM_ITEM = "/edm/bom_item";
+        String BOM_HDR = "/edm/bom_hdr";
+        String CNS_PLAN_PARAMETER = "/plan/cns_plan_parameter";
+        String MATL_MFG_RTNG = "/edm/matl_mfg_rtng";
+        String MFG_RTNG_ITM_NDE = "/edm/mfg_rtng_itm_nde";
+        String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
+    }
+
+
+    interface BOM_HDR {
+        String SRCSYSCD = "srcSysCd";
+        String ALTBOMNUM = "altBomNum";
+        String BOMNUM = "bomNum";
+        String BOMCATCD = "bomCatCd";
+    }
+
+    interface MFG_RTNG_ITM_NDE {
+        String SRCSYSCD = "srcSysCd";
+        String RTNGTYPCD = "rtngTypCd";
+        String RTNGNDENUM = "rtngNdeNum";
+        String RTNGGRPCNTRNBR = "rtngGrpCntrNbr";
+        String RTNGGRPCD = "rtngGrpCd";
+    }
+
+    interface MFG_RTNG_ITM {
+        String RTNGTYPCD = "rtngTypCd";
+        String RTNGITMNUM = "rtngItmNum";
+        String SRCSYSCD = "srcSysCd";
+        String RTNGGRPCD = "rtngGrpCd";
+        String OPERNUM = "operNum";
     }
 
     interface PLAN_USER_OVERRIDE {
@@ -405,6 +437,8 @@ public interface IConstant {
         String PARAMETER = "parameter";
         String INCL_EXCL = "inclExcl";
         String PARAMETER_VALUE = "parameterValue";
+        String LOCAL_MATERIALNUMBER_NUMBER = "localMaterialNumber";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface CNS_MATERIAL_INCL {
@@ -662,6 +696,13 @@ public interface IConstant {
         String FIELD_NAME_PLNTY = "plnty";
         String FIELD_NAME_PLNAL = "plnal";
         String FIELD_NAME_ZKRIZ = "zkriz";
+        String SRCSYSCD = "srcSysCd";
+        String RTNGTYPCD = "rtngTypCd";
+        String RTNGGRPCNTRNUM = "rtngGrpcntrNum";
+        String PLNTCD = "plntCd";
+        String RNTGGRPCNTRNBR = "rntgGrpCntrNbr";
+        String MATLNUM = "matlNum";
+        String RTNGGRPCD = "rtngGrpCd";
     }
 
     interface BOM_ITEM {
@@ -671,6 +712,8 @@ public interface IConstant {
         String FIELD_STAS_STLKN_VALUE = "stlkn";
         String FIELD_STAS_STASZ_VALUE = "stasz";
         String FIELD_LEKNZ_VALUE_X = "x";
+        String BOMNUM = "bomNum";
+        String SRCSYSCD = "srcSysCd";
 
     }
 

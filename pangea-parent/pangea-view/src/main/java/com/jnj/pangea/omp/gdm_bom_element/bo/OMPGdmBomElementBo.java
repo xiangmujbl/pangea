@@ -21,7 +21,7 @@ public class OMPGdmBomElementBo extends BaseBo {
     private String offset;
     private String offsetCalendarId;
     private String offsetPercentage;
-    private String offsetType;
+    private String offsetPercType;
     private String planLevelId;
     private String productId;
     private String quantity;
@@ -31,7 +31,7 @@ public class OMPGdmBomElementBo extends BaseBo {
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("", "")
+                .makeJsonObject("bomElementId", bomElementId)
                 .toJsonString();
     }
 
@@ -163,12 +163,12 @@ public class OMPGdmBomElementBo extends BaseBo {
         this.offsetPercentage = offsetPercentage;
     }
 
-    public String getOffsetType() {
-        return this.offsetType;
+    public String getOffsetPercType() {
+        return offsetPercType;
     }
 
-    public void setOffsetType(String offsetType) {
-        this.offsetType = offsetType;
+    public void setOffsetPercType(String offsetPercType) {
+        this.offsetPercType = offsetPercType;
     }
 
     public String getPlanLevelId() {

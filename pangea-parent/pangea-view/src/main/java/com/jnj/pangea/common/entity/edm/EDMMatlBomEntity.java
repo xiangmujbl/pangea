@@ -9,6 +9,14 @@ import java.util.Map;
  * @date: 2018/5/14
  */
 public class EDMMatlBomEntity extends CommonEntity {
+    private String srcSysCd;
+    private String matlNum;
+    private String plntCd;
+    private String altBomNum;
+    private String sourceSystem;
+    private String bomNum;
+    private String bomUsgCd;
+    private String attribute;
     private String mandt;
     private String matnr;
     private String stlal;
@@ -32,7 +40,13 @@ public class EDMMatlBomEntity extends CommonEntity {
         setLosvn((String) map.get("losvn"));
         setLosbs((String) map.get("losbs"));
         setAedat((String) map.get("aedat"));
-        setAndat((String) map.get("andat"));
+        setMatlNum((String) map.get("matlNum"));
+        setPlntCd((String) map.get("plntCd"));
+        setAltBomNum((String) map.get("altBomNum"));
+        setSourceSystem((String) map.get("sourceSystem"));
+        setBomNum((String) map.get("bomNum"));
+        setBomUsgCd((String) map.get("bomUsgCd"));
+        setAttribute((String) map.get("attribute"));
     }
 
     public String getMandt() {
@@ -113,5 +127,69 @@ public class EDMMatlBomEntity extends CommonEntity {
 
     public void setAedat(String aedat) {
         this.aedat = aedat;
+    }
+
+    public String getSrcSysCd() {
+        return srcSysCd;
+    }
+
+    public void setSrcSysCd(String srcSysCd) {
+        this.srcSysCd = srcSysCd;
+    }
+
+    public String getMatlNum() {
+        return matlNum;
+    }
+
+    public void setMatlNum(String matlNum) {
+        this.matlNum = matlNum;
+    }
+
+    public String getPlntCd() {
+        return plntCd;
+    }
+
+    public void setPlntCd(String plntCd) {
+        this.plntCd = plntCd;
+    }
+
+    public String getAltBomNum() {
+        return altBomNum;
+    }
+
+    public void setAltBomNum(String altBomNum) {
+        this.altBomNum = altBomNum;
+    }
+
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
+    }
+
+    public String getBomNum() {
+        return bomNum;
+    }
+
+    public void setBomNum(String bomNum) {
+        this.bomNum = bomNum;
+    }
+
+    public String getBomUsgCd() {
+        return bomUsgCd;
+    }
+
+    public void setBomUsgCd(String bomUsgCd) {
+        this.bomUsgCd = bomUsgCd;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }

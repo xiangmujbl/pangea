@@ -74,7 +74,7 @@ Feature: OMPGdmBomElement AEAZ-4250
     Then A file is found on sink application with name "GDMBOMElement.tsv"
 
     Then I check  file data for filename "/omp/gdm_bom_element" by keyFields "bomElementId"
-      | bomElementId | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | bomId | bomType | bomUsage | comment | endEff | erpFeedbackQuantity | locationId | offset | offsetCalendarId | offsetPercentage | offsetType | planLevelId | productId | quantity | startEff |
+      | bomElementId | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | bomId | bomType | bomUsage | comment | endEff | erpFeedbackQuantity | locationId | offset | offsetCalendarId | offsetPercentage |offsetPercType | planLevelId | productId | quantity | startEff |
 
     And I delete the test data
 
