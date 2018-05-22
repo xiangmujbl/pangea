@@ -1,11 +1,11 @@
 <adf-curation>
     <curation mainRegion="/edm/sales_order_v1" viewRegion="/omp/gdm_sales_history" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_sales_history.controller.OMPGdmSalesHistoryController"
-              writeTo="all" topic="PANGEA_V1_gdm_omp_gdm_sales_history">
+              writeTo="all" topic="PANGEA_V1_omp_gdm_sales_history">
         <regions>
             <region path="/edm/sales_order_v1">
                 <columns>sourceSystem,salesOrderNo,salesOrderItem,scheduleLineItem,localSalesOrg,localShipToParty,localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localItemCategory,localSDItemCurrency,localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute</columns>
-                <!--<filter>localOrderCreateDt:{20180401 TO *]</filter>-->
+                <filter>localOrderCreateDt:{20170401 TO *]</filter>
                 <relations>
                     <relation path="/plan/cns_cust_excl" isPrimaryKey="false">
                         <expression>salesOrg=/edm/sales_order_v1.localSalesOrg,customerShipTo=/edm/sales_order_v1.localShipToParty</expression>
@@ -29,7 +29,7 @@
                         <expression>localCurrency=/edm/sales_order_v1.localSDItemCurrency</expression>
                     </relation>
                     <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
-                        <expression>customerId=/edm/sales_order_v1.localShipToParty,salesOrganization=/edm/sales_order_v1.localSalesOrg</expression>
+                        <expression>customerId=/edm/sales_order_v1.localShipToParty,salesOrg=/edm/sales_order_v1.localSalesOrg</expression>
                     </relation>
                     <relation path="/project_one/knvh" isPrimaryKey="false">
                         <expression>kunnr=/edm/sales_order_v1.localShipToParty,vkorg=/edm/sales_order_v1.localSalesOrg</expression>
@@ -80,7 +80,7 @@
             </region>
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>demandGroup,customerId,salesOrganization</columns>
+                <columns>demandGroup,customerId,salesOrg</columns>
                 <relations>
                     <relation path="/project_one/knvh" isPrimaryKey="false">
                         <expression>hkunnr=/plan/cns_dem_grp_asgn.customerId,kunnr=/plan/cns_dem_grp_asgn.customerId</expression>

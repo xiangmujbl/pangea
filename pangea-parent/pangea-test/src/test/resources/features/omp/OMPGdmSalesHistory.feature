@@ -3,7 +3,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
 
   Scenario: Full Load curation
 
-    And I will remove the test file on sink application "GDMSaleshistory.tsv"
+    And I will remove the test file on sink application "GDMSalesHistory.tsv"
 
     Given I import "/edm/sales_order_v1" by keyFields "sourceSystem,salesOrderNo,salesOrderItem"
       | sourceSystem | salesOrderNo | salesOrderItem | scheduleLineItem | localSalesOrg | localShipToParty | localOrderCreateDt | localOrderType | localPlant | localMaterialNumber | localItemCategory | localSDItemCurrency | localRequestedDate | localRejReason | salesOrderQty | localNumtoBase | localDentoBase | localRoute |
@@ -79,7 +79,7 @@ Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
     And I wait "/edm/currency_v1" Async Queue complete
 
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | demandGroup | customerId | salesOrganization |
+      | demandGroup | customerId | salesOrg          |
       | 76100007    | 0000177376 | BR01              |
       | 76100008    | 0000118476 | BR01              |
       | 76100009    | 0000185314 | BR01              |
@@ -124,9 +124,9 @@ Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
 
     When I submit task with xml file "xml/omp/OMPGdmSalesHistory.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMSaleshistory.tsv"
+    Then A file is found on sink application with name "GDMSalesHistory.tsv"
 
-    Then I check file data for filename "GDMSaleshistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
+    Then I check file data for filename "GDMSalesHistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
       | salesHistoryId       | activeFCTERP | certaintyId | conversionFactorXx | currencyId | customerId | demandStreamId | dueDate             | fromDueDate         | locationId      | productId | quantity | salesUnit | validValueXx |
       | 0008288860000001_T4  | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
       | 0008288859000003_T3  | YES          | FOC         |                    | ADP        | 76100008   |                | 01/02/2019 00:00:00 | 01/02/2019 00:00:00 | CONS_LATAM_BR08 | PPC02     | 2.0      | CA        |              |
