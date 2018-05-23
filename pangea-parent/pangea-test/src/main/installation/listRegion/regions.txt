@@ -46,6 +46,7 @@
 /project_one/afpo
 /project_one/afko
 /project_one/affl
+/project_one/rkpf
 /plan/edm_failed_data
 /plan/cons_time_dep_xchange
 /plan/cns_spl_proc_typ
@@ -85,12 +86,11 @@
 /plan/cns_cert_key
 /plan/cns_cert_deter
 /plan/cns_abc_ind
-/omp/product_type
 /omp/product_detail
 /omp/product_country
 /omp/product
 /omp/process_type
-/omp/lot_size_key
+/omp/gdm_lot_size_key
 /omp/location_type
 /omp/gdm_unit_evol
 /omp/gdm_unit
@@ -183,3 +183,5 @@
 /omp/gdm_bom_element
 
 /edm/mfg_order
+
+/edm/mfg_order_itm

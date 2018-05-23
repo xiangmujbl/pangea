@@ -31,7 +31,6 @@ public class EDMMfgRtngSeqServiceImpl implements ICommonService {
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
-        LogUtil.getCoreLog().info("======22222222222222222222222=====" );
         ResultObject resultObject = new ResultObject();
         PlflEntity plflEntity = (PlflEntity) o;
         if (null != plflEntity) {
@@ -49,7 +48,6 @@ public class EDMMfgRtngSeqServiceImpl implements ICommonService {
         if (null != edmSourceSystemV1Entity) {
             mfgRtngSeqBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
         }
-        LogUtil.getCoreLog().info("======22222222222222222222222=====" );
         mfgRtngSeqBo.setRtngGrpCd(plflEntity.getPlnnr());
         mfgRtngSeqBo.setRtngGrpCntrNbr(plflEntity.getPlnal());
         mfgRtngSeqBo.setRtngSqncNum(plflEntity.getPlnfl());
@@ -66,12 +64,10 @@ public class EDMMfgRtngSeqServiceImpl implements ICommonService {
         mfgRtngSeqBo.setSeqRelKeyReturn(plflEntity.getBschl2());
         mfgRtngSeqBo.setSeqStartNode(plflEntity.getBknt1());
         mfgRtngSeqBo.setSeqEndNode(plflEntity.getBknt2());
-        LogUtil.getCoreLog().info("======11111111111111111111111=====" + plflEntity);
         //rule T2
 
         List<PlflEntity> plflEntitylist = projectOnePlflDao.getEntityWithPlnnrAndPlnalAndPlnfl(plflEntity.getPlnnr(), plflEntity.getPlnal(), plflEntity.getPlnfl());
         String zaehl = plflEntity.getZaehl();
-        LogUtil.getCoreLog().info("======11111111111111111111111=====" + plflEntitylist.size());
         if (plflEntitylist != null) {
             if (plflEntitylist.size() > 1) {
                 Collections.sort(plflEntitylist, new Comparator<PlflEntity>(){

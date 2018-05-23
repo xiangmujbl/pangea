@@ -5,7 +5,7 @@
         <regions>
 
             <region path="/project_one/qals">
-                <columns>mandt,prueflos,werk,matnr,art,herkunft,objnr,stsma,stat35,enstehdat,entstezeit,ersteldat,aenderdat,pastrterm,pastrzeit,paendterm,paendzeit,aufnr,kunnr,lifnr,charg,lagortchrg,ebeln,ebelp,mjahr,mblnr,werkvorg,lagortvorg,losmenge,mengeneinh,lmengezub,lmengeist</columns>
+                <columns>mandt,prueflos,werk,matnr,art,herkunft,objnr,stsma,stat35,enstehdat,entstezeit,ERSTELDATERSTELZEIT,AENDERDATAENDERZEIT,pastrterm,pastrzeit,paendterm,paendzeit,aufnr,kunnr,lifnr,charg,lagortchrg,ebeln,ebelp,mjahr,mblnr,werkvorg,lagortvorg,losmenge,mengeneinh,lmengezub,lmengeist</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
