@@ -6,6 +6,8 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMBomItemEntity;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 public class EDMBomItemDaoImpl extends CommonDaoImpl {
 
     private static EDMBomItemDaoImpl instance;
@@ -17,12 +19,12 @@ public class EDMBomItemDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMBomItemEntity getEntityWithConditions(String bomNum, String srcSysCd) {
+    public List<EDMBomItemEntity> getEntityWithConditions(String bomNum, String srcSysCd) {
         if (StringUtils.isNotBlank(bomNum) && StringUtils.isNotBlank(srcSysCd)) {
             String queryString = QueryHelper.buildCriteria(IConstant.BOM_ITEM.BOMNUM).is(bomNum)
                     .and(IConstant.BOM_ITEM.SRCSYSCD).is(srcSysCd)
                     .toQueryString();
-            return queryForObject(IConstant.REGION.BOM_ITEM, queryString, EDMBomItemEntity.class);
+            return queryForList(IConstant.REGION.BOM_ITEM, queryString, EDMBomItemEntity.class);
         }
         return null;
     }
