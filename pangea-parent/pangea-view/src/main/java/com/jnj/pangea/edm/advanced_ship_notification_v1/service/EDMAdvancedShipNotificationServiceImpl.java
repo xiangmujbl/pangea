@@ -110,8 +110,6 @@ public class EDMAdvancedShipNotificationServiceImpl {
 
         edmAdvancedShipNotificationBo.setLocRefDocLineNum(lipsEntity.getVgpos());
 
-        resultObject.setBaseBo(edmAdvancedShipNotificationBo);
-
         // T1
         // Get sourceSystem from source_system_v1 using below condition:
         // source_system_v1-localSourceSystem = "project_one"
@@ -126,6 +124,8 @@ public class EDMAdvancedShipNotificationServiceImpl {
         if(likpEntity.getVbtyp().equals(IConstant.VALUE.SEVEN)) {
             edmAdvancedShipNotificationBo.setLocaldeliveryCatg(likpEntity.getVbtyp());
         }
+
+        resultObject.setBaseBo(edmAdvancedShipNotificationBo);
         return resultObject;
     }
 
