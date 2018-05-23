@@ -35,7 +35,7 @@
 
 		<adf-grid:partitioned-region name="product_detail" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
-		<adf-grid:partitioned-region name="lot_size_key" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
+		<adf-grid:partitioned-region name="gdm_lot_size_key" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="gdm_cluster" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
@@ -58,7 +58,6 @@
 
 		<adf-grid:partitioned-region name="gdm_location_detail" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
-		<adf-grid:partitioned-region name="product_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="gdm_customer" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
