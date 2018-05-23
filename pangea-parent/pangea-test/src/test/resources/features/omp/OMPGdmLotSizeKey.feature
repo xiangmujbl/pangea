@@ -1,6 +1,6 @@
-@pangea_test @AEAZ-2378
+@pangea_test @AEAZ-4485
 Feature:  OMPGdmLotSizeKey-Curation
-
+#
   Scenario: Full Load curation
 
     And I will remove the test file on sink application "LotSizeKey.tsv"
@@ -21,7 +21,7 @@ Feature:  OMPGdmLotSizeKey-Curation
     Then A file is found on sink application with name "LotSizeKey.tsv"
 
     And I check file data for filename "LotSizeKey.tsv" by keyFields "lotSizeKey"
-      |  activeOprerp |  period  |  comments   |  quantity  | lotSizeKey |  activeSoperp |   description                    |
+      |  activeOPRERP |  period  |  comments   |  quantity  | lotSizeKey |  activeSOPERP |   description                    |
       |        YES    | F        | Fixed Lot   | 0          |     FX     |       NO      |  Fixed order quantity (JJ)       |
       |        YES    | T        | 10 Day Lot  | 10         |     Z1     |       NO      |  10 Days                         |
       |        YES    | M        | Monthly Lot | 1          |     MB     |       NO      |  Monthly lot size (JJ)           |
