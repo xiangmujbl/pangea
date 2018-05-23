@@ -183,3 +183,5 @@
 /omp/gdm_bom_element
 
 /edm/mfg_order
+
+/edm/mfg_order_itm

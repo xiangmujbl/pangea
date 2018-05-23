@@ -130,6 +130,7 @@ public interface IConstant {
         String MATL_MFG_RTNG = "/edm/matl_mfg_rtng";
         String MFG_RTNG_ITM_NDE = "/edm/mfg_rtng_itm_nde";
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
+        String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
     }
 
 
@@ -173,6 +174,8 @@ public interface IConstant {
 
     interface PLAN_CNS_MATERIAL_PLAN_STATUS {
         String DP_RELEVANT = "dpRelevant";
+        String SP_RELEVANT = "spRelevant";
+        String NO_PLAN_RELEVANT = "noPlanRelevant";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PLANT = "localPlant";
@@ -748,6 +751,16 @@ public interface IConstant {
         String SOFT_ZAEHL_VALUE = "zaehl";
     }
 
+    interface PLAN_CNS_TLANE_CONTROL {
+        String CRITICAL_PARAMETER = "criticalParameter{0}";
+        String CRITICAL_PARAMETER_HIGH = "criticalParameter{0}High";
+        String CRITICAL_PARAMETER_TABLE = "criticalParameter{0}Table";
+        String CRITICAL_PARAMETER_FIELD = "criticalParameter{0}Field";
+        String CRITICAL_PARAMETER_LOW = "criticalParameter{0}Low";
+        String CRITICAL_PARAMETER_OPERATOR = "criticalParameter{0}Operator";
+        String CRITICAL_PARAMETER_IE = "criticalParameter{0}IE";
+    }
+
     interface LFU {
         String DATA_OBJECT = "dataObject";
         String SPLIT = "-";
@@ -849,10 +862,32 @@ public interface IConstant {
         String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
         String SEVEN = "7";
         String VENDOR_TRANSPORT = "VendorTransport";
+        String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
+        String INTERNAL_TRANSPORT = "InternalTransport";
         String SUPPLY = "SUPPLY";
         String INFINITE = "INFINITE";
         String ASTERIX = "*";
         String DEFAULT = "DEFAULT";
+        String CNS_PROD_LOC_ATTRIB = "cns_prod_loc_attrib";
+        String MATERIAL_PLANT = "material_plant";
+        String SOURCE_LIST = "source_list";
+        String INCLUSION = "I";
+        String EXCLUSION = "E";
+        String SOURCE_SYSTEM_CRITICAL_PARAMETERS = "sourceSystemCriticalParameters";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String SELECT = "select";
+        String FROM = "from";
+        String WHERE = "WHERE";
+        String AND = "AND";
+        String OPERATOR_EQUAL = "=";
+        String OPERATOR_LESS_THAN = "<";
+        String OPERATOR_LESS_THAN_EQUAL = "<=";
+        String OPERATOR_GREATER_THAN = ">";
+        String OPERATOR_GREATER_THAN_EQUAL = ">=";
+        String OPERATOR_NOT_EQUAL = "!=";
+
+        String LOCAL_PLANT = "localPlant";
+        String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
     }
 
     interface FAILED {
@@ -880,6 +915,7 @@ public interface IConstant {
             String OMP_GDM_SALES_HISTORY = "OMPGdmSalesHistory";
             String OMP_GDM_CONVERSION_STORAGE = "OMPGdmConversionStorage";
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
+            String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
         }
 
         interface ERROR_CODE {

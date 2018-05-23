@@ -63,14 +63,19 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return null;
         }
 
-        if (!checkJ1(salesOrderV1Entity)) {
-            return null;
-        }
-
         String localSalesOrg = salesOrderV1Entity.getLocalSalesOrg();
         String localShipToParty = salesOrderV1Entity.getLocalShipToParty();
         String localOrderType = salesOrderV1Entity.getLocalOrderType();
         String localItemCategory = salesOrderV1Entity.getLocalItemCategory();
+
+        PlanCnsCustExclEntity custExclEntity = checkF1(localSalesOrg,localShipToParty);
+        if (null==custExclEntity){
+            return null;
+        }
+
+        if (!checkJ1(salesOrderV1Entity)) {
+            return null;
+        }
 
         String salesHistoryId = salesOrderV1Entity.getSalesOrderNo() + salesOrderV1Entity.getSalesOrderItem();
         gdmSalesHistoryBo.setSalesHistoryId(salesHistoryId);
@@ -102,9 +107,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             if (checkF2T6(fromDueDate)) {
                 gdmSalesHistoryBo.setDueDate(fromDueDate);
             } else {
-                FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F2, "");
-                resultObject.setFailData(failData);
-                return resultObject;
+                return null;
             }
         }
 
@@ -213,12 +216,10 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     }
 
     private String checkT6(String localRoute, String localRequestedDate) {
-
         TvroEntity tvroEntity = tvroDao.getEntityWithRoute(localRoute);
         if (null != tvroEntity) {
             String traztd = tvroEntity.getTraztd();
             if (StringUtils.isNotEmpty(traztd) && StringUtils.isNotEmpty(localRequestedDate)) {
-
                 int traztdNum = Integer.parseInt(traztd) / 240000;
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
                 Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztdNum);

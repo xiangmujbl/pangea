@@ -22,6 +22,9 @@ public class EDMPlantV1DaoImpl extends CommonDaoImpl {
     }
 
     public EDMPlantV1Entity getEntityWithLocalPlant(String localPlant) {
+        if(StringUtils.isBlank(localPlant)){
+            return null;
+        }
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_PLANT_V1.LOCAL_PLANT).is(localPlant).toQueryString();
         return queryForObject(IConstant.REGION.EDM_PLANT_V1,queryString,EDMPlantV1Entity.class);
     }
