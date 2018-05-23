@@ -17,8 +17,8 @@ public class ProjectOneQalsEntity extends CommonEntity {
     private String stat35;
     private String enstehdat;
     private String entstezeit;
-    private String ersteldat;
-    private String aenderdat;
+    private String ERSTELDATERSTELZEIT;
+    private String AENDERDATAENDERZEIT;
     private String pastrterm;
     private String pastrzeit;
     private String paendterm;
@@ -53,8 +53,8 @@ public class ProjectOneQalsEntity extends CommonEntity {
         setStat35((String) map.get("stat35"));
         setEnstehdat((String) map.get("enstehdat"));
         setEntstezeit((String) map.get("entstezeit"));
-        setErsteldat((String) map.get("ersteldat"));
-        setAenderdat((String) map.get("aenderdat"));
+        setERSTELDATERSTELZEIT((String) map.get("ERSTELDATERSTELZEIT"));
+        setAENDERDATAENDERZEIT((String) map.get("AENDERDATAENDERZEIT"));
         setPastrterm((String) map.get("pastrterm"));
         setPastrzeit((String) map.get("pastrzeit"));
         setPaendterm((String) map.get("paendterm"));
@@ -164,20 +164,20 @@ public class ProjectOneQalsEntity extends CommonEntity {
         this.entstezeit = entstezeit;
     }
 
-    public String getErsteldat() {
-        return this.ersteldat;
+    public String getERSTELDATERSTELZEIT() {
+        return this.ERSTELDATERSTELZEIT;
     }
 
-    public void setErsteldat(String ersteldat) {
-        this.ersteldat = ersteldat;
+    public void setERSTELDATERSTELZEIT(String ERSTELDATERSTELZEIT) {
+        this.ERSTELDATERSTELZEIT = ERSTELDATERSTELZEIT;
     }
 
-    public String getAenderdat() {
-        return this.aenderdat;
+    public String getAENDERDATAENDERZEIT() {
+        return this.AENDERDATAENDERZEIT;
     }
 
-    public void setAenderdat(String aenderdat) {
-        this.aenderdat = aenderdat;
+    public void setAENDERDATAENDERZEIT(String AENDERDATAENDERZEIT) {
+        this.AENDERDATAENDERZEIT = AENDERDATAENDERZEIT;
     }
 
     public String getPastrterm() {

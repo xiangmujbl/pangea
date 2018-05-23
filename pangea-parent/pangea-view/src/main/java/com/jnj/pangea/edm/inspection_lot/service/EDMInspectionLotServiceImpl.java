@@ -13,8 +13,12 @@ import com.jnj.pangea.common.entity.project_one.QaveEntity;
 import com.jnj.pangea.common.entity.project_one.Tj02tEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.inspection_lot.bo.EDMInspectionLotBo;
+import com.jnj.pangea.util.DateUtils;
+import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +44,6 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ProjectOneQalsEntity projectOneQalsEntity  = (ProjectOneQalsEntity)o;
-       // LogUtil.getCoreLog().info("==========================buildView start=========");
         ResultObject resultObject = new ResultObject();
         EDMInspectionLotBo edmInspectionLotV1Bo = new EDMInspectionLotBo();
         EDMSourceSystemV1Entity sourceEntity = getSourceEntity();
@@ -53,7 +56,8 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         edmInspectionLotV1Bo.setLotOrigCd(projectOneQalsEntity.getHerkunft());
         edmInspectionLotV1Bo.setLocalObjectNumber(projectOneQalsEntity.getObjnr());
         //N1
-        if(projectOneQalsEntity.getStat35().equals("")){
+        boolean empty = StringUtils.isEmpty(projectOneQalsEntity.getStat35());
+        if(empty){
             edmInspectionLotV1Bo.setStsPrfl(projectOneQalsEntity.getStsma());
         }
         edmInspectionLotV1Bo.setUsgDecInd(projectOneQalsEntity.getStat35());
@@ -61,12 +65,17 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         String date = getDate(projectOneQalsEntity.getEnstehdat());
         edmInspectionLotV1Bo.setLocalDateOfLotCreation(date);
         edmInspectionLotV1Bo.setLocalTimeOfLotCreation(projectOneQalsEntity.getEntstezeit());
-        edmInspectionLotV1Bo.setCrtDttm(projectOneQalsEntity.getErsteldat());
-        edmInspectionLotV1Bo.setChgDttm(projectOneQalsEntity.getAenderdat());
+        Date dueDate = DateUtils.stringToDate(projectOneQalsEntity.getERSTELDATERSTELZEIT(), DateUtils.F_yyyyMMddHHmmss_);
+        String CrtDttm = DateUtils.dateToString(dueDate, DateUtils.ISO_8602);
+        edmInspectionLotV1Bo.setCrtDttm(CrtDttm);
+        Date dueDate1 = DateUtils.stringToDate(projectOneQalsEntity.getAENDERDATAENDERZEIT(), DateUtils.F_yyyyMMddHHmmss_);
+        String ChgDttm = DateUtils.dateToString(dueDate1, DateUtils.ISO_8602);
+        edmInspectionLotV1Bo.setChgDttm(ChgDttm);
         String date1 = getDate(projectOneQalsEntity.getPastrterm());
         edmInspectionLotV1Bo.setInspStrtDt(date1);
         edmInspectionLotV1Bo.setInspStrtTm(projectOneQalsEntity.getPastrzeit());
-        edmInspectionLotV1Bo.setInspEndDt(date1);
+        String date2 = getDate(projectOneQalsEntity.getPaendterm());
+        edmInspectionLotV1Bo.setInspEndDt(date2);
         edmInspectionLotV1Bo.setInspEndTm(projectOneQalsEntity.getPaendzeit());
         edmInspectionLotV1Bo.setCstmNum(projectOneQalsEntity.getKunnr());
         edmInspectionLotV1Bo.setVndrNum(projectOneQalsEntity.getLifnr());
@@ -82,7 +91,8 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         edmInspectionLotV1Bo.setInspLotQty(projectOneQalsEntity.getLosmenge());
         edmInspectionLotV1Bo.setToBePostedQty(projectOneQalsEntity.getLmengezub());
         //N2
-        if(!projectOneQalsEntity.getLmengezub().equals("")){
+        boolean empty1 = StringUtils.isEmpty(projectOneQalsEntity.getLmengezub());
+        if(!empty1){
             edmInspectionLotV1Bo.setActlLotQty(projectOneQalsEntity.getLmengeist());
         }
         //N4
@@ -94,7 +104,8 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         }
         String objnr = getStringNumber(projectOneQalsEntity.getPrueflos());
         String s = getqcStsCd(objnr);
-        if(!s.equals("")&&s!=null){
+        boolean empty2 = StringUtils.isEmpty(s);
+        if(!empty2){
             edmInspectionLotV1Bo.setQcStsCd(s);
         }
         resultObject.setBaseBo(edmInspectionLotV1Bo);
@@ -108,7 +119,7 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
     public String getStringNumber(String number) {
         String [] str = {"0","0","0","0","0","0","0","0","0","0","0","0"};
         String QL = "QL";
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(QL);
         for (int i = 0; i < str.length-number.length(); i++) {
             String s = str[i];
@@ -118,7 +129,7 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         return sb.toString();
     }
     public String getqcStsCd(String objnr){
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         List<JestEntity> entityWithObjnr = projectOneJestDao.getEntityByObjnr(objnr);
         if(null!=entityWithObjnr){
         for (JestEntity jestEntity : entityWithObjnr) {
@@ -138,19 +149,19 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         }
         return sb.toString();
     }
+
     public  String getDate (String time)  {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.F_yyyyMMdd);
         formatter.setLenient(false);
         try{
             Date newDate= formatter.parse(time);
-            formatter = new SimpleDateFormat("yyyy-MM-dd");
+            formatter = new SimpleDateFormat(DateUtils.DATE_FORMAT_1);
             String format = formatter.format(newDate);
             return format;
         }catch (Exception e){
             return null;
         }
     }
-
 
 
 
