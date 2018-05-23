@@ -9,6 +9,7 @@ import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsProdLocAttribEntity;
 import com.jnj.pangea.omp.gdm_product_location_detail.bo.OMPGdmProductLocationDetailBo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +38,11 @@ public class OMPGdmProductLocationDetailServiceImpl {
         String localMaterialNumber = cnsMaterialPlanStatusEntity.getLocalMaterialNumber();
         String localPlant = cnsMaterialPlanStatusEntity.getLocalPlant();
         String sourceSystem = cnsMaterialPlanStatusEntity.getSourceSystem();
-        PlanCnsProdLocAttribEntity prodLocAttribEntity = cnsProdLocAttribDao.getEntityWithConditions(sourceSystem, localMaterialNumber, localPlant);
+
+        PlanCnsProdLocAttribEntity prodLocAttribEntity = null;
+        if (StringUtils.isNotEmpty(localMaterialNumber) && StringUtils.isNotEmpty(localPlant) && StringUtils.isNotEmpty(sourceSystem)) {
+            prodLocAttribEntity = cnsProdLocAttribDao.getEntityWithConditions(sourceSystem, localMaterialNumber, localPlant);
+        }
 
         if (null != prodLocAttribEntity) {
 
@@ -97,7 +102,7 @@ public class OMPGdmProductLocationDetailServiceImpl {
                         cnsMaterialPlanStatusEntity.getLocalMaterialNumber(), cnsMaterialPlanStatusEntity.getLocalPlant()));
                 resultObjects.add(resultObject);
             }
-        }  else {
+        } else {
             // Reject record
             ResultObject resultObject = new ResultObject();
             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP, IConstant.FAILED.INTERFACE_ID.OMP_GDM_PRODUCT_LOCATION_DETAIL, IConstant.FAILED.ERROR_CODE.N2,
