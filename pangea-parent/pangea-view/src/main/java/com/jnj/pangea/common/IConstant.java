@@ -909,6 +909,16 @@ public interface IConstant {
 
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
+        String BATCH_START = "batchstart";
+        String BATCH_END = "batchend";
+        String CONTINU = "continu";
+        String PROPORTIONAL = "proportional";
+        String FIXED = "fixed";
+        String ENDEFF = "2998/12/31 23:59:59";
+        String BOM_86400 = "86400";
+        String VOLUMEPLANNING = "VolumePlanning";
+        String DETAILEDSCHEDULING = "DetailedScheduling";
+        String PROPORTIONAL_BACK_SLANT="/proportional";
     }
 
     interface FAILED {

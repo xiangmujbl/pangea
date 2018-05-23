@@ -23,6 +23,7 @@
 	</gfe:replicated-region>
 
 	<adf-grid:replicated-region id="omp">
+		<adf-grid:partitioned-region name="gdm_product_type" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
 		<adf-grid:partitioned-region name="gdm_lfu" enable-temporal="false" enable-lucene="true" persistent="${persistent.enable}" disk-store-ref="samplePerist" />
 
