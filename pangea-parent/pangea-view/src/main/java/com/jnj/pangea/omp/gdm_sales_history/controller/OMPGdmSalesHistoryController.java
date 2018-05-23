@@ -3,6 +3,7 @@ package com.jnj.pangea.omp.gdm_sales_history.controller;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
@@ -27,21 +28,26 @@ public class OMPGdmSalesHistoryController extends BaseController {
         List<ViewResultItem> result = new LinkedList<>();
         Set<String> scheduleLineItemSet = new HashSet<>();
         events.forEach(raw -> {
-            ResultObject resultObject = process(raw,scheduleLineItemSet);
-            if (null != resultObject){
-                if (resultObject.isSuccess()) {
-                    BaseBo baseBo = resultObject.getBaseBo();
-                    if (null != baseBo) {
-                        result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
-                    }
-                } else {
-                    if (null != resultObject.getFailData()) {
-                        FailData failData = resultObject.getFailData();
-                        result.add(ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap()));
+            try {
+                ResultObject resultObject = process(raw,scheduleLineItemSet);
+                if (null != resultObject){
+                    if (resultObject.isSuccess()) {
+                        BaseBo baseBo = resultObject.getBaseBo();
+                        if (null != baseBo) {
+                            result.add(ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap()));
+                        }
+                    } else {
+                        if (null != resultObject.getFailData()) {
+                            FailData failData = resultObject.getFailData();
+                            result.add(ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap()));
+                        }
                     }
                 }
+            } catch (Exception e) {
+                LogUtil.getCoreLog().info(e);
             }
         });
+
         return result;
     }
 
