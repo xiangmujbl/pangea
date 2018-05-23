@@ -4,6 +4,9 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMMfgRtngItmEntity;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
 
@@ -16,10 +19,16 @@ public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMMfgRtngItmEntity getEntityWithConditions(String param) {
+    public List<EDMMfgRtngItmEntity> getEntityWithConditions(String srcSysCd,String rtngTypCd,String rtngItmNum,String rtngGrpCd) {
+        if(StringUtils.isNotBlank(srcSysCd) && StringUtils.isNotBlank(rtngTypCd) &&StringUtils.isNotBlank(rtngItmNum) && StringUtils.isNotBlank(rtngGrpCd)){
+            String queryString = QueryHelper.buildCriteria(IConstant.MFG_RTNG_ITM.SRCSYSCD).is(srcSysCd)
+                    .and(IConstant.MFG_RTNG_ITM.RTNGTYPCD).is(rtngTypCd)
+                    .and(IConstant.MFG_RTNG_ITM.RTNGITMNUM).is(rtngItmNum)
+                    .and(IConstant.MFG_RTNG_ITM.RTNGGRPCD).is(rtngGrpCd)
+                    .toQueryString();
+            return queryForList(IConstant.REGION.MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
+        }
 
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         return null;
     }
 }

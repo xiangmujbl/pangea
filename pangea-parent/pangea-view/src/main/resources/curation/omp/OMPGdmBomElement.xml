@@ -9,10 +9,7 @@
                 </columns>
                 <relations>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
-                        <expression>
-                            sourceSystem=/edm/matl_bom.sourceSystem,
-                            attribute=/edm/matl_bom.attribute
-                        </expression>
+                        <expression></expression>
                     </relation>
                     <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
                         <expression>
@@ -135,7 +132,7 @@
 
             <region path="/omp/gdm_bom_element">
                 <columns>
-                    bomElementId,active,activeFCTERP,activeOPRERP,activeSOPERP,batchId,bomId,bomType,bomUsage,comment,endEff,erpFeedbackQuantity,locationId,offset,offsetCalendarId,offsetPercentage,offsetType,planLevelId,productId,quantity,startEff
+                    bomElementId,active,activeFCTERP,activeOPRERP,activeSOPERP,batchId,bomId,bomType,bomUsage,comment,endEff,erpFeedbackQuantity,locationId,offset,offsetCalendarId,offsetPercentage,offsetPercType,planLevelId,productId,quantity,startEff
                 </columns>
             </region>
         </regions>

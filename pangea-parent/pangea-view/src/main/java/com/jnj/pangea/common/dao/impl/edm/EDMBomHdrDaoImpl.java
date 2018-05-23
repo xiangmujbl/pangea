@@ -4,6 +4,7 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMBomHdrEntity;
+import org.apache.commons.lang3.StringUtils;
 
 public class EDMBomHdrDaoImpl extends CommonDaoImpl {
 
@@ -16,10 +17,16 @@ public class EDMBomHdrDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMBomHdrEntity getEntityWithConditions(String param) {
+    public EDMBomHdrEntity getEntityWithConditions(String srcSysCd,String bomNum,String altBomNum,String bomCatCd) {
 
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+        if(StringUtils.isNotBlank(srcSysCd)&& StringUtils.isNotBlank(bomNum) &&StringUtils.isNotBlank(altBomNum) && StringUtils.isNotBlank(bomCatCd)){
+            String queryString = QueryHelper.buildCriteria(IConstant.BOM_HDR.SRCSYSCD).is(srcSysCd)
+                    .and(IConstant.BOM_HDR.BOMNUM).is(bomNum)
+                    .and(IConstant.BOM_HDR.ALTBOMNUM).is(altBomNum)
+                    .and(IConstant.BOM_HDR.BOMCATCD).is(bomCatCd)
+                    .toQueryString();
+            return queryForObject(IConstant.REGION.BOM_HDR, queryString, EDMBomHdrEntity.class);
+        }
         return null;
     }
 }

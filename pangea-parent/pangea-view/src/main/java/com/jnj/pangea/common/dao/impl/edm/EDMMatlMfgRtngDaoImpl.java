@@ -4,6 +4,9 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMMatlMfgRtngEntity;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 public class EDMMatlMfgRtngDaoImpl extends CommonDaoImpl {
 
@@ -16,10 +19,17 @@ public class EDMMatlMfgRtngDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMMatlMfgRtngEntity getEntityWithConditions(String param) {
-
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+    public List<EDMMatlMfgRtngEntity> getEntityWithFiveConditions(String srcSysCd, String matlNum, String plantCd, String rtngGrpCd, String rtngGrpCntrNum) {
+        if (StringUtils.isNotBlank(srcSysCd) && StringUtils.isNotBlank(plantCd)
+                && StringUtils.isNotBlank(rtngGrpCd) && StringUtils.isNotBlank(matlNum) && StringUtils.isNotBlank(rtngGrpCntrNum)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.MATL_MFG_RTNG.SRCSYSCD).is(srcSysCd)
+                    .and(IConstant.MATL_MFG_RTNG.MATLNUM).is(matlNum)
+                    .and(IConstant.MATL_MFG_RTNG.RTNGGRPCD).is(rtngGrpCd)
+                    .and(IConstant.MATL_MFG_RTNG.RTNGGRPCNTRNUM).is(rtngGrpCntrNum)
+                    .and(IConstant.MATL_MFG_RTNG.PLNTCD).is(plantCd).
+                            toQueryString();
+            return queryForList(IConstant.REGION.MATL_MFG_RTNG, queryString, EDMMatlMfgRtngEntity.class);
+        }
         return null;
     }
 }
