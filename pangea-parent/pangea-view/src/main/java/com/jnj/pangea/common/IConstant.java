@@ -726,6 +726,7 @@ public interface IConstant {
         String RNTGGRPCNTRNBR = "rntgGrpCntrNbr";
         String MATLNUM = "matlNum";
         String RTNGGRPCD = "rtngGrpCd";
+        String FIELD_MATLRTNGVALID_TO_NULL = "";
     }
 
     interface BOM_ITEM {
