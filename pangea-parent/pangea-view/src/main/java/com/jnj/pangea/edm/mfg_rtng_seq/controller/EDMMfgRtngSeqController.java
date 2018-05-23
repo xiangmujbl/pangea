@@ -15,7 +15,6 @@ public class EDMMfgRtngSeqController extends CommonController {
 
     @Override
     public ResultObject process(RawDataEvent raw) {
-        LogUtil.getCoreLog().info("======22222222222222222222222=====" );
         return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), PlflEntity.class), null);
 
     }
