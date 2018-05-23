@@ -5,6 +5,7 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -47,5 +48,15 @@ public class EDMSourceListV1DaoImpl extends CommonDaoImpl {
                 .and(IConstant.EDM_SOURCE_LIST_V1.LOCAL_BLOCKED_SOURCEOF_SUPPLY).isNull()
                 .toQueryString();
         return queryForList(IConstant.REGION.EDM_SOURCE_LIST_V1, queryString, EDMSourceListV1Entity.class);
+    }
+
+    public List<EDMSourceListV1Entity> getEntityListWithSourceSystemAndLocalMaterialNumber(String sourceSystem,String localMaterialNumber) {
+        if(StringUtils.isNotEmpty(localMaterialNumber)&&StringUtils.isNotEmpty(sourceSystem)){
+            String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_LIST_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+                    .and(IConstant.EDM_SOURCE_LIST_V1.SOURCE_SYSTEM).is(sourceSystem)
+                    .toQueryString();
+            return queryForList(IConstant.REGION.EDM_SOURCE_LIST_V1, queryString, EDMSourceListV1Entity.class);
+        }
+        return null;
     }
 }

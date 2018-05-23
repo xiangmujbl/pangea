@@ -174,3 +174,12 @@
 /project_one/lips
 /edm/outbound_delivery_line_v1
 
+
+/edm/matl_bom
+/edm/bom_item
+/edm/matl_prod_versn
+/edm/matl_mfg_rtng
+/edm/mfg_rtng_itm_nde
+/omp/gdm_bom_element
+
+/edm/mfg_order

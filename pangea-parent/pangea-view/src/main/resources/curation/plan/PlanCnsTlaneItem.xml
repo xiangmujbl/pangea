@@ -1,0 +1,108 @@
+<adf-curation>
+    <curation mainRegion="/plan/cns_tlane_control" viewRegion="/plan/cns_tlane_item" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.plan.cns_tlane_item.controller.PlanCnsTlaneItemController">
+        <regions>
+
+            <region path="/plan/cns_tlane_control">
+                <columns>
+                    sequenceNumber,tlaneName,validFrom,validTo,originLocation,destinatonLocation,mode,leadTime,processTypeId,sourceSystemCriticalParameters,
+                    criticalParameter1Table,criticalParameter1Field,criticalParameter1Low,criticalParameter1Operator
+                    ,criticalParameter1IE,criticalParameter2Table,criticalParameter2Field,criticalParameter2Low
+                    ,criticalParameter2High,criticalParameter2Operator,criticalParameter2IE,criticalParameter3Table
+                    ,criticalParameter3Field,criticalParameter3Low,criticalParameter3High,criticalParameter3Operator
+                    ,criticalParameter3IE,criticalParameter4Table,criticalParameter4Field,criticalParameter4Low
+                    ,criticalParameter4High,criticalParameter4Operator,criticalParameter4IE,criticalParameter5Table
+                    ,criticalParameter5Field,criticalParameter5Low,criticalParameter5High,criticalParameter5Operator
+                    ,criticalParameter5IE,criticalParameter6Table,criticalParameter6Field,criticalParameter6Low
+                    ,criticalParameter6High,criticalParameter6Operator,criticalParameter6IE,criticalParameter7Table
+                    ,criticalParameter7Field,criticalParameter7Low,criticalParameter7High,criticalParameter7Operator
+                    ,criticalParameter7IE,criticalParameter8Table,criticalParameter8Field,criticalParameter8Low
+                    ,criticalParameter8High,criticalParameter8Operator,criticalParameter8IE,criticalParameter9Table
+                    ,criticalParameter9Field,criticalParameter9Low,criticalParameter9High,criticalParameter9Operator
+                    ,criticalParameter9IE,criticalParameter10Table,criticalParameter10Field,criticalParameter10Low,criticalParameter10High
+                    ,criticalParameter10Operator,criticalParameter10IE
+                </columns>
+                <relations>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_plant_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/source_list_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_prod_loc_attrib" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    localPlant,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/plan/cns_spl_pln_loc">
+                <columns>
+                    localNumber,sourceSystem,localPlant,vendorOrCustomer
+                </columns>
+            </region>
+
+            <region path="/edm/material_plant_v1">
+                <columns>
+                    localMaterialNumber,sourceSystem,localPlant,localPlantStatus,localMrpController,localMrpType,
+                    localSpecialProcurementType,localProcurementType,localAbcIndicator,localBaseQuantity,localBatchManagementRequirementIndicator,
+                    localCheckingGroupForAvailabilityCheck,localComponentScrap,localComponentScrapInPercent,localConsumptionMode,localConsumptionPeriodBackward,
+                    localConsumptionPeriodForward,localCriticalPart,localDeletionFlagPlant,localDependentRequirements,localFixedLotSize,
+                    localGoodsReceiptProcessingTimeInDays,localInHouseProcessingTime,localLotSize,localMaximumLotSize,localMaximumStockLevel,
+                    localMinimumLotSize,localMinimumSafetyStock,localPlannedDeliveryTimeInDays,localPlanningStrategyGroup,localPlanningTimeFence,
+                    localPostToInspStk,localPostToInspectionStock,localProductionSupervisor,localProductionUnit,localRoundingValueForPoq,
+                    localSafetyStock,localSafetyTime,localSafetyTimeIndicator,materialNumber,plant,plantStatus
+                </columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    localMaterialNumber,sourceSystem,localPlant,active,dpRelevant,localParentCode,materialNumber,noPlanRelevant,parentActive,ppc,spRelevant
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    sourceSystem,localSourceSystem,localMaterialNumber,primaryPlanningCode,materialNumber
+                </columns>
+            </region>
+
+            <region path="/edm/source_list_v1">
+                <columns>
+                    localMaterialNumber,localPlant,sourceSystem,localVendorAccountNumber
+                </columns>
+            </region>
+
+            <region path="/plan/cns_prod_loc_attrib">
+                <columns>
+                    localMaterialNumber,sourceSystem,localPlant,minMinShelfLife,minShelfLife,schAttrbDesc1,schAttrbDesc2,schAttrbDesc3,schdAttrbName1,schdAttrbName2,schdAttrbName3,supplyGroup,primarySupplierPlantCode
+                </columns>
+            </region>
+
+            <region path="/plan/cns_tlane_item">
+                <columns>
+                    sequenceNumber,tlaneName,materialNumber,validFrom,validTo,originLocation,destinatonLocation,mode,leadTime,processTypeId
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

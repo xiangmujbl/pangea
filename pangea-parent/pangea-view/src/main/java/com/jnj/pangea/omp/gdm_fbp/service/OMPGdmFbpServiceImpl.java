@@ -102,7 +102,7 @@ public class OMPGdmFbpServiceImpl {
         String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
         PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.FBP);
         PlanCnsFinPlanValEntity finPlanValEntity = cnsFinPlanValDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.FBP);
-        LogUtil.getCoreLog().info("=======111111111111111===="+sourceSystem );
+
 
 
 
@@ -117,16 +117,14 @@ public class OMPGdmFbpServiceImpl {
         String productId= null;
         if (null!=planCnsPlanParameterEntity && null!=materialGlobalV1Entity)
          productId =planCnsPlanParameterEntity.getParameterValue()+IConstant.VALUE.UNDERLINE+materialGlobalV1Entity.getLocalDpParentCode();
-        LogUtil.getCoreLog().info("=======22222222222222===="+localMaterialNumber );
         String yearMonth =null;
 
-        LogUtil.getCoreLog().info("6666666666666666666666"+localDpParentCode );
 
-            LogUtil.getCoreLog().info("=======77777777777777===="+finPlanQtyEntity+"=======7777777777777======="+ finPlanValEntity+"=========7777777777777777========="+planCnsPlanParameterEntity);
+
             if (null!=finPlanQtyEntity && null!=planCnsPlanParameterEntity && null!=finPlanValEntity){
                 //List<PlanCnsPlanParameterEntity> planCnsPlanParameterEntity1 = planCnsPlanParameterDao.getEntityWithAttributeList(sourceSystem);
                 PlanCnsPlanParameterEntity planCnsPlanParameterEntity1 = planCnsPlanParameterDao.getEntityWithAttribute(sourceSystem);
-                LogUtil.getCoreLog().info("=======@@@@@@@===="+planCnsPlanParameterEntity1 );
+
                 if (null!=planCnsPlanParameterEntity1){
                     yearMonth=finPlanQtyEntity.getYearMonth();
                 }else if (null!=finPlanQtyEntity && null!=planCnsPlanParameterEntity){
@@ -135,16 +133,13 @@ public class OMPGdmFbpServiceImpl {
                     yearMonth=finPlanValEntity.getYearMonth();
                 }
             }
-            LogUtil.getCoreLog().info("=======8888888888888888===="+yearMonth );
 
-        LogUtil.getCoreLog().info("=======3333333333====" );
+
         //rules  T5
             if (null!=yearMonth){
-                LogUtil.getCoreLog().info("=======4444444444====" +yearMonth);
                 List<EDMJNJCalendarV1Entity> edmjnjCalendarV1Entities = edmjnjCalendarV1Dao.getEntityWithFiscalPeriod(yearMonth);
                 if (null!=edmjnjCalendarV1Entities && edmjnjCalendarV1Entities.size()>0) {
                     for (EDMJNJCalendarV1Entity entity:edmjnjCalendarV1Entities) {
-                        LogUtil.getCoreLog().info("++++++++++++++++" + entity);
                         OMPGdmFbpBo gdmfbpBo = new OMPGdmFbpBo();
                         Date dueDate = DateUtils.stringToDate(entity.getWeekToDate(), DateUtils.DATE_FORMAT_1);
                         gdmfbpBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.J_yyyyMMdd_HHmmss));
@@ -164,7 +159,6 @@ public class OMPGdmFbpServiceImpl {
                             EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = materialAuomV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumberQty, unitIdQty, sourceSystemQty);
 
                         if (null != edmMaterialAuomV1Entity) {
-                            LogUtil.getCoreLog().info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                             //gdmfbpBo.setVolume(entity.getNoOfWeek());
                             try {
                                 double quantity = Double.parseDouble(finPlanQtyEntity.getQuantity());
@@ -175,7 +169,6 @@ public class OMPGdmFbpServiceImpl {
                                     BigDecimal a = new BigDecimal(result);
                                     // BigDecimal b = new BigDecimal(localNumerator);
                                     // BigDecimal c = new BigDecimal(localDenominator);
-                                    LogUtil.getCoreLog().info("CCCCCCCCCCCCCCCCCCCCCCC" + a);
 //                                    BigDecimal v = b.divide(c);
 //                                    LogUtil.getCoreLog().info("VVVVVVVVVVVVVVVVVVVV"+v);
 //                                    BigDecimal n = a.multiply(v);
@@ -184,7 +177,6 @@ public class OMPGdmFbpServiceImpl {
                                     double df = a.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
                                     String volume = df + "";
                                     gdmfbpBo.setVolume(volume);
-                                    LogUtil.getCoreLog().info(quantity + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + localNumerator + "BBBBBBBBB" + localDenominator);
                                 }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
@@ -192,7 +184,6 @@ public class OMPGdmFbpServiceImpl {
                             }
                         }
                     }
-                        LogUtil.getCoreLog().info(entity.getNoOfWeek()+"!!!!!!!!!!!!!!!)))))))" +entity.getNoOfWeek());
                         gdmfbpBos.add(gdmfbpBo);
                     }
                 }
