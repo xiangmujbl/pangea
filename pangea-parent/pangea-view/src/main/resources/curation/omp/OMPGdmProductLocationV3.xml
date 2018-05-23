@@ -6,7 +6,6 @@
 
             <region path="/edm/material_plant_v1">
                 <columns>
-                    XCHPF,
                     localMaterialNumber,
                     localPlant,
                     sourceSystem,
