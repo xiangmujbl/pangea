@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-1815
-Feature: OMPGdmProductUnitConversion AEAZ-1815
+@pangea_test @AEAZ-1815 @AEAZ-4071
+Feature: OMPGdmProductUnitConversion AEAZ-4071
 
   @Scenario1
   Scenario: J1
