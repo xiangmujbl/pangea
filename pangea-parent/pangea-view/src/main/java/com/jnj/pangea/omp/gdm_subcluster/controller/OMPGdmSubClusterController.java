@@ -13,6 +13,7 @@ import com.jnj.pangea.omp.gdm_subcluster.service.OMPGdmSubClusterServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,17 +28,19 @@ public class OMPGdmSubClusterController extends CommonController{
     public List<ViewResultItem> process(List<RawDataEvent> events) {
 
         List<ViewResultItem> result = new LinkedList<>();
-        HashMap<String, String> existing = new HashMap<String, String>();
+        //HashMap<String, String> existing = new HashMap<String, String>();
+        HashSet<String> existing  = new HashSet<String>();
         events.forEach(raw -> {
             ResultObject resultObject = process(raw);
             if (null != resultObject) {
                 if(resultObject.isSuccess()){
                     //Rule R1
                     HashMap<String,Object> myBo = new HashMap(resultObject.getBaseBo().toMap());
-                   String cid = (String) myBo.get("clusterId");
+                    //String cid = (String) myBo.get("clusterId");
                     String subCid = (String) myBo.get("subClusterId");
-                    if(null == existing.get(subCid)){
-                        existing.put(subCid,cid);
+                    if(!existing.contains(subCid)){
+                        //existing.put(subCid,cid);
+                        existing.add(subCid);
                         result.add(ViewResultBuilder.newResultItem(resultObject.getBaseBo().getKey(), resultObject.getBaseBo().toMap()));
                     }
 
