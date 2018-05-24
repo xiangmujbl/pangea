@@ -13,6 +13,7 @@ public class EDMBomHdrEntity extends CommonEntity {
     private String bomVldFromDt;
     private String bomBaseQty;
     private String bomUomCd;
+    private String bomVld_ToDt;
 
     public EDMBomHdrEntity(Map<String, Object> map) {
         super(map);
@@ -24,6 +25,7 @@ public class EDMBomHdrEntity extends CommonEntity {
         setBomVldFromDt((String) map.get("bomVldFromDt"));
         setBomBaseQty((String) map.get("bomBaseQty"));
         setBomUomCd((String) map.get("bomUomCd"));
+        setBomVld_ToDt((String) map.get("bomVld_ToDt"));
     }
 
     public String getSrcSysCd() {
@@ -82,4 +84,11 @@ public class EDMBomHdrEntity extends CommonEntity {
         this.bomVldFromDt = bomVldFromDt;
     }
 
+    public String getBomVld_ToDt() {
+        return bomVld_ToDt;
+    }
+
+    public void setBomVld_ToDt(String bomVld_ToDt) {
+        this.bomVld_ToDt = bomVld_ToDt;
+    }
 }

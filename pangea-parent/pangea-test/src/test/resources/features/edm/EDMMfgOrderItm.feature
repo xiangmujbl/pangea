@@ -11,8 +11,8 @@ Feature: EDMMfgOrderItm AEAZ-4252
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
-      | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
-      | ems               | EMS                   | EMS          | ems                |
+      | project_one        | Project One            | CONS_LATAM   | Consumer Latam Ent |
+      | ems                 | EMS                     | EMS           | ems                  |
     And I wait "/edm/source_system_v1" Async Queue complete
 
 

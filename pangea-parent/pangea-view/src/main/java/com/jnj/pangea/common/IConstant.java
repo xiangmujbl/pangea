@@ -613,6 +613,7 @@ public interface IConstant {
     }
 
     interface PROJECT_ONE_KNVH {
+        String HKUNNR = "hkunnr";
         String KUNNR = "kunnr";
         String VKORG = "vkorg";
         String DATBI = "datbi";
@@ -817,6 +818,7 @@ public interface IConstant {
         String LA_ = "LA_";
         String PGA = "PGA";
         String UNDERLINE = "_";
+        String HORIZONTAL_Line = "-";
         String BACK_SLANT = "/";
         String USD = "USD";
         String PANGEA = "Pangea";
@@ -911,6 +913,8 @@ public interface IConstant {
 
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
+
+        String BR = "BR";
         String BATCH_START = "batchstart";
         String BATCH_END = "batchend";
         String CONTINU = "continu";
@@ -921,6 +925,9 @@ public interface IConstant {
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
+        String M = "M";
+
+
     }
 
     interface FAILED {
@@ -949,6 +956,7 @@ public interface IConstant {
             String OMP_GDM_CONVERSION_STORAGE = "OMPGdmConversionStorage";
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
+            String OMP_GDM_POS = "OMPGdmPos";
         }
 
         interface ERROR_CODE {

@@ -6,9 +6,11 @@ Feature: EDMMfgRtngSeq AEAZ-3277
     Given I import "/project_one/plfl" by keyFields "plnty,plnnr,plnal,plnfl,zaehl"
       | plnty | plnnr | plnal | plnfl | zaehl | datuv     | aennr       | loekz | andat | aedat | flgat | ltxa1 | losvn | losbs | bschl1 | bschl2 | bknt1 | bknt2 |
       | N     | 997   | 1     | 1     | 1     | 2018/4/30 | 50000000003 |       | andat | aedat | 0     | ltxa1 | losvn | losbs | bschl1 | bschl2 |  1     |   1    |
-      | N     | 997   | 1     | 2     | 2     | 2018/8/25 | 50000000004 |       | andat | aedat | 2     | ltxa1 | losvn | losbs | bschl1 | bschl2 | 1     | 1     |
-      | N     | 997   | 1     | 2     | 3     | 2018/8/31 | 50000000005 | X     | andat | aedat | 2     | ltxa1 | losvn | losbs | bschl1 | bschl2 | 1     | 1     |
-      | N     | 997   | 1     | 3     | 4     | 2018/8/31 | 50000000006 |       | andat | aedat | 2     | ltxa1 | losvn | losbs | bschl1 | bschl2 | 1     | 1     |
+      | 2     | 997   | 1     | 2     | 2     | 2018/8/25 | 50000000004 |       | andat | aedat | 2     | ltxa1 | losvn | losbs | bschl1 | bschl2 | 1     | 1     |
+      | 2     | 997   | 1     | 2     | 3     | 2018/8/26 | 50000000005 |       | andat | aedat | 2     | ltxa1 | losvn | losbs | bschl1 | bschl2 | 1     | 1     |
+      | N     | 997   | 1     | 3     | 4     | 2018/8/28 | 50000000006 |       | andat | aedat | 2     | ltxa1 | losvn | losbs | bschl1 | bschl2 | 1     | 1     |
+      | N     | 997   | 1     | 3     | 5     | 2018/8/31 | 50000000007 |       | andat | aedat | 2     | ltxa1 | losvn | losbs | bschl1 | bschl2 | 1     | 1     |
+
     And I wait "/project_one/plfl" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -23,8 +25,10 @@ Feature: EDMMfgRtngSeq AEAZ-3277
     Then I check region data "/edm/mfg_rtng_seq" by keyFields "srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngSqncVrsnCntrNbr"
       | srcSysCd   | rtngTypCd | rtngGrpCd | rtngGrpCntrNbr | rtngSqncNum | rtngSqncVrsnCntrNbr | valFromDt | chgNum      | delInd | crtDttm | chgDttm | seqCategory | seqDesc | fromLtSzQty | toLtSzQty | seqRelKeyBranch | seqRelKeyReturn | seqStartNode | seqEndNode | seqValidToDate |
       | CONS_LATAM | N         | 997        | 1               | 1             | 1                     | 2018/4/30 | 50000000003 |        | andat   | aedat    | 0            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1               | 1            | 9999/12/31 |
-      | CONS_LATAM | N         | 997        | 1               | 2             | 2                     | 2018/8/25 | 50000000005 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 2018/8/31 |
-      | CONS_LATAM | N         | 997        | 1               | 3             | 4                     | 2018/8/31 | 50000000006 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 9999/12/31 |
+      | CONS_LATAM | 2         | 997        | 1               | 2             | 2                     | 2018/8/25 | 50000000005 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 2018/8/26 |
+      | CONS_LATAM | 2         | 997        | 1               | 2             | 3                     | 2018/8/26 | 50000000005 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 9999/12/31 |
+      | CONS_LATAM | N         | 997        | 1               | 3             | 4                     | 2018/8/28 | 50000000007 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 2018/8/31 |
+      | CONS_LATAM | N         | 997        | 1               | 3             | 5                     | 2018/8/31 | 50000000007 |        | andat   | aedat    | 2            | ltxa1    | losvn       | losbs     | bschl1          | bschl2            | 1              | 1           | 9999/12/31 |
 #    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
 #      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
@@ -32,7 +36,7 @@ Feature: EDMMfgRtngSeq AEAZ-3277
 
     And I delete the test data
 
-   # And I will remove all data with region "/edm/mfg_rtng_seq"
+    And I will remove all data with region "/edm/mfg_rtng_seq"
 
     And I will remove all data with region "/plan/edm_failed_data"
 

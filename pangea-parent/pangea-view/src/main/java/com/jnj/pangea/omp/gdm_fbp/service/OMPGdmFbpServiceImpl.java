@@ -196,14 +196,14 @@ public class OMPGdmFbpServiceImpl {
                 String country = finPlanQtyEntity.getCountry();
                 EDMCountryEntity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
                 if (null != countryV1Entity) {
-                    fbp.setCountryId(countryV1Entity.getLocalCountry());
+                    fbp.setCountryId(countryV1Entity.getCountryCode());
                 }
             }
             if (null != finPlanValEntity) {
                 String currency = finPlanValEntity.getCurrency();
                 EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
                 if (null != currencyV1Entity) {
-                    fbp.setCurrencyId(currencyV1Entity.getLocalCurrency());
+                    fbp.setCurrencyId(currencyV1Entity.getCurrencyCode());
                 }
             }
             if (null != planCnsPlanParameterEntity && null != materialGlobalV1Entity){
