@@ -62,3 +62,27 @@
 /qa/plan/cns_material_plan_status
 
 
+
+/qa/ems/ems_f_mdm_countries
+/qa/ems/ems_f_z_currencies
+/qa/project_one/marc
+/qa/project_one/mbew
+/qa/project_one/vbak
+/qa/project_one/vbap
+/qa/project_one/vbep
+/qa/project_one/vbpa
+/qa/project_one/vbkd
+/qa/project_one/marm
+/qa/ems/ems_f_mdm_material_types
+/qa/ems/ems_f_z_enterprise_plants
+/qa/project_one/t001
+/qa/project_one/t001k
+/qa/project_one/t001w
+/qa/ems/ems_f_mdm_units
+/qa/project_one/t141
+/qa/project_one/mara
+/qa/project_one/makt
+/qa/project_one/tmabc
+/qa/project_one/tmabct
+
+
