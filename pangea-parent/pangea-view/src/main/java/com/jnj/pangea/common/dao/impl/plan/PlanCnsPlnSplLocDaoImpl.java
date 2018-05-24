@@ -5,6 +5,8 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 
+import java.util.List;
+
 
 public class PlanCnsPlnSplLocDaoImpl extends CommonDaoImpl {
     private static PlanCnsPlnSplLocDaoImpl instance;
@@ -26,5 +28,11 @@ public class PlanCnsPlnSplLocDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PLAN_CNS_SPL_PLN_LOC.VENDORORCUSTOMER).is(vendorOrCustomer)
                 .and(IConstant.PLAN_CNS_SPL_PLN_LOC.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.CNS_SPL_PLN_LOC,queryString,PlanCnsPlnSplLocEntity.class);
+    }
+
+    public List<PlanCnsPlnSplLocEntity> getEntitiesWithSourceSystemAndLocalPlantNumber (String sourceSystem, String localPlantNumber) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_SPL_PLN_LOC.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.PLAN_CNS_SPL_PLN_LOC.LOCALNUMBER).is(localPlantNumber).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_SPL_PLN_LOC,queryString,PlanCnsPlnSplLocEntity.class);
     }
 }

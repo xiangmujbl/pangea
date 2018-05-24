@@ -340,7 +340,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
-        String SP_RELEVANT = "sPRelevant";
+        String SP_RELEVANT = "spRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
 
@@ -495,6 +495,8 @@ public interface IConstant {
 
     interface CNS_TLANE_ITEM_EXCEPTION {
         String REF_SEQ_NUM_TLANE_ITEM = "refSeqNumTlaneItem";
+        String MATERIAL_NUMBER = "materialNumber";
+        String TLANE_NAME = "tlaneName";
     }
     interface PLAN_CNS_SPL_PLN_LOC {
         String SOURCE_SYSTEM = "sourceSystem";

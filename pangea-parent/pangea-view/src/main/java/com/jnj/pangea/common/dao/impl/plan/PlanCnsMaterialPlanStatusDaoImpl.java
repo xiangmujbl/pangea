@@ -7,6 +7,8 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
 
     private static PlanCnsMaterialPlanStatusDaoImpl instance;
@@ -116,5 +118,14 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
             }
         }
         return null;
+    }
+
+    public List<PlanCnsMaterialPlanStatusEntity> getEntitiesWithLocalMaterialNumberLocalPlantSourceSystemAndRelevant(String localMaterialNumber, String localPlantNum, String sourceSystem) {
+		String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlantNum).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is("X").
+                toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
 }
