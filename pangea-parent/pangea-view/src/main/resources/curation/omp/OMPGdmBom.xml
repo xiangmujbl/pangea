@@ -1,0 +1,89 @@
+<adf-curation>
+    <curation mainRegion="/edm/matl_bom" viewRegion="/omp/gdm_bom" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_bom.controller.OMPGdmBomController">
+        <regions>
+
+            <region path="/edm/matl_bom">
+                <columns>srcSysCd,matlNum,plntCd,altBomNum,bomNum,bomUsgCd</columns>
+                <relations>
+                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression>attribute=/edm/matl_bom.srcSysCd,sourceSystem=/edm/matl_bom.sourceSystem
+                        </expression>
+                    </relation>
+                    <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
+                        <expression>
+                            srcSysCd=/edm/matl_bom.srcSysCd,
+                            matlNum=/edm/matl_bom.matlNum,
+                            plntCd=/edm/matl_bom.plntCd,
+                            altBomNum=/edm/matl_bom.altBomNum
+                        </expression>
+                    </relation>
+                    <relation path="/edm/bom_hdr" isPrimaryKey="false">
+                        <expression>
+                            srcSysCd=/edm/matl_bom.srcSysCd,
+                            bomNum=/edm/matl_bom.bomNum,
+                            altBomNum=/edm/matl_bom.altBomNum
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cns_plan_parameter">
+                <columns>sourceSystem,dataObject,attribute,parameterValue</columns>
+            </region>
+            <region path="/edm/matl_prod_versn">
+                <columns>srcSysCd,matlNum,plntCd,altBomNum,prdntVrsnNum</columns>
+                <relations>
+                    <relation path="/edm/matl_mfg_rtng" isPrimaryKey="false">
+                        <expression>
+                            srcSysCd=/edm/matl_prod_versn.srcSysCd,
+                            matlNum= /edm/matl_prod_versn.matlNum,
+                            plntCd= /edm/matl_prod_versn.plntCd
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/matl_mfg_rtng">
+                <columns>srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr</columns>
+                <relations>
+                    <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false">
+                        <expression>
+                            srcSysCd =/edm/matl_mfg_rtng.srcSysCd,
+                            rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd,
+                            rtngGrpCd=/edm/matl_mfg_rtng.rntgGrpCd,
+                            rtngGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/mfg_rtng_itm_nde">
+                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr</columns>
+                <relations>
+                    <relation path="/edm/mfg_rtng_itm" isPrimaryKey="false">
+                        <expression>
+                            srcSysCd =/edm/mfg_rtng_itm_nde.srcSysCd,
+                            rtngTypCd=/edm/mfg_rtng_itm_nde.rtngTypCd,
+                            rtngGrpCd=/edm/mfg_rtng_itm_nde.rtngGrpCd,
+                            rtngItmNum=/edm/mfg_rtng_itm_nde.rtngNdeNum
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/mfg_rtng_itm">
+                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngNdeNum,operNum</columns>
+            </region>
+
+            <region path="/edm/bom_hdr">
+                <columns>srcSysCd,bomNum,altBomNum</columns>
+            </region>
+
+
+            <region path="/omp/gdm_bom">
+                <columns>bomId,active,activeFCTERP,activeOPRERP,activeSOPERP,comments,endEff,locationId,startEff</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
