@@ -23,7 +23,7 @@ public class PlanCnsPlnSplLocDaoImpl extends CommonDaoImpl {
     }
 
     public PlanCnsPlnSplLocEntity getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(String sourceSystem, String localNumber, String vendorOrCustomer) {
-        if(!(sourceSystem.isEmpty() && localNumber.isEmpty() && vendorOrCustomer.isEmpty()) && sourceSystem != null && localNumber != null && vendorOrCustomer != null) {
+        if( (!(sourceSystem.isEmpty())) && (!(localNumber.isEmpty())) && (!(vendorOrCustomer.isEmpty())) && sourceSystem != null && localNumber != null && vendorOrCustomer != null) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_SPL_PLN_LOC.LOCALNUMBER).is(localNumber)
                     .and(IConstant.PLAN_CNS_SPL_PLN_LOC.VENDORORCUSTOMER).is(vendorOrCustomer)
                     .and(IConstant.PLAN_CNS_SPL_PLN_LOC.SOURCE_SYSTEM).is(sourceSystem).toQueryString();

@@ -1,4 +1,5 @@
 package com.jnj.pangea.omp.gdm_supply.service;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -19,9 +20,11 @@ import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_supply.bo.OMPGdmSupplyBo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class OMPGdmSupplyServiceImpl implements ICommonService {
+public class OMPGdmSupplyServiceImpl {
 
     private static OMPGdmSupplyServiceImpl instance;
 
@@ -39,13 +42,15 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanCnsPlnSplLocDaoImpl planCnsPlnSplLocDao = PlanCnsPlnSplLocDaoImpl.getInstance();
 
-    @Override
-    public ResultObject buildView(String key, Object o, Object o2) {
+
+    public List<ResultObject> buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
+        OMPGdmSupplyBo gdmSupplyBo = new OMPGdmSupplyBo();
+        List<ResultObject> resultObjects = new ArrayList<>();
+
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
-        OMPGdmSupplyBo gdmSupplyBo = new OMPGdmSupplyBo();
 
         // N1
         String partA = null;
@@ -65,7 +70,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                     if(edmSourceListV1Entity.getLocalVendorAccountNumber() != null && (!(edmSourceListV1Entity.getLocalVendorAccountNumber().isEmpty()))) {
                         if(edmSourceListV1Entity.getSourceSystem() != null && (!(edmSourceListV1Entity.getSourceSystem().isEmpty()))) {
                             String supplyId = partA
-                                    + edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant() + IConstant.VALUE.UNDERLINE
+                                    + edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmSourceListV1Entity.getLocalPlant() + IConstant.VALUE.BACK_SLANT
                                     + edmSourceListV1Entity.getLocalVendorAccountNumber();
                             gdmSupplyBo.setSupplyId(supplyId);
                         } else {
@@ -109,7 +114,6 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
 
                         gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
 
-
                         // N6
                         EDMMaterialPlantV1Entity edmMaterialPlantV1Entity = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
 
@@ -130,14 +134,6 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
 
                         // N18
                         gdmSupplyBo.setPROCESSTYPEID(IConstant.VALUE.VENDOR_TRANSPORT);
-
-                        // N19
-                        PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());
-                        if(planCnsProcessTypeEntity != null) {
-                            gdmSupplyBo.setLABEL(planCnsProcessTypeEntity.getProcessTypeDesc());
-                        } else {
-                            return null;
-                        }
 
                         // N11
                         PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithSourceSystemAndLocalMaterialNumberAndLocalPlant(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalMaterialNumber(), edmSourceListV1Entity.getLocalPlant());
@@ -160,7 +156,8 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                                 } else {
                                     FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N11", "Material Global V1 Primary planning code and Material Number are blank");
                                     resultObject.setFailData(failData);
-                                    return resultObject;
+                                    resultObjects.add(resultObject);
+                                    return resultObjects;
                                 }
 
                              // N12
@@ -189,7 +186,6 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                                             + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getLocalNumber());
                             }
 
-
                             // N15
                             String dateToFormat = edmSourceListV1Entity.getLocalSourceListRecordValidFrom();
                             SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
@@ -213,27 +209,57 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
                                 gdmSupplyBo.setINCQuantity(edmMaterialPlantV1Entity.getLocalRoundingValueForPoq());
                             }
 
-                            // N16
-                            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
-                            if (planCnsPlnSplLocEntity == null) {
-                                gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
-                            } else {
-                                    if (edmMaterialPlantV1Entity != null) {
-                                    String localSpecialProcurementType = edmMaterialPlantV1Entity.getLocalSpecialProcurementType();
-                                    if (localSpecialProcurementType.equals("30")) {
-                                        // skip if local Special Procurement Type == 30
-                                            return null;
+
+                                // N18
+                                PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity_2 = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
+                                if (planCnsPlnSplLocEntity_2 != null) {
+                                    // if planCnsPlnSplLocEntity local plant is not empty SKIP
+                                    if (!(planCnsPlnSplLocEntity_2.getLocalPlant().isEmpty())) {
+                                        return null;
                                     } else {
-                                        // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
-                                        if (!(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) && edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() != null) {
+                                        // if it is empty then Populate Value as "VendorPurchase"
+                                        gdmSupplyBo.setPROCESSTYPEID("VendorPurchase");
+                                    }
+
+                                } else {
+                                    // check if planCnsPlnSplLocEntity is exists if not then populate value as "ExternalPurchase"
+                                    gdmSupplyBo.setPROCESSTYPEID("ExternalPurchase");
+                                }
+
+                                // N19
+                                PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());
+                                if(planCnsProcessTypeEntity != null) {
+                                    gdmSupplyBo.setLABEL(planCnsProcessTypeEntity.getProcessTypeDesc());
+                                } else {
+                                    return null;
+                                }
+
+                                // N16
+                                PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
+                                if (planCnsPlnSplLocEntity == null) {
+                                    gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                } else {
+                                    EDMMaterialPlantV1Entity edmMaterialPlantV1Entity_1 = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getMaterialNumber());
+                                    if (edmMaterialPlantV1Entity_1 != null) {
+                                        String localSpecialProcurementType = edmMaterialPlantV1Entity_1.getLocalSpecialProcurementType();
+                                        if (localSpecialProcurementType.equals("30")) {
+                                            // skip if local Special Procurement Type == 30 as it is a sub contracting scenario
                                             return null;
                                         } else {
-                                            // set Vendor to EDM Source List V1 local vendor account number
-                                            gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                            // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
+                                            if (!(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) && edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() != null) {
+                                                return null;
+                                            } else {
+                                                // set Vendor to EDM Source List V1 local vendor account number
+                                                gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                                OMPGdmSupplyBo gdmSupplyBo1 = gdmSupplyBo;
+                                                gdmSupplyBo1.setLocationId(planCnsPlnSplLocEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer() + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber());
+                                                LogUtil.getAppLog().info("gdmSupplyBo1 get locationID :{}", planCnsPlnSplLocEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer() + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber());
+                                            }
                                         }
                                     }
                                 }
-                            }
+
                         } else {
                            return null;
                         }
@@ -244,13 +270,15 @@ public class OMPGdmSupplyServiceImpl implements ICommonService {
         } else {
             return null;
         }
-        resultObject.setBaseBo(gdmSupplyBo);
+            resultObject.setBaseBo(gdmSupplyBo);
+            resultObjects.add(resultObject);
     } else {
         FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N1", "Material Global V1 Primary planning code and Material Number are blank");
         resultObject.setFailData(failData);
-        return resultObject;
+        resultObjects.add(resultObject);
+        return resultObjects;
     }
-    return resultObject;
+    return resultObjects;
 }
 
     private FailData writeFailDataToRegion(EDMSourceListV1Entity edmSourceListV1Entity, String ruleCode, String errorValue) {
