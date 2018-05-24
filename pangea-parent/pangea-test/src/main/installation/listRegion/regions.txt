@@ -46,6 +46,7 @@
 /project_one/afpo
 /project_one/afko
 /project_one/affl
+/project_one/rkpf
 /plan/edm_failed_data
 /plan/cons_time_dep_xchange
 /plan/cns_spl_proc_typ
