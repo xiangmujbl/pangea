@@ -56,7 +56,6 @@ public class CommonDaoImpl implements ICommonDao {
     @Override
     public <T> T queryForObject(String region, String queryString, Class<? extends CommonEntity> resultType) {
         T entry = null;
-
         Map.Entry<String, Map<String, Object>> result = AdfViewHelper.queryForMap(region, queryString);
         if (null != result && null != result.getValue()) {
             try {

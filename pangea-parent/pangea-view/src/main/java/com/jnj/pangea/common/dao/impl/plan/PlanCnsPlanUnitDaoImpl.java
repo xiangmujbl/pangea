@@ -38,4 +38,5 @@ public class PlanCnsPlanUnitDaoImpl extends CommonDaoImpl {
                 .and(IConstant.CNS_PLAN_UNIT.PLAN_FLAG).is(planFlag).toQueryString();
         return queryForObject(IConstant.REGION.CNS_PLAN_UNIT, queryString, CnsPlanUnitEntity.class);
     }
+
 }
