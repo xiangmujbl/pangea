@@ -5,6 +5,7 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
@@ -23,6 +24,15 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
 
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+    }
+
+    public EDMMaterialGlobalV1Entity getEntityByLocalMaterialNumberEndsWithParameter(String localMaterialNumber) {
+        if (StringUtils.isNotEmpty(localMaterialNumber)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).endsWith(localMaterialNumber).toQueryString();
+            LogUtil.getCoreLog().info("=====================queryString = " + queryString);
+            return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+        }
+        return null;
     }
 
     public List<EDMMaterialGlobalV1Entity> getEntitiesWithLocalDpParentCode(String localDpParentCode) {
