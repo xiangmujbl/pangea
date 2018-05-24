@@ -69,7 +69,7 @@ public class EDMWrkCtrServiceImpl implements ICommonService {
         wrkCtrBo.setSlocCd(crhdEntity.getLgort_res());
         wrkCtrBo.setMixingInd(crhdEntity.getMixmat());
         //J1 T2
-        List<ProjectOneCrtxEntity> crtxEntities = crtxDao.getEntityWithObjid(crhdEntity.getObjid());
+        List<ProjectOneCrtxEntity> crtxEntities = crtxDao.getEntityWithObjid(crhdEntity.getObjid(),crhdEntity.getObjty());
         LogUtil.getCoreLog().info("--------------------crtxEntities--------"+crtxEntities);
         if (crtxEntities != null && crtxEntities.size() > 0) {
             String capyDesc = "";

@@ -20,9 +20,11 @@ public class ProjectOneCrtxDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<ProjectOneCrtxEntity> getEntityWithObjid(String objid) {
-        if (StringUtils.isNotBlank(objid)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_CRTX.OBJID).is(objid).toQueryString();
+    public List<ProjectOneCrtxEntity> getEntityWithObjid(String objid,String objty) {
+        if (StringUtils.isNotBlank(objid) && StringUtils.isNotBlank(objty)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_CRTX.OBJID).is(objid)
+                    .and(IConstant.PROJECT_ONE_CRTX.OBJTY).is(objty)
+                    .toQueryString();
             return queryForList(IConstant.REGION.PROJECT_ONE_CRTX, queryString, ProjectOneCrtxEntity.class);
         }
         return null;

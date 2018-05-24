@@ -11,7 +11,10 @@
                         <expression></expression>
                     </relation>
                     <relation path="/project_one/crtx">
-                        <expression>objid=/project_one/crhd.objid</expression>
+                        <expression>
+                            objid=/project_one/crhd.objid,
+                            objty=/project_one/crhd.objty
+                        </expression>
                     </relation>
                 </relations>
             </region>
@@ -23,7 +26,7 @@
             </region>
             <region path="/project_one/crtx">
                 <columns>
-                    objid,spras,ktext
+                    objty,objid,spras,ktext
                 </columns>
             </region>
             <region path="/edm/wrk_ctr">

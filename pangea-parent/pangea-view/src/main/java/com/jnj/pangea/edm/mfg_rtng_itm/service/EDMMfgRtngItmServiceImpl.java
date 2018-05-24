@@ -44,12 +44,14 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
         if (entityWithLocalSourceSystem != null) {
             mfgRtngItmBo.setSrcSysCd(entityWithLocalSourceSystem.getSourceSystem());
         }
-        //J1
+        //J1 F1
         List<ProjectOnePlasEntity> plasEntityList = plasDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
         if (plasEntityList == null || plasEntityList.size() == 0) {
             return resultObject;
         } else {
-            mfgRtngItmBo.setRtngTypCd(plpoEntity.getPlnty());
+            if(plpoEntity.getPlnty().equals(IConstant.VALUE.N) || plpoEntity.getPlnty().equals(IConstant.VALUE.TWO)){
+                mfgRtngItmBo.setRtngTypCd(plpoEntity.getPlnty());
+            }
         }
         mfgRtngItmBo.setRtngGrpCd(plpoEntity.getPlnnr());
         mfgRtngItmBo.setRtngItmNum(plpoEntity.getPlnkn());

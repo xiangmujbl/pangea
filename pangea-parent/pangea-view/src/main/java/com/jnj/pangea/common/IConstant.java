@@ -743,6 +743,7 @@ public interface IConstant {
 
     interface PROJECT_ONE_CRTX {
         String OBJID = "objid";
+        String OBJTY="objty";
     }
 
     interface MFG_RTNG_RLTNSHP {
@@ -871,6 +872,7 @@ public interface IConstant {
         String CRITICAL_ROH = "Critical-ROH";
         String CURRENCY_V = "1.0";
         String ONE = "1";
+        String TWO = "2";
         String AAAADL = "AAAADL";
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
@@ -918,7 +920,7 @@ public interface IConstant {
         String BOM_86400 = "86400";
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
-        String PROPORTIONAL_BACK_SLANT="/proportional";
+        String PROPORTIONAL_BACK_SLANT = "/proportional";
     }
 
     interface FAILED {
