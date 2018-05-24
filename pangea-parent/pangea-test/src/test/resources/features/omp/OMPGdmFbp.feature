@@ -35,7 +35,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     #currency_v1-localCurrency=cns_fin_plan_val-currency
     Given I import "/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
       | sourceSystem | localCurrency | currencyCode | currencyName   | isoNumeric |
-      | CONS_LATAM   | BRL           | CADP         | Brazilian Real | -          |
+      | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
       | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
 
     #cns_plan_parameter-attribute=material_global_v1-sourceSystem
@@ -72,8 +72,8 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
       | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value | volume |
-      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | BRL        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | BRL        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -125,7 +125,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     #currency_v1-localCurrency=cns_fin_plan_val-currency
     Given I import "/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
       | sourceSystem | localCurrency | currencyCode | currencyName   | isoNumeric |
-      | CONS_LATAM   | BRL           | CADP         | Brazilian Real | -          |
+      | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
       | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
       | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
 
@@ -165,8 +165,8 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
       | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value | volume |
-      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | BRL        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | BRL        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -223,9 +223,9 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     #currency_v1-localCurrency=cns_fin_plan_val-currency
     Given I import "/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
       | sourceSystem | localCurrency | currencyCode | currencyName   | isoNumeric |
-      | CONS_LATAM   | BRL           | CADP         | Brazilian Real | -          |
       | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
-      | CONS_LATAM   | BRL           | CADP         | Brazilian Real | -          |
+      | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
+      | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
       | CONS_LATAM   | BRL           | CAED         | Brazilian Real | -          |
 
     #cns_plan_parameter-attribute=material_global_v1-sourceSystem
@@ -267,10 +267,10 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
       | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value | volume |
-      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | BRL        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | BRL        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | BRL        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | BRL        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED         | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
