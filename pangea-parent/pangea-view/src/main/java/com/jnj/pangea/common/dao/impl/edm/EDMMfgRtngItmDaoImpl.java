@@ -19,14 +19,14 @@ public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<EDMMfgRtngItmEntity> getEntityWithConditions(String srcSysCd,String rtngTypCd,String rtngItmNum,String rtngGrpCd) {
+    public EDMMfgRtngItmEntity getEntityWithConditions(String srcSysCd,String rtngTypCd,String rtngItmNum,String rtngGrpCd) {
         if(StringUtils.isNotBlank(srcSysCd) && StringUtils.isNotBlank(rtngTypCd) &&StringUtils.isNotBlank(rtngItmNum) && StringUtils.isNotBlank(rtngGrpCd)){
             String queryString = QueryHelper.buildCriteria(IConstant.MFG_RTNG_ITM.SRCSYSCD).is(srcSysCd)
                     .and(IConstant.MFG_RTNG_ITM.RTNGTYPCD).is(rtngTypCd)
                     .and(IConstant.MFG_RTNG_ITM.RTNGITMNUM).is(rtngItmNum)
                     .and(IConstant.MFG_RTNG_ITM.RTNGGRPCD).is(rtngGrpCd)
                     .toQueryString();
-            return queryForList(IConstant.REGION.MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
+            return queryForObject(IConstant.REGION.MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
         }
 
         return null;

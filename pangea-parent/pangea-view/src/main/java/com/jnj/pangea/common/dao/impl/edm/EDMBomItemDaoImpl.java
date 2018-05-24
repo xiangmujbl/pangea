@@ -19,12 +19,13 @@ public class EDMBomItemDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<EDMBomItemEntity> getEntityWithConditions(String bomNum, String srcSysCd) {
+    public EDMBomItemEntity getEntityWithConditions(String bomNum, String srcSysCd ) {
         if (StringUtils.isNotBlank(bomNum) && StringUtils.isNotBlank(srcSysCd)) {
             String queryString = QueryHelper.buildCriteria(IConstant.BOM_ITEM.BOMNUM).is(bomNum)
                     .and(IConstant.BOM_ITEM.SRCSYSCD).is(srcSysCd)
+                    .and(IConstant.BOM_ITEM.BOMCATCD).is(IConstant.VALUE.M)
                     .toQueryString();
-            return queryForList(IConstant.REGION.BOM_ITEM, queryString, EDMBomItemEntity.class);
+            return queryForObject(IConstant.REGION.BOM_ITEM, queryString, EDMBomItemEntity.class);
         }
         return null;
     }

@@ -134,6 +134,7 @@ public interface IConstant {
         String MFG_RTNG_ITM_NDE = "/edm/mfg_rtng_itm_nde";
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
         String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
+        String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
     }
 
 
@@ -529,8 +530,8 @@ public interface IConstant {
 
     interface PROJECT_ONE_MCHB {
         String CHARG = "charg";
-        String  MATNR = "matnr";
-        String  WERKS = "werks";
+        String MATNR = "matnr";
+        String WERKS = "werks";
     }
 
     interface PROJECT_ONE_MKOL {
@@ -548,7 +549,7 @@ public interface IConstant {
         String WERKS = "werks";
     }
 
-        interface PROJECT_ONE_AFPO {
+    interface PROJECT_ONE_AFPO {
         String AUFNR = "aufnr";
     }
 
@@ -739,12 +740,13 @@ public interface IConstant {
         String FIELD_LEKNZ_VALUE_X = "x";
         String BOMNUM = "bomNum";
         String SRCSYSCD = "srcSysCd";
+        String BOMCATCD = "bomCatCd";
 
     }
 
     interface PROJECT_ONE_CRTX {
         String OBJID = "objid";
-        String OBJTY="objty";
+        String OBJTY = "objty";
     }
 
     interface MFG_RTNG_RLTNSHP {
@@ -772,6 +774,10 @@ public interface IConstant {
         String FIELD_PLNTY_VALUE_2 = "2";
         String FIELD_PLNTY_VALUE_N = "N";
         String SOFT_ZAEHL_VALUE = "zaehl";
+        String SRCSYSCD = "srcSysCd";
+        String RTNGTYPCD = "rtngTypCd";
+        String RTNGGRPCD = "rtngGrpCd";
+        String RTNGGRPCNTRNBR = "rtngGrpCntrNbr";
     }
 
     interface PLAN_CNS_TLANE_CONTROL {
@@ -830,6 +836,7 @@ public interface IConstant {
         String V = "V";
         String C = "C";
         String S = "S";
+        String M = "M";
         String SPRAS_EN = "EN";
         String PLSCN = "000";
         String YYYYMMDD = "yyyyMMdd";

@@ -91,7 +91,6 @@
                     </relation>
                 </relations>
             </region>
-
             <region path="/edm/matl_mfg_rtng">
                 <columns>
                     srcSysCd,rtngTypCd,rtngGrpcntrNum,plntCd,rntgGrpCntrNbr,matlNum,rtngGrpCd
@@ -105,9 +104,21 @@
                             rntgGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr
                         </expression>
                     </relation>
+                    <relation path="/edm/mfg_rtng_hdr">
+                        <expression>
+                            srcSysCd=/edm/matl_mfg_rtng.srcSysCd ,
+                            rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd ,
+                            rtngGrpCd=/edm/matl_mfg_rtng.rtngGrpCd ,
+                            rtngGrpCntrNbr=/edm/matl_mfg_rtng.rtngGrpCntrNbr
+                        </expression>
+                    </relation>
                 </relations>
             </region>
-
+            <region path="/edm/mfg_rtng_hdr">
+                <columns>
+                    srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,toLtSzQty
+                </columns>
+            </region>
             <region path="/edm/mfg_rtng_itm_nde">
                 <columns>
                     srcSysCd,rtngTypCd,rtngNdeNum,rtngGrpCntrNbr,rtngGrpCd
@@ -126,7 +137,7 @@
 
             <region path="/edm/mfg_rtng_itm">
                 <columns>
-                    rtngTypCd,rtngItmNum,srcSysCd,rtngGrpCd,operNum
+                    rtngTypCd,rtngItmNum,srcSysCd,rtngGrpCd,operNum,bsQty
                 </columns>
             </region>
 

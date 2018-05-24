@@ -11,6 +11,7 @@ public class EDMMfgRtngItmEntity extends CommonEntity {
     private String srcSysCd;
     private String rtngGrpCd;
     private String operNum;
+    private String bsQty;
 
     public EDMMfgRtngItmEntity(Map<String, Object> map) {
         super(map);
@@ -20,6 +21,15 @@ public class EDMMfgRtngItmEntity extends CommonEntity {
         setSrcSysCd((String) map.get("srcSysCd"));
         setRtngGrpCd((String) map.get("rtngGrpCd"));
         setOperNum((String) map.get("operNum"));
+        setBsQty((String) map.get("bsQty"));
+    }
+
+    public String getBsQty() {
+        return bsQty;
+    }
+
+    public void setBsQty(String bsQty) {
+        this.bsQty = bsQty;
     }
 
     public String getRtngTypCd() {
