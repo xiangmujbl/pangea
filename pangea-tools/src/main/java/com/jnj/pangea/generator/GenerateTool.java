@@ -9,19 +9,19 @@ public class GenerateTool {
 
     public static void main(String[] args) {
 
-      ViewCreator viewCreator = new ViewCreator("omp", "product_detail", "", false);
+      ViewCreator viewCreator = new ViewCreator("edm", "inventory_stock", "3678", false);
 
         // first step
         viewCreator.generateTestJavaFile();
-//        viewCreator.generateCurationXMLFile();
-//        // fill the xml, and run below
-//        viewCreator.generateFeature();
-//        viewCreator.generateBo();
-//        viewCreator.generateEntityAndDao();
-//        viewCreator.generateController();
-//        viewCreator.generateService();
-//
-//        viewCreator.appendNewRegionPath();
-//        viewCreator.generateRegionGridXML();
+        viewCreator.generateCurationXMLFile();
+        // fill the xml, and run below
+        viewCreator.generateFeature();
+        viewCreator.generateBo();
+        viewCreator.generateEntityAndDao();
+        viewCreator.generateController();
+        viewCreator.generateService();
+
+        viewCreator.appendNewRegionPath();
+        viewCreator.generateRegionGridXML();
     }
 }

@@ -20,16 +20,16 @@ Feature: EDMWrkCtr AEAZ-4243
     And I wait "/edm/source_system_v1" Async Queue complete
 
     Given I import "/project_one/crtx" by keyFields "objid,spras,ktext"
-      | objid    | spras | ktext     |
-      | 10000001 | EN    | Machine 1 |
-      | 10000001 | ES    | Maquina 1 |
-      | 10000001 | PT    | M1        |
-      | 10000002 | EN    | Machine 2 |
-      | 10000002 | ES    | Maquina 2 |
-      | 10000003 | PT    | M3        |
-      | 10000004 | ES    | Maquina 4 |
-      | 10000004 | PT    | M4        |
-      | 10000005 | ES    |           |
+      | objty | objid    | spras | ktext     |
+      | A     | 10000001 | EN    | Machine 1 |
+      | A     | 10000001 | ES    | Maquina 1 |
+      | A     | 10000001 | PT    | M1        |
+      | B     | 10000002 | EN    | Machine 2 |
+      | B     | 10000002 | ES    | Maquina 2 |
+      | C     | 10000003 | PT    | M3        |
+      | D     | 10000004 | ES    | Maquina 4 |
+      | D     | 10000004 | PT    | M4        |
+      | E     | 10000005 | ES    |           |
     And I wait "/project_one/crtx" Async Queue complete
 
 

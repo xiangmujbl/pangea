@@ -184,4 +184,8 @@
 
 /edm/mfg_order
 
-/edm/mfg_order_itm
+/edm/mfg_order_rtng
+/omp/GDMBOM
+
+
+

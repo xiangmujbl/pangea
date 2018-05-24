@@ -82,6 +82,9 @@ public interface IConstant {
         String PROJECT_ONE_EINE = "/project_one/eine";
         String PROJECT_ONE_MCHA = "/project_one/mcha";
         String PROJECT_ONE_MCHB = "/project_one/mchb";
+        String PROJECT_ONE_MSLB = "/project_one/mslb";
+        String PROJECT_ONE_MKOL = "/project_one/mkol";
+        String PROJECT_ONE_MARD = "/project_one/mard";
         String PROJECT_ONE_AFPO = "/project_one/afpo";
         String PROJECT_ONE_AUFK = "/project_one/aufk";
         String PROJECT_ONE_JEST = "/project_one/jest";
@@ -526,9 +529,26 @@ public interface IConstant {
 
     interface PROJECT_ONE_MCHB {
         String CHARG = "charg";
+        String  MATNR = "matnr";
+        String  WERKS = "werks";
     }
 
-    interface PROJECT_ONE_AFPO {
+    interface PROJECT_ONE_MKOL {
+        String MATNR = "matnr";
+        String WERKS = "werks";
+    }
+
+    interface PROJECT_ONE_MSLB {
+        String MATNR = "matnr";
+        String WERKS = "werks";
+    }
+
+    interface PROJECT_ONE_MARD {
+        String MATNR = "matnr";
+        String WERKS = "werks";
+    }
+
+        interface PROJECT_ONE_AFPO {
         String AUFNR = "aufnr";
     }
 
@@ -723,6 +743,7 @@ public interface IConstant {
 
     interface PROJECT_ONE_CRTX {
         String OBJID = "objid";
+        String OBJTY="objty";
     }
 
     interface MFG_RTNG_RLTNSHP {
@@ -851,6 +872,7 @@ public interface IConstant {
         String CRITICAL_ROH = "Critical-ROH";
         String CURRENCY_V = "1.0";
         String ONE = "1";
+        String TWO = "2";
         String AAAADL = "AAAADL";
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
@@ -898,7 +920,7 @@ public interface IConstant {
         String BOM_86400 = "86400";
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
-        String PROPORTIONAL_BACK_SLANT="/proportional";
+        String PROPORTIONAL_BACK_SLANT = "/proportional";
     }
 
     interface FAILED {
