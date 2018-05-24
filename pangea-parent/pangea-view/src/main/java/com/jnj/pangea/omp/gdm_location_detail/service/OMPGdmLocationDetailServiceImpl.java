@@ -37,22 +37,19 @@ public class OMPGdmLocationDetailServiceImpl {
         values[2] = cnsPlantAttrEntity.getLocationAttribute3Value();
         values[3] = cnsPlantAttrEntity.getLocationAttribute4Value();
 
-        // T1 - create multi records per attr
+        // T1 - create multi records per attribute
         for (int i=0;i<4;i++){
 
             ResultObject resultObject = new ResultObject();
 
-            if (names[i] == null) {
-                names[i] = "";
-            }
-            if (values[i] == null) {
-                values[i] = "";
-            }
-
-            //if both are empty, nothing to do.
-            if(!(names[i].isEmpty() && values[i].isEmpty())) {
+            //if attribute is empty, nothing to do.
+            if(null != names[i] && !names[i].isEmpty()) {
 
                 OMPGdmLocationDetailBo gdmLocationDetailBo = new OMPGdmLocationDetailBo();
+
+                if (values[i] == null) {
+                    values[i] = "";
+                }
 
                 // Rule T1/T2
                 gdmLocationDetailBo.setName(names[i]);
@@ -67,11 +64,11 @@ public class OMPGdmLocationDetailServiceImpl {
 
 
                 // Rule C1
-                String locationid = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
-                gdmLocationDetailBo.setLocationId(locationid);
+                String locationId = cnsPlantAttrEntity.getSourceSystem() + IConstant.VALUE.UNDERLINE + cnsPlantAttrEntity.getLocalPlant();
+                gdmLocationDetailBo.setLocationId(locationId);
 
                 // Rule C2
-                String locationDetailId = locationid + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + names[i] + IConstant.VALUE.BACK_SLANT + values[i];
+                String locationDetailId = locationId + IConstant.VALUE.BACK_SLANT + CLASS + IConstant.VALUE.BACK_SLANT + names[i] + IConstant.VALUE.BACK_SLANT + values[i];
                 gdmLocationDetailBo.setLocationDetailId(locationDetailId);
 
 
@@ -85,6 +82,7 @@ public class OMPGdmLocationDetailServiceImpl {
                 // Rule N5
                 gdmLocationDetailBo.setActiveSOPERP(IConstant.VALUE.NO);
 
+                // Rule N6
                 gdmLocationDetailBo.setDescription(IConstant.VALUE.PANGEA);
 
                 resultObject.setBaseBo(gdmLocationDetailBo);

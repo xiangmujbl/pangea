@@ -1,4 +1,4 @@
-@pangea_test @AEAZ-2376
+@pangea_test @AEAZ-3680
 Feature:  OMPGdmLocationDetail-Curation
 
   Scenario: Full Load curation AEAZ-3680
