@@ -5,6 +5,8 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.plan.PlanCnsDemGrpAsgnEntity;
 
+import java.util.List;
+
 public class PlanCnsDemGrpAsgnDaoImpl extends CommonDaoImpl {
 
     private static PlanCnsDemGrpAsgnDaoImpl instance;
@@ -37,5 +39,11 @@ public class PlanCnsDemGrpAsgnDaoImpl extends CommonDaoImpl {
             return queryForObject(IConstant.REGION.PLAN_CNS_DEM_GRP_ASGN, queryString, PlanCnsDemGrpAsgnEntity.class);
         }
         return null;
+    }
+
+    public List<PlanCnsDemGrpAsgnEntity> getEntityWithDemandGroupAndSourceSystem(String demandGroup, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.DEMAND_GROUP).is(demandGroup)
+                .and(IConstant.PLAN_CNS_DEM_GRP_ASGN.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_DEM_GRP_ASGN, queryString, PlanCnsDemGrpAsgnEntity.class);
     }
 }

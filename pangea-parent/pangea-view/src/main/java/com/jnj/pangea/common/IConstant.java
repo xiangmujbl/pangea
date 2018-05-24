@@ -137,7 +137,6 @@ public interface IConstant {
         String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
     }
 
-
     interface BOM_HDR {
         String SRCSYSCD = "srcSysCd";
         String ALTBOMNUM = "altBomNum";
@@ -611,6 +610,8 @@ public interface IConstant {
         String CUSTOMER_ID = "customerId";
         String SALES_ORGANIZATION = "salesOrganization";
         String CUSTOMER_SHIP_TO = "customerShipTo";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String DEMAND_GROUP = "demandGroup";
     }
 
     interface PROJECT_ONE_KNVH {
@@ -641,6 +642,7 @@ public interface IConstant {
     interface PLAN_CNS_CUST_CHANNEL {
         String CHANNEL = "channel";
         String SALES_ORG = "salesOrg";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface PLAN_CNS_SO_TYPE_INCL {
