@@ -1,9 +1,9 @@
-package com.jnj.pangea.edm.outbound_delivery_line_v1.bo;
+package com.jnj.pangea.edm.outbound_delivery_line.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class EDMOutboundDeliveryLineV1Bo extends BaseBo {
+public class EDMOutboundDeliveryLineBo extends BaseBo {
 
     private String srcSysCd;
     private String delvDocId;

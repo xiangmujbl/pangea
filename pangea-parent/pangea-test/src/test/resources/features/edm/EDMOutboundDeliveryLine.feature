@@ -18,7 +18,7 @@ Feature: EDMOutboundDeliveryLineV1 AEAZ-4690
 
     And I wait "/edm/source_system_v1" Async Queue complete
 
-    When I submit task with xml file "xml/edm/EDMOutboundDeliveryLineV1.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/edm/EDMOutboundDeliveryLine.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/outbound_delivery_line_v1" by keyFields "srcSysCd,delvDocId,delvLineNbr"
       | srcSysCd   | delvDocId  | delvLineNbr | matlNum            | btchNum | vendBtchNum | shippingPlntCd | baseUnitOfMeasureCd | shippedQty | actlSkuDelvQty | slsOrdrNum | slsOrdrLineNbr |

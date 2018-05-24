@@ -1,6 +1,6 @@
 <adf-curation>
     <curation mainRegion="/project_one/lips" viewRegion="/edm/outbound_delivery_line_v1" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.edm.outbound_delivery_line_v1.controller.EDMOutboundDeliveryLineV1Controller">
+              executionClassName="com.jnj.pangea.edm.outbound_delivery_line.controller.EDMOutboundDeliveryLineController">
         <regions>
 
             <region path="/project_one/lips">

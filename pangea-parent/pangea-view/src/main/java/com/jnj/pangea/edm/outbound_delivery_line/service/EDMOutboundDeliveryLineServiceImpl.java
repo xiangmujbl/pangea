@@ -1,19 +1,19 @@
-package com.jnj.pangea.edm.outbound_delivery_line_v1.service;
+package com.jnj.pangea.edm.outbound_delivery_line.service;
 
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.project_one.LipsEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.edm.outbound_delivery_line_v1.bo.EDMOutboundDeliveryLineV1Bo;
+import com.jnj.pangea.edm.outbound_delivery_line.bo.EDMOutboundDeliveryLineBo;
 
-public class EDMOutboundDeliveryLineV1ServiceImpl implements ICommonService {
+public class EDMOutboundDeliveryLineServiceImpl implements ICommonService {
 
-    private static EDMOutboundDeliveryLineV1ServiceImpl instance;
+    private static EDMOutboundDeliveryLineServiceImpl instance;
 
-    public static EDMOutboundDeliveryLineV1ServiceImpl getInstance() {
+    public static EDMOutboundDeliveryLineServiceImpl getInstance() {
         if (instance == null) {
-            instance = new EDMOutboundDeliveryLineV1ServiceImpl();
+            instance = new EDMOutboundDeliveryLineServiceImpl();
         }
         return instance;
     }
@@ -26,7 +26,7 @@ public class EDMOutboundDeliveryLineV1ServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         LipsEntity lipsEntity = (LipsEntity) o;
 
-        EDMOutboundDeliveryLineV1Bo outboundDeliveryLineV1Bo = new EDMOutboundDeliveryLineV1Bo();
+        EDMOutboundDeliveryLineBo outboundDeliveryLineV1Bo = new EDMOutboundDeliveryLineBo();
 
         // rules T1
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
