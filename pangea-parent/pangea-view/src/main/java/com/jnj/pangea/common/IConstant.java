@@ -911,6 +911,8 @@ public interface IConstant {
 
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
+
+        String BR = "BR";
         String BATCH_START = "batchstart";
         String BATCH_END = "batchend";
         String CONTINU = "continu";
@@ -921,6 +923,8 @@ public interface IConstant {
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
+
+
     }
 
     interface FAILED {

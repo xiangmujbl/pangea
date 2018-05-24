@@ -35,14 +35,22 @@ public class EDMMfgRtngSeqServiceImpl implements ICommonService {
         PlflEntity plflEntity = (PlflEntity) o;
         if (null != plflEntity) {
             if (StringUtils.isNotEmpty(plflEntity.getLoekz()) && IConstant.VALUE.X.equals(plflEntity.getLoekz())) {
-                return resultObject;
+                        return resultObject;
             }
         }
 
         EDMMfgRtngSeqBo mfgRtngSeqBo = new EDMMfgRtngSeqBo();
 
         //rule F1
-        mfgRtngSeqBo.setRtngTypCd(IConstant.VALUE.N);
+        if(null!=plflEntity){
+           String plnty = plflEntity.getPlnty();
+           if (StringUtils.isNotEmpty(plnty)){
+               if ( IConstant.VALUE.TWO.equals(plnty) || IConstant.VALUE.N.equals(plnty) ){
+                   mfgRtngSeqBo.setRtngTypCd(plnty);
+               }
+           }
+        }
+
         //rule T1
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
         if (null != edmSourceSystemV1Entity) {
@@ -98,7 +106,6 @@ public class EDMMfgRtngSeqServiceImpl implements ICommonService {
 
             }
         }
-        LogUtil.getCoreLog().info("======mfgRtngSeqBo=====" + mfgRtngSeqBo);
         resultObject.setBaseBo(mfgRtngSeqBo);
         return resultObject;
     }
