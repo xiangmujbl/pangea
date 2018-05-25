@@ -122,6 +122,16 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         return null;
 
     }
+    public PlanCnsPlanParameterEntity getEntityWithSourceSystem(String sourceSystem) {
+if (StringUtils.isNotBlank(sourceSystem)){
+    String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+            .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(IConstant.VALUE.SEND_TO_OMP)
+            .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(sourceSystem)
+            .toQueryString();
+    return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+}
+        return null;
+    }
     public PlanCnsPlanParameterEntity getEntityWithAttributeListForLFUOne(String sourceSystem) {
         if(StringUtils.isBlank(sourceSystem)){
             return null;

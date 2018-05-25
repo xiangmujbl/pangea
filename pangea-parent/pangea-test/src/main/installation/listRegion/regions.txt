@@ -174,8 +174,6 @@
 /plan/user_override
 /project_one/lips
 /edm/outbound_delivery_line_v1
-
-
 /edm/matl_bom
 /edm/bom_item
 /edm/matl_prod_versn
@@ -187,5 +185,6 @@
 /edm/mfg_order
 /edm/mfg_order_rtng
 /omp/GDMBOM
+/omp/gdm_resource
 /omp/gdm_bom
 /edm/mfg_rtng_hdr

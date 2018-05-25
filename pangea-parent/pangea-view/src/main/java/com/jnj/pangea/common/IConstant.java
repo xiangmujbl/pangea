@@ -6,6 +6,8 @@ package com.jnj.pangea.common;
 public interface IConstant {
 
     interface REGION {
+        String EDM_CAPY_HDR ="/edm/capy_hdr/edm/capy_hdr";
+        String EDM_WRK_CTR = "/edm/wrk_ctr";
         String PROJECT_ONE_Qave = "/project_one/qave";
         // ------fail region
         String FAIL_DATA = "/plan/edm_failed_data";
@@ -324,6 +326,14 @@ public interface IConstant {
         String LOCAL_COUNTRY = "localCountry";
         String SOURCE_SYSTEM = "sourceSystem";
     }
+    interface EDM_WRK_CTR {
+        String SRC_SYS_CD = "srcSysCd";
+        String CAPY_NUM = "capyNum";
+    }
+    interface EDM_CAPY_HDR {
+        String CAP_CAT_CD = "capyCatCd";
+    }
+
 
     interface PROJECT_ONE_KAKT {
         String KAPID = "kapid";
@@ -876,6 +886,7 @@ public interface IConstant {
         String ACTIVE = "ACTIVE";
         String BASE = "BASE";
         String STR_ONE = "001";
+        String STR_NINE = "009";
         String OMP = "omp";
         String CNS_SALES_HISTORY = "CNS_SalesHistory";
         String RESTRICT_SELECT = "restrictSelect";
@@ -950,10 +961,11 @@ public interface IConstant {
 
             String DP = "DP";
             String SP = "SP";
+            String PP = "PP";
         }
 
         interface INTERFACE_ID {
-
+            String GDM_RESOURCE = "GDMResource";
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
             String OMP_GDM_PRODUCT = "OMPGdmProduct";
             String OMP_GDM_PRODUCT_UNIT_CONVERSION = "OMPGdmProductUnitConversion";
@@ -981,6 +993,7 @@ public interface IConstant {
             String T5 = "T5";
             String T8 = "T8";
             String C1 = "C1";
+            String C2 = "C2";
             String C5 = "C5";
             String J1 = "J1";
             String J2 = "J2";
