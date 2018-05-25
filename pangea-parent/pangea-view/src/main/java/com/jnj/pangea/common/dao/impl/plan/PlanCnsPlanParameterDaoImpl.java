@@ -63,6 +63,14 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
 
+    public PlanCnsPlanParameterEntity getEntityWithAttribute(String sourceSystem,String attribute) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(attribute)
+                .and(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
+
+
     public List<PlanCnsPlanParameterEntity> getEntityWithAttributeList(String attribute) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(attribute).toQueryString();
         return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
@@ -113,5 +121,14 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         }
         return null;
 
+    }
+    public PlanCnsPlanParameterEntity getEntityWithAttributeListForLFUOne(String sourceSystem) {
+        if(StringUtils.isBlank(sourceSystem)){
+            return null;
+        }
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.LFU.DATA_OBJECT).is(IConstant.VALUE.SEND_TO_OMP)
+                .toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
 }

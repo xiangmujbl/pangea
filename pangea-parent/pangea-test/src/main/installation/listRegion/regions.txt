@@ -47,6 +47,7 @@
 /project_one/afko
 /project_one/affl
 /project_one/rkpf
+/project_one/afvv
 /plan/edm_failed_data
 /plan/cons_time_dep_xchange
 /plan/cns_spl_proc_typ
@@ -181,16 +182,10 @@
 /edm/matl_mfg_rtng
 /edm/mfg_rtng_itm_nde
 /omp/gdm_bom_element
-
+/edm/mfg_order_oper
+/edm/mfg_order_itm
 /edm/mfg_order
-
 /edm/mfg_order_rtng
 /omp/GDMBOM
-
-
-
-
 /omp/gdm_bom
-
-
 /edm/mfg_rtng_hdr

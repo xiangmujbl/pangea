@@ -135,6 +135,12 @@ public interface IConstant {
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
         String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
         String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
+        String  EDM_MFG_ORDER_ITM="/edm/mfg_order_itm";
+        String EDM_MATL_PROD_VERSN="/edm/matl_prod_versn";
+        String EDM_RESERV_ITM="/edm/reserv_itm";
+        String EDM_MFG_ORDER_RTNG="/edm/mfg_order_rtng";
+        String EDM_MFG_ORDER_SEQ="/edm/mfg_order_seq";
+        String EDM_BOM_ITEM="/edm/bom_item";
     }
 
     interface BOM_HDR {
@@ -1004,6 +1010,77 @@ public interface IConstant {
 
             String PROJECT_ONE = "project_one";
         }
+    }
+
+    interface OMP_GDMBOMELEMENT{
+        interface EDM_MFG_ORDER_ITM{
+            public static final String FIELD_SRCSYSCD="srcSysCd";
+            public static final String FIELD_MFGORDRNUM="mfgOrdrNum";
+        }
+        interface MATL_PROD_VERSN{
+            public static final String FIELD_SRCSYSCD="srcSysCd";
+            public static final String FIELD_MATLNUM="matlNum";
+            public static final String FIELD_PLNTCD="plntCd";
+            public static final String FIELD_PRDNTVRSNNUM="prdntVrsnNum";
+        }
+        interface RESERV_ITM{
+            public static final String FIELD_SOURCESYSCD="sourceSysCd";
+            public static final String FIELD_RSRVTNNUM="rsrvtnNum";
+        }
+        interface MFG_ORDER_RTNG{
+            public static final String FIELD_SOURCESYSCD="srcSysCd";
+            public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
+        }
+        interface MFG_ORDER_SEQ{
+            public static final String FIELD_SOURCESYSCD="sourceSysCd";
+            public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
+        }
+        interface BOM_ITEM{
+            public static final String FIELD_SRCSYSCD="srcSysCd";
+            public static final String FIELD_BOMCATCD="bomCatCd";
+            public static final String FIELD_BOMNUM="bomNum";
+            public static final String FIELD_DSTRBTNKEYCD_NAME="GLEI";
+            public static final String FIELD_DSTRBTNKEYCD_VALUE="continu";
+            public static final String FIELD_DSTRBTNKEYCD_MAT_VALUE="batchend";
+
+
+            public static final String FIELD_DSTRBTNKEYCD_BLACK_VALUE="batchstart";
+
+            public static final String FIELD_DSTRBTNKEYCD_ELSE_VALUE="";
+
+
+        }
+        public static final String KEY_SPLIT="/";
+        public static final String QTYFXIND_X="X";
+        public static final String QTYFXIND_X_VALUE="fixed";
+        public static final String QTYFXIND_BLACK="proportional";
+        public static final String QTYFXIND_MAT="proportional";
+
+
+        public static final String LEAVE_BLACK="";
+
+        public static final String ENDEFF="31/12/2998 23:59:59";
+        public static final String STARTEFF="01/01/1980 00:00:00";
+        public static final String __SPLIT="_";
+        public static final String FRONT_BOMID_PRO_LOW="pro";
+        public static final String FRONT_BOMID_PRO_UP="PRO";
+        public static final String DEFAULT_VALUE_YES="YES";
+        public static final String DEFAULT_VALUE_NO="NO";
+        public static final long DEFAULT_VALUE_LEADTIMEOFFSET=864000;
+        public static final String DEFAULT_VALUE_PLANLEVELID_BLANK="*";
+        public static final String DEFAULT_VALUE_0_BLANK="0";
+
+
+        public static final String DEFAULT_VALUE_PlanLevelId_X="DetailedScheduling";
+
+
+        public static final String CLONE_BOMEID="proportional";
+        public static final String CLONE_PLANLEVELID="VolumePlanning";
+        public static final String PATTERN_DECIMAL_5="#.00000";
+        public static final String PATTERN_DECIMAL_3="#.000";
+
+
+
     }
 
     interface RKPF {
