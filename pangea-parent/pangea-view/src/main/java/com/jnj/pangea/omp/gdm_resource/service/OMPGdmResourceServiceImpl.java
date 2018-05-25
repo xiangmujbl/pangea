@@ -91,7 +91,7 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
             String desc = capyHdrEntity.getCapyDesc();
             if (StringUtils.isNotEmpty(desc)) {
                 String[] descT = desc.split("/");
-                if (descT.length>0){
+                if (descT.length>2){
                     String plntcd = capyHdrEntity.getPlntCd();
                     if (StringUtils.isNotEmpty(plntcd)) {
                         if (StringUtils.isNotEmpty(descT[0])) {
@@ -113,7 +113,7 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
         if (null != capyHdrEntity) {
             String plntcd = capyHdrEntity.getPlntCd();
             if (StringUtils.isNotEmpty(plntcd)) {
-                gdmResourceBo.setLocationId(capyHdrEntity.getSrcSysCd() + IConstant.VALUE.SPACE + capyHdrEntity.getPlntCd());
+                gdmResourceBo.setLocationId(capyHdrEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + capyHdrEntity.getPlntCd());
             } else {
                 String errorValue = "Plant Id not found";
                 String errorCode = IConstant.FAILED.ERROR_CODE.C2;
