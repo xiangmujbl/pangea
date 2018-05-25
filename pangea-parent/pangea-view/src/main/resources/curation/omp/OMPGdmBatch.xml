@@ -6,7 +6,7 @@
 
             <region path="/edm/batch_master_v1">
                 <columns>
-                    btchNum,localBatchExpDate,localBatchMfgDate,srcSysCd,localPlant,matlNum
+                    btchNum,btchExpDt,btchMfgDt,srcSysCd,localPlant,matlNum
                 </columns>
                 <relations>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
