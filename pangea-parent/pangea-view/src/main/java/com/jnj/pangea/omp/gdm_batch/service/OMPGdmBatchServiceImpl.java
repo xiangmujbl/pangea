@@ -84,7 +84,7 @@ public class OMPGdmBatchServiceImpl implements ICommonService {
            // if(!batchMasterV1Entity.getLocalPlant().isEmpty()&&!batchMasterV1Entity.getLocalBatchNumber().isEmpty()
            //         &&!batchMasterV1Entity.getSrcSysCd().isEmpty()){
 
-                if(!batchMasterV1Entity.getLocalPlant().isEmpty()&&!batchMasterV1Entity.getBtchNum().isEmpty() && !batchMasterV1Entity.getMatlNum().isEmpty()
+                if(!batchMasterV1Entity.getLocalPlant().isEmpty()&& && batchMasterV1Entity.getBtchNum() !=null && !batchMasterV1Entity.getBtchNum().isEmpty() && !batchMasterV1Entity.getMatlNum().isEmpty()
                         &&!batchMasterV1Entity.getSrcSysCd().isEmpty()){
                 String locationId = batchMasterV1Entity.getSrcSysCd()+"_"+batchMasterV1Entity.getLocalPlant();
                 String batchId = gdmBatchBo.getProductId()+"/"+locationId+"/"+batchMasterV1Entity.getBtchNum();
