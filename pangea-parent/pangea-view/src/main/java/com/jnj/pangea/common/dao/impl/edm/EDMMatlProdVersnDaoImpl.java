@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
+import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
@@ -43,5 +44,31 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
 
         }
         return null;
+    }
+
+    public List<EDMMatlProdVersnEntity> getEntityWithConditions(String srcSysCd, String matlNum, String plntCd, String prdntVrsnNum) {
+
+        ADFCriteria adfCriteria=QueryHelper.buildCriteria();
+        if(StringUtils.isNotBlank(srcSysCd)){
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_SRCSYSCD).is(srcSysCd);
+        }else{
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_SRCSYSCD).isNull();
+        }
+        if(StringUtils.isNotBlank(matlNum)){
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_MATLNUM).is(matlNum);
+        }else{
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_MATLNUM).isNull();
+        }
+        if(StringUtils.isNotBlank(plntCd)){
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PLNTCD).is(plntCd);
+        }else{
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PLNTCD).isNull();
+        }
+        if(StringUtils.isNotBlank(prdntVrsnNum)){
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PRDNTVRSNNUM).is(prdntVrsnNum);
+        }else{
+            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PRDNTVRSNNUM).isNull();
+        }
+        return queryForList(IConstant.REGION.EDM_MATL_PROD_VERSN, adfCriteria.toQueryString(), EDMMatlProdVersnEntity.class);
     }
 }

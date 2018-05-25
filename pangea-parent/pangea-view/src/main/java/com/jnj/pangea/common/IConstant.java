@@ -6,6 +6,8 @@ package com.jnj.pangea.common;
 public interface IConstant {
 
     interface REGION {
+        String EDM_CAPY_HDR ="/edm/capy_hdr/edm/capy_hdr";
+        String EDM_WRK_CTR = "/edm/wrk_ctr";
         String PROJECT_ONE_Qave = "/project_one/qave";
         // ------fail region
         String FAIL_DATA = "/plan/edm_failed_data";
@@ -135,6 +137,12 @@ public interface IConstant {
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
         String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
         String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
+        String  EDM_MFG_ORDER_ITM="/edm/mfg_order_itm";
+        String EDM_MATL_PROD_VERSN="/edm/matl_prod_versn";
+        String EDM_RESERV_ITM="/edm/reserv_itm";
+        String EDM_MFG_ORDER_RTNG="/edm/mfg_order_rtng";
+        String EDM_MFG_ORDER_SEQ="/edm/mfg_order_seq";
+        String EDM_BOM_ITEM="/edm/bom_item";
     }
 
     interface BOM_HDR {
@@ -318,6 +326,14 @@ public interface IConstant {
         String LOCAL_COUNTRY = "localCountry";
         String SOURCE_SYSTEM = "sourceSystem";
     }
+    interface EDM_WRK_CTR {
+        String SRC_SYS_CD = "srcSysCd";
+        String CAPY_NUM = "capyNum";
+    }
+    interface EDM_CAPY_HDR {
+        String CAP_CAT_CD = "capyCatCd";
+    }
+
 
     interface PROJECT_ONE_KAKT {
         String KAPID = "kapid";
@@ -870,6 +886,7 @@ public interface IConstant {
         String ACTIVE = "ACTIVE";
         String BASE = "BASE";
         String STR_ONE = "001";
+        String STR_NINE = "009";
         String OMP = "omp";
         String CNS_SALES_HISTORY = "CNS_SalesHistory";
         String RESTRICT_SELECT = "restrictSelect";
@@ -944,10 +961,11 @@ public interface IConstant {
 
             String DP = "DP";
             String SP = "SP";
+            String PP = "PP";
         }
 
         interface INTERFACE_ID {
-
+            String GDM_RESOURCE = "GDMResource";
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
             String OMP_GDM_PRODUCT = "OMPGdmProduct";
             String OMP_GDM_PRODUCT_UNIT_CONVERSION = "OMPGdmProductUnitConversion";
@@ -975,6 +993,7 @@ public interface IConstant {
             String T5 = "T5";
             String T8 = "T8";
             String C1 = "C1";
+            String C2 = "C2";
             String C5 = "C5";
             String J1 = "J1";
             String J2 = "J2";
@@ -1004,6 +1023,77 @@ public interface IConstant {
 
             String PROJECT_ONE = "project_one";
         }
+    }
+
+    interface OMP_GDMBOMELEMENT{
+        interface EDM_MFG_ORDER_ITM{
+            public static final String FIELD_SRCSYSCD="srcSysCd";
+            public static final String FIELD_MFGORDRNUM="mfgOrdrNum";
+        }
+        interface MATL_PROD_VERSN{
+            public static final String FIELD_SRCSYSCD="srcSysCd";
+            public static final String FIELD_MATLNUM="matlNum";
+            public static final String FIELD_PLNTCD="plntCd";
+            public static final String FIELD_PRDNTVRSNNUM="prdntVrsnNum";
+        }
+        interface RESERV_ITM{
+            public static final String FIELD_SOURCESYSCD="sourceSysCd";
+            public static final String FIELD_RSRVTNNUM="rsrvtnNum";
+        }
+        interface MFG_ORDER_RTNG{
+            public static final String FIELD_SOURCESYSCD="srcSysCd";
+            public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
+        }
+        interface MFG_ORDER_SEQ{
+            public static final String FIELD_SOURCESYSCD="sourceSysCd";
+            public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
+        }
+        interface BOM_ITEM{
+            public static final String FIELD_SRCSYSCD="srcSysCd";
+            public static final String FIELD_BOMCATCD="bomCatCd";
+            public static final String FIELD_BOMNUM="bomNum";
+            public static final String FIELD_DSTRBTNKEYCD_NAME="GLEI";
+            public static final String FIELD_DSTRBTNKEYCD_VALUE="continu";
+            public static final String FIELD_DSTRBTNKEYCD_MAT_VALUE="batchend";
+
+
+            public static final String FIELD_DSTRBTNKEYCD_BLACK_VALUE="batchstart";
+
+            public static final String FIELD_DSTRBTNKEYCD_ELSE_VALUE="";
+
+
+        }
+        public static final String KEY_SPLIT="/";
+        public static final String QTYFXIND_X="X";
+        public static final String QTYFXIND_X_VALUE="fixed";
+        public static final String QTYFXIND_BLACK="proportional";
+        public static final String QTYFXIND_MAT="proportional";
+
+
+        public static final String LEAVE_BLACK="";
+
+        public static final String ENDEFF="31/12/2998 23:59:59";
+        public static final String STARTEFF="01/01/1980 00:00:00";
+        public static final String __SPLIT="_";
+        public static final String FRONT_BOMID_PRO_LOW="pro";
+        public static final String FRONT_BOMID_PRO_UP="PRO";
+        public static final String DEFAULT_VALUE_YES="YES";
+        public static final String DEFAULT_VALUE_NO="NO";
+        public static final long DEFAULT_VALUE_LEADTIMEOFFSET=864000;
+        public static final String DEFAULT_VALUE_PLANLEVELID_BLANK="*";
+        public static final String DEFAULT_VALUE_0_BLANK="0";
+
+
+        public static final String DEFAULT_VALUE_PlanLevelId_X="DetailedScheduling";
+
+
+        public static final String CLONE_BOMEID="proportional";
+        public static final String CLONE_PLANLEVELID="VolumePlanning";
+        public static final String PATTERN_DECIMAL_5="#.00000";
+        public static final String PATTERN_DECIMAL_3="#.000";
+
+
+
     }
 
     interface RKPF {

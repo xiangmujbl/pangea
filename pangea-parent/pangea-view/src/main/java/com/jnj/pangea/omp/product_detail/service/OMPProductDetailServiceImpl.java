@@ -67,6 +67,9 @@ public class OMPProductDetailServiceImpl {
                 bo.setDescription(IConstant.VALUE.PANGEA);
             }
 
+            //rules D1
+            bo.setActiveSOPERP(IConstant.VALUE.NO);
+
             resultObject.setBaseBo(bo);
             resultObjectList.add(resultObject);
         }
@@ -96,11 +99,11 @@ public class OMPProductDetailServiceImpl {
             if (edmSourceSystemV1Entity != null) {
                 productDetailBo1.setProductDetailId(edmSourceSystemV1Entity.getLocalSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.PGA + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.LATAM_SKU);
                 productDetailBo1.setProductId(edmSourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
+                productDetailBo1.setName(IConstant.VALUE.LATAM_SKU);
+                productDetailBo1.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
+                productDetailBo1.setActiveFCTERP(IConstant.VALUE.YES);
+                boList.add(productDetailBo1);
             }
-            productDetailBo1.setName(IConstant.VALUE.LATAM_SKU);
-            productDetailBo1.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
-            productDetailBo1.setActiveFCTERP(IConstant.VALUE.YES);
-            boList.add(productDetailBo1);
         }
 
         if (cnsMaterialPlanStatusEntity != null && IConstant.VALUE.CONS_LATAM.equals(materialGlobalV1Entity.getSourceSystem()) && IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getDpRelevant())) {
@@ -112,18 +115,17 @@ public class OMPProductDetailServiceImpl {
             }
             productDetailBo1.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
             productDetailBo1.setActiveFCTERP(IConstant.VALUE.YES);
+            boList.add(productDetailBo1);
 
             OMPProductDetailBo productDetailBo2 = new OMPProductDetailBo();
             if (edmSourceSystemV1Entity != null) {
                 productDetailBo2.setProductDetailId(edmSourceSystemV1Entity.getLocalSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.PGA + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.LATAM_ROOT);
                 productDetailBo2.setValue(edmSourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
                 productDetailBo2.setProductId(edmSourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
+                productDetailBo2.setName(IConstant.VALUE.LATAM_ROOT);
+                productDetailBo2.setActiveFCTERP(IConstant.VALUE.YES);
+                boList.add(productDetailBo2);
             }
-            productDetailBo2.setName(IConstant.VALUE.LATAM_ROOT);
-            productDetailBo2.setActiveFCTERP(IConstant.VALUE.YES);
-
-            boList.add(productDetailBo1);
-            boList.add(productDetailBo2);
         }
 
         if (cnsMaterialPlanStatusEntity != null && IConstant.VALUE.CONS_LATAM.equals(materialGlobalV1Entity.getSourceSystem()) && (IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(cnsMaterialPlanStatusEntity.getNoPlanRelevant())) && (!"".equals(materialGlobalV1Entity.getLocalManufacturingTechnology()))) {
