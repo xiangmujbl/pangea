@@ -35,11 +35,11 @@ public class EDMMfgRtngItmNdeServiceImpl implements ICommonService {
             mfgRtngItmNdeBo.setSrcSysCd(sourceSystemV1Entity.getSourceSystem());
         }
         //rule F1
-        if(qalsEntity.getPlnty().equals("2")||qalsEntity.getPlnty().equals("N")){
-            mfgRtngItmNdeBo.setRtngTypCd(qalsEntity.getPlnty());
-        }else{
-            mfgRtngItmNdeBo.setRtngTypCd("");
+
+        if(qalsEntity.getPlnty()!=null&&!qalsEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_2)&&!qalsEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_N)){
+            return resultObject;
         }
+        mfgRtngItmNdeBo.setRtngTypCd(qalsEntity.getPlnty());
         mfgRtngItmNdeBo.setRtngGrpCd(qalsEntity.getPlnnr());
         mfgRtngItmNdeBo.setRtngGrpCntrNbr(qalsEntity.getPlnal());
         mfgRtngItmNdeBo.setRtngSqncNum(qalsEntity.getPlnfl());
