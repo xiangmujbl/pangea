@@ -86,7 +86,7 @@
 
             <region path="/plan/cns_spl_pln_loc">
                 <columns>
-                    localNumber,vendorOrCustomer,sourceSystem
+                    localNumber,vendorOrCustomer,sourceSystem,localPlant
                 </columns>
             </region>
 
