@@ -7,6 +7,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMMatlProdVersnEntity;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
@@ -34,16 +35,16 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
     }
 
     public List<EDMMatlProdVersnEntity> getEntityListWithFourConditions(String srcSysCd, String plantCd, String matlNum, String altBomNum) {
+        List<EDMMatlProdVersnEntity> matlProdVersnEntityList = new ArrayList<>();
         if (StringUtils.isNotBlank(srcSysCd)&&StringUtils.isNotBlank(plantCd)&&StringUtils.isNotBlank(matlNum)&&StringUtils.isNotBlank(altBomNum)) {
             String queryString = QueryHelper.buildCriteria(IConstant.MATL_PROD_VERSN.SRCSYSCD).is(srcSysCd)
                     .and(IConstant.MATL_PROD_VERSN.PLNTCD).is(plantCd)
                     .and(IConstant.MATL_PROD_VERSN.MATLNUM).is(matlNum)
                     .and(IConstant.MATL_PROD_VERSN.ALTBOMNUM).is(altBomNum)
                     .toQueryString();
-            return queryForList(IConstant.REGION.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
-
+            matlProdVersnEntityList = queryForList(IConstant.REGION.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
         }
-        return null;
+        return matlProdVersnEntityList;
     }
 
     public List<EDMMatlProdVersnEntity> getEntityWithConditions(String srcSysCd, String matlNum, String plntCd, String prdntVrsnNum) {

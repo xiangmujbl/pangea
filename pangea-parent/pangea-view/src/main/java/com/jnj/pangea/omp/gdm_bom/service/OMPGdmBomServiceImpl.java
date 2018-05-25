@@ -68,7 +68,7 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
 
         List<OMPGdmBomBo> gdmBomBoList = new ArrayList<>();
 
-        List<EDMMatlProdVersnEntity> matlProdVersnEntityList = matlProdVersnDao.getEntityListWithFourConditions(matlBomEntity.getPlntCd(),matlBomEntity.getPlntCd(),matlBomEntity.getMatlNum(),matlBomEntity.getAltBomNum());
+        List<EDMMatlProdVersnEntity> matlProdVersnEntityList = matlProdVersnDao.getEntityListWithFourConditions(matlBomEntity.getSrcSysCd(),matlBomEntity.getPlntCd(),matlBomEntity.getMatlNum(),matlBomEntity.getAltBomNum());
         for (EDMMatlProdVersnEntity matlProdVersnEntity:matlProdVersnEntityList){
 
             List<PlanCnsPlanParameterEntity> planParameterEntityList = cnsPlanParameterDao.getEntityListWithSourceSystemAndDataObject(matlBomEntity.getSrcSysCd(),IConstant.VALUE.SEND_TO_OMP);

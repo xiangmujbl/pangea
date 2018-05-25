@@ -6,6 +6,7 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
@@ -86,12 +87,13 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
     }
 
     public List<PlanCnsPlanParameterEntity> getEntityListWithSourceSystemAndDataObject(String sourceSystem, String dataObject) {
+        List<PlanCnsPlanParameterEntity> planParameterEntityList = new ArrayList<>();
         if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(dataObject)) {
             String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
                     .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject).toQueryString();
-            return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+            planParameterEntityList = queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
         }
-        return null;
+        return planParameterEntityList;
     }
 
     public List<PlanCnsPlanParameterEntity> getEntitiesWithConditions(String sourceSystem, String dataObject, String attribute) {
@@ -121,6 +123,16 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         }
         return null;
 
+    }
+    public PlanCnsPlanParameterEntity getEntityWithSourceSystem(String sourceSystem) {
+if (StringUtils.isNotBlank(sourceSystem)){
+    String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+            .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(IConstant.VALUE.SEND_TO_OMP)
+            .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(sourceSystem)
+            .toQueryString();
+    return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+}
+        return null;
     }
     public PlanCnsPlanParameterEntity getEntityWithAttributeListForLFUOne(String sourceSystem) {
         if(StringUtils.isBlank(sourceSystem)){

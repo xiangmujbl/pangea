@@ -69,7 +69,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         String localItemCategory = salesOrderV1Entity.getLocalItemCategory();
 
         PlanCnsCustExclEntity custExclEntity = checkF1(localSalesOrg,localShipToParty);
-        if (null==custExclEntity){
+        if (null!=custExclEntity){
             return null;
         }
 
@@ -182,7 +182,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
     private String checkT5Part1(String localShipToParty, String localSalesOrg) {
         if (StringUtils.isNotEmpty(localShipToParty) && StringUtils.isNotEmpty(localSalesOrg)) {
-            PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrganization(localShipToParty, localSalesOrg);
+            PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrg(localShipToParty, localSalesOrg);
             if (null != demGrpAsgnEntity) {
                 return demGrpAsgnEntity.getDemandGroup();
             }
@@ -205,7 +205,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
                 String kunnr = knvhEntity.getKunnr();
                 if (StringUtils.isNotEmpty(kunnr)) {
-                    PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrganization(kunnr, localSalesOrg);
+                    PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrg(kunnr, localSalesOrg);
                     if (null != demGrpAsgnEntity && StringUtils.isNotEmpty(demGrpAsgnEntity.getDemandGroup())) {
                         return demGrpAsgnEntity.getDemandGroup();
                     }
@@ -223,7 +223,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
                 int traztdNum = Integer.parseInt(traztd) / 240000;
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
                 Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztdNum);
-                return DateUtils.dateToString(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
+                return DateUtils.dateToString(fromDueDate, DateUtils.J_yyyyMMdd_HHmmss);
             }
         }
         return null;
@@ -235,7 +235,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             Date presentDate = new Date();
             int parameterValueLong = (int) Double.parseDouble(parameterValue);
             Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueLong);
-            Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
+            Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.J_yyyyMMdd_HHmmss);
             if (dueDateFormat.getTime() >= resultDate.getTime()) {
                 return true;
             }
@@ -268,15 +268,16 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     }
 
     private PlanCnsOrdRejEntity checkJ2(EDMSalesOrderV1Entity salesOrderV1Entity) {
-        return cnsOrdRejDao.getEntityWithSalesOrgAndRejCd(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalRejReason());
+        String localRejReason = StringUtils.trim(salesOrderV1Entity.getLocalRejReason());
+        return cnsOrdRejDao.getEntityWithSalesOrgAndRejCd(salesOrderV1Entity.getLocalSalesOrg(), localRejReason);
     }
 
     private String checkJ2T9(EDMSalesOrderV1Entity salesOrderV1Entity) {
         PlanCnsOrdRejEntity ordRejEntity = null;
-        if (null != salesOrderV1Entity.getLocalRejReason() || !"".equals(salesOrderV1Entity.getLocalRejReason())) {
+        if (StringUtils.isNotEmpty(StringUtils.trim(salesOrderV1Entity.getLocalRejReason()))) {
             ordRejEntity = checkJ2(salesOrderV1Entity);
         }
-        if (null != ordRejEntity || null == salesOrderV1Entity.getLocalRejReason() || "".equals(salesOrderV1Entity.getLocalRejReason())) {
+        if (null != ordRejEntity || StringUtils.isEmpty(StringUtils.trim(salesOrderV1Entity.getLocalRejReason()))) {
             try {
                 Double salesOrderQty = Double.parseDouble(salesOrderV1Entity.getSalesOrderQty());
                 int localNumtoBase = Integer.parseInt(salesOrderV1Entity.getLocalNumtoBase());
@@ -312,8 +313,8 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         failData.setKey1(salesOrderV1Entity.getSalesOrderNo());
         failData.setKey2(salesOrderV1Entity.getSalesOrderItem());
         failData.setKey3(salesOrderV1Entity.getScheduleLineItem());
-        failData.setKey4("");
-        failData.setKey5("");
+        failData.setKey4(salesOrderV1Entity.getLocalShipToParty());
+        failData.setKey5(salesOrderV1Entity.getLocalSalesOrg());
         return failData;
     }
 }

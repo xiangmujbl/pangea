@@ -3,7 +3,6 @@ package com.jnj.pangea.omp.gdm_sales_history.controller;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
@@ -28,7 +27,6 @@ public class OMPGdmSalesHistoryController extends BaseController {
         List<ViewResultItem> result = new LinkedList<>();
         Set<String> scheduleLineItemSet = new HashSet<>();
         events.forEach(raw -> {
-            try {
                 ResultObject resultObject = process(raw,scheduleLineItemSet);
                 if (null != resultObject){
                     if (resultObject.isSuccess()) {
@@ -43,11 +41,8 @@ public class OMPGdmSalesHistoryController extends BaseController {
                         }
                     }
                 }
-            } catch (Exception e) {
-                LogUtil.getCoreLog().info(e);
-            }
-        });
 
+        });
         return result;
     }
 
