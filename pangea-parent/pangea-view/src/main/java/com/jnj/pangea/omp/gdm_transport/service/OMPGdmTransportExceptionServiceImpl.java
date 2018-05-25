@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_transport.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -14,11 +13,10 @@ import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.*;
 
-public class OMPGdmTransportExceptionServiceImpl {
+public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceParent {
 
     private static OMPGdmTransportExceptionServiceImpl instance;
 
@@ -37,8 +35,9 @@ public class OMPGdmTransportExceptionServiceImpl {
     private PlanCnsMaterialPlanStatusDaoImpl materialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanCnsProcessTypeDaoImpl processTypeDao = PlanCnsProcessTypeDaoImpl.getInstance();
 
-    private boolean curationFail = false;
-    private List<Map<String, String>> failedRules = new ArrayList<>();
+//    private boolean curationFail;
+//    private boolean curationSkip;
+//    private List<Map<String, String>> failedRules;
 
 
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -48,26 +47,29 @@ public class OMPGdmTransportExceptionServiceImpl {
         CnsTlaneItemExceptionEntity tlaneItemExEntity = (CnsTlaneItemExceptionEntity) o;
         EDMSourceListV1Entity srcListV1Entity = null;
         String rule = "setup";
+        this.curationFail = false;
+        this.curationSkip = false;
+        this.failedRules = new ArrayList<>();
 
-        // ensure material number is not empty
+        // check main data points are present
         if (tlaneItemExEntity.getMaterialNumber().isEmpty()) {
             this.setFailedRule(rule, "Material Number null in CNS Tlane Item Exception");
         }
 
-        if (tlaneItemExEntity.getOriginLocation().isEmpty()) {
+        if (!this.curationFail && tlaneItemExEntity.getOriginLocation().isEmpty()) {
             this.setFailedRule(rule, "Origin Location is Empty. Can't generate source system or plant.");
         }
 
-        if (tlaneItemExEntity.getDestinationLocation().isEmpty()) {
+        if (!this.curationFail && tlaneItemExEntity.getDestinationLocation().isEmpty()) {
             this.setFailedRule(rule, "Destination Location is Empty. Can't generate source system or plant.");
         }
 
-        if (!this.curationFail) {
-            //N1
+        //N1
+        if (!this.curationSkip && !this.curationFail) {
             gdmTransportBo.setTransportId(this.ruleN1(tlaneItemExEntity));
         }
 
-        if (!this.curationFail) {
+        if (!this.curationSkip && !this.curationFail) {
             //N2
             gdmTransportBo.setActive(IConstant.VALUE.YES);
             gdmTransportBo.setActiveOPRERP(IConstant.VALUE.YES);
@@ -83,51 +85,46 @@ public class OMPGdmTransportExceptionServiceImpl {
             gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
         }
 
-        if (!this.curationFail) {
-            //N8
+        //N8
+        if (!this.curationSkip && !this.curationFail) {
             gdmTransportBo.setPurchasingGroup(this.ruleN8(tlaneItemExEntity));
         }
 
-        if (!this.curationFail) {
+        //N9 & N10 Prep
+        if (!this.curationSkip && !this.curationFail) {
             srcListV1Entity = this.ruleN9N10(tlaneItemExEntity);
         }
 
-        if (!this.curationFail && srcListV1Entity != null) {
-
-            //N9
+        //N9 & N10
+        if (!this.curationSkip &&!this.curationFail && srcListV1Entity != null) {
             gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
-
-            //N10
             gdmTransportBo.setVendorId(srcListV1Entity.getLocalVendorAccountNumber());
         }
 
-        if (!this.curationFail) {
-            //N11
+        //N11
+        if (!this.curationSkip && !this.curationFail) {
             gdmTransportBo.setFromLocationId(this.ruleN11(tlaneItemExEntity));
         }
 
-        if (!this.curationFail) {
-
+        //N12 & N14
+        if (!this.curationSkip && !this.curationFail) {
             String prodId = this.ruleN12N14(tlaneItemExEntity);
-            //N12
             gdmTransportBo.setFromProductId(prodId);
-            //N14
             gdmTransportBo.setToProductId(prodId);
-
         }
 
-        if (!this.curationFail) {
-            //N13
+        //N13
+        if (!this.curationSkip && !this.curationFail) {
             gdmTransportBo.setToLocationId(this.ruleN13(tlaneItemExEntity));
         }
 
-        if (!this.curationFail) {
-            //N15
+        //N15
+        if (!this.curationSkip && !this.curationFail) {
             gdmTransportBo.setActiveSOPERP(IConstant.VALUE.NO);
         }
 
-        //no rules
-        if (!this.curationFail) {
+        //No Rules
+        if (!this.curationSkip && !this.curationFail) {
             PlanCnsProcessTypeEntity processTypeEntity =
                     this.processTypeDao.getCnsProcessTypeById(tlaneItemExEntity.getProcessTypeId());
             gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
@@ -150,6 +147,8 @@ public class OMPGdmTransportExceptionServiceImpl {
                     tlaneItemExEntity.getMaterialNumber()
                     )
             );
+        } else if (this.curationSkip) {
+            resultObject = null;
         } else {
             resultObject.setBaseBo(gdmTransportBo);
         }
@@ -187,49 +186,49 @@ public class OMPGdmTransportExceptionServiceImpl {
         return entryExists;
     }
 
-    /**
-     * Get location string as list
-     * @param location
-     * @return
-     */
-    private ArrayList<String> getLocationStringArray (String location) {
-        String[] locArray = location.split("_V_");
-        return new ArrayList<>(Arrays.asList(locArray));
-    }
-
-    /**
-     * Take the plant number from location string list
-     * @param location
-     * @return
-     */
-    private String getLocalPlantNum (String location) {
-        ArrayList<String> locList = getLocationStringArray(location);
-        return locList.get(locList.size() - 1);
-    }
-
-    /**
-     * Take the source system from the location string list
-     * @param location
-     * @return
-     */
-    private String getSourceSystem (String location) {
-        ArrayList<String> locList = getLocationStringArray(location);
-        locList.remove(locList.size() - 1);
-        return locList.get(0);
-    }
+//    /**
+//     * Get location string as list
+//     * @param location
+//     * @return
+//     */
+//    private ArrayList<String> getLocationStringArray (String location) {
+//        String[] locArray = location.split("_V_");
+//        return new ArrayList<>(Arrays.asList(locArray));
+//    }
+//
+//    /**
+//     * Take the plant number from location string list
+//     * @param location
+//     * @return
+//     */
+//    private String getLocalPlantNum (String location) {
+//        ArrayList<String> locList = getLocationStringArray(location);
+//        return locList.get(locList.size() - 1);
+//    }
+//
+//    /**
+//     * Take the source system from the location string list
+//     * @param location
+//     * @return
+//     */
+//    private String getSourceSystem (String location) {
+//        ArrayList<String> locList = getLocationStringArray(location);
+//        locList.remove(locList.size() - 1);
+//        return locList.get(0);
+//    }
 
     /**
      * set the class's failed rule list and flag
      * @param rule
      * @param msg
      */
-    private void setFailedRule (String rule, String msg) {
-        this.curationFail = true;
-        Map<String,String> error = new HashMap<>();
-        error.put("rule", rule);
-        error.put("error", msg);
-        this.failedRules.add(error);
-    }
+//    private void setFailedRule (String rule, String msg) {
+//        this.curationFail = true;
+//        Map<String,String> error = new HashMap<>();
+//        error.put("rule", rule);
+//        error.put("error", msg);
+//        this.failedRules.add(error);
+//    }
 
     /**
      * 1) get mat_glob_v1.local_material_number where mat_glob_v1.ppcode = tlane.matnum
@@ -329,9 +328,8 @@ public class OMPGdmTransportExceptionServiceImpl {
             transportId = tlaneItemExceptionEntity.getMaterialNumber() + IConstant.VALUE.BACK_SLANT
                     + tlaneItemExceptionEntity.getOriginLocation() + IConstant.VALUE.BACK_SLANT
                     + tlaneItemExceptionEntity.getDestinationLocation();
-        }
-        else {
-            this.setFailedRule(rule, "Deletion Indicator not Blank");
+        } else {
+            this.curationSkip = true;
             return null;
         }
 
@@ -360,7 +358,7 @@ public class OMPGdmTransportExceptionServiceImpl {
 
         //skip rest if no mat num was found
         if (locMatNum == null) {
-            this.setFailedRule(rule, "Material number not found in MaterialGlobalV1");
+            this.curationSkip = true;
             return null;
         }
 
@@ -370,7 +368,7 @@ public class OMPGdmTransportExceptionServiceImpl {
             purchaseGroup = materialPlantV1EntityList.get(0).getLocalPurchasingGroup();
         }
         else {
-            this.setFailedRule(rule, "No Records found in MaterialGlobalV1 for local material, local plant and source system combination");
+            this.curationSkip = true;
             return null;
         }
 
@@ -394,7 +392,7 @@ public class OMPGdmTransportExceptionServiceImpl {
 
         //skip rest if no mat num was found
         if (locMatNum == null) {
-            this.setFailedRule(rule, "Material number not found in MaterialGlobalV1");
+            this.curationSkip = true;
             return null;
         }
 
@@ -405,7 +403,7 @@ public class OMPGdmTransportExceptionServiceImpl {
             sourceListV1Entity = sourceListV1EntityList.get(0);
         }
         else {
-            this.setFailedRule(rule,"No Matching Record found in EDMSourceListV1Entity");
+            this.curationSkip = true;
             return null;
         }
 
@@ -430,7 +428,7 @@ public class OMPGdmTransportExceptionServiceImpl {
             return tlaneItemExceptionEntity.getOriginLocation();
         }
 
-        this.setFailedRule(rule, "Planning not relevant");
+        this.curationSkip = true;
         return null;
     }
 
@@ -444,30 +442,29 @@ public class OMPGdmTransportExceptionServiceImpl {
 
         String rule = "N12_N14";
         String fromProdId = null;
+        String srcSys = this.getSourceSystem(tlaneItemExceptionEntity.getOriginLocation());
+        String locPlant = this.getLocalPlantNum(tlaneItemExceptionEntity.getOriginLocation());
         String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity);
 
         if (locMatNum == null) {
-            this.setFailedRule(rule, "Material number not found in MaterialGlobalV1");
+            this.curationSkip = true;
             return null;
         }
 
-        String srcSys = this.getSourceSystem(tlaneItemExceptionEntity.getOriginLocation());
-        String locPlant = this.getLocalPlantNum(tlaneItemExceptionEntity.getOriginLocation());
-
         if (!this.checkLocationRelevant(srcSys, locPlant)) {
-            this.setFailedRule(rule, "Location not found in plant v1 or plan spl loc");
+            this.curationSkip = true;
             return null;
         }
 
         if (!this.checkMaterialRelevant(locMatNum, locPlant, srcSys)) {
-            this.setFailedRule(rule, "No Records relevant in materialPlanStatus");
+            this.curationSkip = true;
             return null;
         }
 
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = this.getGlobV1Entity(locMatNum);
 
         if (materialGlobalV1Entity == null) {
-            this.setFailedRule(rule, "No record found for local material number in material global v1");
+            this.curationSkip = true;
             return null;
         }
 
@@ -477,7 +474,7 @@ public class OMPGdmTransportExceptionServiceImpl {
         }
 
         if (fromProdId.isEmpty()) {
-            this.setFailedRule(rule, "Material Number empty for fromProdId");
+            this.curationSkip = true;
         }
 
         return fromProdId;
@@ -501,7 +498,7 @@ public class OMPGdmTransportExceptionServiceImpl {
             return tlaneItemExceptionEntity.getDestinationLocation();
         }
 
-        this.setFailedRule(rule, "Planning not relevant");
+        this.curationSkip = true;
         return null;
     }
 }
