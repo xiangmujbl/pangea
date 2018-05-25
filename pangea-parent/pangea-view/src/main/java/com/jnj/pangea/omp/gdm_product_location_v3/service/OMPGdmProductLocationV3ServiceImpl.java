@@ -17,6 +17,7 @@ import com.jnj.pangea.omp.gdm_product_location_v3.bo.OMPGdmProductLocationV3Bo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 public class OMPGdmProductLocationV3ServiceImpl {
@@ -144,7 +145,7 @@ public class OMPGdmProductLocationV3ServiceImpl {
                 bo.setMinRemainingShelfLife(edmMaterialGlobalV1Entity.getMinRemShelfLife());
             }
             //rules E12
-            PlanCnsProdLocAttribEntity attribEntity = getFieldWithE12(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant() ,materialPlantV1Entity.getSourceSystem());
+            PlanCnsProdLocAttribEntity attribEntity = getFieldWithE12(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant(), materialPlantV1Entity.getSourceSystem());
             if (attribEntity != null) {
                 bo.setSupplyGroup(attribEntity.getSupplyGroup());
             }
@@ -176,7 +177,7 @@ public class OMPGdmProductLocationV3ServiceImpl {
                 bo.setTotalShelfLife(edmMaterialGlobalV1Entity.getTotalShelfLife());
                 bo.setProductTypeId(edmMaterialGlobalV1Entity.getMaterialType());
             }
-            if(materialPlantV1Entity != null){
+            if (materialPlantV1Entity != null) {
                 //rule E11
                 if (materialPlantV1Entity.getLocalBatchManagementRequirementIndicator().equals(IConstant.VALUE.X)) {
                     bo.setBatchManaged(IConstant.VALUE.YES);
@@ -250,17 +251,16 @@ public class OMPGdmProductLocationV3ServiceImpl {
                         String localvendorAccountNumber = sourceListV1Entity.getLocalVendorAccountNumber();
                         if (StringUtils.isNotEmpty(localvendorAccountNumber)) {
                             localvendorAccountNumberList.add(localvendorAccountNumber);
+                            ompGdmProductLocationV3Bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant());
                             List<PlanSplPlnLocEntity> splPlnLocEntries = splPlnLocDao.getEntityListWithConditions(sourceListV1Entity.getSourceSystem(), sourceListV1Entity.getLocalVendorAccountNumber());
-                        
-                            if (splPlnLocEntries.size() > 0) {
-                                if ("".equals(splPlnLocEntries.get(0).getLocalPlant())) {
-                                    ompGdmProductLocationV3Bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntries.get(0).getVendorOrCustomer() + "_" +splPlnLocEntries.get(0).getLocalNumber());
-                                } else {
-                                    ompGdmProductLocationV3Bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntries.get(0).getLocalPlant() + "$" + splPlnLocEntries.get(0).getLocalNumber());
+                            for (PlanSplPlnLocEntity splPlnLocEntity : splPlnLocEntries) {
+                                if (null != splPlnLocEntity) {
+                                    if ("".equals(splPlnLocEntity.getLocalPlant())) {
+                                        ompGdmProductLocationV3Bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getVendorOrCustomer() + "_" + splPlnLocEntity.getLocalNumber());
+                                    } else {
+                                        ompGdmProductLocationV3Bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getLocalPlant() + "$" + splPlnLocEntity.getLocalNumber());
+                                    }
                                 }
-
-                            } else {
-                                ompGdmProductLocationV3Bo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant());
                             }
                         }
                     }
@@ -330,14 +330,16 @@ public class OMPGdmProductLocationV3ServiceImpl {
 
     /**
      * rules E12
-     *@param localMaterialNumber
+     *
+     * @param localMaterialNumber
      * @param localPlant
      */
-    private PlanCnsProdLocAttribEntity getFieldWithE12(String localMaterialNumber, String localPlant , String sourceSystem) {
+    private PlanCnsProdLocAttribEntity getFieldWithE12(String localMaterialNumber, String localPlant, String
+            sourceSystem) {
         if ("".equals(localMaterialNumber) || "".equals(localPlant) || "".equals(sourceSystem)) {
             return null;
         }
-        PlanCnsProdLocAttribEntity attribEntity = cnsProdLocAttribDao.getEntityWithLocalMaterialNumberAndLocalPlantAndSourceSystem(localMaterialNumber, localPlant ,sourceSystem);
+        PlanCnsProdLocAttribEntity attribEntity = cnsProdLocAttribDao.getEntityWithLocalMaterialNumberAndLocalPlantAndSourceSystem(localMaterialNumber, localPlant, sourceSystem);
         return attribEntity;
     }
 

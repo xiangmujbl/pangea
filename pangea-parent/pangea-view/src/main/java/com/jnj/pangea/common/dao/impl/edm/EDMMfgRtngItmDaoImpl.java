@@ -31,4 +31,17 @@ public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
 
         return null;
     }
+
+    public List<EDMMfgRtngItmEntity> getEntityListWithConditions(String srcSysCd,String rtngTypCd,String rtngItmNum,String rtngGrpCd) {
+        if(StringUtils.isNotBlank(srcSysCd) && StringUtils.isNotBlank(rtngTypCd) &&StringUtils.isNotBlank(rtngItmNum) && StringUtils.isNotBlank(rtngGrpCd)){
+            String queryString = QueryHelper.buildCriteria(IConstant.MFG_RTNG_ITM.SRCSYSCD).is(srcSysCd)
+                    .and(IConstant.MFG_RTNG_ITM.RTNGTYPCD).is(rtngTypCd)
+                    .and(IConstant.MFG_RTNG_ITM.RTNGITMNUM).is(rtngItmNum)
+                    .and(IConstant.MFG_RTNG_ITM.RTNGGRPCD).is(rtngGrpCd)
+                    .toQueryString();
+            return queryForObject(IConstant.REGION.MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
+        }
+
+        return null;
+    }
 }

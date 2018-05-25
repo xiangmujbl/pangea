@@ -68,7 +68,7 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
 
         List<OMPGdmBomBo> gdmBomBoList = new ArrayList<>();
 
-        List<EDMMatlProdVersnEntity> matlProdVersnEntityList = matlProdVersnDao.getEntityWithFourConditions(matlBomEntity.getPlntCd(),matlBomEntity.getPlntCd(),matlBomEntity.getMatlNum(),matlBomEntity.getAltBomNum());
+        List<EDMMatlProdVersnEntity> matlProdVersnEntityList = matlProdVersnDao.getEntityListWithFourConditions(matlBomEntity.getPlntCd(),matlBomEntity.getPlntCd(),matlBomEntity.getMatlNum(),matlBomEntity.getAltBomNum());
         for (EDMMatlProdVersnEntity matlProdVersnEntity:matlProdVersnEntityList){
 
             List<PlanCnsPlanParameterEntity> planParameterEntityList = cnsPlanParameterDao.getEntityListWithSourceSystemAndDataObject(matlBomEntity.getSrcSysCd(),IConstant.VALUE.SEND_TO_OMP);
@@ -83,7 +83,7 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
 
                     for (EDMMfgRtngItmNdeEntity mfgRtngItmNdeEntity:mfgRtngItmNdeEntityList){
 
-                        List<EDMMfgRtngItmEntity> mfgRtngItmEntityList = mfgRtngItmDao.getEntityWithConditions(mfgRtngItmNdeEntity.getSrcSysCd(),mfgRtngItmNdeEntity.getRtngTypCd(),mfgRtngItmNdeEntity.getRtngNdeNum(),mfgRtngItmNdeEntity.getRtngGrpCd());
+                        List<EDMMfgRtngItmEntity> mfgRtngItmEntityList = mfgRtngItmDao.getEntityListWithConditions(mfgRtngItmNdeEntity.getSrcSysCd(),mfgRtngItmNdeEntity.getRtngTypCd(),mfgRtngItmNdeEntity.getRtngNdeNum(),mfgRtngItmNdeEntity.getRtngGrpCd());
 
                         for (EDMMfgRtngItmEntity mfgRtngItmEntity:mfgRtngItmEntityList){
                             OMPGdmBomBo gdmBomBo = new OMPGdmBomBo();

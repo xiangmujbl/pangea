@@ -934,7 +934,6 @@ public interface IConstant {
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
-        String M = "M";
 
 
     }
