@@ -91,15 +91,17 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
             String desc = capyHdrEntity.getCapyDesc();
             if (StringUtils.isNotEmpty(desc)) {
                 String[] descT = desc.split("/");
-                String plntcd = capyHdrEntity.getPlntCd();
-                if (StringUtils.isNotEmpty(plntcd)) {
-                    if (StringUtils.isNotEmpty(descT[0])) {
-                        gdmResourceBo.setDescription(descT[0]);
-                    } else{
-                        if (plntcd.startsWith(IConstant.VALUE.BR)) {
-                            gdmResourceBo.setDescription(descT[2]);
-                        } else if (!plntcd.startsWith(IConstant.VALUE.BR)) {
-                            gdmResourceBo.setDescription(descT[1]);
+                if (descT.length>2){
+                    String plntcd = capyHdrEntity.getPlntCd();
+                    if (StringUtils.isNotEmpty(plntcd)) {
+                        if (StringUtils.isNotEmpty(descT[0])) {
+                            gdmResourceBo.setDescription(descT[0]);
+                        } else{
+                            if (plntcd.startsWith(IConstant.VALUE.BR)) {
+                                gdmResourceBo.setDescription(descT[2]);
+                            } else if (!plntcd.startsWith(IConstant.VALUE.BR)) {
+                                gdmResourceBo.setDescription(descT[1]);
+                            }
                         }
                     }
                 }
@@ -111,10 +113,22 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
         if (null != capyHdrEntity) {
             String plntcd = capyHdrEntity.getPlntCd();
             if (StringUtils.isNotEmpty(plntcd)) {
-                gdmResourceBo.setLocationId(capyHdrEntity.getSrcSysCd() + IConstant.VALUE.SPACE + capyHdrEntity.getPlntCd());
+                gdmResourceBo.setLocationId(capyHdrEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + capyHdrEntity.getPlntCd());
             } else {
                 String errorValue = "Plant Id not found";
-                getFailDate(IConstant.FAILED.ERROR_CODE.C2, errorValue, capyHdrEntity);
+                String errorCode = IConstant.FAILED.ERROR_CODE.C2;
+                FailData failData = new FailData();
+                failData.setErrorCode(errorCode);
+                failData.setErrorValue(errorValue);
+                failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.PP);
+                failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_RESOURCE);
+                failData.setSourceSystem(IConstant.VALUE.OMP);
+                failData.setKey1(capyHdrEntity.getSrcSysCd());
+                failData.setKey2(capyHdrEntity.getCapyNum());
+                failData.setKey3("");
+                failData.setKey4("");
+                failData.setKey5("");
+                resultObject.setFailData(failData);
             }
         }
 
@@ -122,20 +136,20 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
         return resultObject;
     }
 
-    public ResultObject getFailDate(String errorCode, String errorValue, EDMCapyHdrEntity capyHdrEntity) {
-        ResultObject resultObject = new ResultObject();
-        FailData failData = new FailData();
-        failData.setErrorCode(errorCode);
-        failData.setErrorValue(errorValue);
-        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.PP);
-        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_RESOURCE);
-        failData.setSourceSystem(IConstant.VALUE.OMP);
-        failData.setKey1(capyHdrEntity.getSrcSysCd());
-        failData.setKey2(capyHdrEntity.getCapyNum());
-        failData.setKey3("");
-        failData.setKey4("");
-        failData.setKey5("");
-        resultObject.setFailData(failData);
-        return resultObject;
-    }
+//    public ResultObject getFailDate(String errorCode, String errorValue, EDMCapyHdrEntity capyHdrEntity) {
+//        ResultObject resultObject = new ResultObject();
+//        FailData failData = new FailData();
+//        failData.setErrorCode(errorCode);
+//        failData.setErrorValue(errorValue);
+//        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.PP);
+//        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_RESOURCE);
+//        failData.setSourceSystem(IConstant.VALUE.OMP);
+//        failData.setKey1(capyHdrEntity.getSrcSysCd());
+//        failData.setKey2(capyHdrEntity.getCapyNum());
+//        failData.setKey3("");
+//        failData.setKey4("");
+//        failData.setKey5("");
+//        resultObject.setFailData(failData);
+//        return resultObject;
+//    }
 }
