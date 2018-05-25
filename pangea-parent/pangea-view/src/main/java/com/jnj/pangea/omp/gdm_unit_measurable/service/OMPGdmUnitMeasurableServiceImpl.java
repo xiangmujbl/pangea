@@ -102,6 +102,12 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
                 gdmUnitMeasurableBo.setIsoCode(IConstant.VALUE.BLANK);
                 // rules T4
                 gdmUnitMeasurableBo.setPrecision(cnsPlanUnitEntity.getRoundingDecimal());
+                // rules T2
+                gdmUnitMeasurableBo.setLongDescription(cnsPlanUnitEntity.getLocalUomName());
+                // rules T3
+                gdmUnitMeasurableBo.setMeasure(IConstant.VALUE.AAAADL);
+                // rules T5
+                gdmUnitMeasurableBo.setShortDescription(cnsPlanUnitEntity.getLocalUomName());
             }
         }
         resultObject.setBaseBo(gdmUnitMeasurableBo);
