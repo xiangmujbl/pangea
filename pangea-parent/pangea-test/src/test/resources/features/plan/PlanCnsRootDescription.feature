@@ -22,9 +22,9 @@ Feature: PlanCnsRootDescription AEAZ-3675
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/user_override" by keyFields "target,sourceSystem,key1,key2,key3,key4,key5"
-      | target                     | sourceSystem | key1       | key2               | key3 | key4 | key5 | value1                             | value2 | value3 | value4 | value5 |
-      | /plan/cns_root_description | project_one  | CONS_LATAM | 178962124094540036 |      |      |      | TYLENOL* BEBE GOTAS SUSP 36FRX15ML |        |        |        |        |
+    Given I import "/plan/cns_root_description_user_override" by keyFields "sourceSystem,localDpParentCode"
+      | sourceSystem | localDpParentCode  | rootDesc                              | ovrRootDesc                        |
+      | CONS_LATAM   | 178962124094540036 | TYLENOL*CRIANCA LIQ SUSPENSAO 36X60ML | TYLENOL* BEBE GOTAS SUSP 36FRX15ML |
 
     And I wait "/plan/user_override" Async Queue complete
 
@@ -69,9 +69,9 @@ Feature: PlanCnsRootDescription AEAZ-3675
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/user_override" by keyFields "target,sourceSystem,key1,key2,key3,key4,key5"
-      | target                     | sourceSystem | key1       | key2               | key3 | key4 | key5 | value1                              | value2 | value3 | value4 | value5 |
-      | /plan/cns_root_description | project_one  | CONS_LATAM | 178962124288680036 |      |      |      | J'S BABY SHAMPOO 12X750ML - ARG 733 |        |        |        |        |
+    Given I import "/plan/cns_root_description_user_override" by keyFields "sourceSystem,localDpParentCode"
+      | sourceSystem | localDpParentCode  | rootDesc                           | ovrRootDesc                         |
+      | CONS_LATAM   | 178962124288680036 | TYLENOL* BEBE GOTAS SUSP 36FRX15ML | J'S BABY SHAMPOO 12X750ML - ARG 733 |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -114,9 +114,8 @@ Feature: PlanCnsRootDescription AEAZ-3675
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/user_override" by keyFields "target,sourceSystem,key1,key2,key3,key4,key5"
-      | target                     | sourceSystem | key1       | key2               | key3 | key4 | key5 | value1                              | value2 | value3 | value4 | value5 |
-      | /plan/cns_root_description | project_one  | CONS_LATAM | 178962124094540036 |      |      |      | J'S BABY SHAMPOO 12X750ML - ARG 733 |        |        |        |        |
+    Given I import "/plan/cns_root_description_user_override" by keyFields "sourceSystem,localDpParentCode"
+      | sourceSystem | localDpParentCode | rootDesc | ovrRootDesc |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -160,9 +159,9 @@ Feature: PlanCnsRootDescription AEAZ-3675
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/user_override" by keyFields "target,sourceSystem,key1,key2,key3,key4,key5"
-      | target                     | sourceSystem | key1       | key2               | key3 | key4 | key5 | value1                              | value2 | value3 | value4 | value5 |
-      | /plan/cns_root_description | project_one  | CONS_LATAM | 178962124288680036 |      |      |      | J'S BABY SHAMPOO 12X750ML - ARG 744 |        |        |        |        |
+    Given I import "/plan/cns_root_description_user_override" by keyFields "sourceSystem,localDpParentCode"
+      | sourceSystem | localDpParentCode  | rootDesc                           | ovrRootDesc                         |
+      | CONS_LATAM   | 178962124288680036 | TYLENOL* BEBE GOTAS SUSP 36FRX15ML | J'S BABY SHAMPOO 12X750ML - ARG 744 |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 

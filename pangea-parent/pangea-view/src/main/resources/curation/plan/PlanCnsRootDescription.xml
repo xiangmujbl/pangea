@@ -15,8 +15,8 @@
                     <relation path="/edm/material_global_v1_clone" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/plan/user_override" isPrimaryKey="false">
-                        <expression>value2=/edm/material_global_v1.localDpParentCode</expression>
+                    <relation path="/plan/cns_root_description_user_override" isPrimaryKey="false">
+                        <expression>localDpParentCode=/edm/material_global_v1.localDpParentCode</expression>
                     </relation>
                 </relations>
             </region>
@@ -34,8 +34,8 @@
                 <columns>localMaterialNumber,localDpParentCode,refDescription</columns>
             </region>
 
-            <region path="/plan/user_override">
-                <columns>target,sourceSystem,key1,key2,key3,key4,key5,value1,value2,value3,value4,value5</columns>
+            <region path="/plan/cns_root_description_user_override">
+                <columns>sourceSystem,localDpParentCode,rootDesc,ovrRootDesc</columns>
             </region>
 
             <region path="/plan/cns_root_description">

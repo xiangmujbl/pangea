@@ -188,3 +188,5 @@
 /omp/gdm_resource
 /omp/gdm_bom
 /edm/mfg_rtng_hdr
+/plan/cns_root_description_user_override
+
