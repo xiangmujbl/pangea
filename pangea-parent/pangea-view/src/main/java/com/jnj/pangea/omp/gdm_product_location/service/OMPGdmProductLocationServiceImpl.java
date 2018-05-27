@@ -251,23 +251,7 @@ public class OMPGdmProductLocationServiceImpl {
                             if (splPlnLocEntries.size() <= 0) {
                                 return new ArrayList<>();
                             } else {
-                                List<PlanSplPlnLocEntity> splPlnLocEntries2 = splPlnLocDao.getEntityListWithConditions2(sourceListV1Entity.getSourceSystem(), sourceListV1Entity.getLocalVendorAccountNumber());
-                                LogUtil.getCoreLog().info("splPlnLocEntries2"+splPlnLocEntries2);
-                                if(null==splPlnLocEntries2||splPlnLocEntries2.size()<=0){
-                                    LogUtil.getCoreLog().info("start========");
-                                    OMPGdmProductLocationBo OMPGdmProductLocationBo = new OMPGdmProductLocationBo();
-                                    OMPGdmProductLocationBo.setActiveOPRERP(IConstant.VALUE.YES);
-                                    if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
-                                        OMPGdmProductLocationBo.setProductId(materialPlantV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getMaterialNumber());
-                                    } else {
-                                        OMPGdmProductLocationBo.setProductId(materialPlantV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
-                                    }
-                                    String locationId = materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant();
-                                    //  OMPGdmProductLocationBo.setLocationId(locationId);
-                                    OMPGdmProductLocationBo.setLocationId(locationId);
-                                    boList.add(OMPGdmProductLocationBo);
-                                }else{
-                                    for (PlanSplPlnLocEntity splPlnLocEntity : splPlnLocEntries2) {
+                                    for (PlanSplPlnLocEntity splPlnLocEntity : splPlnLocEntries) {
                                         OMPGdmProductLocationBo OMPGdmProductLocationBo = new OMPGdmProductLocationBo();
                                         OMPGdmProductLocationBo.setActiveOPRERP(IConstant.VALUE.YES);
 
@@ -276,15 +260,17 @@ public class OMPGdmProductLocationServiceImpl {
                                         } else {
                                             OMPGdmProductLocationBo.setProductId(materialPlantV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
                                         }
-
-                                        if ("".equals(splPlnLocEntity.getLocalPlant())) {
-                                            OMPGdmProductLocationBo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getVendorOrCustomer() + "_" + splPlnLocEntity.getLocalNumber());
-                                        } else {
-                                            OMPGdmProductLocationBo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getLocalPlant() + "$" + splPlnLocEntity.getLocalNumber());
+                                        if(splPlnLocEntity.getVendorOrCustomer().equals("V")){
+                                            if ("".equals(splPlnLocEntity.getLocalPlant())) {
+                                                OMPGdmProductLocationBo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getVendorOrCustomer() + "_" + splPlnLocEntity.getLocalNumber());
+                                            } else {
+                                                OMPGdmProductLocationBo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant() + "$" + splPlnLocEntity.getLocalNumber());
+                                            }
+                                        }else{
+                                            OMPGdmProductLocationBo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant());
                                         }
                                         boList.add(OMPGdmProductLocationBo);
                                     }
-                                }
                             }
                         } else {
                             return new ArrayList<>();
