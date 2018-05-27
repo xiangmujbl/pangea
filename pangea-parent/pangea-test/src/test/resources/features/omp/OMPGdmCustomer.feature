@@ -24,11 +24,11 @@ Feature: OMPGdmCustomer AEAZ-4069
     # get first record from cns_dem_grp_asgn when cns_dem_grp_asgn-sourceSystem = cns_plan_dem_grp-sourceSystem
     # and cns_dem_grp_asgn-demandGroup = cns_plan_dem_grp-demandGroupId
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "countryAffiliate,customerId"
-      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription      | customerName                        | salesOrganization |
-      | BTC          | BR               | 0000000323 | 76100001    | CH006   | Distributor Traditional | Distributor Traditional             | BR01              |
-      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01              |
-      | CONS_LATAM   | BR               | 0000000095 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO TAKEDA COMERCIO LTDA          | BR01              |
-      | CONS_LATAM   | BR               | 0000000268 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO MERCANTIL FARMED              | BR01              |
+      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription      | customerName                        | salesOrg |
+      | BTC          | BR               | 0000000323 | 76100001    | CH006   | Distributor Traditional | Distributor Traditional             | BR01     |
+      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01     |
+      | CONS_LATAM   | BR               | 0000000095 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO TAKEDA COMERCIO LTDA          | BR01     |
+      | CONS_LATAM   | BR               | 0000000268 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO MERCANTIL FARMED              | BR01     |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -85,9 +85,9 @@ Feature: OMPGdmCustomer AEAZ-4069
     # when cns_dem_grp_asgn-affiliateCountry <> cns_clusters-countryID
     # or cns_dem_grp_asgn-sourceSystem <> cns_clusters-sourceSystem, then skip the record.
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "countryAffiliate,customerId"
-      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription      | customerName                        | salesOrganization |
-      | CONS_LATAM   | BR1              | 0000000323 | 76100001    | CH006   | Distributor Traditional | Distributor Traditional             | BR01              |
-      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01              |
+      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription      | customerName                        | salesOrg |
+      | CONS_LATAM   | BR1              | 0000000323 | 76100001    | CH006   | Distributor Traditional | Distributor Traditional             | BR01     |
+      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01     |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -145,9 +145,9 @@ Feature: OMPGdmCustomer AEAZ-4069
     And I wait "/plan/cns_cust_channel" Async Queue complete
 
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "countryAffiliate,customerId"
-      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription  | customerName                        | salesOrganization |
-      | CONS_LATAM   | VE               | 0000008289 | 76100002    | CH008   | Modern Trade        | Clubs/Cash & Carry                  | BR01              |
-      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01              |
+      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription  | customerName                        | salesOrg |
+      | CONS_LATAM   | VE               | 0000008289 | 76100002    | CH008   | Modern Trade        | Clubs/Cash & Carry                  | BR01     |
+      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01     |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -214,9 +214,9 @@ Feature: OMPGdmCustomer AEAZ-4069
     And I wait "/plan/cns_cust_channel" Async Queue complete
 
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "countryAffiliate,customerId"
-      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription      | customerName                        | salesOrganization |
-      | CONS_LATAM   | BR               | 0000000323 | 76100001    | CH006   | Distributor Traditional | Distributor Traditional             | BR01              |
-      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01              |
+      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription      | customerName                        | salesOrg |
+      | CONS_LATAM   | BR               | 0000000323 | 76100001    | CH006   | Distributor Traditional | Distributor Traditional             | BR01     |
+      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler     | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01     |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -276,8 +276,8 @@ Feature: OMPGdmCustomer AEAZ-4069
     And I wait "/plan/cns_cust_channel" Async Queue complete
 
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "countryAffiliate,customerId"
-      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription  | customerName                        | salesOrganization |
-      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01              |
+      | sourceSystem | countryAffiliate | customerId | demandGroup | channel | channelDescription  | customerName                        | salesOrg |
+      | CONS_LATAM   | BR               | 0000000082 | 76100005    | CH003   | Pharmacy Wholesaler | GRUPO DISTRIB.BRASIL MEDICAMENTOS L | BR01     |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 

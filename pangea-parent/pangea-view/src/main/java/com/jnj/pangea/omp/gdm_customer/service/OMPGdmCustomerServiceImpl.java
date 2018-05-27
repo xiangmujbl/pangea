@@ -49,7 +49,7 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
                 PlanCnsDemGrpAsgnEntity cnsDemGrpAsgnEntity = cnsDemGrpAsgnEntityList.get(0);
                 gdmCustomerBo.setChannel(cnsDemGrpAsgnEntity.getChannel());
                 gdmCustomerBo.setCountryId(cnsDemGrpAsgnEntity.getCountryAffiliate());
-                gdmCustomerBo.setSalesOrganization(cnsDemGrpAsgnEntity.getSalesOrganization());
+                gdmCustomerBo.setSalesOrganization(cnsDemGrpAsgnEntity.getSalesOrg());
 
                 // J1,J3
                 String countryID = cnsDemGrpAsgnEntity.getCountryAffiliate();
@@ -70,7 +70,7 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
                                 gdmCustomerBo.setRegionId(eDMCountryEntity.getConsumerPlanningRegion());
 
                                 // J5
-                                String salesOrg = cnsDemGrpAsgnEntity.getSalesOrganization();
+                                String salesOrg = cnsDemGrpAsgnEntity.getSalesOrg();
                                 String channel = cnsDemGrpAsgnEntity.getChannel();
                                 if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(channel)) {
                                     List<PlanCnsCustChannelEntity> cnsCustChannelEntityList = cnsCustChannelDao.getEntitiesWithSourceSystemAndSalesOrgAndChannel(sourceSystem, salesOrg, channel);

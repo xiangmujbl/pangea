@@ -15,7 +15,7 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
     private String customerName;
     private String customerShipTo;
     private String group;
-    private String salesOrganization;
+    private String salesOrg;
 
     public PlanCnsDemGrpAsgnEntity(Map<String, Object> map) {
         super(map);
@@ -29,7 +29,7 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
         setCustomerName((String) map.get("customerName"));
         setCustomerShipTo((String) map.get("customerShipTo"));
         setGroup((String) map.get("group"));
-        setSalesOrganization((String) map.get("salesOrganization"));
+        setSalesOrg((String) map.get("salesOrg"));
     }
 
     public String getSourceSystem() {
@@ -104,11 +104,11 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
         this.customerName = customerName;
     }
 
-    public String getSalesOrganization() {
-        return salesOrganization;
+    public String getSalesOrg() {
+        return salesOrg;
     }
 
-    public void setSalesOrganization(String salesOrganization) {
-        this.salesOrganization = salesOrganization;
+    public void setSalesOrg(String salesOrg) {
+        this.salesOrg = salesOrg;
     }
 }
