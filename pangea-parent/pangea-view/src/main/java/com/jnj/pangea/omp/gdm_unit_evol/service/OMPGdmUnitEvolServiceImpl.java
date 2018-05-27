@@ -46,7 +46,7 @@ public class OMPGdmUnitEvolServiceImpl {
 
             // effectiveStartDate
             Calendar effectiveStartDate = Calendar.getInstance();
-            Date startDate = DateUtils.stringToDate(consTimeDepXchangeEntity.getEffectiveStartDate(),DateUtils.yyyy_MM_dd);
+            Date startDate = DateUtils.stringToDate(consTimeDepXchangeEntity.getEffectiveStartDate(),DateUtils.dd_MM_yyyy);
             effectiveStartDate.setTime(startDate);
 
             // effectiveEndDate
