@@ -16,7 +16,15 @@
                         <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
                     </relation>
 
+                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+
                 </relations>
+            </region>
+
+            <region path="/plan/cns_plan_parameter">
+                <columns>attribute,dataObject,parameterValue</columns>
             </region>
 
             <region path="/plan/cns_material_plan_status">
