@@ -12,7 +12,7 @@ public class EDMMatlMfgRtngEntity extends CommonEntity {
     private String plntCd;
     private String rntgGrpCntrNbr;
     private String matlNum;
-    private String rtngGrpCd;
+    private String rntgGrpCd;
 
     public EDMMatlMfgRtngEntity(Map<String, Object> map) {
         super(map);
@@ -23,7 +23,7 @@ public class EDMMatlMfgRtngEntity extends CommonEntity {
         setPlntCd((String) map.get("plntCd"));
         setRntgGrpCntrNbr((String) map.get("rntgGrpCntrNbr"));
         setMatlNum((String) map.get("matlNum"));
-        setRtngGrpCd((String) map.get("rtngGrpCd"));
+        setRntgGrpCd((String) map.get("rntgGrpCd"));
     }
 
     public String getSrcSysCd() {
@@ -74,12 +74,11 @@ public class EDMMatlMfgRtngEntity extends CommonEntity {
         this.matlNum = matlNum;
     }
 
-    public String getRtngGrpCd() {
-        return this.rtngGrpCd;
+    public String getRntgGrpCd() {
+        return rntgGrpCd;
     }
 
-    public void setRtngGrpCd(String rtngGrpCd) {
-        this.rtngGrpCd = rtngGrpCd;
+    public void setRntgGrpCd(String rntgGrpCd) {
+        this.rntgGrpCd = rntgGrpCd;
     }
-
 }

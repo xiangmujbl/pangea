@@ -63,7 +63,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                     List<EDMMatlMfgRtngEntity> mfgRtngEntityList = matlMfgRtngDao.getEntityWithFiveConditions(matlProdVersnEntity.getSrcSysCd(), matlProdVersnEntity.getMatlNum(), matlProdVersnEntity.getPlntCd(), matlProdVersnEntity.getRtngGrpCd(), matlProdVersnEntity.getRtngGrpCntrNum());
                     if (mfgRtngEntityList != null && mfgRtngEntityList.size() > 0) {
                         for (EDMMatlMfgRtngEntity mfgRtngEntity : mfgRtngEntityList) {
-                            List<EDMMfgRtngItmNdeEntity> rtngItmNdeEntityList = mfgRtngItmNdeDao.getEntityWithConditions(mfgRtngEntity.getSrcSysCd(), mfgRtngEntity.getRtngTypCd(), mfgRtngEntity.getRntgGrpCntrNbr(), mfgRtngEntity.getRtngGrpCd());
+                            List<EDMMfgRtngItmNdeEntity> rtngItmNdeEntityList = mfgRtngItmNdeDao.getEntityWithConditions(mfgRtngEntity.getSrcSysCd(), mfgRtngEntity.getRtngTypCd(), mfgRtngEntity.getRntgGrpCntrNbr(), mfgRtngEntity.getRntgGrpCd());
                             if (rtngItmNdeEntityList != null && rtngItmNdeEntityList.size() > 0) {
                                 for (EDMMfgRtngItmNdeEntity rtngItmNdeEntity : rtngItmNdeEntityList) {
                                     EDMMfgRtngItmEntity mfgRtngItmEntity = mfgRtngItmDao.getEntityWithConditions(rtngItmNdeEntity.getSrcSysCd(), rtngItmNdeEntity.getRtngTypCd(), rtngItmNdeEntity.getRtngNdeNum(), rtngItmNdeEntity.getRtngGrpCd());
@@ -156,7 +156,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
         EDMMatlProdVersnEntity matlProdVersnEntity = matlProdVersnEntityList.get(0);
         List<EDMMatlMfgRtngEntity> mfgRtngEntityList = matlMfgRtngDao.getEntityWithFiveConditions(matlProdVersnEntity.getSrcSysCd(), matlProdVersnEntity.getMatlNum(), matlProdVersnEntity.getPlntCd(), matlProdVersnEntity.getRtngGrpCd(), matlProdVersnEntity.getRtngGrpCntrNum());
         EDMMatlMfgRtngEntity mfgRtngEntity = mfgRtngEntityList.get(0);
-        List<EDMMfgRtngItmNdeEntity> rtngItmNdeEntityList = mfgRtngItmNdeDao.getEntityWithConditions(mfgRtngEntity.getSrcSysCd(), mfgRtngEntity.getRtngTypCd(), mfgRtngEntity.getRntgGrpCntrNbr(), mfgRtngEntity.getRtngGrpCd());
+        List<EDMMfgRtngItmNdeEntity> rtngItmNdeEntityList = mfgRtngItmNdeDao.getEntityWithConditions(mfgRtngEntity.getSrcSysCd(), mfgRtngEntity.getRtngTypCd(), mfgRtngEntity.getRntgGrpCntrNbr(), mfgRtngEntity.getRntgGrpCd());
         EDMMfgRtngItmNdeEntity rtngItmNdeEntity = rtngItmNdeEntityList.get(0);
         EDMMfgRtngItmEntity mfgRtngItmEntity = mfgRtngItmDao.getEntityWithConditions(rtngItmNdeEntity.getSrcSysCd(), rtngItmNdeEntity.getRtngTypCd(), rtngItmNdeEntity.getRtngNdeNum(), rtngItmNdeEntity.getRtngGrpCd());
         EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getBomNum(), matlBomEntity.getAltBomNum(), bomItemEntity.getBomCatCd());
