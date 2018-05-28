@@ -143,4 +143,10 @@ if (StringUtils.isNotBlank(sourceSystem)){
                 .toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
+
+    public PlanCnsPlanParameterEntity getEntityWithAttributeAndDataObject(String attribute, String dataObject) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute)
+                .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
 }

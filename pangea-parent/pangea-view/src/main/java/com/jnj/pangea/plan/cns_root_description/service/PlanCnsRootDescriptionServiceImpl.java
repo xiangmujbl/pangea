@@ -52,7 +52,7 @@ public class PlanCnsRootDescriptionServiceImpl implements ICommonService {
                 String localParentCode = cnsMaterialPlanStatusEntity.getLocalParentCode();
                 if (StringUtils.isNotEmpty(localParentCode) && !extraParam.containsKey(localParentCode)) {
 
-                    cnsRootDescriptionBo.setLocalDpParentCode(cnsMaterialPlanStatusEntity.getLocalParentCode());
+                    cnsRootDescriptionBo.setLocalDpParentCode(materialGlobalV1Entity.getLocalDpParentCode());
 
                     // rules T1
                     EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();

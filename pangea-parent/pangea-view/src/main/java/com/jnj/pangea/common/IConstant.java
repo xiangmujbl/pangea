@@ -818,6 +818,7 @@ public interface IConstant {
         String LATAM_SKU = "LATAM_SKU";
         String LATAM_TECH = "LATAM_TECH";
         String PROJECT_ONE = "project_one";
+        String PROJECT_ONE_DEV = "Project_One";
         String EMS = "[EMS]";
         String EN = "E";
         String PT = "P";
