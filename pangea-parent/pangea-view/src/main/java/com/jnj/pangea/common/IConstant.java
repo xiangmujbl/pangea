@@ -884,6 +884,7 @@ public interface IConstant {
         String ACTIVE = "ACTIVE";
         String BASE = "BASE";
         String STR_ONE = "001";
+        String STR_TWO = "002";
         String STR_NINE = "009";
         String OMP = "omp";
         String CNS_SALES_HISTORY = "CNS_SalesHistory";

@@ -47,7 +47,7 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
                 LogUtil.getCoreLog().info("----------capyCatCd---------"+capyCatCd);
                 EDMWrkCtrEntity edmWrkCtrEntity = wrkCtrDao.getEntityWithSrcSysCdAndCapyNum(src, num);
                 if (null != edmWrkCtrEntity ) {
-                    if (IConstant.VALUE.STR_ONE.equals(capyCatCd)){
+                    if (IConstant.VALUE.STR_TWO.equals(capyCatCd)){
                         LogUtil.getCoreLog().info("----------come in---------"+capyCatCd);
                         String srcSysCd = edmWrkCtrEntity.getSrcSysCd();
                         if (StringUtils.isNotEmpty(srcSysCd)) {
