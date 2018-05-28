@@ -15,7 +15,6 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
     private String matlMvmtSeqNbr;
     private String delvSchedCntNbr;
     private String poCatTypeCd;
-    private String sequenceNumber;
     private String poTypeCd;
     private String crtOnDt;
     private String supNum;
@@ -79,6 +78,8 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
     private String custNum;
     private String outbDelvCmpltInd;
     private String localConfCrtOnDt;
+    private String localSeqNumVendConf;
+    private String localSeqNumActAsgn;
 
     public EDMPurchaseOrderOAV1Entity(Map<String, Object> map) {
         super(map);
@@ -91,7 +92,6 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
         setMatlMvmtSeqNbr((String)map.get("matlMvmtSeqNbr"));
         setDelvSchedCntNbr((String)map.get("delvSchedCntNbr"));
         setPoCatTypeCd((String)map.get("poCatTypeCd"));
-        setSequenceNumber((String)map.get("sequenceNumber"));
         setPoTypeCd((String)map.get("poTypeCd"));
         setCrtOnDt((String)map.get("crtOnDt"));
         setSupNum((String)map.get("supNum"));
@@ -155,6 +155,8 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
         setCustNum((String)map.get("custNum"));
         setOutbDelvCmpltInd((String)map.get("outbDelvCmpltInd"));
         setLocalConfCrtOnDt((String)map.get("localConfCrtOnDt"));
+        setLocalSeqNumVendConf((String)map.get("localSeqNumVendConf"));
+        setLocalSeqNumActAsgn((String)map.get("localSeqNumActAsgn"));
     }
 
     public String getSourceSystem() {
@@ -227,14 +229,6 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
 
     public void setPoCatTypeCd(String poCatTypeCd) {
         this.poCatTypeCd = poCatTypeCd;
-    }
-
-    public String getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(String sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
     }
 
     public String getPoTypeCd() {
@@ -739,5 +733,21 @@ public class EDMPurchaseOrderOAV1Entity extends CommonEntity {
 
     public void setLocalConfCrtOnDt(String localConfCrtOnDt) {
         this.localConfCrtOnDt = localConfCrtOnDt;
+    }
+
+    public String getLocalSeqNumVendConf() {
+        return localSeqNumVendConf;
+    }
+
+    public void setLocalSeqNumVendConf(String localSeqNumVendConf) {
+        this.localSeqNumVendConf = localSeqNumVendConf;
+    }
+
+    public String getLocalSeqNumActAsgn() {
+        return localSeqNumActAsgn;
+    }
+
+    public void setLocalSeqNumActAsgn(String localSeqNumActAsgn) {
+        this.localSeqNumActAsgn = localSeqNumActAsgn;
     }
 }
