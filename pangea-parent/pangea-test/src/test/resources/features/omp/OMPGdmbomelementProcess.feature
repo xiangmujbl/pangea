@@ -30,19 +30,18 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
   @Scenario1
   Scenario:  JOIN MFG_ORDER, MFG_ORDER_ITM, MFG_ORDER_RTNG, MFG_ORDER_SEQ  If no records found, skip ,if multiple records found, use all of them for output  --(J1)
 
-
     Given I import "/edm/mfg_order" by keyFields "sourceSysCd,mfgOrdrNum"
       | sourceSysCd   | mfgOrdrNum   | rsrvtnNum  | ordrRtngNum | bomCatCd | bomNum     | actRlseDt |
       # actRlseDt Between current date and current date - 1
       | CONS_LATAM    | 000001000320 | 0000000570 | 0000000340  | stlty    | 0000000540 | 20180520  |
-      | CONS_LATAM    | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180524  |
-      | CONS_LATAM    | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180524  |
-      | CONS_LATAM    | 000001000323 | 0000000573 | 0000000343  | stlty    | 0000000543 | 20180524  |
-      | CONS_LATAM    | 000001000324 | 0000000574 | 0000000344  | stlty    | 0000000544 | 20180524  |
-      | CONS_LATAM    | 000001000325 | 0000000575 | 0000000345  | stlty    | 0000000545 | 20180524  |
-      | CONS_LATAM    | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180524  |
+      | CONS_LATAM    | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180529  |
+      | CONS_LATAM    | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180529  |
+      | CONS_LATAM    | 000001000323 | 0000000573 | 0000000343  | stlty    | 0000000543 | 20180529  |
+      | CONS_LATAM    | 000001000324 | 0000000574 | 0000000344  | stlty    | 0000000544 | 20180529  |
+      | CONS_LATAM    | 000001000325 | 0000000575 | 0000000345  | stlty    | 0000000545 | 20180529  |
+      | CONS_LATAM    | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180529  |
       #sourceSysCd not equals /plan/cns_plan_parameter.attribute(CONS_LATAM-J1!=CONS_LATAM)
-      | CONS_LATAM-J1 | 000001000327 | 0000000577 | 0000000347  | stlty    | 0000000547 | 20180524  |
+      | CONS_LATAM-J1 | 000001000327 | 0000000577 | 0000000347  | stlty    | 0000000547 | 20180529  |
 
     And I wait "/edm/mfg_order" Async Queue complete
 
@@ -139,7 +138,9 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     When I submit task with xml file "xml/OMP/OMPGdmbomelementProcess.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_bom_element" by keyFields "BOMElementId"
+    Then A file is found on sink application with name "GDMBOMElement_process.tsv"
+
+    Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "BOMElementId"
       | BOMElementId                                                      | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                               | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset     | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId | ProductId             | Quantity | StartEff            |
       | PRO/CONS_LATAM/000001000326/444/0010/000000000000004776/0020/0026 | YES    | YES          | YES          | NO           | 0026    | PRO/LA_000001000326/0000000346/0010 | batchstart | proportional |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR06 | 864000.000 |                  |                  |                | *           | LA_000000000000004776 | 0.000    | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000326/444/0010/000000000000004776/0001/0006 | YES    | YES          | YES          | NO           | 0006    | PRO/LA_000001000326/0000000346/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 15.000              | CONS_LATAM_BR06 | 864000.000 |                  |                  |                | *           | LA_000000000000004776 | 521.000  | 01/01/1980 00:00:00 |
@@ -151,9 +152,9 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     Given I import "/edm/mfg_order" by keyFields "sourceSysCd,mfgOrdrNum"
       | sourceSysCd | mfgOrdrNum   | rsrvtnNum  | ordrRtngNum | bomCatCd | bomNum     | actRlseDt |
-      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180524  |
-      | CONS_LATAM  | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180524  |
-      | CONS_LATAM  | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180524  |
+      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180529  |
+      | CONS_LATAM  | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180529  |
+      | CONS_LATAM  | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180529  |
 
     And I wait "/edm/mfg_order" Async Queue complete
 
@@ -182,8 +183,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
-
-
     Given I import "/edm/reserv_itm" by keyFields "sourceSysCd,rsrvtnNum,rsrvtnItmNum,rsrvtnRcrdTypCd"
       | sourceSysCd | rsrvtnNum  | rsrvtnItmNum | rsrvtnRcrdTypCd | delInd | qtyFxInd | bomItmNum | btchNum | matlNum            | leadTimeOffset | rqmtQty | wthdrnQty |
       | CONS_LATAM  | 0000000571 | 0001         |                 |        |          | 0020      | 0021    | 000000000000004771 | 0              | 15.000  | 15.000    |
@@ -191,7 +190,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM  | 0000000576 | 0006         |                 |        |          | 0020      | 0026    | 000000000000004776 | 1              | 15.000  | 15.000    |
 
     And I wait "/edm/reserv_itm" Async Queue complete
-
 
     Given I import "/edm/mfg_order_rtng" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
       | srcSysCd   | ordrRtngNum | ordrRtngCtrNum | operNum |
@@ -201,9 +199,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/mfg_order_rtng" Async Queue complete
 
-
-
-
     Given I import "/edm/mfg_order_seq" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
       | srcSysCd   | ordrRtngNum | ordrRtngCtrNum | rtngSqncNum |
       | CONS_LATAM | 0000000341  | 0000000001     | 444         |
@@ -211,8 +206,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM | 0000000346  | 0000000006     | 444         |
 
     And I wait "/edm/mfg_order_seq" Async Queue complete
-
-
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum,bomItmNdeNum,bomItmCntrNbr"
       | srcSysCd   | bomCatCd | bomNum     | bomItmNdeNum | bomItmCntrNbr | dstrbtnKeyCd |
@@ -222,10 +215,11 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/bom_item" Async Queue complete
 
-
     When I submit task with xml file "xml/OMP/OMPGdmbomelementProcess.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_bom_element" by keyFields "BOMElementId"
+    Then A file is found on sink application with name "GDMBOMElement_process.tsv"
+
+    Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "BOMElementId"
       | BOMElementId                                                      | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                               | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset      | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId | ProductId             | Quantity | StartEff            |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0020/0021 | YES    | YES          | YES          | NO           | 0021    | PRO/LA_000001000321/0000000341/0010 | batchstart | proportional |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *           | LA_000000000000004771 | 0.000    | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0001/0001 | YES    | YES          | YES          | NO           | 0001    | PRO/LA_000001000321/0000000341/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 15.000              | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *           | LA_000000000000004771 | 521.000  | 01/01/1980 00:00:00 |
@@ -241,9 +235,9 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     Given I import "/edm/mfg_order" by keyFields "sourceSysCd,mfgOrdrNum"
       | sourceSysCd | mfgOrdrNum   | rsrvtnNum  | ordrRtngNum | bomCatCd | bomNum     | actRlseDt |
-      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180524  |
-      | CONS_LATAM  | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180524  |
-      | CONS_LATAM  | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180524  |
+      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180529  |
+      | CONS_LATAM  | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180529  |
+      | CONS_LATAM  | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180529  |
 
     And I wait "/edm/mfg_order" Async Queue complete
 
@@ -291,9 +285,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/mfg_order_rtng" Async Queue complete
 
-
-
-
     Given I import "/edm/mfg_order_seq" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
       | srcSysCd   | ordrRtngNum | ordrRtngCtrNum | rtngSqncNum |
       | CONS_LATAM | 0000000341  | 0000000001     | 444         |
@@ -301,8 +292,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM | 0000000346  | 0000000006     | 444         |
 
     And I wait "/edm/mfg_order_seq" Async Queue complete
-
-
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum,bomItmNdeNum,bomItmCntrNbr"
       | srcSysCd   | bomCatCd | bomNum     | bomItmNdeNum | bomItmCntrNbr | dstrbtnKeyCd |
@@ -312,10 +301,11 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/bom_item" Async Queue complete
 
-
     When I submit task with xml file "xml/OMP/OMPGdmbomelementProcess.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_bom_element" by keyFields "BOMElementId"
+    Then A file is found on sink application with name "GDMBOMElement_process.tsv"
+
+    Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "BOMElementId"
       | BOMElementId                                                                   | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                               | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset     | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId        | ProductId             | Quantity | StartEff            |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0020/0021              | YES    | YES          | YES          | NO           | 0021    | PRO/LA_000001000321/0000000341/0010 | batchstart | proportional |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR01 | 0.000      |                  |                  |                | *                  | LA_000000000000004771 | -1.000   | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0001/0001              | YES    | YES          | YES          | NO           | 0001    | PRO/LA_000001000321/0000000341/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000      |                  |                  |                | *                  | LA_000000000000004771 | 521.000  | 01/01/1980 00:00:00 |
@@ -331,7 +321,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     Given I import "/edm/mfg_order" by keyFields "sourceSysCd,mfgOrdrNum"
       | sourceSysCd | mfgOrdrNum   | rsrvtnNum  | ordrRtngNum | bomCatCd | bomNum     | actRlseDt |
-      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180524  |
+      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180529  |
 
     And I wait "/edm/mfg_order" Async Queue complete
 
@@ -376,16 +366,11 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/mfg_order_rtng" Async Queue complete
 
-
-
-
     Given I import "/edm/mfg_order_seq" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
       | srcSysCd   | ordrRtngNum | ordrRtngCtrNum | rtngSqncNum |
       | CONS_LATAM | 0000000341  | 0000000001     | 444         |
 
     And I wait "/edm/mfg_order_seq" Async Queue complete
-
-
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum,bomItmNdeNum,bomItmCntrNbr"
       | srcSysCd   | bomCatCd | bomNum     | bomItmNdeNum | bomItmCntrNbr | dstrbtnKeyCd |
@@ -393,10 +378,11 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/bom_item" Async Queue complete
 
-
     When I submit task with xml file "xml/OMP/OMPGdmbomelementProcess.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_bom_element" by keyFields "BOMElementId"
+    Then A file is found on sink application with name "GDMBOMElement_process.tsv"
+
+    Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "BOMElementId"
       | BOMElementId                                                      | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                               | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId | ProductId             | Quantity | StartEff            |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0020/0021 | YES    | YES          | YES          | NO           | 0021    | PRO/LA_000001000321/0000000341/0010 | batchstart | proportional |          | 31/12/2998 23:59:59 | 20849.000           | CONS_LATAM_BR01 | 0.000  |                  |                  |                | *           | LA_000000000000004771 | -1.000   | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0001/0001 | YES    | YES          | YES          | NO           | 0001    | PRO/LA_000001000321/0000000341/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000  |                  |                  |                | *           | LA_000000000000004771 | 521.000  | 01/01/1980 00:00:00 |
@@ -410,9 +396,9 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     Given I import "/edm/mfg_order" by keyFields "sourceSysCd,mfgOrdrNum"
       | sourceSysCd | mfgOrdrNum   | rsrvtnNum  | ordrRtngNum | bomCatCd | bomNum     | actRlseDt |
-      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180524  |
-      | CONS_LATAM  | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180524  |
-      | CONS_LATAM  | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180524  |
+      | CONS_LATAM  | 000001000321 | 0000000571 | 0000000341  | stlty    | 0000000541 | 20180529  |
+      | CONS_LATAM  | 000001000322 | 0000000572 | 0000000342  | stlty    | 0000000542 | 20180529  |
+      | CONS_LATAM  | 000001000326 | 0000000576 | 0000000346  | stlty    | 0000000546 | 20180529  |
 
     And I wait "/edm/mfg_order" Async Queue complete
 
@@ -465,9 +451,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/mfg_order_rtng" Async Queue complete
 
-
-
-
     Given I import "/edm/mfg_order_seq" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
       | srcSysCd   | ordrRtngNum | ordrRtngCtrNum | rtngSqncNum |
       | CONS_LATAM | 0000000341  | 0000000001     | 444         |
@@ -475,8 +458,6 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM | 0000000346  | 0000000006     | 444         |
 
     And I wait "/edm/mfg_order_seq" Async Queue complete
-
-
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum,bomItmNdeNum,bomItmCntrNbr"
       | srcSysCd   | bomCatCd | bomNum     | bomItmNdeNum | bomItmCntrNbr | dstrbtnKeyCd |
@@ -486,19 +467,20 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/bom_item" Async Queue complete
 
-
     When I submit task with xml file "xml/OMP/OMPGdmbomelementProcess.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/gdm_bom_element" by keyFields "BOMElementId"
-      | BOMElementId                                                                   | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                               | BOMType | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset      | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId        | ProductId             | Quantity | StartEff            |
+    Then A file is found on sink application with name "GDMBOMElement_process.tsv"
+
+    Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "BOMElementId"
+      | BOMElementId                                                                   | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                               | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset      | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId        | ProductId             | Quantity | StartEff            |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0020/0021              | YES    | YES          | YES          | NO           | 0021    | PRO/LA_000001000321/0000000341/0010 | batchstart | proportional |          | 31/12/2998 23:59:59 | 20849.000           | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *                  | LA_000000000000004771 | -1.000   | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000004771/0001/0001              | YES    | YES          | YES          | NO           | 0001    | PRO/LA_000001000321/0000000341/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *                  | LA_000000000000004771 | 521.000  | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000003772/0002/0001              | YES    | YES          | YES          | NO           | 0001    | PRO/LA_000001000321/0000000341/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *                  | LA_000000000000003772 | 522.000  | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000003773/0003/0001              | YES    | YES          | YES          | NO           | 0001    | PRO/LA_000001000321/0000000341/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *                  | LA_000000000000003773 | 523.000  | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/000001000321/444/0010/000000000000003773/0004/0001              | YES    | YES          | YES          | NO           | 0001    | PRO/LA_000001000321/0000000341/0010 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *                  | LA_000000000000003773 | 523.000  | 01/01/1980 00:00:00 |
-      | PRO/CONS_LATAM/000001000322/444/0010/000000000000004772/0020/0022              | YES    | YES          | YES          | NO           | 0022    | PRO/LA_000001000322/0000000342/0010 | continu | fixed        |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR02 | 8640000.000 |                  |                  |                | DetailedScheduling | LA_000000000000004772 | 1.000    | 01/01/1980 00:00:00 |
-      | PRO/CONS_LATAM/000001000322/444/0010/000000000000004772/0020/0022/proportional | YES    | YES          | YES          | NO           | 0022    | PRO/LA_000001000322/0000000342/0010 | continu | fixed        |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR02 | 8640000.000 |                  |                  |                | VolumePlanning     | LA_000000000000004772 | 1.000    | 01/01/1980 00:00:00 |
-      | PRO/CONS_LATAM/000001000322/444/0010/000000000000004772/0001/0002              | YES    | YES          | YES          | NO           | 0002    | PRO/LA_000001000322/0000000342/0010 | continu | proportional |          | 31/12/2998 23:59:59 | 14.000              | CONS_LATAM_BR02 | 4320000.000 |                  |                  |                | *                  | LA_000000000000004772 | 521.000  | 01/01/1980 00:00:00 |
-      | PRO/CONS_LATAM/000001000326/444/0010/000000000000004776/0020/0026              | YES    | YES          | YES          | NO           | 0026    | PRO/LA_000001000326/0000000346/0010 |         |              |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR06 | 864000.000  |                  |                  |                |                    | LA_000000000000004776 | 0.000    | 01/01/1980 00:00:00 |
-      | PRO/CONS_LATAM/000001000326/444/0010/000000000000004776/0001/0006              | YES    | YES          | YES          | NO           | 0006    | PRO/LA_000001000326/0000000346/0010 |         | proportional |          | 31/12/2998 23:59:59 | 15.000              | CONS_LATAM_BR06 | 864000.000  |                  |                  |                | *                  | LA_000000000000004776 | 521.000  | 01/01/1980 00:00:00 |
+      | PRO/CONS_LATAM/000001000322/444/0010/000000000000004772/0020/0022              | YES    | YES          | YES          | NO           | 0022    | PRO/LA_000001000322/0000000342/0010 | continu    | fixed        |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR02 | 8640000.000 |                  |                  |                | DetailedScheduling | LA_000000000000004772 | 1.000    | 01/01/1980 00:00:00 |
+      | PRO/CONS_LATAM/000001000322/444/0010/000000000000004772/0020/0022/proportional | YES    | YES          | YES          | NO           | 0022    | PRO/LA_000001000322/0000000342/0010 | continu    | fixed        |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR02 | 8640000.000 |                  |                  |                | VolumePlanning     | LA_000000000000004772 | 1.000    | 01/01/1980 00:00:00 |
+      | PRO/CONS_LATAM/000001000322/444/0010/000000000000004772/0001/0002              | YES    | YES          | YES          | NO           | 0002    | PRO/LA_000001000322/0000000342/0010 | continu    | proportional |          | 31/12/2998 23:59:59 | 14.000              | CONS_LATAM_BR02 | 4320000.000 |                  |                  |                | *                  | LA_000000000000004772 | 521.000  | 01/01/1980 00:00:00 |
+      | PRO/CONS_LATAM/000001000326/444/0010/000000000000004776/0020/0026              | YES    | YES          | YES          | NO           | 0026    | PRO/LA_000001000326/0000000346/0010 |            |              |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR06 | 864000.000  |                  |                  |                |                    | LA_000000000000004776 | 0.000    | 01/01/1980 00:00:00 |
+      | PRO/CONS_LATAM/000001000326/444/0010/000000000000004776/0001/0006              | YES    | YES          | YES          | NO           | 0006    | PRO/LA_000001000326/0000000346/0010 |            | proportional |          | 31/12/2998 23:59:59 | 15.000              | CONS_LATAM_BR06 | 864000.000  |                  |                  |                | *                  | LA_000000000000004776 | 521.000  | 01/01/1980 00:00:00 |
 

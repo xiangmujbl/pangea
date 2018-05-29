@@ -22,17 +22,21 @@ public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
     }
 
     public List<EDMMfgOrderRtngEntity> getEntityWithConditions(String srcSysCd,String ordrRtngNum) {
+
         ADFCriteria adfCriteria=QueryHelper.buildCriteria();
-        if(StringUtils.isNotBlank(srcSysCd)){
-            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_SOURCESYSCD).is(srcSysCd);
+        if(StringUtils.isBlank(srcSysCd)){
+            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_SOURCESYSCD).isNull());
         }else{
-            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_SOURCESYSCD).isNull();
+            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_SOURCESYSCD).is(srcSysCd.trim()));
         }
-        if(StringUtils.isNotBlank(ordrRtngNum)){
-            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_ORDRRTNGNUM).is(ordrRtngNum);
+
+        if(StringUtils.isBlank(ordrRtngNum)){
+            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_ORDRRTNGNUM).isNull());
         }else{
-            adfCriteria.and(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_ORDRRTNGNUM).isNull();
+            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_ORDRRTNGNUM).is(ordrRtngNum.trim()));
         }
-        return queryForList(IConstant.REGION.EDM_MFG_ORDER_RTNG, adfCriteria.toQueryString(), EDMMfgOrderRtngEntity.class);
+        String queryString=adfCriteria.toQueryString();
+        LogUtil.getCoreLog().info("queryString" +queryString);
+        return queryForList(IConstant.REGION.EDM_MFG_ORDER_RTNG,queryString, EDMMfgOrderRtngEntity.class);
     }
 }

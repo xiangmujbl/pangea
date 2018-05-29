@@ -15,6 +15,9 @@ public class ProjectOnePlasEntity extends CommonEntity {
     private String datuv;
     private String loekz;
     private String arnnr;
+    private String andat;
+    private String aedat;
+    private String aennr;
 
     public ProjectOnePlasEntity(Map<String, Object> map) {
         super(map);
@@ -28,6 +31,33 @@ public class ProjectOnePlasEntity extends CommonEntity {
         setDatuv((String) map.get("datuv"));
         setLoekz((String) map.get("loekz"));
         setArnnr((String) map.get("arnnr"));
+        setAndat((String) map.get("andat"));
+        setAedat((String) map.get("aedat"));
+        setAennr((String) map.get("aennr"));
+    }
+
+    public String getAennr() {
+        return aennr;
+    }
+
+    public void setAennr(String aennr) {
+        this.aennr = aennr;
+    }
+
+    public String getAndat() {
+        return andat;
+    }
+
+    public void setAndat(String andat) {
+        this.andat = andat;
+    }
+
+    public String getAedat() {
+        return aedat;
+    }
+
+    public void setAedat(String aedat) {
+        this.aedat = aedat;
     }
 
     public String getPlnty() {

@@ -1,6 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/mfg_order" viewRegion="/omp/gdm_bom_element" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_bom_element_Process.controller.OMPGdmbomelementController">
+              executionClassName="com.jnj.pangea.omp.gdm_bom_element_Process.controller.OMPGdmbomelementController"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_bom_element_process">
         <regions>
 
             <region path="/edm/mfg_order">
@@ -16,7 +17,7 @@
                         <expression>srcSysCd=/edm/mfg_order.sourceSysCd,ordrRtngNum=/edm/mfg_order.ordrRtngNum</expression>
                     </relation>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
-                          <expression>sourceSystem=/edm/mfg_order.sourceSysCd,attribute=/edm/mfg_order.sourceSysCd</expression>
+                        <expression>sourceSystem=/edm/mfg_order.sourceSysCd,attribute=/edm/mfg_order.sourceSysCd</expression>
                     </relation>
                     <relation path="/edm/bom_item" isPrimaryKey="false">
                         <expression>srcSysCd=/edm/mfg_order.sourceSysCd,bomCatCd=/edm/mfg_order.bomCatCd,bomNum=/edm/mfg_order.bomNum</expression>
