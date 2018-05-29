@@ -49,7 +49,7 @@ public class EDMMfgOrderOperServiceImpl implements ICommonService {
         mfgOrderOperBo.setActv5UomCd(afvvEntity.getVge05());
         mfgOrderOperBo.setActv5Qty(afvvEntity.getVgw05());
         mfgOrderOperBo.setActv6UomCd(afvvEntity.getVge06());
-        mfgOrderOperBo.setActv6Qty(afvvEntity.getGw06());
+        mfgOrderOperBo.setActv6Qty(afvvEntity.getVgw06());
         mfgOrderOperBo.setMinOvrlapTimeUomCd(afvvEntity.getZeimu());
         mfgOrderOperBo.setMinOvrlapTimeInDaysQty(afvvEntity.getZminu());
         mfgOrderOperBo.setMinSendAhdQty(afvvEntity.getMinwe());
