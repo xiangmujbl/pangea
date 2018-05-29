@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.inspection_lot.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -46,6 +47,12 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         ProjectOneQalsEntity projectOneQalsEntity  = (ProjectOneQalsEntity)o;
         ResultObject resultObject = new ResultObject();
         EDMInspectionLotBo edmInspectionLotV1Bo = new EDMInspectionLotBo();
+        //N1
+        boolean empty = StringUtils.isEmpty(projectOneQalsEntity.getStat35());
+        boolean empty1 = StringUtils.isEmpty(projectOneQalsEntity.getLmengezub());
+        if(!empty||empty1){
+            return null;
+        }
         EDMSourceSystemV1Entity sourceEntity = getSourceEntity();
         edmInspectionLotV1Bo.setSrcSysCd(sourceEntity.getSourceSystem());
         edmInspectionLotV1Bo.setLotNum(projectOneQalsEntity.getPrueflos());
@@ -56,10 +63,7 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         edmInspectionLotV1Bo.setLotOrigCd(projectOneQalsEntity.getHerkunft());
         edmInspectionLotV1Bo.setLocalObjectNumber(projectOneQalsEntity.getObjnr());
         //N1
-        boolean empty = StringUtils.isEmpty(projectOneQalsEntity.getStat35());
-        if(empty){
-            edmInspectionLotV1Bo.setStsPrfl(projectOneQalsEntity.getStsma());
-        }
+        edmInspectionLotV1Bo.setStsPrfl(projectOneQalsEntity.getStsma());
         edmInspectionLotV1Bo.setUsgDecInd(projectOneQalsEntity.getStat35());
         //N5
         String date = getDate(projectOneQalsEntity.getEnstehdat());
@@ -91,10 +95,7 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         edmInspectionLotV1Bo.setInspLotQty(projectOneQalsEntity.getLosmenge());
         edmInspectionLotV1Bo.setToBePostedQty(projectOneQalsEntity.getLmengezub());
         //N2
-        boolean empty1 = StringUtils.isEmpty(projectOneQalsEntity.getLmengezub());
-        if(!empty1){
-            edmInspectionLotV1Bo.setActlLotQty(projectOneQalsEntity.getLmengeist());
-        }
+        edmInspectionLotV1Bo.setActlLotQty(projectOneQalsEntity.getLmengeist());
         //N4
         QaveEntity qaveEntity = projcetOneQaveDao.getQaveEntity(projectOneQalsEntity.getPrueflos());
         if(qaveEntity!=null){
@@ -121,9 +122,11 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         String QL = "QL";
         StringBuilder sb = new StringBuilder();
         sb.append(QL);
-        for (int i = 0; i < str.length-number.length(); i++) {
-            String s = str[i];
-            sb.append(s);
+        if(number.length()<12){
+            for (int i = 0; i < str.length-number.length(); i++) {
+                String s = str[i];
+                sb.append(s);
+            }
         }
         sb.append(number);
         return sb.toString();
@@ -137,17 +140,13 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
             List<Tj02tEntity> entityWithStat = projectOneTj02tDao.getEntityWithStat(stat);
             if(null!=entityWithStat){
             for (Tj02tEntity tj02tEntity : entityWithStat) {
-                if(sb.length()==0||sb.length()==entityWithStat.size()-1){
-                        sb.append(tj02tEntity.getTxt04());
-                    }else{
                         sb.append(" ");
                         sb.append(tj02tEntity.getTxt04());
-                    }
                 }
             }
         }
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 
     public  String getDate (String time)  {
