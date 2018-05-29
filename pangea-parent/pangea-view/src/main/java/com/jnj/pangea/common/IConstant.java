@@ -744,6 +744,7 @@ public interface IConstant {
         String RNTGGRPCNTRNBR = "rntgGrpCntrNbr";
         String MATLNUM = "matlNum";
         String RNTGGRPCD = "rntgGrpCd";
+        String RTNGGRPCD = "rtngGrpCd";
         String FIELD_MATLRTNGVALID_TO_NULL = "";
     }
 
@@ -1047,6 +1048,7 @@ public interface IConstant {
         interface MFG_ORDER_SEQ{
             public static final String FIELD_SOURCESYSCD="sourceSysCd";
             public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
+            public static final String FIELD_SCSYSCD="srcSysCd";
         }
         interface BOM_ITEM{
             public static final String FIELD_SRCSYSCD="srcSysCd";

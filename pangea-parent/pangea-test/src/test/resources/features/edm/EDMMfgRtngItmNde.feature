@@ -22,7 +22,6 @@ Feature: EDMMfgRtngItmNde AEAZ-3273
 
     Then I check region data "/edm/mfg_rtng_itm_nde" by keyFields "srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr"
       | srcSysCd   | rtngTypCd | rtngGrpCd   | rtngGrpCntrNbr | rtngSqncNum | rtngNdeNum | rtngNdeVrsnCntrNbr | ValidFromDate | chgNum | delInd | CreateDttm | chgDttm  |
-      | CONS_LATAM |           | 00000001_T1 | 01             | 000000      | 00000001   | 00000001           | 20170504      | 111    | 111    | 20180504   | 20090911 |
       | CONS_LATAM | 2         | 00000002_F1 | 01             | 000000      | 00000002   | 00000002           | 20170504      | 111    | 111    | 20180504   | 20090911 |
       | CONS_LATAM | N         | 00000003_F1 | 01             | 000000      | 00000002   | 00000002           | 20170504      | 111    | 111    | 20180504   | 20090911 |
 

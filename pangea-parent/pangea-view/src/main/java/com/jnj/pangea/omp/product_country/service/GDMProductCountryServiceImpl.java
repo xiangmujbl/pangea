@@ -73,6 +73,8 @@ public class GDMProductCountryServiceImpl implements ICommonService {
                     String productId = IConstant.VALUE.LA_ + prodCtyAfflEntity.getDpParentCode();
                     productCountryBo.setProductId(productId);
                 }
+            }else{
+                return resultObject;
             }
             productCountryBo.setRootSize(prodCtyAfflEntity.getRootSize());
             productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
