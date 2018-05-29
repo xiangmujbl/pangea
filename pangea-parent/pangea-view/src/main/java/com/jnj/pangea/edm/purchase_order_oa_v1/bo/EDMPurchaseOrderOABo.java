@@ -14,7 +14,6 @@ public class EDMPurchaseOrderOABo extends BaseBo {
     private String matlMvmtSeqNbr;
     private String delvSchedCntNbr;
     private String poCatTypeCd;
-    private String sequenceNumber;
     private String poTypeCd;
     private String crtOnDt;
     private String supNum;
@@ -77,6 +76,9 @@ public class EDMPurchaseOrderOABo extends BaseBo {
     private String grLeadTimeDays;
     private String custNum;
     private String outbDelvCmpltInd;
+    private String localConfCrtOnDt;
+    private String localSeqNumVendConf;
+    private String localSeqNumActAsgn;
 
 
     @Override
@@ -90,7 +92,8 @@ public class EDMPurchaseOrderOABo extends BaseBo {
                 .add("matlMvmtNum",this.matlMvmtNum)
                 .add("matlMvmtSeqNbr",this.matlMvmtSeqNbr)
                 .add("delvSchedCntNbr",this.delvSchedCntNbr)
-                .add("sequenceNumber",this.sequenceNumber)
+                .add("localSeqNumVendConf",this.localSeqNumVendConf)
+                .add("localSeqNumActAsgn",this.localSeqNumActAsgn)
                 .toJsonString();
     }
 
@@ -164,14 +167,6 @@ public class EDMPurchaseOrderOABo extends BaseBo {
 
     public void setPoCatTypeCd(String poCatTypeCd) {
         this.poCatTypeCd = poCatTypeCd;
-    }
-
-    public String getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(String sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
     }
 
     public String getPoTypeCd() {
@@ -668,5 +663,29 @@ public class EDMPurchaseOrderOABo extends BaseBo {
 
     public void setOutbDelvCmpltInd(String outbDelvCmpltInd) {
         this.outbDelvCmpltInd = outbDelvCmpltInd;
+    }
+
+    public String getLocalConfCrtOnDt() {
+        return localConfCrtOnDt;
+    }
+
+    public void setLocalConfCrtOnDt(String localConfCrtOnDt) {
+        this.localConfCrtOnDt = localConfCrtOnDt;
+    }
+
+    public String getLocalSeqNumVendConf() {
+        return localSeqNumVendConf;
+    }
+
+    public void setLocalSeqNumVendConf(String localSeqNumVendConf) {
+        this.localSeqNumVendConf = localSeqNumVendConf;
+    }
+
+    public String getLocalSeqNumActAsgn() {
+        return localSeqNumActAsgn;
+    }
+
+    public void setLocalSeqNumActAsgn(String localSeqNumActAsgn) {
+        this.localSeqNumActAsgn = localSeqNumActAsgn;
     }
 }
