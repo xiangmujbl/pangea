@@ -5,7 +5,7 @@
 
             <region path="/project_one/plaf">
                 <columns>
-                    plnum,plwrk,pwwrk,matnr,meins,beskz,sobes,numvr,paart,gsmng,avmng,bdmng,psttr,pstti,pedtr,pedti,webaz,auffx,lgort,verid,terst,tered,dispo,plscn
+                    plnum,plwrk,pwwrk,matnr,meins,beskz,sobes,numvr,paart,gsmng,avmng,bdmng,psttr,pstti,pedtr,pedti,webaz,auffx,lgort,verid,terst,tered,wadatist,plscn
                 </columns>
                 <filter>plscn:000</filter>
                 <relations>
@@ -26,7 +26,7 @@
 
             <region path="/project_one/plaf" alias="/project_one/plaf_clone">
                 <columns>
-                    plnum,plwrk,pwwrk,matnr,meins,beskz,sobes,numvr,paart,gsmng,avmng,bdmng,psttr,pstti,pedtr,pedti,webaz,auffx,lgort,verid,terst,tered,dispo,plscn
+                    plnum,plwrk,pwwrk,matnr,meins,beskz,sobes,numvr,paart,gsmng,avmng,bdmng,psttr,pstti,pedtr,pedti,webaz,auffx,lgort,verid,terst,tered,wadatist,plscn
                 </columns>
             </region>
 

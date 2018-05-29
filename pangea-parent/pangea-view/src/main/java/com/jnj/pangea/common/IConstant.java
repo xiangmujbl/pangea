@@ -86,11 +86,19 @@ public interface IConstant {
         String PLAN_CNS_SPL_PLN_LOC = "/plan/cns_spl_pln_loc";
         String PLAN_CNS_PROCESS_TYPE = "/plan/cns_process_type";
         String PLAN_CNS_PLAN_OBJECT_FILTER = "/plan/cns_plan_object_filter";
+        String PROJECT_ONE_EKPO = "/project_one/ekpo";
+        String PROJECT_ONE_EKKO = "/project_one/ekko";
+        String PROJECT_ONE_EKES = "/project_one/ekes";
+        String PROJECT_ONE_EKET = "/project_one/eket";
+        String PROJECT_ONE_EKPV = "/project_one/ekpv";
+        String PROJECT_ONE_EKBE = "/project_one/ekbe";
         String CNS_TLANE_ITEM_EXCEPTION = "/plan/cns_tlane_item_exception";
         String CNS_TLANE_ITEM = "/plan/cns_tlane_item";
         String PLAN_CONS_TIME_DEP_XCHANGE_CLONE = "/plan/cons_time_dep_xchange_clone";
         String EDM_JNJ_CALENDAR_V1 = "/edm/jnj_calendar_v1";
         String EDM_UNIT_OF_MEASURE_V1 = "/edm/unit_of_measure_v1";
+        String PROJECT_ONE_LIKP = "/project_one/likp";
+        String PROJECT_ONE_LIPS = "/project_one/lips";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -188,6 +196,14 @@ public interface IConstant {
     interface PLAN_CNS_PROC_TYP {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_PROCUREMENT_TYPE = "localProcurementType";
+    }
+
+    interface PROJECT_ONE_LIKP {
+        String VBELN = "vbeln";
+    }
+
+    interface PROJECT_ONE_LIPS {
+        String VBELN = "vbeln";
     }
 
     interface PROJECT_ONE_TMABCT {
@@ -425,6 +441,15 @@ public interface IConstant {
         String ISTAT = "istat";
     }
 
+    interface PROJECT_ONE_EKPO {
+        String EBELN = "ebeln";
+    }
+
+    interface PROJECT_ONE_EKBE {
+        String EBELN = "ebeln";
+        String EBELP = "ebelp";
+    }
+
     interface PLAN_CNS_PROCESS_TYPE {
         String PROCESS_TYPE_ID = "processTypeId";
         String PROCESS_TYPE_DESCRIPTION = "processTypeDesc";
@@ -555,8 +580,10 @@ public interface IConstant {
         String YYYY_MM_DD = "yyyy/MM/dd";
         String YYYYMMDD_ZERO = "00000000";
         String YYYY_MM_DD_ZERO = "0000/00/00";
+        String  HH_NN_SS_ZERO = " 00:00:00";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
-        String YYYYDDMMHHMMSS = "yyyy/DD/mm HH:mm:ss";
+        String YYYYMMDDBS = "yyyy/MM/dd";
+        String YYYYMMDD_WITH_DASH = "yyyy-MM-dd";
         String MMDYYYY = "MM/d/yyyy";
         String DDMMYYYY = "dd/MM/yyyy";
         String N = "N";
@@ -568,7 +595,6 @@ public interface IConstant {
         String BA = "BA";
         String FALSE = "FALSE";
         String COLON = ":";
-        String YYYYMMDDBS = "yyyy/MM/dd";
         String TRANSPORT = "TRANSPORT";
         String STAR = "*";
         String LFU = "LFU";
@@ -595,6 +621,7 @@ public interface IConstant {
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
+        String SEVEN = "7";
         String VENDOR_TRANSPORT = "VendorTransport";
         String DEFAULT = "DEFAULT";
     }
