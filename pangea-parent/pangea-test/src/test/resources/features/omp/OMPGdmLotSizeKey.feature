@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-4482
-Feature:  OMPGdmLotSizeKey-Curation
+Feature:  OMPGdmLotSizeKey AEAZ-4482
 #
-  Scenario: Full Load curation
+  Scenario: Full Load consumption
 
     And I will remove the test file on sink application "LotSizeKey.tsv"
 
