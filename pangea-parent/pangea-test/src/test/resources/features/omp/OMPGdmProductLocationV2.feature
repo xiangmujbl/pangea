@@ -38,7 +38,7 @@ Feature: OMPGdmProductLocationV2-Curation AEAZ-2827
     And I wait "/edm/source_system_v1" Async Queue complete
 
     Given I import "/plan/cns_spl_pln_loc" by keyFields "sourceSystem,localNumber"
-      | sourceSystem | localNumber | vendororCustomer |
+      | sourceSystem | localNumber | vendorOrCustomer |
       | CON_LATAM    | LN06        | V                |
 
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete

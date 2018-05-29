@@ -38,6 +38,11 @@ public class OMPGdmSupplyBo extends BaseBo {
                 .toJsonString();
     }
 
+    //default constructor
+    public OMPGdmSupplyBo() {
+
+    }
+
     //copy constructor
     public OMPGdmSupplyBo(OMPGdmSupplyBo ompGdmSupplyBo, String locationId) {
         this.LocationId = locationId;
@@ -59,11 +64,6 @@ public class OMPGdmSupplyBo extends BaseBo {
         this.TransportType = ompGdmSupplyBo.getTransportType();
         this.VENDORID = ompGdmSupplyBo.getVENDORID();
         this.INCQuantity = ompGdmSupplyBo.getINCQuantity();
-    }
-
-    //default constructor
-    public OMPGdmSupplyBo() {
-
     }
 
     public String getSupplyId() {

@@ -1,5 +1,4 @@
 package com.jnj.pangea.omp.gdm_supply.service;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -16,7 +15,6 @@ import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsProcessTypeEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_supply.bo.OMPGdmSupplyBo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +51,7 @@ public class OMPGdmSupplyServiceImpl {
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
         // N1
-        String partA = null;
+        String partA;
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(edmSourceListV1Entity.getLocalMaterialNumber());
         if(null != materialGlobalV1Entity && (!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty() && materialGlobalV1Entity.getMaterialNumber().isEmpty()))) {
             if (materialGlobalV1Entity.getPrimaryPlanningCode() != null && (!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()))) {
@@ -126,7 +124,7 @@ public class OMPGdmSupplyServiceImpl {
                                             String materialNumber = materialGlobalV1Entity.getMaterialNumber();
                                             if (materialNumber != null && (!(materialNumber.isEmpty())) && primaryPlanningCode != null && (!(primaryPlanningCode.isEmpty()))) {
 
-                                                if (primaryPlanningCode != null && (!(primaryPlanningCode.isEmpty()))) {
+                                                if ((!(primaryPlanningCode.isEmpty()))) {
                                                     gdmSupplyBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
                                                 } else if (primaryPlanningCode.equals(materialNumber)) {
                                                     gdmSupplyBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
@@ -191,61 +189,58 @@ public class OMPGdmSupplyServiceImpl {
                                             // N18
                                             PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity_2 = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
                                             if (null != planCnsPlnSplLocEntity_2) {
-                                                // if no value returned use ExternalPurchase
-                                                gdmSupplyBo.setPROCESSTYPEID("ExternalPurchase");
                                                 // if planCnsPlanSplLocEntity local plant is not empty SKIP
-                                                if ((!(planCnsPlnSplLocEntity_2.getLocalPlant().isEmpty()))) {
+                                                if (((planCnsPlnSplLocEntity_2.getLocalPlant().isEmpty()))) {
 
-                                                } else {
-                                                    // check if planCnsPlnSplLocEntity is exists if not then populate value as "VendorPurchase"
+                                                    // check if planCnsPlnSplLocEntity exists getLocalPlant if not then populate value as "VendorPurchase"
                                                     gdmSupplyBo.setPROCESSTYPEID("VendorPurchase");
-                                                }
-                                            }
 
-                                            // N19
-                                            PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());
-                                            LogUtil.getAppLog().info("\n\n\ngdmSupplyBo getPROCESSTYPEID() :{}\n\n\n", gdmSupplyBo.getPROCESSTYPEID());
-                                            if (planCnsProcessTypeEntity != null) {
+                                                    // N16
+                                                    PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
+                                                    if (planCnsPlnSplLocEntity != null) {
 
+                                                        EDMMaterialPlantV1Entity edmMaterialPlantV1Entity_1 = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
+                                                        if (edmMaterialPlantV1Entity_1 != null) {
 
-                                                gdmSupplyBo.setLABEL(planCnsProcessTypeEntity.getProcessTypeDesc());
-                                            }
+                                                            // skip if local Special Procurement Type == 30 as it is a sub contracting scenario
+                                                            String localSpecialProcurementType = edmMaterialPlantV1Entity_1.getLocalSpecialProcurementType();
+                                                            if (!(localSpecialProcurementType.equals("30"))) {
 
-                                            // N16
-                                            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
-                                            if (planCnsPlnSplLocEntity != null) {
+                                                                // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
+                                                                if ((edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty())) {
 
-                                                EDMMaterialPlantV1Entity edmMaterialPlantV1Entity_1 = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
-                                                if (edmMaterialPlantV1Entity_1 != null) {
-                                                    String localSpecialProcurementType = edmMaterialPlantV1Entity_1.getLocalSpecialProcurementType();
-                                                    if (localSpecialProcurementType.equals("30")) {
-                                                        // skip if local Special Procurement Type == 30 as it is a sub contracting scenario
+                                                                    // set Vendor to EDM Source List V1 local vendor account number
+                                                                    gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
 
-                                                    } else {
-                                                        // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
-                                                        if (!(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) && edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() != null) {
+                                                                    // N19
+                                                                    PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());
+                                                                    if (planCnsProcessTypeEntity != null) {
+                                                                        gdmSupplyBo.setLABEL(planCnsProcessTypeEntity.getProcessTypeDesc());
+                                                                    }
 
-                                                        } else {
-                                                            // set Vendor to EDM Source List V1 local vendor account number
-                                                            gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                                                    String locationID = planCnsPlnSplLocEntity.getSourceSystem()
+                                                                            + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
+                                                                            + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber();
 
-                                                            String locationID = planCnsPlnSplLocEntity.getSourceSystem()
-                                                                    + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
-                                                                    + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber();
+                                                                    OMPGdmSupplyBo gdmSupplyBo1 = new OMPGdmSupplyBo(gdmSupplyBo, locationID);
 
-                                                            OMPGdmSupplyBo gdmSupplyBo1 = new OMPGdmSupplyBo(gdmSupplyBo, locationID);
-
-                                                            LogUtil.getAppLog().info("\n\n\ngdmSupplyBo1 get locationID :{}\n\n\n", gdmSupplyBo1.getLocationId());
-
-                                                            LogUtil.getAppLog().info("\n\n\ngdmSupplyBo get locationID 2 :{}\n\n\n", gdmSupplyBo.getLocationId());
-
-                                                            resultObject_1.setBaseBo(gdmSupplyBo1);
-                                                            resultObjects.add(resultObject_1);
+                                                                    resultObject_1.setBaseBo(gdmSupplyBo1);
+                                                                    resultObjects.add(resultObject_1);
+                                                                }
+                                                            }
                                                         }
+                                                    } else {
+                                                        gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
                                                     }
                                                 }
                                             } else {
-                                                gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                                // if no value returned use ExternalPurchase
+                                                gdmSupplyBo.setPROCESSTYPEID("ExternalPurchase");
+                                            }
+                                            // N19
+                                            PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());
+                                            if (planCnsProcessTypeEntity != null) {
+                                                gdmSupplyBo.setLABEL(planCnsProcessTypeEntity.getProcessTypeDesc());
                                             }
                                             resultObject.setBaseBo(gdmSupplyBo);
                                             resultObjects.add(resultObject);

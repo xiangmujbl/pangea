@@ -25,9 +25,9 @@ public class PlanCnsProcessTypeDaoImpl extends CommonDaoImpl {
         return queryForList(IConstant.REGION.PLAN_CNS_PROCESS_TYPE,queryString,PlanCnsProcessTypeEntity.class);
     }
 
-    public PlanCnsProcessTypeEntity getEntityWithConditions(String processTypeDesc) {
-        if(processTypeDesc != null && !(processTypeDesc.isEmpty())) {
-            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROCESS_TYPE.PROCESS_TYPE_DESCRIPTION).is(processTypeDesc).toQueryString();
+    public PlanCnsProcessTypeEntity getEntityWithConditions(String processTypeID) {
+        if(processTypeID != null && !(processTypeID.isEmpty())) {
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROCESS_TYPE.PROCESS_TYPE_ID).is(processTypeID).toQueryString();
             return queryForObject(IConstant.REGION.PLAN_CNS_PROCESS_TYPE, queryString, PlanCnsProcessTypeEntity.class);
         }
         return null;

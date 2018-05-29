@@ -197,6 +197,7 @@ public class TestBase implements En {
 
     public Set<String> checkData(List<List<String>> list, String[] keyFields, String regionPath) {
         ((HashMap) viewKeys.get()).clear();
+        Assert.assertEquals(list.size()-1, adfService.onPath(getRealRegionPath(regionPath)).count()); //-1 for headers
         Map<String, String> map = Utils.parseList(list, keyFields);
         map.forEach((k, source) -> {
             String value = adfService.onPath(getRealRegionPath(regionPath)).get(k);
