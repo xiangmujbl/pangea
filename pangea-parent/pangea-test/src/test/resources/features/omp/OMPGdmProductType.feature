@@ -3,7 +3,7 @@ Feature: OMPProductType AEAZ-4485
 
   Scenario: Full Load consumption
   # Gets the data that the primary key is not empty.
-  #  And I will remove the test file on sink application "ProductType.tsv"
+    And I will remove the test file on sink application "ProductType.tsv"
 
     Given I import "/edm/material_type_v1" by keyFields "materialType"
       | materialType | materialTypeName |
