@@ -3,11 +3,9 @@ package com.jnj.pangea.omp.gdm_product.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.*;
 import com.jnj.pangea.common.entity.edm.*;
-import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
+import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.common.entity.edm.EDMProductFamilyV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMProductFamilyV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMFormV1Entity;
@@ -22,8 +20,6 @@ import com.jnj.pangea.common.entity.edm.EDMFranchiseV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMFranchiseV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMGlobalBusinessUnitV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBusinessUnitV1DaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import com.jnj.pangea.omp.gdm_product.bo.OMPGdmProductBo;
 import org.apache.commons.lang.StringUtils;
 
@@ -52,6 +48,7 @@ public class OMPGdmProductServiceImpl {
     private EDMGlobalBusinessUnitV1DaoImpl globalBaseUnitV1Dao = EDMGlobalBusinessUnitV1DaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl cnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
     private PlanCnsPlanParameterDaoImpl planParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
+    private PlanCnsRootDescriptionDaoImpl rootDescriptionDao = PlanCnsRootDescriptionDaoImpl.getInstance();
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
@@ -70,6 +67,9 @@ public class OMPGdmProductServiceImpl {
                 if (StringUtils.isNotEmpty(primaryPlanningCode)) {
                     OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
                     gdmProductBo.setProductId(primaryPlanningCode);
+                    String refDescription = materialGlobalV1Entity.getRefDescription();
+                    gdmProductBo.setDescription(refDescription);
+                    gdmProductBo.setShortDescription(refDescription);
                     productBos.add(gdmProductBo);
                 }
             }
@@ -78,6 +78,22 @@ public class OMPGdmProductServiceImpl {
             if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
                 if (StringUtils.isNotEmpty(localDPParentCode) && StringUtils.isNotEmpty(parameterValue)) {
                     OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
+                    gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
+
+                    PlanCnsRootDescriptionEntity cnsRootDescriptionEntity = rootDescriptionDao.getEntityWithSourceSystemAndLocalDpParentCode(materialGlobalV1Entity.getSourceSystem(),materialGlobalV1Entity.getLocalDpParentCode());
+
+                    if (null != cnsRootDescriptionEntity){
+                        String ovrRootDesc = cnsRootDescriptionEntity.getOvrRootDesc();
+
+                        if (StringUtils.isNotEmpty(ovrRootDesc)){
+                            gdmProductBo.setDescription(ovrRootDesc);
+                            gdmProductBo.setShortDescription(ovrRootDesc);
+                        }else {
+                            gdmProductBo.setDescription(cnsRootDescriptionEntity.getRootDesc());
+                            gdmProductBo.setShortDescription(cnsRootDescriptionEntity.getRootDesc());
+                        }
+                    }
+
                     gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
                     productBos.add(gdmProductBo);
                 }
@@ -103,11 +119,7 @@ public class OMPGdmProductServiceImpl {
 
                 productBo.setActiveSOPERP(IConstant.VALUE.NO);
 
-                String refDescription = materialGlobalV1Entity.getRefDescription();
 
-                productBo.setDescription(refDescription);
-                productBo.setLabel(refDescription);
-                productBo.setMatkl(materialGlobalV1Entity.getMaterialGroup());
 
                 String productFamily = materialGlobalV1Entity.getProductFamily();
                 productBo.setPlanningHierarchy1(productFamily);
@@ -184,7 +196,7 @@ public class OMPGdmProductServiceImpl {
                     }
                 }
 
-                productBo.setShortDescription(refDescription);
+
                 productBo.setTechnology(materialGlobalV1Entity.getLocalManufacturingTechnology());
 
                 String localBaseUom = materialGlobalV1Entity.getLocalBaseUom();

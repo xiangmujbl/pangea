@@ -173,6 +173,11 @@ public interface IConstant {
         String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
 
+    interface PLAN_CNS_ROOT_DESCRIPTION {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_DP_PARENT_CODE = "localDpParentCode";
+    }
+
     interface EDM_JNJ_CALENDAR_V1 {
         String FISCALPERIOD = "fiscalPeriod";
     }
