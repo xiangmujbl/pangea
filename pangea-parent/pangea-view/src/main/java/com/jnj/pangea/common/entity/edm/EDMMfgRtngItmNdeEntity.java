@@ -62,4 +62,14 @@ public class EDMMfgRtngItmNdeEntity extends CommonEntity {
         this.rtngGrpCd = rtngGrpCd;
     }
 
+    @Override
+    public String toString() {
+        return "EDMMfgRtngItmNdeEntity{" +
+                "srcSysCd='" + srcSysCd + '\'' +
+                ", rtngTypCd='" + rtngTypCd + '\'' +
+                ", rtngNdeNum='" + rtngNdeNum + '\'' +
+                ", rtngGrpCntrNbr='" + rtngGrpCntrNbr + '\'' +
+                ", rtngGrpCd='" + rtngGrpCd + '\'' +
+                '}';
+    }
 }

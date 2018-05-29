@@ -66,19 +66,19 @@
                 <relations>
                     <relation path="/edm/matl_mfg_rtng">
                         <expression>
-                            srcSysCd=/edm/matl_prod_versn.srcSysCd,matlNum=/edm/matl_prod_versn.matlNum,plntCd=/edm/matl_prod_versn.plntCd,rtngGrpCd=/edm/matl_prod_versn.rtngGrpCd,rtngGrpcntrNum=/edm/matl_prod_versn.rtngGrpcntrNum
+                            srcSysCd=/edm/matl_prod_versn.srcSysCd,matlNum=/edm/matl_prod_versn.matlNum,plntCd=/edm/matl_prod_versn.plntCd,rntgGrpCd=/edm/matl_prod_versn.rtngGrpCd,rntgGrpCntrNbr=/edm/matl_prod_versn.rtngGrpcntrNum
                         </expression>
                     </relation>
                 </relations>
             </region>
             <region path="/edm/matl_mfg_rtng">
                 <columns>
-                    srcSysCd,rtngTypCd,rtngGrpcntrNum,plntCd,rntgGrpCntrNbr,matlNum,rtngGrpCd
+                    srcSysCd,rtngTypCd,rtngGrpcntrNum,plntCd,rntgGrpCntrNbr,matlNum,rntgGrpCd
                 </columns>
                 <relations>
                     <relation path="/edm/mfg_rtng_itm_nde">
                         <expression>
-                            srcSysCd=/edm/matl_mfg_rtng.srcSysCd,rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd,rtngGrpCd=/edm/matl_mfg_rtng.rtngGrpCd,rntgGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr
+                            srcSysCd=/edm/matl_mfg_rtng.srcSysCd,rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd,rtngGrpCd=/edm/matl_mfg_rtng.rntgGrpCd,rtngGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr
                         </expression>
                     </relation>
                 </relations>

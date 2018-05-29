@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
@@ -20,18 +21,13 @@ public class EDMMfgRtngItmNdeDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<EDMMfgRtngItmNdeEntity> getEntityWithConditions(String srcSysCd, String rtngTypCd, String rntgGrpCntrNbr, String rtngGrpCd) {
-
-        List<EDMMfgRtngItmNdeEntity> mfgRtngItmNdeEntityList = new ArrayList<>();
-        if (StringUtils.isNotEmpty(srcSysCd)&&StringUtils.isNotEmpty(rtngTypCd)&& StringUtils.isNotEmpty(rntgGrpCntrNbr)&& StringUtils.isNotEmpty(rtngGrpCd)) {
+    public List<EDMMfgRtngItmNdeEntity> getEntityWithConditions(String srcSysCd, String rtngTypCd, String rtngGrpCd,String rntgGrpCntrNbr) {
             String queryString = QueryHelper.buildCriteria(IConstant.MFG_RTNG_ITM_NDE.SRCSYSCD).is(srcSysCd)
                     .and(IConstant.MFG_RTNG_ITM_NDE.RTNGGRPCD).is(rtngGrpCd)
                     .and(IConstant.MFG_RTNG_ITM_NDE.RTNGTYPCD).is(rtngTypCd)
                     .and(IConstant.MFG_RTNG_ITM_NDE.RTNGGRPCNTRNBR).is(rntgGrpCntrNbr)
                     .toQueryString();
-
-            mfgRtngItmNdeEntityList = queryForList(IConstant.REGION.MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
-        }
-        return mfgRtngItmNdeEntityList;
+            LogUtil.getCoreLog().info("=====================queryString_NDE======================"+queryString);
+            return queryForList(IConstant.REGION.MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
     }
 }
