@@ -15,9 +15,9 @@ public class GeneraRepot {
         String path = pathRoot + "/pangea-parent/pangea-test/target/reports/json/";
         File fileParent = new File(path);
         File[] fileList = fileParent.listFiles();
-        for (File file : fileList) {
-            String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
-            createReport(pathRoot, fileName);
+        for (File file:fileList) {
+            String fileName = file.getName().substring(0,file.getName().lastIndexOf("."));
+            createReport(pathRoot,fileName);
         }
     }
 

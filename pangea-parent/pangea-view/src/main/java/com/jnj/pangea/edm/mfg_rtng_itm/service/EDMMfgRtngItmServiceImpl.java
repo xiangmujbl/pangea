@@ -49,9 +49,13 @@ public class EDMMfgRtngItmServiceImpl implements ICommonService {
         if (plasEntityList == null || plasEntityList.size() == 0) {
             return resultObject;
         } else {
-            if(plpoEntity.getPlnty().equals(IConstant.VALUE.N) || plpoEntity.getPlnty().equals(IConstant.VALUE.TWO)){
-                mfgRtngItmBo.setRtngTypCd(plpoEntity.getPlnty());
-            }
+                if (plpoEntity.getPlnty().equals(IConstant.VALUE.N) || plpoEntity.getPlnty().equals(IConstant.VALUE.TWO)) {
+                    mfgRtngItmBo.setRtngTypCd(plpoEntity.getPlnty());
+                }else{
+                    return resultObject;
+                }
+
+
         }
         mfgRtngItmBo.setRtngGrpCd(plpoEntity.getPlnnr());
         mfgRtngItmBo.setRtngItmNum(plpoEntity.getPlnkn());
