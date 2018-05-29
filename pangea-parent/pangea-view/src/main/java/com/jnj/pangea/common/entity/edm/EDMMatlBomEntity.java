@@ -31,6 +31,7 @@ public class EDMMatlBomEntity extends CommonEntity {
     public EDMMatlBomEntity(Map<String, Object> map) {
         super(map);
 
+        setSrcSysCd((String) map.get("srcSysCd"));
         setMandt((String) map.get("mandt"));
         setMatnr((String) map.get("matnr"));
         setStlal((String) map.get("stlal"));
@@ -47,6 +48,7 @@ public class EDMMatlBomEntity extends CommonEntity {
         setBomNum((String) map.get("bomNum"));
         setBomUsgCd((String) map.get("bomUsgCd"));
         setAttribute((String) map.get("attribute"));
+        setAndat((String) map.get("andat"));
     }
 
     public String getMandt() {
@@ -191,5 +193,29 @@ public class EDMMatlBomEntity extends CommonEntity {
 
     public void setAttribute(String attribute) {
         this.attribute = attribute;
+    }
+
+    @Override
+    public String toString() {
+        return "EDMMatlBomEntity{" +
+                "srcSysCd='" + srcSysCd + '\'' +
+                ", matlNum='" + matlNum + '\'' +
+                ", plntCd='" + plntCd + '\'' +
+                ", altBomNum='" + altBomNum + '\'' +
+                ", sourceSystem='" + sourceSystem + '\'' +
+                ", bomNum='" + bomNum + '\'' +
+                ", bomUsgCd='" + bomUsgCd + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", mandt='" + mandt + '\'' +
+                ", matnr='" + matnr + '\'' +
+                ", stlal='" + stlal + '\'' +
+                ", stlan='" + stlan + '\'' +
+                ", stlnr='" + stlnr + '\'' +
+                ", werks='" + werks + '\'' +
+                ", losvn='" + losvn + '\'' +
+                ", losbs='" + losbs + '\'' +
+                ", andat='" + andat + '\'' +
+                ", aedat='" + aedat + '\'' +
+                '}';
     }
 }

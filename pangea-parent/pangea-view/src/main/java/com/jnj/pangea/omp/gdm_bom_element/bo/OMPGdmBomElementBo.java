@@ -2,6 +2,9 @@ package com.jnj.pangea.omp.gdm_bom_element.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
+import com.jnj.pangea.omp.gdm_bom_element_Process.bo.OMPGdmbomelementBo;
+
+import java.lang.reflect.Field;
 
 public class OMPGdmBomElementBo extends BaseBo {
 
@@ -203,4 +206,60 @@ public class OMPGdmBomElementBo extends BaseBo {
         this.startEff = startEff;
     }
 
+
+    public OMPGdmBomElementBo clone() {
+        try {
+            return (OMPGdmBomElementBo)super.clone();
+        }catch (Exception e){
+            e.printStackTrace();
+            OMPGdmBomElementBo ompGdmbomElementBo=new OMPGdmBomElementBo();
+            Class classOORI=this.getClass();
+            Class classOClone=ompGdmbomElementBo.getClass();
+            Field[] fieldORI=classOORI.getDeclaredFields();
+            Field[] fieldClone=classOClone.getDeclaredFields();
+            for(int i=0;i<fieldORI.length;i++){
+                Field FieldORI=fieldORI[i];
+                for(int j=0;j<fieldClone.length;j++){
+                    Field FieldClone=fieldClone[j];
+                    if(FieldClone.getName().equals(FieldORI.getName())){
+                        FieldClone.setAccessible(true);
+                        try {
+                            FieldClone.set(ompGdmbomElementBo, FieldORI.get(this));
+                        } catch (IllegalAccessException e1) {
+                            e1.printStackTrace();
+                        }
+                        FieldClone.setAccessible(false);
+                    }
+
+                }
+            }
+            return ompGdmbomElementBo;
+        }
+    }
+    @Override
+    public String toString() {
+        return "OMPGdmBomElementBo{" +
+                "bomElementId='" + bomElementId + '\'' +
+                ", active='" + active + '\'' +
+                ", activeFCTERP='" + activeFCTERP + '\'' +
+                ", activeOPRERP='" + activeOPRERP + '\'' +
+                ", activeSOPERP='" + activeSOPERP + '\'' +
+                ", batchId='" + batchId + '\'' +
+                ", bomId='" + bomId + '\'' +
+                ", bomType='" + bomType + '\'' +
+                ", bomUsage='" + bomUsage + '\'' +
+                ", comment='" + comment + '\'' +
+                ", endEff='" + endEff + '\'' +
+                ", erpFeedbackQuantity='" + erpFeedbackQuantity + '\'' +
+                ", locationId='" + locationId + '\'' +
+                ", offset='" + offset + '\'' +
+                ", offsetCalendarId='" + offsetCalendarId + '\'' +
+                ", offsetPercentage='" + offsetPercentage + '\'' +
+                ", offsetPercType='" + offsetPercType + '\'' +
+                ", planLevelId='" + planLevelId + '\'' +
+                ", productId='" + productId + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", startEff='" + startEff + '\'' +
+                '}';
+    }
 }

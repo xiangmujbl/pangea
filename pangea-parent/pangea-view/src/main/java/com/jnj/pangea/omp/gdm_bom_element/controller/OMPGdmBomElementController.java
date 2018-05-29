@@ -8,11 +8,7 @@ import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.controller.CommonController;
-import com.jnj.pangea.common.controller.CommonListController;
 import com.jnj.pangea.common.entity.edm.EDMMatlBomEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsDpPriceEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_bom_element.service.OMPGdmBomElementServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
@@ -37,9 +33,11 @@ public class OMPGdmBomElementController extends BaseController {
 
             for (ResultObject resultObject : resultObjectList) {
                 if (resultObject.isSuccess()) {
-                    BaseBo baseBo = resultObject.getBaseBo();
-                    ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
-                    result.add(viewRaw);
+                    if(resultObject.getBaseBo() !=null){
+                        BaseBo baseBo = resultObject.getBaseBo();
+                        ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());
+                        result.add(viewRaw);
+                    }
                 } else {
                     if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();

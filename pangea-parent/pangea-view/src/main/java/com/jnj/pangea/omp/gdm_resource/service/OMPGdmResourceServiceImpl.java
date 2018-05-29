@@ -47,7 +47,7 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
                 LogUtil.getCoreLog().info("----------capyCatCd---------"+capyCatCd);
                 EDMWrkCtrEntity edmWrkCtrEntity = wrkCtrDao.getEntityWithSrcSysCdAndCapyNum(src, num);
                 if (null != edmWrkCtrEntity ) {
-                    if (IConstant.VALUE.STR_ONE.equals(capyCatCd)){
+                    if (IConstant.VALUE.STR_TWO.equals(capyCatCd)){
                         LogUtil.getCoreLog().info("----------come in---------"+capyCatCd);
                         String srcSysCd = edmWrkCtrEntity.getSrcSysCd();
                         if (StringUtils.isNotEmpty(srcSysCd)) {
@@ -112,9 +112,11 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
         //rule C2
         if (null != capyHdrEntity) {
             String plntcd = capyHdrEntity.getPlntCd();
+            LogUtil.getCoreLog().info("=================="+plntcd);
             if (StringUtils.isNotEmpty(plntcd)) {
                 gdmResourceBo.setLocationId(capyHdrEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + capyHdrEntity.getPlntCd());
             } else {
+                //ResultObject resultObject = new ResultObject();
                 String errorValue = "Plant Id not found";
                 String errorCode = IConstant.FAILED.ERROR_CODE.C2;
                 FailData failData = new FailData();
@@ -129,9 +131,10 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
                 failData.setKey4("");
                 failData.setKey5("");
                 resultObject.setFailData(failData);
+                return resultObject;
+               // return failData;
             }
         }
-
         resultObject.setBaseBo(gdmResourceBo);
         return resultObject;
     }

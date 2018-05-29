@@ -1,14 +1,14 @@
 <adf-curation>
     <curation mainRegion="/edm/matl_bom" viewRegion="/omp/gdm_bom" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_bom.controller.OMPGdmBomController">
+              executionClassName="com.jnj.pangea.omp.gdm_bom.controller.OMPGdmBomController"
+              writeTo="all" topic="PANGEA_V1_gdm_bom_1">
         <regions>
 
             <region path="/edm/matl_bom">
                 <columns>srcSysCd,matlNum,plntCd,altBomNum,bomNum,bomUsgCd</columns>
                 <relations>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
-                        <expression>attribute=/edm/matl_bom.srcSysCd,sourceSystem=/edm/matl_bom.sourceSystem
-                        </expression>
+                        <expression>attribute=/edm/matl_bom.srcSysCd,srcSysCd=/edm/matl_bom.srcSysCd</expression>
                     </relation>
                     <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
                         <expression>
@@ -59,7 +59,7 @@
             </region>
 
             <region path="/edm/mfg_rtng_itm_nde">
-                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr</columns>
+                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngNdeNum,rtngGrpCntrNbr</columns>
                 <relations>
                     <relation path="/edm/mfg_rtng_itm" isPrimaryKey="false">
                         <expression>
@@ -72,7 +72,7 @@
                 </relations>
             </region>
             <region path="/edm/mfg_rtng_itm">
-                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngNdeNum,operNum</columns>
+                <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,operNum</columns>
             </region>
 
             <region path="/edm/bom_hdr">

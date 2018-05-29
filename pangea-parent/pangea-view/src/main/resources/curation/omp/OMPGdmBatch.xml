@@ -6,14 +6,14 @@
 
             <region path="/edm/batch_master_v1">
                 <columns>
-                    localBatchNumber,localBatchExpDate,localBatchMfgDate,srcSysCd,locPrtyId,matlId
+                    btchNum,btchExpDt,btchMfgDt,srcSysCd,localPlant,matlNum
                 </columns>
                 <relations>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/edm/batch_master_v1.matlId</expression>
+                        <expression>localMaterialNumber=/edm/batch_master_v1.matlNum</expression>
                     </relation>
                 </relations>
             </region>

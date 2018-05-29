@@ -26,6 +26,14 @@ public class PlanSplPlnLocDaoImpl extends CommonDaoImpl {
 
         String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_SPL_PLN_LOC.SOURCE_SYSTEM).is(sourceSystem)
                 .and(IConstant.PLAN_CNS_SPL_PLN_LOC.LOCALNUMBER).is(localVendorAccountNumber)
+                .toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_SPL_PLN_LOC, queryString, PlanSplPlnLocEntity.class);
+    }
+
+    public List<PlanSplPlnLocEntity> getEntityListWithConditions2(String sourceSystem, String localVendorAccountNumber) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_SPL_PLN_LOC.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.PLAN_CNS_SPL_PLN_LOC.LOCALNUMBER).is(localVendorAccountNumber)
                 .and(IConstant.PLAN_CNS_SPL_PLN_LOC.VENDORORCUSTOMER).is("V")
                 .toQueryString();
         return queryForList(IConstant.REGION.PLAN_CNS_SPL_PLN_LOC, queryString, PlanSplPlnLocEntity.class);

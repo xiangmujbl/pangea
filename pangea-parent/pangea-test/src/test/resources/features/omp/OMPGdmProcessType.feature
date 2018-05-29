@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-4484
 Feature: OMPProcessType AEAZ-4484
 
-  Scenario: Full Load curation
+  Scenario: Full Load consumption
     # 1. get record from cns_process_type
 
     And I will remove the test file on sink application "ProcessType.tsv"
@@ -31,7 +31,7 @@ Feature: OMPProcessType AEAZ-4484
 
     Then I delete the test data
 
-    And I will remove all data with region "/omp/process_type"
+    And I will remove all data with region "/omp/gdm_process_type"
 
     And I will remove all data with region "/plan/edm_failed_data"
 

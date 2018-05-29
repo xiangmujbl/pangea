@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/matl_bom" viewRegion="/omp/gdm_bom_element" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_bom_element.controller.OMPGdmBomElementController"
-              writeTo="kafka" topic="PANGEA_V1_omp_gdm_bom_element">
+              writeTo="all" topic="PANGEA_V1_omp_gdm_bom_element">
         <regions>
 
             <region path="/edm/matl_bom">
@@ -14,32 +14,22 @@
                     </relation>
                     <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
                         <expression>
-                            srcSysCd=/edm/matl_bom.srcSysCd,
-                            matlNum=/edm/matl_bom.matlNum,
-                            plntCd=/edm/matl_bom.plntCd,
-                            altBomNum=/edm/matl_bom.altBomNum
+                            srcSysCd=/edm/matl_bom.srcSysCd,matlNum=/edm/matl_bom.matlNum,plntCd=/edm/matl_bom.plntCd,altBomNum=/edm/matl_bom.altBomNum
                         </expression>
                     </relation>
                     <relation path="/edm/bom_item">
                         <expression>
-                            srcSysCd=/edm/matl_bom.srcSysCd,
-                            bomNum=/edm/matl_bom.bomNum
+                            srcSysCd=/edm/matl_bom.srcSysCd,bomNum=/edm/matl_bom.bomNum
                         </expression>
                     </relation>
                     <relation path="/edm/bom_hdr">
                         <expression>
-                            srcSysCd=/edm/matl_bom.srcSysCd,
-                            bomNum=/edm/matl_bom.bomNum,
-                            altBomNum=/edm/matl_bom.altBomNum
+                            srcSysCd=/edm/matl_bom.srcSysCd,bomNum=/edm/matl_bom.bomNum,altBomNum=/edm/matl_bom.altBomNum
                         </expression>
                     </relation>
-                </relations>
-                <relations>
                     <relation path="/edm/material_plant_v1">
                         <expression>
-                            sourceSystem=/edm/matl_bom.sourceSystem,
-                            localMaterialNumber=/edm/matl_bom.matlNum,
-                            localPlant=/edm/matl_bom.plntCd
+                            sourceSystem=/edm/matl_bom.sourceSystem,localMaterialNumber=/edm/matl_bom.matlNum,localPlant=/edm/matl_bom.plntCd
                         </expression>
                     </relation>
                 </relations>
@@ -52,28 +42,21 @@
             </region>
             <region path="/edm/bom_item">
                 <columns>
-                    bomNum,srcSysCd,bomCatCd, cmpntNum, bomItmNum, bomItmVldFromDt, dstrbtnKeyCd, fxQtyInd,
-                    bomItmVldToDt, leadTimeOffst,cmpntQty,cmpntScrap_Pct, cmpntUomCd
+                    bomNum,srcSysCd,bomCatCd,cmpntNum,bomItmNum,bomItmVldFromDt,dstrbtnKeyCd,fxQtyInd,bomItmVldToDt,leadTimeOffst,cmpntQty,cmpntScrap_Pct,cmpntUomCd
                 </columns>
             </region>
 
             <region path="/edm/bom_hdr">
                 <columns>
-                    srcSysCd,altBomNum,bomNum,bomCatCd, bomVldFromDt, bomBaseQty, bomUomCd
+                    srcSysCd,altBomNum,bomNum,bomCatCd,bomVldFromDt,bomBaseQty,bomUomCd
                 </columns>
-                <relations>
-                    <relation path="/edm/bom_item">
-                        <expression>
-                            bomCatCd=/edm/bom_hdr.bomCatCd
-                        </expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/plan/cns_plan_parameter">
                 <columns>
                     sourceSystem,dataObject,parameterValue,attribute
                 </columns>
+                <filter>dataObject:SEND_TO_OMP</filter>
             </region>
 
             <region path="/edm/matl_prod_versn">
@@ -83,26 +66,19 @@
                 <relations>
                     <relation path="/edm/matl_mfg_rtng">
                         <expression>
-                            srcSysCd=/edm/matl_prod_versn.srcSysCd,
-                            matlNum=/edm/matl_prod_versn.matlNum,
-                            plntCd=/edm/matl_prod_versn.plntCd,
-                            rtngGrpCd=/edm/matl_prod_versn.rtngGrpCd,
-                            rtngGrpcntrNum=/edm/matl_prod_versn.rtngGrpcntrNum
+                            srcSysCd=/edm/matl_prod_versn.srcSysCd,matlNum=/edm/matl_prod_versn.matlNum,plntCd=/edm/matl_prod_versn.plntCd,rntgGrpCd=/edm/matl_prod_versn.rtngGrpCd,rntgGrpCntrNbr=/edm/matl_prod_versn.rtngGrpcntrNum
                         </expression>
                     </relation>
                 </relations>
             </region>
             <region path="/edm/matl_mfg_rtng">
                 <columns>
-                    srcSysCd,rtngTypCd,rtngGrpcntrNum,plntCd,rntgGrpCntrNbr,matlNum,rtngGrpCd
+                    srcSysCd,rtngTypCd,rtngGrpcntrNum,plntCd,rntgGrpCntrNbr,matlNum,rntgGrpCd
                 </columns>
                 <relations>
                     <relation path="/edm/mfg_rtng_itm_nde">
                         <expression>
-                            srcSysCd=/edm/matl_mfg_rtng.srcSysCd,
-                            rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd,
-                            rtngGrpCd=/edm/matl_mfg_rtng.rtngGrpCd,
-                            rntgGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr
+                            srcSysCd=/edm/matl_mfg_rtng.srcSysCd,rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd,rtngGrpCd=/edm/matl_mfg_rtng.rntgGrpCd,rtngGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr
                         </expression>
                     </relation>
                 </relations>
@@ -114,10 +90,7 @@
                 <relations>
                     <relation path="/edm/mfg_rtng_itm">
                         <expression>
-                            srcSysCd=/edm/mfg_rtng_itm_nde.srcSysCd,
-                            rtngTypCd=/edm/mfg_rtng_itm_nde.rtngTypCd,
-                            rtngGrpCd=/edm/mfg_rtng_itm_nde.rtngGrpCd,
-                            rtngItmNum=/edm/mfg_rtng_itm_nde.rtngNdeNum,
+                            srcSysCd=/edm/mfg_rtng_itm_nde.srcSysCd,rtngTypCd=/edm/mfg_rtng_itm_nde.rtngTypCd,rtngGrpCd=/edm/mfg_rtng_itm_nde.rtngGrpCd,rtngItmNum=/edm/mfg_rtng_itm_nde.rtngNdeNum
                         </expression>
                     </relation>
                 </relations>

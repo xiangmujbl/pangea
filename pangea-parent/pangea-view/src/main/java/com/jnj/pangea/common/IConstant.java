@@ -125,7 +125,7 @@ public interface IConstant {
         String PROJECT_ONE_KAKO = "/project_one/kako";
         String PROJECT_ONE_CRTX = "/project_one/crtx";
         String PLAN_CNS_ROOT_DESCRIPTION = "/plan/cns_root_description";
-        String PLAN_USER_OVERRIDE = "/plan/user_override";
+        String PLAN_CNS_ROOT_DESCRIPTION_USER_OVERRIDE = "/plan/cns_root_description_user_override";
         String MATL_PROD_VERSN = "/edm/matl_prod_versn";
         String MATL_BOM = "/edm/matl_bom";
         String MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
@@ -168,11 +168,9 @@ public interface IConstant {
         String OPERNUM = "operNum";
     }
 
-    interface PLAN_USER_OVERRIDE {
-        String TARGET = "target";
+    interface PLAN_CNS_ROOT_DESCRIPTION_USER_OVERRIDE {
         String SOURCE_SYSTEM = "sourceSystem";
-        String KEY1 = "key1";
-        String KEY2 = "key2";
+        String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -624,7 +622,7 @@ public interface IConstant {
 
     interface PLAN_CNS_DEM_GRP_ASGN {
         String CUSTOMER_ID = "customerId";
-        String SALES_ORGANIZATION = "salesOrganization";
+        String SALES_ORG = "salesOrg";
         String CUSTOMER_SHIP_TO = "customerShipTo";
         String SOURCE_SYSTEM = "sourceSystem";
         String DEMAND_GROUP = "demandGroup";
@@ -745,6 +743,7 @@ public interface IConstant {
         String PLNTCD = "plntCd";
         String RNTGGRPCNTRNBR = "rntgGrpCntrNbr";
         String MATLNUM = "matlNum";
+        String RNTGGRPCD = "rntgGrpCd";
         String RTNGGRPCD = "rtngGrpCd";
         String FIELD_MATLRTNGVALID_TO_NULL = "";
     }
@@ -820,6 +819,7 @@ public interface IConstant {
         String LATAM_SKU = "LATAM_SKU";
         String LATAM_TECH = "LATAM_TECH";
         String PROJECT_ONE = "project_one";
+        String PROJECT_ONE_DEV = "Project_One";
         String EMS = "[EMS]";
         String EN = "E";
         String PT = "P";
@@ -886,6 +886,7 @@ public interface IConstant {
         String ACTIVE = "ACTIVE";
         String BASE = "BASE";
         String STR_ONE = "001";
+        String STR_TWO = "002";
         String STR_NINE = "009";
         String OMP = "omp";
         String CNS_SALES_HISTORY = "CNS_SalesHistory";
@@ -1047,6 +1048,7 @@ public interface IConstant {
         interface MFG_ORDER_SEQ{
             public static final String FIELD_SOURCESYSCD="sourceSysCd";
             public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
+            public static final String FIELD_SCSYSCD="srcSysCd";
         }
         interface BOM_ITEM{
             public static final String FIELD_SRCSYSCD="srcSysCd";

@@ -2,9 +2,9 @@ package com.jnj.pangea.edm.mfg_rtng_itm_nde.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.entity.projectOne.ProjectOneQalsEntity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.entity.project_one.ProjectOnePlasEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mfg_rtng_itm_nde.bo.EDMMfgRtngItmNdeBo;
 
@@ -25,7 +25,7 @@ public class EDMMfgRtngItmNdeServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-        ProjectOneQalsEntity qalsEntity = (ProjectOneQalsEntity) o;
+        ProjectOnePlasEntity plasEntity = (ProjectOnePlasEntity) o;
 
         EDMMfgRtngItmNdeBo mfgRtngItmNdeBo = new EDMMfgRtngItmNdeBo();
 
@@ -36,20 +36,20 @@ public class EDMMfgRtngItmNdeServiceImpl implements ICommonService {
         }
         //rule F1
 
-        if(qalsEntity.getPlnty()!=null&&!qalsEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_2)&&!qalsEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_N)){
+        if(plasEntity.getPlnty()!=null&&!plasEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_2)&&!plasEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_N)){
             return resultObject;
         }
-        mfgRtngItmNdeBo.setRtngTypCd(qalsEntity.getPlnty());
-        mfgRtngItmNdeBo.setRtngGrpCd(qalsEntity.getPlnnr());
-        mfgRtngItmNdeBo.setRtngGrpCntrNbr(qalsEntity.getPlnal());
-        mfgRtngItmNdeBo.setRtngSqncNum(qalsEntity.getPlnfl());
-        mfgRtngItmNdeBo.setRtngNdeNum(qalsEntity.getPlnkn());
-        mfgRtngItmNdeBo.setRtngNdeVrsnCntrNbr(qalsEntity.getZaehl());
-        mfgRtngItmNdeBo.setValidFromDate(qalsEntity.getDatuv());
-        mfgRtngItmNdeBo.setChgNum(qalsEntity.getAennr());
-        mfgRtngItmNdeBo.setDelInd(qalsEntity.getLoekz());
-        mfgRtngItmNdeBo.setCreateDttm(qalsEntity.getAndat());
-        mfgRtngItmNdeBo.setChgDttm(qalsEntity.getAedat());
+        mfgRtngItmNdeBo.setRtngTypCd(plasEntity.getPlnty());
+        mfgRtngItmNdeBo.setRtngGrpCd(plasEntity.getPlnnr());
+        mfgRtngItmNdeBo.setRtngGrpCntrNbr(plasEntity.getPlnal());
+        mfgRtngItmNdeBo.setRtngSqncNum(plasEntity.getPlnfl());
+        mfgRtngItmNdeBo.setRtngNdeNum(plasEntity.getPlnkn());
+        mfgRtngItmNdeBo.setRtngNdeVrsnCntrNbr(plasEntity.getZaehl());
+        mfgRtngItmNdeBo.setValidFromDate(plasEntity.getDatuv());
+        mfgRtngItmNdeBo.setChgNum(plasEntity.getAennr());
+        mfgRtngItmNdeBo.setDelInd(plasEntity.getLoekz());
+        mfgRtngItmNdeBo.setCreateDttm(plasEntity.getAndat());
+        mfgRtngItmNdeBo.setChgDttm(plasEntity.getAedat());
 
         resultObject.setBaseBo(mfgRtngItmNdeBo);
         return resultObject;
