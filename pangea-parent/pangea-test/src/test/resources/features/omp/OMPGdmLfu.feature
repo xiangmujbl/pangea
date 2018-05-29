@@ -120,14 +120,6 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
       | LA-LDPC03-2018/01/08 00:00:00 | AT033     |            | 2018/01/15 00:00:00 | 2018/01/08 00:00:00 | LA-LDPC03 |       | 3000   |
       | LC-LDPC03-2018/01/08 00:00:00 | AT033     |            | 2018/01/15 00:00:00 | 2018/01/08 00:00:00 | LC-LDPC03 |       | 3000   |
 
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-
-    Then I delete the test data
-
-    And I will remove all data with region "/omp/gdm_lfu"
-
-    And I will remove all data with region "/plan/edm_failed_data"
 
   @Scenario2
   Scenario: only found record in cns_fin_plan_val
@@ -154,7 +146,6 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
       | 000000000000000001  | LBU01     | CONS_LATAM   | 100            | 10               |
       | 000000000000000002  | LBU02     | CONS_LATAM   | 100            | 10               |
       | 000000000000000003  | LBU03     | CONS_LATAM   | 100            | 10               |
-      | 000000000000000005  | LBU05     | CONS_LATAM   | 10             | 10               |
 
     And I wait "/edm/material_auom_v1" Async Queue complete
 
@@ -163,7 +154,8 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
       | 000000000000000001  | LFU        | VAL01 | 201901    | AT01    | ADA      |
       | 000000000000000002  | LFU        | VAL02 | 201901    | AT02    | ADD      |
       | 000000000000000003  | LFU        | VAL03 | 201801    | AT03    | ADE      |
-      | 000000000000000003  | LFE        | VAL05 | 201801    | AT03    | ADF      |
+      | 000000000000000003  | LFE        | VAL03 | 201801    | AT03    | ADE      |
+
     And I wait "/plan/cns_fin_plan_val" Async Queue complete
 
     Given I import "/edm/country_v1" by keyFields "sourceSystem,localCountry"
@@ -220,15 +212,6 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
       | LA-LDPC03-2018/01/08 00:00:00 |           | ADEE       | 2018/01/15 00:00:00 | 2018/01/08 00:00:00 | LA-LDPC03 | VAL03 |        |
       | LC-LDPC03-2018/01/08 00:00:00 |           | ADEE       | 2018/01/15 00:00:00 | 2018/01/08 00:00:00 | LC-LDPC03 | VAL03 |        |
 
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-
-    Then I delete the test data
-
-    And I will remove all data with region "/omp/gdm_lfu"
-
-    And I will remove all data with region "/plan/edm_failed_data"
-
   @Scenario3
   Scenario:  both  found record in cns_fin_plan_qty and  cns_fin_plan_val  ,same localMaterialNumber output once
 
@@ -261,7 +244,7 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
     Given I import "/plan/cns_fin_plan_val" by keyFields "localMaterialNumber,identifier"
       | localMaterialNumber | identifier | value | yearMonth | country | currency |
       | 000000000000000003  | LFU        | VAL03 | 201801    | AT03    | ADE      |
-      | 000000000000000005  | LFU        | VAL05 | 201801    | AT05    | ADG      |
+      | 000000000000000005  | LFU        | VAL05 | 201901    | AT05    | ADG      |
     And I wait "/plan/cns_fin_plan_val" Async Queue complete
 
     Given I import "/edm/country_v1" by keyFields "sourceSystem,localCountry"
