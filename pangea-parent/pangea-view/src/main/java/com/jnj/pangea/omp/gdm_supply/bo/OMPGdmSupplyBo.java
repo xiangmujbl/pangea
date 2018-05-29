@@ -37,35 +37,7 @@ public class OMPGdmSupplyBo extends BaseBo {
                 .makeJsonObject("supplyId", this.SupplyId)
                 .toJsonString();
     }
-
-    //default constructor
-    public OMPGdmSupplyBo() {
-
-    }
-
-    //copy constructor
-    public OMPGdmSupplyBo(OMPGdmSupplyBo ompGdmSupplyBo, String locationId) {
-        this.LocationId = locationId;
-        this.SupplyId = ompGdmSupplyBo.getSupplyId();
-        this.Active = ompGdmSupplyBo.getActive();
-        this.ActiveOPRERP = ompGdmSupplyBo.getActiveOPRERP();
-        this.ActiveSOPERP = ompGdmSupplyBo.getActiveSOPERP();
-        this.FromDate = ompGdmSupplyBo.getFromDate();
-        this.LABEL = ompGdmSupplyBo.getLABEL();
-        this.MaxQuantity = ompGdmSupplyBo.getMaxQuantity();
-        this.MinQuantity = ompGdmSupplyBo.getMinQuantity();
-        this.Preference = ompGdmSupplyBo.getPreference();
-        this.PROCESSTYPEID = ompGdmSupplyBo.getPROCESSTYPEID();
-        this.ProductId = ompGdmSupplyBo.getProductId();
-        this.PURCHASINGGROUP = ompGdmSupplyBo.getPURCHASINGGROUP();
-        this.PURCHASINGORGANIZATION = ompGdmSupplyBo.getPURCHASINGORGANIZATION();
-        this.SupplierId = ompGdmSupplyBo.getSupplierId();
-        this.ToDate = ompGdmSupplyBo.getToDate();
-        this.TransportType = ompGdmSupplyBo.getTransportType();
-        this.VENDORID = ompGdmSupplyBo.getVENDORID();
-        this.INCQuantity = ompGdmSupplyBo.getINCQuantity();
-    }
-
+    
     public String getSupplyId() {
         return SupplyId;
     }

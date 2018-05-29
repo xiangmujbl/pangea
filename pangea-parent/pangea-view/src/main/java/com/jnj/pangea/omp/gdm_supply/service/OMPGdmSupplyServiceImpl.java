@@ -64,7 +64,7 @@ public class OMPGdmSupplyServiceImpl {
                 if (edmSourceListV1Entity.getLocalPlant() != null && (!(edmSourceListV1Entity.getLocalPlant().isEmpty()))) {
                     if (edmSourceListV1Entity.getLocalVendorAccountNumber() != null && (!(edmSourceListV1Entity.getLocalVendorAccountNumber().isEmpty()))) {
                         if (edmSourceListV1Entity.getSourceSystem() != null && (!(edmSourceListV1Entity.getSourceSystem().isEmpty()))) {
-                            String supplyId = partA
+                            String supplyId = partA + IConstant.VALUE.BACK_SLANT
                                     + edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmSourceListV1Entity.getLocalPlant() + IConstant.VALUE.BACK_SLANT
                                     + edmSourceListV1Entity.getLocalVendorAccountNumber();
                             gdmSupplyBo.setSupplyId(supplyId);
@@ -211,26 +211,15 @@ public class OMPGdmSupplyServiceImpl {
 
                                                                     // set Vendor to EDM Source List V1 local vendor account number
                                                                     gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
-
-                                                                    // N19
-                                                                    PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());
-                                                                    if (planCnsProcessTypeEntity != null) {
-                                                                        gdmSupplyBo.setLABEL(planCnsProcessTypeEntity.getProcessTypeDesc());
-                                                                    }
-
-                                                                    String locationID = planCnsPlnSplLocEntity.getSourceSystem()
-                                                                            + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
-                                                                            + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber();
-
-                                                                    OMPGdmSupplyBo gdmSupplyBo1 = new OMPGdmSupplyBo(gdmSupplyBo, locationID);
-
-                                                                    resultObject_1.setBaseBo(gdmSupplyBo1);
-                                                                    resultObjects.add(resultObject_1);
+                                                                    gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() +
+                                                                            IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
+                                                                            + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber());
                                                                 }
                                                             }
                                                         }
                                                     } else {
                                                         gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                                        gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
                                                     }
                                                 }
                                             } else {
