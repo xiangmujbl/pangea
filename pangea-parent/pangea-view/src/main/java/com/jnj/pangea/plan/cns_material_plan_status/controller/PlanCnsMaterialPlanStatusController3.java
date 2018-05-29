@@ -59,7 +59,7 @@ public class PlanCnsMaterialPlanStatusController3 extends BaseController {
     public String getTime() {
         List<PlanCnsPlanParameterEntity> t1SpList = planParameterDao.getEntitiesWithConditions(IConstant.VALUE.CONS_LATAM,
                 IConstant.VALUE.CNS_PRODUCT_INCLUSION, IConstant.VALUE.LESS_DAYS, IConstant.VALUE.LESS_DAYS,IConstant.VALUE.I);
-       if(t1SpList.size()==1){
+       if(t1SpList.size()>=1){
            PlanCnsPlanParameterEntity planCnsPlanParameterEntity = t1SpList.get(0);
            return planCnsPlanParameterEntity.getParameterValue();
        }

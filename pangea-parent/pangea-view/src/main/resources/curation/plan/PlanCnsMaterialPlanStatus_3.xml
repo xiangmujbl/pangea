@@ -31,9 +31,9 @@
                     <relation path="/edm/plant_v1">
                         <expression></expression>
                     </relation>
-                    <relation path="/plan/cns_material_plan_status">
-                        <expression>localMaterialNumber=/edm/sales_order_v1.localMaterialNumber</expression>
-                    </relation>
+                    <!--<relation path="/plan/cns_material_plan_status">-->
+                        <!--<expression>localMaterialNumber=/edm/sales_order_v1.localMaterialNumber</expression>-->
+                    <!--</relation>-->
                 </relations>
             </region>
 
