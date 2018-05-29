@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_bom.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.edm.EDMMatlBomEntity;
@@ -47,16 +48,18 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
         List<ResultObject> resultObjectList = new ArrayList<>();
         EDMMatlBomEntity matlBomEntity = (EDMMatlBomEntity) o;
 
+
+
         List<OMPGdmBomBo> gdmBomBoList = checkT1(matlBomEntity);
 
-        for (OMPGdmBomBo gdmBomBo:gdmBomBoList) {
+        for (OMPGdmBomBo gdmBomBo : gdmBomBoList) {
 
             gdmBomBo.setActive(IConstant.VALUE.YES);
             gdmBomBo.setActiveFCTERP(IConstant.VALUE.YES);
             gdmBomBo.setActiveOPRERP(IConstant.VALUE.YES);
             gdmBomBo.setActiveSOPERP(IConstant.VALUE.NO);
 
-            String locationId = matlBomEntity.getSrcSysCd() +IConstant.VALUE.UNDERLINE + matlBomEntity.getPlntCd();
+            String locationId = matlBomEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + matlBomEntity.getPlntCd();
             gdmBomBo.setLocationId(locationId);
 
         }
@@ -64,28 +67,44 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
         return resultObjectList;
     }
 
-    private List<OMPGdmBomBo> checkT1(EDMMatlBomEntity matlBomEntity){
+    private List<OMPGdmBomBo> checkT1(EDMMatlBomEntity matlBomEntity) {
 
         List<OMPGdmBomBo> gdmBomBoList = new ArrayList<>();
 
-        List<EDMMatlProdVersnEntity> matlProdVersnEntityList = matlProdVersnDao.getEntityListWithFourConditions(matlBomEntity.getSrcSysCd(),matlBomEntity.getPlntCd(),matlBomEntity.getMatlNum(),matlBomEntity.getAltBomNum());
-        for (EDMMatlProdVersnEntity matlProdVersnEntity:matlProdVersnEntityList){
+        List<EDMMatlProdVersnEntity> matlProdVersnEntityList = matlProdVersnDao.getEntityListWithFourConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getPlntCd(), matlBomEntity.getMatlNum(), matlBomEntity.getAltBomNum());
 
-            List<PlanCnsPlanParameterEntity> planParameterEntityList = cnsPlanParameterDao.getEntityListWithSourceSystemAndDataObject(matlBomEntity.getSrcSysCd(),IConstant.VALUE.SEND_TO_OMP);
+        LogUtil.getCoreLog().info("matlProdVersnEntityList.size()>>>>>>>>>>>>>>>>>>>>{}" + matlProdVersnEntityList.size());
 
-            for (PlanCnsPlanParameterEntity planParameterEntity:planParameterEntityList){
+        for (EDMMatlProdVersnEntity matlProdVersnEntity : matlProdVersnEntityList) {
 
-                List<EDMMatlMfgRtngEntity> matlMfgRtngEntityList = matlMfgRtngDao.getEntityWithThreeConditions(matlProdVersnEntity.getSrcSysCd(),matlProdVersnEntity.getMatlNum(),matlProdVersnEntity.getPlntCd());
+            List<PlanCnsPlanParameterEntity> planParameterEntityList = cnsPlanParameterDao.getEntityListWithSourceSystemAndDataObject(matlBomEntity.getSrcSysCd(), IConstant.VALUE.SEND_TO_OMP);
 
-                for (EDMMatlMfgRtngEntity matlMfgRtngEntity:matlMfgRtngEntityList){
+            LogUtil.getCoreLog().info("planParameterEntityList.size()>>>>>>>>>>>>>>>>>>>>{}" + planParameterEntityList.size());
 
-                    List<EDMMfgRtngItmNdeEntity> mfgRtngItmNdeEntityList = mfgRtngItmNdeDao.getEntityWithConditions(matlMfgRtngEntity.getSrcSysCd(), matlMfgRtngEntity.getRtngTypCd(), matlMfgRtngEntity.getRntgGrpCntrNbr(), matlMfgRtngEntity.getRtngGrpCd());
+            for (PlanCnsPlanParameterEntity planParameterEntity : planParameterEntityList) {
 
-                    for (EDMMfgRtngItmNdeEntity mfgRtngItmNdeEntity:mfgRtngItmNdeEntityList){
+                List<EDMMatlMfgRtngEntity> matlMfgRtngEntityList = matlMfgRtngDao.getEntityWithThreeConditions(matlProdVersnEntity.getSrcSysCd(), matlProdVersnEntity.getMatlNum(), matlProdVersnEntity.getPlntCd());
 
-                        List<EDMMfgRtngItmEntity> mfgRtngItmEntityList = mfgRtngItmDao.getEntityListWithConditions(mfgRtngItmNdeEntity.getSrcSysCd(),mfgRtngItmNdeEntity.getRtngTypCd(),mfgRtngItmNdeEntity.getRtngNdeNum(),mfgRtngItmNdeEntity.getRtngGrpCd());
+                LogUtil.getCoreLog().info("matlMfgRtngEntityList.size()>>>>>>>>>>>>>>>>>>>>{}" + matlMfgRtngEntityList.size());
 
-                        for (EDMMfgRtngItmEntity mfgRtngItmEntity:mfgRtngItmEntityList){
+                for (EDMMatlMfgRtngEntity matlMfgRtngEntity : matlMfgRtngEntityList) {
+
+                    List<EDMMfgRtngItmNdeEntity> mfgRtngItmNdeEntityList = mfgRtngItmNdeDao.getEntityWithConditions(matlMfgRtngEntity.getSrcSysCd(), matlMfgRtngEntity.getRtngTypCd(), matlMfgRtngEntity.getRntgGrpCntrNbr(), matlMfgRtngEntity.getRntgGrpCd());
+
+                    LogUtil.getCoreLog().info("mfgRtngItmNdeEntityList.size()>>>>>>>>>>>>>>>>>>>>{}" + mfgRtngItmNdeEntityList.size());
+
+                    for (EDMMfgRtngItmNdeEntity mfgRtngItmNdeEntity : mfgRtngItmNdeEntityList) {
+
+                        LogUtil.getCoreLog().info("mfgRtngItmNdeEntity>>>>getSrcSysCd:" + mfgRtngItmNdeEntity.getSrcSysCd());
+                        LogUtil.getCoreLog().info("mfgRtngItmNdeEntity>>>>getRtngTypCd:" + mfgRtngItmNdeEntity.getRtngTypCd());
+                        LogUtil.getCoreLog().info("mfgRtngItmNdeEntity>>>>getRtngNdeNum:" + mfgRtngItmNdeEntity.getRtngNdeNum().toString());
+                        LogUtil.getCoreLog().info("mfgRtngItmNdeEntity>>>>getRtngGrpCd:" + mfgRtngItmNdeEntity.getRtngGrpCd());
+                        //                                                                                       String srcSysCd,String rtngTypCd,String rtngItmNum,String rtngGrpCd
+                        List<EDMMfgRtngItmEntity> mfgRtngItmEntityList = mfgRtngItmDao.getEntityListWithConditions(mfgRtngItmNdeEntity.getSrcSysCd(), mfgRtngItmNdeEntity.getRtngTypCd(), mfgRtngItmNdeEntity.getRtngNdeNum(), mfgRtngItmNdeEntity.getRtngGrpCd());
+
+                        LogUtil.getCoreLog().info("mfgRtngItmEntityList.size()>>>>>>>>>>>>>>>>>>>>{}" + mfgRtngItmEntityList.size());
+
+                        for (EDMMfgRtngItmEntity mfgRtngItmEntity : mfgRtngItmEntityList) {
                             OMPGdmBomBo gdmBomBo = new OMPGdmBomBo();
                             String bomId = matlProdVersnEntity.getPrdntVrsnNum() + IConstant.VALUE.BACK_SLANT + planParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE +
                                     matlMfgRtngEntity.getMatlNum() + IConstant.VALUE.BACK_SLANT + matlMfgRtngEntity.getPlntCd() + IConstant.VALUE.BACK_SLANT +
@@ -93,40 +112,46 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
                                     matlBomEntity.getBomUsgCd() + IConstant.VALUE.BACK_SLANT + mfgRtngItmEntity.getOperNum();
                             gdmBomBo.setBomId(bomId);
 
-                            EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithFiveConditions(matlBomEntity.getSrcSysCd(),matlBomEntity.getBomNum(),matlBomEntity.getAltBomNum(),IConstant.VALUE.M);
+                            EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithFiveConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getBomNum(), matlBomEntity.getAltBomNum(), IConstant.VALUE.M);
 
-                            String endEff = checkEndEff(bomHdrEntity.getBomVld_ToDt(),matlProdVersnEntity.getValToDt());
-                            String startEff = checkStartEff(bomHdrEntity.getBomVldFromDt(),matlProdVersnEntity.getValToDt());
+                            String endEff = checkEndEff(bomHdrEntity.getBomVld_ToDt(), matlProdVersnEntity.getValToDt());
+                            String startEff = checkStartEff(bomHdrEntity.getBomVldFromDt(), matlProdVersnEntity.getValToDt());
 
                             gdmBomBo.setEndEff(endEff);
                             gdmBomBo.setStartEff(startEff);
 
                             gdmBomBoList.add(gdmBomBo);
+
+                            LogUtil.getCoreLog().info("gdmBomBo------------->>>" + gdmBomBo.toMap());
+
                         }
 
                     }
                 }
             }
         }
+
+        LogUtil.getCoreLog().info("gdmBomBoList------------->>>" + gdmBomBoList.size());
         return gdmBomBoList;
     }
 
-    private String checkEndEff(String bomVld_ToDt,String valToDt){
-        Date bomVld_ToDtFormat = DateUtils.stringToDate(bomVld_ToDt,DateUtils.yyyy_MM_dd);
-        Date valToDtFormat = DateUtils.stringToDate(valToDt,DateUtils.yyyy_MM_dd);
-        if (bomVld_ToDtFormat.getTime()>=valToDtFormat.getTime()){
-            return DateUtils.dateToString(valToDtFormat,DateUtils.J_yyyyMMdd_HHmmss);
-        }else {
-            return DateUtils.dateToString(bomVld_ToDtFormat,DateUtils.J_yyyyMMdd_HHmmss);
+    private String checkEndEff(String bomVld_ToDt, String valToDt) {
+        Date bomVld_ToDtFormat = DateUtils.stringToDate(bomVld_ToDt, DateUtils.yyyy_MM_dd);
+        Date valToDtFormat = DateUtils.stringToDate(valToDt, DateUtils.yyyy_MM_dd);
+        if (bomVld_ToDtFormat.getTime() >= valToDtFormat.getTime()) {
+            return DateUtils.dateToString(valToDtFormat, DateUtils.J_yyyyMMdd_HHmmss);
+        } else {
+            return DateUtils.dateToString(bomVld_ToDtFormat, DateUtils.J_yyyyMMdd_HHmmss);
         }
     }
-    private String checkStartEff(String bomVldFromDt,String valToDt){
-        Date bomVldFromDtFormat = DateUtils.stringToDate(bomVldFromDt,DateUtils.yyyy_MM_dd);
-        Date valToDtFormat = DateUtils.stringToDate(valToDt,DateUtils.yyyy_MM_dd);
-        if (bomVldFromDtFormat.getTime()>=valToDtFormat.getTime()){
-            return DateUtils.dateToString(bomVldFromDtFormat,DateUtils.J_yyyyMMdd_HHmmss);
-        }else {
-            return DateUtils.dateToString(valToDtFormat,DateUtils.J_yyyyMMdd_HHmmss);
+
+    private String checkStartEff(String bomVldFromDt, String valToDt) {
+        Date bomVldFromDtFormat = DateUtils.stringToDate(bomVldFromDt, DateUtils.yyyy_MM_dd);
+        Date valToDtFormat = DateUtils.stringToDate(valToDt, DateUtils.yyyy_MM_dd);
+        if (bomVldFromDtFormat.getTime() >= valToDtFormat.getTime()) {
+            return DateUtils.dateToString(bomVldFromDtFormat, DateUtils.J_yyyyMMdd_HHmmss);
+        } else {
+            return DateUtils.dateToString(valToDtFormat, DateUtils.J_yyyyMMdd_HHmmss);
         }
     }
 }
