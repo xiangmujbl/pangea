@@ -23,7 +23,7 @@ public class ProjectOneAfvvEntity extends CommonEntity {
     private String vge05;
     private String vgw05;
     private String vge06;
-    private String gw06;
+    private String vgw06;
     private String zeimu;
     private String zminu;
     private String minwe;
@@ -62,7 +62,7 @@ public class ProjectOneAfvvEntity extends CommonEntity {
         setVge05((String) map.get("vge05"));
         setVgw05((String) map.get("vgw05"));
         setVge06((String) map.get("vge06"));
-        setGw06((String) map.get("gw06"));
+        setVgw06((String) map.get("vgw06"));
         setZeimu((String) map.get("zeimu"));
         setZminu((String) map.get("zminu"));
         setMinwe((String) map.get("minwe"));
@@ -218,12 +218,12 @@ public class ProjectOneAfvvEntity extends CommonEntity {
         this.vge06 = vge06;
     }
 
-    public String getGw06() {
-        return this.gw06;
+    public String getVgw06() {
+        return vgw06;
     }
 
-    public void setGw06(String gw06) {
-        this.gw06 = gw06;
+    public void setVgw06(String vgw06) {
+        this.vgw06 = vgw06;
     }
 
     public String getZeimu() {
