@@ -79,7 +79,7 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
 
     public PlanCnsPlanParameterEntity getEntityWithSourceSystemAndDataObject(String sourceSystem, String dataObject) {
         if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(dataObject)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+            String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(sourceSystem)
                     .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject).toQueryString();
             return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
         }
@@ -96,13 +96,19 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         return planParameterEntityList;
     }
 
+    public PlanCnsPlanParameterEntity getEntitiesWithConditions1(String sourceSystem, String dataObject, String attribute) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject)
+                .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
+
     public List<PlanCnsPlanParameterEntity> getEntitiesWithConditions(String sourceSystem, String dataObject, String attribute) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
                 .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject)
                 .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute).toQueryString();
         return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
-
     public List<PlanCnsPlanParameterEntity> getEntityWithAttributeListForLFU(String sourceSystem) {
         if (StringUtils.isBlank(sourceSystem)) {
             return null;

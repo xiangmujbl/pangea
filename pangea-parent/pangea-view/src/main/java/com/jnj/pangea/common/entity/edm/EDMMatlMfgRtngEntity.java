@@ -81,4 +81,17 @@ public class EDMMatlMfgRtngEntity extends CommonEntity {
     public void setRntgGrpCd(String rntgGrpCd) {
         this.rntgGrpCd = rntgGrpCd;
     }
+
+    @Override
+    public String toString() {
+        return "EDMMatlMfgRtngEntity{" +
+                "srcSysCd='" + srcSysCd + '\'' +
+                ", rtngTypCd='" + rtngTypCd + '\'' +
+                ", rtngGrpcntrNum='" + rtngGrpcntrNum + '\'' +
+                ", plntCd='" + plntCd + '\'' +
+                ", rntgGrpCntrNbr='" + rntgGrpCntrNbr + '\'' +
+                ", matlNum='" + matlNum + '\'' +
+                ", rntgGrpCd='" + rntgGrpCd + '\'' +
+                '}';
+    }
 }

@@ -743,7 +743,7 @@ public interface IConstant {
         String PLNTCD = "plntCd";
         String RNTGGRPCNTRNBR = "rntgGrpCntrNbr";
         String MATLNUM = "matlNum";
-        String RTNGGRPCD = "rtngGrpCd";
+        String RNTGGRPCD = "rntgGrpCd";
         String FIELD_MATLRTNGVALID_TO_NULL = "";
     }
 
