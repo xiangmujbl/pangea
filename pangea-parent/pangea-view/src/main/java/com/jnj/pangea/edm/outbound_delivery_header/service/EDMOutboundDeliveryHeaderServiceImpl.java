@@ -34,46 +34,45 @@ public class EDMOutboundDeliveryHeaderServiceImpl implements ICommonService{
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
 
         if(sourceSystemV1Entity != null){
-            outboundDeliveryHeaderBo.setSrcSysCd(sourceSystemV1Entity.getSourceSystem());
-            outboundDeliveryHeaderBo.setDelvDocId(likpEntity.getVbeln());
-            outboundDeliveryHeaderBo.setShippingPtNum(likpEntity.getVstel());
-            outboundDeliveryHeaderBo.setDelvTypeCd(likpEntity.getLfart());
-
             if(likpEntity.getVbtyp().equals("J")){
                 outboundDeliveryHeaderBo.setSlsOrdrCarCd(likpEntity.getVbtyp());
-            } else{
-                outboundDeliveryHeaderBo.setSlsOrdrCarCd("");
+                outboundDeliveryHeaderBo.setSrcSysCd(sourceSystemV1Entity.getSourceSystem());
+                outboundDeliveryHeaderBo.setDelvDocId(likpEntity.getVbeln());
+                outboundDeliveryHeaderBo.setShippingPtNum(likpEntity.getVstel());
+                outboundDeliveryHeaderBo.setDelvTypeCd(likpEntity.getLfart());
+
+                SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+                SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD_WITH_DASH);
+
+                try {
+                    Date dateFromLfdat = sdfFrom.parse(likpEntity.getLfdat());
+                    Date dateFromErdat = sdfFrom.parse(likpEntity.getErdat());
+
+                    String dateToLfdat = sdfTo.format(dateFromLfdat);
+                    String dateToErdat = sdfTo.format(dateFromErdat);
+
+                    outboundDeliveryHeaderBo.setDelvDt(dateToLfdat);
+                    outboundDeliveryHeaderBo.setCrtDttm(dateToErdat);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    outboundDeliveryHeaderBo.setDelvDt("");
+                    outboundDeliveryHeaderBo.setCrtDttm("");
+                }
+
+                outboundDeliveryHeaderBo.setSoldToCustNum(likpEntity.getKunag());
+                outboundDeliveryHeaderBo.setShipToCustNum(likpEntity.getKunnr());
+                outboundDeliveryHeaderBo.setBillOfLdngNum(likpEntity.getBolnr());
+                outboundDeliveryHeaderBo.setDelvNum(likpEntity.getLifex());
+                outboundDeliveryHeaderBo.setPlanGiDt(likpEntity.getWadat());
+                outboundDeliveryHeaderBo.setActlGiDt(likpEntity.getWadatist());
+                outboundDeliveryHeaderBo.setShippingCondCd(likpEntity.getVsbed());
+                outboundDeliveryHeaderBo.setSupNum(likpEntity.getLifnr());
+                outboundDeliveryHeaderBo.setPlntCd(likpEntity.getWerks());
+                outboundDeliveryHeaderBo.setLocalSalesOrg(likpEntity.getVkorg());
+
+                resultObject.setBaseBo(outboundDeliveryHeaderBo);
             }
-            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-            SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD_WITH_DASH);
-
-            try {
-                Date dateFromLfdat = sdfFrom.parse(likpEntity.getLfdat());
-                Date dateFromErdat = sdfFrom.parse(likpEntity.getErdat());
-
-                String dateToLfdat = sdfTo.format(dateFromLfdat);
-                String dateToErdat = sdfTo.format(dateFromErdat);
-
-                outboundDeliveryHeaderBo.setDelvDt(dateToLfdat);
-                outboundDeliveryHeaderBo.setCrtDttm(dateToErdat);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                outboundDeliveryHeaderBo.setDelvDt("");
-                outboundDeliveryHeaderBo.setCrtDttm("");
-            }
-
-            outboundDeliveryHeaderBo.setSoldToCustNum(likpEntity.getKunag());
-            outboundDeliveryHeaderBo.setShipToCustNum(likpEntity.getKunnr());
-            outboundDeliveryHeaderBo.setBillOfLdngNum(likpEntity.getBolnr());
-            outboundDeliveryHeaderBo.setDelvNum(likpEntity.getLifex());
-            outboundDeliveryHeaderBo.setPlanGiDt(likpEntity.getWadat());
-            outboundDeliveryHeaderBo.setActlGiDt(likpEntity.getWadatist());
-            outboundDeliveryHeaderBo.setShippingCondCd(likpEntity.getVsbed());
-            outboundDeliveryHeaderBo.setSupNum(likpEntity.getLifnr());
-            outboundDeliveryHeaderBo.setPlntCd(likpEntity.getWerks());
-            outboundDeliveryHeaderBo.setLocalSalesOrg(likpEntity.getVkorg());
         }
-        resultObject.setBaseBo(outboundDeliveryHeaderBo);
         return resultObject;
     }
 }
