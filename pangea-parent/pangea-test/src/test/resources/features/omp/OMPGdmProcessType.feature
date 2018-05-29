@@ -31,7 +31,7 @@ Feature: OMPProcessType AEAZ-4484
 
     Then I delete the test data
 
-    And I will remove all data with region "/omp/process_type"
+    And I will remove all data with region "/omp/gdm_process_type"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
