@@ -74,7 +74,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
 
         edmAdvancedShipNotificationBo.setReceivingPtID(likpEntity.getVstel());
 
-        edmAdvancedShipNotificationBo.setLocaldeliveryCatg(likpEntity.getLfart());
+        edmAdvancedShipNotificationBo.setLocaldeliveryType(likpEntity.getLfart());
 
         // N3
         // ERP Date is informat yyyymmdd
@@ -110,22 +110,22 @@ public class EDMAdvancedShipNotificationServiceImpl {
 
         edmAdvancedShipNotificationBo.setLocRefDocLineNum(lipsEntity.getVgpos());
 
-        resultObject.setBaseBo(edmAdvancedShipNotificationBo);
-
         // T1
         // Get sourceSystem from source_system_v1 using below condition:
         // source_system_v1-localSourceSystem = "project_one"
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
 
         if(edmSourceSystemV1Entity != null){
-            edmAdvancedShipNotificationBo.setSrcSysCd(edmSourceSystemV1Entity.getLocalSourceSystem());
+            edmAdvancedShipNotificationBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
         }
 
-        // N2
+        // N1
         // Select only when LIKP-VBTYP= 7
         if(likpEntity.getVbtyp().equals(IConstant.VALUE.SEVEN)) {
-            edmAdvancedShipNotificationBo.setLocaldeliveryType(likpEntity.getVbtyp());
+            edmAdvancedShipNotificationBo.setLocaldeliveryCatg(likpEntity.getVbtyp());
         }
+
+        resultObject.setBaseBo(edmAdvancedShipNotificationBo);
         return resultObject;
     }
 
