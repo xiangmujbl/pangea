@@ -685,6 +685,7 @@ public interface IConstant {
 
     interface EDM_UNIT_OF_MEASURE_V1 {
         String UOM = "uom";
+        String SOURCESYSTEM = "sourceSystem";
     }
 
     interface PROJECT_ONE_PLFL {
