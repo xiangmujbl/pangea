@@ -70,6 +70,8 @@ public class OMPGdmProductServiceImpl {
                     String refDescription = materialGlobalV1Entity.getRefDescription();
                     gdmProductBo.setDescription(refDescription);
                     gdmProductBo.setShortDescription(refDescription);
+                    gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
+                    gdmProductBo.setActiveFCTERP(IConstant.VALUE.NO);
                     productBos.add(gdmProductBo);
                 }
             }
@@ -93,7 +95,8 @@ public class OMPGdmProductServiceImpl {
                             gdmProductBo.setShortDescription(cnsRootDescriptionEntity.getRootDesc());
                         }
                     }
-
+                    gdmProductBo.setActiveOPRERP(IConstant.VALUE.NO);
+                    gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
                     gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
                     productBos.add(gdmProductBo);
                 }
@@ -112,10 +115,10 @@ public class OMPGdmProductServiceImpl {
                 ResultObject resultObject = new ResultObject();
 
                 productBo.setActive(IConstant.VALUE.NO);
-                productBo.setActiveFCTERP(IConstant.VALUE.NO);
-                productBo.setActiveOPRERP(IConstant.VALUE.NO);
-
-                checkE1(productBo, materialPlanStatusEntity);
+//                productBo.setActiveFCTERP(IConstant.VALUE.NO);
+//                productBo.setActiveOPRERP(IConstant.VALUE.NO);
+//
+//                checkE1(productBo, materialPlanStatusEntity);
 
                 productBo.setActiveSOPERP(IConstant.VALUE.NO);
 
