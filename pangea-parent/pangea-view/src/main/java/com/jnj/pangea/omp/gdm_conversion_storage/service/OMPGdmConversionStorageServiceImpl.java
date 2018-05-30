@@ -111,10 +111,10 @@ public class OMPGdmConversionStorageServiceImpl {
                             }
                             //C2
                             Date dueDate = DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekToDate(), DateUtils.DATE_FORMAT_1);
-                            gdmConversionStorageBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.J_yyyy_MM_dd_HHmmss));
+                            gdmConversionStorageBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
                             // C3
                             Date fromDueDate = DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekFromDate(), DateUtils.DATE_FORMAT_1);
-                            gdmConversionStorageBo.setFromDueDate(DateUtils.dateToString(fromDueDate, DateUtils.J_yyyy_MM_dd_HHmmss));
+                            gdmConversionStorageBo.setFromDueDate(DateUtils.dateToString(fromDueDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
                             //C5
                             String salesPrice = cnsDpPriceEntity.getSalesPrice();
                             if (StringUtils.isBlank(salesPrice) || IConstant.VALUE.ZERO.equals(salesPrice)) {
