@@ -72,4 +72,15 @@ public class EDMMfgRtngItmEntity extends CommonEntity {
         this.operNum = operNum;
     }
 
+    @Override
+    public String toString() {
+        return "EDMMfgRtngItmEntity{" +
+                "rtngTypCd='" + rtngTypCd + '\'' +
+                ", rtngItmNum='" + rtngItmNum + '\'' +
+                ", srcSysCd='" + srcSysCd + '\'' +
+                ", rtngGrpCd='" + rtngGrpCd + '\'' +
+                ", operNum='" + operNum + '\'' +
+                ", bsQty='" + bsQty + '\'' +
+                '}';
+    }
 }

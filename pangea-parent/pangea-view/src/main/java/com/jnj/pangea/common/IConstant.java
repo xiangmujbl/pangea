@@ -912,9 +912,9 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
         String BOM_VlD_ToDt = "9999/12/31";
-        String EN_CAPY = "EN";
-        String ES_CAPY = "ES";
-        String PT_CAPY = "PT";
+        String EN_CAPY = "E";
+        String ES_CAPY = "S";
+        String PT_CAPY = "P";
         String FBP = "FBP";
         String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
         String SEVEN = "7";
@@ -971,6 +971,7 @@ public interface IConstant {
         }
 
         interface INTERFACE_ID {
+            String OMP_GDMPRODUCT_TYPE = "OMPGdmProductType";
             String GDM_RESOURCE = "GDMResource";
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
             String OMP_GDM_PRODUCT = "OMPGdmProduct";

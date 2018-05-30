@@ -141,4 +141,22 @@ public class EDMBomItemEntity extends CommonEntity {
         this.bomItmVldFromDt = bomItmVldFromDt;
     }
 
+    @Override
+    public String toString() {
+        return "EDMBomItemEntity{" +
+                "bomNum='" + bomNum + '\'' +
+                ", srcSysCd='" + srcSysCd + '\'' +
+                ", bomCatCd='" + bomCatCd + '\'' +
+                ", cmpntNum='" + cmpntNum + '\'' +
+                ", bomItmNum='" + bomItmNum + '\'' +
+                ", bomItmVldFromDt='" + bomItmVldFromDt + '\'' +
+                ", dstrbtnKeyCd='" + dstrbtnKeyCd + '\'' +
+                ", fxQtyInd='" + fxQtyInd + '\'' +
+                ", bomItmVldToDt='" + bomItmVldToDt + '\'' +
+                ", leadTimeOffst='" + leadTimeOffst + '\'' +
+                ", cmpntQty='" + cmpntQty + '\'' +
+                ", cmpntScrap_Pct='" + cmpntScrap_Pct + '\'' +
+                ", cmpntUomCd='" + cmpntUomCd + '\'' +
+                '}';
+    }
 }

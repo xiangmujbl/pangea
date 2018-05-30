@@ -43,10 +43,18 @@ public class EDMBomHdrDaoImpl extends CommonDaoImpl {
                     .toQueryString();
             List<EDMBomHdrEntity> bomHdrEntityList = queryForList(IConstant.REGION.BOM_HDR, queryString, EDMBomHdrEntity.class);
             for (EDMBomHdrEntity bomHdrEntity:bomHdrEntityList) {
-                Date bomVld_ToDtFormat = DateUtils.stringToDate(bomHdrEntity.getBomVld_ToDt(),DateUtils.yyyy_MM_dd);
-                Date currentDate = new Date();
-                if (bomVld_ToDtFormat.getTime()>currentDate.getTime()){
-                    return bomHdrEntity;
+                String bomVld_ToDt = bomHdrEntity.getBomVld_ToDt();
+                if(StringUtils.isNotEmpty(bomVld_ToDt)){
+
+                    Date bomVld_ToDtFormat = DateUtils.stringToDate(bomVld_ToDt,DateUtils.yyyy_MM_dd);
+                    Date currentDate = new Date();
+
+                    if (null == bomVld_ToDtFormat){
+                        bomVld_ToDtFormat = DateUtils.stringToDate(bomVld_ToDt,DateUtils.F_yyyyMMdd);
+                    }
+                    if (bomVld_ToDtFormat.getTime() >= currentDate.getTime()){
+                        return bomHdrEntity;
+                    }
                 }
             }
         }

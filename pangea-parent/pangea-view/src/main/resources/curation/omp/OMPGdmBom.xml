@@ -32,7 +32,7 @@
                 <columns>sourceSystem,dataObject,attribute,parameterValue</columns>
             </region>
             <region path="/edm/matl_prod_versn">
-                <columns>srcSysCd,matlNum,plntCd,altBomNum,prdntVrsnNum</columns>
+                <columns>srcSysCd,matlNum,plntCd,altBomNum,prdntVrsnNum,valToDt</columns>
                 <relations>
                     <relation path="/edm/matl_mfg_rtng" isPrimaryKey="false">
                         <expression>
@@ -76,7 +76,7 @@
             </region>
 
             <region path="/edm/bom_hdr">
-                <columns>srcSysCd,bomNum,altBomNum</columns>
+                <columns>srcSysCd,bomNum,altBomNum,bomCatCd,bomVld_ToDt,bomVldFromDt</columns>
             </region>
 
 
