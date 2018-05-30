@@ -50,6 +50,9 @@ public class EDMInventoryStockBo extends BaseBo implements Cloneable{
                 .add("localBatchId", this.localBatchId)
                 .add("localSpecialStockIndicator", this.localSpecialStockIndicator)
                 .add("localConsignmentSpecialStockIndicator", this.localConsignmentSpecialStockIndicator)
+                .add("localStorageLocation", this.localStorageLocation)
+                .add("localMaterial", this.localMaterial)
+                .add("localVendorNumber", this.localVendorNumber)
                 .toJsonString();
     }
 
