@@ -3,7 +3,7 @@ package com.jnj.pangea.omp.gdm_bom.bo;
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class OMPGdmBomBo extends BaseBo {
+public class OMPGdmBomBo extends BaseBo implements Cloneable{
 
     private String bomId;
     private String active;
@@ -94,4 +94,7 @@ public class OMPGdmBomBo extends BaseBo {
         this.startEff = startEff;
     }
 
+    public Object copy() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

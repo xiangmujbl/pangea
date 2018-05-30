@@ -26,7 +26,7 @@
             </region>
 
             <region path="/edm/inspection_lot_v1">
-                <columns>srcSysCd,lotNum,PlntCd,matlId,baseUom,lotVerifTypeCd,lotOrigCd,localObjectNumber,stsPrfl,usgDecInd,localDateOfLotCreation,localTimeOfLotCreation,crtDttm,chgDttm,inspStrtDt,inspStrtTm,inspEndDt,inspEndTm,cstmNum,vndrNum,btchNum,stgLocCd,mfgOrdrDoc,poDocNum,poDocLineNbr,matlMvmtDocYr,matlMvmtDocNum,stckPlntCd,stckSLocCd,inspLotQty,actlLotQty,toBePostedQty,qcStsCd,usgDcsnCd,qcDcsnDttm</columns>
+                <columns>srcSysCd,lotNum,plntCd,matlId,baseUom,lotVerifTypeCd,lotOrigCd,localObjectNumber,stsPrfl,usgDecInd,localDateOfLotCreation,localTimeOfLotCreation,crtDttm,chgDttm,inspStrtDt,inspStrtTm,inspEndDt,inspEndTm,cstmNum,vndrNum,btchNum,stgLocCd,mfgOrdrDoc,poDocNum,poDocLineNbr,matlMvmtDocYr,matlMvmtDocNum,stckPlntCd,stckSLocCd,inspLotQty,actlLotQty,toBePostedQty,qcStsCd,usgDcsnCd,qcDcsnDttm</columns>
             </region>
             <region path="/edm/source_system_v1">
                 <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>

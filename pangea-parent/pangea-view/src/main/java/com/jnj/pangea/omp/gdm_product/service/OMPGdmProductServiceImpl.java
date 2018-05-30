@@ -114,15 +114,13 @@ public class OMPGdmProductServiceImpl {
 
                 ResultObject resultObject = new ResultObject();
 
+                if (StringUtils.isEmpty(productBo.getProductId())){
+                    continue;
+                }
+
                 productBo.setActive(IConstant.VALUE.NO);
-//                productBo.setActiveFCTERP(IConstant.VALUE.NO);
-//                productBo.setActiveOPRERP(IConstant.VALUE.NO);
-//
-//                checkE1(productBo, materialPlanStatusEntity);
 
                 productBo.setActiveSOPERP(IConstant.VALUE.NO);
-
-
 
                 String productFamily = materialGlobalV1Entity.getProductFamily();
                 productBo.setPlanningHierarchy1(productFamily);
