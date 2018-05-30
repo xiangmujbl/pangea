@@ -66,20 +66,35 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         edmInspectionLotV1Bo.setStsPrfl(projectOneQalsEntity.getStsma());
         edmInspectionLotV1Bo.setUsgDecInd(projectOneQalsEntity.getStat35());
         //N5
-        String date = getDate(projectOneQalsEntity.getEnstehdat());
-        edmInspectionLotV1Bo.setLocalDateOfLotCreation(date);
+        boolean empty5 = StringUtils.isEmpty(projectOneQalsEntity.getEnstehdat());
+        if(!empty5){
+            String date = getDate(projectOneQalsEntity.getEnstehdat());
+            edmInspectionLotV1Bo.setLocalDateOfLotCreation(date);
+        }
         edmInspectionLotV1Bo.setLocalTimeOfLotCreation(projectOneQalsEntity.getEntstezeit());
-        Date dueDate = DateUtils.stringToDate(projectOneQalsEntity.getERSTELDATERSTELZEIT(), DateUtils.F_yyyyMMddHHmmss_);
-        String CrtDttm = DateUtils.dateToString(dueDate, DateUtils.ISO_8602);
-        edmInspectionLotV1Bo.setCrtDttm(CrtDttm);
-        Date dueDate1 = DateUtils.stringToDate(projectOneQalsEntity.getAENDERDATAENDERZEIT(), DateUtils.F_yyyyMMddHHmmss_);
-        String ChgDttm = DateUtils.dateToString(dueDate1, DateUtils.ISO_8602);
-        edmInspectionLotV1Bo.setChgDttm(ChgDttm);
-        String date1 = getDate(projectOneQalsEntity.getPastrterm());
-        edmInspectionLotV1Bo.setInspStrtDt(date1);
+        boolean empty3 = StringUtils.isEmpty(projectOneQalsEntity.getersteldatErstelzeit());
+        if(!empty3){
+            Date dueDate = DateUtils.stringToDate(projectOneQalsEntity.getersteldatErstelzeit(), DateUtils.F_yyyyMMddHHmmss_);
+            String CrtDttm = DateUtils.dateToString(dueDate, DateUtils.ISO_8602);
+            edmInspectionLotV1Bo.setCrtDttm(CrtDttm);
+        }
+        boolean empty4 = StringUtils.isEmpty(projectOneQalsEntity.getaenderdatAenderzeit());
+        if(!empty4){
+            Date dueDate1 = DateUtils.stringToDate(projectOneQalsEntity.getaenderdatAenderzeit(), DateUtils.F_yyyyMMddHHmmss_);
+            String ChgDttm = DateUtils.dateToString(dueDate1, DateUtils.ISO_8602);
+            edmInspectionLotV1Bo.setChgDttm(ChgDttm);
+        }
+        boolean empty7 = StringUtils.isEmpty(projectOneQalsEntity.getPastrterm());
+        if(!empty7){
+            String date1 = getDate(projectOneQalsEntity.getPastrterm());
+            edmInspectionLotV1Bo.setInspStrtDt(date1);
+        }
         edmInspectionLotV1Bo.setInspStrtTm(projectOneQalsEntity.getPastrzeit());
-        String date2 = getDate(projectOneQalsEntity.getPaendterm());
-        edmInspectionLotV1Bo.setInspEndDt(date2);
+        boolean empty6 = StringUtils.isEmpty(projectOneQalsEntity.getPaendterm());
+        if(!empty6){
+            String date2 = getDate(projectOneQalsEntity.getPaendterm());
+            edmInspectionLotV1Bo.setInspEndDt(date2);
+        }
         edmInspectionLotV1Bo.setInspEndTm(projectOneQalsEntity.getPaendzeit());
         edmInspectionLotV1Bo.setCstmNum(projectOneQalsEntity.getKunnr());
         edmInspectionLotV1Bo.setVndrNum(projectOneQalsEntity.getLifnr());
