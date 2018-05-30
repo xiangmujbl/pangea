@@ -7,7 +7,7 @@ public class EDMInspectionLotBo extends BaseBo {
 
     private String srcSysCd;
     private String lotNum;
-    private String PlntCd;
+    private String plntCd;
     private String matlId;
     private String baseUom;
     private String lotVerifTypeCd;
@@ -66,12 +66,12 @@ public class EDMInspectionLotBo extends BaseBo {
         this.lotNum = lotNum;
     }
 
-    public String getPlntCd() {
-        return this.PlntCd;
+    public String getplntCd() {
+        return this.plntCd;
     }
 
-    public void setPlntCd(String plntCd) {
-        this.PlntCd = plntCd;
+    public void setplntCd(String plntCd) {
+        this.plntCd = plntCd;
     }
 
     public String getMatlId() {

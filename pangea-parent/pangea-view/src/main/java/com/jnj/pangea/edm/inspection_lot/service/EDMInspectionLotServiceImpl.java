@@ -56,7 +56,7 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         EDMSourceSystemV1Entity sourceEntity = getSourceEntity();
         edmInspectionLotV1Bo.setSrcSysCd(sourceEntity.getSourceSystem());
         edmInspectionLotV1Bo.setLotNum(projectOneQalsEntity.getPrueflos());
-        edmInspectionLotV1Bo.setPlntCd(projectOneQalsEntity.getWerk());
+        edmInspectionLotV1Bo.setplntCd(projectOneQalsEntity.getWerk());
         edmInspectionLotV1Bo.setMatlId(projectOneQalsEntity.getMatnr());
         edmInspectionLotV1Bo.setBaseUom(projectOneQalsEntity.getMengeneinh());
         edmInspectionLotV1Bo.setLotVerifTypeCd(projectOneQalsEntity.getArt());
