@@ -72,8 +72,6 @@ Feature: EDMSalesOrder AEAZ-493
 
     And I compare the number of records between "/project_one/vbak" and "/edm/sales_order_v1,/plan/edm_failed_data"
 
-  Scenario: delete all test data
-
     Then I delete the test data
 
     And I will remove all data with region "/edm/sales_order_v1"

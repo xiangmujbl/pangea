@@ -94,20 +94,20 @@ public class EDMBatchMasterServiceImpl implements ICommonService {
                 eDMBatchMasterBo.setMatlNum(mch1Entity.getMatnr());
                 eDMBatchMasterBo.setBtchNum(mch1Entity.getCharg());
                 eDMBatchMasterBo.setBtchStsCd(mch1Entity.getZustd());
-                SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+                SimpleDateFormat inFormatter = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD );
                 SimpleDateFormat outFormatter = new SimpleDateFormat(IConstant.VALUE.YYYY_MM_DD);
 
                 try {
                     if (IConstant.VALUE.YYYYMMDD_ZERO.equals(mch1Entity.getVfdat())) {
                         eDMBatchMasterBo.setBtchExpDt(IConstant.VALUE.YYYY_MM_DD_ZERO);
                     } else {
-                        eDMBatchMasterBo.setBtchExpDt(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())));
+                        eDMBatchMasterBo.setBtchExpDt(outFormatter.format(inFormatter.parse(mch1Entity.getVfdat())) + IConstant.VALUE.HH_NN_SS_ZERO);
                     }
 
                     if (IConstant.VALUE.YYYYMMDD_ZERO.equals(mch1Entity.getHsdat())) {
                         eDMBatchMasterBo.setBtchMfgDt(IConstant.VALUE.YYYY_MM_DD_ZERO);
                     } else {
-                        eDMBatchMasterBo.setBtchMfgDt(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat())));
+                        eDMBatchMasterBo.setBtchMfgDt(outFormatter.format(inFormatter.parse(mch1Entity.getHsdat()) ) + IConstant.VALUE.HH_NN_SS_ZERO);
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();

@@ -93,7 +93,6 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         setLocalConsumptionPeriodForward((String) map.get("localConsumptionPeriodForward"));
         setLocalGoodsReceiptProcessingTimeInDays((String) map.get("localGoodsReceiptProcessingTimeInDays"));
         setLocalBatchManagementRequirementIndicator((String) map.get("localBatchManagementRequirementIndicator"));
-
         setLocalPurchasingGroup((String)map.get("localPurchasingGroup"));
         setPurchsngGrpCd((String)map.get("purchsngGrpCd"));
     }

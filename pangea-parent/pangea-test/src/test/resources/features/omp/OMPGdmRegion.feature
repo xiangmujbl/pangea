@@ -19,8 +19,8 @@ Feature: OMPGdmRegion AEAZ-2711
 
     Then I check file data for filename "GDMRegion.tsv" by keyFields "regionId"
       | regionId | activeFCTERP | activeOPRERP | activeSOPERP | regionDescription          |
-      | NORTHREG | YES          | YES          | YES          | South America North Region |
-      | SOUTHREG | YES          | YES          | YES          | South America South Region |
+      | NORTHREG | YES          | YES          | NO          | South America North Region |
+      | SOUTHREG | YES          | YES          | NO          | South America South Region |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

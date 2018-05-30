@@ -9,14 +9,15 @@ public class EDMBatchMasterV1Entity extends CommonEntity {
     private String sourceSystem;
     private String localMaterialNumber;
     private String materialNumber;
-    private String localBatchNumber;
     private String localShelfLifeExpiration;
     private String localDateofManufacture;
-    private String localBatchExpDate;
-    private String localBatchMfgDate;
+
+    private String btchExpDt;
+    private String btchMfgDt;
     private String srcSysCd;
-    private String matlId;
-    private String locPrtyId;
+    private String btchNum;
+    private String matlNum;
+    private String localPlant;
 
 
     public EDMBatchMasterV1Entity(Map<String, Object> map) {
@@ -24,14 +25,14 @@ public class EDMBatchMasterV1Entity extends CommonEntity {
         setSourceSystem((String) map.get("sourceSystem"));
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
         setMaterialNumber((String) map.get("materialNumber"));
-        setLocalBatchNumber((String) map.get("localBatchNumber"));
         setLocalShelfLifeExpiration((String) map.get("localShelfLifeExpiration"));
         setLocalDateofManufacture((String) map.get("localDateofManufacture"));
-        setLocalBatchExpDate((String) map.get("localBatchExpDate"));
-        setLocalBatchMfgDate((String) map.get("localBatchMfgDate"));
+        setBtchExpDt((String) map.get("btchExpDt"));
+        setBtchMfgDt((String) map.get("btchMfgDt"));
         setSrcSysCd((String) map.get("srcSysCd"));
-        setMatlId((String) map.get("matlId"));
-        setLocPrtyId((String) map.get("locPrtyId"));
+        setMatlNum((String) map.get("matlNum"));
+        setLocalPlant((String) map.get("localPlant"));
+        setBtchNum((String) map.get("btchNum"));
     }
 
     public String getSrcSysCd() { return srcSysCd; }
@@ -62,12 +63,14 @@ public class EDMBatchMasterV1Entity extends CommonEntity {
         this.materialNumber = materialNumber;
     }
 
-    public String getLocalBatchNumber() {
-        return localBatchNumber;
+
+
+    public String getBtchNum() {
+        return btchNum;
     }
 
-    public void setLocalBatchNumber(String localBatchNumber) {
-        this.localBatchNumber = localBatchNumber;
+    public void setBtchNum(String btchNum) {
+        this.btchNum = btchNum;
     }
 
     public String getLocalShelfLifeExpiration() {
@@ -86,27 +89,36 @@ public class EDMBatchMasterV1Entity extends CommonEntity {
         this.localDateofManufacture = localDateofManufacture;
     }
 
-    public String getLocalBatchExpDate() {
-        return localBatchExpDate;
+    public String getBtchExpDt() {
+        return btchExpDt;
     }
 
-    public void setLocalBatchExpDate(String localBatchExpDate) {
-        this.localBatchExpDate = localBatchExpDate;
+    public void setBtchExpDt(String btchExpDt) {
+        this.btchExpDt = btchExpDt;
     }
 
-    public String getLocalBatchMfgDate() {
-        return localBatchMfgDate;
+
+    public String getBtchMfgDt() {
+        return btchMfgDt;
     }
 
-    public void setLocalBatchMfgDate(String localBatchMfgDate) {
-        this.localBatchMfgDate = localBatchMfgDate;
+    public void setBtchMfgDt(String btchMfgDt) {
+        this.btchMfgDt = btchMfgDt;
     }
 
-    public String getMatlId() { return matlId; }
 
-    public void setMatlId(String matlId) { this.matlId = matlId; }
+    public String getMatlNum() {
+        return matlNum;
+    }
+    public void setMatlNum(String matlNum) {
+        this.matlNum = matlNum;
+    }
+    public String getLocalPlant() {
+        return localPlant;
+    }
 
-    public String getLocPrtyId() { return locPrtyId; }
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
+    }
 
-    public void setLocPrtyId(String locPrtyId) { this.locPrtyId = locPrtyId; }
 }
