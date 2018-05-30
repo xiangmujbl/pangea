@@ -1,6 +1,5 @@
 package com.jnj.pangea.edm.inventory_stock.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneMardDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneMchbDaoImpl;
@@ -101,7 +100,6 @@ public class EDMInventoryStockServiceImpl {
                                         resultObjectList.add(resultObject);
                                     } catch (Exception exception) {
                                         exception.printStackTrace();
-                                        LogUtil.getLogger().info("");
                                     }
                                 });
                             } catch (Exception exception) {
@@ -116,7 +114,6 @@ public class EDMInventoryStockServiceImpl {
                 exception.printStackTrace();
             }
         });
-        LogUtil.getLogger().info("----------------resultObjectList1-------------------->>>"+resultObjectList.size());
         return resultObjectList;
     }
 
@@ -155,7 +152,6 @@ public class EDMInventoryStockServiceImpl {
 
     public List<MkolEntity> joinMkol(String matnr, String werks){
         List<MkolEntity> mkolList = mkolDao.getMkolListWithMatnrAndWerks(matnr, werks);
-        LogUtil.getLogger().info("-----------mkolList-------------------->>>>"+mkolList.size());
         if(mkolList.isEmpty()){
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("sobkz","");
@@ -166,13 +162,11 @@ public class EDMInventoryStockServiceImpl {
             MkolEntity mkolEntity = new MkolEntity(map);
             mkolList.add(mkolEntity);
         }
-        LogUtil.getLogger().info("-----------mkolList1111111-------------------->>>>"+mkolList.size());
         return mkolList;
     }
 
     public List<MardEntity> joinMard(String matnr, String werks){
         List<MardEntity> mardList = mardDao.getMardListWithMatnrAndWerks(matnr,werks);
-        LogUtil.getLogger().info("-----------mardList-------------------->>>>"+mardList.size());
         if(mardList.isEmpty()){
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("werks","");
@@ -191,7 +185,6 @@ public class EDMInventoryStockServiceImpl {
             MardEntity mardEntity = new MardEntity(map);
             mardList.add(mardEntity);
         }
-        LogUtil.getLogger().info("-----------mardList1111111-------------------->>>>"+mardList.size());
         return mardList;
     }
 }
