@@ -222,7 +222,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		List<EDMMaterialPlantV1Entity> materialPlantV1EntityList = this.materialPlantV1Dao.getEntitiesWithLocalMaterialNumberLocalPlantNumberSourceSystem(locMatNum,localPlantNum,sourceSystem);
 
 		if (!materialPlantV1EntityList.isEmpty()) {
-			purchaseGroup = materialPlantV1EntityList.get(0).getPurchasingGrpCd();
+			purchaseGroup = materialPlantV1EntityList.get(0).getPurchsngGrpCd();
 		}
 		else {
 
