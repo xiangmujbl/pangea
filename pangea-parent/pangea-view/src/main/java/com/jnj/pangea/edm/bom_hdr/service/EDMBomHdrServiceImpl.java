@@ -52,7 +52,7 @@ public class EDMBomHdrServiceImpl implements ICommonService {
         edmBomHdrV1Bo.setBomTxt(mainData.getStktx());
         edmBomHdrV1Bo.setBomStsCd(mainData.getStlst());
         //T2
-        List<StkoEntity> stkoEntityList = projectOneStkoDao.getEntityWithStlnrAndStlal(mainData.getStlnr(), mainData.getStlal());
+        List<StkoEntity> stkoEntityList = projectOneStkoDao.getEntityWithStlnrAndStlal(mainData.getStlnr(), mainData.getStlal(),mainData.getStlty());
         String stkoz = mainData.getStkoz();
         if (stkoEntityList.size() > 1) {
             sort( stkoEntityList);

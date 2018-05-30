@@ -36,8 +36,6 @@ public class EDMWrkCtrServiceImpl implements ICommonService {
         EDMWrkCtrBo wrkCtrBo = new EDMWrkCtrBo();
         //T1
         EDMSourceSystemV1Entity entityWithLocalSourceSystem = sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
-        LogUtil.getCoreLog().info("====================PROJECT_ONE================="+IConstant.VALUE.PROJECT_ONE);
-        LogUtil.getCoreLog().info("====================entityWithLocalSourceSystem================="+entityWithLocalSourceSystem.getSourceSystem());
         if (entityWithLocalSourceSystem != null) {
             wrkCtrBo.setSrcSysCd(entityWithLocalSourceSystem.getSourceSystem());
         }
@@ -69,8 +67,8 @@ public class EDMWrkCtrServiceImpl implements ICommonService {
         wrkCtrBo.setSlocCd(crhdEntity.getLgort_res());
         wrkCtrBo.setMixingInd(crhdEntity.getMixmat());
         //J1 T2
-        List<ProjectOneCrtxEntity> crtxEntities = crtxDao.getEntityWithObjid(crhdEntity.getObjid(),crhdEntity.getObjty());
-        LogUtil.getCoreLog().info("--------------------crtxEntities--------"+crtxEntities);
+        List<ProjectOneCrtxEntity> crtxEntities = crtxDao.getEntityWithObjid(crhdEntity.getObjid(), crhdEntity.getObjty());
+        LogUtil.getCoreLog().info("--------------------crtxEntities--------" + crtxEntities);
         if (crtxEntities != null && crtxEntities.size() > 0) {
             String capyDesc = "";
             String[] strArray = new String[3];
@@ -85,11 +83,11 @@ public class EDMWrkCtrServiceImpl implements ICommonService {
                     strArray[2] = entity.getKtext() + "/";
                 }
             }
-            for(int i=0;i<strArray.length;i++){
-                if(strArray[i]==null){
-                    capyDesc=capyDesc+"/";
-                }else{
-                    capyDesc=capyDesc+strArray[i];
+            for (int i = 0; i < strArray.length; i++) {
+                if (strArray[i] == null) {
+                    capyDesc = capyDesc + "/";
+                } else {
+                    capyDesc = capyDesc + strArray[i];
                 }
             }
             capyDesc = capyDesc.substring(0, capyDesc.length() - 1);
