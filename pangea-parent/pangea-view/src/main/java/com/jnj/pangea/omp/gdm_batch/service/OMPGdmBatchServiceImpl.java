@@ -118,7 +118,7 @@ public class OMPGdmBatchServiceImpl implements ICommonService {
             if(cnsMaterialPlanStatusDaoEntity==null){
                 return IConstant.VALUE.N;
             }
-            if(cnsMaterialPlanStatusDaoEntity.getSpRelevant().equals(IConstant.VALUE.X) || cnsMaterialPlanStatusDaoEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)){
+            if((cnsMaterialPlanStatusDaoEntity.getSpRelevant() != null && cnsMaterialPlanStatusDaoEntity.getSpRelevant().trim().equals(IConstant.VALUE.X)) || (cnsMaterialPlanStatusDaoEntity.getNoPlanRelevant() != null &&  cnsMaterialPlanStatusDaoEntity.getNoPlanRelevant().trim().equals(IConstant.VALUE.X))){
                 return IConstant.VALUE.Y;
             }
         }
