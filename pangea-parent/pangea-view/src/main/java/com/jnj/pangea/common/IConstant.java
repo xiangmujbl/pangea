@@ -173,6 +173,11 @@ public interface IConstant {
         String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
 
+    interface PLAN_CNS_ROOT_DESCRIPTION {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_DP_PARENT_CODE = "localDpParentCode";
+    }
+
     interface EDM_JNJ_CALENDAR_V1 {
         String FISCALPERIOD = "fiscalPeriod";
     }
@@ -907,9 +912,9 @@ public interface IConstant {
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
         String BOM_VlD_ToDt = "9999/12/31";
-        String EN_CAPY = "EN";
-        String ES_CAPY = "ES";
-        String PT_CAPY = "PT";
+        String EN_CAPY = "E";
+        String ES_CAPY = "S";
+        String PT_CAPY = "P";
         String FBP = "FBP";
         String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
         String SEVEN = "7";

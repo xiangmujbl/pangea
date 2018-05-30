@@ -1,6 +1,5 @@
 package com.jnj.pangea.plan.cns_material_plan_status.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -55,15 +54,11 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         boolean checkF1 = checkF1(edmSalesOrderV1Entity, f1ASet, f1BSet, f1CSet);
         boolean checkF2 = checkF2(edmSalesOrderV1Entity);
         if (!checkF1) {
-            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F1, "");
-            resultObject.setFailData(failData);
-            return resultObject;
+            return null;
         }
 
         if (!checkF2) {
-            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F2, "");
-            resultObject.setFailData(failData);
-            return resultObject;
+            return null;
         }
 
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
@@ -72,9 +67,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             materialPlanStatusBo.setLocalPlant(edmSalesOrderV1Entity.getLocalPlant());
             materialPlanStatusBo.setLocalMaterialNumber(edmSalesOrderV1Entity.getLocalMaterialNumber());
         } else {
-            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.J1, "");
-            resultObject.setFailData(failData);
-            return resultObject;
+            return null;
         }
 
         //D1
@@ -93,11 +86,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             materialPlanStatusBo.setLocalParentCode(materialGlobalV1Entity.getLocalDpParentCode());
             materialPlanStatusBo.setPpc(materialGlobalV1Entity.getPrimaryPlanningCode());
         } else {
-            FailData failData = writeFailData(edmSalesOrderV1Entity, IConstant.FAILED.ERROR_CODE.J2, "");
-            resultObject.setFailData(failData);
-            return resultObject;
+            return null;
         }
-
 
         //T5
         if (checkT5(materialPlanStatusBo)) {
@@ -111,7 +101,6 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         resultObject.setBaseBo(materialPlanStatusBo);
         return resultObject;
     }
-
 
     private boolean checkF1(EDMSalesOrderV1Entity salesOrderV1Entity, Set<String> f1ASet, Set<String> f1BSet, Set<String> f1CSet) {
         String localPlant = salesOrderV1Entity.getLocalPlant();
@@ -132,8 +121,10 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
     }
 
     private boolean checkF2(EDMSalesOrderV1Entity salesOrderV1Entity) {
-        PlanCnsCustExclEntity cnsCustExclEntity = planCnsCustExclDao.getEntityWithSalesOrgAndNotCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
-        if (null != cnsCustExclEntity) {
+        PlanCnsCustExclEntity cnsCustExclEntity = planCnsCustExclDao.getEntityWithSalesOrgAndCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
+        List<PlanCnsCustExclEntity> cnsCustExclEntityList = planCnsCustExclDao.getEntityListWithSalesOrg(salesOrderV1Entity.getLocalSalesOrg());
+
+        if (cnsCustExclEntityList.size()>0 && null == cnsCustExclEntity) {
             return true;
         }
         return false;
@@ -188,29 +179,6 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
             if (entityWithLocalMaterialNumber != null) {
                 return entityWithLocalMaterialNumber.getMaterialNumber();
             }
-        }
-        return null;
-    }
-
-    public boolean reluesTwo(EDMSalesOrderV1Entity edmSalesOrderV1Entity) {
-        PlanCnsCustExclEntity entityWithSalesOrgAndCustomerShipTo = null;
-        //F2 rules
-        if (edmSalesOrderV1Entity.getLocalSalesOrg() != null && !edmSalesOrderV1Entity.getLocalSalesOrg().equals("")) {
-            entityWithSalesOrgAndCustomerShipTo = planCnsCustExclDao.getEntityWithSalesOrgAndCustomerShipTo(edmSalesOrderV1Entity.getLocalSalesOrg());
-        }
-        if (entityWithSalesOrgAndCustomerShipTo != null) {
-            String localShipToParty = edmSalesOrderV1Entity.getLocalShipToParty();
-            if (null != localShipToParty && localShipToParty.equalsIgnoreCase(entityWithSalesOrgAndCustomerShipTo.getCustomerShipTo())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public EDMMaterialGlobalV1Entity getGlobal(String localMaterialNumber) {
-        if (StringUtils.isNotEmpty(localMaterialNumber)) {
-            EDMMaterialGlobalV1Entity materialGlobalV1Entity = edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
-            return materialGlobalV1Entity;
         }
         return null;
     }

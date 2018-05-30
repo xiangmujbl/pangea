@@ -112,4 +112,19 @@ public class EDMMatlProdVersnEntity extends CommonEntity {
         this.valFromDt = valFromDt;
     }
 
+    @Override
+    public String toString() {
+        return "EDMMatlProdVersnEntity{" +
+                "srcSysCd='" + srcSysCd + '\'' +
+                ", plntCd='" + plntCd + '\'' +
+                ", altBomNum='" + altBomNum + '\'' +
+                ", matlNum='" + matlNum + '\'' +
+                ", rtngGrpCntrNum='" + rtngGrpCntrNum + '\'' +
+                ", rtngGrpCd='" + rtngGrpCd + '\'' +
+                ", prdntVrsnNum='" + prdntVrsnNum + '\'' +
+                ", dstrbtnKeyCd='" + dstrbtnKeyCd + '\'' +
+                ", valToDt='" + valToDt + '\'' +
+                ", valFromDt='" + valFromDt + '\'' +
+                '}';
+    }
 }

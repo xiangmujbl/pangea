@@ -18,10 +18,12 @@ public class ProjectOneStkoDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<StkoEntity> getEntityWithStlnrAndStlal(String stlnr,String stlal){
-        if (StringUtils.isNotBlank(stlnr) && StringUtils.isNotBlank(stlal)){
+    public List<StkoEntity> getEntityWithStlnrAndStlal(String stlnr,String stlal,String stlty){
+        if (StringUtils.isNotBlank(stlnr) && StringUtils.isNotBlank(stlal) && StringUtils.isNotBlank(stlty)){
             String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_STKO.STLNR).is(stlnr).
-                    and(IConstant.PROJECT_ONE_STKO.STLAL).is(stlal).toQueryString();
+                    and(IConstant.PROJECT_ONE_STKO.STLAL).is(stlal)
+                    .and(IConstant.PROJECT_ONE_STKO.STLTY).is(stlty).toQueryString();
+
             return queryForList(IConstant.REGION.PROJECT_ONE_STKO_CLONE, queryString, StkoEntity.class);
         }
        return null;

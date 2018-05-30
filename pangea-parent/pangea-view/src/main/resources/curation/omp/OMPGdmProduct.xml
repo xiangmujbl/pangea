@@ -41,6 +41,12 @@
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
                         <expression>localUom=/edm/material_global_v1.localBaseUom</expression>
                     </relation>
+                    <relation path="/plan/cns_root_description" isPrimaryKey="false">
+                        <expression>
+                            sourceSystem=/edm/material_global_v1.sourceSystem,
+                            localDpParentCode=/edm/material_global_v1.localDpParentCode
+                        </expression>
+                    </relation>
                 </relations>
 
             </region>
@@ -96,10 +102,15 @@
                 </columns>
             </region>
 
+            <region path="/plan/cns_root_description">
+                <columns>
+                    sourceSystem,localDpParentCode,rootDesc,ovrRootDesc
+                </columns>
+            </region>
 
             <region path="/omp/gdm_product">
                 <columns>
-                    productId,active,activeFCTERP,activeOPRERP,activeSOPERP,color,description,label,matkl,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,prdha,shortDescription,sourceLocationId,subFranchise,technology,unitId
+                    productId,active,activeFCTERP,activeOPRERP,activeSOPERP,color,description,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,shortDescription,sourceLocationId,subFranchise,technology,unitId
                 </columns>
             </region>
 
