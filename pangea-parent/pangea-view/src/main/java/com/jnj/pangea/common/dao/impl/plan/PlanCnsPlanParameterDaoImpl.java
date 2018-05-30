@@ -155,4 +155,15 @@ if (StringUtils.isNotBlank(sourceSystem)){
                 .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
+
+    public  List<PlanCnsPlanParameterEntity> getPlanCnsPlanParameterEntityListWithSrcSysCdAndDataObject(String srcSysCd,String dataObject){
+        List<PlanCnsPlanParameterEntity> list = new ArrayList<PlanCnsPlanParameterEntity>();
+        if(StringUtils.isNotBlank(srcSysCd)){
+            String queryString  = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(srcSysCd)
+                    .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject)
+                    .toQueryString();
+            return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+        }
+        return list;
+    }
 }

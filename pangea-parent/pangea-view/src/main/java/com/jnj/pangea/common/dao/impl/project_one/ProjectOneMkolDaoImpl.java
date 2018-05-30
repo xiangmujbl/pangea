@@ -5,6 +5,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.project_one.MkolEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectOneMkolDaoImpl extends CommonDaoImpl {
@@ -19,8 +20,9 @@ public class ProjectOneMkolDaoImpl extends CommonDaoImpl {
     }
 
     public List<MkolEntity> getMkolListWithMatnrAndWerks(String matnr, String werks){
+        List<MkolEntity> list = new ArrayList<MkolEntity>();
         if ("".equals(matnr) || "".equals(werks)){
-            return null;
+            return list;
         }
         String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_MKOL.MATNR).is(matnr)
                 .and(IConstant.PROJECT_ONE_MKOL.WERKS).is(werks).toQueryString();

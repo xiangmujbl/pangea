@@ -8,6 +8,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMMfgOrderRtngEntity;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
@@ -38,5 +39,15 @@ public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
         String queryString=adfCriteria.toQueryString();
         LogUtil.getCoreLog().info("queryString" +queryString);
         return queryForList(IConstant.REGION.EDM_MFG_ORDER_RTNG,queryString, EDMMfgOrderRtngEntity.class);
+    }
+
+    public List<EDMMfgOrderRtngEntity> joinMfgOrderRtngWithOrdrRtngNum(String ordrRtngNum){
+        List<EDMMfgOrderRtngEntity> list = new ArrayList<EDMMfgOrderRtngEntity>();
+        if(StringUtils.isNotBlank(ordrRtngNum)){
+            String queryString  = QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_ORDRRTNGNUM).is(ordrRtngNum)
+                    .toQueryString();
+            return queryForList(IConstant.REGION.EDM_MFG_ORDER_RTNG, queryString, EDMMfgOrderRtngEntity.class);
+        }
+        return list;
     }
 }
