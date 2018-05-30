@@ -30,7 +30,7 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
 
         OMPGdmUnitMeasurableBo gdmUnitMeasurableBo = new OMPGdmUnitMeasurableBo();
 
-        // rules T1
+            // rules T1
         gdmUnitMeasurableBo.setUnitId(cnsPlanUnitEntity.getUnit());
         // rules D1
         gdmUnitMeasurableBo.setActive(IConstant.VALUE.YES);
@@ -50,8 +50,9 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
         gdmUnitMeasurableBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         String unit = cnsPlanUnitEntity.getUnit();
-        if (StringUtils.isNotEmpty(unit)) {
-            EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity = unitOfMeasureV1Dao.getEntityWithConditions(unit);
+        if (StringUtils.isNotEmpty(unit) && StringUtils.isNotEmpty(cnsPlanUnitEntity.getSourceSystem())) {
+            EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity = unitOfMeasureV1Dao.getEntityWithUnitAndSourceSystem(unit,cnsPlanUnitEntity.getSourceSystem());
+
 
             if (null != unitOfMeasureV1Entity) {
                 // rules F1
@@ -62,6 +63,7 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
                 }
 
                 // rules F2
+
                 if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getIsoCode())) {
                     gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
                 } else {
