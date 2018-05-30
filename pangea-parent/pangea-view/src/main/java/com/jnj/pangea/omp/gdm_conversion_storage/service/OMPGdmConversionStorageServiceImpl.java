@@ -51,19 +51,20 @@ public class OMPGdmConversionStorageServiceImpl {
         // cns_dp_price-sourceSystem = material_global_v1-sourceSystem
         if (edmMaterialGlobalV1Entity == null) {
             String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
-            ResultObject resultObject=getFailDate(IConstant.FAILED.ERROR_CODE.J1,errorValue,cnsDpPriceEntity);
+            ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
             resultObjectList.add(resultObject);
             return resultObjectList;
         }
         if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode())) {
             String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
-            ResultObject resultObject =getFailDate(IConstant.FAILED.ERROR_CODE.J1,errorValue,cnsDpPriceEntity);
+            ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
             resultObjectList.add(resultObject);
             return resultObjectList;
         }
 
         List<EDMJNJCalendarV1Entity> edmJNJCalendarV1EntityList = edmJNJCalendarV1Dao.getEntityWithFiscalPeriod(cnsDpPriceEntity.getFromDate());
         if (edmJNJCalendarV1EntityList != null && edmJNJCalendarV1EntityList.size() > 0) {
+
             for (EDMJNJCalendarV1Entity edmjnjCalendarV1Entity : edmJNJCalendarV1EntityList) {
                 //J1
                 //source_system_v1 -localSourceSystem = material_global_v1-sourceSystem
@@ -71,35 +72,36 @@ public class OMPGdmConversionStorageServiceImpl {
                 List<EDMCountryEntity> edmCountryEntityList = countryV1Dao.getEntityWithLocalCountryList(cnsDpPriceEntity.getCountry());
                 if (edmCountryEntityList == null || edmCountryEntityList.size() == 0) {
                     String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
-                    ResultObject resultObject=getFailDate(IConstant.FAILED.ERROR_CODE.J1,errorValue,cnsDpPriceEntity);
+                    ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
                     resultObjectList.add(resultObject);
-                    return resultObjectList;
+                    continue;
                 }
                 List<PlanCnsCustChannelEntity> planCnsCustChannelEntities = null;
+
                 for (EDMCountryEntity edmCountryEntity : edmCountryEntityList) {
                     if (edmCountryEntity != null) {
                         String countryCode = edmCountryEntity.getCountryCode();
                         if (StringUtils.isEmpty(countryCode)) {
                             String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
-                            ResultObject resultObject=getFailDate(IConstant.FAILED.ERROR_CODE.J1,errorValue,cnsDpPriceEntity);
+                            ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
                             resultObjectList.add(resultObject);
-                            return resultObjectList;
+                            continue;
                         }
-                        planCnsCustChannelEntities = cnsCustChannelDao.getEntitiesWithStartCharInSalesOrg(edmCountryEntity.getCountryCode());
+                        planCnsCustChannelEntities = cnsCustChannelDao.getEntitiesWithStartCharInSalesOrg(countryCode);
                         if (planCnsCustChannelEntities.isEmpty()) {
                             String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
-                            ResultObject resultObject=getFailDate(IConstant.FAILED.ERROR_CODE.J1,errorValue,cnsDpPriceEntity);
+                            ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
                             resultObjectList.add(resultObject);
-                            return resultObjectList;
+                            continue;
                         }
 
                         for (PlanCnsCustChannelEntity pccc : planCnsCustChannelEntities) {
                             //C1
                             if (StringUtils.isBlank(pccc.getChannel())) {
                                 String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
-                                ResultObject resultObject=getFailDate(IConstant.FAILED.ERROR_CODE.J1,errorValue,cnsDpPriceEntity);
+                                ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
                                 resultObjectList.add(resultObject);
-                                return resultObjectList;
+                                continue;
                             }
                             OMPGdmConversionStorageBo gdmConversionStorageBo = new OMPGdmConversionStorageBo();
                             if (edmMaterialGlobalV1Entity != null && pccc != null && edmCountryEntity != null) {
@@ -109,21 +111,21 @@ public class OMPGdmConversionStorageServiceImpl {
                             }
                             //C2
                             Date dueDate = DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekToDate(), DateUtils.DATE_FORMAT_1);
-                            gdmConversionStorageBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.J_yyyy_MM_dd_HHmmss));
+                            gdmConversionStorageBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
                             // C3
                             Date fromDueDate = DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekFromDate(), DateUtils.DATE_FORMAT_1);
-                            gdmConversionStorageBo.setFromDueDate(DateUtils.dateToString(fromDueDate, DateUtils.J_yyyy_MM_dd_HHmmss));
+                            gdmConversionStorageBo.setFromDueDate(DateUtils.dateToString(fromDueDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
                             //C5
                             String salesPrice = cnsDpPriceEntity.getSalesPrice();
                             if (StringUtils.isBlank(salesPrice) || IConstant.VALUE.ZERO.equals(salesPrice)) {
-                                return resultObjectList;
+                                continue;
                             } else if (StringUtils.isNotBlank(salesPrice) && !IConstant.VALUE.ZERO.equals(salesPrice) && isMathC5(salesPrice)) {
                                 gdmConversionStorageBo.setValue(getFieldWithC5(cnsDpPriceEntity.getLocalMaterialNumber()));
                             } else if (!isMathC5(salesPrice)) {
                                 String errorValue = "Sales price is non-numeric";
-                                ResultObject resultObject=getFailDate(IConstant.FAILED.ERROR_CODE.C5,errorValue,cnsDpPriceEntity);
+                                ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.C5, errorValue, cnsDpPriceEntity);
                                 resultObjectList.add(resultObject);
-                                return resultObjectList;
+                                continue;
                             }
                             //D1
                             gdmConversionStorageBo.setConversionFactor(IConstant.VALUE.SALESPRICE);
@@ -189,7 +191,7 @@ public class OMPGdmConversionStorageServiceImpl {
             String regex = "^[1-9][0-9]*\\.[0-9]+$|^[1-9][0-9]*$|^0+\\.[0-9]+$";
             char c = s.charAt(0);
             boolean bool;
-            if (c == '+' | c == '-') {
+            if (c == '+' || c == '-') {
                 bool = s.substring(1).matches(regex);
             } else {
                 bool = s.matches(regex);
@@ -202,7 +204,7 @@ public class OMPGdmConversionStorageServiceImpl {
         }
     }
 
-    public ResultObject getFailDate(String errorCode,String errorValue,PlanCnsDpPriceEntity cnsDpPriceEntity){
+    public ResultObject getFailDate(String errorCode, String errorValue, PlanCnsDpPriceEntity cnsDpPriceEntity) {
         ResultObject resultObject = new ResultObject();
         FailData failData = new FailData();
         failData.setErrorCode(errorCode);

@@ -1005,6 +1005,7 @@ public interface IConstant {
             String J1 = "J1";
             String J2 = "J2";
             String E1 = "E1";
+            String E2 = "E2";
             String E3 = "E3";
             String E4 = "E4";
             String E5 = "E5";
@@ -1024,6 +1025,7 @@ public interface IConstant {
         interface ERROR_VALUE {
 
             String OMP_GDM_PRODUCT_LOCATION_DETAIL_N2 = "Not Planning Relevant";
+            String OMP_GDM_PRODUCT_LOCATION_DETAIL_E2 = "Missing Primary Plannig Code and Enterprise Material Number";
         }
 
         interface SOURCE_SYSTEM {

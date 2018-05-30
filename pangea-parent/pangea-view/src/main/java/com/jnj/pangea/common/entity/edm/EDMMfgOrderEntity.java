@@ -13,6 +13,8 @@ public class EDMMfgOrderEntity extends CommonEntity {
     private String bomCatCd;
     private String bomNum;
     private String actRlseDt;
+    private String srcSysCd;
+    private String plntCd;
     public EDMMfgOrderEntity(Map<String, Object> map) {
         super(map);
 
@@ -23,8 +25,8 @@ public class EDMMfgOrderEntity extends CommonEntity {
         setBomCatCd((String) map.get("bomCatCd"));
         setBomNum((String) map.get("bomNum"));
         setActRlseDt ((String) map.get("actRlseDt"));
-
-
+        setSrcSysCd((String) map.get("srcSysCd"));
+        setPlntCd((String) map.get("plntCd"));
     }
 
     public String getBomCatCd() {
@@ -83,4 +85,19 @@ public class EDMMfgOrderEntity extends CommonEntity {
         this.ordrRtngNum = ordrRtngNum;
     }
 
+    public String getSrcSysCd() {
+        return srcSysCd;
+    }
+
+    public void setSrcSysCd(String srcSysCd) {
+        this.srcSysCd = srcSysCd;
+    }
+
+    public String getPlntCd() {
+        return plntCd;
+    }
+
+    public void setPlntCd(String plntCd) {
+        this.plntCd = plntCd;
+    }
 }

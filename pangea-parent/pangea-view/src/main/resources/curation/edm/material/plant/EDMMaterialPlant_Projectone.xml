@@ -4,7 +4,7 @@
         <regions>
 
             <region path="/project_one/marc">
-                <columns>matnr,werks,mmsta,beskz,bstfe,bstma,bstmi,bstrf,disls,dismm,wadatist,dzeit,eisbe,eislo,lifnr,frtme,insmk,kausf,kzkri,maabc,mabst,mtvfp,plifz,sbdkz,shflg,shzet,sobsl,strgr,vint1,vint2,vrmod,webaz,xchpf,fxhor,basmg</columns>
+                <columns>matnr,werks,mmsta,beskz,bstfe,bstma,bstmi,bstrf,disls,dismm,dispo,wadatist,dzeit,eisbe,eislo,fevor,lifnr,frtme,insmk,kausf,kzkri,maabc,mabst,mtvfp,plifz,sbdkz,shflg,shzet,sobsl,strgr,vint1,vint2,vrmod,webaz,xchpf,fxhor,basmg</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>

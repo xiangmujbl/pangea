@@ -1,4 +1,4 @@
-package com.jnj.pangea.omp.gdm_product_location_detail.controller;
+package com.jnj.pangea.omp.gdm_bom.controller;
 
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
@@ -8,29 +8,26 @@ import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
-import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
-import com.jnj.pangea.omp.gdm_product_location_detail.service.OMPGdmProductLocationDetailServiceImpl;
+import com.jnj.pangea.common.entity.edm.EDMMfgOrderEntity;
+import com.jnj.pangea.omp.gdm_bom.service.OMPGdmBomServiceImpl2;
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OMPGdmProductLocationDetailController extends BaseController {
+public class OMPGdmBomController2 extends BaseController {
 
-    private OMPGdmProductLocationDetailServiceImpl service = OMPGdmProductLocationDetailServiceImpl.getInstance();
+    private OMPGdmBomServiceImpl2 service = OMPGdmBomServiceImpl2.getInstance();
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
-
         List<ViewResultItem> result = new ArrayList<>();
         list.forEach(raw -> {
 
             RawDataValue rawValue = raw.getValue();
+            EDMMfgOrderEntity edmMfgOrderEntity = BeanUtil.mapToBean(rawValue.toMap(), EDMMfgOrderEntity.class);
 
-            PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = BeanUtil.mapToBean(rawValue.toMap(), PlanCnsMaterialPlanStatusEntity.class);
-
-            List<ResultObject> resultObjectList = service.buildView(raw.getKey(), materialPlanStatusEntity, null);
-
+            List<ResultObject> resultObjectList = service.buildView(raw.getKey(),edmMfgOrderEntity , null);
             for (ResultObject resultObject:resultObjectList) {
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = resultObject.getBaseBo();
@@ -44,8 +41,8 @@ public class OMPGdmProductLocationDetailController extends BaseController {
                     }
                 }
             }
-
         });
         return result;
+
     }
 }
