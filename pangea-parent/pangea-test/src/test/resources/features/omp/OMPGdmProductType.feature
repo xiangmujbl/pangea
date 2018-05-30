@@ -22,7 +22,8 @@ Feature: OMPProductType AEAZ-4485
       | FERT          | YES          | YES          | NO           | Finished Product |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+      | functionalArea | interfaceID                 | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+      | SP             | OMPGdmProductType           | N2        | omp          |              |      |      |      |      |       | Not Planning Relevant |
 
 
   Scenario: delete all test data

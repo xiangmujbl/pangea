@@ -17,8 +17,8 @@ public class ProjectOneQalsEntity extends CommonEntity {
     private String stat35;
     private String enstehdat;
     private String entstezeit;
-    private String ERSTELDATERSTELZEIT;
-    private String AENDERDATAENDERZEIT;
+    private String ersteldatErstelzeit;
+    private String aenderdatAenderzeit;
     private String pastrterm;
     private String pastrzeit;
     private String paendterm;
@@ -53,8 +53,8 @@ public class ProjectOneQalsEntity extends CommonEntity {
         setStat35((String) map.get("stat35"));
         setEnstehdat((String) map.get("enstehdat"));
         setEntstezeit((String) map.get("entstezeit"));
-        setERSTELDATERSTELZEIT((String) map.get("ERSTELDATERSTELZEIT"));
-        setAENDERDATAENDERZEIT((String) map.get("AENDERDATAENDERZEIT"));
+        setersteldatErstelzeit((String) map.get("ersteldatErstelzeit"));
+        setaenderdatAenderzeit((String) map.get("aenderdatAenderzeit"));
         setPastrterm((String) map.get("pastrterm"));
         setPastrzeit((String) map.get("pastrzeit"));
         setPaendterm((String) map.get("paendterm"));
@@ -164,20 +164,20 @@ public class ProjectOneQalsEntity extends CommonEntity {
         this.entstezeit = entstezeit;
     }
 
-    public String getERSTELDATERSTELZEIT() {
-        return this.ERSTELDATERSTELZEIT;
+    public String getersteldatErstelzeit() {
+        return this.ersteldatErstelzeit;
     }
 
-    public void setERSTELDATERSTELZEIT(String ERSTELDATERSTELZEIT) {
-        this.ERSTELDATERSTELZEIT = ERSTELDATERSTELZEIT;
+    public void setersteldatErstelzeit(String ersteldatErstelzeit) {
+        this.ersteldatErstelzeit = ersteldatErstelzeit;
     }
 
-    public String getAENDERDATAENDERZEIT() {
-        return this.AENDERDATAENDERZEIT;
+    public String getaenderdatAenderzeit() {
+        return this.aenderdatAenderzeit;
     }
 
-    public void setAENDERDATAENDERZEIT(String AENDERDATAENDERZEIT) {
-        this.AENDERDATAENDERZEIT = AENDERDATAENDERZEIT;
+    public void setaenderdatAenderzeit(String aenderdatAenderzeit) {
+        this.aenderdatAenderzeit = aenderdatAenderzeit;
     }
 
     public String getPastrterm() {

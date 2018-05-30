@@ -48,8 +48,6 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
         List<ResultObject> resultObjectList = new ArrayList<>();
         EDMMatlBomEntity matlBomEntity = (EDMMatlBomEntity) o;
 
-
-
         List<OMPGdmBomBo> gdmBomBoList = checkT1(matlBomEntity);
 
         for (OMPGdmBomBo gdmBomBo : gdmBomBoList) {
@@ -66,6 +64,7 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
 
             resultObject.setBaseBo(gdmBomBo);
 
+            resultObjectList.add(resultObject);
         }
 
         return resultObjectList;
@@ -101,16 +100,8 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
                                     matlBomEntity.getBomUsgCd() + IConstant.VALUE.BACK_SLANT + mfgRtngItmEntity.getOperNum();
                             gdmBomBo.setBomId(bomId);
 
-                            //BOM_HDR-srcSysCd  =  MATL_BOM-srcSysCd            and
-                            //	BOM_HDR-bomCatCd  = 'M'                                                  and
-                            //	BOM_HDR-bomNum    =  MATL_BOM-bomNum          and
-                            //	BOM_HDR-altBomNum =  MATL_BOM-altBomNum     and
-                            //	BOM_HDR-bomVld_ToDt     > Current Date.
-                            //                                                                    String srcSysCd, String bomNum, String altBomNum, String bomCatCd
                             EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithFiveConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getBomNum(), matlBomEntity.getAltBomNum(), IConstant.VALUE.M);
 
-                            LogUtil.getCoreLog().info("bomHdrEntity>>>>>>>>>>>>>>>>>>>>{}" + bomHdrEntity);
-                            LogUtil.getCoreLog().info("matlProdVersnEntity>>>>>>>>>>>>>>>>>>>>{}" + matlProdVersnEntity);
                             if (null != bomHdrEntity){
 
                                 String endEff = checkEndEff(bomHdrEntity.getBomVld_ToDt(), matlProdVersnEntity.getValToDt());
@@ -122,8 +113,6 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
 
                             gdmBomBoList.add(gdmBomBo);
 
-                            LogUtil.getCoreLog().info("gdmBomBo------------->>>" + gdmBomBo.toMap());
-
                         }
 
                     }
@@ -131,7 +120,6 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
             }
         }
 
-        LogUtil.getCoreLog().info("gdmBomBoList------------->>>" + gdmBomBoList.size());
         return gdmBomBoList;
     }
 
