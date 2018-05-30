@@ -41,9 +41,7 @@ Feature: OMPGdmBOM AEAZ-4480
       | CONS_LATAM | CONS         | SEND_TO_OMP              | ND             |
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
-
     When I submit task with xml file "xml/omp/OMPGdmBom2.xml" and execute file "jar/pangea-view.jar"
-
 
     Then A file is found on sink application with name "GDMBOM.tsv"
 
