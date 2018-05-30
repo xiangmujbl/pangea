@@ -1,6 +1,5 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
@@ -30,7 +29,6 @@ public class EDMMatlMfgRtngDaoImpl extends CommonDaoImpl {
                     .and(IConstant.MATL_MFG_RTNG.RNTGGRPCNTRNBR).is(rntgGrpCntrNum)
                     .and(IConstant.MATL_MFG_RTNG.PLNTCD).is(plantCd).
                             toQueryString();
-            LogUtil.getCoreLog().info("=========================StringQuery============="+queryString);
             return queryForList(IConstant.REGION.MATL_MFG_RTNG, queryString, EDMMatlMfgRtngEntity.class);
         }
         return null;

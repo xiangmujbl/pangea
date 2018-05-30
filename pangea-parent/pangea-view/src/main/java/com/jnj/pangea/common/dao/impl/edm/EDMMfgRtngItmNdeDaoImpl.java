@@ -27,7 +27,20 @@ public class EDMMfgRtngItmNdeDaoImpl extends CommonDaoImpl {
                     .and(IConstant.MFG_RTNG_ITM_NDE.RTNGTYPCD).is(rtngTypCd)
                     .and(IConstant.MFG_RTNG_ITM_NDE.RTNGGRPCNTRNBR).is(rntgGrpCntrNbr)
                     .toQueryString();
-            LogUtil.getCoreLog().info("=====================queryString_NDE======================"+queryString);
             return queryForList(IConstant.REGION.MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
+    }
+
+    public List<EDMMfgRtngItmNdeEntity> getEntityListWithConditions(String srcSysCd, String rtngTypCd, String rtngGrpCd,String rtngGrpCntrNbr) {
+        List<EDMMfgRtngItmNdeEntity> mfgRtngItmNdeEntityList = new ArrayList<>();
+        if (StringUtils.isNotEmpty(srcSysCd) && StringUtils.isNotEmpty(rtngTypCd) && StringUtils.isNotEmpty(rtngGrpCd) && StringUtils.isNotEmpty(rtngGrpCntrNbr) ){
+            String queryString = QueryHelper.buildCriteria(IConstant.MFG_RTNG_ITM_NDE.SRCSYSCD).is(srcSysCd)
+                    .and(IConstant.MFG_RTNG_ITM_NDE.RTNGGRPCD).is(rtngGrpCd)
+                    .and(IConstant.MFG_RTNG_ITM_NDE.RTNGTYPCD).is(rtngTypCd)
+                    .and(IConstant.MFG_RTNG_ITM_NDE.RTNGGRPCNTRNBR).is(rtngGrpCntrNbr)
+                    .toQueryString();
+            mfgRtngItmNdeEntityList = queryForList(IConstant.REGION.MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
+        }
+
+        return mfgRtngItmNdeEntityList;
     }
 }
