@@ -971,6 +971,7 @@ public interface IConstant {
         }
 
         interface INTERFACE_ID {
+            String OMP_GDMPRODUCT_TYPE = "OMPGdmProductType";
             String GDM_RESOURCE = "GDMResource";
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
             String OMP_GDM_PRODUCT = "OMPGdmProduct";
