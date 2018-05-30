@@ -5,6 +5,7 @@ import com.jnj.pangea.common.entity.CommonEntity;
 import java.util.Map;
 
 public class MarcEntity extends CommonEntity {
+
     private String matnr;
     private String werks;
     private String mmsta;
@@ -453,6 +454,38 @@ public class MarcEntity extends CommonEntity {
 
     }
 
+    public String getMatnr() {
+        return matnr;
+    }
+
+    public void setMatnr(String matnr) {
+        this.matnr = matnr;
+    }
+
+    public String getWerks() {
+        return werks;
+    }
+
+    public void setWerks(String werks) {
+        this.werks = werks;
+    }
+
+    public String getMmsta() {
+        return mmsta;
+    }
+
+    public void setMmsta(String mmsta) {
+        this.mmsta = mmsta;
+    }
+
+    public String getBeskz() {
+        return beskz;
+    }
+
+    public void setBeskz(String beskz) {
+        this.beskz = beskz;
+    }
+
     public String getBstfe() {
         return bstfe;
     }
@@ -692,35 +725,6 @@ public class MarcEntity extends CommonEntity {
     public void setFxhor(String fxhor) {
         this.fxhor = fxhor;
     }
-
-
-    public String getMatnr() {
-        return matnr;
-    }
-
-    public void setMatnr(String matnr) {
-        this.matnr = matnr;
-    }
-
-    public String getWerks() {
-        return werks;
-    }
-
-    public void setWerks(String werks) {
-        this.werks = werks;
-    }
-
-    public String getMmsta() {
-        return mmsta;
-    }
-
-    public void setMmsta(String mmsta) {
-        this.mmsta = mmsta;
-    }
-
-    public String getBeskz() { return beskz; }
-
-    public void setBeskz(String beskz) { this.beskz = beskz; }
 
     public String getBasmg() {
         return basmg;

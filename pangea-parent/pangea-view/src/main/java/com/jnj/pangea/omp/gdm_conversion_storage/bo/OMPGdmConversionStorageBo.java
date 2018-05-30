@@ -5,12 +5,10 @@ import com.jnj.pangea.common.BaseBo;
 
 public class OMPGdmConversionStorageBo extends BaseBo {
 
-    private String sourceSystem;
     private String aggregationId;
     private String conversionFactor;
     private String currencyId;
     private String dueDate;
-    private String forecastUploadId;
     private String fromDueDate;
     private String value;
     private String unitId;
@@ -18,21 +16,12 @@ public class OMPGdmConversionStorageBo extends BaseBo {
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("sourceSystem", this.sourceSystem)
-                .add("aggregationId",this.aggregationId)
-                .add("currencyId",this.currencyId)
-                .add("dueDate",this.dueDate)
-                .add("forecastUploadId",this.forecastUploadId)
-                .add("fromDueDate",this.fromDueDate)
+                .makeJsonObject("aggregationId", this.aggregationId)
+                .add("conversionFactor", this.conversionFactor)
+                .add("currencyId", this.currencyId)
+                .add("dueDate", this.dueDate)
+                .add("fromDueDate", this.fromDueDate)
                 .toJsonString();
-    }
-
-    public String getSourceSystem() {
-        return this.sourceSystem;
-    }
-
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
     }
 
     public String getAggregationId() {
@@ -57,14 +46,6 @@ public class OMPGdmConversionStorageBo extends BaseBo {
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public String getForecastUploadId() {
-        return this.forecastUploadId;
-    }
-
-    public void setForecastUploadId(String forecastUploadId) {
-        this.forecastUploadId = forecastUploadId;
     }
 
     public String getFromDueDate() {
