@@ -49,7 +49,7 @@ Feature: OMPGdmCustomer AEAZ-4069
     Then A file is found on sink application with name "GDMCustomer.tsv"
 
     Then I check file data for filename "GDMCustomer.tsv" by keyFields "customerId"
-      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | custCluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
+      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | CUST_Cluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
       | 76100005   | YES    | YES          | NO           | NO           | CH003   | Pharmacy Wholesaler | BR        | SOUTH       |                     | NO          | NO        |                |                  | Pharmacy Wholesaler OTHER |         |                |             |               |             | 76100005                | 103      | BR01              |        |                  | South      |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -109,7 +109,7 @@ Feature: OMPGdmCustomer AEAZ-4069
     Then A file is found on sink application with name "GDMCustomer.tsv"
 
     Then I check file data for filename "GDMCustomer.tsv" by keyFields "customerId"
-      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | custCluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
+      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | CUST_Cluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
       | 76100005   | YES    | YES          | NO           | NO           | CH003   | Pharmacy Wholesaler | BR        | SOUTH       |                     | NO          | NO        |                |                  | Pharmacy Wholesaler OTHER |         |                |             |               |             | 76100005                | 103      | BR01              |        |                  | South      |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -172,7 +172,7 @@ Feature: OMPGdmCustomer AEAZ-4069
     Then A file is found on sink application with name "GDMCustomer.tsv"
 
     Then I check file data for filename "GDMCustomer.tsv" by keyFields "customerId"
-      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | custCluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
+      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | CUST_Cluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
       | 76100005   | YES    | YES          | NO           | NO           | CH003   | Pharmacy Wholesaler | BR        | SOUTH       |                     | NO          | NO        |                |                  | Pharmacy Wholesaler OTHER |         |                |             |               |             | 76100005                | 103      | BR01              |        |                  | South      |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -237,7 +237,7 @@ Feature: OMPGdmCustomer AEAZ-4069
     Then A file is found on sink application with name "GDMCustomer.tsv"
 
     Then I check file data for filename "GDMCustomer.tsv" by keyFields "customerId"
-      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | custCluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
+      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | CUST_Cluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
       | 76100001   | YES    | YES          | NO           | NO           | CH006   |                     | BR        | SOUTH       |                     | NO          | NO        |                |                  | SCAPOL                    |         |                |             |               |             | 76100001                | 103      | BR01              |        |                  | South      |
       | 76100005   | YES    | YES          | NO           | NO           | CH003   | Pharmacy Wholesaler | BR        | SOUTH       |                     | NO          | NO        |                |                  | Pharmacy Wholesaler OTHER |         |                |             |               |             | 76100005                | 103      | BR01              |        |                  | South      |
 
@@ -298,7 +298,7 @@ Feature: OMPGdmCustomer AEAZ-4069
     Then A file is found on sink application with name "GDMCustomer.tsv"
 
     Then I check file data for filename "GDMCustomer.tsv" by keyFields "customerId"
-      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | custCluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
+      | customerId | active | activeFCTERP | activeOPRERP | activeSOPERP | channel | channelDescription  | countryId | CUST_Cluster | distributionChannel | distributor | eCommerce | forecastSource | globalCustomerId | name                      | partner | partnerCountry | partnerName | partnerRegion | partnerRole | planningCustomerGroupID | regionId | salesOrganization | soldTo | sourceLocationId | subCluster |
       | 76100005   | YES    | YES          | NO           | NO           | CH003   | Pharmacy Wholesaler | BR        | SOUTH       |                     | NO          | NO        |                |                  | Pharmacy Wholesaler OTHER |         |                |             |               |             | 76100005                | 103      | BR01              |        |                  | South      |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
