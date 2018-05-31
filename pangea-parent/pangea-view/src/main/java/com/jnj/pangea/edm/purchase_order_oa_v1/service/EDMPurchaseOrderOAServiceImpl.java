@@ -28,7 +28,6 @@ public class EDMPurchaseOrderOAServiceImpl{
     EketDaoImpl eketDao = EketDaoImpl.getInstance();
     EkpvDaoImpl ekpvDao = EkpvDaoImpl.getInstance();
 
-    int sequenceNumber = 0;
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
         List<ResultObject> resultObjects = new ArrayList<>();
@@ -89,7 +88,6 @@ public class EDMPurchaseOrderOAServiceImpl{
         purchaseOrderOABo.setPoNum(ekkoEntity.getEbeln());
         purchaseOrderOABo.setPoLineNbr(ekpoEntity.getEbelp());
         purchaseOrderOABo.setPoCatTypeCd(ekkoEntity.getBstyp());
-        purchaseOrderOABo.setSequenceNumber(Integer.toString(sequenceNumber));
         purchaseOrderOABo.setPoTypeCd(ekkoEntity.getBsart());
         purchaseOrderOABo.setCrtOnDt(ekkoEntity.getAedat());
         purchaseOrderOABo.setSupNum(ekkoEntity.getLifnr());
@@ -142,6 +140,7 @@ public class EDMPurchaseOrderOAServiceImpl{
             purchaseOrderOABo.setLocalMovementType(ekbeEntity.getBwart());
             purchaseOrderOABo.setLocalPostingDate(ekbeEntity.getBudat());
             purchaseOrderOABo.setRecvEaQty(ekbeEntity.getMenge());
+            purchaseOrderOABo.setLocalSeqNumActAsgn(ekbeEntity.getZekkn());
         }
         else {
             purchaseOrderOABo.setEvTypeCd("");
@@ -152,6 +151,7 @@ public class EDMPurchaseOrderOAServiceImpl{
             purchaseOrderOABo.setLocalMovementType("");
             purchaseOrderOABo.setLocalPostingDate("");
             purchaseOrderOABo.setRecvEaQty("");
+            purchaseOrderOABo.setLocalSeqNumActAsgn("");
         }
 
         if(ekesEntity != null) {
@@ -163,6 +163,8 @@ public class EDMPurchaseOrderOAServiceImpl{
             purchaseOrderOABo.setSlsOrdrNum(ekesEntity.getVbeln());
             purchaseOrderOABo.setSlsOrdrLineNbr(ekesEntity.getVbelp());
             purchaseOrderOABo.setVendBtchNum(ekesEntity.getCharg());
+            purchaseOrderOABo.setLocalConfCrtOnDt(ekesEntity.getErdat());
+            purchaseOrderOABo.setLocalSeqNumVendConf(ekesEntity.getEtens());
         }
         else {
             purchaseOrderOABo.setCnfrmSeqNbr("");
@@ -173,6 +175,8 @@ public class EDMPurchaseOrderOAServiceImpl{
             purchaseOrderOABo.setSlsOrdrNum("");
             purchaseOrderOABo.setSlsOrdrLineNbr("");
             purchaseOrderOABo.setVendBtchNum("");
+            purchaseOrderOABo.setLocalConfCrtOnDt("");
+            purchaseOrderOABo.setLocalSeqNumVendConf("");
         }
 
         if(eketEntity != null) {
@@ -204,7 +208,6 @@ public class EDMPurchaseOrderOAServiceImpl{
         }
 
         resultObject.setBaseBo(purchaseOrderOABo);
-        sequenceNumber++;
         return resultObject;
     }
 }
