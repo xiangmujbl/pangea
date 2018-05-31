@@ -38,11 +38,11 @@ Feature: OMPGdmPos AEAZ-3214
 
     #cns_dp_pos-customer = cns_dem_grp_asgn-customerShipTo
     And I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | customerId | customerShipTo | demandGroup |
-      | 104076     | 104076-J1      | 1           |
-      | 10236      | 104077-J1      | 2           |
-      | 10237      | 104079-J1      |             |
-      | 10238      | 104088-J1      | 3           |
+      | customerId | demandGroup |
+      | 104076-J1  | 1           |
+      | 104077-J1  | 2           |
+      | 104079-J1  |             |
+      | 104088-J1  | 3           |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 

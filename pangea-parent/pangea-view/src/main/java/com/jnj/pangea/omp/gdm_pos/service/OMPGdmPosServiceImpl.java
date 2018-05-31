@@ -24,7 +24,6 @@ import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class OMPGdmPosServiceImpl {
@@ -53,12 +52,16 @@ public class OMPGdmPosServiceImpl {
         PlanCnsDpPosEntity cnsDpPosEntity = (PlanCnsDpPosEntity) o;
 
         //not sure the result is object or list? according to currrent data ,the result is object
-        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityByLocalMaterialNumberEndsWithParameter(cnsDpPosEntity.getLocalMaterial());
+        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = null;
+        String localMaterialNumber = cnsDpPosEntity.getLocalMaterial();
+        if (StringUtils.isNotEmpty(localMaterialNumber)) {
+            edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(cnsDpPosEntity.getLocalMaterial());
+        }
         if (null == edmMaterialGlobalV1Entity) {
             // Reject this record
             ResultObject resultObject = new ResultObject();
             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
+                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root1", "", cnsDpPosEntity.getLocalMaterial(),
                     cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
             list.add(resultObject);
             return list;
@@ -71,7 +74,7 @@ public class OMPGdmPosServiceImpl {
                 // Reject this record
                 ResultObject resultObject = new ResultObject();
                 resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                        IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
+                        IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root2", "", cnsDpPosEntity.getLocalMaterial(),
                         cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
                 list.add(resultObject);
                 return list;
@@ -83,27 +86,27 @@ public class OMPGdmPosServiceImpl {
                 if (StringUtils.isNotEmpty(customer)) {
 
                     // not sure the result is object or list ?
-                    PlanCnsDemGrpAsgnEntity planCnsDemGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerShipTo(customer);
+                    PlanCnsDemGrpAsgnEntity planCnsDemGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(customer);
                     if (null != planCnsDemGrpAsgnEntity) {
                         String demandGroup = planCnsDemGrpAsgnEntity.getDemandGroup();
-                        if(StringUtils.isNotBlank(demandGroup)){
+                        if (StringUtils.isNotBlank(demandGroup)) {
                             //whether filter by table KNVH
-                            List<KnvhEntity> knvhEntityListStep1 = knvhDao.getEntityListByKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerShipTo());
+                            List<KnvhEntity> knvhEntityListStep1 = knvhDao.getEntityListByKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerId());
                             if (knvhEntityListStep1.size() > 0 && StringUtils.isNotEmpty(demandGroup)) {
                                 // If value found in cns_dem_grp_asgn-demandGroup then CONCATENATE 'LA_' ,  localDpParentCode, '-' and   cns_dem_grp_asgn-demandGroup
                                 aggregationId = IConstant.VALUE.LA_ + edmMaterialGlobalV1Entity.getLocalDpParentCode() + IConstant.VALUE.HORIZONTAL_Line + demandGroup;
 
                             } else {
-                                List<KnvhEntity> knvhEntityListStep2 = knvhDao.getEntityListByHKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerShipTo());
+                                List<KnvhEntity> knvhEntityListStep2 = knvhDao.getEntityListByHKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerId());
                                 if (knvhEntityListStep2.size() > 0 && StringUtils.isNotEmpty(demandGroup)) {
                                     //CONCATENATE 'LA_' ,  localDpParentCode, '-' and   cns_dem_grp_asgn-demandGroup
                                     aggregationId = IConstant.VALUE.LA_ + edmMaterialGlobalV1Entity.getLocalDpParentCode() + IConstant.VALUE.HORIZONTAL_Line + demandGroup;
                                 }
                             }
-                        }else{
+                        } else {
                             ResultObject resultObject = new ResultObject();
                             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
+                                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root3", "", cnsDpPosEntity.getLocalMaterial(),
                                     cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
                             list.add(resultObject);
                             return list;
@@ -111,7 +114,7 @@ public class OMPGdmPosServiceImpl {
                     } else {
                         ResultObject resultObject = new ResultObject();
                         resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                                IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
+                                IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root4", "", cnsDpPosEntity.getLocalMaterial(),
                                 cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
                         list.add(resultObject);
                         return list;
@@ -176,7 +179,7 @@ public class OMPGdmPosServiceImpl {
             // Reject this record
             ResultObject resultObject = new ResultObject();
             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
+                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root5", "", cnsDpPosEntity.getLocalMaterial(),
                     cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
             list.add(resultObject);
             return list;

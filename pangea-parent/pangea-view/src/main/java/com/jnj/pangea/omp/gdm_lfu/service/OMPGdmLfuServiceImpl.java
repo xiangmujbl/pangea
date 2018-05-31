@@ -114,7 +114,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
                     gdmLfuBoV1.setVolume(gdmLfuBo.getVolume());
                     gdmLfuBoV1.setFromDueDate(dateFrom);
                     gdmLfuBoV1.setDueDate(dateTo);
-                    gdmLfuBoV1.setLFUId(gdmLfuBoV1.getProductId() + IConstant.LFU.SPLIT + gdmLfuBoV1.getFromDueDate());
+                    gdmLfuBoV1.setLfuId(gdmLfuBoV1.getProductId() + IConstant.LFU.SPLIT + gdmLfuBoV1.getFromDueDate());
                     resultObject.setBaseBo(gdmLfuBoV1);
                     list.add(resultObject);
                 }

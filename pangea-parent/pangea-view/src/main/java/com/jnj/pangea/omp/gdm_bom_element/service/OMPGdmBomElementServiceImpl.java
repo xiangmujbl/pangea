@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_bom_element.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
@@ -11,7 +10,6 @@ import com.jnj.pangea.common.service.ICommonListService;
 import com.jnj.pangea.omp.gdm_bom_element.bo.OMPGdmBomElementBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import sun.rmi.runtime.Log;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -73,7 +71,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                                     EDMMfgRtngItmEntity mfgRtngItmEntity = mfgRtngItmDao.getEntityWithConditions(rtngItmNdeEntity.getSrcSysCd(), rtngItmNdeEntity.getRtngTypCd(), rtngItmNdeEntity.getRtngNdeNum(), rtngItmNdeEntity.getRtngGrpCd());
                                     if (mfgRtngItmEntity != null) {
                                         EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getBomNum(), matlBomEntity.getAltBomNum(), bomItemEntity.getBomCatCd());
-                                        if(bomHdrEntity !=null){
+                                        if (bomHdrEntity != null) {
                                             ResultObject resultObject = new ResultObject();
                                             OMPGdmBomElementBo gdmBomElementBo = new OMPGdmBomElementBo();
                                             //T1
@@ -168,7 +166,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
             EDMMfgRtngItmNdeEntity rtngItmNdeEntity = rtngItmNdeEntityList.get(0);
             mfgRtngItmEntity = mfgRtngItmDao.getEntityWithConditions(rtngItmNdeEntity.getSrcSysCd(), rtngItmNdeEntity.getRtngTypCd(), rtngItmNdeEntity.getRtngNdeNum(), rtngItmNdeEntity.getRtngGrpCd());
         }
-        if (matlProdVersnEntity != null && bomItemEntity != null && materialPlantV1Entity != null && planCnsPlanParameterEntity_system_object != null && mfgRtngItmEntity !=null) {
+        if (matlProdVersnEntity != null && bomItemEntity != null && materialPlantV1Entity != null && planCnsPlanParameterEntity_system_object != null && mfgRtngItmEntity != null) {
             EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getBomNum(), matlBomEntity.getAltBomNum(), bomItemEntity.getBomCatCd());
             //T1
             String bomElementId = getBomElementId_T1(IConstant.VALUE.ONE, matlProdVersnEntity, mfgRtngEntity, matlBomEntity, mfgRtngItmEntity, bomItemEntity, bomHdrEntity);
@@ -230,8 +228,8 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
     public String getBomElementId_T1(String type, EDMMatlProdVersnEntity matlProdVersnEntity, EDMMatlMfgRtngEntity mfgRtngEntity, EDMMatlBomEntity matlBomEntity, EDMMfgRtngItmEntity mfgRtngItmEntity, EDMBomItemEntity bomItemEntity, EDMBomHdrEntity bomHdrEntity) {
         String bomElementId = "";
 
-        if(matlProdVersnEntity !=null && mfgRtngEntity !=null && matlBomEntity !=null
-                && mfgRtngItmEntity !=null && bomItemEntity !=null && bomHdrEntity!=null){
+        if (matlProdVersnEntity != null && mfgRtngEntity != null && matlBomEntity != null
+                && mfgRtngItmEntity != null && bomItemEntity != null && bomHdrEntity != null) {
             if (StringUtils.isNotBlank(matlProdVersnEntity.getPrdntVrsnNum())) {
                 bomElementId = bomElementId + matlProdVersnEntity.getPrdntVrsnNum() + IConstant.VALUE.BACK_SLANT;
             }

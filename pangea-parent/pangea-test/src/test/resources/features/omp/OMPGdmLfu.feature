@@ -109,8 +109,8 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
 
     Then A file is found on sink application with name "GDMLfu.tsv"
 
-    Then I check file data for filename "GDMLfu.tsv" by keyFields "LFUId"
-      | LFUId                         | CountryId | CurrencyId | DueDate             | FromDueDate         | ProductId | Value | Volume |
+    Then I check file data for filename "GDMLfu.tsv" by keyFields "lfuId"
+      | lfuId                         | countryId | currencyId | dueDate             | fromDueDate         | productId | value | volume |
       | LA-LDPC01-2019/01/01 00:00:00 | AT011     |            | 2019/01/08 00:00:00 | 2019/01/01 00:00:00 | LA-LDPC01 |       | 1000   |
       | LC-LDPC01-2019/01/01 00:00:00 | AT011     |            | 2019/01/08 00:00:00 | 2019/01/01 00:00:00 | LC-LDPC01 |       | 1000   |
       | LA-LDPC06-2019/01/01 00:00:00 | AT066     |            | 2019/01/08 00:00:00 | 2019/01/01 00:00:00 | LA-LDPC06 |       |        |
@@ -201,8 +201,8 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
 
     Then A file is found on sink application with name "GDMLfu.tsv"
 
-    Then I check file data for filename "GDMLfu.tsv" by keyFields "LFUId"
-      | LFUId                         | CountryId | CurrencyId | DueDate             | FromDueDate         | ProductId | Value | Volume |
+    Then I check file data for filename "GDMLfu.tsv" by keyFields "lfuId"
+      | lfuId                         | countryId | currencyId | dueDate             | fromDueDate         | productId | value | volume |
       | LA-LDPC01-2019/01/01 00:00:00 |           | ADAA       | 2019/01/08 00:00:00 | 2019/01/01 00:00:00 | LA-LDPC01 | VAL01 |        |
       | LC-LDPC01-2019/01/01 00:00:00 |           | ADAA       | 2019/01/08 00:00:00 | 2019/01/01 00:00:00 | LC-LDPC01 | VAL01 |        |
       | LA-LDPC02-2019/01/01 00:00:00 |           | ADDD       | 2019/01/08 00:00:00 | 2019/01/01 00:00:00 | LA-LDPC02 | VAL02 |        |
@@ -290,8 +290,8 @@ Feature:  E.2.1.6 GDMLFU - Consumptionn
 
     Then A file is found on sink application with name "GDMLfu.tsv"
 
-    Then I check file data for filename "GDMLfu.tsv" by keyFields "LFUId"
-      | LFUId                         | CountryId | CurrencyId | DueDate             | FromDueDate         | ProductId | Value | Volume |
+    Then I check file data for filename "GDMLfu.tsv" by keyFields "lfuId"
+      | lfuId                         | countryId | currencyId | dueDate             | fromDueDate         | productId | value | volume |
       | LA-LDPC03-2018/01/01 00:00:00 | AT033     | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA-LDPC03 | VAL03 | 3000   |
       | LC-LDPC03-2018/01/01 00:00:00 | AT033     | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LC-LDPC03 | VAL03 | 3000   |
       | LA-LDPC03-2018/01/08 00:00:00 | AT033     | ADEE       | 2018/01/15 00:00:00 | 2018/01/08 00:00:00 | LA-LDPC03 | VAL03 | 3000   |

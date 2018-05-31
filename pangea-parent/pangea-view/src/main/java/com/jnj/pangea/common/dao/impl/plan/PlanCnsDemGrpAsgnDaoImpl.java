@@ -18,12 +18,6 @@ public class PlanCnsDemGrpAsgnDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsDemGrpAsgnEntity getEntityWithCustomerShipTo(String customerShipTo) {
-
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.CUSTOMER_SHIP_TO).is(customerShipTo).toQueryString();
-        return queryForObject(IConstant.REGION.PLAN_CNS_DEM_GRP_ASGN, queryString, PlanCnsDemGrpAsgnEntity.class);
-    }
-
     public PlanCnsDemGrpAsgnEntity getEntitiesWithCustomerIdAndSalesOrg(String customerId, String salesOrg) {
         if (null != customerId && !"".equals(customerId) &&  null!=salesOrg && !"".equals(salesOrg)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.CUSTOMER_ID).is(customerId)

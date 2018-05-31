@@ -26,15 +26,6 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
     }
 
-    public EDMMaterialGlobalV1Entity getEntityByLocalMaterialNumberEndsWithParameter(String localMaterialNumber) {
-        if (StringUtils.isNotEmpty(localMaterialNumber)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).endsWith(localMaterialNumber).toQueryString();
-            LogUtil.getCoreLog().info("=====================queryString = " + queryString);
-            return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
-        }
-        return null;
-    }
-
     public List<EDMMaterialGlobalV1Entity> getEntitiesWithLocalDpParentCode(String localDpParentCode) {
 
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_DP_PARENT_CODE).is(localDpParentCode).toQueryString();
