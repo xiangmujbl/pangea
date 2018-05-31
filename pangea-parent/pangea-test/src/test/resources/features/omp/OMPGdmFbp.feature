@@ -8,7 +8,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode  | localBaseUom |
       | CONS_LATAM   | 000000000000000945  | 178962124094540036 | KI           |
-      | CONS_LATAM   | 000000000000002886  | 178962124094540045 | KI           |
+      | CONS_LATAM   | 000000000000002886 | 178962124094540045 | KI           |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     #cns_fin_plan_qty-localMaterialNumber=material_global_v1-localMaterialNumber
@@ -16,6 +16,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
       | localMaterialNumber | identifier | country | unitId | quantity    | yearMonth | sourceSystem |
       | 000000000000000945  | FBP        | BR      | ZUM    | 154.6566667 | 201805    | CONS_LATAM   |
       | 000000000000002886  | FBP        | BR      | ZUM    | 417.573     | 201806    | CONS_LATAM   |
+
     And I wait "/plan/cns_fin_plan_qty" Async Queue complete
 
    #cns_fin_plan_val-localMaterialNumber=material_global_v1-localMaterialNumber
@@ -23,6 +24,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
       | localMaterialNumber | identifier | value       | yearMonth | currency |
       | 000000000000000945  | FBP        | 745400.866  | 201805    | BRL      |
       | 000000000000002886  | FBP        | 4658755.412 | 201806    | BRL      |
+      | 000000000000002886  | FBP        | 1.0          | 201807    | BRL      |
     And I wait "/plan/cns_fin_plan_val" Async Queue complete
 
     #country_v1-localCountry=cns_fin_plan_qty-country
@@ -53,6 +55,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
       | calWeek | fiscalPeriod | noOfWeek | weekFromDate | weekToDate |
       | 201914  | 201805       | 4        | 2019-04-01   | 2019-04-08 |
       | 201915  | 201806       | 4        | 2019-04-08   | 2019-04-15 |
+      | 201916  | 201807       | 4        | 2019-04-08   | 2019-04-15 |
 
     And I wait "/edm/jnj_calendar_v1" Async Queue complete
 
@@ -71,9 +74,9 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     Then A file is found on sink application with name "GDMFbp.tsv"
 
     Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
-      | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value | volume |
-      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value             | volume  |
+      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   745400.866   |   12.888    |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4658756.412   |   34.798     |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -165,8 +168,8 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
       | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value | volume |
-      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 | 745400.866   |   12.888    |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 | 4658755.412   |   34.798     |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -267,10 +270,10 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
       | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value | volume |
-      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED         | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   4  |   12.888    |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4   |   34.798     |
+      | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED         | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 | 745400.866  |   12.888    |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 | 4658755.412  |   34.798     |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 | 4658755.412  |   34.798     |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED         | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 | 4658755.412  |   34.798     |
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
