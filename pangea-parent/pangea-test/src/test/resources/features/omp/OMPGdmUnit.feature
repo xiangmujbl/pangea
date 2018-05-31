@@ -1,7 +1,7 @@
 @pangea_test @AEAZ-3683
 Feature: OMPGdmUnit AEAZ-3683
 
-  Scenario: Full Load curation for currency
+  Scenario: Full Load consumption for currency
     #  1. If no records found from currency_v1, skip insertion (rule E1)
     #  2. Send as "YES" when sourced from edm currency_v1 (rule D1)
     #  3. when sourced from edm currency_v1 populate 1.0 (rule D2)
@@ -36,7 +36,7 @@ Feature: OMPGdmUnit AEAZ-3683
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-  Scenario: Full Load curation for measure
+  Scenario: Full Load consumption for measure
     # 1. Get atrribute from cns_plan_unit-factor when cns_plan_unit-unit in (unit_of_measure_V1-uom) (rule F1)
     # 2. Populate '1' when cns_plan_unit-unit not exist in unit_of_measure_v1-uom (rule F1)
     # 3. Populate 'YES' when cns_plan_unit-planFlag = DP or DPSP (rule D3,D4)
@@ -55,18 +55,18 @@ Feature: OMPGdmUnit AEAZ-3683
 
     And I will remove the test file on sink application "GDMUnit_measure.tsv"
 
-    Given I import "/plan/cns_plan_unit" by keyFields "localUom,localUomName,plantFlag,sourceSystem,unit"
-      | localUom | localUomName        | plantFlag | sourceSystem | unit   | factor | roundingDecimal |
-      | KI       | Crate               | DPSP      | CONS_LATAM   | CA     | 2      | 0               |
-      | EA       | Each                | DPSP      | CONS_LATAM   | EA     | 2      | 0               |
-      | KG       | KiloGram            | SP        | CONS_LATAM   | KG     | 2      | 6               |
-      | ZUM      | Market Control Unit | DP        | CONS_LATAM   | LA_ZUM | 2      | 6               |
-      | DZ       | Dozen               | SP        | CONS_LATAM   | DZ     | 2      | 3               |
-      | KM       | Kilometer           | SP        | CONS_LATAM   | KM     | 2      | 3               |
-      | L        | Liter               | SP        | CONS_LATAM   | L      | 2      | 6               |
-      | M2       | Square Meter        | SP        | CONS_LATAM   | M2     | 2      | 6               |
-      | TH       | Thousand            | SP        | CONS_LATAM   | TS     | 2      | 6               |
-      | PAL      | Pallet              | SP        | CONS_LATAM   | PAL    | 2      | 0               |
+    Given I import "/plan/cns_plan_unit" by keyFields "localUom,localUomName,planFlag,sourceSystem,unit"
+      | localUom | localUomName        | planFlag | sourceSystem | unit   | factor | roundingDecimal |
+      | KI       | Crate               | DPSP     | CONS_LATAM   | CA     | 2      | 0               |
+      | EA       | Each                | DPSP     | CONS_LATAM   | EA     | 2      | 0               |
+      | KG       | KiloGram            | SP       | CONS_LATAM   | KG     | 2      | 6               |
+      | ZUM      | Market Control Unit | DP       | CONS_LATAM   | LA_ZUM | 2      | 6               |
+      | DZ       | Dozen               | SP       | CONS_LATAM   | DZ     | 2      | 3               |
+      | KM       | Kilometer           | SP       | CONS_LATAM   | KM     | 2      | 3               |
+      | L        | Liter               | SP       | CONS_LATAM   | L      | 2      | 6               |
+      | M2       | Square Meter        | SP       | CONS_LATAM   | M2     | 2      | 6               |
+      | TH       | Thousand            | SP       | CONS_LATAM   | TS     | 2      | 6               |
+      | PAL      | Pallet              | SP       | CONS_LATAM   | PAL    | 2      | 0               |
 
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
@@ -79,7 +79,7 @@ Feature: OMPGdmUnit AEAZ-3683
       | KM  | 1      | KMT     | Kilometer    |         | 3               | KM       | CONS_LATAM   |
       | L   | 1      | LTR     | Liter        |         | 3               | L        | CONS_LATAM   |
       | M2  | 1      | MTK     | Square meter |         | 3               | M2       | CONS_LATAM   |
-      | TS  | 1      | MIL     | Thousands    |         | 3               | TH       | CONS_LATAM   |
+      | TS  | 1      | MIL     | Thousands    |         | 3               | TH       | BTC          |
       | PAL | 1      | PL      |              |         | 0               | PAL      | CONS_LATAM   |
 
     And I wait "/edm/unit_of_measure_v1" Async Queue complete
@@ -89,17 +89,17 @@ Feature: OMPGdmUnit AEAZ-3683
     Then A file is found on sink application with name "GDMUnit_measure.tsv"
 
     Then I check file data for filename "GDMUnit_measure.tsv" by keyFields "unitId"
-      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure | precision | shortDescription |
-      | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case            | 0       | 0         | Case             |
-      | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each            | AAAADL  | 0         | Each             |
-      | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram        | AAAADL  | 3         | KiloGram         |
-      | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         |                 |         | 6         |                  |
-      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen           | AAAADL  | 3         | Dozen            |
-      | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer       | AAAADL  | 3         | Kilometer        |
-      | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter           | AAAADL  | 3         | Liter            |
-      | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter    | AAAADL  | 3         | Square meter     |
-      | TS     | YES    | NO           | YES          | NO           | 2      | MIL     | Thousands       | AAAADL  | 3         | Thousands        |
-      | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet          | AAAADL  | 0         | Pallet           |
+      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription     | measure | precision | shortDescription    |
+      | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case                | 0       | 0         | Case                |
+      | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each                | AAAADL  | 0         | Each                |
+      | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram            | AAAADL  | 3         | KiloGram            |
+      | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         | Market Control Unit | AAAADL  | 6         | Market Control Unit |
+      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL  | 3         | Dozen               |
+      | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL  | 3         | Kilometer           |
+      | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL  | 3         | Liter               |
+      | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL  | 3         | Square meter        |
+      | TS     | YES    | NO           | YES          | NO           | 1      |         | Thousand            | AAAADL  | 6         | Thousand            |
+      | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet              | AAAADL  | 0         | Pallet              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1 | key2 | key3 | key4 | key5 | errorValue | sourceSystem |
@@ -119,15 +119,15 @@ Feature: OMPGdmUnit AEAZ-3683
     When I execute xd job to merge file "GDMUnit_*" to "GDMUnit.tsv" by keyFields "unitId"
 
     Then I check file data for filename "GDMUnit.tsv" by keyFields "unitId"
-      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure  | precision | shortDescription |
-      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar       | CURRENCY | 0         | US Dollar        |
-      | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case            | 0        | 0         | Case             |
-      | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each            | AAAADL   | 0         | Each             |
-      | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram        | AAAADL   | 3         | KiloGram         |
-      | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         |                 |          | 6         |                  |
-      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen           | AAAADL   | 3         | Dozen            |
-      | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer       | AAAADL   | 3         | Kilometer        |
-      | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter           | AAAADL   | 3         | Liter            |
-      | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter    | AAAADL   | 3         | Square meter     |
-      | TS     | YES    | NO           | YES          | NO           | 2      | MIL     | Thousands       | AAAADL   | 3         | Thousands        |
-      | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet          | AAAADL   | 0         | Pallet           |
+      | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription     | measure  | precision | shortDescription    |
+      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar           | CURRENCY | 0         | US Dollar           |
+      | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case                | 0        | 0         | Case                |
+      | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each                | AAAADL   | 0         | Each                |
+      | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram            | AAAADL   | 3         | KiloGram            |
+      | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         | Market Control Unit | AAAADL   | 6         | Market Control Unit |
+      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL   | 3         | Dozen               |
+      | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL   | 3         | Kilometer           |
+      | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL   | 3         | Liter               |
+      | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL   | 3         | Square meter        |
+      | TS     | YES    | NO           | YES          | NO           | 1      |         | Thousand            | AAAADL   | 6         | Thousand            |
+      | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet              | AAAADL   | 0         | Pallet              |
