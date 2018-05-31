@@ -41,4 +41,43 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
                 .and(IConstant.EDM_MATERIAL_GLOBAL_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
     }
+
+    public List<EDMMaterialGlobalV1Entity> getEntitiesWithPrimaryPlanningCode(String primaryPlanningCode) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.PRIMARY_PLANNING_CODE).is(primaryPlanningCode).toQueryString();
+        return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+    }
+
+    public List<EDMMaterialGlobalV1Entity> getEntitiesWithMaterialNumber(String materialNumber) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.MATERIAL_NUMBER).is(materialNumber).toQueryString();
+        return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+    }
+
+    /**
+     * Same as query for object above but returns a list.
+     * Also uses local material number instead of
+     * material number. Should only have single entity match
+     * (using primary keys) but list easier to work with.
+     * @param materialNumber
+     * @param sourceSystem
+     * @return
+     */
+    public List<EDMMaterialGlobalV1Entity> getEntitiesWithMaterialNumberAndSourceSystem (String materialNumber, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.MATERIAL_NUMBER).is(materialNumber)
+                .and(IConstant.EDM_MATERIAL_GLOBAL_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+    }
+
+    public List<EDMMaterialGlobalV1Entity> getEntitiesWithLocalMaterialNumber (String localMaterialNumber) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
+        return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+    }
+
+    public List<EDMMaterialGlobalV1Entity> getEntitiesWithPrimaryPlanningCodeAndSourceSystem(String primaryPlanningCode, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.PRIMARY_PLANNING_CODE).is(primaryPlanningCode)
+                .and(IConstant.EDM_MATERIAL_GLOBAL_V1.SOURCE_SYSTEM).is(sourceSystem)
+                .toQueryString();
+        return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
+    }
 }
