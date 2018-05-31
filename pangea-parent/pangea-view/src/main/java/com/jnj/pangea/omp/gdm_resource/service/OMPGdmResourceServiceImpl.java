@@ -44,20 +44,16 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
             String num = capyHdrEntity.getCapyNum();
             String capyCatCd = capyHdrEntity.getCapyCatCd();
             if (StringUtils.isNotEmpty(src) && StringUtils.isNotEmpty(num)) {
-                LogUtil.getCoreLog().info("----------capyCatCd---------"+capyCatCd);
                 EDMWrkCtrEntity edmWrkCtrEntity = wrkCtrDao.getEntityWithSrcSysCdAndCapyNum(src, num);
                 if (null != edmWrkCtrEntity ) {
+                    String usgcd = edmWrkCtrEntity.getWrkCtrUsgCd();
                     if (IConstant.VALUE.STR_TWO.equals(capyCatCd)){
-                        LogUtil.getCoreLog().info("----------come in---------"+capyCatCd);
+                        if (IConstant.VALUE.STR_ONE.equals(usgcd) || IConstant.VALUE.STR_NINE.equals(usgcd)) {
                         String srcSysCd = edmWrkCtrEntity.getSrcSysCd();
                         if (StringUtils.isNotEmpty(srcSysCd)) {
                             PlanCnsPlanParameterEntity planCnsPlanParameterEntity = cnsPlanParameterDao.getEntityWithSourceSystem(srcSysCd);
                             if (null != planCnsPlanParameterEntity) {
-                                        String usgcd = edmWrkCtrEntity.getWrkCtrUsgCd();
-                                        LogUtil.getCoreLog().info("@@@@@@@@@@@@@@@@@@@@"+usgcd);
-                                        if (IConstant.VALUE.STR_ONE.equals(usgcd) || IConstant.VALUE.STR_NINE.equals(usgcd)) {
                                             gdmResourceBo.setResourceId(capyHdrEntity.getPlntCd() + IConstant.VALUE.BACK_SLANT + edmWrkCtrEntity.getWrkCtrCd() + IConstant.VALUE.BACK_SLANT + capyHdrEntity.getCapyCatCd());
-                                            LogUtil.getCoreLog().info("COMEIN----------------------"+usgcd);
                                         }else {
                                             return resultObject;
                                         }
@@ -112,7 +108,6 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
         //rule C2
         if (null != capyHdrEntity) {
             String plntcd = capyHdrEntity.getPlntCd();
-            LogUtil.getCoreLog().info("=================="+plntcd);
             if (StringUtils.isNotEmpty(plntcd)) {
                 gdmResourceBo.setLocationId(capyHdrEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + capyHdrEntity.getPlntCd());
             } else {
