@@ -18,8 +18,19 @@ public class LipsDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<LipsEntity> getLipsEntityWithVbeln(String vbeln) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_LIPS.VBELN).is(vbeln).toQueryString();
-        return (queryForList(IConstant.REGION.PROJECT_ONE_LIPS, queryString, LipsEntity.class));
+    public LipsEntity getLipsEntityWithVbeln(String likpVbeln) {
+        if(likpVbeln != null && !(likpVbeln.isEmpty())) {
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_LIPS.VBELN).is(likpVbeln).toQueryString();
+            return (queryForObject(IConstant.REGION.PROJECT_ONE_LIPS, queryString, LipsEntity.class));
+        }
+        return null;
+    }
+
+    public List<LipsEntity> getLipsEntitiesWithVbeln(String likpVbeln) {
+        if(likpVbeln != null && !(likpVbeln.isEmpty())) {
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_LIPS.VBELN).is(likpVbeln).toQueryString();
+            return (queryForList(IConstant.REGION.PROJECT_ONE_LIPS, queryString, LipsEntity.class));
+        }
+        return null;
     }
 }

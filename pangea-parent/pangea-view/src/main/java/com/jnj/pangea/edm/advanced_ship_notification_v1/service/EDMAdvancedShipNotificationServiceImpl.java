@@ -46,14 +46,13 @@ public class EDMAdvancedShipNotificationServiceImpl {
 
         // J1
         // Join using (LIKP-VBELN) = (LIPS-VBELN) to get value of ( LIPS-POSNR) and there can be multiple values
-        List<LipsEntity> lipsEntities = lipsDao.getLipsEntityWithVbeln(likpEntity.getVbeln());
-
-        if(lipsEntities != null) {
-            for(LipsEntity lipsEntity : lipsEntities) {
-                resultObjects.add(setObjectByPosnr(lipsEntity.getPosnr(), likpEntity, lipsEntity));
-            }
+        List<LipsEntity> lipsEntities = lipsDao.getLipsEntitiesWithVbeln(likpEntity.getVbeln());
+        LogUtil.getCoreLog().info("Lips Entity length: {}", lipsEntities.size());
+        for(LipsEntity lipsEntity : lipsEntities) {
+            LogUtil.getCoreLog().info("Lips Entity POSNR: {}", lipsEntity.getPosnr());
+            LogUtil.getCoreLog().info("Lips Entity vbeln: {}", lipsEntity.getVbeln());
+            resultObjects.add(setObjectByPosnr(lipsEntity.getPosnr(), likpEntity, lipsEntity));
         }
-
         return resultObjects;
     }
 
@@ -114,8 +113,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // Get sourceSystem from source_system_v1 using below condition:
         // source_system_v1-localSourceSystem = "project_one"
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
-
-        if(edmSourceSystemV1Entity != null){
+        if (edmSourceSystemV1Entity != null) {
             edmAdvancedShipNotificationBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
         }
 
@@ -123,8 +121,10 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // Select only when LIKP-VBTYP= 7
         if(likpEntity.getVbtyp().equals(IConstant.VALUE.SEVEN)) {
             edmAdvancedShipNotificationBo.setLocaldeliveryCatg(likpEntity.getVbtyp());
+        } else {
+            // skip
+            return null;
         }
-
         resultObject.setBaseBo(edmAdvancedShipNotificationBo);
         return resultObject;
     }
