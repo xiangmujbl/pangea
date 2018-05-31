@@ -37,10 +37,9 @@ public class EDMAdvancedShipNotificationController extends BaseController {
 
             RawDataValue rawValue = raw.getValue();
 
-            LipsEntity lipsEntity = BeanUtil.mapToBean(rawValue.toMap(), LipsEntity.class);
             LikpEntity likpEntity = BeanUtil.mapToBean(rawValue.toMap(), LikpEntity.class);
 
-            List<ResultObject> resultObjectList = edmAdvanceShipNotificationService.buildView(raw.getKey(), lipsEntity, likpEntity);
+            List<ResultObject> resultObjectList = edmAdvanceShipNotificationService.buildView(raw.getKey(), likpEntity, null);
 
             for (ResultObject resultObject : resultObjectList) {
                 if (resultObject.isSuccess()) {

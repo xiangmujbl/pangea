@@ -42,7 +42,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
 
         List<ResultObject> resultObjects = new ArrayList<>();
 
-        LikpEntity likpEntity = (LikpEntity) o2;
+        LikpEntity likpEntity = (LikpEntity) o;
 
         // J1
         // Join using (LIKP-VBELN) = (LIPS-VBELN) to get value of ( LIPS-POSNR) and there can be multiple values
@@ -51,18 +51,18 @@ public class EDMAdvancedShipNotificationServiceImpl {
         for(LipsEntity lipsEntity : lipsEntities) {
             LogUtil.getCoreLog().info("Lips Entity POSNR: {}", lipsEntity.getPosnr());
             LogUtil.getCoreLog().info("Lips Entity vbeln: {}", lipsEntity.getVbeln());
-            resultObjects.add(setObjectByPosnr(lipsEntity.getPosnr(), likpEntity, lipsEntity));
+            resultObjects.add(setObjectByPosnr(likpEntity, lipsEntity));
         }
         return resultObjects;
     }
 
-    private ResultObject setObjectByPosnr(String posnr, LikpEntity likpEntity, LipsEntity lipsEntity) {
+    private ResultObject setObjectByPosnr(LikpEntity likpEntity, LipsEntity lipsEntity) {
 
         ResultObject resultObject = new ResultObject();
 
         EDMAdvancedShipNotificationBo edmAdvancedShipNotificationBo = new EDMAdvancedShipNotificationBo();
 
-        edmAdvancedShipNotificationBo.setDelvLineNbr(posnr);
+        edmAdvancedShipNotificationBo.setDelvLineNbr(lipsEntity.getPosnr());
 
         // N3
         // ERP Date is informat yyyymmdd
