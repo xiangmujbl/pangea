@@ -44,7 +44,6 @@ public class OMPGdmSupplyServiceImpl {
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-        ResultObject resultObject_1 = new ResultObject();
         OMPGdmSupplyBo gdmSupplyBo = new OMPGdmSupplyBo();
         List<ResultObject> resultObjects = new ArrayList<>();
 
@@ -65,7 +64,7 @@ public class OMPGdmSupplyServiceImpl {
                     if (edmSourceListV1Entity.getLocalVendorAccountNumber() != null && (!(edmSourceListV1Entity.getLocalVendorAccountNumber().isEmpty()))) {
                         if (edmSourceListV1Entity.getSourceSystem() != null && (!(edmSourceListV1Entity.getSourceSystem().isEmpty()))) {
                             String supplyId = partA + IConstant.VALUE.BACK_SLANT
-                                    + edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmSourceListV1Entity.getLocalPlant() + IConstant.VALUE.BACK_SLANT
+                                    + edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant() + IConstant.VALUE.BACK_SLANT
                                     + edmSourceListV1Entity.getLocalVendorAccountNumber();
                             gdmSupplyBo.setSupplyId(supplyId);
 
@@ -76,10 +75,10 @@ public class OMPGdmSupplyServiceImpl {
                             // N20
                             gdmSupplyBo.setActiveSOPERP(IConstant.VALUE.NO);
 
-                            // N15
+                            // N15 toDate
                             String dateToFormat_1 = edmSourceListV1Entity.getLocalSourceListRecordValidTo();
                             SimpleDateFormat sdfFrom_1 = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-                            SimpleDateFormat sdfTo_1 = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+                            SimpleDateFormat sdfTo_1 = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDHHMMSS);
 
                             Date dFrom_1 = null;
                             try {
@@ -188,43 +187,43 @@ public class OMPGdmSupplyServiceImpl {
 
                                             // N18
                                             PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity_2 = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
-                                            if (null != planCnsPlnSplLocEntity_2) {
-                                                // if planCnsPlanSplLocEntity local plant is not empty SKIP
-                                                if (((planCnsPlnSplLocEntity_2.getLocalPlant().isEmpty()))) {
-
-                                                    // check if planCnsPlnSplLocEntity exists getLocalPlant if not then populate value as "VendorPurchase"
-                                                    gdmSupplyBo.setPROCESSTYPEID("VendorPurchase");
-
-                                                    // N16
-                                                    PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
-                                                    if (planCnsPlnSplLocEntity != null) {
-
-                                                        EDMMaterialPlantV1Entity edmMaterialPlantV1Entity_1 = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
-                                                        if (edmMaterialPlantV1Entity_1 != null) {
-
-                                                            // skip if local Special Procurement Type == 30 as it is a sub contracting scenario
-                                                            String localSpecialProcurementType = edmMaterialPlantV1Entity_1.getLocalSpecialProcurementType();
-                                                            if (!(localSpecialProcurementType.equals("30"))) {
-
-                                                                // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
-                                                                if ((edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty())) {
-
-                                                                    // set Vendor to EDM Source List V1 local vendor account number
-                                                                    gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
-                                                                    gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() +
-                                                                            IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
-                                                                            + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber());
-                                                                }
-                                                            }
-                                                        }
+                                            if(null != planCnsPlnSplLocEntity_2) {
+                                                    if (planCnsPlnSplLocEntity_2.getLocalPlant().isEmpty()) {
+                                                        // check if planCnsPlnSplLocEntity exists getLocalPlant if not then populate value as "VendorPurchase"
+                                                        gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.VENDOR_PURCHASE);
                                                     } else {
-                                                        gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
-                                                        gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
+                                                        // if no value returned use ExternalPurchase
+                                                        gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.EXTERNAL_PURCHASE);
                                                     }
                                                 }
-                                            } else {
-                                                // if no value returned use ExternalPurchase
-                                                gdmSupplyBo.setPROCESSTYPEID("ExternalPurchase");
+
+                                            // N16
+                                            if(edmSourceListV1Entity.getLocalVendorAccountNumber() != null) {
+                                                gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                            }
+
+                                            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
+                                            if (planCnsPlnSplLocEntity != null) {
+
+                                                EDMMaterialPlantV1Entity edmMaterialPlantV1Entity_1 = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
+                                                if (edmMaterialPlantV1Entity_1 != null) {
+
+                                                    // skip if local Special Procurement Type == 30 as it is a sub contracting scenario
+                                                    String localSpecialProcurementType = edmMaterialPlantV1Entity_1.getLocalSpecialProcurementType();
+                                                    if (!(localSpecialProcurementType.equals("30"))) {
+
+                                                        // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
+                                                        if (edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) {
+
+                                                            // set Vendor to EDM Source List V1 local vendor account number
+                                                            gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
+                                                            gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem()
+                                                                    + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant()
+                                                                    + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
+                                                                    + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber());
+                                                        }
+                                                    }
+                                                }
                                             }
                                             // N19
                                             PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());

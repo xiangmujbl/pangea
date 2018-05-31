@@ -37,7 +37,7 @@ public class OMPGdmSupplyBo extends BaseBo {
                 .makeJsonObject("supplyId", this.SupplyId)
                 .toJsonString();
     }
-    
+
     public String getSupplyId() {
         return SupplyId;
     }

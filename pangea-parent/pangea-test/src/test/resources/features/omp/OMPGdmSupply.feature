@@ -74,31 +74,31 @@ Feature:  OMPGdmSupply-Curation
 
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
       | localMaterialNumber | materialNumber | sourceSystem | primaryPlanningCode |
-      | 3                   | 51178        | CONS_LATAM   | 51178             |
-      | 4                   | 945          | CONS_LATAM   | 945               |
-      | 5                   | 71325        | CONS_LATAM   | 71325             |
-      | 6                   | 1331         | CONS_LATAM   | 1331              |
-      | 7                   | 92129        | CONS_LATAM   | 92129             |
-      | 8                   | 51178        | CONS_LATAM   | 51178             |
-      | 9                   |              | CONS_LATAM   |                   |
-      | 10                  | 71325        | CONS_LATAM   | 71325             |
-      | 11                  | 1331         | CONS_LATAM   | 1331              |
-      | 12                  | 92129        | CONS_LATAM   | 92129             |
-      | 13                  | 51178        | CONS_LATAM   | 51178             |
-      | 14                  | 945          | CONS_LATAM   | 945               |
-      | 15                  | 71325        | CONS_LATAM   | 71325             |
-      | 16                  | 1331         | CONS_LATAM   | 1331              |
-      | 17                  | 92129        | CONS_LATAM   | 92129             |
-      | 18                  | 945          | CONS_LATAM   | 945               |
-      | 19                  | 71325        | CONS_LATAM   | 71325             |
-      | 20                  | 1331         | CONS_LATAM   | 1331              |
-      | 21                  | 92129        | CONS_LATAM   | 92129             |
-      | 22                  | 945          | CONS_LATAM   | 945               |
-      | 23                  | 71325        | CONS_LATAM   | 71325             |
-      | 24                  | 1331         | CONS_LATAM   | 1331              |
-      | 25                  | 92129        | CONS_LATAM   | 92129             |
-      |                     | 945          | CONS_LATAM   | 945               |
-      | 32                  | 71325        | CONS_LATAM   | 71325             |
+      | 3                   | 51178          | CONS_LATAM   | 51178               |
+      | 4                   | 945            | CONS_LATAM   | 945                 |
+      | 5                   | 71325          | CONS_LATAM   | 71325               |
+      | 6                   | 1331           | CONS_LATAM   | 1331                |
+      | 7                   | 92129          | CONS_LATAM   | 92129               |
+      | 8                   | 51178          | CONS_LATAM   | 51178               |
+      | 9                   |                | CONS_LATAM   |                     |
+      | 10                  | 71325          | CONS_LATAM   | 71325               |
+      | 11                  | 1331           | CONS_LATAM   | 1331                |
+      | 12                  | 92129          | CONS_LATAM   | 92129               |
+      | 13                  | 51178          | CONS_LATAM   | 51178               |
+      | 14                  | 945            | CONS_LATAM   | 945                 |
+      | 15                  | 71325          | CONS_LATAM   | 71325               |
+      | 16                  | 1331           | CONS_LATAM   | 1331                |
+      | 17                  | 92129          | CONS_LATAM   | 92129               |
+      | 18                  | 945            | CONS_LATAM   | 945                 |
+      | 19                  | 71325          | CONS_LATAM   | 71325               |
+      | 20                  | 1331           | CONS_LATAM   | 1331                |
+      | 21                  | 92129          | CONS_LATAM   | 92129               |
+      | 22                  | 945            | CONS_LATAM   | 945                 |
+      | 23                  | 71325          | CONS_LATAM   | 71325               |
+      | 24                  | 1331           | CONS_LATAM   | 1331                |
+      | 25                  | 92129          | CONS_LATAM   | 92129               |
+      |                     | 945            | CONS_LATAM   | 945                 |
+      | 32                  | 71325          | CONS_LATAM   | 71325               |
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
@@ -190,20 +190,17 @@ Feature:  OMPGdmSupply-Curation
 
     And I wait "/plan/cns_process_type" Async Queue complete
 
-    Given I import "/plan/cns_spl_pln_loc" by keyFields "localNumber"
+    Given I import "/plan/cns_spl_pln_loc" by keyFields "localNumber,vendorOrCustomer,sourceSystem,localPlant"
       | localNumber | vendorOrCustomer | sourceSystem | localPlant |
       | 6109        | V                | CONS_LATAM   | MX02       |
+      | 6109        |                  | CONS_LATAM   | MX02       |
       | 2519        | V                | CONS_LATAM   |            |
-      | 6359        | V                | CONS_LATAM   |            |
+      | 2519        |                  | CONS_LATAM   |            |
+      | 6359        | V                | CONS_LATAM   | BR16       |
+      | 6359        |                  | CONS_LATAM   | BR16       |
       | 8917        | V                | CONS_LATAM   |            |
-      | 6109        | V                | CONS_LATAM   |            |
-      | 2519        | V                | CONS_LATAM   | BR06       |
-      | 6359        |                  |              |            |
-      | 6359        | V                | CONS_LATAM   |            |
-      | 6359        | Z                | CONS_LATAM   | BR06       |
-      | 8917        | V                | CONS_LATAM   | BR16       |
-      |             | V                | CONS_LATAM   |            |
-      | 6359        | V                |              |            |
+      | 8917        |                  | CONS_LATAM   |            |
+
 
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete
 
@@ -212,18 +209,18 @@ Feature:  OMPGdmSupply-Curation
     Then A file is found on sink application with name "GDMSupply.tsv"
 
     And I check file data for filename "GDMSupply.tsv" by keyFields "SupplyId"
-      | PROCESSTYPEID    | PURCHASINGORGANIZATION | PURCHASINGGROUP | LocationId        | INCQuantity | ProductId | MinQuantity | ActiveSOPERP |   SupplierId      | Active | VENDORID | Preference | ActiveOPRERP | LABEL             |  FromDate            | ToDate     | MaxQuantity | TransportType | SupplyId                   |
-      |                  | BR00                   | BR00            | CONS_LATAM_BR16   | 1000.000    | 71325     |             | NO           | CONS_LATAM_V_8917 | YES    |          | 0          | YES          |                   | 2007/01/08 00:00:00  | 2999/12/31 |             | DEFAULT       | 71325/CONS_LATAM/BR16/8917 |
-      |                  | BR00                   | BR00            | CONS_LATAM_BR06   | 1000.000    | 71325     | 13          | NO           | CONS_LATAM_V_8917 | YES    |          | 1          | YES          |                   | 2007/01/08 00:00:00  | 2999/12/31 | 0           | DEFAULT       | 71325/CONS_LATAM/BR06/8917 |
-      |                  | BR00                   | BR00            | CONS_LATAM_BR16   | 0.001       | 945       | 12          | NO           | CONS_LATAM_V_2519 | YES    |          | 1          | YES          |                   | 2015/07/31 00:00:00  | 9999/12/30 | 0           | DEFAULT       | 945/CONS_LATAM/BR16/2519   |
-      | ExternalPurchase | MX01                   | VE00            | CONS_LATAM_MX02   | 0.001       | 92129     |             | NO           | CONS_LATAM_MX02   | YES    |          | 0          | YES          | External Purchase | 2009/05/08 00:00:00  | 9999/12/30 |             | DEFAULT       | 92129/CONS_LATAM/MX02/6359 |
-      | VendorPurchase   | MX01                   | MX01            | CONS_LATAM_MX02   | 100.000     | 51178     |             | NO           | CONS_LATAM_V_6109 | YES    |          | 1          | YES          | Vendor Purchase   | 2012/07/18 00:00:00  | 9999/12/30 | 75          | DEFAULT       | 51178/CONS_LATAM/MX02/6109 |
-      | VendorPurchase   | MX01                   | MX01            | CONS_LATAM_V_6109 | 0.001       | 51178     | 1           | NO           | CONS_LATAM_V_6109 | YES    | 6109     | 1          | YES          | Vendor Purchase   | 2012/07/18 00:00:00  | 9999/12/30 | 10          | DEFAULT       | 51178/CONS_LATAM/MX02/6109 |
-      | ExternalPurchase | MX01                   | MX01            | CONS_LATAM_MX02   | 500.000     | 92129     | 10          | NO           | CONS_LATAM_MX02   | YES    |          | 0          | YES          | External Purchase | 2009/05/08 00:00:00  | 9999/12/30 | 15          | DEFAULT       | 92129/CONS_LATAM/MX02/6359 |
-      | ExternalPurchase | MX01                   | MX01            | CONS_LATAM_MX02   | 100.000     | 92129     |             | NO           | CONS_LATAM_MX02   | YES    |          | 1          | YES          | External Purchase | 2009/05/08 00:00:00  | 9999/12/30 | 50          | DEFAULT       | 92129/CONS_LATAM/MX02/6359 |
-      |                  | BR00                   | BR00            | CONS_LATAM_BR16   | 100.000     | 945       | 2           | NO           | CONS_LATAM_V_2519 | YES    |          | 1          | YES          |                   | 2015/07/31 00:00:00  | 9999/12/30 | 100         | DEFAULT       | 945/CONS_LATAM/BR16/2519   |
-      |                  |                        | VE00            | CONS_LATAM_VE01   | 1000.000    | 1331      | 9           | NO           | CONS_LATAM_V_8917 | YES    |          | 1          | YES          |                   | 2006/09/10 00:00:00  | 2999/12/31 |             | DEFAULT       | 1331/CONS_LATAM/VE01/8917  |
-
+      | PROCESSTYPEID    | PURCHASINGORGANIZATION | PURCHASINGGROUP | LocationId             | INCQuantity | ProductId | MinQuantity | ActiveSOPERP |   SupplierId      | Active | VENDORID | Preference | ActiveOPRERP | LABEL             |  FromDate           | ToDate              | MaxQuantity | TransportType | SupplyId                   |
+      | VendorPurchase   | BR00                   | BR00            | CONS_LATAM_BR16_V_8917 | 1000.000    | 71325     |             | NO           | CONS_LATAM_V_8917 | YES    | 8917     | 0          | YES          | Vendor Purchase   | 2007/01/08 00:00:00 | 2999/12/31 00:00:00 |             | DEFAULT       | 71325/CONS_LATAM_BR16/8917 |
+      | VendorPurchase   | BR00                   | BR00            | CONS_LATAM_BR06        | 1000.000    | 71325     | 13          | NO           | CONS_LATAM_V_8917 | YES    | 8917     | 1          | YES          | Vendor Purchase   | 2007/01/08 00:00:00 | 2999/12/31 00:00:00 | 0           | DEFAULT       | 71325/CONS_LATAM_BR06/8917 |
+      | VendorPurchase   | BR00                   | BR00            | CONS_LATAM_BR16_V_2519 | 0.001       | 945       | 12          | NO           | CONS_LATAM_V_2519 | YES    | 2519     | 1          | YES          | Vendor Purchase   | 2015/07/31 00:00:00 | 9999/12/30 00:00:00 | 0           | DEFAULT       | 945/CONS_LATAM_BR16/2519   |
+      | ExternalPurchase | MX01                   | VE00            | CONS_LATAM_MX02_V_6359 | 0.001       | 92129     |             | NO           | CONS_LATAM_V_6359 | YES    | 6359     | 0          | YES          | External Purchase | 2009/05/08 00:00:00 | 9999/12/30 00:00:00 |             | DEFAULT       | 92129/CONS_LATAM_MX02/6359 |
+      | VendorPurchase   | MX01                   | MX01            | CONS_LATAM_MX02        | 100.000     | 51178     |             | NO           | CONS_LATAM_V_6109 | YES    | 6109     | 1          | YES          | Vendor Purchase   | 2012/07/18 00:00:00 | 9999/12/30 00:00:00 | 75          | DEFAULT       | 51178/CONS_LATAM_MX02/6109 |
+      | VendorPurchase   | MX01                   | MX01            | CONS_LATAM_MX02_V_6109 | 0.001       | 51178     | 1           | NO           | CONS_LATAM_V_6109 | YES    | 6109     | 1          | YES          | Vendor Purchase   | 2012/07/18 00:00:00 | 9999/12/30 00:00:00 | 10          | DEFAULT       | 51178/CONS_LATAM_MX02/6109 |
+      | ExternalPurchase | MX01                   | MX01            | CONS_LATAM_MX02_V_6359 | 500.000     | 92129     | 10          | NO           | CONS_LATAM_V_6359 | YES    | 6359     | 0          | YES          | External Purchase | 2009/05/08 00:00:00 | 9999/12/30 00:00:00 | 15          | DEFAULT       | 92129/CONS_LATAM_MX02/6359 |
+      | ExternalPurchase | MX01                   | MX01            | CONS_LATAM_MX02        | 100.000     | 92129     |             | NO           | CONS_LATAM_V_6359 | YES    | 6359     | 1          | YES          | External Purchase | 2009/05/08 00:00:00 | 9999/12/30 00:00:00 | 50          | DEFAULT       | 92129/CONS_LATAM_MX02/6359 |
+      | VendorPurchase   | BR00                   | BR00            | CONS_LATAM_BR16_V_2519 | 100.000     | 945       | 2           | NO           | CONS_LATAM_V_2519 | YES    | 2519     | 1          | YES          | Vendor Purchase   | 2015/07/31 00:00:00 | 9999/12/30 00:00:00 | 100         | DEFAULT       | 945/CONS_LATAM_BR16/2519   |
+      | VendorPurchase   |                        | VE00            | CONS_LATAM_VE01_V_8917 | 1000.000    | 1331      | 9           | NO           | CONS_LATAM_V_8917 | YES    | 8917     | 1          | YES          | Vendor Purchase   | 2006/09/10 00:00:00 | 2999/12/31 00:00:00 |             | DEFAULT       | 1331/CONS_LATAM_VE01/8917  |
+    
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | errorValue                                                             | functionalArea | interfaceID  | key1        | key2    | key3 |    key4    |    key5    | sourceSystem |
       | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM  | 27      | MX02 |            |            | CONS_LATAM   |
