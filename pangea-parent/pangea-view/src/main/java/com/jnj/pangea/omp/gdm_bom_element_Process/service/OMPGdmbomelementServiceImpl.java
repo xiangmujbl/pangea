@@ -68,7 +68,7 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
             return null;
         }
         //get data MATL_PROD_VERSN
-        //LogUtil.getCoreLog().info("listMFG_ORDER_ITMTemp" + listMFG_ORDER_ITMTemp.get(0));
+        LogUtil.getCoreLog().info("listMFG_ORDER_ITMTemp" + listMFG_ORDER_ITMTemp.get(0));
         List<EDMMatlProdVersnEntity> listmatlProdVersn = new ArrayList<>();
         for (int i = 0; i < listMFG_ORDER_ITMTemp.size(); i++) {
             EDMMfgOrderItmEntity edmMfgOrderItmEntity = listMFG_ORDER_ITMTemp.get(i);
@@ -88,11 +88,11 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
         if (listEDMReservItm == null || listEDMReservItm.size() == 0) {
             return null;
         }
-        //LogUtil.getCoreLog().info("listEDMReservItm" + listEDMReservItm.get(0));
+        LogUtil.getCoreLog().info("listEDMReservItm" + listEDMReservItm.get(0));
 
         EDMBomItemEntity edmBomItemEntity = edmBomItemDao.getEntityWithConditions(sourceSysCd, mfgOrderEntity.getBomCatCd(), mfgOrderEntity.getBomNum());
         if (edmBomItemEntity != null) {
-            //LogUtil.getCoreLog().info("planCnsPlanParameterEntity"+edmBomItemEntity.toString());
+            LogUtil.getCoreLog().info("planCnsPlanParameterEntity" + edmBomItemEntity.toString());
         }
         // get data  from
         List<EDMMfgOrderRtngEntity> listEDMMfgOrderRtng = new ArrayList<>();
@@ -100,7 +100,7 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
         if (listEDMMfgOrderRtngTemp == null || listEDMMfgOrderRtngTemp.size() == 0) {
             return null;
         }
-        //LogUtil.getCoreLog().info("listEDMMfgOrderRtngTemp" + listEDMMfgOrderRtngTemp.toString());
+        LogUtil.getCoreLog().info("listEDMMfgOrderRtngTemp" + listEDMMfgOrderRtngTemp.toString());
         //he
         List<EDMMfgOrderSeqEntity> listEDMMfgOrderSeq = new ArrayList<>();
         for (int i = 0; i < listEDMMfgOrderRtngTemp.size(); i++) {
@@ -143,14 +143,14 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                     ResultObject resultObject = new ResultObject();
                     StringBuffer sb = new StringBuffer();
                     sb.append(IConstant.OMP_GDMBOMELEMENT.FRONT_BOMID_PRO_UP).append(key_split);
-                    sb.append(mfgOrderEntity.getSourceSysCd()).append(key_split);
-                    sb.append(mfgOrderEntity.getMfgOrdrNum()).append(key_split);
-                    sb.append(edmMfgOrderSeqEntity.getRtngSqncNum()).append(key_split);
-                    sb.append(edmMfgOrderRtngEntity.getOperNum()).append(key_split);
-                    sb.append(edmReservItmEntity.getMatlNum()).append(key_split);
-                    sb.append(edmReservItmEntity.getBomItmNum()).append(key_split);
-                    sb.append(edmReservItmEntity.getBtchNum());
-                    ompGdmbomelementBo.setBOMElementId(sb.toString());
+                    sb.append(checkNull(mfgOrderEntity.getSourceSysCd()));
+                    sb.append(checkNull(mfgOrderEntity.getMfgOrdrNum()));
+                    sb.append(checkNull(edmMfgOrderSeqEntity.getRtngSqncNum()));
+                    sb.append(checkNull(edmMfgOrderRtngEntity.getOperNum()));
+                    sb.append(checkNull(edmReservItmEntity.getMatlNum()));
+                    sb.append(checkNull(edmReservItmEntity.getBomItmNum()));
+                    sb.append(checkNullEnd(edmReservItmEntity.getBtchNum()));
+                    ompGdmbomelementBo.setBomElementId(sb.toString());
                     ompGdmbomelementBo.setActive(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_YES);
                     ompGdmbomelementBo.setActiveFCTERP(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_YES);
                     ompGdmbomelementBo.setActiveOPRERP(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_YES);
@@ -209,7 +209,7 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                         ompGdmbomelementBo.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_PlanLevelId_X);
                         OMPGdmbomelementBo ompGdmbomelementBo1 = ompGdmbomelementBo.clone();
                         ResultObject resultObject1 = new ResultObject();
-                        ompGdmbomelementBo1.setBOMElementId(ompGdmbomelementBo1.getBOMElementId() + IConstant.OMP_GDMBOMELEMENT.KEY_SPLIT + IConstant.OMP_GDMBOMELEMENT.CLONE_BOMEID);
+                        ompGdmbomelementBo1.setBomElementId(ompGdmbomelementBo1.getBomElementId() + IConstant.OMP_GDMBOMELEMENT.KEY_SPLIT + IConstant.OMP_GDMBOMELEMENT.CLONE_BOMEID);
                         ompGdmbomelementBo1.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.CLONE_PLANLEVELID);
                         resultObject1.setBaseBo(ompGdmbomelementBo1);
                         list.add(resultObject1);
@@ -251,14 +251,14 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                     ResultObject resultObject = new ResultObject();
                     StringBuffer sb = new StringBuffer();
                     sb.append(IConstant.OMP_GDMBOMELEMENT.FRONT_BOMID_PRO_UP).append(key_split);
-                    sb.append(mfgOrderEntity.getSourceSysCd()).append(key_split);
-                    sb.append(mfgOrderEntity.getMfgOrdrNum()).append(key_split);
-                    sb.append(edmMfgOrderSeqEntity.getRtngSqncNum()).append(key_split);
-                    sb.append(edmMfgOrderRtngEntity.getOperNum()).append(key_split);
-                    sb.append(orderItmEntity.getMatlNum()).append(key_split);
-                    sb.append(orderItmEntity.getLnItmNbr()).append(key_split);
-                    sb.append(orderItmEntity.getBtchNum());
-                    ompGdmbomelementBo.setBOMElementId(sb.toString());
+                    sb.append(checkNull(mfgOrderEntity.getSourceSysCd()));
+                    sb.append(checkNull(mfgOrderEntity.getMfgOrdrNum()));
+                    sb.append(checkNull(edmMfgOrderSeqEntity.getRtngSqncNum()));
+                    sb.append(checkNull(edmMfgOrderRtngEntity.getOperNum()));
+                    sb.append(checkNull(orderItmEntity.getMatlNum()));
+                    sb.append(checkNull(orderItmEntity.getLnItmNbr()));
+                    sb.append(checkNullEnd(orderItmEntity.getBtchNum()));
+                    ompGdmbomelementBo.setBomElementId(sb.toString());
                     ompGdmbomelementBo.setActive(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_YES);
                     ompGdmbomelementBo.setActiveFCTERP(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_YES);
                     ompGdmbomelementBo.setActiveOPRERP(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_YES);
@@ -339,5 +339,20 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
             result = IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_0_BLANK + result;
         }
         return result;
+    }
+
+    public String checkNull(String str) {
+        final String key_split = IConstant.OMP_GDMBOMELEMENT.KEY_SPLIT;
+        if (StringUtils.isNotBlank(str)) {
+            return str + key_split;
+        }
+        return key_split;
+    }
+
+    public String checkNullEnd(String str) {
+        if (StringUtils.isNotBlank(str)) {
+            return str;
+        }
+        return "";
     }
 }

@@ -75,7 +75,7 @@
 
 
             <region path="/omp/gdm_bom_element">
-                <columns>BOMElementId,Active,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,BatchId,BOMId,BOMType,BOMUsage,Comments,EndEff,ERPFeedbackQuantity,LocationId,Offset,OffsetCalendarId,OffsetPercentage,OffsetPercType,PlanLevelId,ProductId,Quantity,StartEff</columns>
+                <columns>bomElementId,Active,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,BatchId,BOMId,BOMType,BOMUsage,Comments,EndEff,ERPFeedbackQuantity,LocationId,Offset,OffsetCalendarId,OffsetPercentage,OffsetPercType,PlanLevelId,ProductId,Quantity,StartEff</columns>
             </region>
 
         </regions>
