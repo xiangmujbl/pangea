@@ -50,20 +50,30 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
         gdmUnitMeasurableBo.setActiveSOPERP(IConstant.VALUE.NO);
 
         String unit = cnsPlanUnitEntity.getUnit();
-        if (StringUtils.isNotEmpty(unit) && StringUtils.isNotEmpty(cnsPlanUnitEntity.getSourceSystem())) {
-            EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity = unitOfMeasureV1Dao.getEntityWithUnitAndSourceSystem(unit,cnsPlanUnitEntity.getSourceSystem());
+        if (StringUtils.isNotEmpty(unit)) {
 
+            EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity = unitOfMeasureV1Dao.getEntityWithConditions(unit);
+            if (null != unitOfMeasureV1Entity){
 
-            if (null != unitOfMeasureV1Entity) {
                 // rules F1
                 if (StringUtils.isNotEmpty(cnsPlanUnitEntity.getFactor())) {
                     gdmUnitMeasurableBo.setFactor(cnsPlanUnitEntity.getFactor());
                 } else {
                     gdmUnitMeasurableBo.setFactor(IConstant.VALUE.ONE);
                 }
+            } else {
+
+                // rules F1
+                gdmUnitMeasurableBo.setFactor(IConstant.VALUE.ONE);
+            }
+
+        }
+
+        if (StringUtils.isNotEmpty(unit) && StringUtils.isNotEmpty(cnsPlanUnitEntity.getSourceSystem())) {
+            EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity = unitOfMeasureV1Dao.getEntityWithUnitAndSourceSystem(unit,cnsPlanUnitEntity.getSourceSystem());
+            if (null != unitOfMeasureV1Entity) {
 
                 // rules F2
-
                 if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getIsoCode())) {
                     gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
                 } else {
@@ -98,8 +108,7 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
                     gdmUnitMeasurableBo.setPrecision(cnsPlanUnitEntity.getRoundingDecimal());
                 }
             } else {
-                // rules F1
-                gdmUnitMeasurableBo.setFactor(IConstant.VALUE.ONE);
+
                 // rules F2
                 gdmUnitMeasurableBo.setIsoCode(IConstant.VALUE.BLANK);
                 // rules T4
