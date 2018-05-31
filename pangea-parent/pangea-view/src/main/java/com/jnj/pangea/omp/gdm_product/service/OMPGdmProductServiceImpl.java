@@ -118,7 +118,7 @@ public class OMPGdmProductServiceImpl {
                     continue;
                 }
 
-                productBo.setActive(IConstant.VALUE.NO);
+                productBo.setActive(IConstant.VALUE.YES);
 
                 productBo.setActiveSOPERP(IConstant.VALUE.NO);
 
@@ -237,19 +237,6 @@ public class OMPGdmProductServiceImpl {
             return planCnsPlanParameterEntity.getParameterValue();
         }
         return null;
-    }
-
-    private OMPGdmProductBo checkE1(OMPGdmProductBo productBo, PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity) {
-        if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-            productBo.setActive(IConstant.VALUE.YES);
-            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
-                productBo.setActiveOPRERP(IConstant.VALUE.YES);
-            }
-            if (IConstant.VALUE.X.equals(materialPlanStatusEntity.getDpRelevant())) {
-                productBo.setActiveFCTERP(IConstant.VALUE.YES);
-            }
-        }
-        return productBo;
     }
 
     private String checkE2(String productFamily) {
