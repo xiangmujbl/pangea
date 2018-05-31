@@ -1,0 +1,16 @@
+job create
+--name Pangea_Dev_Merge_GDMTransport
+--definition 'file-merger
+    --keyString="machineTypeId, processTypeId, transportId, requirementOffset, purchasingOrganization, active, vendorId, purchasingGroup, label, toLocationId, fromLocationId, planLevelId, activeOPRERP, activeSOPERP, minQuantity, transportOffset, toProductId, transportType, endEff, fromProductId, startEff"
+    --tHost=mboxnait.jnj.com --tUsername=pangeadev --tPassword=PANgeadev_2018
+    --mLocation=/apps/adf/pangea/merge/
+    --outputDirectory=/apps/adf/pangea/merge/archive/
+    --tLocation=/Pangea_LATAM_E2E_Test_DEV/merged/
+    --tSourceLocation=/apps/adf/pangea/merge/archive/
+    --sPattern=GDMTransportMerge*
+    --tFileName=GDMTransport.tsv
+    --outputFileName=GDMTransport.tsv
+    --toCompress=false
+    --zipFileName=""
+    --duplicationFlag=true'
+--deploy

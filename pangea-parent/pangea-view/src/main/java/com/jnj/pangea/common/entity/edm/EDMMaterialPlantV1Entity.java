@@ -44,6 +44,7 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localGoodsReceiptProcessingTimeInDays;
     private String localBatchManagementRequirementIndicator;
     private String localPurchasingGroup;
+    private String purchsngGrpCd;
     private String plantStatus;
     private String localPostToInspStk;
     private String localComponentScrap;
@@ -93,6 +94,7 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         setLocalGoodsReceiptProcessingTimeInDays((String) map.get("localGoodsReceiptProcessingTimeInDays"));
         setLocalBatchManagementRequirementIndicator((String) map.get("localBatchManagementRequirementIndicator"));
         setLocalPurchasingGroup((String)map.get("localPurchasingGroup"));
+        setPurchsngGrpCd((String)map.get("purchsngGrpCd"));
     }
 
 
@@ -454,5 +456,13 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
 
     public void setPlant(String plant) {
         this.plant = plant;
+    }
+
+    public String getPurchsngGrpCd () {
+        return purchsngGrpCd;
+    }
+
+    public void setPurchsngGrpCd (String purchasingGrpCd) {
+        this.purchsngGrpCd = purchasingGrpCd;
     }
 }
