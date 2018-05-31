@@ -58,7 +58,7 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
 
                     PlanCnsClustersEntity planCnsClustersEntity = cnsClustersDao.getEntityWithCountryIdAndSourceSystem(countryID, sourceSystem);
                     if (null != planCnsClustersEntity) {
-                        gdmCustomerBo.setCustCluster(planCnsClustersEntity.getCluster());
+                        gdmCustomerBo.setCUST_Cluster(planCnsClustersEntity.getCluster());
                         gdmCustomerBo.setSubCluster(planCnsClustersEntity.getSubCluster());
 
                         // J2

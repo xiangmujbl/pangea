@@ -45,7 +45,7 @@
             </region>
 
             <region path="/omp/gdm_customer">
-                <columns>customerId,active,activeFCTERP,activeOPRERP,activeSOPERP,channel,channelDescription,countryId,custCluster,distributionChannel,distributor,eCommerce,forecastSource,globalCustomerId,name,partner,partnerCountry,partnerName,partnerRegion,partnerRole,planningCustomerGroupID,regionId,salesOrganization,soldTo,sourceLocationId,subCluster</columns>
+                <columns>customerId,active,activeFCTERP,activeOPRERP,activeSOPERP,channel,channelDescription,countryId,CUST_Cluster,distributionChannel,distributor,eCommerce,forecastSource,globalCustomerId,name,partner,partnerCountry,partnerName,partnerRegion,partnerRole,planningCustomerGroupID,regionId,salesOrganization,soldTo,sourceLocationId,subCluster</columns>
             </region>
 
         </regions>

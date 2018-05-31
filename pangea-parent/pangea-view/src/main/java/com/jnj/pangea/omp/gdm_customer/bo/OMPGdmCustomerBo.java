@@ -13,7 +13,7 @@ public class OMPGdmCustomerBo extends BaseBo {
     private String channel;
     private String channelDescription;
     private String countryId;
-    private String custCluster;
+    private String CUST_Cluster;
     private String distributionChannel;
     private String distributor;
     private String eCommerce;
@@ -103,13 +103,14 @@ public class OMPGdmCustomerBo extends BaseBo {
         this.countryId = countryId;
     }
 
-    public String getCustCluster() {
-        return this.custCluster;
-    }
+    
+    public String getCUST_Cluster() {
+		return CUST_Cluster;
+	}
 
-    public void setCustCluster(String custCluster) {
-        this.custCluster = custCluster;
-    }
+	public void setCUST_Cluster(String cUST_Cluster) {
+		CUST_Cluster = cUST_Cluster;
+	}
 
     public String getDistributionChannel() {
         return this.distributionChannel;
