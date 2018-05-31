@@ -6,6 +6,8 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 public class EDMPlantV1DaoImpl extends CommonDaoImpl {
     private static EDMPlantV1DaoImpl instance;
 
@@ -31,5 +33,11 @@ public class EDMPlantV1DaoImpl extends CommonDaoImpl {
             return queryForObject(IConstant.REGION.EDM_PLANT_V1,queryString,EDMPlantV1Entity.class);
         }
         return null;
+    }
+
+    public List<EDMPlantV1Entity> getEntitiesWithSourceSystemAndLocalPlant (String sourceSystem, String localPlant) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_PLANT_V1.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.EDM_PLANT_V1.LOCAL_PLANT).is(localPlant).toQueryString();
+        return queryForList(IConstant.REGION.EDM_PLANT_V1,queryString,EDMPlantV1Entity.class);
     }
 }
