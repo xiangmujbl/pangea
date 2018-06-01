@@ -61,7 +61,7 @@ public class OMPGdmPosServiceImpl {
             // Reject this record
             ResultObject resultObject = new ResultObject();
             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root1", "", cnsDpPosEntity.getLocalMaterial(),
+                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
                     cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
             list.add(resultObject);
             return list;
@@ -74,7 +74,7 @@ public class OMPGdmPosServiceImpl {
                 // Reject this record
                 ResultObject resultObject = new ResultObject();
                 resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                        IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root2", "", cnsDpPosEntity.getLocalMaterial(),
+                        IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
                         cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
                 list.add(resultObject);
                 return list;
@@ -106,7 +106,7 @@ public class OMPGdmPosServiceImpl {
                         } else {
                             ResultObject resultObject = new ResultObject();
                             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root3", "", cnsDpPosEntity.getLocalMaterial(),
+                                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
                                     cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
                             list.add(resultObject);
                             return list;
@@ -114,7 +114,7 @@ public class OMPGdmPosServiceImpl {
                     } else {
                         ResultObject resultObject = new ResultObject();
                         resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                                IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root4", "", cnsDpPosEntity.getLocalMaterial(),
+                                IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
                                 cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
                         list.add(resultObject);
                         return list;
@@ -179,7 +179,7 @@ public class OMPGdmPosServiceImpl {
             // Reject this record
             ResultObject resultObject = new ResultObject();
             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root5", "", cnsDpPosEntity.getLocalMaterial(),
+                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
                     cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
             list.add(resultObject);
             return list;
