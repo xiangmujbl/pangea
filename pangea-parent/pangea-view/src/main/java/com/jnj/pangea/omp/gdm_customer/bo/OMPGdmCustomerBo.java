@@ -103,13 +103,12 @@ public class OMPGdmCustomerBo extends BaseBo {
         this.countryId = countryId;
     }
 
-    
     public String getCUST_Cluster() {
-		return CUST_Cluster;
+		return this.CUST_Cluster;
 	}
 
-	public void setCUST_Cluster(String cUST_Cluster) {
-		CUST_Cluster = cUST_Cluster;
+	public void setCUST_Cluster(String CUST_Cluster) {
+        this.CUST_Cluster = CUST_Cluster;
 	}
 
     public String getDistributionChannel() {

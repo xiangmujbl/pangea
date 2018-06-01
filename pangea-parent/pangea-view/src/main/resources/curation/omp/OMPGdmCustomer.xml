@@ -15,7 +15,7 @@
             </region>
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>sourceSystem,countryAffiliate,customerId,demandGroup,channel,salesOrg</columns>
+                <columns>sourceSystem,countryAffiliate,customerId,demandGroup,channel,salesOrganization</columns>
                 <relations>
                     <relation path="/plan/cns_clusters" isPrimaryKey="false">
                         <expression>countryId=/plan/cns_dem_grp_asgn.countryAffiliate,sourceSystem=/plan/cns_dem_grp_asgn.sourceSystem</expression>
@@ -47,7 +47,7 @@
             <region path="/omp/gdm_customer">
                 <columns>customerId,active,activeFCTERP,activeOPRERP,activeSOPERP,channel,channelDescription,countryId,CUST_Cluster,distributionChannel,distributor,eCommerce,forecastSource,globalCustomerId,name,partner,partnerCountry,partnerName,partnerRegion,partnerRole,planningCustomerGroupID,regionId,salesOrganization,soldTo,sourceLocationId,subCluster</columns>
             </region>
-
+            commerce
         </regions>
     </curation>
 </adf-curation>
