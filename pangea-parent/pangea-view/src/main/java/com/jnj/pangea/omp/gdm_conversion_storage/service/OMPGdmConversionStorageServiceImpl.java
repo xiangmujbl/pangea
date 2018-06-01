@@ -6,12 +6,14 @@ import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMJNJCalendarV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustChannelDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsDpPriceDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
 import com.jnj.pangea.common.entity.edm.EDMJNJCalendarV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsCustChannelEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsDpPriceEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
@@ -42,6 +44,7 @@ public class OMPGdmConversionStorageServiceImpl {
     private PlanCnsDpPriceDaoImpl cnsDpPriceDao = PlanCnsDpPriceDaoImpl.getInstance();
     private EDMJNJCalendarV1DaoImpl edmJNJCalendarV1Dao = EDMJNJCalendarV1DaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl planCnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
         List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
@@ -61,7 +64,13 @@ public class OMPGdmConversionStorageServiceImpl {
             resultObjectList.add(resultObject);
             return resultObjectList;
         }
-
+        EDMSourceSystemV1Entity sourceSystemV1Entity=sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
+        if(sourceSystemV1Entity == null){
+            String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
+            ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
+            resultObjectList.add(resultObject);
+            return resultObjectList;
+        }
         List<EDMJNJCalendarV1Entity> edmJNJCalendarV1EntityList = edmJNJCalendarV1Dao.getEntityWithFiscalPeriod(cnsDpPriceEntity.getFromDate());
         if (edmJNJCalendarV1EntityList != null && edmJNJCalendarV1EntityList.size() > 0) {
 

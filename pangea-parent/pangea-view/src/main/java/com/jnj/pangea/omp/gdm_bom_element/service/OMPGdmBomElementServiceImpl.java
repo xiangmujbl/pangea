@@ -3,8 +3,10 @@ package com.jnj.pangea.omp.gdm_bom_element.service;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
+import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.service.ICommonListService;
 import com.jnj.pangea.omp.gdm_bom_element.bo.OMPGdmBomElementBo;
@@ -35,6 +37,8 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
     private EDMMatlMfgRtngDaoImpl matlMfgRtngDao = EDMMatlMfgRtngDaoImpl.getInstance();
     private EDMMfgRtngItmNdeDaoImpl mfgRtngItmNdeDao = EDMMfgRtngItmNdeDaoImpl.getInstance();
     private EDMMfgRtngItmDaoImpl mfgRtngItmDao = EDMMfgRtngItmDaoImpl.getInstance();
+    private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
+    private PlanCnsMaterialPlanStatusDaoImpl materialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
     List<ResultObject> resultObjectList_1 = new ArrayList<ResultObject>();
 
@@ -71,11 +75,12 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                                     EDMMfgRtngItmEntity mfgRtngItmEntity = mfgRtngItmDao.getEntityWithConditions(rtngItmNdeEntity.getSrcSysCd(), rtngItmNdeEntity.getRtngTypCd(), rtngItmNdeEntity.getRtngNdeNum(), rtngItmNdeEntity.getRtngGrpCd());
                                     if (mfgRtngItmEntity != null) {
                                         EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getBomNum(), matlBomEntity.getAltBomNum(), bomItemEntity.getBomCatCd());
-                                        if (bomHdrEntity != null) {
+                                        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithMaterialNumberAndSourceSystem(bomItemEntity.getCmpntNum(), matlBomEntity.getSrcSysCd());
+                                        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = materialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(bomItemEntity.getCmpntNum(), matlBomEntity.getPlntCd(), matlBomEntity.getSrcSysCd());
+                                        if (bomHdrEntity != null && materialGlobalV1Entity != null && cnsMaterialPlanStatusEntity != null) {
                                             ResultObject resultObject = new ResultObject();
                                             OMPGdmBomElementBo gdmBomElementBo = new OMPGdmBomElementBo();
                                             //T1
-
                                             String bomElementId = getBomElementId_T1(IConstant.VALUE.ZERO, matlProdVersnEntity, mfgRtngEntity, matlBomEntity, mfgRtngItmEntity, bomItemEntity, bomHdrEntity);
                                             gdmBomElementBo.setBomElementId(bomElementId);
                                             //T2
@@ -115,7 +120,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                                             String offset = getOffset_T10(bomItemEntity.getLeadTimeOffst(), IConstant.VALUE.ZERO);
                                             gdmBomElementBo.setOffset(offset);
                                             //T12
-                                            String productId = getProductId_T12(planCnsPlanParameterEntity.getParameterValue(), bomItemEntity.getCmpntNum());
+                                            String productId = getProductId_T12(planCnsPlanParameterEntity, materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
                                             gdmBomElementBo.setProductId(productId);
                                             //T13
                                             String quantity = getQuantity_T13(bomItemEntity.getCmpntQty(), bomItemEntity.getCmpntScrap_Pct(), IConstant.VALUE.ZERO);
@@ -126,7 +131,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                                             //T11
                                             String planLevelId = getPlanLevelId_T11(bomItemEntity.getFxQtyInd(), gdmBomElementBo, IConstant.VALUE.ZERO,
                                                     planCnsPlanParameterEntity, bomItemEntity, matlProdVersnEntity,
-                                                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity);
+                                                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity,materialGlobalV1Entity,cnsMaterialPlanStatusEntity);
                                             gdmBomElementBo.setPlanLevelId(planLevelId);
                                             resultObject.setBaseBo(gdmBomElementBo);
                                             resultObjectList.add(resultObject);
@@ -149,6 +154,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
     }
 
 
+
     public ResultObject getProductMat(Object o) {
         EDMMatlBomEntity matlBomEntity = (EDMMatlBomEntity) o;
         ResultObject resultObject = new ResultObject();
@@ -161,6 +167,8 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
         List<EDMMatlMfgRtngEntity> mfgRtngEntityList = matlMfgRtngDao.getEntityWithFiveConditions(matlProdVersnEntity.getSrcSysCd(), matlProdVersnEntity.getMatlNum(), matlProdVersnEntity.getPlntCd(), matlProdVersnEntity.getRtngGrpCd(), matlProdVersnEntity.getRtngGrpCntrNum());
         EDMMatlMfgRtngEntity mfgRtngEntity = mfgRtngEntityList.get(0);
         List<EDMMfgRtngItmNdeEntity> rtngItmNdeEntityList = mfgRtngItmNdeDao.getEntityWithConditions(mfgRtngEntity.getSrcSysCd(), mfgRtngEntity.getRtngTypCd(), mfgRtngEntity.getRntgGrpCntrNbr(), mfgRtngEntity.getRntgGrpCd());
+        EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithMaterialNumberAndSourceSystem(bomItemEntity.getCmpntNum(), matlBomEntity.getSrcSysCd());
+        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = materialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(matlBomEntity.getMatlNum(), matlBomEntity.getPlntCd(), matlBomEntity.getSrcSysCd());
         EDMMfgRtngItmEntity mfgRtngItmEntity = null;
         if (rtngItmNdeEntityList != null && rtngItmNdeEntityList.size() > 0) {
             EDMMfgRtngItmNdeEntity rtngItmNdeEntity = rtngItmNdeEntityList.get(0);
@@ -209,10 +217,10 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
             //T11
             String planLevelId = getPlanLevelId_T11(bomItemEntity.getFxQtyInd(), gdmBomElementBo, IConstant.VALUE.ONE,
                     planCnsPlanParameterEntity_system_object, bomItemEntity, matlProdVersnEntity,
-                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity);
+                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity,materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
             gdmBomElementBo.setPlanLevelId(planLevelId);
             //T12
-            String productId = getProductId_T12(planCnsPlanParameterEntity_system_object.getParameterValue(), bomItemEntity.getCmpntNum());
+            String productId = getProductId_T12(planCnsPlanParameterEntity_system_object, materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
             gdmBomElementBo.setProductId(productId);
             //T13
             String quantity = getQuantity_T13(bomHdrEntity.getBomBaseQty(), null, IConstant.VALUE.ONE);
@@ -231,32 +239,32 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
         if (matlProdVersnEntity != null && mfgRtngEntity != null && matlBomEntity != null
                 && mfgRtngItmEntity != null && bomItemEntity != null && bomHdrEntity != null) {
             if (StringUtils.isNotBlank(matlProdVersnEntity.getPrdntVrsnNum())) {
-                bomElementId = bomElementId + matlProdVersnEntity.getPrdntVrsnNum() + IConstant.VALUE.BACK_SLANT;
+                bomElementId = bomElementId + cleanZero(matlProdVersnEntity.getPrdntVrsnNum()) + IConstant.VALUE.BACK_SLANT;
             }
             if (StringUtils.isNotBlank(mfgRtngEntity.getMatlNum())) {
-                bomElementId = bomElementId + mfgRtngEntity.getMatlNum() + IConstant.VALUE.BACK_SLANT;
+                bomElementId = bomElementId + cleanZero(mfgRtngEntity.getMatlNum()) + IConstant.VALUE.BACK_SLANT;
             }
             if (StringUtils.isNotBlank(mfgRtngEntity.getPlntCd())) {
-                bomElementId = bomElementId + mfgRtngEntity.getPlntCd() + IConstant.VALUE.BACK_SLANT;
+                bomElementId = bomElementId + cleanZero(mfgRtngEntity.getPlntCd()) + IConstant.VALUE.BACK_SLANT;
             }
             if (StringUtils.isNotBlank(matlBomEntity.getBomNum())) {
-                bomElementId = bomElementId + matlBomEntity.getBomNum() + IConstant.VALUE.BACK_SLANT;
+                bomElementId = bomElementId + cleanZero(matlBomEntity.getBomNum()) + IConstant.VALUE.BACK_SLANT;
             }
             if (StringUtils.isNotBlank(matlBomEntity.getAltBomNum())) {
-                bomElementId = bomElementId + matlBomEntity.getAltBomNum() + IConstant.VALUE.BACK_SLANT;
+                bomElementId = bomElementId + cleanZero(matlBomEntity.getAltBomNum()) + IConstant.VALUE.BACK_SLANT;
             }
             if (StringUtils.isNotBlank(matlBomEntity.getBomUsgCd())) {
-                bomElementId = bomElementId + matlBomEntity.getBomUsgCd() + IConstant.VALUE.BACK_SLANT;
+                bomElementId = bomElementId + cleanZero(matlBomEntity.getBomUsgCd()) + IConstant.VALUE.BACK_SLANT;
             }
             if (StringUtils.isNotBlank(mfgRtngItmEntity.getOperNum())) {
-                bomElementId = bomElementId + mfgRtngItmEntity.getOperNum() + IConstant.VALUE.BACK_SLANT;
+                bomElementId = bomElementId + cleanZero(mfgRtngItmEntity.getOperNum()) + IConstant.VALUE.BACK_SLANT;
             }
             if (type.equals(IConstant.VALUE.ZERO)) {
                 if (StringUtils.isNotBlank(bomItemEntity.getCmpntNum())) {
-                    bomElementId = bomElementId + bomItemEntity.getCmpntNum() + IConstant.VALUE.BACK_SLANT;
+                    bomElementId = bomElementId + cleanZero(bomItemEntity.getCmpntNum()) + IConstant.VALUE.BACK_SLANT;
                 }
                 if (StringUtils.isNotBlank(bomItemEntity.getBomItmNum())) {
-                    bomElementId = bomElementId + bomItemEntity.getBomItmNum() + IConstant.VALUE.BACK_SLANT;
+                    bomElementId = bomElementId + cleanZero(bomItemEntity.getBomItmNum()) + IConstant.VALUE.BACK_SLANT;
                 }
                 if (StringUtils.isNotBlank(bomItemEntity.getBomItmVldFromDt())) {
                     Date fromDueDate = DateUtils.stringToDate(bomItemEntity.getBomItmVldFromDt(), DateUtils.F_yyyyMMdd);
@@ -278,25 +286,25 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                               String bomNum, String altBomNum, String bomUsgCd, String operNum) {
         String bomId = "";
         if (StringUtils.isNotBlank(prdntVrsnNum)) {
-            bomId = bomId + prdntVrsnNum + IConstant.VALUE.BACK_SLANT;
+            bomId = bomId + cleanZero(prdntVrsnNum) + IConstant.VALUE.BACK_SLANT;
         }
         if (StringUtils.isNotBlank(parameterValue)) {
-            bomId = bomId + parameterValue + IConstant.VALUE.UNDERLINE;
+            bomId = bomId + cleanZero(parameterValue) + IConstant.VALUE.UNDERLINE;
         }
         if (StringUtils.isNotBlank(matlNum)) {
-            bomId = bomId + matlNum + IConstant.VALUE.BACK_SLANT;
+            bomId = bomId + cleanZero(matlNum) + IConstant.VALUE.BACK_SLANT;
         }
         if (StringUtils.isNotBlank(plntCd)) {
-            bomId = bomId + plntCd + IConstant.VALUE.BACK_SLANT;
+            bomId = bomId + cleanZero(plntCd) + IConstant.VALUE.BACK_SLANT;
         }
         if (StringUtils.isNotBlank(bomNum)) {
-            bomId = bomId + bomNum + IConstant.VALUE.BACK_SLANT;
+            bomId = bomId + cleanZero(bomNum) + IConstant.VALUE.BACK_SLANT;
         }
         if (StringUtils.isNotBlank(altBomNum)) {
-            bomId = bomId + altBomNum + IConstant.VALUE.BACK_SLANT;
+            bomId = bomId + cleanZero(altBomNum) + IConstant.VALUE.BACK_SLANT;
         }
         if (StringUtils.isNotBlank(bomUsgCd)) {
-            bomId = bomId + bomUsgCd + IConstant.VALUE.BACK_SLANT;
+            bomId = bomId + cleanZero(bomUsgCd) + IConstant.VALUE.BACK_SLANT;
         }
         if (StringUtils.isNotBlank(operNum)) {
             bomId = bomId + operNum;
@@ -387,7 +395,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
     private String getPlanLevelId_T11(String fxQtyInd, OMPGdmBomElementBo gdmBomElementBo, String type,
                                       PlanCnsPlanParameterEntity planCnsPlanParameterEntity, EDMBomItemEntity bomItemEntity,
                                       EDMMatlProdVersnEntity matlProdVersnEntity, EDMBomHdrEntity bomHdrEntity,
-                                      EDMMaterialPlantV1Entity materialPlantV1Entity, EDMMfgRtngItmEntity mfgRtngItmEntity) {
+                                      EDMMaterialPlantV1Entity materialPlantV1Entity, EDMMfgRtngItmEntity mfgRtngItmEntity,EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity) {
         String planLevelId = "";
         if (type.equals(IConstant.VALUE.ZERO)) {
             if (StringUtils.isBlank(fxQtyInd)) {
@@ -400,7 +408,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                 gdmBomElementBo_T11.setBomElementId(gdmBomElementBo_T11.getBomElementId() + IConstant.VALUE.PROPORTIONAL_BACK_SLANT);
                 gdmBomElementBo_T11.setPlanLevelId(IConstant.VALUE.VOLUMEPLANNING);
                 //T12
-                String productId = getProductId_T12(planCnsPlanParameterEntity.getParameterValue(), bomItemEntity.getCmpntNum());
+                String productId = getProductId_T12(planCnsPlanParameterEntity,materialGlobalV1Entity,cnsMaterialPlanStatusEntity);
                 gdmBomElementBo_T11.setProductId(productId);
                 //T13 Quantity = BOM_ITEM-cmpntQty * average order qty / BOM_HDR-bomBaseQty
                 String qty = "";
@@ -425,10 +433,19 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
         return planLevelId;
     }
 
-    private String getProductId_T12(String parameterValue, String cmpntNum) {
-        String productId = parameterValue + IConstant.VALUE.UNDERLINE + cmpntNum;
+    private String getProductId_T12(PlanCnsPlanParameterEntity planCnsPlanParameterEntity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity) {
+        String spRelevant = cnsMaterialPlanStatusEntity.getSpRelevant();
+        String noPlanRelevant = cnsMaterialPlanStatusEntity.getNoPlanRelevant();
+        String dpRelevant = cnsMaterialPlanStatusEntity.getDpRelevant();
+        String productId = "";
+        if (spRelevant.equals(IConstant.VALUE.X) || noPlanRelevant.equals(IConstant.VALUE.X)) {
+            productId = materialGlobalV1Entity.getPrimaryPlanningCode();
+        } else if (dpRelevant.equals(IConstant.VALUE.X)) {
+            productId = planCnsPlanParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode();
+        }
         return productId;
     }
+
 
     public String getQuantity_T13(String cmpntQty, String cmpntScrap_Pct, String type) {
         String quantity = "";
@@ -459,13 +476,16 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
             } else {
                 if (bomDt.after(valDt)) {
                     StartEff = DateUtils.dateToString(valDt, DateUtils.J_yyyyMMdd_HHmmss);
-
                 } else {
                     StartEff = DateUtils.dateToString(bomDt, DateUtils.J_yyyyMMdd_HHmmss);
-
                 }
             }
         }
         return StartEff;
+    }
+
+    public String cleanZero(String str) {
+        String newStr = str.replaceAll("^(0+)", "");
+        return newStr;
     }
 }

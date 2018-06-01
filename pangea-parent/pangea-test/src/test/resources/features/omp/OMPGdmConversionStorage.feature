@@ -27,6 +27,12 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | AZ          | AZ           |
     And I wait "/edm/country_v1" Async Queue complete
 
+    Given I import "/edm/source_system_v1" by keyFields "localCountry"
+      | localSourceSystem | sourceSystem |
+      | Project_One       | CONS_LATAM   |
+      | [MDD FASE]        | CONS_LATAM   |
+    And I wait "/edm/source_system_v1" Async Queue complete
+
     Given I import "/edm/jnj_calendar_v1" by keyFields "fiscalPeriod,calWeek,noOfWeek"
       | fiscalPeriod | weekFromDate | weekToDate | calWeek | noOfWeek |
       | 201801       | 2018-01-01   | 2018-01-08 | 001     | 4        |
@@ -54,10 +60,11 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | BaseUom2 | unit2 |
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
+    Then A file is found on sink application with name "GDMConversionStorage.tsv"
     When I submit task with xml file "xml/omp/OMPGdmConversionStorage.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMConversionStorage.tsv"
-
+#    Then A file is found on sink application with name "GDMConversionStorage.tsv"
+#
     Then I check file data for filename "GDMConversionStorage.tsv" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
       | aggregationId      | conversionFactor | currencyId | fromDueDate         | dueDate             | value    | unitId |
       | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 1272.299 | unit1  |
@@ -90,6 +97,12 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | AU          | AU           |
       | AW          | AW           |
     And I wait "/edm/country_v1" Async Queue complete
+
+    Given I import "/edm/source_system_v1" by keyFields "localCountry"
+      | localSourceSystem | sourceSystem |
+      | Project_One       | CONS_LATAM   |
+      | [MDD FASE]        | CONS_LATAM   |
+    And I wait "/edm/source_system_v1" Async Queue complete
 
     Given I import "/edm/jnj_calendar_v1" by keyFields "fiscalPeriod,calWeek,noOfWeek"
       | fiscalPeriod | weekFromDate | weekToDate | calWeek | noOfWeek |
@@ -143,7 +156,7 @@ Feature: OMPGdmConversionStorage AEAZ-3688
     And I delete the test data
     And I will remove all data with region "/omp/gdm_conversion_storage"
     And I will remove all data with region "/plan/edm_failed_data"
-
+#
   @Scenario3
   Scenario: C5 & C6
     And I will remove the test file on sink application "GDMConversionStorage.tsv"
@@ -169,6 +182,12 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | AY          | AY           |
       | AR          | AR           |
     And I wait "/edm/country_v1" Async Queue complete
+
+    Given I import "/edm/source_system_v1" by keyFields "localCountry"
+      | localSourceSystem | sourceSystem |
+      | Project_One       | CONS_LATAM   |
+      | [MDD FASE]        | CONS_LATAM   |
+    And I wait "/edm/source_system_v1" Async Queue complete
 
     Given I import "/edm/jnj_calendar_v1" by keyFields "fiscalPeriod,calWeek,noOfWeek"
       | fiscalPeriod | weekFromDate | weekToDate | calWeek | noOfWeek |
@@ -222,25 +241,25 @@ Feature: OMPGdmConversionStorage AEAZ-3688
 
     Then I check file data for filename "GDMConversionStorage.tsv" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
       | aggregationId      | conversionFactor | currencyId | fromDueDate         | dueDate             | value    | unitId |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 1275.876 | unit1 |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-08 00:00:00 | 2018-01-15 00:00:00 | 1275.876 | unit1 |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-15 00:00:00 | 2018-01-22 00:00:00 | 1275.876 | unit1 |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-22 00:00:00 | 2018-01-29 00:00:00 | 1275.876 | unit1 |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 4563.234 | unit2 |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-05 00:00:00 | 2018-02-12 00:00:00 | 4563.234 | unit2 |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-12 00:00:00 | 2018-02-19 00:00:00 | 4563.234 | unit2 |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-19 00:00:00 | 2018-02-26 00:00:00 | 4563.234 | unit2 |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 1275.876 | unit1 |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-05 00:00:00 | 2018-02-12 00:00:00 | 1275.876 | unit1 |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-12 00:00:00 | 2018-02-19 00:00:00 | 1275.876 | unit1 |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-19 00:00:00 | 2018-02-26 00:00:00 | 1275.876 | unit1 |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 4563.234 | unit2 |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-08 00:00:00 | 2018-01-15 00:00:00 | 4563.234 | unit2 |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-15 00:00:00 | 2018-01-22 00:00:00 | 4563.234 | unit2 |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-22 00:00:00 | 2018-01-29 00:00:00 | 4563.234 | unit2 |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-08 00:00:00 | 2018-01-15 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-15 00:00:00 | 2018-01-22 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-22 00:00:00 | 2018-01-29 00:00:00 | 1275.876 | unit1  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-05 00:00:00 | 2018-02-12 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-12 00:00:00 | 2018-02-19 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-19 00:00:00 | 2018-02-26 00:00:00 | 4563.234 | unit2  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-05 00:00:00 | 2018-02-12 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-12 00:00:00 | 2018-02-19 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-19 00:00:00 | 2018-02-26 00:00:00 | 1275.876 | unit1  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-08 00:00:00 | 2018-01-15 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-15 00:00:00 | 2018-01-22 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-22 00:00:00 | 2018-01-29 00:00:00 | 4563.234 | unit2  |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID             | errorCode | sourceSystem | businessArea | key1               | key2          | key3 | key4 | key5   | errorValue                 |
+      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 #      | DP             | OMPGdmConversionStorage | C5        | omp          |              | 000000000000002888 | sourceSystem2 | BRL  | AZ   | 201803 | Sales price is non-numeric |
 #      | DP             | OMPGdmConversionStorage | C5        | omp          |              | 000000000000002889 | sourceSystem2 | BRL  | AZ   | 201803 | Sales price is non-numeric |
 

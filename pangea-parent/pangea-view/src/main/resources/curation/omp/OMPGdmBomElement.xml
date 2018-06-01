@@ -32,9 +32,25 @@
                             sourceSystem=/edm/matl_bom.sourceSystem,localMaterialNumber=/edm/matl_bom.matlNum,localPlant=/edm/matl_bom.plntCd
                         </expression>
                     </relation>
+                    <relation path="/edm/material_global_v1">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status">
+                        <expression></expression>
+                    </relation>
                 </relations>
             </region>
 
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant,dpRelevant
+                </columns>
+            </region>
+            <region path="/edm/material_global_v1">
+                <columns>
+                    primaryPlanningCode,localDpParentCode,sourceSystem,localMaterialNumber
+                </columns>
+            </region>
             <region path="/edm/material_plant_v1">
                 <columns>
                     localGoodsReceiptProcessingTimeInDays, sourceSystem,localMaterialNumber,localPlant
