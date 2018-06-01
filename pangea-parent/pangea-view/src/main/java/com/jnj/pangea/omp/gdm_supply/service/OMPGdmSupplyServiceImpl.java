@@ -157,8 +157,8 @@ public class OMPGdmSupplyServiceImpl {
                                             if (planCnsPlnSplLocEntity_1 == null) {
                                                 gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
                                             } else {
-                                                gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() +
-                                                        IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getVendorOrCustomer()
+                                                gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem()
+                                                        + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getVendorOrCustomer()
                                                         + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity_1.getLocalNumber());
                                             }
 
