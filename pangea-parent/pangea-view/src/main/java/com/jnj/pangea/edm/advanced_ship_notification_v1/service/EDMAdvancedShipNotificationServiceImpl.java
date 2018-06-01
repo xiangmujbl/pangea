@@ -47,10 +47,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // J1
         // Join using (LIKP-VBELN) = (LIPS-VBELN) to get value of ( LIPS-POSNR) and there can be multiple values
         List<LipsEntity> lipsEntities = lipsDao.getLipsEntitiesWithVbeln(likpEntity.getVbeln());
-        LogUtil.getCoreLog().info("Lips Entity length: {}", lipsEntities.size());
         for(LipsEntity lipsEntity : lipsEntities) {
-            LogUtil.getCoreLog().info("Lips Entity POSNR: {}", lipsEntity.getPosnr());
-            LogUtil.getCoreLog().info("Lips Entity vbeln: {}", lipsEntity.getVbeln());
             resultObjects.add(setObjectByPosnr(likpEntity, lipsEntity));
         }
         return resultObjects;
