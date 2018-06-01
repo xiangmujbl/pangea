@@ -298,7 +298,7 @@ public interface IConstant {
 
     interface PLAN_CNS_ABC_IND {
         String SOURCE_SYSTEM = "sourceSystem";
-        String LOCAL_ABC_INDICATOR = "localAbcIndicator";
+        String LOCAL_INDICATOR = "localIndicator";
     }
 
     interface PLAN_CNS_PROC_TYP {
