@@ -33,6 +33,16 @@ public class PlanCnsPlanUnitDaoImpl extends CommonDaoImpl {
         return null;
     }
 
+    public PlanCnsPlanUnitEntity getCnsPlanUnitEntityWithSourceSystemAndLocalUom(String sourceSystem, String localUom) {
+        if (StringUtils.isNotBlank(localUom) && StringUtils.isNotBlank(sourceSystem)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_UNIT.LOCAL_UOM).is(localUom)
+                    .and(IConstant.CNS_PLAN_UNIT.SOURCE_SYSTEM).is(sourceSystem)
+                    .toQueryString();
+            return queryForObject(IConstant.REGION.CNS_PLAN_UNIT, queryString, PlanCnsPlanUnitEntity.class);
+        }
+        return null;
+    }
+
     public CnsPlanUnitEntity getEntityWithLocalUomAndPlanFlag(String localBaseUom, String planFlag) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_UNIT.LOCAL_UOM).is(localBaseUom)
                 .and(IConstant.CNS_PLAN_UNIT.PLAN_FLAG).is(planFlag).toQueryString();
