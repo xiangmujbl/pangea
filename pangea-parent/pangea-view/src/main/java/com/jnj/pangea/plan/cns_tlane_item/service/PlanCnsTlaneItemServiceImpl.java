@@ -56,10 +56,12 @@ public class PlanCnsTlaneItemServiceImpl {
         PlanCnsTlaneControlEntity planCnsTlaneControlEntity = (PlanCnsTlaneControlEntity) o;
         Map map = (Map) o2;
 
+        LogUtil.getCoreLog().info("================= o2 =" + o2);
+
         String destinationLocationWithOutSystem = "";
         String originLocationWithOutSystem = "";
 
-        String destinationLocation = planCnsTlaneControlEntity.getDestinatonLocation();
+        String destinationLocation = planCnsTlaneControlEntity.getDestinatonlocation();
         String originLocation = planCnsTlaneControlEntity.getOriginLocation();
         String sourceSystem = planCnsTlaneControlEntity.getSourceSystemCriticalParameters();
 
@@ -70,7 +72,13 @@ public class PlanCnsTlaneItemServiceImpl {
             if (StringUtils.isNotEmpty(originLocation)) {
                 originLocationWithOutSystem = originLocation.replaceAll(sourceSystem + IConstant.VALUE.UNDERLINE, IConstant.VALUE.BLANK);
             }
+        } else {
+            LogUtil.getCoreLog().info("================= sourceSystem is null ");
         }
+
+        LogUtil.getCoreLog().info("================= originLocationWithOutSystem  =  " + originLocationWithOutSystem);
+        LogUtil.getCoreLog().info("================= destinationLocationWithOutSystem = " + destinationLocationWithOutSystem);
+
 
         //N1
         String processTypeId = "";
@@ -108,7 +116,7 @@ public class PlanCnsTlaneItemServiceImpl {
                 planCnsTlaneItemBo.setValidFrom(planCnsTlaneControlEntity.getValidFrom());
                 planCnsTlaneItemBo.setValidTo(planCnsTlaneControlEntity.getValidTo());
                 planCnsTlaneItemBo.setOriginLocation(planCnsTlaneControlEntity.getOriginLocation());
-                planCnsTlaneItemBo.setDestinatonLocation(planCnsTlaneControlEntity.getDestinatonLocation());
+                planCnsTlaneItemBo.setDestinatonLocation(planCnsTlaneControlEntity.getDestinatonlocation());
                 planCnsTlaneItemBo.setMode(planCnsTlaneControlEntity.getMode());
                 planCnsTlaneItemBo.setLeadTime(planCnsTlaneControlEntity.getLeadTime());
                 planCnsTlaneItemBo.setProcessTypeId(processTypeId);
@@ -151,7 +159,7 @@ public class PlanCnsTlaneItemServiceImpl {
                     planCnsTlaneItemBo.setValidFrom(planCnsTlaneControlEntity.getValidFrom());
                     planCnsTlaneItemBo.setValidTo(planCnsTlaneControlEntity.getValidTo());
                     planCnsTlaneItemBo.setOriginLocation(planCnsTlaneControlEntity.getOriginLocation());
-                    planCnsTlaneItemBo.setDestinatonLocation(planCnsTlaneControlEntity.getDestinatonLocation());
+                    planCnsTlaneItemBo.setDestinatonLocation(planCnsTlaneControlEntity.getDestinatonlocation());
                     planCnsTlaneItemBo.setMode(planCnsTlaneControlEntity.getMode());
                     planCnsTlaneItemBo.setLeadTime(planCnsTlaneControlEntity.getLeadTime());
                     planCnsTlaneItemBo.setProcessTypeId(processTypeId);
@@ -250,6 +258,7 @@ public class PlanCnsTlaneItemServiceImpl {
             String queryString = object.getAdfCriteria().and(IConstant.VALUE.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
 
             if (StringUtils.isNotBlank(queryString)) {
+                LogUtil.getCoreLog().info("===================== queryString=" + queryString);
                 List<Map.Entry<String, String>> entryList = AdfViewHelper.queryForList(object.getRegionPath(), queryString);
                 List<String> list = new ArrayList();
                 for (Map.Entry<String, String> entry : entryList) {
@@ -311,10 +320,20 @@ public class PlanCnsTlaneItemServiceImpl {
         ADFCriteria adfCriteria = QueryHelper.buildCriteria(field);
         switch (operator) {
             case IConstant.VALUE.OPERATOR_EQUAL:
-                adfCriteria.is(value);
+                if (value.contains(",")) {
+                    String[] items = value.split(",");
+                    adfCriteria.in(items);
+                } else {
+                    adfCriteria.is(value);
+                }
                 break;
             case IConstant.VALUE.OPERATOR_NOT_EQUAL:
-                adfCriteria.is(value).not();
+                if (value.contains(",")) {
+                    String[] items = value.split(",");
+                    adfCriteria.in(items).not();
+                } else {
+                    adfCriteria.is(value).not();
+                }
                 break;
             case IConstant.VALUE.OPERATOR_LESS_THAN:
                 adfCriteria.lessThan(value);
