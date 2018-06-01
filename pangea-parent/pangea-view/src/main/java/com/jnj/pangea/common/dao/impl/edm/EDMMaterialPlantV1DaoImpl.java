@@ -23,13 +23,17 @@ public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
                 .and(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
     }
-    public EDMMaterialPlantV1Entity getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(String sourceSystem, String localPlant, String localMaterialNumber) {
 
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_PLANT_V1.SOURCE_SYSTEM).is(sourceSystem)
-                .and(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_PLANT).is(localPlant)
-                .and(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+    public EDMMaterialPlantV1Entity getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(String sourceSystem, String localPlant, String localMaterialNumber) {
+        if (sourceSystem != null && localPlant != null && localMaterialNumber != null && ( (!(sourceSystem.isEmpty())) && (!(localPlant.isEmpty())) && (!(localMaterialNumber.isEmpty())))) {
+            String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_PLANT_V1.SOURCE_SYSTEM).is(sourceSystem)
+                    .and(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_PLANT).is(localPlant)
+                    .and(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
+            return queryForObject(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+        }
+        return null;
     }
+
     public EDMMaterialPlantV1Entity getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber( String localMaterialNumber) {
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_PLANT_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
         return queryForObject(IConstant.REGION.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);

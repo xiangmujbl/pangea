@@ -90,8 +90,8 @@ Feature: OMPGdmLocation AEAZ-3685
 
     And I will remove the test file on sink application "GDMLocation_xref.tsv"
 
-    Given I import "/plan/cns_spl_pln_loc" by keyFields "sourceSystem,vendororCustomer,localNumber,localName"
-      | sourceSystem | vendororCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion | localPlant |
+    Given I import "/plan/cns_spl_pln_loc" by keyFields "sourceSystem,vendorOrCustomer,localNumber,localName"
+      | sourceSystem | vendorOrCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion | localPlant |
       | BtB          | V                | 234500_C1   | US           |               | Silgan    | Silgan234500  | NJ          |            |
       | BtB          | V                | 234555_C1   | US           | USD           | Silgan    | Silgan234500  | NJ          | BR12       |
       | BtB          | C                | 234560_C3   | US           | USD           | Silgan    | Silgan234500  | NJ          | BR12       |

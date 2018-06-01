@@ -179,6 +179,11 @@ public interface IConstant {
         String LOCAL_PLAN_STRAT_GRP = "localPlanStratGrp";
     }
 
+    interface PLAN_CNS_PLN_SPL_LOC {
+        String VENDOR_PURCHASE = "VendorPurchase";
+        String EXTERNAL_PURCHASE = "ExternalPurchase";
+    }
+
     interface PROJECT_ONE_T439A {
         String DISLS = "disls";
     }
@@ -527,6 +532,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCALNUMBER = "localNumber";
         String VENDORORCUSTOMER = "vendorOrCustomer";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface CNS_TLANE_ITEM {
@@ -625,9 +631,6 @@ public interface IConstant {
         String LESS_DAYS = "LessDays";
         String SEVEN = "7";
         String VENDOR_TRANSPORT = "VendorTransport";
-        String SUPPLY = "SUPPLY";
-        String INFINITE = "INFINITE";
-        String ASTERIX = "*";
         String DEFAULT = "DEFAULT";
     }
 

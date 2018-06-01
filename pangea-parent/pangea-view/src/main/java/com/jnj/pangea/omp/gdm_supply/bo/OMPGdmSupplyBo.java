@@ -27,7 +27,8 @@ public class OMPGdmSupplyBo extends BaseBo {
     private String SupplierId;
     private String ToDate;
     private String TransportType;
-    private String VENDOR;
+    private String VENDORID;
+    private String INCQuantity;
 
     // TODO add keys
     @Override
@@ -213,12 +214,20 @@ public class OMPGdmSupplyBo extends BaseBo {
         TransportType = transportType;
     }
 
-    public String getVENDOR() {
-        return VENDOR;
+    public String getVENDORID() {
+        return VENDORID;
     }
 
-    public void setVENDOR(String VENDOR) {
-        this.VENDOR = VENDOR;
+    public void setVENDORID(String VENDORID) {
+        this.VENDORID = VENDORID;
+    }
+
+    public String getINCQuantity() {
+        return INCQuantity;
+    }
+
+    public void setINCQuantity(String INCQuantity) {
+        this.INCQuantity = INCQuantity;
     }
 
 }
