@@ -2,6 +2,7 @@ package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
@@ -22,8 +23,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
 
     public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndlLocalPlant(String localMaterialNumber, String localPlant) {
         if (StringUtils.isNotEmpty(localPlant) && StringUtils.isNotEmpty(localMaterialNumber)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
-                    .and(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlant).toQueryString();
+            String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).and(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlant).toQueryString();
             return queryForObject(IConstant.REGION.CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
         }
         return null;
@@ -169,6 +169,16 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
+
+    public List<PlanCnsMaterialPlanStatusEntity> getEntitiesWithLocalMaterialNumberLocalPlantSourceSystemAndRelevant(String localMaterialNumber, String localPlantNum, String sourceSystem) {
+		String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlantNum).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is("X").
+                toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
+    }
+
     public PlanCnsMaterialPlanStatusEntity getPlanCnsMaterialPlanStatusEntity4251(String sourceSystem,String localMaterialNumber,String localPlant){
         ADFCriteria adfCriteria=QueryHelper.buildCriteria();
         if(StringUtils.isBlank(sourceSystem)){

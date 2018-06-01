@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
+import java.util.List;
+
 
 public class PlanCnsPlnSplLocDaoImpl extends CommonDaoImpl {
     private static PlanCnsPlnSplLocDaoImpl instance;
@@ -41,5 +43,11 @@ public class PlanCnsPlnSplLocDaoImpl extends CommonDaoImpl {
             return queryForList(IConstant.REGION.CNS_SPL_PLN_LOC, queryString, PlanCnsPlnSplLocEntity.class);
         }
         return null;
+    }
+
+    public List<PlanCnsPlnSplLocEntity> getEntitiesWithSourceSystemAndLocalPlantNumber (String sourceSystem, String localPlantNumber) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_SPL_PLN_LOC.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.PLAN_CNS_SPL_PLN_LOC.LOCALNUMBER).is(localPlantNumber).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_SPL_PLN_LOC,queryString,PlanCnsPlnSplLocEntity.class);
     }
 }

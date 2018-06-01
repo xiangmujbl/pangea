@@ -285,6 +285,11 @@ public interface IConstant {
         String LOCAL_PLAN_STRAT_GRP = "localPlanStratGrp";
     }
 
+    interface PLAN_CNS_PLN_SPL_LOC {
+        String VENDOR_PURCHASE = "VendorPurchase";
+        String EXTERNAL_PURCHASE = "ExternalPurchase";
+    }
+
     interface PROJECT_ONE_T439A {
         String DISLS = "disls";
     }
@@ -329,6 +334,7 @@ public interface IConstant {
         String LOCAL_COUNTRY = "localCountry";
         String SOURCE_SYSTEM = "sourceSystem";
     }
+
     interface EDM_WRK_CTR {
         String SRC_SYS_CD = "srcSysCd";
         String CAPY_NUM = "capyNum";
@@ -483,7 +489,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
-        String SP_RELEVANT = "sPRelevant";
+        String SP_RELEVANT = "spRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
 
@@ -671,12 +677,15 @@ public interface IConstant {
 
     interface CNS_TLANE_ITEM_EXCEPTION {
         String REF_SEQ_NUM_TLANE_ITEM = "refSeqNumTlaneItem";
+        String MATERIAL_NUMBER = "materialNumber";
+        String TLANE_NAME = "tlaneName";
     }
 
     interface PLAN_CNS_SPL_PLN_LOC {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCALNUMBER = "localNumber";
         String VENDORORCUSTOMER = "vendorOrCustomer";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface CNS_TLANE_ITEM {
@@ -867,7 +876,7 @@ public interface IConstant {
         String YYYY_MM_DD = "yyyy/MM/dd";
         String YYYYMMDD_ZERO = "00000000";
         String YYYY_MM_DD_ZERO = "0000/00/00";
-        String HH_NN_SS_ZERO = " 00:00:00";
+        String  HH_NN_SS_ZERO = " 00:00:00";
         String YYYYMMDDHHMMSS = "yyyy/MM/dd HH:mm:ss";
         String YYYYDDMMHHMMSS = "yyyy/DD/mm HH:mm:ss";
         String YYYYMMDDBS = "yyyy/MM/dd";
@@ -943,10 +952,8 @@ public interface IConstant {
         String OPERATOR_GREATER_THAN = ">";
         String OPERATOR_GREATER_THAN_EQUAL = ">=";
         String OPERATOR_NOT_EQUAL = "!=";
-
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
-
         String BR = "BR";
         String BATCH_START = "batchstart";
         String BATCH_END = "batchend";
