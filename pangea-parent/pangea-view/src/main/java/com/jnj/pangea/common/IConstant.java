@@ -188,6 +188,7 @@ public interface IConstant {
 
     interface PLAN_CNS_MATERIAL_PLAN_STATUS {
         String DP_RELEVANT = "dpRelevant";
+
         String SP_RELEVANT = "spRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
@@ -196,6 +197,7 @@ public interface IConstant {
         String LOCAL_PARENT_CODE = "localParentCode";
         String MATERIAL_NUMBER = "materialNumber";
         String ACTIVE = "active";
+        String FIELD_X="X";
     }
 
     interface PLAN_PROD_LOC_MIN_SHELF {
@@ -1067,15 +1069,12 @@ public interface IConstant {
             public static final String FIELD_DSTRBTNKEYCD_NAME="GLEI";
             public static final String FIELD_DSTRBTNKEYCD_VALUE="continu";
             public static final String FIELD_DSTRBTNKEYCD_MAT_VALUE="batchend";
-
-
             public static final String FIELD_DSTRBTNKEYCD_BLACK_VALUE="batchstart";
-
             public static final String FIELD_DSTRBTNKEYCD_ELSE_VALUE="";
-
-
         }
+
         public static final String KEY_SPLIT="/";
+
         public static final String QTYFXIND_X="X";
         public static final String QTYFXIND_X_VALUE="fixed";
         public static final String QTYFXIND_BLACK="proportional";
@@ -1083,6 +1082,12 @@ public interface IConstant {
 
 
         public static final String LEAVE_BLACK="";
+
+        public static final String PATTERN_POINTER=".";
+
+        public static final String PATTERN_= "-";
+
+        public static final String PATTERN_0P000= "0.000";
 
         public static final String ENDEFF="31/12/2998 23:59:59";
         public static final String STARTEFF="01/01/1980 00:00:00";
@@ -1094,20 +1099,21 @@ public interface IConstant {
         public static final long DEFAULT_VALUE_LEADTIMEOFFSET=864000;
         public static final String DEFAULT_VALUE_PLANLEVELID_BLANK="*";
         public static final String DEFAULT_VALUE_0_BLANK="0";
-
-
+        public static final char DEL_0='0';
         public static final String DEFAULT_VALUE_PlanLevelId_X="DetailedScheduling";
-
-
         public static final String CLONE_BOMEID="proportional";
         public static final String CLONE_PLANLEVELID="VolumePlanning";
         public static final String PATTERN_DECIMAL_5="#.00000";
         public static final String PATTERN_DECIMAL_3="#.000";
 
+    }
+    interface FAILDATA{
+        public static final String ERRORCODE="500";
+        public static final String NA="NA";
+        public static final String  PRODUCTID_FAIL_MSG="Unable to construct ProductId";
 
 
     }
-
     interface RKPF {
         String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
     }
