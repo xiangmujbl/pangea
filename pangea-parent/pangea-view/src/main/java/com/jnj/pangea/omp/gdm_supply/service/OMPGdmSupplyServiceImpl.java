@@ -46,6 +46,7 @@ public class OMPGdmSupplyServiceImpl {
         ResultObject resultObject = new ResultObject();
         OMPGdmSupplyBo gdmSupplyBo = new OMPGdmSupplyBo();
         List<ResultObject> resultObjects = new ArrayList<>();
+        List<ResultObject> skipObjects = new ArrayList<>();
 
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
@@ -188,14 +189,16 @@ public class OMPGdmSupplyServiceImpl {
                                             // N18
                                             PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity_2 = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
                                             if(null != planCnsPlnSplLocEntity_2) {
-                                                    if (planCnsPlnSplLocEntity_2.getLocalPlant().isEmpty()) {
-                                                        // check if planCnsPlnSplLocEntity exists getLocalPlant if not then populate value as "VendorPurchase"
-                                                        gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.VENDOR_PURCHASE);
-                                                    } else {
-                                                        // if no value returned use ExternalPurchase
-                                                        gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.EXTERNAL_PURCHASE);
-                                                    }
+                                                if (planCnsPlnSplLocEntity_2.getLocalPlant().isEmpty()) {
+                                                    // check if planCnsPlnSplLocEntity exists getLocalPlant if not then populate value as "VendorPurchase"
+                                                    gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.VENDOR_PURCHASE);
+                                                } else {
+                                                    return skipObjects;
                                                 }
+                                            } else {
+                                                // if no value returned use ExternalPurchase
+                                                gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.EXTERNAL_PURCHASE);
+                                            }
 
                                             // N16
                                             if(edmSourceListV1Entity.getLocalVendorAccountNumber() != null) {
@@ -225,6 +228,7 @@ public class OMPGdmSupplyServiceImpl {
                                                     }
                                                 }
                                             }
+
                                             // N19
                                             PlanCnsProcessTypeEntity planCnsProcessTypeEntity = cnsProcessTypeDao.getEntityWithConditions(gdmSupplyBo.getPROCESSTYPEID());
                                             if (planCnsProcessTypeEntity != null) {
