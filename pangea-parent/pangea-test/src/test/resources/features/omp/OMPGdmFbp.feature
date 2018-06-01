@@ -1,7 +1,7 @@
-@pangea_test @AEAZ-4062
+@pangea_test @AEAZ-
 Feature:  OMPGdmfbp-Curation AEAZ-4062
   @Scenario1
-  Scenario: Pick unique FPB data from cns_fin_plan_qty and cns_fin_plan_val 
+ Scenario: Pick unique FPB data from cns_fin_plan_qty and cns_fin_plan_val 
 
     And I will remove the test file on sink application "GDMFbp.tsv"
 
@@ -69,7 +69,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     And I wait "/edm/material_auom_v1" Async Queue complete
 
-    When I submit task with xml file "xml/omp/OMPGdmFbp.xml" and execute file "jar/pangea-view.jar"
+   When I submit task with xml file "xml/omp/OMPGdmFbp.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMFbp.tsv"
 
@@ -173,8 +173,8 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-
-    #And I compare the number of records between "/plan/cns_fin_plan_qty" and "/omp/gdm_fbp,/plan/edm_failed_data"
+      | DP               | GDMFbp      | J1         | omp           |                | CONS_LATAM | 000000000000002887 |      |      |      | localDpParentCode not found |
+    And I compare the number of records between "/plan/cns_fin_plan_qty" and "/omp/gdm_fbp,/plan/edm_failed_data"
 
     Then I delete the test data
 
@@ -286,3 +286,6 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     And I will remove all data with region "/omp/gdm_fbp"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+
+

@@ -3,7 +3,7 @@ Feature:  OMPGdmProduct AEAZ-3689
 
   Scenario: Full Load curation
 
-    And I will remove the test file on sink application "GDMProduct.tsv"
+#    And I will remove the test file on sink application "GDMProduct.tsv"
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber   | localRefDescription             | localMaterialType | localBaseUom | materialNumber | refDescription                           | materialType | localDpParentCode | parentCode    | globalDpParentCode | form | category | subBrand | brand | franchise | globalBusinessUnit | productFamily | localManufacturingTechnology | manufacturingTechnology | localMaterialGroup | materialGroup | flagForDeletion | materialStatus | division | batchManageIndicator | minRemShelfLife | totalShelfLife | primaryPlanningCode |
@@ -30,7 +30,7 @@ Feature:  OMPGdmProduct AEAZ-3689
       | sourceSystem | localMaterialNumber   | localPlant | materialNumber | localParentCode | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
       | CONS_LATAM   | 000000000000000016    | BR011      | 9862           | G3a             | G4a | X      | X          |            | X            |                |
       | CONS_LATAM   | 000000000000000046    | BR021      | 9864           | G3b             | G4b | X      | X          | X          | X            |                |
-      | CONS_LATAM   | 000000000000000076    | BR021      | 9864           | G3b             | G4b | X      |            |            | X            | X              |
+      | CONS_LATAM   | 000000000000000076    | BR021      | 9864           | G3b             | G4b | X      | X          |            | X            | X              |
 
       | CONS_LATAM   | 000000000000000109_J1 | BR031      |                |                 |     | X      |            |            | X            |                |
       | CONS_LATAM   | 000000000000000110_J1 | BR031      |                |                 |     | X      | X          |            | X            | X              |
@@ -112,16 +112,23 @@ Feature:  OMPGdmProduct AEAZ-3689
       | CONS_LATAM   | KG       | KiloGram     | SP       | KGU  |
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
+    Given I import "/plan/cns_root_description" by keyFields "sourceSystem,localDpParentCode"
+      | sourceSystem | localDpParentCode | rootDesc                                 | ovrRootDesc                              |
+      | CONS_LATAM   | LDPC01            | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | J'S SOFT DEO                             |
+      | CONS_LATAM   | LDPC02            | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |
+    And I wait "/plan/cns_root_description" Async Queue complete
+
     When I submit task with xml file "xml/omp/OMPGdmProduct.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMProduct.tsv"
 
     Then I check file data for filename "GDMProduct.tsv" by keyFields "productId"
-      | productId | active | activeFCTERP | activeOPRERP | activeSOPERP | color | description                              | label                                    | matkl | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc  | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | prdha | shortDescription                         | sourceLocationId | subFranchise | technology | unitId |
-      | 1234      | YES    | YES          | YES          | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
-      | LA_LDPC02 | YES    | YES          | YES          | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
-      | LA_LDPC01 | YES    | YES          | NO           | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG01  | AB101              | Acuvue Bifocal         | 101                | C&C ACNE               | 1001               | Body Care Wash          | 101                | OGX                    | TD001              | JOHNSONS ADULT         | FCH001             | BABY CARE              | GFO001             | SKINCARE               |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT01      | CRTU   |
-      | 2563      | YES    | YES          | YES          | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | MG02  | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
+#    Then I check region data "/omp/gdm_product" by keyFields "productId"
+      | productId | active | activeFCTERP | activeOPRERP | activeSOPERP | color | description                              | planningHierarchy1 | planningHierarchy1Desc | planningHierarchy2 | planningHierarchy2Desc | planningHierarchy3 | planningHierarchy3Desc  | planningHierarchy4 | planningHierarchy4Desc | planningHierarchy5 | planningHierarchy5Desc | planningHierarchy6 | planningHierarchy6Desc | planningHierarchy7 | planningHierarchy7Desc | shortDescription                         | sourceLocationId | subFranchise | technology | unitId |
+      | 1234      | YES    | NO           | YES          | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
+      | LA_LDPC02 | YES    | YES          | NO           | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
+      | LA_LDPC01 | YES    | YES          | NO           | NO           |       | J'S SOFT DEO                             | AB101              | Acuvue Bifocal         | 101                | C&C ACNE               | 1001               | Body Care Wash          | 101                | OGX                    | TD001              | JOHNSONS ADULT         | FCH001             | BABY CARE              | GFO001             | SKINCARE               | J'S SOFT DEO                             |                  |              | LMT01      | CRTU   |
+      | 2563      | YES    | NO           | YES          | NO           |       | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | AC102              | Acuvue 2               | 102                | C&C CLEANSERS          | 1002               | Body Cleansing Bar Soap | 102                | Neostrata              | TD002              | JOHNSONS BABY          | FCH002             | BEAUTY                 | GFO002             | CHC                    | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML |                  |              | LMT02      | EAU    |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1                  | key2 | key3 | key4 | key5 | errorValue                                                      |
@@ -139,7 +146,6 @@ Feature:  OMPGdmProduct AEAZ-3689
       | SP             | OMPGdmProduct | E7        | CONS_LATAM   |              | 000000000000000117_E7 |      |      |      |      | There is no franchise assigned for product                      |
       | SP             | OMPGdmProduct | E8        | CONS_LATAM   |              | 000000000000000118_E8 |      |      |      |      | There is no globalBusinessUnit assigned for product             |
       | SP             | OMPGdmProduct | E9        | CONS_LATAM   |              | 000000000000000119_E9 |      |      |      |      | No Plannable Enterprise UOM has been assigned to the local Unit |
-#     And I compare the number of records between "/edm/material_global_v1" and "/omp/gdm_product,/plan/edm_failed_data"
 
   Scenario: delete all test data
 

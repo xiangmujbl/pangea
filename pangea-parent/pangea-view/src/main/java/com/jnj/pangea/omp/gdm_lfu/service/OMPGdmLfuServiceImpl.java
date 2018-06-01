@@ -70,12 +70,12 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
             EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomV1Dao.getEntityWithConditions(finPlanQtyEntity.getLocalMaterialNumber(), finPlanQtyEntity.getUnitId(), finPlanQtyEntity.getSourceSystem());
             if (edmMaterialAuomV1Entity != null) {
                 try {
-                    int quantity = Integer.parseInt(finPlanQtyEntity.getQuantity());
-                    int localNumerator = Integer.parseInt(edmMaterialAuomV1Entity.getLocalNumerator());
-                    int localDenominator = Integer.parseInt(edmMaterialAuomV1Entity.getLocalDenominator());
+                    double quantity = Double.parseDouble(finPlanQtyEntity.getQuantity());
+                    double localNumerator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalNumerator());
+                    double localDenominator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
                     qty = quantity * localNumerator / localDenominator + "";
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogUtil.getCoreLog().error(e.getMessage());
                 }
             }
             gdmLfuBo.setVolume(qty);
