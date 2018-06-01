@@ -122,4 +122,20 @@ public class PlanCnsMaterialPlanStatusEntity extends CommonEntity {
         this.noPlanRelevant = noPlanRelevant;
     }
 
+    @Override
+    public String toString() {
+        return "PlanCnsMaterialPlanStatusEntity{" +
+                "sourceSystem='" + sourceSystem + '\'' +
+                ", localMaterialNumber='" + localMaterialNumber + '\'' +
+                ", localPlant='" + localPlant + '\'' +
+                ", materialNumber='" + materialNumber + '\'' +
+                ", localParentCode='" + localParentCode + '\'' +
+                ", ppc='" + ppc + '\'' +
+                ", active='" + active + '\'' +
+                ", dpRelevant='" + dpRelevant + '\'' +
+                ", spRelevant='" + spRelevant + '\'' +
+                ", parentActive='" + parentActive + '\'' +
+                ", noPlanRelevant='" + noPlanRelevant + '\'' +
+                '}';
+    }
 }

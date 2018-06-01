@@ -68,7 +68,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
             country = finPlanQtyEntity.getCountry();
             yearMonth = finPlanQtyEntity.getYearMonth();
             EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomV1Dao.getEntityWithConditions(finPlanQtyEntity.getLocalMaterialNumber(), finPlanQtyEntity.getUnitId(), finPlanQtyEntity.getSourceSystem());
-            if (edmMaterialAuomV1Entity != null) {
+            if(edmMaterialAuomV1Entity!=null){
                 try {
                     double quantity = Double.parseDouble(finPlanQtyEntity.getQuantity());
                     double localNumerator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalNumerator());

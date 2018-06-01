@@ -15,6 +15,8 @@ public class EDMMfgOrderEntity extends CommonEntity {
     private String actRlseDt;
     private String srcSysCd;
     private String plntCd;
+    private String primaryPlanningCode;
+
     public EDMMfgOrderEntity(Map<String, Object> map) {
         super(map);
 
@@ -27,6 +29,15 @@ public class EDMMfgOrderEntity extends CommonEntity {
         setActRlseDt ((String) map.get("actRlseDt"));
         setSrcSysCd((String) map.get("srcSysCd"));
         setPlntCd((String) map.get("plntCd"));
+        setPrimaryPlanningCode((String) map.get("primaryPlanningCode"));
+    }
+
+    public String getPrimaryPlanningCode() {
+        return primaryPlanningCode;
+    }
+
+    public void setPrimaryPlanningCode(String primaryPlanningCode) {
+        this.primaryPlanningCode = primaryPlanningCode;
     }
 
     public String getBomCatCd() {
