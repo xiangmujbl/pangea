@@ -85,6 +85,17 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
+    
+    public PlanCnsMaterialPlanStatusEntity getEntityWithSPNoPlanRelevantAndLocalMaterialnumber(String localMaterialnumber) {
+    	
+    	 ADFCriteria adfCriteria = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber);
+    	 adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is(IConstant.VALUE.X)
+                 .or(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.NO_PLAN_RELEVANT).is(IConstant.VALUE.X)));
+                 
+        String queryString = adfCriteria.toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
+    }
+
 
     public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndsourceSystem(String localMaterialNumber, String sourceSystem) {
         if ("".equals(localMaterialNumber) || "".equals(sourceSystem)) {
@@ -171,6 +182,20 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
+    public PlanCnsMaterialPlanStatusEntity getEntityWithLocalParentCodeAndDp(String localParentCode) {
+        if (StringUtils.isNotEmpty(localParentCode) ) {
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_PARENT_CODE).is(localParentCode)
+            		.and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.DP_RELEVANT).is(IConstant.VALUE.X)
+            		.toQueryString();
+            
+            PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
+            if (planCnsMaterialPlanStatusEntity != null) {
+                return planCnsMaterialPlanStatusEntity;
+            }
+        }
+        return null;
+    }
+    
     public PlanCnsMaterialPlanStatusEntity getPlanCnsMaterialPlanStatusEntity4251(String sourceSystem,String localMaterialNumber,String localPlant){
         ADFCriteria adfCriteria=QueryHelper.buildCriteria();
         if(StringUtils.isBlank(sourceSystem)){
