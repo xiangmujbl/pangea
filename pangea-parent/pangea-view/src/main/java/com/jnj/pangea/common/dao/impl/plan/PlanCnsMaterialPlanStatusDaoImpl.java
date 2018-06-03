@@ -2,6 +2,7 @@ package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
@@ -65,6 +66,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
             String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
                     .and(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlant)
                     .and(IConstant.CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+            LogUtil.getCoreLog().info("---------------queryString_PlanCnsMaterialPlanStatusEntity--------"+queryString);
             return queryForObject(IConstant.REGION.CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
         }
         return null;

@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_bom_element.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
@@ -62,7 +63,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
         List<EDMMatlProdVersnEntity> matlProdVersnEntityList = matlProdVersnDao.getEntityWithFourConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getPlntCd(), matlBomEntity.getMatlNum(), matlBomEntity.getAltBomNum());
         EDMBomItemEntity bomItemEntity = bomItemDao.getEntityWithConditions(matlBomEntity.getBomNum(), matlBomEntity.getSrcSysCd());
         EDMMaterialPlantV1Entity materialPlantV1Entity = materialPlantV1Dao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(matlBomEntity.getSrcSysCd(), matlBomEntity.getPlntCd(), matlBomEntity.getMatlNum());
-        PlanCnsPlanParameterEntity planCnsPlanParameterEntity = cnsPlanParameterDao.getEntitiesWithConditions1(matlBomEntity.getSrcSysCd(), IConstant.VALUE.SEND_TO_OMP, matlBomEntity.getSrcSysCd());
+        PlanCnsPlanParameterEntity planCnsPlanParameterEntity = cnsPlanParameterDao.getEntitiesWithConditions1(matlBomEntity.getSourceSystem(), IConstant.VALUE.SEND_TO_OMP);
         if (matlProdVersnEntityList != null && matlProdVersnEntityList.size() > 0) {
             for (EDMMatlProdVersnEntity matlProdVersnEntity : matlProdVersnEntityList) {
                 if (matlProdVersnEntity != null && bomItemEntity != null && materialPlantV1Entity != null && planCnsPlanParameterEntity != null) {
@@ -78,6 +79,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                                         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithMaterialNumberAndSourceSystem(bomItemEntity.getCmpntNum(), matlBomEntity.getSrcSysCd());
                                         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = materialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(bomItemEntity.getCmpntNum(), matlBomEntity.getPlntCd(), matlBomEntity.getSrcSysCd());
                                         if (bomHdrEntity != null && materialGlobalV1Entity != null && cnsMaterialPlanStatusEntity != null) {
+//                                        if (bomHdrEntity != null) {
                                             ResultObject resultObject = new ResultObject();
                                             OMPGdmBomElementBo gdmBomElementBo = new OMPGdmBomElementBo();
                                             //T1
@@ -131,10 +133,12 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                                             //T11
                                             String planLevelId = getPlanLevelId_T11(bomItemEntity.getFxQtyInd(), gdmBomElementBo, IConstant.VALUE.ZERO,
                                                     planCnsPlanParameterEntity, bomItemEntity, matlProdVersnEntity,
-                                                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity,materialGlobalV1Entity,cnsMaterialPlanStatusEntity);
+                                                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity, materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
                                             gdmBomElementBo.setPlanLevelId(planLevelId);
                                             resultObject.setBaseBo(gdmBomElementBo);
                                             resultObjectList.add(resultObject);
+                                        }else{
+                                            return resultObjectList;
                                         }
                                     } else {
                                         return resultObjectList;
@@ -149,10 +153,11 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                     }
                 }
             }
+        }else{
+            return resultObjectList;
         }
         return resultObjectList;
     }
-
 
 
     public ResultObject getProductMat(Object o) {
@@ -217,7 +222,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
             //T11
             String planLevelId = getPlanLevelId_T11(bomItemEntity.getFxQtyInd(), gdmBomElementBo, IConstant.VALUE.ONE,
                     planCnsPlanParameterEntity_system_object, bomItemEntity, matlProdVersnEntity,
-                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity,materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
+                    bomHdrEntity, materialPlantV1Entity, mfgRtngItmEntity, materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
             gdmBomElementBo.setPlanLevelId(planLevelId);
             //T12
             String productId = getProductId_T12(planCnsPlanParameterEntity_system_object, materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
@@ -395,7 +400,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
     private String getPlanLevelId_T11(String fxQtyInd, OMPGdmBomElementBo gdmBomElementBo, String type,
                                       PlanCnsPlanParameterEntity planCnsPlanParameterEntity, EDMBomItemEntity bomItemEntity,
                                       EDMMatlProdVersnEntity matlProdVersnEntity, EDMBomHdrEntity bomHdrEntity,
-                                      EDMMaterialPlantV1Entity materialPlantV1Entity, EDMMfgRtngItmEntity mfgRtngItmEntity,EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity) {
+                                      EDMMaterialPlantV1Entity materialPlantV1Entity, EDMMfgRtngItmEntity mfgRtngItmEntity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity) {
         String planLevelId = "";
         if (type.equals(IConstant.VALUE.ZERO)) {
             if (StringUtils.isBlank(fxQtyInd)) {
@@ -408,7 +413,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                 gdmBomElementBo_T11.setBomElementId(gdmBomElementBo_T11.getBomElementId() + IConstant.VALUE.PROPORTIONAL_BACK_SLANT);
                 gdmBomElementBo_T11.setPlanLevelId(IConstant.VALUE.VOLUMEPLANNING);
                 //T12
-                String productId = getProductId_T12(planCnsPlanParameterEntity,materialGlobalV1Entity,cnsMaterialPlanStatusEntity);
+                String productId = getProductId_T12(planCnsPlanParameterEntity, materialGlobalV1Entity, cnsMaterialPlanStatusEntity);
                 gdmBomElementBo_T11.setProductId(productId);
                 //T13 Quantity = BOM_ITEM-cmpntQty * average order qty / BOM_HDR-bomBaseQty
                 String qty = "";

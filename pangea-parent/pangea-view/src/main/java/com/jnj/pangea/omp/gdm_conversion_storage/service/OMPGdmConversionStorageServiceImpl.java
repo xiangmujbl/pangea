@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_conversion_storage.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -72,6 +73,12 @@ public class OMPGdmConversionStorageServiceImpl {
             return resultObjectList;
         }
         List<EDMJNJCalendarV1Entity> edmJNJCalendarV1EntityList = edmJNJCalendarV1Dao.getEntityWithFiscalPeriod(cnsDpPriceEntity.getFromDate());
+        if(edmJNJCalendarV1EntityList==null || edmJNJCalendarV1EntityList.size()<=0){
+            String errorValue = "sourceSystem / dpParent code / channel / countryCode do not exist";
+            ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.J1, errorValue, cnsDpPriceEntity);
+            resultObjectList.add(resultObject);
+            return resultObjectList;
+        }
         if (edmJNJCalendarV1EntityList != null && edmJNJCalendarV1EntityList.size() > 0) {
 
             for (EDMJNJCalendarV1Entity edmjnjCalendarV1Entity : edmJNJCalendarV1EntityList) {
@@ -127,6 +134,9 @@ public class OMPGdmConversionStorageServiceImpl {
                             //C5
                             String salesPrice = cnsDpPriceEntity.getSalesPrice();
                             if (StringUtils.isBlank(salesPrice) || IConstant.VALUE.ZERO.equals(salesPrice)) {
+                                String errorValue = "Sales price is non-numeric";
+                                ResultObject resultObject = getFailDate(IConstant.FAILED.ERROR_CODE.C5, errorValue, cnsDpPriceEntity);
+                                resultObjectList.add(resultObject);
                                 continue;
                             } else if (StringUtils.isNotBlank(salesPrice) && !IConstant.VALUE.ZERO.equals(salesPrice) && isMathC5(salesPrice)) {
                                 gdmConversionStorageBo.setValue(getFieldWithC5(cnsDpPriceEntity.getLocalMaterialNumber()));
