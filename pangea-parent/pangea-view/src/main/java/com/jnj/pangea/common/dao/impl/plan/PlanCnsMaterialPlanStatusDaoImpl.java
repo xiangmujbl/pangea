@@ -83,6 +83,17 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
+    
+    public PlanCnsMaterialPlanStatusEntity getEntityWithSPNoPlanRelevantAndLocalMaterialnumber(String localMaterialnumber) {
+    	
+    	 ADFCriteria adfCriteria = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber);
+    	 adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is(IConstant.VALUE.X)
+                 .or(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.NO_PLAN_RELEVANT).is(IConstant.VALUE.X)));
+                 
+        String queryString = adfCriteria.toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
+    }
+
 
     public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndsourceSystem(String localMaterialNumber, String sourceSystem) {
         if ("".equals(localMaterialNumber) || "".equals(sourceSystem)) {
