@@ -94,6 +94,16 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
 
+
+    public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
+        if ("".equals(localMaterialNumber) || "".equals(sourceSystem)) {
+            return null;
+        }
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+                .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
+    }
+
     public PlanCnsMaterialPlanStatusEntity getEntityWithThereConditions(String localMaterialNumber, String localPlant, String dpRelevant) {
         if (StringUtils.isNotEmpty(localMaterialNumber) && StringUtils.isNotEmpty(localPlant) && StringUtils.isNotEmpty(dpRelevant)) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.DP_RELEVANT).is(dpRelevant)
@@ -120,7 +130,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         return null;
     }
 
-    public List<PlanCnsMaterialPlanStatusEntity> getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
+    public List<PlanCnsMaterialPlanStatusEntity> getEntitiesWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
         if (StringUtils.isNotBlank(localMaterialNumber) && StringUtils.isNotBlank(sourceSystem)) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
                     .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();

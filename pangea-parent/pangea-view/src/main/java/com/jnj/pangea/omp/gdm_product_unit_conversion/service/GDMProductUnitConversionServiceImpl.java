@@ -45,7 +45,7 @@ public class GDMProductUnitConversionServiceImpl {
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
         //J1
         List<GDMProductUnitConversionBo> gdmProductUnitConversionBoList = new ArrayList<>();
-        List<PlanCnsMaterialPlanStatusEntity> planCnsMaterialPlanStatusEntityList = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndSourceSystem(edmMaterialGlobalV1Entity.getLocalMaterialNumber(), edmMaterialGlobalV1Entity.getSourceSystem());
+        List<PlanCnsMaterialPlanStatusEntity> planCnsMaterialPlanStatusEntityList = planCnsMaterialPlanStatusDao.getEntitiesWithLocalMaterialNumberAndSourceSystem(edmMaterialGlobalV1Entity.getLocalMaterialNumber(), edmMaterialGlobalV1Entity.getSourceSystem());
         if (null == planCnsMaterialPlanStatusEntityList || planCnsMaterialPlanStatusEntityList.size() == 0) {
             return resultObjectList;
         }
