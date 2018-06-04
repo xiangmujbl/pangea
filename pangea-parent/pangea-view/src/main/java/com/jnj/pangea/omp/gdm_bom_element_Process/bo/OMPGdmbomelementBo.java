@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 
 public class OMPGdmbomelementBo extends BaseBo implements Cloneable {
 
-    private String BOMElementId;
+    private String bomElementId;
     private String Active;
     private String ActiveFCTERP;
     private String ActiveOPRERP;
@@ -29,20 +29,19 @@ public class OMPGdmbomelementBo extends BaseBo implements Cloneable {
     private String Quantity;
     private String StartEff;
 
-    // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("BOMElementId",BOMElementId)
+                .makeJsonObject("bomElementId",bomElementId)
                 .toJsonString();
     }
 
-    public String getBOMElementId() {
-        return BOMElementId;
+    public String getBomElementId() {
+        return bomElementId;
     }
 
-    public void setBOMElementId(String BOMElementId) {
-        this.BOMElementId = BOMElementId;
+    public void setBomElementId(String bomElementId) {
+        this.bomElementId = bomElementId;
     }
 
     public String getActive() {
@@ -208,7 +207,7 @@ public class OMPGdmbomelementBo extends BaseBo implements Cloneable {
     @Override
     public String toString() {
         return "OMPGdmbomelementBo{" +
-                "BOMElementId='" + BOMElementId + '\'' +
+                "bomElementId='" + bomElementId + '\'' +
                 ", Active='" + Active + '\'' +
                 ", ActiveFCTERP='" + ActiveFCTERP + '\'' +
                 ", ActiveOPRERP='" + ActiveOPRERP + '\'' +
@@ -260,6 +259,5 @@ public class OMPGdmbomelementBo extends BaseBo implements Cloneable {
             }
             return ompGdmbomelementBo;
         }
-        // TODO Auto-generated method stub
     }
 }

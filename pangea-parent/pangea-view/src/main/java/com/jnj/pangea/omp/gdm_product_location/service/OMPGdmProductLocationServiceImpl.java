@@ -238,9 +238,9 @@ public class OMPGdmProductLocationServiceImpl {
             OMPGdmProductLocationBo OMPGdmProductLocationBo = new OMPGdmProductLocationBo();
             OMPGdmProductLocationBo.setActiveOPRERP(IConstant.VALUE.YES);
             if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
-            	OMPGdmProductLocationBo.setProductId(materialPlantV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getMaterialNumber());
+            	OMPGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getMaterialNumber());
             } else {
-            	OMPGdmProductLocationBo.setProductId(materialPlantV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
+            	OMPGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
             }
             OMPGdmProductLocationBo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant());
             boList.add(OMPGdmProductLocationBo);

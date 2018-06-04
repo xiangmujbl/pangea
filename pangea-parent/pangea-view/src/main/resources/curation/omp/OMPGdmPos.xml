@@ -11,7 +11,7 @@
                         <expression>localMaterialNumber=/plan/cns_dp_pos.localMaterial</expression>
                     </relation>
                     <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
-                        <expression>customerShipTo=/plan/cns_dp_pos.customer</expression>
+                        <expression>customerId=/plan/cns_dp_pos.customer</expression>
                     </relation>
                     <relation path="/edm/jnj_calendar_v1" isPrimaryKey="false">
                         <expression>fiscalPeriod=/plan/cns_dp_pos.yearMonth</expression>
@@ -50,10 +50,10 @@
 
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>customerId,customerShipTo,demandGroup</columns>
+                <columns>customerId,demandGroup</columns>
                 <relations>
                     <relation path="/project_one/knvh" isPrimaryKey="false">
-                        <expression>kunnr=/plan/cns_dem_grp_asgn.customerShipTo</expression>
+                        <expression>kunnr=/plan/cns_dem_grp_asgn.customerId</expression>
                     </relation>
                 </relations>
             </region>

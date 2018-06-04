@@ -24,7 +24,6 @@ import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class OMPGdmPosServiceImpl {
@@ -53,7 +52,11 @@ public class OMPGdmPosServiceImpl {
         PlanCnsDpPosEntity cnsDpPosEntity = (PlanCnsDpPosEntity) o;
 
         //not sure the result is object or list? according to currrent data ,the result is object
-        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityByLocalMaterialNumberEndsWithParameter(cnsDpPosEntity.getLocalMaterial());
+        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = null;
+        String localMaterialNumber = cnsDpPosEntity.getLocalMaterial();
+        if (StringUtils.isNotEmpty(localMaterialNumber)) {
+            edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(cnsDpPosEntity.getLocalMaterial());
+        }
         if (null == edmMaterialGlobalV1Entity) {
             // Reject this record
             ResultObject resultObject = new ResultObject();
@@ -83,24 +86,44 @@ public class OMPGdmPosServiceImpl {
                 if (StringUtils.isNotEmpty(customer)) {
 
                     // not sure the result is object or list ?
-                    PlanCnsDemGrpAsgnEntity planCnsDemGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerShipTo(customer);
+                    PlanCnsDemGrpAsgnEntity planCnsDemGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(customer);
                     if (null != planCnsDemGrpAsgnEntity) {
                         String demandGroup = planCnsDemGrpAsgnEntity.getDemandGroup();
-                        if(StringUtils.isNotBlank(demandGroup)){
+                        if (StringUtils.isNotBlank(demandGroup)) {
                             //whether filter by table KNVH
-                            List<KnvhEntity> knvhEntityListStep1 = knvhDao.getEntityListByKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerShipTo());
+
+                            String customerId = fixField(planCnsDemGrpAsgnEntity.getCustomerId());
+
+                            List<KnvhEntity> list1 = knvhDao.getEntityListByKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerId());
+                            List<KnvhEntity> knvhEntityListStep1 = new ArrayList<>();
+
+                            for (KnvhEntity knvhEntity : list1) {
+                                String kunner = fixField(knvhEntity.getKunnr());
+                                if (kunner.equals(customerId)) {
+                                    knvhEntityListStep1.add(knvhEntity);
+                                }
+                            }
+
                             if (knvhEntityListStep1.size() > 0 && StringUtils.isNotEmpty(demandGroup)) {
                                 // If value found in cns_dem_grp_asgn-demandGroup then CONCATENATE 'LA_' ,  localDpParentCode, '-' and   cns_dem_grp_asgn-demandGroup
                                 aggregationId = IConstant.VALUE.LA_ + edmMaterialGlobalV1Entity.getLocalDpParentCode() + IConstant.VALUE.HORIZONTAL_Line + demandGroup;
-
                             } else {
-                                List<KnvhEntity> knvhEntityListStep2 = knvhDao.getEntityListByHKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerShipTo());
+                                List<KnvhEntity> list2 = knvhDao.getEntityListByHKunnrAndDatbi(planCnsDemGrpAsgnEntity.getCustomerId());
+                                List<KnvhEntity> knvhEntityListStep2 = new ArrayList<>();
+
+                                for (KnvhEntity knvhEntity : list2) {
+                                    String hkunner = fixField(knvhEntity.getHkunnr());
+                                    if (hkunner.equals(customerId)) {
+                                        knvhEntityListStep2.add(knvhEntity);
+                                    }
+                                }
+
                                 if (knvhEntityListStep2.size() > 0 && StringUtils.isNotEmpty(demandGroup)) {
                                     //CONCATENATE 'LA_' ,  localDpParentCode, '-' and   cns_dem_grp_asgn-demandGroup
                                     aggregationId = IConstant.VALUE.LA_ + edmMaterialGlobalV1Entity.getLocalDpParentCode() + IConstant.VALUE.HORIZONTAL_Line + demandGroup;
                                 }
                             }
-                        }else{
+                        } else {
                             ResultObject resultObject = new ResultObject();
                             resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
                                     IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
@@ -145,8 +168,6 @@ public class OMPGdmPosServiceImpl {
                             if (null != sourceSystemV1Entity) {
                                 gdmPosBo.setUnitId(planCnsPlanUnitEntity.getUnit());
                             }
-                        } else {
-                            LogUtil.getCoreLog().info("=============== planCnsPlanUnitEntity is null");
                         }
 
                         //T5
@@ -182,5 +203,14 @@ public class OMPGdmPosServiceImpl {
             return list;
         }
         return list;
+    }
+
+    private String fixField(String field) {
+        if (field.startsWith("0")) {
+            field = field.substring(1, field.length());
+            return fixField(field);
+        } else {
+            return field;
+        }
     }
 }

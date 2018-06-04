@@ -68,14 +68,14 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
             country = finPlanQtyEntity.getCountry();
             yearMonth = finPlanQtyEntity.getYearMonth();
             EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomV1Dao.getEntityWithConditions(finPlanQtyEntity.getLocalMaterialNumber(), finPlanQtyEntity.getUnitId(), finPlanQtyEntity.getSourceSystem());
-            if (edmMaterialAuomV1Entity != null) {
+            if(edmMaterialAuomV1Entity!=null){
                 try {
-                    int quantity = Integer.parseInt(finPlanQtyEntity.getQuantity());
-                    int localNumerator = Integer.parseInt(edmMaterialAuomV1Entity.getLocalNumerator());
-                    int localDenominator = Integer.parseInt(edmMaterialAuomV1Entity.getLocalDenominator());
+                    double quantity = Double.parseDouble(finPlanQtyEntity.getQuantity());
+                    double localNumerator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalNumerator());
+                    double localDenominator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
                     qty = quantity * localNumerator / localDenominator + "";
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogUtil.getCoreLog().error(e.getMessage());
                 }
             }
             gdmLfuBo.setVolume(qty);
@@ -114,7 +114,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
                     gdmLfuBoV1.setVolume(gdmLfuBo.getVolume());
                     gdmLfuBoV1.setFromDueDate(dateFrom);
                     gdmLfuBoV1.setDueDate(dateTo);
-                    gdmLfuBoV1.setLFUId(gdmLfuBoV1.getProductId() + IConstant.LFU.SPLIT + gdmLfuBoV1.getFromDueDate());
+                    gdmLfuBoV1.setLfuId(gdmLfuBoV1.getProductId() + IConstant.LFU.SPLIT + gdmLfuBoV1.getFromDueDate());
                     resultObject.setBaseBo(gdmLfuBoV1);
                     list.add(resultObject);
                 }

@@ -7,12 +7,12 @@ Feature: OMPGdmPos AEAZ-3214
     And I will remove the test file on sink application "GDMPOS.tsv"
 
     Given I import "/plan/cns_dp_pos" by keyFields "localMaterial,customer,sourceSystem,yearMonth"
-      | customer  | localMaterial | quantity | sourceSystem | yearMonth |
-      | 104076-J1 | 4000          | 9        | CONS_LATAM   | 199601    |
-      | 104077-J1 | 6200          | 8        | CONS_LATAM   | 201804    |
-      | 104078    | 6200          | 8        | CONS_LATAM   | 201808    |
-      | 104079-J1 | 6200          | 8        | CONS_LATAM   | 201809    |
-      | 104089    | 6201          | 8        | CONS_LATAM   | 201808    |
+      | customer  | localMaterial      | quantity | sourceSystem | yearMonth |
+      | 104076-J1 | 000000000000004000 | 9        | CONS_LATAM   | 199601    |
+      | 104077-J1 | 000000000000006200 | 8        | CONS_LATAM   | 201804    |
+      | 104078    | 000000000000006200 | 8        | CONS_LATAM   | 201808    |
+      | 104079-J1 | 000000000000006200 | 8        | CONS_LATAM   | 201809    |
+      | 104089    | 000000000000006201 | 8        | CONS_LATAM   | 201808    |
 
     And I wait "/plan/cns_dp_pos" Async Queue complete
 
@@ -38,11 +38,11 @@ Feature: OMPGdmPos AEAZ-3214
 
     #cns_dp_pos-customer = cns_dem_grp_asgn-customerShipTo
     And I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | customerId | customerShipTo | demandGroup |
-      | 104076     | 104076-J1      | 1           |
-      | 10236      | 104077-J1      | 2           |
-      | 10237      | 104079-J1      |             |
-      | 10238      | 104088-J1      | 3           |
+      | customerId | demandGroup |
+      | 104076-J1  | 1           |
+      | 104077-J1  | 2           |
+      | 104079-J1  |             |
+      | 104088-J1  | 3           |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -101,13 +101,11 @@ Feature: OMPGdmPos AEAZ-3214
     #cns_plan_unit-unit
     #Distribute cns_dp_pos-quantity equally into noOfWeeks and round to the nearest integer
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1 | key2      | key3   | key4 | key5 | errorValue          | sourceSystem |
-      |           | DP             | OMPGdmPos   | 6200 | 104077-J1 | 201804 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200 | 104078    | 201808 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200 | 104079-J1 | 201809 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6201 | 104089    | 201808 |      |      | Unable to find Root |              |
-
-
+      | errorCode | functionalArea | interfaceID | key1               | key2      | key3   | key4 | key5 | errorValue           | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077-J1 | 201804 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078    | 201808 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079-J1 | 201809 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089    | 201808 |      |      | Unable to find Root1 |              |
 
     Then I delete the test data
 
@@ -121,13 +119,13 @@ Feature: OMPGdmPos AEAZ-3214
     And I will remove the test file on sink application "GDMPOS.tsv"
 
     Given I import "/plan/cns_dp_pos" by keyFields "localMaterial,customer,sourceSystem,yearMonth"
-      | customer | localMaterial | quantity | sourceSystem | yearMonth |
-      | 104076   | 4000-J1       | 9        | CONS_LATAM   | 199601    |
-      | 104097   | 4001-J1       | 8        | CONS_LATAM   | 201804    |
-      | 104077   | 6200          | 8        | CONS_LATAM   | 201804    |
-      | 104078   | 6200          | 8        | CONS_LATAM   | 201808    |
-      | 104079   | 6200          | 8        | CONS_LATAM   | 201809    |
-      | 104089   | 6201          | 8        | CONS_LATAM   | 201808    |
+      | customer | localMaterial         | quantity | sourceSystem | yearMonth |
+      | 104076   | 000000000000004000-J1 | 9        | CONS_LATAM   | 199601    |
+      | 104097   | 000000000000004001-J1 | 8        | CONS_LATAM   | 201804    |
+      | 104077   | 000000000000006200    | 8        | CONS_LATAM   | 201804    |
+      | 104078   | 000000000000006200    | 8        | CONS_LATAM   | 201808    |
+      | 104079   | 000000000000006200    | 8        | CONS_LATAM   | 201809    |
+      | 104089   | 000000000000006201    | 8        | CONS_LATAM   | 201808    |
 
     And I wait "/plan/cns_dp_pos" Async Queue complete
 
@@ -154,11 +152,11 @@ Feature: OMPGdmPos AEAZ-3214
 
     #cns_dp_pos-customer = cns_dem_grp_asgn-customerShipTo
     And I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | customerId | customerShipTo | demandGroup |
-      | 104076     | 104076         | 1           |
-      | 10236      | 104077         | 2           |
-      | 10237      | 104079         |             |
-      | 10238      | 104088         | 3           |
+      | customerId | demandGroup |
+      | 104076     | 1           |
+      | 104077     | 2           |
+      | 104079     |             |
+      | 104088     | 3           |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -212,12 +210,12 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070072-1 | LA_178910100400070072-1-1996/01/29 00:00:00 |            | 1996/01/29 00:00:00 | 1996/01/22 00:00:00 | CA     | 2        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1    | key2   | key3   | key4 | key5 | errorValue          | sourceSystem |
-      |           | DP             | OMPGdmPos   | 6200    | 104077 | 201804 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200    | 104078 | 201808 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200    | 104079 | 201809 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6201    | 104089 | 201808 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 4001-J1 | 104097 | 201804 |      |      | Unable to find Root |              |
+      | errorCode | functionalArea | interfaceID | key1                  | key2   | key3   | key4 | key5 | errorValue           | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200    | 104077 | 201804 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200    | 104078 | 201808 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200    | 104079 | 201809 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201    | 104089 | 201808 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000004001-J1 | 104097 | 201804 |      |      | Unable to find Root2 |              |
 
 
     Then I delete the test data
@@ -232,13 +230,13 @@ Feature: OMPGdmPos AEAZ-3214
     And I will remove the test file on sink application "GDMPOS.tsv"
 
     Given I import "/plan/cns_dp_pos" by keyFields "localMaterial,customer,sourceSystem,yearMonth"
-      | customer  | localMaterial | quantity | sourceSystem | yearMonth |
-      | 104076-T1 | 4000          | 9        | CONS_LATAM   | 199601    |
-      | 104097-T1 | 4001          | 8        | CONS_LATAM   | 201804    |
-      | 104077-T1 | 6200          | 8        | CONS_LATAM   | 201804    |
-      | 104078    | 6200          | 8        | CONS_LATAM   | 201808    |
-      | 104079-T1 | 6200          | 8        | CONS_LATAM   | 201809    |
-      | 104089    | 6201          | 8        | CONS_LATAM   | 201808    |
+      | customer  | localMaterial      | quantity | sourceSystem | yearMonth |
+      | 104076-T1 | 000000000000004000 | 9        | CONS_LATAM   | 199601    |
+      | 104097-T1 | 000000000000004001 | 8        | CONS_LATAM   | 201804    |
+      | 104077-T1 | 000000000000006200 | 8        | CONS_LATAM   | 201804    |
+      | 104078    | 000000000000006200 | 8        | CONS_LATAM   | 201808    |
+      | 104079-T1 | 000000000000006200 | 8        | CONS_LATAM   | 201809    |
+      | 104089    | 000000000000006201 | 8        | CONS_LATAM   | 201808    |
 
     And I wait "/plan/cns_dp_pos" Async Queue complete
 
@@ -265,11 +263,11 @@ Feature: OMPGdmPos AEAZ-3214
 
     #cns_dp_pos-customer = cns_dem_grp_asgn-customerShipTo
     And I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | customerId | customerShipTo | demandGroup |
-      | 104076     | 104076-T1      | 1           |
-      | 10236      | 104077-T1      | 2           |
-      | 10237      | 104079-T1      |             |
-      | 10238      | 104088-T1      | 3           |
+      | customerId | demandGroup |
+      | 104076-T1  | 1           |
+      | 104077-T1  | 2           |
+      | 104079-T1  |             |
+      | 104088-T1  | 3           |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -327,12 +325,12 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070072-1 | LA_178910100400070072-1-1996/01/29 00:00:00 |            | 1996/01/29 00:00:00 | 1996/01/22 00:00:00 | CA     | 2        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1 | key2      | key3   | key4 | key5 | errorValue          | sourceSystem |
-      |           | DP             | OMPGdmPos   | 6200 | 104077-T1 | 201804 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200 | 104078    | 201808 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200 | 104079-T1 | 201809 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6201 | 104089    | 201808 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 4001 | 104097-T1 | 201804 |      |      | Unable to find Root |              |
+      | errorCode | functionalArea | interfaceID | key1               | key2      | key3   | key4 | key5 | errorValue           | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077-T1 | 201804 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078    | 201808 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079-T1 | 201809 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089    | 201808 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000004001 | 104097-T1 | 201804 |      |      | Unable to find Root2 |              |
 
     Then I delete the test data
 
@@ -346,13 +344,13 @@ Feature: OMPGdmPos AEAZ-3214
     And I will remove the test file on sink application "GDMPOS.tsv"
 
     Given I import "/plan/cns_dp_pos" by keyFields "localMaterial,customer,sourceSystem,yearMonth"
-      | customer | localMaterial | quantity | sourceSystem | yearMonth |
-      | 104076   | 4000          | 9        | CONS_LATAM   | 199601    |
-      | 104097   | 4001          | 8        | CONS_LATAM   | 201804    |
-      | 104077   | 6200          | 8        | CONS_LATAM   | 201804    |
-      | 104078   | 6200          | 8        | CONS_LATAM   | 201808    |
-      | 104079   | 6200          | 8        | CONS_LATAM   | 201809    |
-      | 104089   | 6201          | 8        | CONS_LATAM   | 201808    |
+      | customer | localMaterial      | quantity | sourceSystem | yearMonth |
+      | 104076   | 000000000000004000 | 9        | CONS_LATAM   | 199601    |
+      | 104097   | 000000000000004001 | 8        | CONS_LATAM   | 201804    |
+      | 104077   | 000000000000006200 | 8        | CONS_LATAM   | 201804    |
+      | 104078   | 000000000000006200 | 8        | CONS_LATAM   | 201808    |
+      | 104079   | 000000000000006200 | 8        | CONS_LATAM   | 201809    |
+      | 104089   | 000000000000006201 | 8        | CONS_LATAM   | 201808    |
 
     And I wait "/plan/cns_dp_pos" Async Queue complete
 
@@ -379,11 +377,11 @@ Feature: OMPGdmPos AEAZ-3214
 
     #cns_dp_pos-customer = cns_dem_grp_asgn-customerShipTo
     And I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | customerId | customerShipTo | demandGroup |
-      | 104076     | 104076         | 1           |
-      | 10236      | 104077         | 2           |
-      | 10237      | 104079         |             |
-      | 10238      | 104088         | 3           |
+      | customerId | demandGroup |
+      | 104076     | 1           |
+      | 104077     | 2           |
+      | 104079     |             |
+      | 104088     | 3           |
 
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
@@ -441,12 +439,12 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070072-1 | LA_178910100400070072-1-1996/01/29 00:00:00 |            | 1996/01/29 00:00:00 | 1996/01/22 00:00:00 | CA     | 2        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1 | key2   | key3   | key4 | key5 | errorValue          | sourceSystem |
-      |           | DP             | OMPGdmPos   | 6200 | 104077 | 201804 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200 | 104078 | 201808 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6200 | 104079 | 201809 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 6201 | 104089 | 201808 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 4001 | 104097 | 201804 |      |      | Unable to find Root |              |
+      | errorCode | functionalArea | interfaceID | key1               | key2   | key3   | key4 | key5 | errorValue           | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077 | 201804 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078 | 201808 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079 | 201809 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089 | 201808 |      |      | Unable to find Root1 |              |
+      |           | DP             | OMPGdmPos   | 000000000000004001 | 104097 | 201804 |      |      | Unable to find Root2 |              |
 
     Then I delete the test data
 
@@ -460,12 +458,12 @@ Feature: OMPGdmPos AEAZ-3214
     And I will remove the test file on sink application "GDMPOS.tsv"
 
     Given I import "/plan/cns_dp_pos" by keyFields "localMaterial,customer,sourceSystem,yearMonth"
-      | customer | localMaterial | quantity | sourceSystem | yearMonth |
-      | 104071   | 4000          | 9        | CONS_LATAM   | 199601    |
-      | 104072   | 4001          |          | CONS_LATAM   | 199602    |
-      | 104073   | 4002          |          | CONS_LATAM   | 199603    |
-      | 104074   | 4003          | 8        | CONS_LATAM   | 199604    |
-      | 104075   | 4004          | 8        | CONS_LATAM   | 199605    |
+      | customer | localMaterial      | quantity | sourceSystem | yearMonth |
+      | 104071   | 000000000000004000 | 9        | CONS_LATAM   | 199601    |
+      | 104072   | 000000000000004001 |          | CONS_LATAM   | 199602    |
+      | 104073   | 000000000000004002 |          | CONS_LATAM   | 199603    |
+      | 104074   | 000000000000004003 | 8        | CONS_LATAM   | 199604    |
+      | 104075   | 000000000000004004 | 8        | CONS_LATAM   | 199605    |
     And I wait "/plan/cns_dp_pos" Async Queue complete
 
     # material_global_v1-localMaterialNumber = cns_dp_pos-localMaterial
@@ -489,12 +487,12 @@ Feature: OMPGdmPos AEAZ-3214
 
     #cns_dp_pos-customer = cns_dem_grp_asgn-customerShipTo
     And I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | customerId | customerShipTo | demandGroup |
-      | 104076     | 104071         | 1           |
-      | 10236      | 104072         | 2           |
-      | 10237      | 104073         |             |
-      | 10238      | 104084         | 3           |
-      | 10239      | 104085         | 3           |
+      | customerId | demandGroup |
+      | 104071     | 1           |
+      | 104072     | 2           |
+      | 104073     |             |
+      | 104084     | 3           |
+      | 104085     | 3           |
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
     #cns_dem_grp_asgn-customerShipTo = KNVH-KUNNR
@@ -552,10 +550,10 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070071-1 | LA_178910100400070071-1-1996/03/29 00:00:00 |            | 1996/03/29 00:00:00 | 1996/03/29 00:00:00 | CA     |          |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1 | key2   | key3   | key4 | key5 | errorValue          | sourceSystem |
-      |           | DP             | OMPGdmPos   | 4002 | 104073 | 199603 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 4003 | 104074 | 199604 |      |      | Unable to find Root |              |
-      |           | DP             | OMPGdmPos   | 4004 | 104075 | 199605 |      |      | Unable to find Root |              |
+      | errorCode | functionalArea | interfaceID | key1               | key2   | key3   | key4 | key5 | errorValue           | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000004002 | 104073 | 199603 |      |      | Unable to find Root3 |              |
+      |           | DP             | OMPGdmPos   | 000000000000004003 | 104074 | 199604 |      |      | Unable to find Root2 |              |
+      |           | DP             | OMPGdmPos   | 000000000000004004 | 104075 | 199605 |      |      | Unable to find Root1 |              |
 
     Then I delete the test data
 

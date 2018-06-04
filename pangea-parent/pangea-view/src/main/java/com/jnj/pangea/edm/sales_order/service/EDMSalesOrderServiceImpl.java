@@ -1,6 +1,5 @@
 package com.jnj.pangea.edm.sales_order.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -9,14 +8,13 @@ import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.*;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.project_one.*;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.sales_order.bo.EDMSalesOrderBo;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class EDMSalesOrderServiceImpl{
+public class EDMSalesOrderServiceImpl {
 
     private static EDMSalesOrderServiceImpl instance;
 
@@ -27,7 +25,6 @@ public class EDMSalesOrderServiceImpl{
         return instance;
     }
 
-    private VbakDaoImpl vbakDao = VbakDaoImpl.getInstance();
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private VbapDaoImpl vbapDao = VbapDaoImpl.getInstance();
     private VbepDaoImpl vbepDao = VbepDaoImpl.getInstance();
@@ -37,13 +34,13 @@ public class EDMSalesOrderServiceImpl{
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
-        List<ResultObject> resultObjectList=new ArrayList<ResultObject>();
+        List<ResultObject> resultObjectList = new ArrayList<ResultObject>();
         VbakEntity vbakEntity = (VbakEntity) o;
 
-        List<VbepEntity> vbepEntities=null;
+        List<VbepEntity> vbepEntities = null;
         //rule J1
         List<VbapEntity> vbapEntities = getFieldWithJ1(vbakEntity.getVbeln());
-        if (vbapEntities==null || vbapEntities.size()==0) {
+        if (vbapEntities == null || vbapEntities.size() == 0) {
             ResultObject resultObject = new ResultObject();
             FailData failData = new FailData();
             failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J1);
@@ -61,16 +58,15 @@ public class EDMSalesOrderServiceImpl{
             return resultObjectList;
         }
 
-        LogUtil.getLogger().info("-----------------{}------------","rule J1");
-
-        for (VbapEntity vbapEntity:vbapEntities){
+        if (null == vbapEntities || vbapEntities.size() == 0) {
+            return resultObjectList;
+        }
+        for (VbapEntity vbapEntity : vbapEntities) {
             //rule J2
-            if(vbapEntity!=null){
-                vbepEntities= getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
-                LogUtil.getLogger().info("-----------------{}------------","rule J2");
-
+            if (vbapEntity != null) {
+                vbepEntities = getFieldWithJ2(vbakEntity.getVbeln(), vbapEntity.getPosnr());
             }
-            if (vbepEntities==null || vbepEntities.size()==0) {
+            if (vbepEntities == null || vbepEntities.size() == 0) {
                 ResultObject resultObject = new ResultObject();
                 FailData failData = new FailData();
                 failData.setErrorCode(IConstant.FAILED.ERROR_CODE.J2);
@@ -88,13 +84,12 @@ public class EDMSalesOrderServiceImpl{
                 return resultObjectList;
             }
 
-            for (VbepEntity vbepEntity:vbepEntities){
-                LogUtil.getLogger().info("-----------------{}------------","new bo");
+            for (VbepEntity vbepEntity : vbepEntities) {
                 EDMSalesOrderBo salesOrderBo = new EDMSalesOrderBo();
 
                 //rule T1
                 EDMSourceSystemV1Entity sourceSystem = sourceSystemV1Dao.getEntityWithLocalSourceSystem(IConstant.VALUE.PROJECT_ONE);
-                if (sourceSystem!=null){
+                if (sourceSystem != null) {
                     salesOrderBo.setSourceSystem(sourceSystem.getSourceSystem());
                 }
 
@@ -119,27 +114,27 @@ public class EDMSalesOrderServiceImpl{
                 salesOrderBo.setLocalChangeDt(vbakEntity.getAedat());
                 salesOrderBo.setLocalPricingProcedure(vbakEntity.getKalsm());
 
-               if (vbapEntity!=null){
-                   salesOrderBo.setSalesOrderItem(vbapEntity.getPosnr());
-                   salesOrderBo.setLocalMaterialNumber(vbapEntity.getMatnr());
-                   salesOrderBo.setLocalPlant(vbapEntity.getWerks());
-                   salesOrderBo.setLocalItemCategory(vbapEntity.getPstyv());
-                   salesOrderBo.setLocalItemDlvRlvnt(vbapEntity.getLfrel());
-                   salesOrderBo.setLocalItemBillRlvnt(vbapEntity.getFkrel());
-                   salesOrderBo.setLocalRejReason(vbapEntity.getAbgru());
-                   salesOrderBo.setSalesOrderQty(vbapEntity.getKwmeng());
-                   salesOrderBo.setLocalSalesUnit(vbapEntity.getVrkme());
-                   salesOrderBo.setLocalNumtoBase(vbapEntity.getUmvkz());
-                   salesOrderBo.setLocalDentoBase(vbapEntity.getUmvkn());
-                   salesOrderBo.setLocalBillingBlockItem(vbapEntity.getFaksp());
-                   salesOrderBo.setLocalSDItemValue(vbapEntity.getNetwr());
-                   salesOrderBo.setLocalSDItemCurrency(vbapEntity.getWaerk());
-                   salesOrderBo.setLocalStorageLocation(vbapEntity.getLgort());
-                   salesOrderBo.setLocalShippingPoint(vbapEntity.getVstel());
-                   salesOrderBo.setLocalRoute(vbapEntity.getRoute());
-               }
+                if (vbapEntity != null) {
+                    salesOrderBo.setSalesOrderItem(vbapEntity.getPosnr());
+                    salesOrderBo.setLocalMaterialNumber(vbapEntity.getMatnr());
+                    salesOrderBo.setLocalPlant(vbapEntity.getWerks());
+                    salesOrderBo.setLocalItemCategory(vbapEntity.getPstyv());
+                    salesOrderBo.setLocalItemDlvRlvnt(vbapEntity.getLfrel());
+                    salesOrderBo.setLocalItemBillRlvnt(vbapEntity.getFkrel());
+                    salesOrderBo.setLocalRejReason(vbapEntity.getAbgru());
+                    salesOrderBo.setSalesOrderQty(vbapEntity.getKwmeng());
+                    salesOrderBo.setLocalSalesUnit(vbapEntity.getVrkme());
+                    salesOrderBo.setLocalNumtoBase(vbapEntity.getUmvkz());
+                    salesOrderBo.setLocalDentoBase(vbapEntity.getUmvkn());
+                    salesOrderBo.setLocalBillingBlockItem(vbapEntity.getFaksp());
+                    salesOrderBo.setLocalSDItemValue(vbapEntity.getNetwr());
+                    salesOrderBo.setLocalSDItemCurrency(vbapEntity.getWaerk());
+                    salesOrderBo.setLocalStorageLocation(vbapEntity.getLgort());
+                    salesOrderBo.setLocalShippingPoint(vbapEntity.getVstel());
+                    salesOrderBo.setLocalRoute(vbapEntity.getRoute());
+                }
 
-                if (vbepEntity!=null){
+                if (vbepEntity != null) {
                     salesOrderBo.setScheduleLineItem(vbepEntity.getEtenr());
                     salesOrderBo.setLocalScheduleLineDate(vbepEntity.getEdatu());
                     salesOrderBo.setLocalSchLineQty(vbepEntity.getWmeng());
@@ -147,18 +142,18 @@ public class EDMSalesOrderServiceImpl{
                 }
 
                 //rule J3
-                VbpaEntity vbpaEntity = getFieldWithJ3(vbakEntity.getVbeln(),IConstant.VALUE.WE);
-                if (vbpaEntity!=null){
+                VbpaEntity vbpaEntity = getFieldWithJ3(vbakEntity.getVbeln(), IConstant.VALUE.WE);
+                if (vbpaEntity != null) {
                     salesOrderBo.setLocalShipToParty(vbpaEntity.getKunnr());
                 }
 
                 //rule J4
                 VbkdEntity vbkdEntity = getFieldWithJ4(vbakEntity.getVbeln());
-               if (vbkdEntity!=null){
-                   salesOrderBo.setLocalIncoTerms1(vbkdEntity.getInco1());
-                   salesOrderBo.setLocalIncoTerms2(vbkdEntity.getInco2());
-                   salesOrderBo.setLocalCustomerGroup(vbkdEntity.getKdgrp());
-               }
+                if (vbkdEntity != null) {
+                    salesOrderBo.setLocalIncoTerms1(vbkdEntity.getInco1());
+                    salesOrderBo.setLocalIncoTerms2(vbkdEntity.getInco2());
+                    salesOrderBo.setLocalCustomerGroup(vbkdEntity.getKdgrp());
+                }
                 ResultObject resultObject = new ResultObject();
 
                 resultObject.setBaseBo(salesOrderBo);
@@ -173,45 +168,38 @@ public class EDMSalesOrderServiceImpl{
 
     //J4
     private VbkdEntity getFieldWithJ4(String vbeln) {
-        VbkdEntity entity=null;
-        if (!"".equals(vbeln)){
-             entity = vbkdDao.getEntityWithPosnrAndVbelAndPosnrIsNullOrBlankOr000000(vbeln);
-        }
-        if (null == entity) {
-            return null;
+        VbkdEntity entity = null;
+        if (StringUtils.isNotBlank(vbeln)) {
+            entity = vbkdDao.getEntityWithPosnrAndVbelAndPosnrIsNullOrBlankOr000000(vbeln);
         }
         return entity;
     }
 
     //J3
-    private VbpaEntity getFieldWithJ3(String vbeln,String parvw) {
-        if ("".equals(vbeln)||"".equals(parvw)){
-            return null;
+    private VbpaEntity getFieldWithJ3(String vbeln, String parvw) {
+        if (StringUtils.isNotBlank(vbeln) && StringUtils.isNotBlank(parvw)) {
+            VbpaEntity entity = vbpaDao.getEntityWithPosnrAndParvwAndVbelnAndPosnrIsNullOrBlankOr000000(vbeln, parvw);
+            return entity;
         }
-        VbpaEntity entity = vbpaDao.getEntityWithPosnrAndParvwAndVbelnAndPosnrIsNullOrBlankOr000000(vbeln,parvw);
-        if (null == entity) {
-            return null;
-        }
-        return entity;
+        return null;
     }
 
     //J2
     private List<VbepEntity> getFieldWithJ2(String vbeln, String posnr) {
-        if ("".equals(vbeln)){
-            return null;
-        }
-        List<VbepEntity> entity = vbepDao.getEntityWithVbelnAndPosnr(vbeln, posnr);
+        if (StringUtils.isNotBlank(vbeln)) {
+            List<VbepEntity> entity = vbepDao.getEntityWithVbelnAndPosnr(vbeln, posnr);
             return entity;
-
+        }
+        return null;
     }
 
     //J1
     private List<VbapEntity> getFieldWithJ1(String vbeln) {
-        if ("".equals(vbeln)){
-            return null;
+        if (StringUtils.isNotBlank(vbeln)) {
+            List<VbapEntity> entitys = vbapDao.getEntityWithVbeln(vbeln);
+            return entitys;
         }
-        List<VbapEntity> entitys = vbapDao.getEntityWithVbeln(vbeln);
-        return entitys;
+        return null;
     }
 
 }

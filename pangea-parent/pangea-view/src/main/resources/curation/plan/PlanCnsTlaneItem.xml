@@ -5,7 +5,7 @@
 
             <region path="/plan/cns_tlane_control">
                 <columns>
-                    sequenceNumber,tlaneName,validFrom,validTo,originLocation,destinatonLocation,mode,leadTime,processTypeId,sourceSystemCriticalParameters,
+                    sequenceNumber,tlaneName,validFrom,validTo,originLocation,destinatonlocation,mode,leadTime,processTypeId,sourceSystemCriticalParameters,
                     criticalParameter1Table,criticalParameter1Field,criticalParameter1Low,criticalParameter1Operator
                     ,criticalParameter1IE,criticalParameter2Table,criticalParameter2Field,criticalParameter2Low
                     ,criticalParameter2High,criticalParameter2Operator,criticalParameter2IE,criticalParameter3Table
@@ -99,7 +99,7 @@
 
             <region path="/plan/cns_tlane_item">
                 <columns>
-                    sequenceNumber,tlaneName,materialNumber,validFrom,validTo,originLocation,destinatonLocation,mode,leadTime,processTypeId
+                    sequenceNumber,tlaneName,materialNumber,validFrom,validTo,originLocation,destinatonlocation,mode,leadTime,processTypeId
                 </columns>
             </region>
 

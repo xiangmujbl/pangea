@@ -15,7 +15,7 @@
             </region>
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>sourceSystem,countryAffiliate,customerId,demandGroup,channel,salesOrg</columns>
+                <columns>sourceSystem,countryAffiliate,customerId,demandGroup,channel,salesOrganization</columns>
                 <relations>
                     <relation path="/plan/cns_clusters" isPrimaryKey="false">
                         <expression>countryId=/plan/cns_dem_grp_asgn.countryAffiliate,sourceSystem=/plan/cns_dem_grp_asgn.sourceSystem</expression>

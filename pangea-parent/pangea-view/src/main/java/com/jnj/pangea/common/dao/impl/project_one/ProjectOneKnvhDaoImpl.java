@@ -42,7 +42,7 @@ public class ProjectOneKnvhDaoImpl extends CommonDaoImpl {
     public List<KnvhEntity> getEntityListByKunnrAndDatbi(String kunnr) {
         if (null != kunnr && !"".equals(kunnr)) {
             String currentDate = DateUtil.format(new Date(), DateUtil.F_yyyyMMdd);
-            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.KUNNR).is(kunnr)
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.KUNNR).endsWith(kunnr)
                     .and(IConstant.PROJECT_ONE_KNVH.DATBI).greaterThan(currentDate).toQueryString();
             return queryForList(IConstant.REGION.PROJECT_ONE_KNVH, queryString, KnvhEntity.class);
         }
@@ -52,7 +52,7 @@ public class ProjectOneKnvhDaoImpl extends CommonDaoImpl {
     public List<KnvhEntity> getEntityListByHKunnrAndDatbi(String hkunnr) {
         if (null != hkunnr && !"".equals(hkunnr)) {
             String currentDate = DateUtil.format(new Date(), DateUtil.F_yyyyMMdd);
-            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.HKUNNR).is(hkunnr)
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.HKUNNR).endsWith(hkunnr)
                     .and(IConstant.PROJECT_ONE_KNVH.DATBI).greaterThan(currentDate).toQueryString();
             return queryForList(IConstant.REGION.PROJECT_ONE_KNVH, queryString, KnvhEntity.class);
         }

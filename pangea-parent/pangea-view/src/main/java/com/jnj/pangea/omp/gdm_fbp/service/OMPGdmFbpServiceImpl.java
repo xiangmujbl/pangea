@@ -1,6 +1,7 @@
 package com.jnj.pangea.omp.gdm_fbp.service;
 
 import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
@@ -109,10 +110,25 @@ public class OMPGdmFbpServiceImpl {
             String currency =null;
             for (PlanCnsFinPlanValEntity val: finPlanValEntity) {
                 currency = val.getCurrency();
-
         //rules  T1
         String localDpParentCode = materialGlobalV1Entity.getLocalDpParentCode();
         if (StringUtils.isEmpty(localDpParentCode)){
+            ResultObject resultObject = new ResultObject();
+            String errorValue = "localDpParentCode not found";
+            String errorCode = IConstant.FAILED.ERROR_CODE.J1;
+            FailData failData = new FailData();
+            failData.setErrorCode(errorCode);
+            failData.setErrorValue(errorValue);
+            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
+            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_FBP);
+            failData.setSourceSystem(IConstant.VALUE.OMP);
+            failData.setKey1(materialGlobalV1Entity.getSourceSystem());
+            failData.setKey2(materialGlobalV1Entity.getLocalMaterialNumber());
+            failData.setKey3("");
+            failData.setKey4("");
+            failData.setKey5("");
+            resultObject.setFailData(failData);
+            resultObjects.add(resultObject);
             return resultObjects;
         }
         String productId= null;
@@ -132,7 +148,6 @@ public class OMPGdmFbpServiceImpl {
                     yearMonth=val.getYearMonth();
                 }
             }
-
         //rules  T5
             if (null!=yearMonth){
                 List<EDMJNJCalendarV1Entity> edmjnjCalendarV1Entities = edmjnjCalendarV1Dao.getEntityWithFiscalPeriod(yearMonth);
@@ -149,13 +164,16 @@ public class OMPGdmFbpServiceImpl {
 
                         //rules T7,T8
                         value += Double.parseDouble(val.getValue());
-                        sum = value+"";
+                        int size = finPlanValEntity.size();
+                        double avg = value/size;
+                        BigDecimal a = new BigDecimal(avg);
+                        double avge = a.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        sum = avge+"";
                         if (null != finPlanQtyEntity) {
                             String localMaterialNumberQty = finPlanQtyEntity.getLocalMaterialNumber();
                             String unitIdQty = finPlanQtyEntity.getUnitId();
                             String sourceSystemQty = finPlanQtyEntity.getSourceSystem();
                             EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = materialAuomV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumberQty, unitIdQty, sourceSystemQty);
-
                             if (null != edmMaterialAuomV1Entity) {
                                 //gdmfbpBo.setVolume(entity.getNoOfWeek());
                                 try {
@@ -164,8 +182,9 @@ public class OMPGdmFbpServiceImpl {
                                     double localDenominator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
                                     if (0.0 != quantity && 0 != localNumerator && 0 != localDenominator) {
                                         double result = quantity * (localNumerator / localDenominator);
-                                        BigDecimal a = new BigDecimal(result);
-                                        double df = a.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                        Double avgResult = result/size;
+                                        BigDecimal b = new BigDecimal(avgResult);
+                                        double df = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
                                         String volume = df + "";
                                         gdmfbpBo.setVolume(volume);
                                     }
@@ -180,11 +199,8 @@ public class OMPGdmFbpServiceImpl {
 
                 }
             }
-
-
             }
             for (OMPGdmFbpBo fbp:gdmfbpBos) {
-
                 ResultObject resultObject = new ResultObject();
                 fbp.setValue(sum);
                 //rules  T2,T3
@@ -208,7 +224,6 @@ public class OMPGdmFbpServiceImpl {
                 resultObject.setBaseBo(fbp);
                 resultObjects.add(resultObject);
             }
-
         }
         return resultObjects;
     }

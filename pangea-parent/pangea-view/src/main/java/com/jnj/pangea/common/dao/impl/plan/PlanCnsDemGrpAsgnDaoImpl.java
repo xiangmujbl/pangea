@@ -4,6 +4,7 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.plan.PlanCnsDemGrpAsgnEntity;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -18,12 +19,6 @@ public class PlanCnsDemGrpAsgnDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsDemGrpAsgnEntity getEntityWithCustomerShipTo(String customerShipTo) {
-
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.CUSTOMER_SHIP_TO).is(customerShipTo).toQueryString();
-        return queryForObject(IConstant.REGION.PLAN_CNS_DEM_GRP_ASGN, queryString, PlanCnsDemGrpAsgnEntity.class);
-    }
-
     public PlanCnsDemGrpAsgnEntity getEntitiesWithCustomerIdAndSalesOrg(String customerId, String salesOrg) {
         if (null != customerId && !"".equals(customerId) &&  null!=salesOrg && !"".equals(salesOrg)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.CUSTOMER_ID).is(customerId)
@@ -34,7 +29,7 @@ public class PlanCnsDemGrpAsgnDaoImpl extends CommonDaoImpl {
     }
 
     public PlanCnsDemGrpAsgnEntity getEntityWithCustomerId(String customerId) {
-        if (null != customerId && !"".equals(customerId)){
+        if (StringUtils.isNotEmpty(customerId)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.CUSTOMER_ID).is(customerId).toQueryString();
             return queryForObject(IConstant.REGION.PLAN_CNS_DEM_GRP_ASGN, queryString, PlanCnsDemGrpAsgnEntity.class);
         }

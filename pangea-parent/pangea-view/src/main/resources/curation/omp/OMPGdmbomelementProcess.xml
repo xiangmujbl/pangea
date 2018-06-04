@@ -22,6 +22,12 @@
                     <relation path="/edm/bom_item" isPrimaryKey="false">
                         <expression>srcSysCd=/edm/mfg_order.sourceSysCd,bomCatCd=/edm/mfg_order.bomCatCd,bomNum=/edm/mfg_order.bomNum</expression>
                     </relation>
+                        <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+                        </relation>
+                        <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+                        </relation>
                 </relations>
             </region>
 
@@ -34,11 +40,18 @@
                 </relations>
             </region>
 
+            <region path="/plan/cns_material_plan_status">
+                <columns>sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant</columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>sourceSystem,localMaterialNumber,primaryPlanningCode,localDpParentCode</columns>
+            </region>
+
 
             <region path="/edm/bom_item">
                 <columns>srcSysCd,bomCatCd,bomNum,dstrbtnKeyCd</columns>
             </region>
-
 
             <region path="/edm/reserv_itm">
                 <columns>sourceSysCd,rsrvtnNum,delInd,qtyFxInd,bomItmNum,btchNum,matlNum,leadTimeOffset,rqmtQty,wthdrnQty</columns>
@@ -75,7 +88,7 @@
 
 
             <region path="/omp/gdm_bom_element">
-                <columns>BOMElementId,Active,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,BatchId,BOMId,BOMType,BOMUsage,Comments,EndEff,ERPFeedbackQuantity,LocationId,Offset,OffsetCalendarId,OffsetPercentage,OffsetPercType,PlanLevelId,ProductId,Quantity,StartEff</columns>
+                <columns>bomElementId,Active,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,BatchId,BOMId,BOMType,BOMUsage,Comments,EndEff,ERPFeedbackQuantity,LocationId,Offset,OffsetCalendarId,OffsetPercentage,OffsetPercType,PlanLevelId,ProductId,Quantity,StartEff</columns>
             </region>
 
         </regions>

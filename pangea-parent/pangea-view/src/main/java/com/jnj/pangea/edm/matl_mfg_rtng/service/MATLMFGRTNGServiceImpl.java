@@ -12,7 +12,11 @@ import com.jnj.pangea.common.entity.edm.EDMProjectOneMAPLEntity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.matl_mfg_rtng.bo.MATLMFGRTNGBo;
+import com.jnj.pangea.util.DateUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,7 +70,8 @@ public class MATLMFGRTNGServiceImpl implements ICommonService {
             matlmfgrtngBo.setChgNum(edmProjectOneMAPLEntity.getAennr());
             matlmfgrtngBo.setMatlRtngValid_To(IConstant.MATL_MFG_RTNG.FIELD_MATLRTNGVALID_TO_NULL);
             if(edmProjectOneMAPLEntity1!=null ){
-                matlmfgrtngBo.setMatlRtngValid_To(edmProjectOneMAPLEntity1.getDatuv());
+                Date fromDueDate = DateUtils.stringToDate(edmProjectOneMAPLEntity1.getDatuv(), DateUtils.F_yyyyMMdd);
+                matlmfgrtngBo.setMatlRtngValid_To(DateUtils.dateToString(fromDueDate, DateUtils.yyyy_MM_dd));
             }
         }else {
             matlmfgrtngBo.setValFromDt(edmProjectOneMAPLEntity.getDatuv());

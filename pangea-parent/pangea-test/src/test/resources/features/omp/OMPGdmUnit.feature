@@ -58,6 +58,7 @@ Feature: OMPGdmUnit AEAZ-3683
     Given I import "/plan/cns_plan_unit" by keyFields "localUom,localUomName,planFlag,sourceSystem,unit"
       | localUom | localUomName        | planFlag | sourceSystem | unit   | factor | roundingDecimal |
       | KI       | Crate               | DPSP     | CONS_LATAM   | CA     | 2      | 0               |
+      | CS       | Case                | DPSP     | CONS_LATAM   | CA     | 2      | 0               |
       | EA       | Each                | DPSP     | CONS_LATAM   | EA     | 2      | 0               |
       | KG       | KiloGram            | SP       | CONS_LATAM   | KG     | 2      | 6               |
       | ZUM      | Market Control Unit | DP       | CONS_LATAM   | LA_ZUM | 2      | 6               |
@@ -98,7 +99,7 @@ Feature: OMPGdmUnit AEAZ-3683
       | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL  | 3         | Kilometer           |
       | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL  | 3         | Liter               |
       | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL  | 3         | Square meter        |
-      | TS     | YES    | NO           | YES          | NO           | 1      |         | Thousand            | AAAADL  | 6         | Thousand            |
+      | TS     | YES    | NO           | YES          | NO           | 2      |         | Thousand            | AAAADL  | 6         | Thousand            |
       | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet              | AAAADL  | 0         | Pallet              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -129,5 +130,5 @@ Feature: OMPGdmUnit AEAZ-3683
       | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL   | 3         | Kilometer           |
       | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL   | 3         | Liter               |
       | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL   | 3         | Square meter        |
-      | TS     | YES    | NO           | YES          | NO           | 1      |         | Thousand            | AAAADL   | 6         | Thousand            |
+      | TS     | YES    | NO           | YES          | NO           | 2      |         | Thousand            | AAAADL   | 6         | Thousand            |
       | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet              | AAAADL   | 0         | Pallet              |

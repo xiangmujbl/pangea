@@ -47,7 +47,7 @@ Feature: OMPGdmBOM AEAZ-4480
 
     Then I check file data for filename "GDMBOM.tsv" by keyFields "bomId"
       | bomId                               | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff               | locationId      | startEff             |
-      | PRO/LA_000001000612/0000000613/0010 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
+      | PRO/LA_1000612/613/0010 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -65,7 +65,7 @@ Feature: OMPGdmBOM AEAZ-4480
     And I will remove the test file on sink application "GDMBOM.tsv"
 
     Given I import "/edm/mfg_order" by keyFields "mfgOrdrNum"
-      | srcSysCd   | actRlseDt | ordrRtngNum | mfgOrdrNum   | plntCd |
+      | sourceSysCd   | actRlseDt | ordrRtngNum | mfgOrdrNum   | plntCd |
       | CONS_LATAM | 20180528  | 0000000613  | 000001000612 | BR02   |
       | CONS_LATAM | 20180528  | 0000000653  | 000001000652 | BR02   |
       | CONS_LATAM | 20180528  | 0000000781  | 000001000780 | BR02   |
@@ -97,9 +97,9 @@ Feature: OMPGdmBOM AEAZ-4480
 
     Then I check file data for filename "GDMBOM.tsv" by keyFields "bomId"
       | bomId                               | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff               | locationId      | startEff             |
-      | PRO/LA_000001000612/0000000613/0010 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
-      | PRO/LA_000001000652/0000000653/0010 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
-      | PRO/LA_000001000780/0000000781/0010 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
+      | PRO/LA_1000612/613/10 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
+      | PRO/LA_1000652/653/10 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
+      | PRO/LA_1000780/781/10 | YES    | YES          | YES          | NO           |          | 31/12/2298  23:59:59 | CONS_LATAM_BR02 | 01/01/1980  00:00:00 |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
