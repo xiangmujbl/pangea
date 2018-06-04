@@ -9,6 +9,7 @@ import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.project_one.StkoEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.bom_hdr.bo.EDMBomHdrV1Bo;
+import com.jnj.pangea.util.DateUtils;
 
 import java.util.*;
 
@@ -41,7 +42,8 @@ public class EDMBomHdrServiceImpl implements ICommonService {
         edmBomHdrV1Bo.setBomNum(mainData.getStlnr());
         edmBomHdrV1Bo.setAltBomNum(mainData.getStlal());
         edmBomHdrV1Bo.setBomCntrNbr(mainData.getStkoz());
-        edmBomHdrV1Bo.setBomVldFromDt(mainData.getDatuv());
+        Date dueDate = DateUtils.stringToDate(mainData.getDatuv(), DateUtils.F_yyyyMMdd);
+        edmBomHdrV1Bo.setBomVldFromDt(DateUtils.dateToString(dueDate, DateUtils.yyyy_MM_dd));
         edmBomHdrV1Bo.setChgNum(mainData.getAennr());
         edmBomHdrV1Bo.setDelInd(mainData.getLoekz());
         edmBomHdrV1Bo.setPrvCntrNbr(mainData.getVgkzl());
@@ -61,7 +63,8 @@ public class EDMBomHdrServiceImpl implements ICommonService {
             }
             for (StkoEntity st : stkoEntityList) {
                 if (Integer.parseInt(st.getStkoz()) > Integer.parseInt(stkoz)) {
-                    edmBomHdrV1Bo.setBomVld_ToDt(st.getDatuv());
+                    Date date = DateUtils.stringToDate(st.getDatuv(), DateUtils.F_yyyyMMdd);
+                    edmBomHdrV1Bo.setBomVld_ToDt(DateUtils.dateToString(date, DateUtils.yyyy_MM_dd));
                     break;
                 }
             }

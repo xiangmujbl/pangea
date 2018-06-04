@@ -1,9 +1,22 @@
 @pangea_test @AEAZ-3688
 Feature: OMPGdmConversionStorage AEAZ-3688
 
+
+  Background:delete all test data
+
+    Then I delete the test data
+
+    And I will remove all data with region "/plan/cns_dp_price"
+    And I will remove all data with region "/edm/country_v1"
+    And I will remove all data with region "/edm/jnj_calendar_v1"
+    And I will remove all data with region "/edm/material_global_v1"
+    And I will remove all data with region "/plan/cns_cust_channel"
+    And I will remove all data with region "/plan/cns_plan_unit"
+    And I will remove all data with region "/omp/gdm_conversion_storage"
+    And I will remove all data with region "/plan/edm_failed_data"
+    And I will remove all data with region "/edm/source_system_v1"
   @Scenario1
   Scenario: J1
-    And I will remove the test file on sink application "GDMConversionStorage.tsv"
     Given I import "/plan/cns_dp_price" by keyFields "sourceSystem,localMaterialNumber,currency,country,fromDate"
       | localMaterialNumber | currency | country | fromDate | salesPrice  | sourceSystem  |
       | 000000000000002885  | BRL      | AT      | 201801   | 1286.604828 | sourceSystem1 |
@@ -27,7 +40,7 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | AZ          | AZ           |
     And I wait "/edm/country_v1" Async Queue complete
 
-    Given I import "/edm/source_system_v1" by keyFields "localCountry"
+    Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | sourceSystem |
       | Project_One       | CONS_LATAM   |
       | [MDD FASE]        | CONS_LATAM   |
@@ -60,15 +73,14 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | BaseUom2 | unit2 |
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
-    Then A file is found on sink application with name "GDMConversionStorage.tsv"
     When I submit task with xml file "xml/omp/OMPGdmConversionStorage.xml" and execute file "jar/pangea-view.jar"
 
-#    Then A file is found on sink application with name "GDMConversionStorage.tsv"
-#
+    Then A file is found on sink application with name "GDMConversionStorage.tsv"
+
     Then I check file data for filename "GDMConversionStorage.tsv" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
       | aggregationId      | conversionFactor | currencyId | fromDueDate         | dueDate             | value    | unitId |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/01 00:00:00 | 2018/01/08 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/01/29 00:00:00 | 2018/02/05 00:00:00 | 1272.299 | unit1  |
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID             | errorCode | sourceSystem | businessArea | key1               | key2          | key3 | key4 | key5   | errorValue                                                        |
       | DP             | OMPGdmConversionStorage | J1        | omp          |              | 000000000000002887 | sourceSystem2 | BRL  | AT   | 201801 | sourceSystem / dpParent code / channel / countryCode do not exist |
@@ -81,7 +93,6 @@ Feature: OMPGdmConversionStorage AEAZ-3688
 
   @Scenario2
   Scenario: C2 & C3
-    And I will remove the test file on sink application "GDMConversionStorage.tsv"
     Given I import "/plan/cns_dp_price" by keyFields "sourceSystem,localMaterialNumber,currency,country,fromDate"
       | localMaterialNumber | currency | country | fromDate | salesPrice  | sourceSystem  |
       | 000000000000002885  | BRL      | AT      | 201801   | 1286.604828 | sourceSystem1 |
@@ -98,7 +109,7 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | AW          | AW           |
     And I wait "/edm/country_v1" Async Queue complete
 
-    Given I import "/edm/source_system_v1" by keyFields "localCountry"
+    Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | sourceSystem |
       | Project_One       | CONS_LATAM   |
       | [MDD FASE]        | CONS_LATAM   |
@@ -141,25 +152,26 @@ Feature: OMPGdmConversionStorage AEAZ-3688
 
     Then I check file data for filename "GDMConversionStorage.tsv" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
       | aggregationId      | conversionFactor | currencyId | fromDueDate         | dueDate             | value    | unitId |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-08 00:00:00 | 2018-01-15 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-15 00:00:00 | 2018-01-22 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-22 00:00:00 | 2018-01-29 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-05 00:00:00 | 2018-02-12 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-12 00:00:00 | 2018-02-19 00:00:00 | 1272.299 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-19 00:00:00 | 2018-02-26 00:00:00 | 1272.299 | unit1  |
-
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/01 00:00:00 | 2018/01/08 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/08 00:00:00 | 2018/01/15 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/15 00:00:00 | 2018/01/22 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/22 00:00:00 | 2018/01/29 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/01/29 00:00:00 | 2018/02/05 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/02/05 00:00:00 | 2018/02/12 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/02/12 00:00:00 | 2018/02/19 00:00:00 | 1272.299 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/02/19 00:00:00 | 2018/02/26 00:00:00 | 1272.299 | unit1  |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+      | DP             | OMPGdmConversionStorage | J1        | omp          |              | 000000000000002887 | sourceSystem2 | BRL  | AW   | 201803 | sourceSystem / dpParent code / channel / countryCode do not exist |
+
     And I delete the test data
     And I will remove all data with region "/omp/gdm_conversion_storage"
     And I will remove all data with region "/plan/edm_failed_data"
-#
+    And I will remove the test file on sink application "GDMConversionStorage.tsv"
+
   @Scenario3
   Scenario: C5 & C6
-    And I will remove the test file on sink application "GDMConversionStorage.tsv"
     Given I import "/plan/cns_dp_price" by keyFields "sourceSystem,localMaterialNumber,currency,country,fromDate"
       | localMaterialNumber | currency | country | fromDate | salesPrice  | sourceSystem  |
       | 000000000000002885  | BRL      | AT      | 201801   | 1286.604828 | sourceSystem1 |
@@ -183,7 +195,7 @@ Feature: OMPGdmConversionStorage AEAZ-3688
       | AR          | AR           |
     And I wait "/edm/country_v1" Async Queue complete
 
-    Given I import "/edm/source_system_v1" by keyFields "localCountry"
+    Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | sourceSystem |
       | Project_One       | CONS_LATAM   |
       | [MDD FASE]        | CONS_LATAM   |
@@ -241,27 +253,27 @@ Feature: OMPGdmConversionStorage AEAZ-3688
 
     Then I check file data for filename "GDMConversionStorage.tsv" by keyFields "sourceSystem,aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate"
       | aggregationId      | conversionFactor | currencyId | fromDueDate         | dueDate             | value    | unitId |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 1275.876 | unit1  |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-08 00:00:00 | 2018-01-15 00:00:00 | 1275.876 | unit1  |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-15 00:00:00 | 2018-01-22 00:00:00 | 1275.876 | unit1  |
-      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018-01-22 00:00:00 | 2018-01-29 00:00:00 | 1275.876 | unit1  |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 4563.234 | unit2  |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-05 00:00:00 | 2018-02-12 00:00:00 | 4563.234 | unit2  |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-12 00:00:00 | 2018-02-19 00:00:00 | 4563.234 | unit2  |
-      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018-02-19 00:00:00 | 2018-02-26 00:00:00 | 4563.234 | unit2  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-01-29 00:00:00 | 2018-02-05 00:00:00 | 1275.876 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-05 00:00:00 | 2018-02-12 00:00:00 | 1275.876 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-12 00:00:00 | 2018-02-19 00:00:00 | 1275.876 | unit1  |
-      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018-02-19 00:00:00 | 2018-02-26 00:00:00 | 1275.876 | unit1  |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-01 00:00:00 | 2018-01-08 00:00:00 | 4563.234 | unit2  |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-08 00:00:00 | 2018-01-15 00:00:00 | 4563.234 | unit2  |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-15 00:00:00 | 2018-01-22 00:00:00 | 4563.234 | unit2  |
-      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018-01-22 00:00:00 | 2018-01-29 00:00:00 | 4563.234 | unit2  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/01 00:00:00 | 2018/01/08 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/08 00:00:00 | 2018/01/15 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/15 00:00:00 | 2018/01/22 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AT001-AT | SALESPRICE       | BRL        | 2018/01/22 00:00:00 | 2018/01/29 00:00:00 | 1275.876 | unit1  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018/01/29 00:00:00 | 2018/02/05 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018/02/05 00:00:00 | 2018/02/12 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018/02/12 00:00:00 | 2018/02/19 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AY001-AY | SALESPRICE       | BRL        | 2018/02/19 00:00:00 | 2018/02/26 00:00:00 | 4563.234 | unit2  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/01/29 00:00:00 | 2018/02/05 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/02/05 00:00:00 | 2018/02/12 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/02/12 00:00:00 | 2018/02/19 00:00:00 | 1275.876 | unit1  |
+      | LA_123ABC-AU001-AU | SALESPRICE       | BRL        | 2018/02/19 00:00:00 | 2018/02/26 00:00:00 | 1275.876 | unit1  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018/01/01 00:00:00 | 2018/01/08 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018/01/08 00:00:00 | 2018/01/15 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018/01/15 00:00:00 | 2018/01/22 00:00:00 | 4563.234 | unit2  |
+      | LA_234DEF-AR001-AR | SALESPRICE       | BRL        | 2018/01/22 00:00:00 | 2018/01/29 00:00:00 | 4563.234 | unit2  |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-#      | DP             | OMPGdmConversionStorage | C5        | omp          |              | 000000000000002888 | sourceSystem2 | BRL  | AZ   | 201803 | Sales price is non-numeric |
-#      | DP             | OMPGdmConversionStorage | C5        | omp          |              | 000000000000002889 | sourceSystem2 | BRL  | AZ   | 201803 | Sales price is non-numeric |
+      | DP             | OMPGdmConversionStorage | C5        | omp          |              | 000000000000002888 | sourceSystem2 | BRL  | AZ   | 201803 | Sales price is non-numeric |
+      | DP             | OMPGdmConversionStorage | C5        | omp          |              | 000000000000002889 | sourceSystem2 | BRL  | AK   | 201803 | Sales price is non-numeric |
 
     And I delete the test data
     And I will remove all data with region "/omp/gdm_conversion_storage"

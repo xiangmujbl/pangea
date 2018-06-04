@@ -164,7 +164,11 @@ public class OMPGdmFbpServiceImpl {
 
                         //rules T7,T8
                         value += Double.parseDouble(val.getValue());
-                        sum = value+"";
+                        int size = finPlanValEntity.size();
+                        double avg = value/size;
+                        BigDecimal a = new BigDecimal(avg);
+                        double avge = a.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        sum = avge+"";
                         if (null != finPlanQtyEntity) {
                             String localMaterialNumberQty = finPlanQtyEntity.getLocalMaterialNumber();
                             String unitIdQty = finPlanQtyEntity.getUnitId();
@@ -178,8 +182,9 @@ public class OMPGdmFbpServiceImpl {
                                     double localDenominator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
                                     if (0.0 != quantity && 0 != localNumerator && 0 != localDenominator) {
                                         double result = quantity * (localNumerator / localDenominator);
-                                        BigDecimal a = new BigDecimal(result);
-                                        double df = a.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                        Double avgResult = result/size;
+                                        BigDecimal b = new BigDecimal(avgResult);
+                                        double df = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
                                         String volume = df + "";
                                         gdmfbpBo.setVolume(volume);
                                     }

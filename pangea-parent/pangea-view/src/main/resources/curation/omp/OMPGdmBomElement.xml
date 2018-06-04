@@ -33,24 +33,20 @@
                         </expression>
                     </relation>
                     <relation path="/edm/material_global_v1">
-                        <expression></expression>
+                        <expression>
+                            sourceSystem=/edm/matl_bom.srcSysCd
+                        </expression>
                     </relation>
                     <relation path="/plan/cns_material_plan_status">
-                        <expression></expression>
+                        <expression>
+                            sourceSystem=/edm/matl_bom.srcSysCd,
+                            localPlant=/edm/matl_bom.plntCd
+                        </expression>
                     </relation>
                 </relations>
             </region>
 
-            <region path="/plan/cns_material_plan_status">
-                <columns>
-                    sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant,dpRelevant
-                </columns>
-            </region>
-            <region path="/edm/material_global_v1">
-                <columns>
-                    primaryPlanningCode,localDpParentCode,sourceSystem,localMaterialNumber
-                </columns>
-            </region>
+
             <region path="/edm/material_plant_v1">
                 <columns>
                     localGoodsReceiptProcessingTimeInDays, sourceSystem,localMaterialNumber,localPlant
@@ -60,6 +56,14 @@
                 <columns>
                     bomNum,srcSysCd,bomCatCd,cmpntNum,bomItmNum,bomItmVldFromDt,dstrbtnKeyCd,fxQtyInd,bomItmVldToDt,leadTimeOffst,cmpntQty,cmpntScrap_Pct,cmpntUomCd
                 </columns>
+                <relations>
+                    <relation path="/edm/material_global_v1">
+                        localMaterialNumber=/edm/bom_item.cmpntNum
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status">
+                        localMaterialNumber=/edm/bom_item.cmpntNum
+                    </relation>
+                </relations>
             </region>
 
             <region path="/edm/bom_hdr">
@@ -111,13 +115,21 @@
                     </relation>
                 </relations>
             </region>
-
             <region path="/edm/mfg_rtng_itm">
                 <columns>
                     rtngTypCd,rtngItmNum,srcSysCd,rtngGrpCd,operNum,bsQty
                 </columns>
             </region>
-
+            <region path="/edm/material_global_v1">
+                <columns>
+                    primaryPlanningCode,localDpParentCode,sourceSystem,localMaterialNumber
+                </columns>
+            </region>
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant,dpRelevant
+                </columns>
+            </region>
             <region path="/omp/gdm_bom_element">
                 <columns>
                     bomElementId,active,activeFCTERP,activeOPRERP,activeSOPERP,batchId,bomId,bomType,bomUsage,comment,endEff,erpFeedbackQuantity,locationId,offset,offsetCalendarId,offsetPercentage,offsetPercType,planLevelId,productId,quantity,startEff

@@ -1,14 +1,14 @@
 @pangea_test @AEAZ-
 Feature:  OMPGdmfbp-Curation AEAZ-4062
   @Scenario1
- Scenario: Pick unique FPB data from cns_fin_plan_qty and cns_fin_plan_val 
+ Scenario: Pick unique FBP data from cns_fin_plan_qty and cns_fin_plan_val 
 
     And I will remove the test file on sink application "GDMFbp.tsv"
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode  | localBaseUom |
       | CONS_LATAM   | 000000000000000945  | 178962124094540036 | KI           |
-      | CONS_LATAM   | 000000000000002886 | 178962124094540045 | KI           |
+      | CONS_LATAM   | 000000000000002886  | 178962124094540045 | KI           |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     #cns_fin_plan_qty-localMaterialNumber=material_global_v1-localMaterialNumber
@@ -25,6 +25,8 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
       | 000000000000000945  | FBP        | 745400.866  | 201805    | BRL      |
       | 000000000000002886  | FBP        | 4658755.412 | 201806    | BRL      |
       | 000000000000002886  | FBP        | 1.0          | 201807    | BRL      |
+      | 000000000000002886  | FBP        | 1.0          | 201808    | BRL      |
+      | 000000000000002886  | FBP        | 1.0          | 201809    | BRL      |
     And I wait "/plan/cns_fin_plan_val" Async Queue complete
 
     #country_v1-localCountry=cns_fin_plan_qty-country
@@ -56,6 +58,8 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
       | 201914  | 201805       | 4        | 2019-04-01   | 2019-04-08 |
       | 201915  | 201806       | 4        | 2019-04-08   | 2019-04-15 |
       | 201916  | 201807       | 4        | 2019-04-08   | 2019-04-15 |
+      | 201917  | 201808       | 4        | 2019-04-08   | 2019-04-15 |
+      | 201918  | 201809       | 4        | 2019-04-08   | 2019-04-15 |
 
     And I wait "/edm/jnj_calendar_v1" Async Queue complete
 
@@ -76,7 +80,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
       | fbpId                                          | countryId | currencyId | dueDate             | fromDueDate         | productId             | value             | volume  |
       | 10_178962124094540036-2019/04/01 00:00:00 | BR        | CAED        | 2019/04/08 00:00:00 | 2019/04/01 00:00:00 | 10_178962124094540036 |   745400.866   |   12.888    |
-      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   4658756.412   |   34.798     |
+      | 10_178962124094540045-2019/04/08 00:00:00 | BR        | CAED        | 2019/04/15 00:00:00 | 2019/04/08 00:00:00 | 10_178962124094540045 |   1164689.603   |   8.699   |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -90,7 +94,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     And I will remove all data with region "/plan/edm_failed_data"
 
   @Scenario2
-  Scenario: Reject the FPB record if localDpParentCode is empty  for the associated material 
+  Scenario: Reject the FBP record if localDpParentCode is empty  for the associated material 
 
     And I will remove the test file on sink application "GDMFbp.tsv"
 
