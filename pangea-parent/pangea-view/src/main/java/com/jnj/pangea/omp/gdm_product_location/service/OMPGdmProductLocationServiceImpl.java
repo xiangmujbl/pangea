@@ -154,7 +154,7 @@ public class OMPGdmProductLocationServiceImpl {
             //rules E6
             PlanCnsSplProcTypEntity planCnsSplProcTypEntity = getFieldWithE6(materialPlantV1Entity.getLocalSpecialProcurementType(), materialPlantV1Entity.getSourceSystem());
             if (planCnsSplProcTypEntity != null) {
-                bo.setSobsl(planCnsSplProcTypEntity.getSpecialProcurementType());
+                bo.setSobsl(planCnsSplProcTypEntity.getSplProcType());
             }
             //rules E7
             PlanCnsPlngStratGrpEntity stratGrpEntity = getFieldWithE7(materialPlantV1Entity.getLocalPlanningStrategyGroup(), materialPlantV1Entity.getSourceSystem());
