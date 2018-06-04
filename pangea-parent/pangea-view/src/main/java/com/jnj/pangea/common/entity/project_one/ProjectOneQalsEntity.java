@@ -39,9 +39,17 @@ public class ProjectOneQalsEntity extends CommonEntity {
     private String lmengezub;
     private String lmengeist;
 
+    private String aenderdat;
+    private String aenderzeit;
+    private String erstelzeit;
+    private String ersteldat;
+
     public ProjectOneQalsEntity(Map<String, Object> map) {
         super(map);
-
+        setAenderdat((String) map.get("aenderdat"));
+        setAenderzeit((String) map.get("aenderzeit"));
+        setErstelzeit((String) map.get("erstelzeit"));
+        setErsteldat((String) map.get("ersteldat"));
         setMandt((String) map.get("mandt"));
         setPrueflos((String) map.get("prueflos"));
         setWerk((String) map.get("werk"));
@@ -332,4 +340,35 @@ public class ProjectOneQalsEntity extends CommonEntity {
         this.lmengeist = lmengeist;
     }
 
+    public String getAenderdat() {
+        return aenderdat;
+    }
+
+    public void setAenderdat(String aenderdat) {
+        this.aenderdat = aenderdat;
+    }
+
+    public String getAenderzeit() {
+        return aenderzeit;
+    }
+
+    public void setAenderzeit(String aenderzeit) {
+        this.aenderzeit = aenderzeit;
+    }
+
+    public String getErstelzeit() {
+        return erstelzeit;
+    }
+
+    public void setErstelzeit(String erstelzeit) {
+        this.erstelzeit = erstelzeit;
+    }
+
+    public String getErsteldat() {
+        return ersteldat;
+    }
+
+    public void setErsteldat(String ersteldat) {
+        this.ersteldat = ersteldat;
+    }
 }

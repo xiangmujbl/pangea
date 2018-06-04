@@ -10,13 +10,13 @@ Feature: EDMInspectionLotV1  AEAZ-3677
   Scenario: Full Load curation
 
     Given I import "/project_one/qals" by keyFields "prueflos,werk"
-      | mandt | prueflos   | werk | matnr | art | herkunft | objnr         | stsma   | stat35     | enstehdat | entstezeit | ersteldatErstelzeit|aenderdatAenderzeit | pastrterm | pastrzeit | paendterm | paendzeit | aufnr | kunnr | lifnr | charg    | lagortchrg | ebeln    | ebelp | mjahr | mblnr    | werkvorg | lagortvorg | losmenge | mengeneinh | lmengezub | lmengeist |
-      |    120|010000001138|BR02  |32239  |01   |01        |QL010000001138 |STALOTE  |            |20001024   |8:26:42 AM  |20001024 08:26:42   |19000101 00:00:00   |20001024   |12:00:00 AM|20001024   |12:00:00 AM|       |       |6245   |4000008964|BR01        |3000000022|70     |2000   |5000018782|BR02      |BR01        |3195.000  |KG          |0.000      |  3195.000 |
-      |    120|010000001153|BR02  |12937  |01   |01        |QL010000001153 |STALOTE  |            |20001023   |11:39:39 AM |20001023 11:39:39   |19000101 00:00:00   |20001023   |12:00:00 AM|20001023   |12:00:00 AM|       |       |2893   |4000008934|BR01        |3000001553|10     |2000   |5000017720|BR02      |BR01        |25.920    |TS          |0.000      |25.920     |
-      |    120|010000001614|BR02  |100060 |01   |01        |QL010000001614 |STALOTE  |            |20001030   |10:05:15 AM |20001030 10:05:15   |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |0.000      |500.000    |
-      |    120|010000001620|BR02  |100060 |01   |01        |QL010000001620 |STALOTE  |  X         |20001030   |10:05:15 AM |20001030 10:05:15   |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |0.000      |500.000    |
-      |    120|010000001631|BR02  |100060 |01   |01        |QL010000001631 |STALOTE  |            |20001030   |10:05:15 AM |20001030 10:05:15   |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |           |500.000    |
-      |    120|010000001691|BR02  |100060 |01   |01        |QL010000001691 |STALOTE  |            |20001030   |10:05:15 AM |20001030 10:05:15   |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |0.000      |500.000    |
+      | mandt | prueflos   | werk | matnr | art | herkunft | objnr         | stsma   | stat35     | enstehdat | entstezeit |ersteldat|erstelzeit| ersteldatErstelzeit|aenderdat|aenderzeit|aenderdatAenderzeit | pastrterm | pastrzeit | paendterm | paendzeit | aufnr | kunnr | lifnr | charg    | lagortchrg | ebeln    | ebelp | mjahr | mblnr    | werkvorg | lagortvorg | losmenge | mengeneinh | lmengezub | lmengeist |
+      |    120|010000001138|BR02  |32239  |01   |01        |QL010000001138 |STALOTE  |            |20001024   |8:26:42 AM  |20001024 |082642    |20001024 08:26:42   |19000101 |000000    |19000101 00:00:00   |20001024   |12:00:00 AM|20001024   |12:00:00 AM|       |       |6245   |4000008964|BR01        |3000000022|70     |2000   |5000018782|BR02      |BR01        |3195.000  |KG          |0.000      |  3195.000 |
+      |    120|010000001153|BR02  |12937  |01   |01        |QL010000001153 |STALOTE  |            |20001023   |11:39:39 AM |20001023 |113939    |20001023 11:39:39   | 19000101|000000    |19000101 00:00:00   |20001023   |12:00:00 AM|20001023   |12:00:00 AM|       |       |2893   |4000008934|BR01        |3000001553|10     |2000   |5000017720|BR02      |BR01        |25.920    |TS          |0.000      |25.920     |
+      |    120|010000001614|BR02  |100060 |01   |01        |QL010000001614 |STALOTE  |            |20001030   |10:05:15 AM |20001030 |100515    |20001030 10:05:15   |19000101 |000000    |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |0.000      |500.000    |
+      |    120|010000001620|BR02  |100060 |01   |01        |QL010000001620 |STALOTE  |  X         |20001030   |10:05:15 AM |20001030 |100515    |20001030 10:05:15   |19000101 |000000    |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |0.000      |500.000    |
+      |    120|010000001631|BR02  |100060 |01   |01        |QL010000001631 |STALOTE  |            |20001030   |10:05:15 AM |20001030 |100515    |20001030 10:05:15   |19000101 |000000    |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |           |500.000    |
+      |    120|010000001691|BR02  |100060 |01   |01        |QL010000001691 |STALOTE  |            |20001030   |10:05:15 AM |20001030 |100515    |20001030 10:05:15   |19000101 |000000    |19000101 00:00:00   |20001030   |12:00:00 AM|20001030   |12:00:00 AM|       |       |1858   |4000009567|BR01        |3000000645|30     |2000   |5000025593|BR02      |BR01        |500.000   |KG          |0.000      |500.000    |
 
     And I wait "/project_one/qals" Async Queue complete
 
@@ -36,7 +36,7 @@ Feature: EDMInspectionLotV1  AEAZ-3677
 
     And I wait "/project_one/qave" Async Queue complete
 
-    Given I import "/project_one/jest" by keyFields "objnr,stat"
+    Given I import "/project_one/jest" by keyFields "objnr,stat,mandt"
       | mandt| objnr     | stat| inact|
       |120|QL010000001138|E0001|      |
       |120|QL010000001138|I0001|X     |
@@ -109,7 +109,7 @@ Feature: EDMInspectionLotV1  AEAZ-3677
 
     And I wait "/project_one/jest" Async Queue complete
 
-    Given I import "/project_one/tj02t" by keyFields "istat"
+    Given I import "/project_one/tj02t" by keyFields "istat,spras"
       |istat|spras|txt04|txt30                        |
       |I0203|EN   |SPRQ |Quantity posting required    |
       |I0205|EN   |PASG |Plan/specification assigned  |
@@ -128,7 +128,7 @@ Feature: EDMInspectionLotV1  AEAZ-3677
 
 
     Then I check region data "/edm/inspection_lot_v1" by keyFields "srcSysCd,lotNum"
-      | srcSysCd | lotNum    | plntCd | matlId | baseUom | lotVerifTypeCd | lotOrigCd | localObjectNumber | stsPrfl | usgDecInd | localDateOfLotCreation   | localTimeOfLotCreation   | crtDttm               | chgDttm               | inspStrtDt   | inspStrtTm   | inspEndDt   | inspEndTm | cstmNum | vndrNum | btchNum | stgLocCd | mfgOrdrDoc | poDocNum | poDocLineNbr | matlMvmtDocYr | matlMvmtDocNum | stckPlntCd | stckSLocCd | inspLotQty | actlLotQty | toBePostedQty | usgDcsnCd  | qcDcsnDttm|qcStsCd|
+      | srcSysCd | lotNum    | plntCd  | matlId | baseUom | lotVerifTypeCd | lotOrigCd | localObjectNumber | stsPrfl | usgDecInd | localDateOfLotCreation   | localTimeOfLotCreation   | crtDttm               | chgDttm               | inspStrtDt   | inspStrtTm   | inspEndDt   | inspEndTm | cstmNum | vndrNum | btchNum | stgLocCd | mfgOrdrDoc | poDocNum | poDocLineNbr | matlMvmtDocYr | matlMvmtDocNum | stckPlntCd | stckSLocCd | inspLotQty | actlLotQty | toBePostedQty | usgDcsnCd  | qcDcsnDttm|qcStsCd|
       |CONS_LATAM|010000001138|BR02    |32239   |KG       |01              |01         |QL010000001138     |STALOTE  |           |2000-10-24                |8:26:42 AM                |2000-10-24T08:26:42.000|1900-01-01T00:00:00.000|2000-10-24    |12:00:00 AM   |2000-10-24   |12:00:00 AM|         |6245     |4000008964|BR01      |            |3000000022|70            |2000           |5000018782      |BR02        |BR01        |3195.000    |3195.000    |0.000          |APR        |2000-10-24 |SPRQ PASG CCTD CALC RREC STIC ICCO UD SPCO STUP CROK|
       |CONS_LATAM|010000001153|BR02    |12937   |TS       |01              |01         |QL010000001153     |STALOTE  |           |2000-10-23                |11:39:39 AM               |2000-10-23T11:39:39.000|1900-01-01T00:00:00.000|2000-10-23    |12:00:00 AM   |2000-10-23   |12:00:00 AM|         |2893     |4000008934|BR01      |            |3000001553|10            |2000           |5000017720      |BR02        |BR01        |25.920      |25.920      |0.000          |APR        |2000-10-24 |SPRQ PASG CCTD CALC RREC STIC ICCO UD SPCO STUP|
       |CONS_LATAM|010000001614|BR02    |100060  |KG       |01              |01         |QL010000001614     |STALOTE  |           |2000-10-30                |10:05:15 AM               |2000-10-30T10:05:15.000|1900-01-01T00:00:00.000|2000-10-30    |12:00:00 AM   |2000-10-30   |12:00:00 AM|         |1858     |4000009567|BR01      |            |3000000645|30            |2000           |5000025593      |BR02        |BR01        |500.000     |500.000     |0.000          |APR        |2000-11-08 |SPRQ PASG CCTD CALC RREC STIC ICCO UD SPCO STUP CROK|
@@ -143,4 +143,5 @@ Feature: EDMInspectionLotV1  AEAZ-3677
     And I will remove all data with region "/edm/inspection_lot_v1"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
 
