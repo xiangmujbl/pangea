@@ -90,6 +90,7 @@
 /plan/cns_cert_key
 /plan/cns_cert_deter
 /plan/cns_abc_ind
+/plan/cns_tlane_control
 /omp/product_type
 /omp/product_detail
 /omp/product_country
