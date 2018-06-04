@@ -259,7 +259,7 @@ public class OMPGdmProductLocationServiceImpl {
                             localvendorAccountNumberList.add(localvendorAccountNumber);
                             List<PlanSplPlnLocEntity> splPlnLocEntries = splPlnLocDao.getEntityListWithConditions(sourceListV1Entity.getSourceSystem(), sourceListV1Entity.getLocalVendorAccountNumber());
                             if (splPlnLocEntries.size() <= 0) {
-                                return new ArrayList<>();
+                                return boList;
                             } else {
                                     for (PlanSplPlnLocEntity splPlnLocEntity : splPlnLocEntries) {
                                         if(splPlnLocEntity.getVendorOrCustomer().equals("V")){
@@ -276,7 +276,7 @@ public class OMPGdmProductLocationServiceImpl {
                                     }
                             }
                         } else {
-                            return new ArrayList<>();
+                            return boList;
                         }
                     }
                     break; //break for first record. 
