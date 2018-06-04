@@ -56,16 +56,29 @@ public class OMPGdmPosServiceImpl {
         String localMaterialNumber = cnsDpPosEntity.getLocalMaterial();
         if (StringUtils.isNotEmpty(localMaterialNumber)) {
             edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(cnsDpPosEntity.getLocalMaterial());
+            if (null == edmMaterialGlobalV1Entity) {
+                // Reject this record
+                ResultObject resultObject = new ResultObject();
+                resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
+                        IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
+                        cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
+                list.add(resultObject);
+                return list;
+            }
         }
-        if (null == edmMaterialGlobalV1Entity) {
-            // Reject this record
-            ResultObject resultObject = new ResultObject();
-            resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
-                    IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", cnsDpPosEntity.getLocalMaterial(),
-                    cnsDpPosEntity.getCustomer(), cnsDpPosEntity.getYearMonth()));
-            list.add(resultObject);
-            return list;
-        }
+
+//        "JOIN
+//        edm/material_global_v1,
+//                plan/cns_dp_pos,
+//                plan/cns_dem_grp_asgn and
+//        project_one/KNVH  WITH
+//               material_global_v1-sourceSystem = cns_plan_parameter-attribute ( where cns_plan_parameter-sourceSystem = material_global_v1-sourceSystem and cns_plan_parameter-dataObject = 'SEND_TO_OMP'  ) AND
+//               material_global_v1-localMaterialNumber = cns_dp_pos-localMaterial AND
+//               cns_dp_pos-customer = cns_dem_grp_asgn-customerShipTo AND
+//               cns_dem_grp_asgn-customerShipTo = KNVH-KUNNR AND
+//               KNVH-DATBI >= Current Date"
+
+
 
         List<PlanCnsPlanParameterEntity> cnsPlanParameterEntityList = cnsPlanParameterDao.getEntitiesWithConditions(edmMaterialGlobalV1Entity.getSourceSystem(), IConstant.VALUE.SEND_TO_OMP, edmMaterialGlobalV1Entity.getSourceSystem());
         // not sure whether need to filter by table cns_plan_parameter

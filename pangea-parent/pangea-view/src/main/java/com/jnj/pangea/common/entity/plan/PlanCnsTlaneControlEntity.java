@@ -11,7 +11,7 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
     private String validFrom;
     private String validTo;
     private String originLocation;
-    private String destinatonlocation;
+    private String destinationLocation;
     private String mode;
     private String leadTime;
     private String processTypeId;
@@ -26,7 +26,7 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
         setValidFrom((String) map.get("validFrom"));
         setValidTo((String) map.get("validTo"));
         setOriginLocation((String) map.get("originLocation"));
-        setDestinatonlocation((String) map.get("destinatonlocation"));
+        setDestinationLocation((String) map.get("destinationLocation"));
         setMode((String) map.get("mode"));
         setLeadTime((String) map.get("leadTime"));
         setProcessTypeId((String) map.get("processTypeId"));
@@ -73,12 +73,12 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
         this.originLocation = originLocation;
     }
 
-    public String getDestinatonlocation() {
-        return destinatonlocation;
+    public String getDestinationLocation() {
+        return destinationLocation;
     }
 
-    public void setDestinatonlocation(String destinatonlocation) {
-        this.destinatonlocation = destinatonlocation;
+    public void setDestinationLocation(String destinationLocation) {
+        this.destinationLocation = destinationLocation;
     }
 
     public String getMode() {

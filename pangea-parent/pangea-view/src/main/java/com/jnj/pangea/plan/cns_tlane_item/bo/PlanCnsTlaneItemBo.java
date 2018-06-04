@@ -10,7 +10,7 @@ public class PlanCnsTlaneItemBo extends BaseBo {
     private String validFrom;
     private String validTo;
     private String originLocation;
-    private String destinatonLocation;
+    private String destinationLocation;
     private String materialNumber;
     private String mode;
     private String leadTime;
@@ -67,12 +67,12 @@ public class PlanCnsTlaneItemBo extends BaseBo {
         this.originLocation = originLocation;
     }
 
-    public String getDestinatonLocation() {
-        return destinatonLocation;
+    public String getDestinationLocation() {
+        return destinationLocation;
     }
 
-    public void setDestinatonLocation(String destinatonLocation) {
-        this.destinatonLocation = destinatonLocation;
+    public void setDestinationLocation(String destinationLocation) {
+        this.destinationLocation = destinationLocation;
     }
 
     public String getMaterialNumber() {

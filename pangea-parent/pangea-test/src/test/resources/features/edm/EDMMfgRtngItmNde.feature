@@ -28,8 +28,6 @@ Feature: EDMMfgRtngItmNde AEAZ-3273
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/project_one/plas" and "/edm/mfg_rtng_itm_nde,/plan/edm_failed_data"
-
     And I delete the test data
 
     And I will remove all data with region "/edm/mfg_rtng_itm_nde"

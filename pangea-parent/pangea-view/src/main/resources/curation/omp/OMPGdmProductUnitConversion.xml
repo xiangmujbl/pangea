@@ -22,7 +22,7 @@
 
             <region path="/plan/cns_material_plan_status">
                 <columns>
-                    localMaterialNumber,materialNumber,active,dpRelevant,spRelevant,localPlant,sourceSystem
+                    localMaterialNumber,materialNumber,active,dpRelevant,spRelevant,localPlant,sourceSystem,noPlanRelevant
                 </columns>
             </region>
 

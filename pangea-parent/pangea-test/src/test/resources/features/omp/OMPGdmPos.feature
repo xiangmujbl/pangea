@@ -101,11 +101,13 @@ Feature: OMPGdmPos AEAZ-3214
     #cns_plan_unit-unit
     #Distribute cns_dp_pos-quantity equally into noOfWeeks and round to the nearest integer
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1               | key2      | key3   | key4 | key5 | errorValue           | sourceSystem |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077-J1 | 201804 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078    | 201808 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079-J1 | 201809 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089    | 201808 |      |      | Unable to find Root1 |              |
+      | errorCode | functionalArea | interfaceID | key1               | key2      | key3   | key4 | key5 | errorValue          | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077-J1 | 201804 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078    | 201808 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079-J1 | 201809 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089    | 201808 |      |      | Unable to find Root |              |
+
+  Scenario: delete all test data
 
     Then I delete the test data
 
@@ -210,13 +212,14 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070072-1 | LA_178910100400070072-1-1996/01/29 00:00:00 |            | 1996/01/29 00:00:00 | 1996/01/22 00:00:00 | CA     | 2        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1                  | key2   | key3   | key4 | key5 | errorValue           | sourceSystem |
-      |           | DP             | OMPGdmPos   | 000000000000006200    | 104077 | 201804 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200    | 104078 | 201808 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200    | 104079 | 201809 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006201    | 104089 | 201808 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000004001-J1 | 104097 | 201804 |      |      | Unable to find Root2 |              |
+      | errorCode | functionalArea | interfaceID | key1                  | key2   | key3   | key4 | key5 | errorValue          | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200    | 104077 | 201804 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200    | 104078 | 201808 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200    | 104079 | 201809 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201    | 104089 | 201808 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000004001-J1 | 104097 | 201804 |      |      | Unable to find Root |              |
 
+  Scenario: delete all test data
 
     Then I delete the test data
 
@@ -325,12 +328,14 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070072-1 | LA_178910100400070072-1-1996/01/29 00:00:00 |            | 1996/01/29 00:00:00 | 1996/01/22 00:00:00 | CA     | 2        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1               | key2      | key3   | key4 | key5 | errorValue           | sourceSystem |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077-T1 | 201804 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078    | 201808 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079-T1 | 201809 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089    | 201808 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000004001 | 104097-T1 | 201804 |      |      | Unable to find Root2 |              |
+      | errorCode | functionalArea | interfaceID | key1               | key2      | key3   | key4 | key5 | errorValue          | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077-T1 | 201804 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078    | 201808 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079-T1 | 201809 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089    | 201808 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000004001 | 104097-T1 | 201804 |      |      | Unable to find Root |              |
+
+  Scenario: delete all test data
 
     Then I delete the test data
 
@@ -439,12 +444,14 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070072-1 | LA_178910100400070072-1-1996/01/29 00:00:00 |            | 1996/01/29 00:00:00 | 1996/01/22 00:00:00 | CA     | 2        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1               | key2   | key3   | key4 | key5 | errorValue           | sourceSystem |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077 | 201804 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078 | 201808 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079 | 201809 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089 | 201808 |      |      | Unable to find Root1 |              |
-      |           | DP             | OMPGdmPos   | 000000000000004001 | 104097 | 201804 |      |      | Unable to find Root2 |              |
+      | errorCode | functionalArea | interfaceID | key1               | key2   | key3   | key4 | key5 | errorValue          | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104077 | 201804 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104078 | 201808 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006200 | 104079 | 201809 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000006201 | 104089 | 201808 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000004001 | 104097 | 201804 |      |      | Unable to find Root |              |
+
+  Scenario: delete all test data
 
     Then I delete the test data
 
@@ -550,16 +557,10 @@ Feature: OMPGdmPos AEAZ-3214
       | LA_178910100400070071-1 | LA_178910100400070071-1-1996/03/29 00:00:00 |            | 1996/03/29 00:00:00 | 1996/03/29 00:00:00 | CA     |          |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | errorCode | functionalArea | interfaceID | key1               | key2   | key3   | key4 | key5 | errorValue           | sourceSystem |
-      |           | DP             | OMPGdmPos   | 000000000000004002 | 104073 | 199603 |      |      | Unable to find Root3 |              |
-      |           | DP             | OMPGdmPos   | 000000000000004003 | 104074 | 199604 |      |      | Unable to find Root2 |              |
-      |           | DP             | OMPGdmPos   | 000000000000004004 | 104075 | 199605 |      |      | Unable to find Root1 |              |
-
-    Then I delete the test data
-
-    And I will remove all data with region "/omp/gdm_pos"
-
-    And I will remove all data with region "/plan/edm_failed_data"
+      | errorCode | functionalArea | interfaceID | key1               | key2   | key3   | key4 | key5 | errorValue          | sourceSystem |
+      |           | DP             | OMPGdmPos   | 000000000000004002 | 104073 | 199603 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000004003 | 104074 | 199604 |      |      | Unable to find Root |              |
+      |           | DP             | OMPGdmPos   | 000000000000004004 | 104075 | 199605 |      |      | Unable to find Root |              |
 
   Scenario: delete all test data
 
