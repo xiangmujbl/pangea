@@ -272,13 +272,13 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                     bomElementId = bomElementId + cleanZero(bomItemEntity.getBomItmNum()) + IConstant.VALUE.BACK_SLANT;
                 }
                 if (StringUtils.isNotBlank(bomItemEntity.getBomItmVldFromDt())) {
-                    Date fromDueDate = DateUtils.stringToDate(bomItemEntity.getBomItmVldFromDt(), DateUtils.F_yyyyMMdd);
+                    Date fromDueDate = DateUtils.stringToDate(bomItemEntity.getBomItmVldFromDt(), DateUtils.yyyy_MM_dd);
                     String fromDate = DateUtils.dateToString(fromDueDate, DateUtils.F_yyyyMMdd);
                     bomElementId = bomElementId + fromDate;
                 }
             } else {
                 if (StringUtils.isNotBlank(bomHdrEntity.getBomVldFromDt())) {
-                    Date fromDueDate = DateUtils.stringToDate(bomHdrEntity.getBomVldFromDt(), DateUtils.F_yyyyMMdd);
+                    Date fromDueDate = DateUtils.stringToDate(bomHdrEntity.getBomVldFromDt(), DateUtils.yyyy_MM_dd);
                     String fromDate = DateUtils.dateToString(fromDueDate, DateUtils.F_yyyyMMdd);
                     bomElementId = bomElementId + fromDate;
                 }
@@ -352,7 +352,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
     public String getEndEff_T8(String bomItmVldToDt, String valToDt, String type) {
         String endEff = "";
         Date bomDt = DateUtils.stringToDate(bomItmVldToDt, DateUtils.yyyy_MM_dd);
-        Date valDt = DateUtils.stringToDate(valToDt, DateUtils.F_yyyyMMdd);
+        Date valDt = DateUtils.stringToDate(valToDt, DateUtils.yyyy_MM_dd);
         Date endEff_default = DateUtils.stringToDate(IConstant.VALUE.ENDEFF, DateUtils.J_yyyyMMdd_HHmmss);
         if (type.equals(IConstant.VALUE.ZERO)) {
             if (bomDt.after(valDt)) {
