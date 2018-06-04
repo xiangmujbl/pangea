@@ -26,6 +26,9 @@
 /qa/plan/cns_product_status_lov
 /qa/plan/cns_so_type_incl
 /qa/plan/cns_ord_rej
+/qa/plan/cns_root_description
+/qa/plan/cns_clusters
+/qa/plan/jnj_calendar_v1
 
 /qa/ngems/sub_brand_v1
 /qa/ngems/source_system
