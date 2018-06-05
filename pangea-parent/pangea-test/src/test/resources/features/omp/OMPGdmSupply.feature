@@ -197,9 +197,9 @@ Feature:  OMPGdmSupply-Curation
 
     Given I import "/plan/cns_spl_pln_loc" by keyFields "localNumber,vendorOrCustomer,sourceSystem,localPlant"
       | localNumber | vendorOrCustomer | sourceSystem | localPlant |
-      | 6109        | V                | CONS_LATAM   | MX02       |
-      | 2519        | V                | CONS_LATAM   | MX02       |
-      | 6359        | V                | CONS_LATAM   | MX02       |
+      | 6109        | V                | CONS_LATAM   |            |
+      | 2519        | V                | CONS_LATAM   |            |
+      | 6359        |                  | CONS_LATAM   |            |
       | 8917        | V                | CONS_LATAM   | MX02       |
 
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete
