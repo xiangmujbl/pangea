@@ -6,8 +6,7 @@ package com.jnj.pangea.common;
 public interface IConstant {
 
     interface REGION {
-        // ------fail region
-        String FAIL_DATA = "/plan/edm_failed_data";
+
         // -----region
         String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
         String EDM_WRK_CTR = "/edm/wrk_ctr";

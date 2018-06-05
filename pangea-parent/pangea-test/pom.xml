@@ -38,11 +38,6 @@
             <artifactId>adf-compute-client</artifactId>
             <version>${adf.compute.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.jnj.adf</groupId>
-            <artifactId>adf-test-framework</artifactId>
-            <version>${adf.version}</version>
-        </dependency>
         <!--<dependency>-->
             <!--<groupId>com.jnj.adf</groupId>-->
             <!--<artifactId>adf-auto-curation</artifactId>-->
