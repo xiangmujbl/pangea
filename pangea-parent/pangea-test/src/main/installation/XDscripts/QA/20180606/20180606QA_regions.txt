@@ -1,10 +1,15 @@
 /qa/project_one/tvro
 /qa/project_one/knvh
 
+/qa/edm/global_business_unit_v1
+
 /qa/plan/cns_spl_pln_loc
 /qa/plan/cns_root_description
 /qa/plan/cns_plant_attr
 /qa/plan/cns_clusters
+/qa/plan/cns_material_plan_status
+/qa/plan/cns_plan_parameter
+/qa/plan/cns_cert_deter
 
 /qa/omp/product_detail
 /qa/omp/product_country
@@ -23,5 +28,3 @@
 
 /qa/ngems/global_business_unit_v1
 
-/qa/edm/jnj_calendar_v1
-/qa/edm/global_business_unit_v1
