@@ -37,17 +37,23 @@
         <dependency>
             <groupId>com.jnj.adf</groupId>
             <artifactId>adf-auto-curation</artifactId>
-            <version>0.3.04-0.2</version>
+            <version>0.3.04-0.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.jnj.adf</groupId>
+                    <artifactId>adf-compute</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.jnj.adf</groupId>
             <artifactId>adf-auto-deploy</artifactId>
-            <version>0.3.04-0.2</version>
+            <version>0.3.04-0.3</version>
         </dependency>
         <dependency>
             <groupId>com.jnj.adf</groupId>
             <artifactId>adf-auto-test</artifactId>
-            <version>0.3.04-0.2</version>
+            <version>0.3.04-0.3</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>com.jnj.adf</groupId>-->
