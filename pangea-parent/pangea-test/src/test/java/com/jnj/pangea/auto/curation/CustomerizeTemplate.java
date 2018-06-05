@@ -12,13 +12,15 @@ import java.io.IOException;
 public class CustomerizeTemplate {
 
     public static void main(String[] args) throws IOException {
-
         Template template = new CETemplateImpl();
-        template.generateAll("edm_currency.xml");
-
+        String customizeXml = "autocuration/omega/jde/xml/omp/gdm_product_unit_conversion.xml";
+        template.generateAll(customizeXml,"jar/omega-hooks.jar");
+//        Template template = new CETemplateImpl();
+//        template.generateAll("edm_currency.xml");
 //        JarGenerate jarGenerate = new JarGenerateImpl();
 //        jarGenerate.jarGenerate();
 //        template.generateAll(customizeXml,"jar/omega-hooks.jar");
+
     }
 
 }
