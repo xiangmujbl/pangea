@@ -36,7 +36,6 @@ public class EDMMfgOrderSeqDaoImpl extends CommonDaoImpl {
         }else{
             adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_SEQ.FIELD_ORDRRTNGNUM).is(ordrRtngNum.trim()));
         }
-        LogUtil.getCoreLog().info("EDMMfgOrderSeqDaoImpl "+adfCriteria.toQueryString());
         return queryForList(IConstant.REGION.EDM_MFG_ORDER_SEQ, adfCriteria.toQueryString(), EDMMfgOrderSeqEntity.class);
     }
 

@@ -51,9 +51,9 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         String actRlseDt = mfgOrderEntity.getActRlseDt();
         String beforeDate = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
-//        if (StringUtils.isBlank(actRlseDt) || (!actRlseDt.equals(nowDate) && !actRlseDt.equals(beforeDate))) {
-//            return null;
-//        }
+        if (StringUtils.isBlank(actRlseDt) || (!actRlseDt.equals(nowDate) && !actRlseDt.equals(beforeDate))) {
+            return null;
+        }
         String sourceSysCd = mfgOrderEntity.getSourceSysCd();
         String mfgOrdrNum = mfgOrderEntity.getMfgOrdrNum();
         String rsrvtnNum = mfgOrderEntity.getRsrvtnNum();
@@ -208,7 +208,7 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                     ompGdmbomelementBo.setLocationId(edmMfgOrderItmEntity.getSrcSysCd() + IConstant.OMP_GDMBOMELEMENT.__SPLIT + edmMfgOrderItmEntity.getPlntCd());
                     EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity= edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(edmReservItmEntity.getMatlNum(),mfgOrderEntity.getSourceSysCd());
                     if(edmMaterialGlobalV1Entity==null){
-                        FailData failData=new FailData(IConstant.FAILDATA.NA,edmReservItmEntity.getMatlNum(),IConstant.FAILDATA.ERRORCODE,IConstant.FAILDATA.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum());
+                        FailData failData=new FailData(IConstant.FAILDATA.NA,IConstant.OMP_GDMBOMELEMENT.INTERFACEID,IConstant.FAILDATA.ERRORCODE,IConstant.OMP_GDMBOMELEMENT.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum(),edmReservItmEntity.getMatlNum());
                         resultObject.setFailData(failData);
                     }else{
                         PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity=null;
@@ -220,7 +220,7 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                         }
 
                         if(planCnsMaterialPlanStatusEntity==null){
-                            FailData failData=new FailData(IConstant.FAILDATA.NA,edmReservItmEntity.getMatlNum(),IConstant.FAILDATA.ERRORCODE,IConstant.FAILDATA.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum());
+                            FailData failData=new FailData(IConstant.FAILDATA.NA,IConstant.OMP_GDMBOMELEMENT.INTERFACEID,IConstant.FAILDATA.ERRORCODE,IConstant.OMP_GDMBOMELEMENT.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum(),edmReservItmEntity.getMatlNum());
                             resultObject.setFailData(failData);
                         }else{
                             String NoPlanRelevant=planCnsMaterialPlanStatusEntity.getNoPlanRelevant();
@@ -232,25 +232,26 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                                     ompGdmbomelementBo.setProductId(planCnsPlanParameterOne.getParameterValue()+IConstant.OMP_GDMBOMELEMENT.__SPLIT+edmMaterialGlobalV1Entity.getLocalDpParentCode());
                                     resultObject.setBaseBo(ompGdmbomelementBo);
                                 }else{
-                                    FailData failData=new FailData(IConstant.FAILDATA.NA,edmReservItmEntity.getMatlNum(),IConstant.FAILDATA.ERRORCODE,IConstant.FAILDATA.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum());
+                                    FailData failData=new FailData(IConstant.FAILDATA.NA,IConstant.OMP_GDMBOMELEMENT.INTERFACEID,IConstant.FAILDATA.ERRORCODE,IConstant.OMP_GDMBOMELEMENT.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum(),edmReservItmEntity.getMatlNum());
                                     resultObject.setFailData(failData);
                                 }
                             }
                         }
                     }
-                    if (StringUtils.isBlank(qtyFxInd)) {
-                        ompGdmbomelementBo.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_PLANLEVELID_BLANK);
-                    } else if (qtyFxInd.equalsIgnoreCase(IConstant.OMP_GDMBOMELEMENT.QTYFXIND_X)) {
-                        ompGdmbomelementBo.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_PlanLevelId_X);
-                        LogUtil.getCoreLog().info("========================"+ompGdmbomelementBo.getLocationId());
-                        OMPGdmbomelementBo ompGdmbomelementBo1 = ompGdmbomelementBo.clone();
-                        LogUtil.getCoreLog().info("========================"+ompGdmbomelementBo1.getLocationId());
-                        ResultObject resultObject1 = new ResultObject();
-                        ompGdmbomelementBo1.setBomElementId(ompGdmbomelementBo1.getBomElementId() + IConstant.OMP_GDMBOMELEMENT.KEY_SPLIT + IConstant.OMP_GDMBOMELEMENT.CLONE_BOMEID);
-                        ompGdmbomelementBo1.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.CLONE_PLANLEVELID);
-                        resultObject1.setBaseBo(ompGdmbomelementBo1);
-                        list.add(resultObject1);
+                    if(resultObject.getFailData()==null){
+                        if (StringUtils.isBlank(qtyFxInd)) {
+                            ompGdmbomelementBo.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_PLANLEVELID_BLANK);
+                        } else if (qtyFxInd.equalsIgnoreCase(IConstant.OMP_GDMBOMELEMENT.QTYFXIND_X)) {
+                            ompGdmbomelementBo.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_PlanLevelId_X);
+                            OMPGdmbomelementBo ompGdmbomelementBo1 = ompGdmbomelementBo.clone();
+                            ResultObject resultObject1 = new ResultObject();
+                            ompGdmbomelementBo1.setBomElementId(ompGdmbomelementBo1.getBomElementId() + IConstant.OMP_GDMBOMELEMENT.KEY_SPLIT + IConstant.OMP_GDMBOMELEMENT.CLONE_BOMEID);
+                            ompGdmbomelementBo1.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.CLONE_PLANLEVELID);
+                            resultObject1.setBaseBo(ompGdmbomelementBo1);
+                            list.add(resultObject1);
+                        }
                     }
+
                     list.add(resultObject);
                 }
             }
@@ -351,13 +352,13 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                     ompGdmbomelementBo.setPlanLevelId(IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_PLANLEVELID_BLANK);
                     EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity= edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(orderItmEntity.getMatlNum(),mfgOrderEntity.getSourceSysCd());
                     if(edmMaterialGlobalV1Entity==null){
-                        FailData failData=new FailData(IConstant.FAILDATA.NA,edmReservItmEntity.getMatlNum(),IConstant.FAILDATA.ERRORCODE,IConstant.FAILDATA.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum());
+                        FailData failData=new FailData(IConstant.FAILDATA.NA,IConstant.OMP_GDMBOMELEMENT.INTERFACEID,IConstant.FAILDATA.ERRORCODE,IConstant.OMP_GDMBOMELEMENT.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum(),edmReservItmEntity.getMatlNum());
                         resultObject.setFailData(failData);
                     }else{
                         PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity=planCnsMaterialPlanStatusDao.getPlanCnsMaterialPlanStatusEntity4251(mfgOrderEntity.getSourceSysCd(),orderItmEntity.getMatlNum(),orderItmEntity.getPlntCd());;
 
                         if(planCnsMaterialPlanStatusEntity==null){
-                            FailData failData=new FailData(IConstant.FAILDATA.NA,edmReservItmEntity.getMatlNum(),IConstant.FAILDATA.ERRORCODE,IConstant.FAILDATA.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum());
+                            FailData failData=new FailData(IConstant.FAILDATA.NA,IConstant.OMP_GDMBOMELEMENT.INTERFACEID,IConstant.FAILDATA.ERRORCODE,IConstant.OMP_GDMBOMELEMENT.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum(),edmReservItmEntity.getMatlNum());
                             resultObject.setFailData(failData);
                         }else{
                             String NoPlanRelevant=planCnsMaterialPlanStatusEntity.getNoPlanRelevant();
@@ -369,7 +370,7 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
                                     ompGdmbomelementBo.setProductId(planCnsPlanParameterOne.getParameterValue()+IConstant.OMP_GDMBOMELEMENT.__SPLIT+edmMaterialGlobalV1Entity.getLocalDpParentCode());
                                     resultObject.setBaseBo(ompGdmbomelementBo);
                                 }else{
-                                    FailData failData=new FailData(IConstant.FAILDATA.NA,edmReservItmEntity.getMatlNum(),IConstant.FAILDATA.ERRORCODE,IConstant.FAILDATA.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum());
+                                    FailData failData=new FailData(IConstant.FAILDATA.NA,IConstant.OMP_GDMBOMELEMENT.INTERFACEID,IConstant.FAILDATA.ERRORCODE,IConstant.OMP_GDMBOMELEMENT.PRODUCTID_FAIL_MSG,mfgOrderEntity.getSourceSysCd(),mfgOrderEntity.getMfgOrdrNum(),edmReservItmEntity.getMatlNum());
                                     resultObject.setFailData(failData);
                                 }
                             }
