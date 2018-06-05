@@ -15,10 +15,7 @@ import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.inspection_lot.bo.EDMInspectionLotBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,18 +47,22 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         boolean empty8 = StringUtils.isEmpty(projectOneQalsEntity.getAenderdat());
         boolean empty9 = StringUtils.isEmpty(projectOneQalsEntity.getAenderzeit());
         if(!empty8 && !empty9){
-            String concat = projectOneQalsEntity.getAenderdat().concat(projectOneQalsEntity.getAenderzeit());
-            Date dueDate1 = DateUtils.stringToDate(concat, DateUtils.F_yyyyMMddHHmmss);
-            String ChgDttm = DateUtils.dateToString(dueDate1, DateUtils.ISO_8602);
-            edmInspectionLotV1Bo.setChgDttm(ChgDttm);
+            if(!projectOneQalsEntity.getAenderdat().equals("00000000")){
+                String concat = projectOneQalsEntity.getAenderdat().concat(projectOneQalsEntity.getAenderzeit());
+                Date dueDate1 = DateUtils.stringToDate(concat, DateUtils.F_yyyyMMddHHmmss);
+                String ChgDttm = DateUtils.dateToString(dueDate1, DateUtils.ISO_8602);
+                edmInspectionLotV1Bo.setChgDttm(ChgDttm);
+            }
         }
         boolean empty10 = StringUtils.isEmpty(projectOneQalsEntity.getErsteldat());
         boolean empty11 = StringUtils.isEmpty(projectOneQalsEntity.getErstelzeit());
         if(!empty10 && !empty11){
-            String concat = projectOneQalsEntity.getErsteldat().concat(projectOneQalsEntity.getErstelzeit());
-            Date dueDate = DateUtils.stringToDate(concat, DateUtils.F_yyyyMMddHHmmss);
-            String CrtDttm = DateUtils.dateToString(dueDate, DateUtils.ISO_8602);
-            edmInspectionLotV1Bo.setCrtDttm(CrtDttm);
+            if(!projectOneQalsEntity.getErsteldat().equals("00000000")){
+                String concat = projectOneQalsEntity.getErsteldat().concat(projectOneQalsEntity.getErstelzeit());
+                Date dueDate = DateUtils.stringToDate(concat, DateUtils.F_yyyyMMddHHmmss);
+                String CrtDttm = DateUtils.dateToString(dueDate, DateUtils.ISO_8602);
+                edmInspectionLotV1Bo.setCrtDttm(CrtDttm);
+            }
 
         }
         //N1
@@ -70,7 +71,6 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
         if(!empty||empty1){
             return null;
         }
-
 
         EDMSourceSystemV1Entity sourceEntity = getSourceEntity();
         edmInspectionLotV1Bo.setSrcSysCd(sourceEntity.getSourceSystem());
