@@ -167,6 +167,9 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         String basmg = marcEntity.getBasmg();
         materialPlantBo.setLocalBaseQuantity(basmg);
 
+        String ekgrp = marcEntity.getEkgrp();
+        materialPlantBo.setPurchsngGrpCd(ekgrp);
+
         resultObject.setBaseBo(materialPlantBo);
 
         return resultObject;
