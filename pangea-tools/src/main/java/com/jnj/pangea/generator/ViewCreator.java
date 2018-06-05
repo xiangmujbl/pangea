@@ -27,13 +27,13 @@ import static com.jnj.pangea.generator.metadata.StringUtils.transformToCamelCase
 
 public class ViewCreator {
 
-    private static final String TEST_DIR = "pangea-parent/pangea-test/src/test/java/com/jnj/pangea/";
-    private static final String FEATURE_DIR = "pangea-parent/pangea-test/src/test/resources/features/";
-    private static final String XML_DIR = "pangea-parent/pangea-view/src/main/resources/curation/";
-    private static final String PROCESSOR_DIR = "pangea-parent/pangea-view/src/main/java/com/jnj/pangea/";
+    private static final String TEST_DIR = "C:\\bigdata\\source\\pangea\\pangea-parent/pangea-test/src/test/java/com/jnj/pangea/";
+    private static final String FEATURE_DIR = "C:\\bigdata\\source\\pangea\\pangea-parent/pangea-test/src/test/resources/features/";
+    private static final String XML_DIR = "C:\\bigdata\\source\\pangea\\pangea-parent/pangea-view/src/main/resources/curation/";
+    private static final String PROCESSOR_DIR = "C:\\bigdata\\source\\pangea\\pangea-parent/pangea-view/src/main/java/com/jnj/pangea/";
 
-    private static final String REGIONS_TXT = "pangea-parent/pangea-test/src/main/installation/listRegion/regions.txt";
-    private static final String REGIONS_XML = "pangea-parent/pangea-test/src/test/resources/grid-server.xml";
+    private static final String REGIONS_TXT = "C:\\bigdata\\source\\pangea\\pangea-parent/pangea-test/src/main/installation/listRegion/regions.txt";
+    private static final String REGIONS_XML = "C:\\bigdata\\source\\pangea\\pangea-parent/pangea-test/src/test/resources/grid-server.xml";
 
     private String system; // edm
     private String name; // TestView
@@ -71,7 +71,7 @@ public class ViewCreator {
 
         try {
             configuration = new Configuration(Configuration.VERSION_2_3_22);
-            configuration.setDirectoryForTemplateLoading(new File("pangea-tools/src/main/resources/template"));
+            configuration.setDirectoryForTemplateLoading(new File("C:\\bigdata\\source\\pangea\\pangea-tools/src/main/resources/template"));
         } catch (IOException e) {
             e.printStackTrace();
         }

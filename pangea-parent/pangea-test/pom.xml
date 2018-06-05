@@ -34,6 +34,21 @@
             <version>${adf.compute.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.jnj.adf</groupId>
+            <artifactId>adf-auto-curation</artifactId>
+            <version>0.3.04-0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jnj.adf</groupId>
+            <artifactId>adf-auto-deploy</artifactId>
+            <version>0.3.04-0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jnj.adf</groupId>
+            <artifactId>adf-auto-test</artifactId>
+            <version>0.3.04-0.2</version>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>com.jnj.adf</groupId>-->
             <!--<artifactId>adf-test-framework</artifactId>-->

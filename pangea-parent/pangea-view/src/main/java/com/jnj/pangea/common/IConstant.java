@@ -6,6 +6,9 @@ package com.jnj.pangea.common;
 public interface IConstant {
 
     interface REGION {
+        // ------fail region
+        String FAIL_DATA = "/plan/edm_failed_data";
+        // -----region
         String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
         String EDM_WRK_CTR = "/edm/wrk_ctr";
         String PROJECT_ONE_Qave = "/project_one/qave";
@@ -822,6 +825,12 @@ public interface IConstant {
     interface LFU {
         String DATA_OBJECT = "dataObject";
         String SPLIT = "-";
+        String SPLIT_ = "_";
+        String PATTERN_DECIMAL_3="#.000";
+        String PATTERN_DECIMAL_5="#.00000";
+        String PATTERN_DECIMAL_0="#";
+
+        String VALUE_BLACK="";
         String CHCEK_TIME = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
     }
 
@@ -1112,6 +1121,9 @@ public interface IConstant {
         public static final String CLONE_PLANLEVELID = "VolumePlanning";
         public static final String PATTERN_DECIMAL_5 = "#.00000";
         public static final String PATTERN_DECIMAL_3 = "#.000";
+        public static final String INTERFACEID="OMPGdmbomelementProcess";
+        public static final String  PRODUCTID_FAIL_MSG="Unable to construct ProductId";
+
 
     }
 
