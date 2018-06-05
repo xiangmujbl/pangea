@@ -213,20 +213,29 @@ public class OMPGdmSupplyServiceImpl {
 
                                                     // skip if local Special Procurement Type == 30 as it is a sub contracting scenario
                                                     String localSpecialProcurementType = edmMaterialPlantV1Entity_1.getLocalSpecialProcurementType();
-                                                    if (!(localSpecialProcurementType.equals("30"))) {
-
+                                                    if (localSpecialProcurementType.equals("30")) {
+                                                        return skipObjects;
+                                                    } else {
                                                         // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
                                                         if (edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) {
 
                                                             // set Vendor to EDM Source List V1 local vendor account number
                                                             gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
                                                             gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem()
-                                                                    + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant()
                                                                     + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
                                                                     + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber());
+                                                        } else {
+                                                            return skipObjects;
                                                         }
                                                     }
+                                                } else {
+                                                        return skipObjects;
+                                                    }
+                                                } else {
+                                                    return skipObjects;
                                                 }
+                                            } else {
+                                                return skipObjects;
                                             }
 
                                             // N19
@@ -243,7 +252,7 @@ public class OMPGdmSupplyServiceImpl {
                     }
                 }
             }
-        }
+
     } else {
         FailData failData = writeFailDataToRegion(edmSourceListV1Entity, "N1", "Material Global V1 Primary planning code and Material Number are blank");
         resultObject.setFailData(failData);
