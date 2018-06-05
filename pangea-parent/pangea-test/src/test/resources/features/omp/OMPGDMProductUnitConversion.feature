@@ -40,38 +40,38 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
 
     #material_global_V1-materialNumber = cns_material_plan_status-materialNumber
     And I import "/plan/cns_material_plan_status" by keyFields "localMaterialNumber,localPlant,sourceSystem"
-      | localMaterialNumber | localPlant | sourceSystem | materialNumber | active | dpRelevant | spRelevant |
-      | 000000000000000017  | BR07       | CONS_LATAM   | 17             | X      | X          | X          |
-      | 000000000000000945  | BR07       | CONS_LATAM   | 945            | X      | X          | X          |
-      | 000000000000000945  | BR16       | CONS_LATAM   | 945            | X      | X          | X          |
-      | 000000000000000945  | BR19       | CONS_LATAM   | 945            | X      | X          | X          |
-      | 000000000000000945  | BR25       | CONS_LATAM   | 945            | X      | X          | X          |
-      | 000000000000055735  | PE01       | CONS_LATAM   | 55735          | X      | X          | X          |
-      | 000000000000058723  | CR01       | CONS_LATAM   | 58723          | X      | X          | X          |
-      | 000000000000058725  | CR01       | CONS_LATAM   | 58725          | X      | X          | X          |
-      | 000000000000004000  | BR07       | CONS_LATAM   | 4000           | X      | X          | X          |
-      | 000000000000004001  | BR07       | CONS_LATAM   | 4001           |        | X          | X          |
-      | 000000000000004002  | BR07       | CONS_LATAM   | 4002           | X      | X          | X          |
-      | 000000000000004003  | BR07       | CONS_LATAM   | 4003           |        | X          | X          |
-      | 000000000000058722  | BR07       | CONS_LATAM   | 58722          |        |            |            |
-      | 000000000000058722  | CO01       | CONS_LATAM   | 58722          | X      |            |            |
-      | 000000000000002885  | CR01       | CONS_LATAM   | 2885           | X      | X          | X          |
-      | 000000000000002886  | CR01       | CONS_LATAM   | 2886           | X      | X          | X          |
-      | 000000000000002887  | CR01       | CONS_LATAM   | 2887           | X      | X          | X          |
-      | 000000000000002888  | CR01       | CONS_LATAM   | 2888           | X      | X          | X          |
-      | 000000000000002889  | CR01       | CONS_LATAM   | 2889           | X      | X          | X          |
-      | 000000000000002890  | CR01       | CONS_LATAM   | 2890           | X      | X          | X          |
-      | 000000000000002891  | CR01       | CONS_LATAM   | 2891           | X      | X          | X          |
-      | 000000000000002892  | CR01       | CONS_LATAM   | 2892           | X      | X          | X          |
-      | 000000000000002893  | CR01       | CONS_LATAM   | 2893           | X      | X          | X          |
-      | 000000000000002894  | CR01       | CONS_LATAM   | 2894           | X      |            | X          |
-      | 000000000000003880  | CR01       | CONS_LATAM   | 3880           | X      | X          | X          |
-      | 000000000000003881  | CR01       | CONS_LATAM   | 3881           | X      | X          |            |
-      | 000000000000004880  | CR01       | CONS_LATAM   | 4880           | X      | X          | X          |
-      | 000000000000004881  | CR01       | CONS_LATAM   | 4881           | X      | X          | X          |
-      | 000000000000004882  | CR01       | CONS_LATAM   | 4882           | X      | X          | X          |
-      | 000000000000004883  | CR01       | CONS_LATAM   | 4883           | X      | X          | X          |
-      | 000000000000006881  | CR01       | CONS_LATAM   | 6881           | X      | X          | X          |
+      | localMaterialNumber | localPlant | sourceSystem | materialNumber | active | dpRelevant | spRelevant | noPlanRelevant |
+      | 000000000000000017  | BR07       | CONS_LATAM   | 17             | X      | X          | X          | X              |
+      | 000000000000000945  | BR07       | CONS_LATAM   | 945            | X      | X          | X          | X              |
+      | 000000000000000945  | BR16       | CONS_LATAM   | 945            | X      | X          | X          | X              |
+      | 000000000000000945  | BR19       | CONS_LATAM   | 945            | X      | X          | X          | X              |
+      | 000000000000000945  | BR25       | CONS_LATAM   | 945            | X      | X          | X          | X              |
+      | 000000000000055735  | PE01       | CONS_LATAM   | 55735          | X      | X          | X          | X              |
+      | 000000000000058723  | CR01       | CONS_LATAM   | 58723          | X      | X          | X          | X              |
+      | 000000000000058725  | CR01       | CONS_LATAM   | 58725          | X      | X          | X          | X              |
+      | 000000000000004000  | BR07       | CONS_LATAM   | 4000           | X      | X          | X          | X              |
+      | 000000000000004001  | BR07       | CONS_LATAM   | 4001           |        | X          | X          | X              |
+      | 000000000000004002  | BR07       | CONS_LATAM   | 4002           | X      | X          | X          | X              |
+      | 000000000000004003  | BR07       | CONS_LATAM   | 4003           |        | X          | X          | X              |
+      | 000000000000058722  | BR07       | CONS_LATAM   | 58722          |        |            |            | X              |
+      | 000000000000058722  | CO01       | CONS_LATAM   | 58722          | X      |            |            | X              |
+      | 000000000000002885  | CR01       | CONS_LATAM   | 2885           | X      | X          | X          | X              |
+      | 000000000000002886  | CR01       | CONS_LATAM   | 2886           | X      | X          | X          | X              |
+      | 000000000000002887  | CR01       | CONS_LATAM   | 2887           | X      | X          | X          | X              |
+      | 000000000000002888  | CR01       | CONS_LATAM   | 2888           | X      | X          | X          | X              |
+      | 000000000000002889  | CR01       | CONS_LATAM   | 2889           | X      | X          | X          | X              |
+      | 000000000000002890  | CR01       | CONS_LATAM   | 2890           | X      | X          | X          | X              |
+      | 000000000000002891  | CR01       | CONS_LATAM   | 2891           | X      | X          | X          | X              |
+      | 000000000000002892  | CR01       | CONS_LATAM   | 2892           | X      | X          | X          | X              |
+      | 000000000000002893  | CR01       | CONS_LATAM   | 2893           | X      | X          | X          | X              |
+      | 000000000000002894  | CR01       | CONS_LATAM   | 2894           | X      |            | X          | X              |
+      | 000000000000003880  | CR01       | CONS_LATAM   | 3880           | X      | X          | X          | X              |
+      | 000000000000003881  | CR01       | CONS_LATAM   | 3881           | X      | X          |            | X              |
+      | 000000000000004880  | CR01       | CONS_LATAM   | 4880           | X      | X          | X          | X              |
+      | 000000000000004881  | CR01       | CONS_LATAM   | 4881           | X      | X          | X          | X              |
+      | 000000000000004882  | CR01       | CONS_LATAM   | 4882           | X      | X          | X          | X              |
+      | 000000000000004883  | CR01       | CONS_LATAM   | 4883           | X      | X          | X          | X              |
+      | 000000000000006881  | CR01       | CONS_LATAM   | 6881           | X      | X          | X          | X              |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -111,7 +111,7 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
       | DPSP     | DPSP  | EA       | CONS_LATAM   | CONS_LATAM   |
       | DP       | DP    | BX       | CONS_LATAM   | CONS_LATAM   |
       | DP       | DPSP1 | CA       | CONS_LATAM   | CONS_LATAM   |
-      | SP       | DPSP2 | KI       | CONS_LATAM   | CONS_LATAM   |
+      | SP       | SP    | KI       | CONS_LATAM   | CONS_LATAM   |
       | DPSP     | DPSP1 | BI       | CONS_LATAM   | CONS_LATAM   |
 
     And I wait "/plan/cns_plan_unit" Async Queue complete
@@ -125,31 +125,33 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
       | gdmProductUnitConversionId | productId             | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | comments |
       | 945DPSP                    | 945                   | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
       | LA_178962124094540035DPSP  | LA_178962124094540035 | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 55735DP                    | 55735                 | DP     | YES    | YES          | YES          | NO           | 0.10   |          |
+      | 55735DP                    | 55735                 | DP     | YES    | YES          | NO           | NO           | 0.10   |          |
       | 58723DPSP                  | 58723                 | DPSP   | YES    | YES          | YES          | NO           | 12.00  |          |
       | 4000DPSP                   | 4000                  | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
       | LA_178962124094540036DPSP  | LA_178962124094540036 | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
       | 4002DPSP                   | 4002                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 58722DPSP                  | 58722                 | DPSP   | YES    | YES          | NO           | NO           | 0.20   |          |
-      | LA_178962124094540038DPSP  | LA_178962124094540038 | DPSP   | YES    | YES          | NO           | NO           | 0.20   |          |
+      | 58722DPSP                  | 58722                 | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
+      | LA_178962124094540038DPSP  | LA_178962124094540038 | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
       | 2886DPSP                   | 2886                  | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
       | LA_178962124288680037DPSP  | LA_178962124288680037 | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 2887DPSP1                  | 2887                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | LA_178962124288680038DPSP1 | LA_178962124288680038 | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
+      | 2887DPSP1                  | 2887                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
+      | LA_178962124288680038DPSP1 | LA_178962124288680038 | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
       | 2890DPSP                   | 2890                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2891DPSP1                  | 2891                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
+      | 2891DPSP1                  | 2891                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
       | 2894DPSP                   | 2894                  | DPSP   | YES    | NO           | YES          | NO           | 0.20   |          |
       | 3880DPSP                   | 3880                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 3881DPSP                   | 3881                  | DPSP   | YES    | YES          | NO           | NO           | 0.20   |          |
+      | 3881DPSP                   | 3881                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
+      | 4880DPSP                   | 4880                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
       | 4880DPSP1                  | 4880                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
       | 2888DPSP1                  | 2888                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2888DPSP1                  | 2888                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
       | LA_178962124288680039DPSP1 | LA_178962124288680039 | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
+      | 2889SP                     | 2889                  | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
+      | LA_178962124288680040SP    | LA_178962124288680040 | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
       | 2892DPSP1                  | 2892                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4883DPSP1                  | 4883                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 6881DPSP1                  | 6881                  | DPSP1  | YES    | YES          | YES          | NO           |        |          |
+      | 4883DPSP1                  | 4883                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
+      | 2893SP                     | 2893                  | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
 
   Scenario:delete all the test data
     And I delete the test data
-    And I will remove all data with region "/omp/gdm_product_unit_conversion"
+#    And I will remove all data with region "/omp/gdm_product_unit_conversion"
     And I will remove all data with region "/plan/edm_failed_data"

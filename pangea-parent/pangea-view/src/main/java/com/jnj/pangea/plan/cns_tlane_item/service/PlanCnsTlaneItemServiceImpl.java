@@ -61,7 +61,7 @@ public class PlanCnsTlaneItemServiceImpl {
         String destinationLocationWithOutSystem = "";
         String originLocationWithOutSystem = "";
 
-        String destinationLocation = planCnsTlaneControlEntity.getDestinatonlocation();
+        String destinationLocation = planCnsTlaneControlEntity.getDestinationLocation();
         String originLocation = planCnsTlaneControlEntity.getOriginLocation();
         String sourceSystem = planCnsTlaneControlEntity.getSourceSystemCriticalParameters();
 
@@ -116,7 +116,7 @@ public class PlanCnsTlaneItemServiceImpl {
                 planCnsTlaneItemBo.setValidFrom(planCnsTlaneControlEntity.getValidFrom());
                 planCnsTlaneItemBo.setValidTo(planCnsTlaneControlEntity.getValidTo());
                 planCnsTlaneItemBo.setOriginLocation(planCnsTlaneControlEntity.getOriginLocation());
-                planCnsTlaneItemBo.setDestinatonLocation(planCnsTlaneControlEntity.getDestinatonlocation());
+                planCnsTlaneItemBo.setDestinationLocation(planCnsTlaneControlEntity.getDestinationLocation());
                 planCnsTlaneItemBo.setMode(planCnsTlaneControlEntity.getMode());
                 planCnsTlaneItemBo.setLeadTime(planCnsTlaneControlEntity.getLeadTime());
                 planCnsTlaneItemBo.setProcessTypeId(processTypeId);
@@ -159,7 +159,7 @@ public class PlanCnsTlaneItemServiceImpl {
                     planCnsTlaneItemBo.setValidFrom(planCnsTlaneControlEntity.getValidFrom());
                     planCnsTlaneItemBo.setValidTo(planCnsTlaneControlEntity.getValidTo());
                     planCnsTlaneItemBo.setOriginLocation(planCnsTlaneControlEntity.getOriginLocation());
-                    planCnsTlaneItemBo.setDestinatonLocation(planCnsTlaneControlEntity.getDestinatonlocation());
+                    planCnsTlaneItemBo.setDestinationLocation(planCnsTlaneControlEntity.getDestinationLocation());
                     planCnsTlaneItemBo.setMode(planCnsTlaneControlEntity.getMode());
                     planCnsTlaneItemBo.setLeadTime(planCnsTlaneControlEntity.getLeadTime());
                     planCnsTlaneItemBo.setProcessTypeId(processTypeId);

@@ -7,6 +7,8 @@ import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.List;
+
 public class PlanCnsPlanUnitDaoImpl extends CommonDaoImpl {
 
     private static PlanCnsPlanUnitDaoImpl instance;
@@ -39,6 +41,16 @@ public class PlanCnsPlanUnitDaoImpl extends CommonDaoImpl {
                     .and(IConstant.CNS_PLAN_UNIT.SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
             return queryForObject(IConstant.REGION.CNS_PLAN_UNIT, queryString, PlanCnsPlanUnitEntity.class);
+        }
+        return null;
+    }
+
+    public List<PlanCnsPlanUnitEntity> getCnsPlanUnitEntityListWithSourceSystemAndLocalUom(String sourceSystem, String localUom) {
+        if (StringUtils.isNotBlank(localUom) && StringUtils.isNotBlank(sourceSystem)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_UNIT.LOCAL_UOM).is(localUom)
+                    .and(IConstant.CNS_PLAN_UNIT.SOURCE_SYSTEM).is(sourceSystem)
+                    .toQueryString();
+            return queryForList(IConstant.REGION.CNS_PLAN_UNIT, queryString, PlanCnsPlanUnitEntity.class);
         }
         return null;
     }

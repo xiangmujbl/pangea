@@ -1,4 +1,4 @@
-package com.jnj.pangea;
+package com.jnj.pangea.ce;
 
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.utils.LogUtil;

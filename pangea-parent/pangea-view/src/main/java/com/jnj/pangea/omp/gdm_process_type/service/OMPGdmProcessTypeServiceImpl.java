@@ -17,7 +17,6 @@ public class OMPGdmProcessTypeServiceImpl implements ICommonService {
         return instance;
     }
 
-
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 

@@ -54,7 +54,7 @@ public class EDMMaterialAuomDaoImpl extends CommonDaoImpl {
     }
 
     public List<EDMMaterialAuomV1Entity> getEntityWithSourceSystemAndLocalMaterialNum(String sourceSystem, String localMaterialNum) {
-        if (StringUtils.isNotBlank(localMaterialNum)) {
+        if (StringUtils.isNotBlank(localMaterialNum) && StringUtils.isNotBlank(sourceSystem)) {
             String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_AUOM_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNum)
                     .and(IConstant.EDM_MATERIAL_AUOM_V1.SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();

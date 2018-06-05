@@ -19,6 +19,7 @@ import com.jnj.pangea.common.dao.impl.edm.EDMBomHdrDaoImpl;
 import com.jnj.pangea.common.service.ICommonListService;
 import com.jnj.pangea.omp.gdm_bom.bo.OMPGdmBomBo;
 import com.jnj.pangea.util.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,11 +95,22 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
 
                         for (EDMMfgRtngItmEntity mfgRtngItmEntity : mfgRtngItmEntityList) {
                             OMPGdmBomBo gdmBomBo = new OMPGdmBomBo();
-                            String bomId = matlProdVersnEntity.getPrdntVrsnNum() + IConstant.VALUE.BACK_SLANT + planParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE +
-                                    matlMfgRtngEntity.getMatlNum() + IConstant.VALUE.BACK_SLANT + matlMfgRtngEntity.getPlntCd() + IConstant.VALUE.BACK_SLANT +
-                                    matlBomEntity.getBomNum() + IConstant.VALUE.BACK_SLANT + matlBomEntity.getAltBomNum() + IConstant.VALUE.BACK_SLANT +
-                                    matlBomEntity.getBomUsgCd() + IConstant.VALUE.BACK_SLANT + mfgRtngItmEntity.getOperNum();
-                            gdmBomBo.setBomId(bomId);
+
+                            try{
+                                Integer matlNum = Integer.parseInt(StringUtils.trim(matlMfgRtngEntity.getMatlNum()));
+                                Integer bomNum = Integer.parseInt(StringUtils.trim(matlBomEntity.getBomNum()));
+                                Integer altBomNum = Integer.parseInt(StringUtils.trim(matlBomEntity.getAltBomNum()));
+                                Integer bomUsgCd = Integer.parseInt(StringUtils.trim(matlBomEntity.getBomUsgCd()));
+                                Integer operNum = Integer.parseInt(StringUtils.trim(mfgRtngItmEntity.getOperNum()));
+
+                                String bomId = matlProdVersnEntity.getPrdntVrsnNum() + IConstant.VALUE.BACK_SLANT + planParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE +
+                                        matlNum + IConstant.VALUE.BACK_SLANT + matlMfgRtngEntity.getPlntCd() + IConstant.VALUE.BACK_SLANT +
+                                        bomNum + IConstant.VALUE.BACK_SLANT + altBomNum + IConstant.VALUE.BACK_SLANT +
+                                        bomUsgCd + IConstant.VALUE.BACK_SLANT + operNum;
+                                gdmBomBo.setBomId(bomId);
+                            }catch (NumberFormatException e){
+                                LogUtil.getCoreLog().info(e);
+                            }
 
                             EDMBomHdrEntity bomHdrEntity = bomHdrDao.getEntityWithFiveConditions(matlBomEntity.getSrcSysCd(), matlBomEntity.getBomNum(), matlBomEntity.getAltBomNum(), IConstant.VALUE.M);
 
@@ -139,7 +151,7 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
     }
 
     private String checkStartEff(String bomVldFromDt, String valToDt) {
-        Date bomVldFromDtFormat = DateUtils.stringToDate(bomVldFromDt, DateUtils.F_yyyyMMdd);
+        Date bomVldFromDtFormat = DateUtils.stringToDate(bomVldFromDt, DateUtils.yyyy_MM_dd);
         Date valToDtFormat = DateUtils.stringToDate(valToDt, DateUtils.F_yyyyMMdd);
         if (bomVldFromDtFormat.getTime() >= valToDtFormat.getTime()) {
             return DateUtils.dateToString(bomVldFromDtFormat, DateUtils.J_yyyyMMdd_HHmmss);

@@ -272,7 +272,7 @@ public class OMPGdmBomElementServiceImpl implements ICommonListService {
                     bomElementId = bomElementId + cleanZero(bomItemEntity.getBomItmNum()) + IConstant.VALUE.BACK_SLANT;
                 }
                 if (StringUtils.isNotBlank(bomItemEntity.getBomItmVldFromDt())) {
-                    Date fromDueDate = DateUtils.stringToDate(bomItemEntity.getBomItmVldFromDt(), DateUtils.yyyy_MM_dd);
+                    Date fromDueDate = DateUtils.stringToDate(bomItemEntity.getBomItmVldFromDt(), DateUtils.F_yyyyMMdd);
                     String fromDate = DateUtils.dateToString(fromDueDate, DateUtils.F_yyyyMMdd);
                     bomElementId = bomElementId + fromDate;
                 }

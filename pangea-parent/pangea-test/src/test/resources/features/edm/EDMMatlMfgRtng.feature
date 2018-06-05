@@ -9,23 +9,23 @@ Feature: E.2.1.1 EDMRouting-MATL_MFG_RTNG - Curation
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | sourceSystem |
-      | project_one       | project_one   |
+      | project_one       | project_one  |
       | EMS               | EMS          |
-      | project_two       | project_two   |
+      | project_two       | project_two  |
 
     And I wait "/edm/source_system_v1" Async Queue complete
 #
 #      #PLNNR/PLNTY/PLNAL/ZKRIZ
     And I import "/project_one/mapl" by keyFields "matnr,werks,plnty,plnnr,plnal,zkriz,zaehl,datuv,aennr,loekz,andat,aedat"
 
-      | matnr       | werks | plnty | plnnr | plnal | zkriz | zaehl | datuv      | aennr        | loekz | andat      | aedat      |
-      | DARRENTEST  | 0001  | 2     | 999   | 1     | 1     | 1     | 2018/04/19 |              |       | 2018/05/14 | 2018/05/14 |
-      | DARRENTEST  | 0001  | 2     | 999   | 2     | 2     | 2     | 2018/04/20 |              |       | 2018/05/14 | 2018/05/14 |
-      | DARRENTEST  | 0001  | N     | 999   | 1     | 1     | 1     | 2018/04/20 |              |       | 2018/05/14 | 2018/05/14 |
-      | DARRENTEST2 | 0001  | 2     | 999   | 1     | 3     | 3     | 2018/08/25 | 500000000003 |       | 2018/05/14 | 2018/05/14 |
-      | DARRENTEST2 | 0001  | 2     | 999   | 1     | 3     | 4     | 2018/08/31 | 500000000004 | X     | 2018/05/14 | 2018/05/14 |
-      | DARRENTEST2 | 0001  | 2     | 999   | 1     | 4     | 5     | 2018/09/25 | 500000000005 |       | 2018/05/14 | 2018/05/14 |
-      | DARRENTEST2 | 0001  | 3-F1  | 999   | 1     | 4     | 5     | 2018/09/25 | 500000000005 |       | 2018/05/14 | 2018/05/14 |
+      | matnr       | werks | plnty | plnnr | plnal | zkriz | zaehl | datuv    | aennr        | loekz | andat    | aedat    |
+      | DARRENTEST  | 0001  | 2     | 999   | 1     | 1     | 1     | 20180419 |              |       | 20180514 | 20180514 |
+      | DARRENTEST  | 0001  | 2     | 999   | 2     | 2     | 2     | 20180420 |              |       | 20180514 | 20180514 |
+      | DARRENTEST  | 0001  | N     | 999   | 1     | 1     | 1     | 20180420 |              |       | 20180514 | 20180514 |
+      | DARRENTEST2 | 0001  | 2     | 999   | 1     | 3     | 3     | 20180825 | 500000000003 |       | 20180514 | 20180514 |
+      | DARRENTEST2 | 0001  | 2     | 999   | 1     | 3     | 4     | 20180831 | 500000000004 | X     | 20180514 | 20180514 |
+      | DARRENTEST2 | 0001  | 2     | 999   | 1     | 4     | 5     | 20180925 | 500000000005 |       | 20180514 | 20180514 |
+      | DARRENTEST2 | 0001  | 3-F1  | 999   | 1     | 4     | 5     | 20180925 | 500000000005 |       | 20180514 | 20180514 |
 
     And I wait "/project_one/mapl" Async Queue complete
 
@@ -34,12 +34,12 @@ Feature: E.2.1.1 EDMRouting-MATL_MFG_RTNG - Curation
 
 
     Then I check region data "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr"
-      | srcSysCd   | matlNum     | plntCd | rtngTypCd | rntgGrpCd | rntgGrpCntrNbr | rntgAddtnlCntrNbr | matlRtngVrsnCntrNbr | valFromDt  | chgNum       | delInd | crtDttm    | chgDttm    | matlRtngValid_To |
-      | project_one | DARRENTEST  | 0001   | 2         | 999       | 1              | 1                 | 1                   | 2018/04/19 |              |        | 2018/05/14 | 2018/05/14 | 9999/12/31       |
-      | project_one | DARRENTEST  | 0001   | 2         | 999       | 2              | 2                 | 2                   | 2018/04/20 |              |        | 2018/05/14 | 2018/05/14 | 9999/12/31       |
-      | project_one | DARRENTEST  | 0001   | N         | 999       | 1              | 1                 | 1                   | 2018/04/20 |              |        | 2018/05/14 | 2018/05/14 | 9999/12/31       |
-      | project_one | DARRENTEST2 | 0001   | 2         | 999       | 1              | 3                 | 3                   | 2018/08/25 | 500000000003 |        | 2018/05/14 | 2018/05/14 | 2018/08/31       |
-      | project_one | DARRENTEST2 | 0001   | 2         | 999       | 1              | 4                 | 5                   | 2018/09/25 | 500000000005 |        | 2018/05/14 | 2018/05/14 | 9999/12/31       |
+      | srcSysCd    | matlNum     | plntCd | rtngTypCd | rntgGrpCd | rntgGrpCntrNbr | rntgAddtnlCntrNbr | matlRtngVrsnCntrNbr | valFromDt  | chgNum       | delInd | crtDttm    | chgDttm    | matlRtngValid_To |
+      | project_one | DARRENTEST  | 0001   | 2         | 999       | 1              | 1                 | 1                   | 20180419 |              |        | 20180514 | 20180514 | 9999/12/31       |
+      | project_one | DARRENTEST  | 0001   | 2         | 999       | 2              | 2                 | 2                   | 20180420 |              |        | 20180514 | 20180514 | 9999/12/31       |
+      | project_one | DARRENTEST  | 0001   | N         | 999       | 1              | 1                 | 1                   | 20180420 |              |        | 20180514 | 20180514 | 9999/12/31       |
+      | project_one | DARRENTEST2 | 0001   | 2         | 999       | 1              | 3                 | 3                   | 20180825 | 500000000003 |        | 20180514 | 20180514 | 2018/08/31       |
+      | project_one | DARRENTEST2 | 0001   | 2         | 999       | 1              | 4                 | 5                   | 20180925 | 500000000005 |        | 20180514 | 20180514 | 9999/12/31       |
 
   Scenario: delete all test data
 

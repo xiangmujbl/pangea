@@ -84,32 +84,32 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum"
-      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt       | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
-      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16 00:00:00 | 0             | 100.000  | 1.00           | EH         |
-      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17 00:00:00 | 0             | 200.000  | 1.00           | EH         |
-      | B003   | 0003     | M        | 003      | 003       | 20180517        |              | X        | 2018/05/18 00:00:00 | 0             | 300.000  | 1.00           | EH         |
+      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
+      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16    | 0             | 100.000  | 1.00           | EH         |
+      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17    | 0             | 200.000  | 1.00           | EH         |
+      | B003   | 0003     | M        | 003      | 003       | 20180517        |              | X        | 2018/05/18    | 0             | 300.000  | 1.00           | EH         |
        #BOM_HDR-bomCatCd  = BOM_ITEM-bomCatCd
-      | B004   | 0004     | N        | 004      | 004       | 20180518        | GLEI         |          | 2018/05/19 00:00:00 | 0             | 400.000  | 1.00           | EH         |
+      | B004   | 0004     | N        | 004      | 004       | 20180518        | GLEI         |          | 2018/05/19    | 0             | 400.000  | 1.00           | EH         |
     And I wait "/edm/bom_item" Async Queue complete
 
     Given I import "/edm/bom_hdr" by keyFields "srcSysCd,bomCatCd,bomNum,altBomNum"
       | srcSysCd | altBomNum | bomNum | bomCatCd | bomVldFromDt | bomBaseQty | bomUomCd |
-      | 0001     | A001      | B001   | M        | 20180515     | 0001       | 0001     |
-      | 0002     | A002      | B002   | M        | 20180516     | 0002       | 0002     |
-      | 0003     | A003      | B003   | M        | 20180517     | 0003       | 0003     |
-      | 0004     | A004      | B004   | M        | 20180518     | 0003       | 0003     |
-      | 0005     | A005      | B005   | M        | 20180519     | 0003       | 0003     |
-      | 0006     | A006      | B006   | M        | 20180520     | 0003       | 0003     |
-      | 0007     | A007      | B007   | M        | 20180521     | 0003       | 0003     |
-      | 0008     | A008      | B008   | M        | 20180522     | 0003       | 0003     |
-      | 0009     | A009      | B009   | M        | 20180523     | 0003       | 0003     |
-      | 0010     | A010      | B010   | M        | 20180524     | 0003       | 0003     |
-      | 0011     | A011      | B011   | M        | 20180525     | 0003       | 0003     |
-      | 0012     | A012      | B012   | M        | 20180526     | 0003       | 0003     |
-      | 0013     | A013      | B013   | M        | 20180527     | 0003       | 0003     |
-      | 0014     | A014      | B014   | M        | 20180528     | 0003       | 0003     |
-      | 0015     | A015      | B015   | M        | 20180529     | 0003       | 0003     |
-      | 0016     | A016      | B016   | M        | 20180530     | 0003       | 0003     |
+      | 0001     | A001      | B001   | M        | 2018/05/15   | 0001       | 0001     |
+      | 0002     | A002      | B002   | M        | 2018/05/16   | 0002       | 0002     |
+      | 0003     | A003      | B003   | M        | 2018/05/17   | 0003       | 0003     |
+      | 0004     | A004      | B004   | M        | 2018/05/18   | 0003       | 0003     |
+      | 0005     | A005      | B005   | M        | 2018/05/19   | 0003       | 0003     |
+      | 0006     | A006      | B006   | M        | 2018/05/20   | 0003       | 0003     |
+      | 0007     | A007      | B007   | M        | 2018/05/21   | 0003       | 0003     |
+      | 0008     | A008      | B008   | M        | 2018/05/22   | 0003       | 0003     |
+      | 0009     | A009      | B009   | M        | 2018/05/23   | 0003       | 0003     |
+      | 0010     | A010      | B010   | M        | 2018/05/24   | 0003       | 0003     |
+      | 0011     | A011      | B011   | M        | 2018/05/25   | 0003       | 0003     |
+      | 0012     | A012      | B012   | M        | 2018/05/26   | 0003       | 0003     |
+      | 0013     | A013      | B013   | M        | 2018/05/27   | 0003       | 0003     |
+      | 0014     | A014      | B014   | M        | 2018/05/28   | 0003       | 0003     |
+      | 0015     | A015      | B015   | M        | 2018/05/29   | 0003       | 0003     |
+      | 0016     | A016      | B016   | M        | 2018/05/30   | 0003       | 0003     |
     And I wait "/edm/bom_hdr" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute"
@@ -121,33 +121,33 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
-      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt  |
-      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 20180517 |
-      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 20180515 |
+      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt    |
+      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 2018/05/17 |
+      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 2018/05/15 |
       #cns_plan_parameter-sourceSystem = MATL_BOM-sourceSystem
-      | 0003     | M003   | A003      | 000000000000203702 | cntr003        | cd003     | vrsn003      | key003       | 20180517  | 20180518 |
+      | 0003     | M003   | A003      | 000000000000203702 | cntr003        | cd003     | vrsn003      | key003       | 20180517  | 2018/05/18 |
       #MATL_BOM-srcSysCd= MATL_PROD_VERSN-srcSysCd
-      | 0005     | M004   | A004      | 000000000000203703 | cntr004        | cd004     | vrsn004      | key004       | 20180518  | 20180519 |
+      | 0005     | M004   | A004      | 000000000000203703 | cntr004        | cd004     | vrsn004      | key004       | 20180518  | 2018/05/19 |
       # MATL_BOM-matlNum   = MATL_PROD_VERSN-matlNum
-      | 0005     | M005   | A005      | 000000000000203704 | cntr005        | cd005     | vrsn005      | key005       | 20180519  | 20180520 |
+      | 0005     | M005   | A005      | 000000000000203704 | cntr005        | cd005     | vrsn005      | key005       | 20180519  | 2018/05/20 |
       #  MATL_BOM-plntCd= MATL_PROD_VERSN-plntCd
-      | 0006     | M005   | A006      | 000000000000203705 | cntr006        | cd006     | vrsn006      | key006       | 20180520  | 20180521 |
+      | 0006     | M005   | A006      | 000000000000203705 | cntr006        | cd006     | vrsn006      | key006       | 20180520  | 2018/05/21 |
        #MATL_BOM-altBomNum   = MATL_PROD_VERSN-altBomNum
-      | 0007     | M007   | A006      | 000000000000203706 | cntr007        | cd007     | vrsn007      | key007       | 20180521  | 20180522 |
+      | 0007     | M007   | A006      | 000000000000203706 | cntr007        | cd007     | vrsn007      | key007       | 20180521  | 2018/05/22 |
       #  MATL_PROD_VERSN-srcSysCd= MATL_MFG_RTNG-srcSysCd
-      | 0008     | M008   | A008      | 000000000000203707 | cntr008        | cd008     | vrsn008      | key008       | 20180522  | 20180523 |
+      | 0008     | M008   | A008      | 000000000000203707 | cntr008        | cd008     | vrsn008      | key008       | 20180522  | 2018/05/23 |
       # MATL_PROD_VERSN-matlNum  = MATL_MFG_RTNG-matlNum
-      | 0009     | M009   | A009      | 000000000000203708 | cntr009        | cd009     | vrsn009      | key009       | 20180523  | 20180524 |
+      | 0009     | M009   | A009      | 000000000000203708 | cntr009        | cd009     | vrsn009      | key009       | 20180523  | 2018/05/24 |
       #MATL_PROD_VERSN-plntCd  = MATL_MFG_RTNG-plntCd
-      | 0010     | M010   | A010      | 000000000000203709 | cntr010        | cd010     | vrsn010      | key010       | 20180524  | 20180525 |
+      | 0010     | M010   | A010      | 000000000000203709 | cntr010        | cd010     | vrsn010      | key010       | 20180524  | 2018/05/25 |
       #MATL_PROD_VERSN-rtngGrpCd   = MATL_MFG_RTNG-rtngGrpCd
-      | 0011     | M011   | A011      | 000000000000203710 | cntr011        | cd011     | vrsn011      | key011       | 20180525  | 20180526 |
+      | 0011     | M011   | A011      | 000000000000203710 | cntr011        | cd011     | vrsn011      | key011       | 20180525  | 2018/05/26 |
       #MATL_PROD_VERSN-rtngGrpcntrNum    = MATL_MFG_RTNG-rtngGrpcntrNum
-      | 0012     | M012   | A012      | 000000000000203711 | cntr012        | cd012     | vrsn012      | key012       | 20180526  | 20180527 |
-      | 0013     | M013   | A013      | 000000000000203712 | cntr013        | cd013     | vrsn013      | key013       | 20180527  | 20180528 |
-      | 0014     | M014   | A014      | 000000000000203713 | cntr014        | cd014     | vrsn014      | key014       | 20180528  | 20180529 |
-      | 0015     | M015   | A015      | 000000000000203714 | cntr015        | cd015     | vrsn015      | key015       | 20180529  | 20180530 |
-      | 0016     | M016   | A016      | 000000000000203715 | cntr016        | cd016     | vrsn016      | key016       | 20180530  | 20180531 |
+      | 0012     | M012   | A012      | 000000000000203711 | cntr012        | cd012     | vrsn012      | key012       | 20180526  | 2018/05/27 |
+      | 0013     | M013   | A013      | 000000000000203712 | cntr013        | cd013     | vrsn013      | key013       | 20180527  | 2018/05/28 |
+      | 0014     | M014   | A014      | 000000000000203713 | cntr014        | cd014     | vrsn014      | key014       | 20180528  | 2018/05/29 |
+      | 0015     | M015   | A015      | 000000000000203714 | cntr015        | cd015     | vrsn015      | key015       | 20180529  | 2018/05/30 |
+      | 0016     | M016   | A016      | 000000000000203715 | cntr016        | cd016     | vrsn016      | key016       | 20180530  | 2018/05/31 |
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
     Given I import "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCntrNbr"
@@ -257,8 +257,6 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I will remove the test file on sink application "GDMBOMElement.tsv"
 
 
-
-
   @Scenario2
   Scenario: check rule  T2 default "YES" & T3 default "NO" & T4 Leave Blank
     Given I import "/edm/matl_bom" by keyFields "srcSysCd,matlNum,plntCd,bomUsgCd,bomNum,altBomNum"
@@ -274,15 +272,15 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum"
-      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt       | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
-      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16 00:00:00 | 0             | 100.000  | 1.00           | TH         |
-      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17 00:00:00 | 0             | 200.000  | 1.00           | TH         |
+      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
+      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16    | 0             | 100.000  | 1.00           | TH         |
+      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17    | 0             | 200.000  | 1.00           | TH         |
     And I wait "/edm/bom_item" Async Queue complete
 
     Given I import "/edm/bom_hdr" by keyFields "srcSysCd,bomCatCd,bomNum,altBomNum"
       | srcSysCd | altBomNum | bomNum | bomCatCd | bomVldFromDt | bomBaseQty | bomUomCd |
-      | 0001     | A001      | B001   | M        | 20180515     | 0001       | 0001     |
-      | 0002     | A002      | B002   | M        | 20180516     | 0002       | 0002     |
+      | 0001     | A001      | B001   | M        | 2018/05/15   | 0001       | 0001     |
+      | 0002     | A002      | B002   | M        | 2018/05/16   | 0002       | 0002     |
     And I wait "/edm/bom_hdr" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute"
@@ -292,9 +290,9 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
-      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt  |
-      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 20180517 |
-      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 20180515 |
+      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt    |
+      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 2018/05/17 |
+      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 2018/05/15 |
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
     Given I import "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCntrNbr"
@@ -351,7 +349,6 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I will remove the test file on sink application "GDMBOMElement.tsv"
 
 
-
   @Scenario3
   Scenario: check rule  T5  & T6  & T7 & T13
     Given I import "/edm/matl_bom" by keyFields "srcSysCd,matlNum,plntCd,bomUsgCd,bomNum,altBomNum"
@@ -367,17 +364,17 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum"
-      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt       | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
+      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
       # If BOM_ITEM-dstrbtnKeyCd=blank, use "batchstart"  AND  If BOM_ITEM-fxQtyInd = X, use "fixed"
-      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16 00:00:00 | 0             | 100.000  | 1.00           | HN         |
+      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16    | 0             | 100.000  | 1.00           | HN         |
       # If BOM_ITEM-dstrbtnKeyCd=GLEI, use "continu"   AND     If BOM_ITEM-fxQtyInd = blank value , use "proportional"
-      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17 00:00:00 | 0             | 200.000  | 1.00           | HN         |
+      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17    | 0             | 200.000  | 1.00           | HN         |
     And I wait "/edm/bom_item" Async Queue complete
 
     Given I import "/edm/bom_hdr" by keyFields "srcSysCd,bomCatCd,bomNum,altBomNum"
       | srcSysCd | altBomNum | bomNum | bomCatCd | bomVldFromDt | bomBaseQty | bomUomCd |
-      | 0001     | A001      | B001   | M        | 20180515     | 0001       | 0001     |
-      | 0002     | A002      | B002   | M        | 20180516     | 0002       | 0002     |
+      | 0001     | A001      | B001   | M        | 2018/05/15   | 0001       | 0001     |
+      | 0002     | A002      | B002   | M        | 2018/05/16   | 0002       | 0002     |
     And I wait "/edm/bom_hdr" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute"
@@ -387,9 +384,9 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
-      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt  |
-      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 20180517 |
-      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 20180515 |
+      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt    |
+      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 2018/05/17 |
+      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 2018/05/15 |
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
     Given I import "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCntrNbr"
@@ -460,17 +457,17 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum"
-      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt       | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
+      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
        # use lowest among BOM_ITEM-bomItmVldToDt and MATL_PROD_VERSN-valToDt
-      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16 00:00:00 | 0             | 100.000  | 1.00           | YH         |
+      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16    | 0             | 100.000  | 1.00           | YH         |
       #  Greatest of BOM_ITEM-bomItmVldFromDt and MATL_PROD_VERSN-valFromDt//
-      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17 00:00:00 | 0             | 200.000  | 1.00           | YH         |
+      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17    | 0             | 200.000  | 1.00           | YH         |
     And I wait "/edm/bom_item" Async Queue complete
 
     Given I import "/edm/bom_hdr" by keyFields "srcSysCd,bomCatCd,bomNum,altBomNum"
       | srcSysCd | altBomNum | bomNum | bomCatCd | bomVldFromDt | bomBaseQty | bomUomCd |
-      | 0001     | A001      | B001   | M        | 20180515     | 0001       | 0001     |
-      | 0002     | A002      | B002   | M        | 20180516     | 0002       | 0002     |
+      | 0001     | A001      | B001   | M        | 2018/05/15   | 0001       | 0001     |
+      | 0002     | A002      | B002   | M        | 2018/05/16   | 0002       | 0002     |
     And I wait "/edm/bom_hdr" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute"
@@ -479,11 +476,11 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
-      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt  |
+      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt    |
         # use lowest among BOM_ITEM-bomItmVldToDt and MATL_PROD_VERSN-valToDt
-      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 20180517 |
+      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 2018/05/17 |
       #  Greatest of BOM_ITEM-bomItmVldFromDt and MATL_PROD_VERSN-valFromDt
-      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 20180515 |
+      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 2018/05/15 |
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
     Given I import "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCntrNbr"
@@ -558,17 +555,17 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum"
-      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt       | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
-      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16 00:00:00 | 0             | 100.000  | 1.00           | YU         |
-      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17 00:00:00 | 0             | 200.000  | 1.00           | YU         |
-      | B003   | 0003     | M        | 003      | 003       | 20180517        | GLEI         |          | 2018/05/18 00:00:00 | 0             | 200.000  | 1.00           | YU         |
+      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
+      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16    | 0             | 100.000  | 1.00           | YU         |
+      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17    | 0             | 200.000  | 1.00           | YU         |
+      | B003   | 0003     | M        | 003      | 003       | 20180517        | GLEI         |          | 2018/05/18    | 0             | 200.000  | 1.00           | YU         |
     And I wait "/edm/bom_item" Async Queue complete
 
     Given I import "/edm/bom_hdr" by keyFields "srcSysCd,bomCatCd,bomNum,altBomNum"
       | srcSysCd | altBomNum | bomNum | bomCatCd | bomVldFromDt | bomBaseQty | bomUomCd |
-      | 0001     | A001      | B001   | M        | 20180515     | 0001       | 0001     |
-      | 0002     | A002      | B002   | M        | 20180516     | 0002       | 0002     |
-      | 0003     | A003      | B003   | M        | 20180517     | 0002       | 0002     |
+      | 0001     | A001      | B001   | M        | 2018/05/15   | 0001       | 0001     |
+      | 0002     | A002      | B002   | M        | 2018/05/16   | 0002       | 0002     |
+      | 0003     | A003      | B003   | M        | 2018/05/17   | 0002       | 0002     |
     And I wait "/edm/bom_hdr" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute"
@@ -577,10 +574,10 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
-      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt  |
-      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 20180517 |
-      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 20180515 |
-      | 0003     | M003   | A003      | 000000000000203702 | cntr003        | cd003     | vrsn003      | key003       | 20180515  | 20180516 |
+      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt    |
+      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 2018/05/17 |
+      | 0002     | M002   | A002      | 000000000000203701 | cntr002        | cd002     | vrsn002      | key002       | 20180514  | 2018/05/15 |
+      | 0003     | M003   | A003      | 000000000000203702 | cntr003        | cd003     | vrsn003      | key003       | 20180515  | 2018/05/16 |
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
     Given I import "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCntrNbr"
@@ -641,7 +638,6 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I will remove the test file on sink application "GDMBOMElement.tsv"
 
 
-
   @Scenario6
   Scenario:  Satisfy all the rules
     Given I import "/edm/matl_bom" by keyFields "srcSysCd,matlNum,plntCd,bomUsgCd,bomNum,altBomNum"
@@ -657,15 +653,15 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     Given I import "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum"
-      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt       | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
-      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16 00:00:00 | 0             | 100.000  | 1.00           | TH         |
-      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17 00:00:00 | 0             | 200.000  | 2.00           | EA         |
+      | bomNum | srcSysCd | bomCatCd | cmpntNum | bomItmNum | bomItmVldFromDt | dstrbtnKeyCd | fxQtyInd | bomItmVldToDt | leadTimeOffst | cmpntQty | cmpntScrap_Pct | cmpntUomCd |
+      | B001   | 0001     | M        | 001      | 001       | 20180515        |              | X        | 2018/05/16    | 0             | 100.000  | 1.00           | TH         |
+      | B002   | 0002     | M        | 002      | 002       | 20180516        | GLEI         |          | 2018/05/17    | 0             | 200.000  | 2.00           | EA         |
     And I wait "/edm/bom_item" Async Queue complete
 
     Given I import "/edm/bom_hdr" by keyFields "srcSysCd,bomCatCd,bomNum,altBomNum"
       | srcSysCd | altBomNum | bomNum | bomCatCd | bomVldFromDt | bomBaseQty | bomUomCd |
-      | 0001     | A001      | B001   | M        | 20180515     | 0001       | 0001     |
-      | 0002     | A002      | B002   | M        | 20180516     | 0002       | 0002     |
+      | 0001     | A001      | B001   | M        | 2018/05/15   | 0001       | 0001     |
+      | 0002     | A002      | B002   | M        | 2018/05/16   | 0002       | 0002     |
     And I wait "/edm/bom_hdr" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute"
@@ -675,11 +671,11 @@ Feature: OMPGdmBomElement AEAZ-4250
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
-      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt  |
-      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 20180517 |
-      | 0001     | M001   | A001      | 000000000000203700 | cntr002        | cd002     | vrsn002      | key002       | 20180516  | 20180517 |
-      | 0002     | M002   | A002      | 000000000000203701 | cntr003        | cd003     | vrsn003      | key003       | 20180514  | 20180515 |
-      | 0002     | M002   | A002      | 000000000000203701 | cntr004        | cd004     | vrsn004      | key004       | 20180514  | 20180515 |
+      | srcSysCd | plntCd | altBomNum | matlNum            | rtngGrpCntrNum | rtngGrpCd | prdntVrsnNum | dstrbtnKeyCd | valFromDt | valToDt    |
+      | 0001     | M001   | A001      | 000000000000203700 | cntr001        | cd001     | vrsn001      | key001       | 20180516  | 2018/05/17 |
+      | 0001     | M001   | A001      | 000000000000203700 | cntr002        | cd002     | vrsn002      | key002       | 20180516  | 2018/05/17 |
+      | 0002     | M002   | A002      | 000000000000203701 | cntr003        | cd003     | vrsn003      | key003       | 20180514  | 2018/05/15 |
+      | 0002     | M002   | A002      | 000000000000203701 | cntr004        | cd004     | vrsn004      | key004       | 20180514  | 2018/05/15 |
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
     Given I import "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCntrNbr"
@@ -751,7 +747,7 @@ Feature: OMPGdmBomElement AEAZ-4250
 
 #    Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
     Then I check file data for filename "GDMBOMElement.tsv" by keyFields "bomElementId"
-      | bomElementId                                                          | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | bomId                                              | bomType    | bomUsage     | comment | endEff              | erpFeedbackQuantity | locationId | offset | offsetCalendarId | offsetPercentage | offsetPercType | planLevelId        | productId     | quantity | startEff           |
+      | bomElementId                                                          | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | bomId                                              | bomType    | bomUsage     | comment | endEff              | erpFeedbackQuantity | locationId | offset | offsetCalendarId | offsetPercentage | offsetPercType | planLevelId        | productId     | quantity | startEff            |
       | vrsn003/203701/M002/B002/A002/2_T11/oper009/2/2/20180516              | YES    | YES          | YES          | NO           |         | vrsn003/para01_203701/M002/B002/A002/2_T11/oper009 | continu    | proportional |         | 2018/05/15 00:00:00 |                     | 0002_M002  | 0      |                  |                  |                | *                  | para01_LDPC02 | 104.000  | 2018/05/16 00:00:00 |
       | vrsn003/203701/M002/B002/A002/2_T11/oper010/2/2/20180516              | YES    | YES          | YES          | NO           |         | vrsn003/para01_203701/M002/B002/A002/2_T11/oper010 | continu    | proportional |         | 2018/05/15 00:00:00 |                     | 0002_M002  | 0      |                  |                  |                | *                  | para01_LDPC02 | 104.000  | 2018/05/16 00:00:00 |
       | vrsn003/203701/M002/B002/A002/2_T11/oper011/2/2/20180516              | YES    | YES          | YES          | NO           |         | vrsn003/para01_203701/M002/B002/A002/2_T11/oper011 | continu    | proportional |         | 2018/05/15 00:00:00 |                     | 0002_M002  | 0      |                  |                  |                | *                  | para01_LDPC02 | 104.000  | 2018/05/16 00:00:00 |

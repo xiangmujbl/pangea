@@ -154,7 +154,7 @@ public class OMPGdmProductLocationServiceImpl {
             //rules E6
             PlanCnsSplProcTypEntity planCnsSplProcTypEntity = getFieldWithE6(materialPlantV1Entity.getLocalSpecialProcurementType(), materialPlantV1Entity.getSourceSystem());
             if (planCnsSplProcTypEntity != null) {
-                bo.setSobsl(planCnsSplProcTypEntity.getSpecialProcurementType());
+                bo.setSobsl(planCnsSplProcTypEntity.getSplProcType());
             }
             //rules E7
             PlanCnsPlngStratGrpEntity stratGrpEntity = getFieldWithE7(materialPlantV1Entity.getLocalPlanningStrategyGroup(), materialPlantV1Entity.getSourceSystem());
@@ -259,7 +259,7 @@ public class OMPGdmProductLocationServiceImpl {
                             localvendorAccountNumberList.add(localvendorAccountNumber);
                             List<PlanSplPlnLocEntity> splPlnLocEntries = splPlnLocDao.getEntityListWithConditions(sourceListV1Entity.getSourceSystem(), sourceListV1Entity.getLocalVendorAccountNumber());
                             if (splPlnLocEntries.size() <= 0) {
-                                return new ArrayList<>();
+                                return boList;
                             } else {
                                     for (PlanSplPlnLocEntity splPlnLocEntity : splPlnLocEntries) {
                                         if(splPlnLocEntity.getVendorOrCustomer().equals("V")){
@@ -276,7 +276,7 @@ public class OMPGdmProductLocationServiceImpl {
                                     }
                             }
                         } else {
-                            return new ArrayList<>();
+                            return boList;
                         }
                     }
                     break; //break for first record. 

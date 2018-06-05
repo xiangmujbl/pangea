@@ -1,11 +1,15 @@
 package com.jnj.pangea.xd;
 
-import com.jnj.pangea.generator.metadata.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +29,12 @@ public class XDTool {
 
         Map<String, String> job2Run = readScripts();
 
+        if (StringUtils.isNotEmpty(PASSWORD)) {
+            PASSWORD = XDTool.readPassword();
+        }
+
         XdClient xdClient = new XdClient(HOST, USER_NAME, PASSWORD);
+
         job2Run.forEach((name, definition) -> {
             if (xdClient.runAsny(name, definition)) {
                 System.out.println("execute success: " + name);
@@ -33,6 +42,7 @@ public class XDTool {
                 System.err.println("execute error: " + name);
             }
         });
+
     }
 
     private static Map<String, String> readScripts() {
@@ -67,4 +77,42 @@ public class XDTool {
         }
         return map;
     }
+
+    private static String readPassword() {
+
+        File file = new File("pangea-tools/src/main/resources/xd_script/config.txt");
+
+        if (file.exists() && !file.isDirectory()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+                return XDTool.decode(br.readLine());
+
+            } catch (Exception ioe) {
+                ioe.printStackTrace();
+            }
+        } else {
+            System.err.println("Missing config.txt file. No Password Provided.");
+        }
+        return null;
+    }
+
+    private static String encode(String plain) {
+        String b64encoded = Base64.getEncoder().encodeToString(plain.getBytes());
+        return new StringBuffer(b64encoded).reverse().toString();
+    }
+
+    private static String decode(String secret) {
+        String reversed = new StringBuffer(secret).reverse().toString();
+        String decoded = "";
+        try {
+            decoded = new String(Base64.getDecoder().decode(reversed));
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+        } finally {
+            return decoded;
+        }
+    }
+
 }
+
+

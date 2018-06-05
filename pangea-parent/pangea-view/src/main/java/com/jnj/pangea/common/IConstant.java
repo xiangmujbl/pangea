@@ -6,12 +6,9 @@ package com.jnj.pangea.common;
 public interface IConstant {
 
     interface REGION {
-        String EDM_CAPY_HDR ="/edm/capy_hdr/edm/capy_hdr";
+        String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
         String EDM_WRK_CTR = "/edm/wrk_ctr";
         String PROJECT_ONE_Qave = "/project_one/qave";
-        // ------fail region
-        String FAIL_DATA = "/plan/edm_failed_data";
-        // -----region
         String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
         String EDM_SOURCE_LIST_V1 = "/edm/source_list_v1";
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
@@ -137,12 +134,12 @@ public interface IConstant {
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
         String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
         String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
-        String  EDM_MFG_ORDER_ITM="/edm/mfg_order_itm";
-        String EDM_MATL_PROD_VERSN="/edm/matl_prod_versn";
-        String EDM_RESERV_ITM="/edm/reserv_itm";
-        String EDM_MFG_ORDER_RTNG="/edm/mfg_order_rtng";
-        String EDM_MFG_ORDER_SEQ="/edm/mfg_order_seq";
-        String EDM_BOM_ITEM="/edm/bom_item";
+        String EDM_MFG_ORDER_ITM = "/edm/mfg_order_itm";
+        String EDM_MATL_PROD_VERSN = "/edm/matl_prod_versn";
+        String EDM_RESERV_ITM = "/edm/reserv_itm";
+        String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
+        String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
+        String EDM_BOM_ITEM = "/edm/bom_item";
     }
 
     interface BOM_HDR {
@@ -197,7 +194,7 @@ public interface IConstant {
         String LOCAL_PARENT_CODE = "localParentCode";
         String MATERIAL_NUMBER = "materialNumber";
         String ACTIVE = "active";
-        String FIELD_X="X";
+        String FIELD_X = "X";
     }
 
     interface PLAN_PROD_LOC_MIN_SHELF {
@@ -209,6 +206,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
+        String VENDOR_PURCHASE = "vendorPurchase";
+        String EXTERNAL_PURCHASE = "externalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -331,10 +330,12 @@ public interface IConstant {
         String LOCAL_COUNTRY = "localCountry";
         String SOURCE_SYSTEM = "sourceSystem";
     }
+
     interface EDM_WRK_CTR {
         String SRC_SYS_CD = "srcSysCd";
         String CAPY_NUM = "capyNum";
     }
+
     interface EDM_CAPY_HDR {
         String CAP_CAT_CD = "capyCatCd";
     }
@@ -485,7 +486,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String LOCAL_PLANT = "localPlant";
-        String SP_RELEVANT = "sPRelevant";
+        String SP_RELEVANT = "spRelevant";
         String NO_PLAN_RELEVANT = "noPlanRelevant";
     }
 
@@ -673,12 +674,15 @@ public interface IConstant {
 
     interface CNS_TLANE_ITEM_EXCEPTION {
         String REF_SEQ_NUM_TLANE_ITEM = "refSeqNumTlaneItem";
+        String MATERIAL_NUMBER = "materialNumber";
+        String TLANE_NAME = "tlaneName";
     }
 
     interface PLAN_CNS_SPL_PLN_LOC {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCALNUMBER = "localNumber";
         String VENDORORCUSTOMER = "vendorOrCustomer";
+        String LOCAL_PLANT = "localPlant";
     }
 
     interface CNS_TLANE_ITEM {
@@ -945,10 +949,8 @@ public interface IConstant {
         String OPERATOR_GREATER_THAN = ">";
         String OPERATOR_GREATER_THAN_EQUAL = ">=";
         String OPERATOR_NOT_EQUAL = "!=";
-
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
-
         String BR = "BR";
         String BATCH_START = "batchstart";
         String BATCH_END = "batchend";
@@ -1038,82 +1040,89 @@ public interface IConstant {
         }
     }
 
-    interface OMP_GDMBOMELEMENT{
-        interface EDM_MFG_ORDER_ITM{
-            public static final String FIELD_SRCSYSCD="srcSysCd";
-            public static final String FIELD_MFGORDRNUM="mfgOrdrNum";
-        }
-        interface MATL_PROD_VERSN{
-            public static final String FIELD_SRCSYSCD="srcSysCd";
-            public static final String FIELD_MATLNUM="matlNum";
-            public static final String FIELD_PLNTCD="plntCd";
-            public static final String FIELD_PRDNTVRSNNUM="prdntVrsnNum";
-        }
-        interface RESERV_ITM{
-            public static final String FIELD_SOURCESYSCD="sourceSysCd";
-            public static final String FIELD_RSRVTNNUM="rsrvtnNum";
-        }
-        interface MFG_ORDER_RTNG{
-            public static final String FIELD_SOURCESYSCD="srcSysCd";
-            public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
-        }
-        interface MFG_ORDER_SEQ{
-            public static final String FIELD_SOURCESYSCD="sourceSysCd";
-            public static final String FIELD_ORDRRTNGNUM="ordrRtngNum";
-            public static final String FIELD_SCSYSCD="srcSysCd";
-        }
-        interface BOM_ITEM{
-            public static final String FIELD_SRCSYSCD="srcSysCd";
-            public static final String FIELD_BOMCATCD="bomCatCd";
-            public static final String FIELD_BOMNUM="bomNum";
-            public static final String FIELD_DSTRBTNKEYCD_NAME="GLEI";
-            public static final String FIELD_DSTRBTNKEYCD_VALUE="continu";
-            public static final String FIELD_DSTRBTNKEYCD_MAT_VALUE="batchend";
-            public static final String FIELD_DSTRBTNKEYCD_BLACK_VALUE="batchstart";
-            public static final String FIELD_DSTRBTNKEYCD_ELSE_VALUE="";
+    interface OMP_GDMBOMELEMENT {
+        interface EDM_MFG_ORDER_ITM {
+            public static final String FIELD_SRCSYSCD = "srcSysCd";
+            public static final String FIELD_MFGORDRNUM = "mfgOrdrNum";
         }
 
-        public static final String KEY_SPLIT="/";
+        interface MATL_PROD_VERSN {
+            public static final String FIELD_SRCSYSCD = "srcSysCd";
+            public static final String FIELD_MATLNUM = "matlNum";
+            public static final String FIELD_PLNTCD = "plntCd";
+            public static final String FIELD_PRDNTVRSNNUM = "prdntVrsnNum";
+        }
 
-        public static final String QTYFXIND_X="X";
-        public static final String QTYFXIND_X_VALUE="fixed";
-        public static final String QTYFXIND_BLACK="proportional";
-        public static final String QTYFXIND_MAT="proportional";
+        interface RESERV_ITM {
+            public static final String FIELD_SOURCESYSCD = "sourceSysCd";
+            public static final String FIELD_RSRVTNNUM = "rsrvtnNum";
+        }
+
+        interface MFG_ORDER_RTNG {
+            public static final String FIELD_SOURCESYSCD = "srcSysCd";
+            public static final String FIELD_ORDRRTNGNUM = "ordrRtngNum";
+        }
+
+        interface MFG_ORDER_SEQ {
+            public static final String FIELD_SOURCESYSCD = "sourceSysCd";
+            public static final String FIELD_ORDRRTNGNUM = "ordrRtngNum";
+            public static final String FIELD_SCSYSCD = "srcSysCd";
+        }
+
+        interface BOM_ITEM {
+            public static final String FIELD_SRCSYSCD = "srcSysCd";
+            public static final String FIELD_BOMCATCD = "bomCatCd";
+            public static final String FIELD_BOMNUM = "bomNum";
+            public static final String FIELD_DSTRBTNKEYCD_NAME = "GLEI";
+            public static final String FIELD_DSTRBTNKEYCD_VALUE = "continu";
+            public static final String FIELD_DSTRBTNKEYCD_MAT_VALUE = "batchend";
+            public static final String FIELD_DSTRBTNKEYCD_BLACK_VALUE = "batchstart";
+            public static final String FIELD_DSTRBTNKEYCD_ELSE_VALUE = "";
+        }
+
+        public static final String KEY_SPLIT = "/";
+
+        public static final String QTYFXIND_X = "X";
+        public static final String QTYFXIND_X_VALUE = "fixed";
+        public static final String QTYFXIND_BLACK = "proportional";
+        public static final String QTYFXIND_MAT = "proportional";
 
 
-        public static final String LEAVE_BLACK="";
+        public static final String LEAVE_BLACK = "";
 
-        public static final String PATTERN_POINTER=".";
+        public static final String PATTERN_POINTER = ".";
 
-        public static final String PATTERN_= "-";
+        public static final String PATTERN_ = "-";
 
-        public static final String PATTERN_0P000= "0.000";
+        public static final String PATTERN_0P000 = "0.000";
 
-        public static final String ENDEFF="31/12/2998 23:59:59";
-        public static final String STARTEFF="01/01/1980 00:00:00";
-        public static final String __SPLIT="_";
-        public static final String FRONT_BOMID_PRO_LOW="pro";
-        public static final String FRONT_BOMID_PRO_UP="PRO";
-        public static final String DEFAULT_VALUE_YES="YES";
-        public static final String DEFAULT_VALUE_NO="NO";
-        public static final long DEFAULT_VALUE_LEADTIMEOFFSET=864000;
-        public static final String DEFAULT_VALUE_PLANLEVELID_BLANK="*";
-        public static final String DEFAULT_VALUE_0_BLANK="0";
-        public static final char DEL_0='0';
-        public static final String DEFAULT_VALUE_PlanLevelId_X="DetailedScheduling";
-        public static final String CLONE_BOMEID="proportional";
-        public static final String CLONE_PLANLEVELID="VolumePlanning";
-        public static final String PATTERN_DECIMAL_5="#.00000";
-        public static final String PATTERN_DECIMAL_3="#.000";
+        public static final String ENDEFF = "31/12/2998 23:59:59";
+        public static final String STARTEFF = "01/01/1980 00:00:00";
+        public static final String __SPLIT = "_";
+        public static final String FRONT_BOMID_PRO_LOW = "pro";
+        public static final String FRONT_BOMID_PRO_UP = "PRO";
+        public static final String DEFAULT_VALUE_YES = "YES";
+        public static final String DEFAULT_VALUE_NO = "NO";
+        public static final long DEFAULT_VALUE_LEADTIMEOFFSET = 864000;
+        public static final String DEFAULT_VALUE_PLANLEVELID_BLANK = "*";
+        public static final String DEFAULT_VALUE_0_BLANK = "0";
+        public static final char DEL_0 = '0';
+        public static final String DEFAULT_VALUE_PlanLevelId_X = "DetailedScheduling";
+        public static final String CLONE_BOMEID = "proportional";
+        public static final String CLONE_PLANLEVELID = "VolumePlanning";
+        public static final String PATTERN_DECIMAL_5 = "#.00000";
+        public static final String PATTERN_DECIMAL_3 = "#.000";
 
     }
-    interface FAILDATA{
-        public static final String ERRORCODE="500";
-        public static final String NA="NA";
-        public static final String  PRODUCTID_FAIL_MSG="Unable to construct ProductId";
+
+    interface FAILDATA {
+        public static final String ERRORCODE = "500";
+        public static final String NA = "NA";
+        public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
 
 
     }
+
     interface RKPF {
         String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
     }

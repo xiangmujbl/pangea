@@ -40,7 +40,7 @@ Feature: OMPGdmUnitEvol-Curation AEAZ-3686
       | CLP004   | YES          | CLP    | 2021/01/01 00:00:00 | 2022/01/01 00:00:00 | 624.53160129902600 | 100        |
       | CLP005   | YES          | CLP    | 2022/01/01 00:00:00 | 2023/01/01 00:00:00 | 624.53160129902600 | 100        |
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1       | key2 | key3     | key4       | key5 | errorValue               | sourceSystem |
       | C1        | DP             | GDMUnitEvol | CONS_LATAM |      | 1/1/2018 | 31/12/2018 |      | All Key fields not Exist |              |
 

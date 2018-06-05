@@ -40,7 +40,7 @@ public class OMPProductDetailServiceImpl {
         //rules J1
         String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
 
-        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(localMaterialNumber, IConstant.VALUE.CONS_LATAM);
+        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndSourceSystem(localMaterialNumber, IConstant.VALUE.CONS_LATAM);
 
         String sourceSystem = materialGlobalV1Entity.getSourceSystem();
         if (StringUtils.isNotEmpty(sourceSystem)) {

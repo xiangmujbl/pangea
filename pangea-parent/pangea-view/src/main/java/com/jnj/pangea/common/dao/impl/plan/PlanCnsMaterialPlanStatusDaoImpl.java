@@ -2,7 +2,6 @@ package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
@@ -66,7 +65,6 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
             String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
                     .and(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlant)
                     .and(IConstant.CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
-            LogUtil.getCoreLog().info("---------------queryString_PlanCnsMaterialPlanStatusEntity--------"+queryString);
             return queryForObject(IConstant.REGION.CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
         }
         return null;
@@ -85,19 +83,19 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
-    
+
     public PlanCnsMaterialPlanStatusEntity getEntityWithSPNoPlanRelevantAndLocalMaterialnumber(String localMaterialnumber) {
-    	
-    	 ADFCriteria adfCriteria = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber);
-    	 adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is(IConstant.VALUE.X)
-                 .or(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.NO_PLAN_RELEVANT).is(IConstant.VALUE.X)));
-                 
+
+        ADFCriteria adfCriteria = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialnumber);
+        adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is(IConstant.VALUE.X)
+                .or(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.NO_PLAN_RELEVANT).is(IConstant.VALUE.X)));
+
         String queryString = adfCriteria.toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
 
 
-    public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndsourceSystem(String localMaterialNumber, String sourceSystem) {
+    public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
         if ("".equals(localMaterialNumber) || "".equals(sourceSystem)) {
             return null;
         }
@@ -132,7 +130,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         return null;
     }
 
-    public List<PlanCnsMaterialPlanStatusEntity> getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
+    public List<PlanCnsMaterialPlanStatusEntity> getEntitiesWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
         if (StringUtils.isNotBlank(localMaterialNumber) && StringUtils.isNotBlank(sourceSystem)) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
                     .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
@@ -182,12 +180,13 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
+
     public PlanCnsMaterialPlanStatusEntity getEntityWithLocalParentCodeAndDp(String localParentCode) {
-        if (StringUtils.isNotEmpty(localParentCode) ) {
+        if (StringUtils.isNotEmpty(localParentCode)) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_PARENT_CODE).is(localParentCode)
-            		.and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.DP_RELEVANT).is(IConstant.VALUE.X)
-            		.toQueryString();
-            
+                    .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.DP_RELEVANT).is(IConstant.VALUE.X)
+                    .toQueryString();
+
             PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
             if (planCnsMaterialPlanStatusEntity != null) {
                 return planCnsMaterialPlanStatusEntity;
@@ -195,25 +194,34 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
-    
-    public PlanCnsMaterialPlanStatusEntity getPlanCnsMaterialPlanStatusEntity4251(String sourceSystem,String localMaterialNumber,String localPlant){
-        ADFCriteria adfCriteria=QueryHelper.buildCriteria();
-        if(StringUtils.isBlank(sourceSystem)){
+
+    public PlanCnsMaterialPlanStatusEntity getPlanCnsMaterialPlanStatusEntity4251(String sourceSystem, String localMaterialNumber, String localPlant) {
+        ADFCriteria adfCriteria = QueryHelper.buildCriteria();
+        if (StringUtils.isBlank(sourceSystem)) {
             adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).isNull());
-        }else{
+        } else {
             adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem.trim()));
         }
-        if(StringUtils.isBlank(localMaterialNumber)){
+        if (StringUtils.isBlank(localMaterialNumber)) {
             adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).isNull());
-        }else{
+        } else {
             adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber.trim()));
         }
-        if(StringUtils.isBlank(localPlant)){
+        if (StringUtils.isBlank(localPlant)) {
             adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).isNull());
-        }else{
+        } else {
             adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlant.trim()));
         }
         adfCriteria.and(QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.FIELD_X));
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, adfCriteria.toQueryString(), PlanCnsMaterialPlanStatusEntity.class);
+    }
+
+    public List<PlanCnsMaterialPlanStatusEntity> getEntitiesWithLocalMaterialNumberLocalPlantSourceSystemAndRelevant(String localMaterialNumber, String localPlantNum, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.LOCAL_PLANT).is(localPlantNum).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).
+                and(IConstant.CNS_MATERIAL_PLAN_STATUS.SP_RELEVANT).is("X").
+                toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
 }
