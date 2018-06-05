@@ -79,3 +79,4 @@ Feature: EDMMaterialPlant AEAZ-510 AEAZ-1693 AEAZ-5869
     And I will remove all data with region "/edm/material_plant_v1"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
