@@ -118,7 +118,6 @@ public class Merge implements Tasklet {
             zipper(this.getOutputDirectory() + this.getOutputFileName(),
                     this.getOutputDirectory() + this.getZipFileName());
         }
-        System.out.println(mergeKey);
         System.out.println("Elapsed time since start: " + (System.currentTimeMillis() - startTime) + "milliseconds");
         System.out.println("DONE.");
         return RepeatStatus.FINISHED;
