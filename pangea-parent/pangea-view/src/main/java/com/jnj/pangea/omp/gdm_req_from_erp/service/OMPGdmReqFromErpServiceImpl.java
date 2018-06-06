@@ -123,17 +123,15 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
                                 //N9
                                 if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
-                                    PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystem("purchase_requisition", edmPurchaseRequisitionV1Entity.getSourceSystem());
-                                    if(planObjectFilterEntity.getSourceObjectAttribute2Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPrTypeCd())) {
-                                        if (planObjectFilterEntity.getSourceObjectAttribute1().equalsIgnoreCase("plntCd") &&
-                                                planObjectFilterEntity.getSourceObjectAttribute1Value().equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getPlntCd())) {
-                                            if (planObjectFilterEntity.getSourceObjectAttribute2().equalsIgnoreCase("prTypeCd")
-                                                    && planObjectFilterEntity.getInclusion_Exclusion().equalsIgnoreCase("I") && !edmPurchaseRequisitionV1Entity.getPrTypeCd().isEmpty()) {
-                                                if (edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-                                                    gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
-                                                    resultObject.setBaseBo(gdmReqFromErpBo); //Skipped if doesn't get here
-                                                }
-                                            }
+                                    PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
+                                            IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
+                                            edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
+                                            "plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), "prTypeCd", IConstant.VALUE.INCLUSION);
+
+                                    if (planObjectFilterEntity != null) {
+                                        if (edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
+                                            gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
+                                            resultObject.setBaseBo(gdmReqFromErpBo); //Skipped if doesn't get here
                                         }
                                     }
                                 }

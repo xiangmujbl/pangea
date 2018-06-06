@@ -61,7 +61,7 @@
 
             <region path="/plan/cns_plan_object_filter">
                 <columns>
-                    sourceObjectTechName,sourceSystem,inclusion_Exclusion,sourceObjectAttribute1Value,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute2
+                    sourceObjectTechName,sourceSystem,inclusionExclusion,sourceObjectAttribute1Value,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute2
                 </columns>
             </region>
 

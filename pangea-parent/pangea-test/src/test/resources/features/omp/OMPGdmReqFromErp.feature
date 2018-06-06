@@ -67,8 +67,8 @@ Feature: OMPGdmReqFromErp-Consumption
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectTechName,sourceSystem"
-      | sourceObjectTechName | sourceSystem | inclusion_Exclusion | sourceObjectAttribute1Value | sourceObjectAttribute1 | sourceObjectAttribute2Value | sourceObjectAttribute2 |
-      | purchase_requisition |   CONS_LATAM |          I          |          MX02               |          plntCd        |            NB               |          prTypeCd      |
+      | sourceObjectTechName | sourceSystem | inclusionExclusion | sourceObjectAttribute1Value | sourceObjectAttribute1 | sourceObjectAttribute2Value | sourceObjectAttribute2 |
+      | purchase_requisition |   CONS_LATAM |          I         |          MX02               |          plntCd        |            NB               |          prTypeCd      |
 
 
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
