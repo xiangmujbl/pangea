@@ -85,14 +85,16 @@ public class GDMProductUnitConversionServiceImpl {
 
         //J2,T5
         if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalMaterialNumber())) {
-            List<EDMMaterialAuomV1Entity> edmMaterialAuomV1EntityList = edmMaterialAuomDao.getEntityWithSourceSystemAndLocalMaterialNum(edmMaterialGlobalV1Entity.getSourceSystem(), edmMaterialGlobalV1Entity.getLocalMaterialNumber());
+            List<EDMMaterialAuomV1Entity> edmMaterialAuomV1EntityList = edmMaterialAuomDao.getEntityWithSourceSystemAndLocalMaterialNum
+            		(edmMaterialGlobalV1Entity.getSourceSystem(), edmMaterialGlobalV1Entity.getLocalMaterialNumber());
             if (null != edmMaterialAuomV1EntityList && edmMaterialAuomV1EntityList.size() > 0) {
                 for (EDMMaterialAuomV1Entity edmMaterialAuomV1Entity : edmMaterialAuomV1EntityList) {
 
                     String factor = "";
-                    List<PlanCnsPlanUnitEntity> planCnsPlanUnitEntityList = planCnsPlanUnitDao.getCnsPlanUnitEntityListWithSourceSystemAndLocalUom(edmMaterialAuomV1Entity.getSourceSystem(), edmMaterialAuomV1Entity.getLocalAuom());
+                    List<PlanCnsPlanUnitEntity> planCnsPlanUnitEntityList = planCnsPlanUnitDao.getCnsPlanUnitEntityListWithSourceSystemAndLocalUom
+                    		(edmMaterialAuomV1Entity.getSourceSystem(), edmMaterialAuomV1Entity.getLocalAuom());
                     if (null == planCnsPlanUnitEntityList || planCnsPlanUnitEntityList.size() <= 0) {
-                        break;
+                        continue;
                     }
 
                     for (PlanCnsPlanUnitEntity planCnsPlanUnitEntity : planCnsPlanUnitEntityList) {
@@ -111,9 +113,12 @@ public class GDMProductUnitConversionServiceImpl {
                         String ActiveFCTERP = "";
                         String ActiveOPRERP = "";
                         //T2 ActiveFCTERP
-                        if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode()) && (IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
+                        if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode()) && 
+                        		(IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || 
+                        				IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
                             ActiveFCTERP = IConstant.VALUE.YES;
-                        } else if ((null != T2Entity && IConstant.VALUE.X.equals(T2Entity.getDpRelevant())) && (IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
+                        } else if ((null != T2Entity && IConstant.VALUE.X.equals(T2Entity.getDpRelevant())) && 
+                        		(IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
                             ActiveFCTERP = IConstant.VALUE.YES;
                         } else {
                             ActiveFCTERP = IConstant.VALUE.NO;
