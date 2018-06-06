@@ -8,7 +8,7 @@ public interface IConstant {
     interface REGION {
 
         // -----region
-        String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
+        String EDM_CAPY_HDR = "/edm/capy_hdr";
         String EDM_WRK_CTR = "/edm/wrk_ctr";
         String PROJECT_ONE_Qave = "/project_one/qave";
         String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
@@ -1132,7 +1132,7 @@ public interface IConstant {
         public static final String PATTERN_DECIMAL_3 = "#.000";
         public static final String INTERFACEID="OMPGdmbomelementProcess";
         public static final String  PRODUCTID_FAIL_MSG="Unable to construct ProductId";
-
+        public static final int  VALUE_DECIMAL_3=3;
 
     }
 

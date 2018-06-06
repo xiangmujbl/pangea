@@ -3,7 +3,6 @@ Feature: OMPGdmResource AEAZ-4481
    #Create view region /omp/gdm_resource/ when the raw main region is /edm/capy_hdr/
   @Scenario1
  Scenario: Test Rule J1,C1 is used correctly
-    And I will remove the test file on sink application "GDMResource.tsv"
     Given I import "/edm/capy_hdr" by keyFields "srcSysCd,capyNum"
       | capyDesc               | plntCd | srcSysCd    | capyNum  | capyCatCd |
       | Machine 1/Maquina 1/M1 | BR01   | CONS_LATAM  | 10000001 | 002       |
@@ -48,10 +47,10 @@ Feature: OMPGdmResource AEAZ-4481
     Then A file is found on sink application with name "GDMResource.tsv"
 
     Then I check file data for filename "GDMResource.tsv" by keyFields "resourceId"
-      | resourceId        | active | activeOPRERP | activeSOPERP | calendarId | description | locationId       |
+      | resourceId        | active | activeOPRERP | activeSOPERP | description | locationId       |
      # Concatenation CAPY_HDR-plntCd, "/", WRK_CTR-wrkCtrCd,"/",CAPY_HDR-capyCatCd(rule C1)
-      | BR01//002          | YES    | YES          | NO           |            | Machine 1   | CONS_LATAM_BR01  |
-      | BR03/CTLC1OXB/002 | YES    | YES          | NO           |            | Machine 3   | PROTECT_ONE_BR03 |
+      | CONS_LATAM/BR01//002          | YES    | YES          | NO           | Machine 1   | CONS_LATAM_BR01  |
+      | PROTECT_ONE/BR03/CTLC1OXB/002 | YES    | YES          | NO           | Machine 3   | PROTECT_ONE_BR03 |
 
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -108,16 +107,16 @@ Feature: OMPGdmResource AEAZ-4481
 
     Then I check file data for filename "GDMResource.tsv" by keyFields "resourceId"
     #  CAPY_HDR-capyDesc will have 3 values separated by "/"
-      | resourceId        | active | activeOPRERP | activeSOPERP | calendarId | description | locationId      |
+      | resourceId        | active | activeOPRERP | activeSOPERP | description | locationId      |
     #  1. By default populate here first value
-      | BR01/CTLC1OXA/002 | YES    | YES          | NO           |            | Machine 1   | CONS_LATAM_BR01 |
+      | CONS_LATAM/BR01/CTLC1OXA/002 | YES    | YES          | NO           |Machine 1   | CONS_LATAM_BR01 |
     #  2. If first value blank check LocationId ( CAPY_HDR-plntCd )
       #  If LocationId is NOT starting with BR then populate here the 2nd value
       #  If LocationId is starting with BR then populate here the 3rd value
-      | BR02/CTLC1OXB/002 | YES    | YES          | NO           |            | M2          | CONS_LATAM_BR02 |
-      | LK03/CTLC1OXC/002 | YES    | YES          | NO           |            | Maquina 3   | CONS_LATAM_LK03 |
+      | CONS_LATAM/BR02/CTLC1OXB/002 | YES    | YES          | NO           | M2          | CONS_LATAM_BR02 |
+      | CONS_LATAM/LK03/CTLC1OXC/002 | YES    | YES          | NO           | Maquina 3   | CONS_LATAM_LK03 |
     #  3. If not found at all then send Blank.
-      | BR04/CTLC1OXD/002 | YES    | YES          | NO           |            |             | CONS_FATE_BR04  |
+      | CONS_FATE/BR04/CTLC1OXD/002 | YES    | YES          | NO           |             | CONS_FATE_BR04  |
 
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -170,10 +169,10 @@ Feature: OMPGdmResource AEAZ-4481
     Then A file is found on sink application with name "GDMResource.tsv"
       # Concatenate CAPY_HDR-srcSysCd, "_", CAPY_HDR-plntCd.
     Then I check file data for filename "GDMResource.tsv" by keyFields "resourceId"
-      | resourceId        | active | activeOPRERP | activeSOPERP | calendarId | description | locationId      |
-      | BR01/CTLC1OXA/002 | YES    | YES          | NO           |            |             | CONS_LATAM_BR01 |
-      | BR02/CTLC1OXB/002 | YES    | YES          | NO           |            | Machine 2   | CONS_LATAM_BR02 |
-      | BR03/CTLC1OXC/002 | YES    | YES          | NO           |            | Machine 3   | CONS_LATAM_BR03 |
+      | resourceId        | active | activeOPRERP | activeSOPERP | description | locationId      |
+      | CONS_LATAM/BR01/CTLC1OXA/002 | YES    | YES          | NO             |              | CONS_LATAM_BR01 |
+      | CONS_LATAM/BR02/CTLC1OXB/002 | YES    | YES          | NO             |  Machine 2   | CONS_LATAM_BR02 |
+      | CONS_LATAM/BR03/CTLC1OXC/002 | YES    | YES          | NO             |  Machine 3   | CONS_LATAM_BR03 |
 
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -227,12 +226,12 @@ Feature: OMPGdmResource AEAZ-4481
     Then A file is found on sink application with name "GDMResource.tsv"
 
     Then I check file data for filename "GDMResource.tsv" by keyFields "resourceId"
-      | resourceId        | active | activeOPRERP | activeSOPERP | calendarId | description | locationId      |
-      | BR01/CTLC1OXA/002 | YES    | YES          | NO           |            | Machine 1   | CONS_LATAM_BR01 |
-      | BR02/CTLC1OXB/002 | YES    | YES          | NO           |            |             | CONS_LATAM_BR02 |
-      | BR07/CTLC1OXC/002 | YES    | YES          | NO           |            | M7          | CONS_BBA_BR07   |
-      | BR04/CTLC1OXD/002 | YES    | YES          | NO           |            | M4          | CONS_LATAM_BR04 |
-      | LK05/CTLC1OXE/002 | YES    | YES          | NO           |            | Maquina 5   | CONS_LATAM_LK05 |
+      | resourceId        | active | activeOPRERP | activeSOPERP | description | locationId      |
+      | CONS_LATAM/BR01/CTLC1OXA/002 | YES    | YES          | NO           | Machine 1   | CONS_LATAM_BR01 |
+      | CONS_LATAM/BR02/CTLC1OXB/002 | YES    | YES          | NO           |             | CONS_LATAM_BR02 |
+      | CONS_BBA/BR07/CTLC1OXC/002 | YES    | YES          | NO           | M7          | CONS_BBA_BR07   |
+      | CONS_LATAM/BR04/CTLC1OXD/002 | YES    | YES          | NO           | M4          | CONS_LATAM_BR04 |
+      | CONS_LATAM/LK05/CTLC1OXE/002 | YES    | YES          | NO           | Maquina 5   | CONS_LATAM_LK05 |
 
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
