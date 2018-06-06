@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_product_unit_conversion.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -43,7 +44,6 @@ public class GDMProductUnitConversionServiceImpl {
 
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
         //J1
-        List<GDMProductUnitConversionBo> gdmProductUnitConversionBoList = new ArrayList<>();
         List<PlanCnsMaterialPlanStatusEntity> planCnsMaterialPlanStatusEntityList = planCnsMaterialPlanStatusDao.getEntitiesWithLocalMaterialNumberAndSourceSystem(edmMaterialGlobalV1Entity.getLocalMaterialNumber(), edmMaterialGlobalV1Entity.getSourceSystem());
         if (null == planCnsMaterialPlanStatusEntityList || planCnsMaterialPlanStatusEntityList.size() == 0) {
             return resultObjectList;
@@ -84,8 +84,6 @@ public class GDMProductUnitConversionServiceImpl {
         }
 
         //J2,T5
-        String ActiveFCTERP = "";
-        String ActiveOPRERP = "";
         if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalMaterialNumber())) {
             List<EDMMaterialAuomV1Entity> edmMaterialAuomV1EntityList = edmMaterialAuomDao.getEntityWithSourceSystemAndLocalMaterialNum(edmMaterialGlobalV1Entity.getSourceSystem(), edmMaterialGlobalV1Entity.getLocalMaterialNumber());
             if (null != edmMaterialAuomV1EntityList && edmMaterialAuomV1EntityList.size() > 0) {
@@ -96,6 +94,7 @@ public class GDMProductUnitConversionServiceImpl {
                     if (null == planCnsPlanUnitEntityList || planCnsPlanUnitEntityList.size() <= 0) {
                         break;
                     }
+
                     for (PlanCnsPlanUnitEntity planCnsPlanUnitEntity : planCnsPlanUnitEntityList) {
                         //J2
                         if (StringUtils.isNotEmpty(edmMaterialAuomV1Entity.getLocalDenominator())) {
@@ -109,11 +108,15 @@ public class GDMProductUnitConversionServiceImpl {
                         //T5
                         String unit = planCnsPlanUnitEntity.getUnit();
 
+                        String ActiveFCTERP = "";
+                        String ActiveOPRERP = "";
                         //T2 ActiveFCTERP
                         if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode()) && (IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
                             ActiveFCTERP = IConstant.VALUE.YES;
                         } else if ((null != T2Entity && IConstant.VALUE.X.equals(T2Entity.getDpRelevant())) && (IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
                             ActiveFCTERP = IConstant.VALUE.YES;
+                        } else {
+                            ActiveFCTERP = IConstant.VALUE.NO;
                         }
 
                         //T3 ActiveOPRERP
@@ -122,13 +125,12 @@ public class GDMProductUnitConversionServiceImpl {
 
                             if (IConstant.VALUE.SP1.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag())) {
                                 ActiveOPRERP = IConstant.VALUE.YES;
+                            } else {
+                                ActiveOPRERP = IConstant.VALUE.NO;
                             }
-                        }
-
-                        if (StringUtils.isBlank(ActiveFCTERP)) {
-                            ActiveFCTERP = IConstant.VALUE.NO;
-                        }
-                        if (StringUtils.isBlank(ActiveOPRERP)) {
+//                            LogUtil.getCoreLog().info("======================= planCnsPlanUnitEntity.getPlanFlag() " + planCnsPlanUnitEntity.getPlanFlag()
+//                                    + ",unit=" + unit + ", getPrimaryPlanningCode = " + edmMaterialGlobalV1Entity.getPrimaryPlanningCode() + ",ActiveOPRERP=" + ActiveOPRERP);
+                        } else {
                             ActiveOPRERP = IConstant.VALUE.NO;
                         }
 
@@ -138,9 +140,8 @@ public class GDMProductUnitConversionServiceImpl {
                             Active = IConstant.VALUE.YES;
                         } else {
                             //skip this record
-                            return resultObjectList;
+                            break;
                         }
-
 
                         if (StringUtils.isNotBlank(unit)) {
                             for (String productId : productIdList) {
