@@ -274,12 +274,14 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_CONSUMPTION_MODE = "localConsumptionMode";
     }
+
     interface PLAN_CNS_COUNTRY_INPUT {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_COUNTRY = "localCountry";
     }
+
     interface PLAN_CNS_PLAN_REGION {
-        String PLANNING_REGION_ID  = "planningRegionID";
+        String PLANNING_REGION_ID = "planningRegionID";
     }
 
 
@@ -837,11 +839,11 @@ public interface IConstant {
         String DATA_OBJECT = "dataObject";
         String SPLIT = "-";
         String SPLIT_ = "_";
-        String PATTERN_DECIMAL_3="#.000";
-        String PATTERN_DECIMAL_5="#.00000";
-        String PATTERN_DECIMAL_0="#";
+        String PATTERN_DECIMAL_3 = "#.000";
+        String PATTERN_DECIMAL_5 = "#.00000";
+        String PATTERN_DECIMAL_0 = "#";
 
-        String VALUE_BLACK="";
+        String VALUE_BLACK = "";
         String CHCEK_TIME = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
     }
 
@@ -1019,6 +1021,7 @@ public interface IConstant {
             String OMP_GDM_CONVERSION_STORAGE = "OMPGdmConversionStorage";
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
+            String OMP_GDM_POS = "OMPGdmPos";
         }
 
         interface ERROR_CODE {
@@ -1135,8 +1138,8 @@ public interface IConstant {
         public static final String CLONE_PLANLEVELID = "VolumePlanning";
         public static final String PATTERN_DECIMAL_5 = "#.00000";
         public static final String PATTERN_DECIMAL_3 = "#.000";
-        public static final String INTERFACEID="OMPGdmbomelementProcess";
-        public static final String  PRODUCTID_FAIL_MSG="Unable to construct ProductId";
+        public static final String INTERFACEID = "OMPGdmbomelementProcess";
+        public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
 
 
     }
