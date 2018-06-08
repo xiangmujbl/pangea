@@ -33,4 +33,12 @@ public class PlanCnsFinPlanValDaoImpl extends CommonDaoImpl {
         return null;
     }
 
+    public List<PlanCnsFinPlanValEntity> getListWithConditions(List<String> localMaterialNumber,String identifier) {
+        if (null != localMaterialNumber && localMaterialNumber.size()>0){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_FIN_PLAN_VAL.LOCAL_MATERIAL_NUMBER).in(localMaterialNumber.toArray())
+                    .and(IConstant.PLAN_CNS_FIN_PLAN_VAL.IDENTIFIER).is(identifier).toQueryString();
+            return queryForList(IConstant.REGION.PLAN_CNS_FIN_PLAN_VAL, queryString, PlanCnsFinPlanValEntity.class);
+        }
+        return null;
+    }
 }
