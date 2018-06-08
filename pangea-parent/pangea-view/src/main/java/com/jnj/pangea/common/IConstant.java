@@ -1028,7 +1028,6 @@ public interface IConstant {
             String OMP_GDM_CONVERSION_STORAGE = "OMPGdmConversionStorage";
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
-            String OMP_GDM_POS = "OMPGdmPos";
         }
 
         interface ERROR_CODE {
