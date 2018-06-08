@@ -144,6 +144,13 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
+        String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
+    }
+
+    interface EDM_INVENTORY_STOCK {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_BATCH_ID = "localBatchId";
+        String LOCAL_MATERIAL = "localMaterial";
     }
 
     interface BOM_HDR {
