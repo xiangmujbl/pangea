@@ -144,6 +144,8 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
+        String EDM_ADVANCE_SHIP_NOTIFICATION_V1= "/edm/avance_ship_notification_v1";
+        String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
     }
 
     interface BOM_HDR {
@@ -541,6 +543,18 @@ public interface IConstant {
         String GBU = "gbu";
     }
 
+    interface EDM_PURCHASE_ORDER_OA_V1 {
+        String PO_NUM = "poNum";
+        String PO_LINE_NBR = "poLineNbr";
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
+
+    interface EDM_ADVANCE_SHIP_NOTIFICATION_V1 {
+        String DELV_DOC_ID = "delvDocID";
+        String DELV_LINE_NBR = "delvLineNbr";
+        String SOURCE_SYSTEM = "sourceSystem";
+    }
+
     interface PLAN_CONS_TIME_DEP_XCHANGE {
         String UNIT_ID = "unitId";
         String FROM_CURRENCY = "fromCurrency";
@@ -870,6 +884,7 @@ public interface IConstant {
         String NO = "NO";
         String WE = "WE";
         String LA_ = "LA_";
+        String LA = "LA";
         String PGA = "PGA";
         String UNDERLINE = "_";
         String HORIZONTAL_Line = "-";
@@ -904,6 +919,7 @@ public interface IConstant {
         String SPACE = " ";
         String CURRENCY = "CURRENCY";
         String ZERO = "0";
+        String ZEROZERO = "0.0";
         String BA = "BA";
         String FALSE = "FALSE";
         String COLON = ":";
@@ -980,7 +996,6 @@ public interface IConstant {
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
-
 
     }
 

@@ -1,12 +1,14 @@
 package com.jnj.pangea.common.entity.edm;
 
 
+import com.jnj.pangea.common.entity.CommonEntity;
+
 import java.util.Map;
 
 /**
  * Created by rtierne2 on 2018/5/10.
  */
-public class EDMAdvancedShipNotificationV1Entity {
+public class EDMAdvancedShipNotificationV1Entity extends CommonEntity {
 
     private String srcSysCd;
     private String delvDocID;
@@ -31,25 +33,26 @@ public class EDMAdvancedShipNotificationV1Entity {
     private String locRefDocLineNum;
 
     public EDMAdvancedShipNotificationV1Entity(Map<String, Object> map) {
+        super(map);
         setSrcSysCd((String) map.get("srcSysCd"));
         setDelvDocID((String) map.get("delvDocID"));
-        setReceivingPtID((String) map.get("delvDocID"));
-        setLocaldeliveryType((String) map.get("delvDocID"));
-        setLocaldeliveryCatg((String) map.get("delvDocID"));
-        setLocaldeliveryDate((String) map.get("delvDocID"));
-        setLocalcreatedDate((String) map.get("delvDocID"));
-        setLocalbillOfLading((String) map.get("delvDocID"));
-        setLocalExternalId((String) map.get("delvDocID"));
-        setActGRDt((String) map.get("delvDocID"));
-        setVendorID((String) map.get("delvDocID"));
-        setLocalShippingPlant((String) map.get("delvDocID"));
-        setLocalbatchNo((String) map.get("delvDocID"));
-        setLocalReceivingPlant((String) map.get("delvDocID"));
-        setBaseUnitOfMeasureCd((String) map.get("delvDocID"));
-        setActlSkuDelvQty((String) map.get("delvDocID"));
-        setLocalRefDocNum((String) map.get("delvDocID"));
-        setLocRefDocLineNum((String) map.get("delvDocID"));
-        setDelvLineNbr((String) map.get("delvDocID"));
+        setReceivingPtID((String) map.get("receivingPtID"));
+        setLocaldeliveryType((String) map.get("localdeliveryType"));
+        setLocaldeliveryCatg((String) map.get("localdeliveryCatg"));
+        setLocaldeliveryDate((String) map.get("localdeliveryDate"));
+        setLocalcreatedDate((String) map.get("localcreatedDate"));
+        setLocalbillOfLading((String) map.get("localbillOfLading"));
+        setLocalExternalId((String) map.get("localExternalId"));
+        setActGRDt((String) map.get("actGRDt"));
+        setVendorID((String) map.get("vendorID"));
+        setLocalShippingPlant((String) map.get("localShippingPlant"));
+        setLocalbatchNo((String) map.get("localbatchNo"));
+        setLocalReceivingPlant((String) map.get("localReceivingPlant"));
+        setBaseUnitOfMeasureCd((String) map.get("baseUnitOfMeasureCd"));
+        setActlSkuDelvQty((String) map.get("actlSkuDelvQty"));
+        setLocalRefDocNum((String) map.get("localRefDocNum"));
+        setLocRefDocLineNum((String) map.get("locRefDocLineNum"));
+        setDelvLineNbr((String) map.get("delvLineNbr"));
         setLocalVendorBatchNo((String) map.get("localVendorBatchNo"));
     }
 
