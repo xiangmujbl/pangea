@@ -98,7 +98,7 @@ public class OMPGdmSupplyServiceImpl {
 
                                     gdmSupplyBo.setLocationId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
 
-                                    // N6
+                                    // N6 //N8
                                     EDMMaterialPlantV1Entity edmMaterialPlantV1Entity = materialPlantDao.getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalPlant(), edmSourceListV1Entity.getLocalMaterialNumber());
 
                                     if (edmMaterialPlantV1Entity != null) {
@@ -140,8 +140,6 @@ public class OMPGdmSupplyServiceImpl {
                                             // N12
                                             if (edmMaterialPlantV1Entity != null) {
                                                 if (edmMaterialPlantV1Entity.getPurchsngGrpCd() != null && (!(edmMaterialPlantV1Entity.getPurchsngGrpCd().isEmpty()))) {
-//                                                if (edmMaterialPlantV1Entity.getLocalPurchasingGroup() != null && (!(edmMaterialPlantV1Entity.getLocalPurchasingGroup().isEmpty()))) {
-//                                                    gdmSupplyBo.setPURCHASINGGROUP(edmMaterialPlantV1Entity.getLocalPurchasingGroup());
                                                     gdmSupplyBo.setPURCHASINGGROUP(edmMaterialPlantV1Entity.getPurchsngGrpCd());
                                                 } else {
                                                     gdmSupplyBo.setPURCHASINGGROUP("");
@@ -161,7 +159,6 @@ public class OMPGdmSupplyServiceImpl {
                                                 gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
                                             } else {
                                                 gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem()
-                                                        + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant()
                                                         + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getVendorOrCustomer()
                                                         + IConstant.VALUE.UNDERLINE + planCnsPlnSplLocEntity.getLocalNumber());
                                             }
