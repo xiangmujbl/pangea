@@ -973,6 +973,7 @@ public interface IConstant {
         String EXCLUSION = "E";
         String SOURCE_SYSTEM_CRITICAL_PARAMETERS = "sourceSystemCriticalParameters";
         String SOURCE_SYSTEM = "sourceSystem";
+        String ADVANCE_SHIP_NOTIFICATIONS = "advance_ship_notifications";
         String SELECT = "select";
         String FROM = "from";
         String WHERE = "WHERE";
@@ -985,13 +986,16 @@ public interface IConstant {
         String OPERATOR_NOT_EQUAL = "!=";
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
+        String LOCAL_RECEIVING_PLANT = "localReceivingPlant";
         String BR = "BR";
         String BATCH_START = "batchstart";
         String BATCH_END = "batchend";
         String CONTINU = "continu";
         String PROPORTIONAL = "proportional";
         String FIXED = "fixed";
+        String MOVEMENT = "movement";
         String ENDEFF = "2998/12/31 23:59:59";
+        String TRANSIT_DATE = "1980/01/01 00:00:00";
         String BOM_86400 = "86400";
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
