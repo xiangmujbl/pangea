@@ -201,7 +201,7 @@ Feature: OMPGdmPos AEAZ-3214
 
     When I submit task with xml file "xml/omp/OMPGdmPos.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMPOS.tsv"
+    Then I delete the test data
 
     Then I check file data for filename "GDMPOS.tsv" by keyFields "aggregationId,forecastUploadId"
       | aggregationId           | forecastUploadId                            | currencyId | dueDate             | fromDueDate         | unitId | volume |
@@ -310,6 +310,8 @@ Feature: OMPGdmPos AEAZ-3214
     And I wait "/edm/jnj_calendar_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmPos.xml" and execute file "jar/pangea-view.jar"
+
+    Then I delete the test data
 
     #CONCATENATE 'LA_' ,  localDpParentCode, '-' and   cns_dem_grp_asgn-demandGroup
     #GDMPOS-DUEDATE = jnj_calender_v1-weekToDate
@@ -566,7 +568,6 @@ Feature: OMPGdmPos AEAZ-3214
     And I will remove all data with region "/omp/gdm_pos"
 
     And I will remove all data with region "/plan/edm_failed_data"
-
   @Scenario6
   Scenario:Pick the POS record with demnad group for L2 hierachy is assigned
 

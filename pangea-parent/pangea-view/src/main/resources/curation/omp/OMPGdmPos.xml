@@ -21,6 +21,7 @@
                         <expression>localDpParentCode=/edm/material_global_v1.localDpParentCode</expression>
                     </relation>
                 </relations>
+                <!--<filter>localDpParentCode:78910100997250012</filter>-->
             </region>
 
             <region path="/plan/cns_dp_pos">
@@ -33,10 +34,12 @@
                         <expression>fiscalPeriod=/plan/cns_dp_pos.yearMonth</expression>
                     </relation>
                 </relations>
+                <!--<filter>yearMonth:201801</filter>-->
             </region>
 
             <region path="/edm/material_global_v1" alias="/edm/material_global_v1_copy">
                 <columns>localMaterialNumber,sourceSystem,localBaseUom,localDpParentCode</columns>
+                <!--<filter>localDpParentCode:78910100997250012</filter>-->
             </region>
 
             <region path="/plan/cns_plan_parameter">
@@ -63,6 +66,7 @@
                         <expression>kunnr=/plan/cns_dem_grp_asgn.customerId</expression>
                     </relation>
                 </relations>
+                <!--<filter>demandGroup:76100007</filter>-->
             </region>
 
             <region path="/project_one/knvh">
@@ -71,6 +75,7 @@
 
             <region path="/edm/jnj_calendar_v1">
                 <columns>fiscalPeriod,noOfWeek,weekToDate,weekFromDate,calWeek</columns>
+                <!--<filter>fiscalPeriod:201801</filter>-->
             </region>
 
             <region path="/omp/gdm_pos">
