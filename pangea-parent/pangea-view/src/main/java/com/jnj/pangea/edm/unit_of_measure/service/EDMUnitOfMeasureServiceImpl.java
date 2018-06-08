@@ -47,6 +47,8 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
             EMSFMdmUnitOfMeasureEntity emsfMdmUnitOfMeasureEntity = emsfMdmUnitOfMeasureDao.getMdmNameWithzSourceSystemAndMdmSapCode(IConstant.VALUE.EMS, zCode);
             if (emsfMdmUnitOfMeasureEntity != null) {
                 edmUnitOfMeasureBo.setUomName(emsfMdmUnitOfMeasureEntity.getMdmName());
+                edmUnitOfMeasureBo.setIsoCode(emsfMdmUnitOfMeasureEntity.getMdmIsoCode());
+                edmUnitOfMeasureBo.setMeasure(emsfMdmUnitOfMeasureEntity.getzUnitsDimension());
             }
         }
         return resultObject;
