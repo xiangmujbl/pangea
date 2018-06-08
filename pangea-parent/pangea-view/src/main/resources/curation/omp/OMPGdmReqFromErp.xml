@@ -1,0 +1,75 @@
+<adf-curation>
+    <curation mainRegion="/edm/purchase_requisition_v1" viewRegion="/omp/gdm_req_from_erp" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_req_from_erp.controller.OMPGdmReqFromErpController"
+              writeTo="all" topic="PANGEA_V1_gdm_req_from_erp">
+        <regions>
+
+            <region path="/edm/purchase_requisition_v1">
+                <columns>
+                    sourceSystem,prNum,prLineNbr,plntCd,matlNum,prLineUomCd,prTypeCd,prCatCd,localControlInd,delInd,prStsCd,recCrtInd,prchsngGrpNum,crtByNm,chngOnDt,prchInfoDesc,mfrPartNum,slocCd,intrnlRefNum,locaalMaterialGroup,suplPlntCd,prLineQty,prRqstDt,needByDt,apprByDt,localPrGRLeadTimeDays,prLineCatCd,acctAsgnmtCatCd,localGRInd,localSupNum,localFixedVendor,prchsngOrgNum,poTypeCd,localAgreement,localAgreementItem,localInfoRecord,asgnSuplSrcInd,localQuotaArr,localQuotaArrItem,prMrpHrzn,bomNum,localPurchaseOrder,localItem,localPODate,localPOQuantity,prClseInd,localReservation,splStkInd,fxInd,localOrderUnit,localSubjToRelease,localBatch,localSpIndStckTfr,localProdVersion,localdelvAddrADRNR,localdelvAddrADRN2,localCustomer,supNum,localSCVendor,localCurrency,localOverallReqRel,mfrPartNum,localManufacturer,localExternalManuf,localPDT,localIncomplete,lineStsCd,blokInd,localBlockingText,localProcuringPlant,localIssStorLoc,localXSysPReqNo,localXSysPReqItem,localXSysItemCat,prDocId
+                </columns>
+                <relations>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>
+                            materialNumber=/edm/purchase_requisition_v1.matlNum,
+                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem
+                        </expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>
+                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem
+                        </expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                        <expression>
+                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem
+                        </expression>
+                    </relation>
+
+                </relations>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode,localBaseUom
+                </columns>
+                <relations>
+                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
+                        <expression>
+                            localUom=/edm/material_global_v1.localBaseUom
+                        </expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber
+                        </expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cns_plan_unit">
+                <columns>
+                    plantFlag,unit,localUom,sourceSystem,localUomName
+                </columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    sourceSystem,localPlant,localMaterialNumber,spRelevant
+                </columns>
+            </region>
+
+            <region path="/plan/cns_plan_object_filter">
+                <columns>
+                    sourceObjectTechName,sourceSystem,inclusion_Exclusion,sourceObjectAttribute1Value,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute2
+                </columns>
+            </region>
+
+            <region path="/omp/gdm_req_from_erp">
+                <columns>
+                    REQFromERPId,BLCKD,BLCKT,DELETED,DeliveryDate,DELKZ,DELNR,DELPS,ERPId,FLIEF,LocationId,ManualOffset,PLIFZ,PRIO_URG,ProductId,REQType,TotalQuantity,UnitId,VERID,WRK02
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

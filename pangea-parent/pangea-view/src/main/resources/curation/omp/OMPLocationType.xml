@@ -11,7 +11,7 @@
 
             <region path="/omp/location_type">
                 <columns>
-                    locationTypeId,activeFctErp,activeOprErp,activeSopErp,label
+                    locationTypeId,activeFCTERP,activeOPRERP,activeSOPERP,label
                 </columns>
             </region>
 

@@ -1,6 +1,5 @@
 package com.jnj.pangea.edm.material.global.service;
 
-import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.ngems.NgemsGoldenMaterialDaoImpl;
@@ -42,12 +41,6 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         MaraEntity maraEntity = (MaraEntity) o;
         String sourceSystem = (String) o2;
 
-        FailData failData = checkT1(maraEntity, sourceSystem);
-        if (null != failData) {
-            resultObject.setFailData(failData);
-            return resultObject;
-        }
-
         EDMMaterialGlobalBo materialGlobalBo = new EDMMaterialGlobalBo();
 
         materialGlobalBo.setSourceSystem(sourceSystem);
@@ -79,6 +72,17 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
                 materialGlobalBo.setMaterialType(goldenMaterialEntity.getMaterialType());
                 materialGlobalBo.setBaseUom(goldenMaterialEntity.getBaseUom());
                 materialGlobalBo.setParentCode(goldenMaterialEntity.getParentCode());
+                // J3
+                if (StringUtils.isEmpty(goldenMaterialEntity.getGlobalDpParentCode()) &&
+                        StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
+
+                    materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getParentCode());
+                }
+                if (StringUtils.isEmpty(goldenMaterialEntity.getParentCode())) {
+
+                    materialGlobalBo.setGlobalDpParentCode("");
+                }
+
                 materialGlobalBo.setForm(goldenMaterialEntity.getForm());
                 materialGlobalBo.setCategory(goldenMaterialEntity.getCategory());
                 materialGlobalBo.setSubBrand(goldenMaterialEntity.getSubBrand());
@@ -87,33 +91,21 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
                 materialGlobalBo.setGlobalBusinessUnit(goldenMaterialEntity.getGlobalBusinessUnit());
                 materialGlobalBo.setProductFamily(goldenMaterialEntity.getProductFamily());
                 materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
-                materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
+                // J4
+                String primaryPlanningCode = goldenMaterialEntity.getPrimaryPlanningCode();
+                if (StringUtils.isNotEmpty(primaryPlanningCode)) {
+                    materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
+                } else {
+                    materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getMaterialNumber());
+                }
             }
         }
         materialGlobalBo.setLocalManufacturingTechnology("");
-        materialGlobalBo.setGlobalDpParentCode("");
         materialGlobalBo.setLocalDpParentCode("");
 
         resultObject.setBaseBo(materialGlobalBo);
 
         return resultObject;
-    }
-
-    private FailData checkT1(MaraEntity maraEntity, String sourceSystem) {
-        FailData failData = null;
-        if (StringUtils.isEmpty(sourceSystem)) {
-            failData = new FailData();
-            failData.setErrorCode("T1");
-            failData.setFunctionalArea("DP");
-            failData.setInterfaceID("EDMMaterialGlobal");
-            failData.setSourceSystem("project_one");
-            failData.setKey1(maraEntity.getMatnr());
-            failData.setKey2("");
-            failData.setKey3("");
-            failData.setKey4("");
-            failData.setKey5("");
-        }
-        return failData;
     }
 
     public String getFieldWithJ1(String matnr) {

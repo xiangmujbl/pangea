@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/plan/cns_loc_type" viewRegion="/omp/gdm_location_type" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_location_type.controller.OMPGdmLocationTypeController"
-              writeTo="kafka" topic="gdm_omp_location_type">
+              writeTo="kafka" topic="PANGEA_V1_gdm_location_type">
         <regions>
 
             <region path="/plan/cns_loc_type">
@@ -12,7 +12,7 @@
 
             <region path="/omp/gdm_location_type">
                 <columns>
-                    locationTypeId,activeFprerp,activeOprerp,activeSoperp,label
+                    LocationTypeId,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,LABEL
                 </columns>
             </region>
 

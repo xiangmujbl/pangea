@@ -5,81 +5,106 @@ import com.jnj.pangea.common.BaseBo;
 
 public class EDMBatchMasterBo extends BaseBo {
 
-    private String sourceSystem;
-    private String localMaterialNumber;
+    private String srcSysCd;
+    private String matlNum;
+    private String btchNum;
+    private String localPlant;
+    private String localStorLocation;
+    private String btchExpDt;
+    private String btchMfgDt;
+    private String plant;
     private String materialNumber;
-    private String localBatchNumber;
-    private String localShelfLifeExpiration;
-    private String localDateofManufacture;
+    private String btchStsCd;
 
-    @Override
-    public String toString() {
-        return "EDMBatchMasterBo{" +
-                "sourceSystem='" + sourceSystem + '\'' +
-                ", localMaterialNumber='" + localMaterialNumber + '\'' +
-                ", materialNumber='" + materialNumber + '\'' +
-                ", localBatchNumber='" + localBatchNumber + '\'' +
-                ", localShelfLifeExpiration='" + localShelfLifeExpiration + '\'' +
-                ", localDateofManufacture='" + localDateofManufacture + '\'' +
-                '}';
-    }
-
-    // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("sourceSystem", this.sourceSystem)
-                .add("localMaterialNumber",this.localMaterialNumber)
-                .add("materialNumber",this.materialNumber)
-                .add("localBatchNumber",this.localBatchNumber)
+                .makeJsonObject("srcSysCd", this.srcSysCd)
+                .add("matlNum", this.matlNum)
+                .add("btchNum", this.btchNum)
+                .add("localPlant", this.localPlant)
+                .add("localStorLocation", this.localStorLocation)
                 .toJsonString();
     }
 
-    public String getSourceSystem() {
-        return sourceSystem;
+    public String getSrcSysCd() {
+        return this.srcSysCd;
     }
 
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
+    public void setSrcSysCd(String srcSysCd) {
+        this.srcSysCd = srcSysCd;
     }
 
-    public String getLocalMaterialNumber() {
-        return localMaterialNumber;
+    public String getMatlNum() {
+        return this.matlNum;
     }
 
-    public void setLocalMaterialNumber(String localMaterialNumber) {
-        this.localMaterialNumber = localMaterialNumber;
+    public void setMatlNum(String matlNum) {
+        this.matlNum = matlNum;
+    }
+
+    public String getBtchNum() {
+        return this.btchNum;
+    }
+
+    public void setBtchNum(String btchNum) {
+        this.btchNum = btchNum;
+    }
+
+    public String getLocalPlant() {
+        return this.localPlant;
+    }
+
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
+    }
+
+    public String getLocalStorLocation() {
+        return this.localStorLocation;
+    }
+
+    public void setLocalStorLocation(String localStorLocation) {
+        this.localStorLocation = localStorLocation;
+    }
+
+    public String getBtchExpDt() {
+        return this.btchExpDt;
+    }
+
+    public void setBtchExpDt(String btchExpDt) {
+        this.btchExpDt = btchExpDt;
+    }
+
+    public String getBtchMfgDt() {
+        return this.btchMfgDt;
+    }
+
+    public void setBtchMfgDt(String btchMfgDt) {
+        this.btchMfgDt = btchMfgDt;
+    }
+
+    public String getPlant() {
+        return this.plant;
+    }
+
+    public void setPlant(String plant) {
+        this.plant = plant;
     }
 
     public String getMaterialNumber() {
-        return materialNumber;
+        return this.materialNumber;
     }
 
     public void setMaterialNumber(String materialNumber) {
         this.materialNumber = materialNumber;
     }
 
-    public String getLocalBatchNumber() {
-        return localBatchNumber;
+    public String getBtchStsCd() {
+        return this.btchStsCd;
     }
 
-    public void setLocalBatchNumber(String localBatchNumber) {
-        this.localBatchNumber = localBatchNumber;
+    public void setBtchStsCd(String btchStsCd) {
+        this.btchStsCd = btchStsCd;
     }
 
-    public String getLocalShelfLifeExpiration() {
-        return localShelfLifeExpiration;
-    }
-
-    public void setLocalShelfLifeExpiration(String localShelfLifeExpiration) {
-        this.localShelfLifeExpiration = localShelfLifeExpiration;
-    }
-
-    public String getLocalDateofManufacture() {
-        return localDateofManufacture;
-    }
-
-    public void setLocalDateofManufacture(String localDateofManufacture) {
-        this.localDateofManufacture = localDateofManufacture;
-    }
 }

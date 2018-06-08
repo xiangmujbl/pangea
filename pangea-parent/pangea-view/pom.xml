@@ -24,18 +24,23 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <resources>
-                        <resource>
-                            <directory>${basedir}/src/main/resources/curation/</directory>
-                        </resource>
-                    </resources>
-                    <outputDirectory>../pangea-test/src/test/resources/xml/</outputDirectory>
-                </configuration>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <move file="${project.build.directory}/classes/curation/"
+                                      tofile="../pangea-test/src/test/resources/xml/"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

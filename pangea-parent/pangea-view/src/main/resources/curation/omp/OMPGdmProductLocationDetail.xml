@@ -1,6 +1,7 @@
 <adf-curation>
     <curation mainRegion="/plan/cns_material_plan_status" viewRegion="/omp/gdm_product_location_detail" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_product_location_detail.controller.OMPGdmProductLocationDetailController">
+              executionClassName="com.jnj.pangea.omp.gdm_product_location_detail.controller.OMPGdmProductLocationDetailController"
+              writeTo="all" topic="gdm_omp_product_location_detail">
         <regions>
 
             <region path="/plan/cns_material_plan_status">
@@ -20,7 +21,7 @@
 
             <region path="/plan/cns_prod_loc_attrib">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,SchdAttrbName1,SchAttrbDesc1,SchdAttrbName2,SchAttrbDesc2,SchdAttrbName3,SchAttrbDesc3,SupplyGroup,minShelfLife,minMinshelfLife
+                    sourceSystem,localMaterialNumber,localPlant,schdAttrbName1,schAttrbDesc1,schdAttrbName2,schAttrbDesc2,schdAttrbName3,schAttrbDesc3,supplyGroup,minShelfLife,minMinshelfLife
                 </columns>
                 <relations>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
@@ -40,7 +41,7 @@
 
             <region path="/omp/gdm_product_location_detail">
                 <columns>
-                    productLocationDetailId,activeOprerp,activeSoperp,CLASS,comments,description,name,productLocationId,unit,value
+                    productLocationDetailId,activeOPRERP,activeSOPERP,CLASS,comments,description,name,productLocationId,unit,value
                 </columns>
             </region>
 

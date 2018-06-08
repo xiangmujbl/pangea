@@ -9,6 +9,6 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/omp/OMPGdmCluster.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-1613 OMPGdmCluster.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-3679 OMPGdmCluster.json"})
 public class OMPGdmCluster {
 }

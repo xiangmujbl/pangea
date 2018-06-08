@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1272
-Feature: EDMSubBrand
+Feature: EDMSubBrand AEAZ-1272
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation
@@ -10,7 +10,6 @@ Feature: EDMSubBrand
       | 102      | Neostrata                    |
       | 103      | Internal Sanitary Protection |
       | 104      | Baby Bar Soaps               |
-
     And I wait "/ngems/sub_brand_v1" Async Queue complete
 
     When I submit task with xml file "xml/edm/EDMSubBrand_ProjectOne.xml" and execute file "jar/pangea-view.jar"
@@ -27,6 +26,10 @@ Feature: EDMSubBrand
 
     And I compare the number of records between "/ngems/sub_brand_v1" and "/edm/sub_brand_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/sub_brand_v1"
+
+    And I will remove all data with region "/plan/edm_failed_data"

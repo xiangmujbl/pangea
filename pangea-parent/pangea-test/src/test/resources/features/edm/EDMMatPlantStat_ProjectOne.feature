@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1279
-Feature: EDMMatPlantStat
+Feature: EDMMatPlantStat AEAZ-1279
 
   Scenario: Full Load curation
 
@@ -8,7 +8,6 @@ Feature: EDMMatPlantStat
       | M001  |
       | M002  |
       | M003  |
-
     And I wait "/project_one/t141" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -30,7 +29,10 @@ Feature: EDMMatPlantStat
 
     And I compare the number of records between "/project_one/t141" and "/edm/mat_plant_stat_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/mat_plant_stat_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"

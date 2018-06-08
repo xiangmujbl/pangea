@@ -12,6 +12,7 @@ public class GoldenMaterialEntity extends CommonEntity {
     private String materialType;
     private String baseUom;
     private String parentCode;
+    private String globalDpParentCode;
     private String brand;
     private String form;
     private String materialStatus;
@@ -29,7 +30,9 @@ public class GoldenMaterialEntity extends CommonEntity {
         setFranchise((String) map.get("franchise"));
         setMaterialType((String) map.get("materialType"));
         setBaseUom((String) map.get("baseUom"));
+        setGlobalDpParentCode((String) map.get("globalDpParentCode"));
         setParentCode((String) map.get("parentCode"));
+
         setBrand((String) map.get("brand"));
         setForm((String) map.get("form"));
         setMaterialStatus((String) map.get("materialStatus"));
@@ -39,14 +42,6 @@ public class GoldenMaterialEntity extends CommonEntity {
         setProductFamily((String) map.get("productFamily"));
         setGlobalBusinessUnit((String) map.get("globalBusinessUnit"));
         setPrimaryPlanningCode((String) map.get("primaryPlanningCode"));
-    }
-
-    public String getPrimaryPlanningCode() {
-        return primaryPlanningCode;
-    }
-
-    public void setPrimaryPlanningCode(String primaryPlanningCode) {
-        this.primaryPlanningCode = primaryPlanningCode;
     }
 
     public String getMaterialNumber() {
@@ -89,12 +84,21 @@ public class GoldenMaterialEntity extends CommonEntity {
         this.baseUom = baseUom;
     }
 
+
     public String getParentCode() {
         return parentCode;
     }
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
+    }
+
+    public String getGlobalDpParentCode() {
+        return globalDpParentCode;
+    }
+
+    public void setGlobalDpParentCode(String globalDpParentCode) {
+        this.globalDpParentCode = globalDpParentCode;
     }
 
     public String getBrand() {
@@ -159,5 +163,13 @@ public class GoldenMaterialEntity extends CommonEntity {
 
     public void setGlobalBusinessUnit(String globalBusinessUnit) {
         this.globalBusinessUnit = globalBusinessUnit;
+    }
+
+    public String getPrimaryPlanningCode() {
+        return primaryPlanningCode;
+    }
+
+    public void setPrimaryPlanningCode(String primaryPlanningCode) {
+        this.primaryPlanningCode = primaryPlanningCode;
     }
 }

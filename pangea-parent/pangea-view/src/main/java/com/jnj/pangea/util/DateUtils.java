@@ -2,20 +2,19 @@ package com.jnj.pangea.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
  * Created by XZhan290 on 2018/3/2.
  */
 public class DateUtils {
+
     public final static String DATE_FORMAT_1 = "yyyy-MM-dd";
     public final static String F_yyyyMMdd = "yyyyMMdd";
     public final static String F_yyyyMM = "yyyyMM";
     public final static String F_yyyyMMddHHmmss = "yyyyMMddHHmmss";
+    public final static String F_yyyyMMddHHmmss_ = "yyyyMMddHH:mm:ss";
     public final static String yyyyMMdd_HHmmss = "yyyyMMdd_HH-mm-ss";
     public final static String yyyy_MM_dd_HHmmss_SSS = "yyyy/MM/dd HH:mm:ss.SSS";
     public final static String yyyyMMdd_HHmmssSSS = "yyyyMMdd HH:mm:ss:SSS";
@@ -23,6 +22,14 @@ public class DateUtils {
     public final static String US_MMM_dd_yyyy_hhmmssSSSaa = "MMM dd yyyy hh:mm:ss:SSSaa";
     public final static String US_EEE_MMM_dd_hhmmsszyyyy = "EEE MMM dd HH:mm:ss z yyyy";
     public final static String dd_MM_yyyy_HHmmss = "dd/MM/yyyy HH:mm:ss";
+    public final static String F_dd_MM_yyyy_HHmmss = "dd-MM-yyyy HH:mm:ss";
+    public final static String F_yyyy_MM_dd_HHmmss = "yyyyMMdd HH:mm:ss";
+    public final static String J_yyyyWW = "yyyyWW";
+    public final static String yyyy_MM_dd_HHmmss = "yyyy/dd/MM HH:mm:ss";
+    public final static String yyyy_MM_dd = "yyyy/MM/dd";
+    public final static String dd_MM_yyyy = "dd/MM/yyyy";
+
+    public final static String J_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
@@ -52,6 +59,17 @@ public class DateUtils {
     }
 
     public static Date stringToDate(String dateStr, String format, Locale locale) {
+
+        if (J_yyyyWW.equals(format) && dateStr.length() == 6) {
+            String year = dateStr.substring(0, 4);
+            String week = dateStr.substring(4, 6);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Integer.parseInt(year), Calendar.JANUARY, 0, 0, 0, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            calendar.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(week));
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE));
+            return calendar.getTime();
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
         Date s_date = null;
         try {
@@ -81,5 +99,32 @@ public class DateUtils {
             }
         }
         return null;
+    }
+
+    public static Date startOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1, 0, 0, 0);
+        return calendar.getTime();
+    }
+
+    public static Date endOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        return calendar.getTime();
+    }
+
+    public static Date offsetDate(Date date, int days) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
+        return calendar.getTime();
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(dateToString(stringToDate("201805", J_yyyyWW), yyyy_MM_dd_HHmmssSSS));
     }
 }

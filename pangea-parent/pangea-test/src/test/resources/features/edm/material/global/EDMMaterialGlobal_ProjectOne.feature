@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-509
-Feature: MaterialGlobal-Data Model & Curation
+@pangea_test @AEAZ-509 @AEAZ-1432
+Feature: MaterialGlobal-Data AEAZ-509 AEAZ-1432
 
   Scenario: Full Load curation
     #  1.test all field values. Enter valid value for fields in source and verify the same value exist in target
@@ -32,10 +32,10 @@ Feature: MaterialGlobal-Data Model & Curation
     And I wait "/project_one/makt" Async Queue complete
 
     And I import "/ngems/golden_material" by keyFields "materialNumber"
-      | materialNumber | materialDescription                      | franchise | materialType | baseUom | parentCode    | brand  | form   | materialStatus | subBrand | manufTechnology | category | productFamily | globalBusinessUnit | primaryPlanningCode |
-      | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FCH001    | FERT         | EA      | 7891010931582 | BRD001 | 116151 | Active         | 1V       | Wipes           | 6        | Not Assigned  | GFO001             | 1233                |
-      | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FCH001    | FERT         | EA      | 7891010931642 | BRD001 | 116151 | Active         | 500003   | Toothbrushes    | 0006     | Not Assigned  | GFO001             | 1234                |
-      | N6016B         | NTG Norwegian Hand Cream FFree 50mL      | 010124    | FERT         | EA      | C-46016       |        |        | Active         | 500003   | Band Aid        | 0006     | 030238        | C00018             | 1234                |
+      | materialNumber | materialDescription                      | franchise | materialType | baseUom | globalDpParentCode | parentCode    | brand  | form   | materialStatus | subBrand | manufTechnology | category | productFamily | globalBusinessUnit | primaryPlanningCode |
+      | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FCH001    | FERT         | EA      |                    | 7891010931582 | BRD001 | 116151 | Active         | 1V       | Wipes           | 6        | Not Assigned  | GFO001             | 1233                |
+      | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FCH001    | FERT         | EA      |                    |               | BRD001 | 116151 | Active         | 500003   | Toothbrushes    | 0006     | Not Assigned  | GFO001             |                     |
+      | N6016B         | NTG Norwegian Hand Cream FFree 50mL      | 010124    | FERT         | EA      |                    | C-46016       |        |        | Active         | 500003   | Band Aid        | 0006     | 030238        | C00018             | 1234                |
     And I wait "/ngems/golden_material" Async Queue complete
 
     And I import "/ngems/material_linkage" by keyFields "sourceSystem,localMaterialNumber"
@@ -50,8 +50,8 @@ Feature: MaterialGlobal-Data Model & Curation
 
     Then I check region data "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localRefDescription                  | localMaterialType | localBaseUom | materialNumber | refDescription                           | materialType | baseUom | localDpParentCod | parentCode    | globalDpParentCode | form   | category | subBrand | brand  | franchise | globalBusinessUnit | productFamily | localManufacturingTechnology | manufacturingTechnology | localMaterialGroup | materialGroup | flagForDeletion | materialStatus | division | batchManageIndicator | minRemShelfLife | totalShelfLife | primaryPlanningCode |
-      | CONS_LATAM   | 97568               | JS COTTON BALLS 50 GRX20 T50P35      | FERT              | KI           | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FERT         | EA      |                  | 7891010931582 |                    | 116151 | 6        | 1V       | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Wipes                   | 01                 |               |                 | 08             | 10       | X                    | 180             | 9999           | 1233                |
-      | CONS_LATAM   | 97570               | BOLAS DE ALGODAO J* 20X50 LV50 PG35. | FERT              | KI           | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FERT         | EA      |                  | 7891010931642 |                    | 116151 | 0006     | 500003   | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Toothbrushes            | 01                 |               |                 | 08             | 10       | X                    | 180             | 1095           | 1234                |
+      | CONS_LATAM   | 97568               | JS COTTON BALLS 50 GRX20 T50P35      | FERT              | KI           | 7891010014803  | J'S SOFT DEO HIDR MAC PROL 12XL400P320ML | FERT         | EA      |                  | 7891010931582 | 7891010931582      | 116151 | 6        | 1V       | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Wipes                   | 01                 |               |                 | 08             | 10       | X                    | 180             | 9999           | 1233                |
+      | CONS_LATAM   | 97570               | BOLAS DE ALGODAO J* 20X50 LV50 PG35. | FERT              | KI           | 7891010931582  | JS BODY DE HI 24H MA PR 12xL400 P320ML N | FERT         | EA      |                  |               |                    | 116151 | 0006     | 500003   | BRD001 | FCH001    | GFO001             | Not Assigned  |                              | Toothbrushes            | 01                 |               |                 | 08             | 10       | X                    | 180             | 1095           | 7891010931582       |
       | CONS_LATAM   | 97572               | REACH TOOTHBRUSH COMPACT SOFT T2P1   | FERT              | KI           |                |                                          |              |         |                  |               |                    |        |          |          |        |           |                    |               |                              |                         | 01                 |               |                 | 08             | 10       | X                    | 180             | 730            |                     |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
@@ -59,8 +59,11 @@ Feature: MaterialGlobal-Data Model & Curation
 
     And I compare the number of records between "/project_one/mara" and "/edm/material_global_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/material_global_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"
 

@@ -4,11 +4,7 @@
         <regions>
 
             <region path="/project_one/marc">
-                <columns>
-                    matnr,werks,mmsta,beskz,bstfe,bstma,bstmi,bstrf,disls,dismm,dispo,dzeit,eisbe,eislo,fevor,frtme,
-                    insmk,kausf,kzkri,maabc,mabst,mtvfp,plifz,sbdkz,shflg,shzet,sobsl,strgr,vint1,vint2,vrmod,webaz,
-                    xchpf,fxhor,basmg
-                </columns>
+                <columns>matnr,werks,mmsta,beskz,bstfe,bstma,bstmi,bstrf,disls,dismm,wadatist,dzeit,eisbe,eislo,lifnr,frtme,insmk,kausf,kzkri,maabc,mabst,mtvfp,plifz,sbdkz,shflg,shzet,sobsl,strgr,vint1,vint2,vrmod,webaz,xchpf,fxhor,basmg</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
@@ -26,40 +22,23 @@
             </region>
 
             <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,sourceSystem
-                </columns>
+                <columns>localSourceSystem,sourceSystem</columns>
             </region>
 
             <region path="/edm/material_global_v1">
-                <columns>
-                    localMaterialNumber,sourceSystem,materialNumber
-                </columns>
+                <columns>localMaterialNumber,sourceSystem,materialNumber</columns>
             </region>
 
             <region path="/edm/plant_v1">
-                <columns>
-                    plant,localPlant,sourceSystem
-                </columns>
+                <columns>plant,localPlant,sourceSystem</columns>
             </region>
 
             <region path="/edm/mat_plant_stat_v1">
-                <columns>
-                    sourceSystem,localPlantStatus,plantStatus
-                </columns>
+                <columns>sourceSystem,localPlantStatus,plantStatus</columns>
             </region>
 
             <region path="/edm/material_plant_v1">
-                <columns>
-                    sourceSystem,localMaterialNumber,localPlant,localDeletionFlagPlant,materialNumber,plant,localPlantStatus,plantStatus,
-                    localProcurementType,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,
-                    localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,
-                    localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,
-                    localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,
-                    localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,
-                    localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,
-                    localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity
-                </columns>
+                <columns>sourceSystem,localMaterialNumber,localPlant,localDeletionFlagPlant,materialNumber,plant,localPlantStatus,plantStatus,localProcurementType,localFixedLotSize,localMaximumLotSize,localMinimumLotSize,localRoundingValueForPoq, localLotSize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock, localProductionSupervisor,localProductionUnit,localPostToInspectionStock,localComponentScrapInPercent, localCriticalPart,localAbcIndicator,localMaximumStockLevel,localCheckingGroupForAvailabilityCheck,localPlannedDeliveryTimeInDays,localDependentRequirements,localSafetyTimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup, localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays, localBatchManagementRequirementIndicator,localPlanningTimeFence,localPostToInspStk,localComponentScrap,localBaseQuantity</columns>
             </region>
 
         </regions>

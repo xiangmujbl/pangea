@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-868
-Feature: EDMSourceSystem
+Feature: EDMSourceSystem AEAZ-868
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation
@@ -26,7 +26,10 @@ Feature: EDMSourceSystem
 
     And I compare the number of records between "/ngems/source_system" and "/edm/source_system_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/source_system_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"

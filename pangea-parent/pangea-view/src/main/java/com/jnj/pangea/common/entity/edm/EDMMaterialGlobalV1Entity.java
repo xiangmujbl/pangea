@@ -31,16 +31,12 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
     private String brand;
     private String localDpParentCode;
     private String primaryPlanningCode;
-
+    private String materialGroup;
+    private String minRemShelfLife;
+    private String totalShelfLife;
     private String localBaseUom;
-
-    public String getLocalBaseUom() {
-        return localBaseUom;
-    }
-
-    public void setLocalBaseUom(String localBaseUom) {
-        this.localBaseUom = localBaseUom;
-    }
+    private String division;
+    private String flagForDeletion;
 
     public EDMMaterialGlobalV1Entity(Map<String, Object> map) {
         super(map);
@@ -67,6 +63,51 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
         setBrand((String) map.get("brand"));
         setLocalDpParentCode((String) map.get("localDpParentCode"));
         setPrimaryPlanningCode((String) map.get("primaryPlanningCode"));
+        setDivision((String) map.get("division"));
+        setFlagForDeletion((String) map.get("flagForDeletion"));
+        setMaterialGroup((String) map.get("materialGroup"));
+        setMinRemShelfLife((String)map.get("minRemShelfLife"));
+        setTotalShelfLife((String)map.get("totalShelfLife"));
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public String getFlagForDeletion() {
+        return flagForDeletion;
+    }
+
+    public void setFlagForDeletion(String flagForDeletion) {
+        this.flagForDeletion = flagForDeletion;
+    }
+
+    public String getTotalShelfLife() {
+        return totalShelfLife;
+    }
+
+    public void setTotalShelfLife(String totalShelfLife) {
+        this.totalShelfLife = totalShelfLife;
+    }
+
+    public String getMinRemShelfLife() {
+        return minRemShelfLife;
+    }
+
+    public void setMinRemShelfLife(String minRemShelfLife) {
+        this.minRemShelfLife = minRemShelfLife;
+    }
+
+    public String getLocalBaseUom() {
+        return localBaseUom;
+    }
+
+    public void setLocalBaseUom(String localBaseUom) {
+        this.localBaseUom = localBaseUom;
     }
 
     public String getLocalDpParentCode() {
@@ -243,5 +284,13 @@ public class EDMMaterialGlobalV1Entity extends CommonEntity {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getMaterialGroup() {
+        return materialGroup;
+    }
+
+    public void setMaterialGroup(String materialGroup) {
+        this.materialGroup = materialGroup;
     }
 }

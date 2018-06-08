@@ -4,7 +4,10 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
-import com.jnj.pangea.common.*;
+import com.jnj.pangea.common.BaseBo;
+import com.jnj.pangea.common.FailData;
+import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.project_one.MaraEntity;
@@ -40,7 +43,7 @@ public class EDMMaterialGlobalController extends BaseController {
             } else {
                 if (resultObject.getFailData() != null) {
                     FailData failData = resultObject.getFailData();
-                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
+                    ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap());
                     result.add(viewResultItem);
                 }
             }

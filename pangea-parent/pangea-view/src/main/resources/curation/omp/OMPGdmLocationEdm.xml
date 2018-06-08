@@ -1,15 +1,24 @@
 <adf-curation>
     <curation mainRegion="/edm/plant_v1" viewRegion="/omp/gdm_location" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_location_edm.controller.OMPGdmLocationEdmController"
-              writeTo="kafka" topic="gdm_omp_location_edm">
+              writeTo="all" topic="PANGEA_V1_omp_gdm_location_edm">
         <regions>
 
             <region path="/edm/plant_v1">
                 <columns>
-                    sourceSystem,localPlant,localPlanningRelevant,country,localCurrency,localPlantName,plantType,region
+                    sourceSystem,localPlant,localPlanningRelevant,country,localCurrency,localPlantName,plantType,region,localCountry
                 </columns>
                 <relations>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/country_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_plant_attr" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/currency_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                 </relations>
@@ -18,6 +27,24 @@
             <region path="/plan/cns_plan_parameter">
                 <columns>
                     parameterValue,sourceSystem,dataObject,attribute,parameter
+                </columns>
+            </region>
+
+            <region path="/plan/cns_plant_attr">
+                <columns>
+                    localPlant,sourceSystem,planLocTypeId
+                </columns>
+            </region>
+
+            <region path="/edm/country_v1">
+                <columns>
+                    sourceSystem,localCountry,consumerPlanningRegion
+                </columns>
+            </region>
+
+            <region path="/edm/currency_v1">
+                <columns>
+                    sourceSystem,localCurrency,currencyCode
                 </columns>
             </region>
 
@@ -30,11 +57,11 @@
                     activeSOPERP,
                     countryId,
                     currencyId,
-                    customerid,
+                    customerId,
                     label,
                     locationTypeId,
                     regionId,
-                    vendorid
+                    vendorId
                 </columns>
             </region>
 

@@ -1,18 +1,38 @@
 <adf-curation>
     <curation mainRegion="/project_one/mch1" viewRegion="/edm/batch_master_v1" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.edm.batch_master.controller.EDMBatchMasterController">
+              executionClassName="com.jnj.pangea.edm.batch_master.controller.EDMBatchMasterController"
+    >
         <regions>
 
             <region path="/project_one/mch1">
                 <columns>
-                    matnr,charg,vfdat,hsdat
+                    matnr,charg,vfdat,hsdat,zustd
+                </columns>
+                <relations>
+                    <relation path="/project_one/mcha" isPrimaryKey="false">
+                        <expression>
+                            matnr=/project_one/mch1.matnr,charg=/project_one/mch1.charg
+                        </expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="true">
+                        <expression>localMaterialNumber=/project_one/mch1.matnr</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/project_one/mcha">
+                <columns>
+                    werks,matnr,charg,mandt
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>localSourceSystem=/project_one/mcha.mandt</expression>
                     </relation>
-                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                        <expression></expression>
+                    <relation path="/project_one/mchb" isPrimaryKey="false">
+                        <expression>charg=/project_one/mcha.charg</expression>
+                    </relation>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression>localPlant=/project_one/mcha.werks</expression>
                     </relation>
                 </relations>
             </region>
@@ -23,14 +43,27 @@
                 </columns>
             </region>
 
-            <region path="/edm/material_global_v1">
+            <region path="/project_one/mchb">
                 <columns>
-                    localMaterialNumber,materialNumber,sourceSystem
+                    charg,lgort
                 </columns>
             </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    localPlant,plant
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode
+                </columns>
+            </region>
+
             <region path="/edm/batch_master_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,materialNumber,localBatchNumber,localShelfLifeExpiration,localDateofManufacture
+                    srcSysCd,matlNum,btchNum,localPlant,localStorLocation,btchExpDt,btchMfgDt,plant,materialNumber,btchStsCd
                 </columns>
             </region>
 

@@ -1,11 +1,13 @@
 <adf-curation>
-    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_product_unit_conversion" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_product_unit_conversion.controller.GDMProductUnitConversionController">
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_product_unit_conversion" chunkSize="1000"
+              chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_product_unit_conversion.controller.GDMProductUnitConversionController"
+              writeTo="all" topic="PANGEA_V1_gdm_product_unit_conversion">
         <regions>
 
             <region path="/edm/material_global_v1">
                 <columns>
-                          localDpParentCode,localBaseUom,primaryPlanningCode,localMaterialNumber
+                    localDpParentCode,localBaseUom,primaryPlanningCode,localMaterialNumber
                 </columns>
                 <relations>
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">

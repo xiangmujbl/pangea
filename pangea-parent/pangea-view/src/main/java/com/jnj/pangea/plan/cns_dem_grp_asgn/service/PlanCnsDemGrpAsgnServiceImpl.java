@@ -16,7 +16,6 @@ public class PlanCnsDemGrpAsgnServiceImpl implements ICommonService {
         return instance;
     }
 
-
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
@@ -24,7 +23,6 @@ public class PlanCnsDemGrpAsgnServiceImpl implements ICommonService {
         EmsCustomerGroupEntity customerGroupEntity = (EmsCustomerGroupEntity) o;
 
         PlanCnsDemGrpAsgnBo cnsDemGrpAsgnBo = new PlanCnsDemGrpAsgnBo();
-        // TODO add logic
         cnsDemGrpAsgnBo.setSourceSystem(customerGroupEntity.getSourceSystem());
         cnsDemGrpAsgnBo.setCustomerShipTo(customerGroupEntity.getCustomerShipTo());
         cnsDemGrpAsgnBo.setSubFranchise(customerGroupEntity.getSubFranchise());

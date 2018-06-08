@@ -5,26 +5,26 @@ import com.jnj.pangea.common.BaseBo;
 
 public class OMPGdmCountryBo extends BaseBo {
 
-    private String countryID;
+    private String countryId;
     private String activeFCTERP;
     private String activeOPRERP;
     private String activeSOPERP;
     private String countryDescription;
-    private String MRC;
+    private String mrc;
 
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("countryID", this.countryID)
+                .makeJsonObject("countryId", this.countryId)
                 .toJsonString();
     }
 
-    public String getCountryID() {
-        return countryID;
+    public String getCountryId() {
+        return countryId;
     }
 
-    public void setCountryID(String countryID) {
-        this.countryID = countryID;
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
     }
 
     public String getActiveFCTERP() {
@@ -59,11 +59,11 @@ public class OMPGdmCountryBo extends BaseBo {
         this.countryDescription = countryDescription;
     }
 
-    public String getMRC() {
-        return MRC;
+    public String getMrc() {
+        return mrc;
     }
 
-    public void setMRC(String MRC) {
-        this.MRC = MRC;
+    public void setMrc(String mrc) {
+        this.mrc = mrc;
     }
 }

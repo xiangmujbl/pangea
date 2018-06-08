@@ -15,7 +15,6 @@ public class GDMProductUnitConversionController extends CommonController {
 
     @Override
     public ResultObject process(RawDataEvent raw) {
-        LogUtil.getCoreLog().info("raw:{}",raw.getValue());
         return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), EDMMaterialGlobalV1Entity.class), null);
     }
 }

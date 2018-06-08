@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-511
-Feature: EDMMaterialAUOM-Curation
+Feature: EDMMaterialAUOM AEAZ-511
 
   Scenario: Full Load curation
     #  1. test get sourceSystem from source_system_v1 (rule T1)
@@ -39,7 +39,10 @@ Feature: EDMMaterialAUOM-Curation
 
     And I compare the number of records between "/project_one/marm" and "/edm/material_auom_v1,/plan/edm_failed_data"
 
-    And I delete the test data
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/material_auom_v1"
+
     And I will remove all data with region "/pangea/edm_failed_data"

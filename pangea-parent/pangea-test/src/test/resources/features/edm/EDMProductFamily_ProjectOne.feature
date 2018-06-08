@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-1275
-Feature: EDMProductFamily
+Feature: EDMProductFamily AEAZ-1275
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation
@@ -25,7 +25,11 @@ Feature: EDMProductFamily
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
     And I compare the number of records between "/ngems/product_family_v1" and "/edm/product_family_v1,/plan/edm_failed_data"
-    And I delete the test data
+
+  Scenario: delete all test data
+
+    Then I delete the test data
 
     And I will remove all data with region "/edm/product_family_v1"
+
     And I will remove all data with region "/plan/edm_failed_data"

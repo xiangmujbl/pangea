@@ -1,34 +1,24 @@
 <adf-curation>
-    <curation mainRegion="/plan/cns_prod_country_aff" viewRegion="/omp/product_country" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.product_country.controller.GDMProductCountryController">
+    <curation mainRegion="/plan/cns_prod_cty_affl" viewRegion="/omp/product_country" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.product_country.controller.GDMProductCountryController"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_product_country" >
         <regions>
 
-            <region path="/plan/cns_prod_country_aff">
-                <columns>
-                    sourceSystem,dpParentCode,country,productClassification,productStatus,dpSegmentation,dpPlanner,rootSize,countryGroup
-                </columns>
+            <region path="/plan/cns_prod_cty_affl">
+                <columns>sourceSystem,dpParentCode,country,prodClassification,prodStatus,ovrPrdClass,ovrPrdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp</columns>
                 <relations>
-                    country_v1-localCountry = cns_prod_country_aff-country
-                    <relation path="/edm/country_v1">
-                        <expression>
-                            localCountry=/plan/cns_prod_country_aff.country
-                        </expression>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>localParentCode = /plan/cns_prod_cty_affl.dpParentCode</expression>
                     </relation>
                 </relations>
             </region>
-
-            <region path="/edm/country_v1">
-                <columns>
-                    localCountry,countryCode
-                </columns>
-            </region>
-
             <region path="/omp/product_country">
-                <columns>
-                    uniqueId,activeFcterp,countryGroup,countryId,dpPlannerId,dpSegmentation,productClassification,productId,productStatus,rootSize,segmentation
-                </columns>
+                <columns>uniqueId,activeFCTERP,countryGroup,countryId,dpPlannerId,dpSegmentation,productClassification,productId,productStatus,rootSize,segmentation</columns>
             </region>
 
+            <region path="/plan/cns_material_plan_status">
+                <columns>dpRelevant,localParentCode</columns>
+            </region>
         </regions>
     </curation>
 </adf-curation>

@@ -4,79 +4,63 @@
         <regions>
 
             <region path="/edm/material_global_v1">
-                <columns>
-                    sourceSystem,localMaterialNumber,localDPParentCode,localBaseUom
-                </columns>
+                <columns>sourceSystem,localMaterialNumber,localDpParentCode,localBaseUom</columns>
                 <relations>
-                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
-                        <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
-                    </relation>
                     <relation path="/plan/cns_fin_plan_qty" isPrimaryKey="false">
-                        <expression>
-                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber,
-                            unitId=/edm/material_global_v1.localBaseUom.
-                        </expression>
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
                     </relation>
                     <relation path="/plan/cns_fin_plan_val" isPrimaryKey="false">
                         <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
                     </relation>
-                    <relation path="/edm/material_auom_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression>attribute=/edm/material_global_v1.sourceSystem,sourceSystem=/edm/material_global_v1.sourceSystem</expression>
                     </relation>
+
                 </relations>
             </region>
 
             <region path="/plan/cns_fin_plan_qty">
-                <columns>
-                    localMaterialNumber,country,currency,unitId,quantity
-                </columns>
+                <columns>localMaterialNumber,identifier,country,unitId,quantity,yearMonth</columns>
                 <relations>
                     <relation path="/edm/country_v1" isPrimaryKey="false">
-                        <expression>localCountry = /plan/cns_fin_plan_qty.country</expression>
+                        <expression>localCountry=/plan/cns_fin_plan_qty.country</expression>
                     </relation>
-                    <relation path="/edm/currency_v1" isPrimaryKey="false">
-                        <expression>localCurrency = /plan/cns_fin_plan_qty.currency</expression>
-                    </relation>
-                    <relation path="/edm/material_auom_v1" isPrimaryKey="false">
-                        <expression>localAuom = /plan/cns_fin_plan_qty.unitId</expression>
+                    <relation path="/edm/jnj_calender_v1" isPrimaryKey="false">
+                        <expression>fiscalPeriod=/plan/cns_fin_plan_qty.yearMonth</expression>
                     </relation>
                 </relations>
             </region>
 
-            <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
-                </columns>
-            </region>
-
             <region path="/plan/cns_fin_plan_val">
-                <columns>
-                    localMaterialNumber,value
-                </columns>
-            </region>
-
-            <region path="/edm/material_auom_v1">
-                <columns>
-                    localMaterialNumber,localAuom,localNumerator,localDenominator
-                </columns>
+                <columns>localMaterialNumber,identifier,value,yearMonth,currency</columns>
+                <relations>
+                <relation path="/edm/jnj_calender_v1" isPrimaryKey="false">
+                    <expression>fiscalPeriod=/plan/cns_fin_plan_val.yearMonth</expression>
+                </relation>
+                    <relation path="/edm/currency_v1" isPrimaryKey="false">
+                        <expression>localCurrency=/plan/cns_fin_plan_val.currency</expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/edm/country_v1">
-                <columns>
-                    sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion
-                </columns>
+                <columns>sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion</columns>
             </region>
 
             <region path="/edm/currency_v1">
-                <columns>
-                    sourceSystem,localCurrency,currencyCode,currencyName,isoNumeric
-                </columns>
+                <columns>sourceSystem,localCurrency,currencyCode,currencyName,isoNumeric</columns>
+            </region>
+
+            <region path="/plan/cns_plan_parameter">
+                <columns>attribute,dataObject,parameter,parameterValue,sourceSystem</columns>
+            </region>
+
+            <region path="/edm/jnj_calender_v1">
+                <columns>calWeek,fiscalPeriod,noOfweek,weekFromDate,weekToDate</columns>
             </region>
 
             <region path="/omp/gdm_fpb">
-                <columns>
-                    fpbId,countryId,currencyId,dueDate,fromDueDate,productId,value,volume
-                </columns>
+                <columns>fpbId,countryId,currencyId,dueDate,fromDueDate,productId,value,volume</columns>
             </region>
 
         </regions>

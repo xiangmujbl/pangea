@@ -1,7 +1,5 @@
 package com.jnj.pangea.edm.material.type.service;
 
-import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.entity.ems.EmsFMdmMaterialTypesEntity;
 import com.jnj.pangea.common.service.ICommonService;
@@ -24,30 +22,10 @@ public class EDMMaterialTypeServiceImpl implements ICommonService {
 
         EDMMaterialTypeBo materialTypemBo = new EDMMaterialTypeBo();
 
-        String zSourceSystem = fMdmMaterialTypesEntity.getzSourceSystem();
-        if (IConstant.VALUE.EMS.equals(zSourceSystem)){
-            materialTypemBo.setMaterialType(fMdmMaterialTypesEntity.getMdmCode());
-            materialTypemBo.setMaterialTypeName(fMdmMaterialTypesEntity.getMdmName());
-            resultObject.setBaseBo(materialTypemBo);
-        } else {
-            FailData failData = writeFailDataToRegion(fMdmMaterialTypesEntity, "T1", "z_source_system value is not [EMS]");
-            resultObject.setFailData(failData);
-        }
-        return resultObject;
-    }
+        materialTypemBo.setMaterialType(fMdmMaterialTypesEntity.getMdmCode());
+        materialTypemBo.setMaterialTypeName(fMdmMaterialTypesEntity.getMdmName());
+        resultObject.setBaseBo(materialTypemBo);
 
-    private FailData writeFailDataToRegion(EmsFMdmMaterialTypesEntity mainData, String ruleCode, String errorValue) {
-        FailData failData = new FailData();
-        failData.setFunctionalArea("DP");
-        failData.setInterfaceID("EDMMaterialType");
-        failData.setErrorCode(ruleCode);
-        failData.setSourceSystem("EMS");
-        failData.setKey1(mainData.getzSourceSystem());
-        failData.setKey2(mainData.getMdmCode());
-        failData.setKey3(mainData.getMdmName());
-        failData.setKey4("");
-        failData.setKey5("");
-        failData.setErrorValue(errorValue);
-        return failData;
+        return resultObject;
     }
 }

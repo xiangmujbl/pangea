@@ -1,10 +1,34 @@
-/.idea/
-*.iml
-target/ 
-.DS_Store 
+#HIDDEN FILES
+.idea
+.DS_Store
+
+#DIRECTORIES
+target/
 /pangea-parent/pangea-test/src/test/resources/jar/
 /pangea-parent/pangea-test/src/test/resources/xml/
-/pangea-parent/pangea-test/target/
-/pangea-parent/pangea-view/target/
-c:/
+/pangea-parent/pangea-test/c:/
 
+#FILE TYPES
+*.ipr
+*.iml
+
+pangea-parent/pangea-test/src/test/resources/jar/pangea-view\.jar
+pangea-parent/pangea-parent\.iws
+/pangea-parent/pangea-test/*.tsv
+pangea-parent/pangea-view/target/
+
+*.class
+
+pangea-parent/pangea-test/target/classes/
+
+pangea-parent/pangea-parent\.ipr
+
+pangea-parent/pangea-parent\.iws
+
+*.pb
+
+pangea-parent/pangea-view/target/
+
+*.ipr
+
+*.iws

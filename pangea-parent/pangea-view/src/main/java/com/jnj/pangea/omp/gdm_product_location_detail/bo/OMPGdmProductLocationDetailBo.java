@@ -6,8 +6,8 @@ import com.jnj.pangea.common.BaseBo;
 public class OMPGdmProductLocationDetailBo extends BaseBo {
 
     private String productLocationDetailId;
-    private String activeOprerp;
-    private String activeSoperp;
+    private String activeOPRERP;
+    private String activeSOPERP;
     private String CLASS;
     private String comments;
     private String description;
@@ -16,7 +16,6 @@ public class OMPGdmProductLocationDetailBo extends BaseBo {
     private String unit;
     private String value;
 
-    // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
@@ -32,20 +31,20 @@ public class OMPGdmProductLocationDetailBo extends BaseBo {
         this.productLocationDetailId = productLocationDetailId;
     }
 
-    public String getActiveOprerp() {
-        return this.activeOprerp;
+    public String getActiveOPRERP() {
+        return activeOPRERP;
     }
 
-    public void setActiveOprerp(String activeOprerp) {
-        this.activeOprerp = activeOprerp;
+    public void setActiveOPRERP(String activeOPRERP) {
+        this.activeOPRERP = activeOPRERP;
     }
 
-    public String getActiveSoperp() {
-        return this.activeSoperp;
+    public String getActiveSOPERP() {
+        return activeSOPERP;
     }
 
-    public void setActiveSoperp(String activeSoperp) {
-        this.activeSoperp = activeSoperp;
+    public void setActiveSOPERP(String activeSOPERP) {
+        this.activeSOPERP = activeSOPERP;
     }
 
     public String getCLASS() {

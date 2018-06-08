@@ -4,9 +4,7 @@
         <regions>
 
             <region path="/project_one/mbew">
-                <columns>
-                    matnr,bwkey,lvorm,vprsv,stprs,peinh,verpr
-                </columns>
+                <columns>matnr,bwkey,lvorm,vprsv,stprs,peinh,verpr</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="true">
                         <expression></expression>
@@ -18,21 +16,15 @@
             </region>
 
             <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
-                </columns>
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
 
             <region path="/edm/plant_v1">
-                <columns>
-                    sourceSystem,localPlant,localPlantName,plant,localPlanningRelevant,localCountry,country,site,localPlantType,plantType,localCurrency,region
-                </columns>
+                <columns>sourceSystem,localPlant,localPlantName,plant,localPlanningRelevant,localCountry,country,site,localPlantType,plantType,localCurrency,region</columns>
             </region>
 
             <region path="/edm/mat_plant_fi_v1">
-                <columns>
-                    sourceSystem,localMaterialNumber,localPlant,localDeleIndicator,plant,priceControl,localStandardPrice,localPriceUnit,localMvp
-                </columns>
+                <columns>sourceSystem,localMaterialNumber,localPlant,localDeleIndicator,plant,priceControl,localStandardPrice,localPriceUnit,localMvp</columns>
             </region>
 
         </regions>

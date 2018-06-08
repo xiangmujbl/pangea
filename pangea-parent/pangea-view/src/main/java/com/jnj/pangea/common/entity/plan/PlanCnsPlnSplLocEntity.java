@@ -7,25 +7,27 @@ import java.util.Map;
 public class PlanCnsPlnSplLocEntity extends CommonEntity {
 
     private String sourceSystem;
-    private String vendorCustomer;
+    private String vendorOrCustomer;
     private String localNumber;
     private String localCountry;
     private String localCurrency;
     private String localName;
     private String planLocTypeId;
     private String localRegion;
+    private String localPlant;
 
     public PlanCnsPlnSplLocEntity(Map<String, Object> map) {
         super(map);
 
         setSourceSystem((String) map.get("sourceSystem"));
-        setVendorCustomer((String) map.get("vendorCustomer"));
+        setVendorOrCustomer((String) map.get("vendorOrCustomer"));
         setLocalNumber((String) map.get("localNumber"));
         setLocalCountry((String) map.get("localCountry"));
         setLocalCurrency((String) map.get("localCurrency"));
         setLocalName((String) map.get("localName"));
         setPlanLocTypeId((String) map.get("planLocTypeId"));
         setLocalRegion((String) map.get("localRegion"));
+        setLocalPlant((String) map.get("localPlant"));
     }
 
     public String getSourceSystem() {
@@ -36,12 +38,12 @@ public class PlanCnsPlnSplLocEntity extends CommonEntity {
         this.sourceSystem = sourceSystem;
     }
 
-    public String getVendorCustomer() {
-        return this.vendorCustomer;
+    public String getVendorOrCustomer() {
+        return vendorOrCustomer;
     }
 
-    public void setVendorCustomer(String vendorCustomer) {
-        this.vendorCustomer = vendorCustomer;
+    public void setVendorOrCustomer(String vendorOrCustomer) {
+        this.vendorOrCustomer = vendorOrCustomer;
     }
 
     public String getLocalCountry() {
@@ -92,4 +94,11 @@ public class PlanCnsPlnSplLocEntity extends CommonEntity {
         this.localRegion = localRegion;
     }
 
+    public String getLocalPlant() {
+        return localPlant;
+    }
+
+    public void setLocalPlant(String localPlant) {
+        this.localPlant = localPlant;
+    }
 }

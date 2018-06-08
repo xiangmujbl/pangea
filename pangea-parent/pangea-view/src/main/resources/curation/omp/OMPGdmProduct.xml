@@ -1,18 +1,17 @@
 <adf-curation>
-    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/product" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.product.controller.OMPProductController"
-              writeTo="kafka" topic="gdm_omp_product">
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_product" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_product.controller.OMPGdmProductController"
+              writeTo="all" topic="PANGEA_V1_gdm_product">
         <regions>
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    localDPParentCode,primaryPlanningCode,refDescription,refDescription,materialGroup,productFamily,form ,category,subBrand,brand,franchise,globalBusinessUnit,refDescription,localManufacturingTechnology
+                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
                 </columns>
                 <relations>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>
-                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber,
-                            localPlant=/edm/material_global_v1.localPlant
+                            sourceSystem=/edm/material_global_v1.sourceSystem,localMaterialNumber=/edm/material_global_v1.localMaterialNumber
                         </expression>
                     </relation>
                     <relation path="/edm/product_family_v1" isPrimaryKey="false">
@@ -33,7 +32,7 @@
                     <relation path="/edm/franchise_v1" isPrimaryKey="false">
                         <expression>franchise=/edm/material_global_v1.franchise</expression>
                     </relation>
-                    <relation path="/edm/global_base_unit_v1" isPrimaryKey="false">
+                    <relation path="/edm/global_business_unit_v1" isPrimaryKey="false">
                         <expression>gbu=/edm/material_global_v1.globalBusinessUnit</expression>
                     </relation>
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
@@ -42,6 +41,7 @@
                 </relations>
 
             </region>
+
             <region path="/plan/cns_material_plan_status">
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
@@ -77,21 +77,21 @@
                     franchise,franchiseDescription
                 </columns>
             </region>
-            <region path="/edm/global_base_unit_v1">
+            <region path="/edm/global_business_unit_v1">
                 <columns>
                     gbu,gbuName
                 </columns>
             </region>
             <region path="/plan/cns_plan_unit">
                 <columns>
-                    sourceSystem,localUom,localUomName,plantFlag,unit
+                    sourceSystem,localUom,localUomName,planFlag,unit
                 </columns>
             </region>
 
 
-            <region path="/omp/product">
+            <region path="/omp/gdm_product">
                 <columns>
-                    productId,active,activeFcterp,activeOprerp,activeSoperp,color,description,groes,isroot,issku,label,matkl,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,prdha,shortDescription,sourceLocationId,subFranchise,technology,unitId
+                    productId,active,activeFCTERP,activeOPRERP,activeSOPERP,color,description,groes,isRoot,isSku,label,matkl,planningHierarchy1,planningHierarchy1Desc,planningHierarchy2,planningHierarchy2Desc,planningHierarchy3,planningHierarchy3Desc,planningHierarchy4,planningHierarchy4Desc,planningHierarchy5,planningHierarchy5Desc,planningHierarchy6,planningHierarchy6Desc,planningHierarchy7,planningHierarchy7Desc,prdha,shortDescription,sourceLocationId,subFranchise,technology,unitId
                 </columns>
             </region>
 

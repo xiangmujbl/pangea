@@ -1,40 +1,38 @@
-@pangea_test
+@pangea_test @AEAZ-3680
 Feature:  OMPGdmLocationDetail-Curation
 
-  Scenario: Full Load curation
+  Scenario: Full Load curation AEAZ-3680
 
     Given I import "/plan/cns_plant_attr" by keyFields "sourceSystem,localPlant"
-      | sourceSystem | localPlant | localPlantName | localPlantType | plant | plantType | localPlanningRelevant | planLocTypeId | planLocTypeDesc | locationAttribute1Desc | locationAttribute1Value | locationAttribute2Desc | locationAttribute2Value | locationAttribute3Desc | locationAttribute3Value | locationAttribute4Desc | locationAttribute4Value |
-      | CONS_LATAM   | BR12       | A              | 00             |       | 00        | Y                     | 00000000001   | DESC01          | ATTRIB1                | VALUE1                  | ATTRIB2                | VALUE2                  | ATTRIB3                | VALUE3                  | ATTRIB4                | VALUE4                  |
-      | CONS_LATAM   | BR13       | A              | 00             |       | 00        | Y                     | 00000000001   | DESC02          | GLBATTR1               | GLBVAL1                 | GLBATTR2               | GLBVAL2                 | GLBATTR3               | GLBVAL3                 | GLBATTR4               | GLBVAL4                 |
-
+      | sourceSystem | localPlant | localPlantName               | localPlantType | plant | plantType               | localPlanningRelevant | planLocTypeId | planLocTypeDesc             | locationAttribute1Desc | locationAttribute1Value | locationAttribute2Desc | locationAttribute2Value | locationAttribute3Desc | locationAttribute3Value | locationAttribute4Desc | locationAttribute4Value |
+      | CONS_LATAM   | BR12       |J&J BR São José Campos - Indus|                |BR59   | MP, Manufacturing Plant | X                     | IM            | Internal Manufacturing Plant| Country                | Brazil                  | Volume                 | High                    |                        |                         |                        |                         |
+      | CONS_LATAM   | CO02       |J&J Colombia - S&M (CO02)     | DC             |CO08   | DC, Distribution Center | X                     | DC            | Distribution Center         | Country                | Colombia                | Volume                 | Low                     |                        |                         |                        |                         |
+      | CONS         | BR14       | A                            | 00             |       | 00                      | Y                     | 00000000001   | DESC03                      | GLBATTR1B              | GLBVAL1B                | GLBATTR2B              | GLBVAL2B                | GLBATTR3B              | GLBVAL3B                | GLBATTR4B              | GLBVAL4B                |
     And I wait "/plan/cns_plant_attr" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "LocationDetail.tsv"
+    Then A file is found on sink application with name "GDMLocationDetail.tsv"
 
-    Then I check file data for filename "LocationDetail.tsv" by keyFields "locationDetailId"
-      | locationDetailId                     | activeOprerp | activeSoperp | CLASS | comments | description | locationid      | name     | unit | value   |
-      | CONS_LATAM_BR12/PGA/ATTRIB1/VALUE1   | YES          | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB1  |      | VALUE1  |
-      | CONS_LATAM_BR12/PGA/ATTRIB2/VALUE2   | YES          | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB2  |      | VALUE2  |
-      | CONS_LATAM_BR12/PGA/ATTRIB3/VALUE3   | YES          | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB3  |      | VALUE3  |
-      | CONS_LATAM_BR12/PGA/ATTRIB4/VALUE4   | YES          | YES          | PGA   |          |             | CONS_LATAM_BR12 | ATTRIB4  |      | VALUE4  |
-      | CONS_LATAM_BR13/PGA/GLBATTR1/GLBVAL1 | YES          | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR1 |      | GLBVAL1 |
-      | CONS_LATAM_BR13/PGA/GLBATTR2/GLBVAL2 | YES          | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR2 |      | GLBVAL2 |
-      | CONS_LATAM_BR13/PGA/GLBATTR3/GLBVAL3 | YES          | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR3 |      | GLBVAL3 |
-      | CONS_LATAM_BR13/PGA/GLBATTR4/GLBVAL4 | YES          | YES          | PGA   |          |             | CONS_LATAM_BR13 | GLBATTR4 |      | GLBVAL4 |
+    Then I check file data for filename "GDMLocationDetail.tsv" by keyFields "locationDetailId"
+      | locationDetailId                    | activeOPRERP | activeSOPERP  | CLASS | comments | description | locationId      | name       | unit | value    |
+      | CONS_LATAM_BR12/PGA/Country/Brazil  | YES          | NO            | PGA   |          | Pangea      | CONS_LATAM_BR12 | Country    |      | Brazil   |
+      | CONS_LATAM_BR12/PGA/Volume/High     | YES          | NO            | PGA   |          | Pangea      | CONS_LATAM_BR12 | Volume     |      | High     |
+      | CONS_LATAM_CO02/PGA/Country/Colombia| YES          | NO            | PGA   |          | Pangea      | CONS_LATAM_CO02 | Country    |      | Colombia |
+      | CONS_LATAM_CO02/PGA/Volume/Low      | YES          | NO            | PGA   |          | Pangea      | CONS_LATAM_CO02 | Volume     |      | Low      |
+      | CONS_BR14//GLBATTR1B/GLBVAL1B       | YES          | NO            |       |          | Pangea      | CONS_BR14       | GLBATTR1B  |      | GLBVAL1B |
+      | CONS_BR14//GLBATTR2B/GLBVAL2B       | YES          | NO            |       |          | Pangea      | CONS_BR14       | GLBATTR2B  |      | GLBVAL2B |
+      | CONS_BR14//GLBATTR3B/GLBVAL3B       | YES          | NO            |       |          | Pangea      | CONS_BR14       | GLBATTR3B  |      | GLBVAL3B |
+      | CONS_BR14//GLBATTR4B/GLBVAL4B       | YES          | NO            |       |          | Pangea      | CONS_BR14       | GLBATTR4B  |      | GLBVAL4B |
 
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-
-#    And I compare the number of records between "/plan/cns_plant_attr,/plan/cns_plant_attr,/plan/cns_plant_attr,/plan/cns_plant_attr" and "/omp/gdm_location_detail,/plan/edm_failed_data"
+#    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+#      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
     And I delete the test data
 
     And I will remove all data with region "/omp/gdm_location_detail"
 
-    And I will remove all data with region "/plan/cns_plant_attr"
+    And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "LocationDetail.tsv"
+    And I will remove the test file on sink application "GDMLocationDetail.tsv"
 

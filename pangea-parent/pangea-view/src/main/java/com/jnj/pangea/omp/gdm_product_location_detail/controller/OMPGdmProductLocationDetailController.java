@@ -22,17 +22,6 @@ public class OMPGdmProductLocationDetailController extends BaseController {
 
     private OMPGdmProductLocationDetailServiceImpl service = OMPGdmProductLocationDetailServiceImpl.getInstance();
 
-//    @Override
-//    public ResultObject process(RawDataEvent raw) {
-//        return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), PlanCnsMaterialPlanStatusEntity.class), null);
-//    }
-
-//    @Override
-//    public List<ViewResultItem> process(List<RawDataEvent> list) {
-//
-//        return null;
-//    }
-
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
@@ -53,7 +42,7 @@ public class OMPGdmProductLocationDetailController extends BaseController {
                 } else {
                     if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

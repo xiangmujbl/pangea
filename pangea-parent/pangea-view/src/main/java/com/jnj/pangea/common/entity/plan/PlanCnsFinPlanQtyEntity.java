@@ -7,19 +7,33 @@ import java.util.Map;
 public class PlanCnsFinPlanQtyEntity extends CommonEntity {
 
     private String localMaterialNumber;
+    private String identifier;
     private String country;
     private String currency;
     private String unitId;
     private String quantity;
 
+    public String getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
+
+    private String yearMonth;
+
+
     public PlanCnsFinPlanQtyEntity(Map<String, Object> map) {
         super(map);
 
         setLocalMaterialNumber((String) map.get("localMaterialNumber"));
+        setIdentifier((String) map.get("identifier"));
         setCountry((String) map.get("country"));
         setCurrency((String) map.get("currency"));
         setUnitId((String) map.get("unitId"));
         setQuantity((String) map.get("quantity"));
+        setYearMonth((String) map.get("yearMonth"));
     }
 
     public String getLocalMaterialNumber() {
@@ -28,6 +42,14 @@ public class PlanCnsFinPlanQtyEntity extends CommonEntity {
 
     public void setLocalMaterialNumber(String localMaterialNumber) {
         this.localMaterialNumber = localMaterialNumber;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getCountry() {

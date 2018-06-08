@@ -5,58 +5,57 @@ import com.jnj.pangea.common.BaseBo;
 
 public class OMPGdmLocationTypeBo extends BaseBo {
 
-    private String locationTypeId;
-    private String activeFprerp;
-    private String activeOprerp;
-    private String activeSoperp;
-    private String label;
+    private String LocationTypeId;
+    private String ActiveFCTERP;
+    private String ActiveOPRERP;
+    private String ActiveSOPERP;
+    private String LABEL;
 
     // TODO add keys
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("locationTypeId", this.locationTypeId)
+                .makeJsonObject("locationTypeId", this.LocationTypeId)
                 .toJsonString();
     }
 
     public String getLocationTypeId() {
-        return this.locationTypeId;
+        return this.LocationTypeId;
     }
 
     public void setLocationTypeId(String locationTypeId) {
-        this.locationTypeId = locationTypeId;
+        this.LocationTypeId = locationTypeId;
     }
 
-    public String getActiveFprerp() {
-        return this.activeFprerp;
+    public String getActiveFCTERP() {
+        return ActiveFCTERP;
     }
 
-    public void setActiveFprerp(String activeFprerp) {
-        this.activeFprerp = activeFprerp;
+    public void setActiveFCTERP(String activeFCTERP) {
+        ActiveFCTERP = activeFCTERP;
     }
 
-    public String getActiveOprerp() {
-        return this.activeOprerp;
+    public String getActiveOPRERP() {
+        return ActiveOPRERP;
     }
 
-    public void setActiveOprerp(String activeOprerp) {
-        this.activeOprerp = activeOprerp;
+    public void setActiveOPRERP(String activeOPRERP) {
+        ActiveOPRERP = activeOPRERP;
     }
 
-    public String getActiveSoperp() {
-        return this.activeSoperp;
+    public String getActiveSOPERP() {
+        return ActiveSOPERP;
     }
 
-    public void setActiveSoperp(String activeSoperp) {
-        this.activeSoperp = activeSoperp;
+    public void setActiveSOPERP(String activeSOPERP) {
+        ActiveSOPERP = activeSOPERP;
     }
 
-    public String getLabel() {
-        return this.label;
+    public String getLABEL() {
+        return LABEL;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setLABEL(String LABEL) {
+        this.LABEL = LABEL;
     }
-
 }
