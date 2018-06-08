@@ -2,9 +2,15 @@ package com.jnj.pangea.omp.gdm_stock.service;
 
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseOrderOAV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsClustersEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
 import com.jnj.pangea.omp.gdm_subcluster.bo.OMPGdmSubClusterBo;
@@ -25,6 +31,9 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     }
 
     EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
+    PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
+    EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
+    PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -84,6 +93,58 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             }
 
             //PO6
+            PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1(
+                    "purchase_order_oa_v1",
+                    purchaseOrderOAV1Entity.getSourceSystem(),
+                    "plntCd",
+                    purchaseOrderOAV1Entity.getPoTypeCd());
+            if(cnsPlanObjectFilterEntity == null) {
+                cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1(
+                        "purchase_order_oa_v1",
+                        purchaseOrderOAV1Entity.getSourceSystem(),
+                        "prchsngOrgNum",
+                        purchaseOrderOAV1Entity.getPrchsngOrgNum());
+            }
+
+            if(cnsPlanObjectFilterEntity != null) {
+                if((purchaseOrderOAV1Entity.getPoTypeCd().equals(cnsPlanObjectFilterEntity.getSourceObjectAttribute2Value())
+                   || purchaseOrderOAV1Entity.getPoTypeCd().equals(cnsPlanObjectFilterEntity.getSourceObjectAttribute2()))
+                   || purchaseOrderOAV1Entity.getPrchsngOrgNum().equals(cnsPlanObjectFilterEntity.getSourceObjectAttribute2Value())) {
+                    if(purchaseOrderOAV1Entity.getDelInd().isEmpty()) {
+                        stockBo.setErpOrderId(purchaseOrderOAV1Entity.getPoNum());
+
+                        //PO7
+                        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(purchaseOrderOAV1Entity.getSourceSystem(), purchaseOrderOAV1Entity.getPlntCd());
+                        if(plantV1Entity != null) {
+                            if(plantV1Entity.getLocalPlanningRelevant().equals("X")) {
+                                stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem() + "_" + purchaseOrderOAV1Entity.getPlntCd());
+
+                                //PO8
+                                if(purchaseOrderOAV1Entity.getLineItemTypeCd().equals("2") || purchaseOrderOAV1Entity.getLineItemTypeCd().equals("K")) {
+                                    stockBo.setConsignment("YES");
+                                } else{
+                                    stockBo.setConsignment("NO");
+                                }
+
+                                //PO9
+                                PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
+                                if(cnsMaterialPlanStatusEntity != null) {
+                                    if(cnsMaterialPlanStatusEntity.getSpRelevant().equals("X") || cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals("X")) {
+                                        if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
+                                            stockBo.setProductId(edmMaterialGlobalV1Entity.getMaterialNumber());
+                                        } else {
+                                            stockBo.setProductId(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
+                                        }
+
+                                        //PO10
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         resultObject.setBaseBo(stockBo);
