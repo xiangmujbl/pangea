@@ -168,6 +168,8 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
 
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete
 
+    When I submit task with xml file "xml/omp/GDMStockPurchaseOrder_aggr.xml"
+
     When I submit task with xml file "xml/omp/OMPGdmSupply.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMStock.tsv"
