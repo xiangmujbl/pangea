@@ -99,6 +99,7 @@ public interface IConstant {
         String EDM_UNIT_OF_MEASURE_V1 = "/edm/unit_of_measure_v1";
         String PROJECT_ONE_LIKP = "/project_one/likp";
         String PROJECT_ONE_LIPS = "/project_one/lips";
+        String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
     }
 
     interface EDM_JNJ_CALENDAR_V1 {
@@ -403,6 +404,16 @@ public interface IConstant {
         String GBU = "gbu";
     }
 
+    interface EDM_PURCHASE_ORDER_OA_V1 {
+        String PO_NUM = "poNum";
+        String PO_LINE_NBR = "poLineNbr";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String CNFRM_QTY = "cnfrmQty";
+        String EV_TYPE_CD = "evTypeCd";
+        String PLNTCD = "plntCd";
+        String PRCHSNG_ORG_NUM = "prchsngOrgNum";
+    }
+
     interface PLAN_CONS_TIME_DEP_XCHANGE {
         String UNIT_ID = "unitId";
         String FROM_CURRENCY ="fromCurrency";
@@ -600,6 +611,7 @@ public interface IConstant {
         String SPACE = " ";
         String CURRENCY = "CURRENCY";
         String ZERO = "0";
+        String ZEROZERO = "0.0";
         String BA = "BA";
         String FALSE = "FALSE";
         String COLON = ":";
@@ -631,7 +643,25 @@ public interface IConstant {
         String LESS_DAYS = "LessDays";
         String SEVEN = "7";
         String VENDOR_TRANSPORT = "VendorTransport";
+        String INTERNAL_TRANSPORT = "InternalTransport";
+        String EXTERNAL_TRANSPORT = "ExternalTransport";
         String DEFAULT = "DEFAULT";
+        String MOVEMENT = "movement";
+        String F = "F";
+        String L = "L";
+        String BE = "BE";
+        String LE = "LE";
+        String TWO_NUM = "2";
+        String THREE_NUM = "3";
+        String K = "K";
+        String EMPTY = "";
+        String NB = "NB";
+        String UB = "UB";
+        String ZLA = "ZLA";
+        String ZNB = "ZNB";
+        String SU = "SU";
+        String TR = "TR";
+        String DEFAULTSM = "Default";
     }
 
     interface FAILED {
