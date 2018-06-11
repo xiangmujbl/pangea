@@ -1,0 +1,236 @@
+<adf-curation executionClassName="com.jnj.pangea.GDMStock5PlannedOrder" failRegion="/plan/edm_fail_data">
+
+    <regions>
+        <region path="/edm/planned_order_v1" mainRegion="true">
+            <columns>matlNum,srcSysCd,mfgPlanOrdrDocId,planPlntCd,planOrdrEndDt</columns>
+            <relations>
+                <!--material_global_v1-->
+                <region path="/edm/material_global_v1" isPrimaryKey="true">
+                    <columns>localMaterialNumber,sourceSystem,primaryPlanningCode,materialNumber</columns>
+                    <expression>
+                        localMaterialNumber=/edm/planned_order_v1.matlNum,sourceSystem=/edm/planned_order_v1.srcSysCd
+                    </expression>
+                </region>
+                <!--plant_v1-->
+                <region path="/edm/plant_v1" isPrimaryKey="true">
+                    <columns>localPlant,sourceSystem,localPlanningRelevant</columns>
+                    <expression>
+                        localPlant=/edm/planned_order_v1.planPlntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
+                    </expression>
+                </region>
+
+            </relations>
+        </region>
+    </regions>
+
+    <methods>
+        <method name="joinMaterialGlobal" isPK="true" resultType="Map" path="/edm/material_global_v1">
+            <parameters>
+                <parameter name="localSourceSystem" value="matlNum" relationship="and"/>
+                <parameter name="sourceSystem" value="srcSysCd"/>
+            </parameters>
+        </method>
+    </methods>
+
+    <methods>
+        <method name="joinPlant" isPK="true" resultType="Map" path="/edm/plant_v1">
+            <parameters>
+                <parameter name="localPlant" value="planPlntCd" relationship="and"/>
+                <parameter name="sourceSystem" value="srcSysCd"/>
+            </parameters>
+        </method>
+    </methods>
+
+    <viewRegion name="/omp/gdm_stock">
+        <vars>
+            <var name="matlNum" value="matlNum"/>
+            <var name="srcSysCd" value="srcSysCd"/>
+            <var name="mfgPlanOrdrDocId" value="mfgPlanOrdrDocId"/>
+            <var name="planPlntCd" value="planPlntCd"/>
+            <var name="prdtnVersNum" value="prdtnVersNum"/>
+        </vars>
+        <columns>
+            <!-- PLO1
+            Concatenation of ProductId, ""/"", LocationId, ""/"", planned_order_v1-mfgPlanOrdrDocId of the Record
+            A) Product Id
+            Using (planned_order_v1-matlNum) = (material_global_v1-localMaterialNumber),   (planned_order_v1- srcSysCd) = (material_global_v1-sourceSystem)
+            find value of field (material_global_v1-primaryPlanningCode) and (material_global_V1-materialMumber)
+            If (material_global_v1-primaryPlanningCode) is Blank then use (material_global_v1-MaterialNumber)
+            ELSE Use (material_global_v1-primaryPlanningCode)
+            Below 2 lines are comments
+            If (material_global_v1-primaryPlanningCode) = (material_global_v1-MaterialNumber) use (material_global_v1-primaryPlanningCode)
+            If (material_global_v1-primaryPlanningCode) not same as (material_global_v1-MaterialNumber) then use (material_global_v1-primaryPlanningCode)
+
+            B) Location Id
+            Using value of (planned_order_v1- mfgPlanOrdrDocId)
+            Concatenate (planned_order_v1 - srcSysCd )+”_”+ (planned_order_v1planPlntCd)
+            Example CONS_LATAM_BR16
+
+            C) (planned_order_v1-mfgPlanOrdrDocId)
+            -->
+            <column name="stockId">
+                <ref method="joinMaterialGlobal" parameter="matlNum,srcSysCd" value="primaryPlanningCode,materialNumber"
+                     resultType="Map">
+                    <if test="StringUtils.isEmpty(materialNumber)">
+                        <set name="stockId"
+                             value="StringInner.join(primaryPlanningCode,'/',srcSysCd,'_',planPlntCd,'/',mfgPlanOrdrDocId)"/>
+                    </if>
+                    <else>
+                        <set name="stockId"
+                             value="StringInner.join(materialNumber,'/',srcSysCd,'_',planPlntCd,'/',mfgPlanOrdrDocId)"/>
+                    </else>
+                </ref>
+            </column>
+
+            <!-- PLO2	Default "YES" -->
+            <column name="active">
+                <set name="active" value="'YES'"/>
+            </column>
+            <column name="activeOPRERP">
+                <set name="activeOPRERP" value="'YES'"/>
+            </column>
+
+            <!-- PLO3	Send as "NO" -->
+            <column name="activeSOPERP">
+                <set name="activeSOPERP" value="'NO'"/>
+            </column>
+            <column name="consignment">
+                <set name="consignment" value="'NO'"/>
+            </column>
+
+            <!-- PLO4	Send as " " -->
+            <column name="batchId">
+                <set name="batchId" value="''"/>
+            </column>
+            <column name="inventoryLinkGroupId">
+                <set name="inventoryLinkGroupId" value="''"/>
+            </column>
+            <column name="vendorId">
+                <set name="vendorId" value="''"/>
+            </column>
+
+            <!-- PLO5	"Default = ""PA"" -->
+            <column name="certaintyId">
+                <set name="certaintyId" value="'PA'"/>
+            </column>
+
+            <!-- PLO6
+            Logic to filter the required Planned Order
+
+            check if (planned_order_ localPlanningScenario) = 000
+            if Value is not 000 then Skip the record from Output
+            ELES
+
+            Using (cns_plan_object_filter- sourceObjectTechName)  = (planned_order_v1) and (cns_plan_object_filter-sourceSystem) = source system derived as in StockId"" in Rule PLO1. (This may result in multiple records)
+            Check if record exists in  table for(cns_plan_object_filter- sourceObjectAttribute1) = planPlntCd from multiple records if resulted.
+            if No then skip
+            if Yes then pick up all values from field (cns_plan_object_filter- sourceObjectAttribute2) = planOrdrTypeCd and check if one of the values from (cns_plan_object_filter- sourceObjectAttribute2) is matching with( planned_order_v1-planOrdrTypeCd)
+            if No then Skip the record from Output File
+            if Yes then Planned Order Quantity = (planned_order_v1-mfgPlanOrdrDocId)
+            -->
+            <column name="erpOrderId">
+                <if test="localPlanningScenario=='000'">
+                    //TODO
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+
+            <!-- PLO7	Using (planned_order_v1-planPlntCd) = (Plant_v1-localPlant) and (planned_order_v1 - sourceSystem ) = (Plant_v1-sourceSystem)
+            check value of field (Plant_v1-localPlanningrelevant) = X
+            if no then skip the record from Output File
+            if Yes then
+            Concatenate (planned_order_v1 - sourceSystem )+”_”+ (planned_order_v1-planPlntCd)
+            Example CONS_LATAM_BR16
+            -->
+            <column name="locationId">
+                <ref method="joinPlant" parameter="planPlntCd,srcSysCd" value="localPlanningRelevant"
+                     resultType="Map">
+                    <if test="localPlanningRelevant=='X'">
+                        <set name="locationId"
+                             value="StringInner.join(srcSysCd,'_',planPlntCd)"/>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </ref>
+            </column>
+
+            <!-- PLO9	Using (planned_order_v1-matlNum) = (cns_material_plan_status_v1-localMaterialNumber),
+            (planned_order_v1-planPlntCd) = (cns_material_plan_status-localPlant),  (planned_order_v1-srcSysCd) = (cns_material_plan_status-sourceSystem)
+            check value of field (cns_material_plan_status-noPlanRelevant) = X
+
+            if No then skip record from adding in Output File
+            if Yes thenUsing (planned_order_v1-matlNum) = (material_global_v1-localMaterialNumber),  (planned_order_v1-srcSysCd) = (material_global_v1-sourceSystem)
+            find value of field (material_global_v1-primaryPlanningCode) and (material_global_V1-materialMumber)
+            If (material_global_v1-primaryPlanningCode) is Blank then use (material_global_v1-MaterialNumber)
+            ELSE Use (material_global_v1-primaryPlanningCode)
+            Below 2 lines are comments
+            If (material_global_v1-primaryPlanningCode) = (material_global_v1-MaterialNumber) use (material_global_v1-primaryPlanningCode)
+            If (material_global_v1-primaryPlanningCode) not same as (material_global_v1-MaterialNumber) then use (material_global_v1-primaryPlanningCode)
+            -->
+            <column name="productId">
+                //TODO
+            </column>
+
+            <!--PLO8	Concatenation of "planned_order_v1-prdtnVersNum","/", derived "ProductId","/", derived "LocationId"-->
+            <column name="processId">
+                <set name="processId"
+                     value="StringInner.join(prdtnVersNum,'/',productId,'/',locationId)"/>
+            </column>
+
+            <!-- PLO10	"Date in planned_order_v1 would be in format yyyy/mm/dd
+            Reformat (planned_order_v1-planOrdrEndDt) format as YYYY/MM/DD HH:NN""SS (HH:NN:SS populated as 00:00:00)"
+            -->
+            <column name="receiptDate">
+                <set name="receiptDate" value="DateInInner.dateToString(DateInInner.stringToDate(planOrdrEndDt),'yyyy/MM/dd')"/>
+            </column>
+
+            <!-- PLO11	"Derive StartDate = (planned_order_v1-planOrdrEndDt) + (planned_order_v1-grDaysLeadQty) Example 2018/05/31 + 10
+            date should be in format  YYYY/MM/DD HH:NN""SS (HH:NN:SS populated as 00:00:00) Example 2018/06/10
+            If above derived date falls on week ends then move the date to 1st Working day"
+            -->
+            <column name="startDate">
+                //TODO
+            </column>
+
+            <!--PLO12	Default as "movement"-->
+            <column name="stockType">
+                <set name="stockType" value="'movement'"/>
+            </column>
+
+            <!--POL13	Send as 0.0-->
+            <column name="blockedQuantity">
+                <set name="blockedQuantity" value="'0.0'"/>
+            </column>
+            <column name="qualityQuantity">
+                <set name="qualityQuantity" value="'0.0'"/>
+            </column>
+            <column name="restrictedQuantity">
+                <set name="restrictedQuantity" value="'0.0'"/>
+            </column>
+            <column name="returnsQuantity">
+                <set name="returnsQuantity" value="'0.0'"/>
+            </column>
+            <column name="transferQuantity">
+                <set name="transferQuantity" value="'0.0'"/>
+            </column>
+            <column name="unrestrictedQuantity">
+                <set name="unrestrictedQuantity" value="'0.0'"/>
+            </column>
+
+            <!--PLO14	Default "Production"-->
+            <column name="processTypeId">
+                <set name="processTypeId" value="'Production'"/>
+            </column>
+
+            <!--PLO15	send as "1980/01/01 ((HH:NN:SS populated as 00:00:00))-->
+            <column name="transitDate">
+                <set name="transitDate" value="'1980/01/01'"/>
+            </column>
+
+        </columns>
+    </viewRegion>
+
+</adf-curation>
