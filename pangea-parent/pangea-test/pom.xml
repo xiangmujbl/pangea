@@ -14,10 +14,15 @@
 
     <properties>
         <adf.version>0.3.04</adf.version>
-        <adf.compute.version>0.3.04-0.5</adf.compute.version>
+        <adf.compute.version>0.3.04-0.3-SNAPSHOT</adf.compute.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.jnj.adf</groupId>
+            <artifactId>adf-core</artifactId>
+            <version>${adf.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -33,11 +38,20 @@
             <artifactId>adf-compute-client</artifactId>
             <version>${adf.compute.version}</version>
         </dependency>
-
         <!--<dependency>-->
             <!--<groupId>com.jnj.adf</groupId>-->
-            <!--<artifactId>adf-test-framework</artifactId>-->
-            <!--<version>${adf.version}</version>-->
+            <!--<artifactId>adf-auto-curation</artifactId>-->
+            <!--<version>0.3.04-0.3</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.jnj.adf</groupId>-->
+            <!--<artifactId>adf-auto-deploy</artifactId>-->
+            <!--<version>0.3.04-0.3</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.jnj.adf</groupId>-->
+            <!--<artifactId>adf-auto-test</artifactId>-->
+            <!--<version>0.3.04-0.3</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>

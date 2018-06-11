@@ -6,6 +6,8 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 
+import java.util.List;
+
 public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
 
     private static EDMSourceSystemV1DaoImpl instance;
@@ -35,10 +37,13 @@ public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
         return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
     }
 
+    public List<EDMSourceSystemV1Entity> getListWithSourceSystemWithProjectOne() {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(IConstant.VALUE.PROJECT_ONE).toQueryString();
+        return queryForList(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
+    }
+
     public EDMSourceSystemV1Entity getEntityWithLocalSourceSystem(String localSourceSystem) {
-        if ("".equals(localSourceSystem)){
-            return null;
-        }
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(localSourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
     }
@@ -48,6 +53,12 @@ public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
             return null;
         }
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
+    }
+
+    public EDMSourceSystemV1Entity getEntityWithLocalSourceSystemAndSourceSystem(String localSourceSystem, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_SOURCE_SYSTEM_V1.LOCAL_SOURCE_SYSTEM).is(localSourceSystem)
+                .and(IConstant.EDM_SOURCE_SYSTEM_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
     }
 }

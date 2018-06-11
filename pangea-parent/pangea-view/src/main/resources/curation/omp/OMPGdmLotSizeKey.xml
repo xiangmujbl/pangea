@@ -13,8 +13,8 @@
             <region path="/omp/gdm_lot_size_key">
                 <columns>
                     lotSizeKey,
-                    activeOprerp,
-                    activeSoperp,
+                    activeOPRERP,
+                    activeSOPERP,
                     comments,
                     description,
                     period,

@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-2711
-Feature: OMPGdmRegion AEAZ-2711
+@pangea_test @AEAZ-3681
+Feature: OMPGdmRegion AEAZ-3681
 
   Scenario: Full Load curation
     # 1. get attributes from cns_plan_region

@@ -1,21 +1,24 @@
 package com.jnj.pangea.omp.gdm_product_unit_conversion.service;
 
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialAuomDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialAuomV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
-import com.jnj.pangea.common.entity.plan.CnsPlanUnitEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_product_unit_conversion.bo.GDMProductUnitConversionBo;
 import org.apache.commons.lang.StringUtils;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
-public class GDMProductUnitConversionServiceImpl implements ICommonService {
+public class GDMProductUnitConversionServiceImpl {
 
     private static GDMProductUnitConversionServiceImpl instance;
 
@@ -31,65 +34,144 @@ public class GDMProductUnitConversionServiceImpl implements ICommonService {
 
     private PlanCnsPlanUnitDaoImpl planCnsPlanUnitDao = PlanCnsPlanUnitDaoImpl.getInstance();
     private EDMMaterialAuomDaoImpl edmMaterialAuomDao = EDMMaterialAuomDaoImpl.getInstance();
+    private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
 
-    @Override
-    public ResultObject buildView(String key, Object o, Object o2) {
 
-        ResultObject resultObject = new ResultObject();
+    public List<ResultObject> buildView(String key, Object o, Object o2) {
+
+        List<ResultObject> resultObjectList = new ArrayList<>();
+
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
-        GDMProductUnitConversionBo gdmProductUnitConversionBo = new GDMProductUnitConversionBo();
-
-        processSystem(edmMaterialGlobalV1Entity, gdmProductUnitConversionBo);
-
-        String localBaseUOM = edmMaterialGlobalV1Entity.getLocalBaseUom();
-        if (StringUtils.isNotEmpty(localBaseUOM)) { //J1
-            PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUOM);
-            String gdmProductUnitConversionId = "";
-            if (StringUtils.isNotEmpty(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
-                gdmProductUnitConversionId += edmMaterialGlobalV1Entity.getPrimaryPlanningCode();
-            }
-            if (cnsPlanUnitEntity != null) {
-                if (StringUtils.isNotEmpty(cnsPlanUnitEntity.getUnit())) {
-                    gdmProductUnitConversionId += cnsPlanUnitEntity.getUnit();
-                }
-                if (!StringUtils.isEmpty(cnsPlanUnitEntity.getUnit())) {
-                    gdmProductUnitConversionBo.setUnitId(cnsPlanUnitEntity.getUnit());
-                } else {
-                    //E1 rejection
-                    FailData fail = writeFailDataToRegion(edmMaterialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.E1, "No Enterprise UOM is maintained");
-                    resultObject.setFailData(fail);
-                    return resultObject;
-                }
-            }
-            gdmProductUnitConversionBo.setGdmProductUnitConversionId(gdmProductUnitConversionId);
+        //J1
+        List<GDMProductUnitConversionBo> gdmProductUnitConversionBoList = new ArrayList<>();
+        List<PlanCnsMaterialPlanStatusEntity> planCnsMaterialPlanStatusEntityList = planCnsMaterialPlanStatusDao.getEntitiesWithLocalMaterialNumberAndSourceSystem(edmMaterialGlobalV1Entity.getLocalMaterialNumber(), edmMaterialGlobalV1Entity.getSourceSystem());
+        if (null == planCnsMaterialPlanStatusEntityList || planCnsMaterialPlanStatusEntityList.size() == 0) {
+            return resultObjectList;
         }
 
-        String localMaterialNumber = edmMaterialGlobalV1Entity.getLocalMaterialNumber();
-        if (StringUtils.isNotEmpty(localMaterialNumber)) { //J2
-            EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomDao.getEntityWithLocalMaterialNumAndLocalAuom(localMaterialNumber, localMaterialNumber);
-            if (edmMaterialAuomV1Entity != null) {
-                String localUomMaterialNumber = edmMaterialAuomV1Entity.getLocalMaterialNumber();
-                String localUom = edmMaterialAuomV1Entity.getLocalAuom();
-                if(localUom.equals(localMaterialNumber) && localUomMaterialNumber.equals(localUomMaterialNumber)) {
-                    String factor = String.valueOf(df.format((float) Integer.valueOf(edmMaterialAuomV1Entity.getLocalNumerator()) / Integer.valueOf(edmMaterialAuomV1Entity.getLocalDenominator())));
-                    gdmProductUnitConversionBo.setFactor(factor);
-                } else {
-                    gdmProductUnitConversionBo.setFactor("");
-                }
+        PlanCnsMaterialPlanStatusEntity T1Entity = null;
+        PlanCnsMaterialPlanStatusEntity T2Entity = null;
+        PlanCnsMaterialPlanStatusEntity T3Entity = null;
+        PlanCnsMaterialPlanStatusEntity T4Entity = null;
+        for (PlanCnsMaterialPlanStatusEntity entity : planCnsMaterialPlanStatusEntityList) {
+            if (IConstant.VALUE.X.equalsIgnoreCase(entity.getActive())) {
+                T1Entity = entity;
+            }
+            if (IConstant.VALUE.X.equalsIgnoreCase(entity.getDpRelevant())) {
+                T2Entity = entity;
+            }
+
+            if (IConstant.VALUE.X.equalsIgnoreCase(entity.getSpRelevant())) {
+                T3Entity = entity;
+            }
+
+            if (IConstant.VALUE.X.equalsIgnoreCase(entity.getNoPlanRelevant())) {
+                T4Entity = entity;
+            }
+
+        }
+
+        //T1
+        List<String> productIdList = new ArrayList<>();
+        if (null != T1Entity && IConstant.VALUE.X.equalsIgnoreCase(T1Entity.getActive())) {
+            if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
+                productIdList.add(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
+            }
+
+            if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode())) {
+                productIdList.add(IConstant.VALUE.LA_ + edmMaterialGlobalV1Entity.getLocalDpParentCode());
             }
         }
 
-        resultObject.setBaseBo(gdmProductUnitConversionBo);
-        return resultObject;
-    }
+        //J2,T5
+        String ActiveFCTERP = "";
+        String ActiveOPRERP = "";
+        if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalMaterialNumber())) {
+            List<EDMMaterialAuomV1Entity> edmMaterialAuomV1EntityList = edmMaterialAuomDao.getEntityWithSourceSystemAndLocalMaterialNum(edmMaterialGlobalV1Entity.getSourceSystem(), edmMaterialGlobalV1Entity.getLocalMaterialNumber());
+            if (null != edmMaterialAuomV1EntityList && edmMaterialAuomV1EntityList.size() > 0) {
+                for (EDMMaterialAuomV1Entity edmMaterialAuomV1Entity : edmMaterialAuomV1EntityList) {
+
+                    String factor = "";
+                    List<PlanCnsPlanUnitEntity> planCnsPlanUnitEntityList = planCnsPlanUnitDao.getCnsPlanUnitEntityListWithSourceSystemAndLocalUom(edmMaterialAuomV1Entity.getSourceSystem(), edmMaterialAuomV1Entity.getLocalAuom());
+                    if (null == planCnsPlanUnitEntityList || planCnsPlanUnitEntityList.size() <= 0) {
+                        break;
+                    }
+                    for (PlanCnsPlanUnitEntity planCnsPlanUnitEntity : planCnsPlanUnitEntityList) {
+                        //J2
+                        if (StringUtils.isNotEmpty(edmMaterialAuomV1Entity.getLocalDenominator())) {
+                            Pattern pattern = Pattern.compile(IConstant.VALUE.PATTERN_DIGITAL);
+                            if (pattern.matcher(edmMaterialAuomV1Entity.getLocalNumerator()).matches() && pattern.matcher(edmMaterialAuomV1Entity.getLocalDenominator()).matches()) {
+                                int localNumerator = Integer.valueOf(edmMaterialAuomV1Entity.getLocalNumerator());
+                                int localDenominator = Integer.valueOf(edmMaterialAuomV1Entity.getLocalDenominator());
+                                factor = String.valueOf(df.format((float) localNumerator / localDenominator));
+                            }
+                        }
+                        //T5
+                        String unit = planCnsPlanUnitEntity.getUnit();
+
+                        //T2 ActiveFCTERP
+                        if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getLocalDpParentCode()) && (IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
+                            ActiveFCTERP = IConstant.VALUE.YES;
+                        } else if ((null != T2Entity && IConstant.VALUE.X.equals(T2Entity.getDpRelevant())) && (IConstant.VALUE.DP.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag()))) {
+                            ActiveFCTERP = IConstant.VALUE.YES;
+                        }
+
+                        //T3 ActiveOPRERP
+                        if ((null != T3Entity && (IConstant.VALUE.X.equals(T3Entity.getSpRelevant()) || IConstant.VALUE.X.equals(T3Entity.getNoPlanRelevant())))
+                                || (null != T4Entity && (IConstant.VALUE.X.equals(T4Entity.getNoPlanRelevant())))) {
+
+                            if (IConstant.VALUE.SP1.equals(planCnsPlanUnitEntity.getPlanFlag()) || IConstant.VALUE.DPSP.equals(planCnsPlanUnitEntity.getPlanFlag())) {
+                                ActiveOPRERP = IConstant.VALUE.YES;
+                            }
+                        }
+
+                        if (StringUtils.isBlank(ActiveFCTERP)) {
+                            ActiveFCTERP = IConstant.VALUE.NO;
+                        }
+                        if (StringUtils.isBlank(ActiveOPRERP)) {
+                            ActiveOPRERP = IConstant.VALUE.NO;
+                        }
+
+                        //T4
+                        String Active = "";
+                        if (IConstant.VALUE.YES.equals(ActiveFCTERP) || IConstant.VALUE.YES.equals(ActiveOPRERP)) {
+                            Active = IConstant.VALUE.YES;
+                        } else {
+                            //skip this record
+                            return resultObjectList;
+                        }
 
 
-    private void processSystem(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, GDMProductUnitConversionBo gdmProductUnitConversionBo) {
-        gdmProductUnitConversionBo.setProductId(edmMaterialGlobalV1Entity.getLocalDpParentCode());
-        gdmProductUnitConversionBo.setActive(IConstant.VALUE.YES); //D1
-        gdmProductUnitConversionBo.setActiveFCTERP(IConstant.VALUE.YES); //D1
-        gdmProductUnitConversionBo.setActiveOPRERP(IConstant.VALUE.YES); //D1
-        gdmProductUnitConversionBo.setActiveSOPERP(IConstant.VALUE.NO); //D2
+                        if (StringUtils.isNotBlank(unit)) {
+                            for (String productId : productIdList) {
+
+                                ResultObject resultObject = new ResultObject();
+
+                                GDMProductUnitConversionBo bo = new GDMProductUnitConversionBo();
+                                bo.setProductId(productId);
+                                bo.setUnitId(unit);
+                                bo.setGdmProductUnitConversionId(productId + unit);
+                                bo.setFactor(factor);
+                                bo.setActiveFCTERP(ActiveFCTERP);
+                                bo.setActiveOPRERP(ActiveOPRERP);
+                                bo.setActive(Active);
+                                //D1 Comments,leave Blank, example " "
+                                bo.setComments("");
+                                //D2 ActiveSOPERP , default "NO"
+                                bo.setActiveSOPERP(IConstant.VALUE.NO);
+
+                                resultObject.setBaseBo(bo);
+
+                                resultObjectList.add(resultObject);
+                            }
+                        }
+                    }
+                }
+            } else {
+                return resultObjectList;
+            }
+        }
+        return resultObjectList;
     }
 
     private FailData writeFailDataToRegion(EDMMaterialGlobalV1Entity materialGlobalV1Entity, String ruleCode, String errorValue) {

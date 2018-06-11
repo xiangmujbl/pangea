@@ -47,6 +47,7 @@ public class EDMMaterialPlantBo  extends BaseBo
     private String localPostToInspStk;
     private String localComponentScrap;
     private String localBaseQuantity;
+    private String purchsngGrpCd;
 
     public String getSourceSystem() {
         return sourceSystem;
@@ -384,6 +385,14 @@ public class EDMMaterialPlantBo  extends BaseBo
         this.localBaseQuantity = localBaseQuantity;
     }
 
+    public String getPurchsngGrpCd() {
+        return purchsngGrpCd;
+    }
+
+    public void setPurchsngGrpCd(String purchsngGrpCd) {
+        this.purchsngGrpCd = purchsngGrpCd;
+    }
+
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
@@ -393,3 +402,4 @@ public class EDMMaterialPlantBo  extends BaseBo
                 .toJsonString();
     }
 }
+

@@ -1,0 +1,34 @@
+<adf-curation>
+    <curation mainRegion="/project_one/mkal" viewRegion="/edm/matl_prod_versn" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.matl_prod_versn.controller.EDMMatlProdVersnController">
+        <regions>
+
+            <region path="/project_one/mkal">
+                <columns>mandt,matnr,werks,verid,adatu,bdatu,stlal,stlan,plnty,plnnr,alnal,beskz,sobsl,losgr,mdv01,text1,verto,bstmi,bstma,alort,prfgF,prdat,mksp,ucmat</columns>
+                <relations>
+                    <relation path="/project_one/mkal_aend" isPrimaryKey="false">
+                        <expression>matnr=/project_one/mkal.matnr,werks=/project_one/mkal.werks,verid=/project_one/mkal.verid</expression>
+                    </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+
+            <region path="/project_one/mkal_aend">
+                <columns>mandt,matnr,werks,verid,andat,aedat</columns>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+            <region path="/edm/matl_prod_versn">
+                <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,altBomNum,bomUsgCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,prcrmntTypCd,spPrcrmntTypCd,cstLtSzQty,mfgLineCd,prdVrsnDesc,dstrbtnKeyCd,frmLtSzQty,toLtSzQty,sLocCd,chckInd,chckDt,lckInd,orgBtchInd,crtDttm,chgDttm</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

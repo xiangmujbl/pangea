@@ -13,6 +13,7 @@ public class GDMProductUnitConversionBo extends BaseBo {
     private String factor;
     private String productId;
     private String unitId;
+    private String comments;
 
     @Override
     public String toString() {
@@ -25,6 +26,7 @@ public class GDMProductUnitConversionBo extends BaseBo {
                 ", factor='" + factor + '\'' +
                 ", productId='" + productId + '\'' +
                 ", unitId='" + unitId + '\'' +
+                ", comments='" + comments + '\'' +
                 '}';
     }
 
@@ -97,5 +99,13 @@ public class GDMProductUnitConversionBo extends BaseBo {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

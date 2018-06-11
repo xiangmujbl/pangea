@@ -22,7 +22,7 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getLfuId() {
-        return this.lfuId;
+        return lfuId;
     }
 
     public void setLfuId(String lfuId) {
@@ -30,7 +30,7 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getCountryId() {
-        return this.countryId;
+        return countryId;
     }
 
     public void setCountryId(String countryId) {
@@ -38,7 +38,7 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getCurrencyId() {
-        return this.currencyId;
+        return currencyId;
     }
 
     public void setCurrencyId(String currencyId) {
@@ -46,7 +46,7 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getDueDate() {
-        return this.dueDate;
+        return dueDate;
     }
 
     public void setDueDate(String dueDate) {
@@ -54,7 +54,7 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getFromDueDate() {
-        return this.fromDueDate;
+        return fromDueDate;
     }
 
     public void setFromDueDate(String fromDueDate) {
@@ -62,7 +62,7 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getProductId() {
-        return this.productId;
+        return productId;
     }
 
     public void setProductId(String productId) {
@@ -70,7 +70,7 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public void setValue(String value) {
@@ -78,24 +78,10 @@ public class OMPGdmLfuBo extends BaseBo {
     }
 
     public String getVolume() {
-        return this.volume;
+        return volume;
     }
 
     public void setVolume(String volume) {
         this.volume = volume;
-    }
-
-    @Override
-    public String toString() {
-        return "OMPGdmLfuBo{" +
-                "lfuId='" + lfuId + '\'' +
-                ", countryId='" + countryId + '\'' +
-                ", currencyId='" + currencyId + '\'' +
-                ", dueDate='" + dueDate + '\'' +
-                ", fromDueDate='" + fromDueDate + '\'' +
-                ", productId='" + productId + '\'' +
-                ", value='" + value + '\'' +
-                ", volume='" + volume + '\'' +
-                '}';
     }
 }

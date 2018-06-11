@@ -37,10 +37,9 @@ public class EDMAdvancedShipNotificationController extends BaseController {
 
             RawDataValue rawValue = raw.getValue();
 
-            LipsEntity lipsEntity = BeanUtil.mapToBean(rawValue.toMap(), LipsEntity.class);
             LikpEntity likpEntity = BeanUtil.mapToBean(rawValue.toMap(), LikpEntity.class);
 
-            List<ResultObject> resultObjectList = edmAdvanceShipNotificationService.buildView(raw.getKey(), lipsEntity, likpEntity);
+            List<ResultObject> resultObjectList = edmAdvanceShipNotificationService.buildView(raw.getKey(), likpEntity, null);
 
             for (ResultObject resultObject : resultObjectList) {
                 if (resultObject.isSuccess()) {
@@ -50,7 +49,7 @@ public class EDMAdvancedShipNotificationController extends BaseController {
                 } else {
                     if (resultObject.getFailData() != null) {
                         FailData failData = resultObject.getFailData();
-                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(IConstant.REGION.FAIL_DATA, failData.getKey(), failData.toMap());
+                        ViewResultItem viewResultItem = ViewResultBuilder.newResultItem(failData.getFailRegion(), failData.getKey(), failData.toMap());
                         result.add(viewResultItem);
                     }
                 }

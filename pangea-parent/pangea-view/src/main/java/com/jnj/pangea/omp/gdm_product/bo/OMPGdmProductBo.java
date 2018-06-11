@@ -12,11 +12,6 @@ public class OMPGdmProductBo extends BaseBo {
     private String activeSOPERP;
     private String color;
     private String description;
-    private String groes;
-    private String isRoot;
-    private String isSku;
-    private String label;
-    private String matkl;
     private String planningHierarchy1;
     private String planningHierarchy1Desc;
     private String planningHierarchy2;
@@ -31,7 +26,6 @@ public class OMPGdmProductBo extends BaseBo {
     private String planningHierarchy6Desc;
     private String planningHierarchy7;
     private String planningHierarchy7Desc;
-    private String prdha;
     private String shortDescription;
     private String sourceLocationId;
     private String subFranchise;
@@ -99,46 +93,6 @@ public class OMPGdmProductBo extends BaseBo {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getGroes() {
-        return this.groes;
-    }
-
-    public void setGroes(String groes) {
-        this.groes = groes;
-    }
-
-    public String getIsRoot() {
-        return isRoot;
-    }
-
-    public void setIsRoot(String isRoot) {
-        this.isRoot = isRoot;
-    }
-
-    public String getIsSku() {
-        return isSku;
-    }
-
-    public void setIsSku(String isSku) {
-        this.isSku = isSku;
-    }
-
-    public String getLabel() {
-        return this.label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getMatkl() {
-        return this.matkl;
-    }
-
-    public void setMatkl(String matkl) {
-        this.matkl = matkl;
     }
 
     public String getPlanningHierarchy1() {
@@ -251,14 +205,6 @@ public class OMPGdmProductBo extends BaseBo {
 
     public void setPlanningHierarchy7Desc(String planningHierarchy7Desc) {
         this.planningHierarchy7Desc = planningHierarchy7Desc;
-    }
-
-    public String getPrdha() {
-        return this.prdha;
-    }
-
-    public void setPrdha(String prdha) {
-        this.prdha = prdha;
     }
 
     public String getShortDescription() {
