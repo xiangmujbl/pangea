@@ -154,7 +154,7 @@ public class OMPGdmSupplyServiceImpl {
                                             }
 
                                             // N14
-                                            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), "V");
+                                            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemLocalNumberAndVendorOrCustomer(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalVendorAccountNumber(), IConstant.VALUE.V);
                                             if (planCnsPlnSplLocEntity == null) {
                                                 gdmSupplyBo.setSupplierId(edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant());
                                             } else {
@@ -205,7 +205,7 @@ public class OMPGdmSupplyServiceImpl {
                                                 if (edmMaterialPlantV1Entity_1 != null) {
                                                 // skip if local Special Procurement Type == 30 as it is a sub contracting scenario
                                                 String localSpecialProcurementType = edmMaterialPlantV1Entity_1.getLocalSpecialProcurementType();
-                                                if (localSpecialProcurementType.equals("30")) {
+                                                if (localSpecialProcurementType.equals(IConstant.VALUE.THIRTY)) {
                                                     return skipObjects;
                                                 } else {
                                                         // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
