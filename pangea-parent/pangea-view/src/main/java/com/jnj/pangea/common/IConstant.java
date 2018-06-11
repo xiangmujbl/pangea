@@ -219,8 +219,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "vendorPurchase";
-        String EXTERNAL_PURCHASE = "externalPurchase";
+        String VENDOR_PURCHASE = "VendorPurchase";
+        String EXTERNAL_PURCHASE = "ExternalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -995,7 +995,7 @@ public interface IConstant {
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
-
+        String THIRTY = "30";
 
     }
 
