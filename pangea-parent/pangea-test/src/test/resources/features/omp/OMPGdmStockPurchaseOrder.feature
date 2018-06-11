@@ -185,7 +185,6 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
       | 58752/CONS_LATAM_MX02/3000793997/40   |   YES  |      YES     |      NO      |         |      0.0        |      YES    |      BE     | 3000793997 | 58752/CONS_LATAM_MX02/3000793997/40/1 | CONS_LATAM_V_6109 | CONS_LATAM_MX01 | TR/58752/CONS_LATAM_MX01/CONS_LATAM_MX01/Default | VendorTransport   |    58752  |       0.0       |  1800.00 | 2017/01/03 00:00:00 |        0.0         |         0.0     | 2017/01/04 00:0i:00 | movement  |        0.0       | 1980/01/01 00:00:00 | 0.0                  |
 
 
-
     And I will remove all data with region "/edm/purchase_order_oa_v1"
 
     And I will remove all data with region "/edm/material_global_v1"
@@ -193,7 +192,6 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
     And I will remove all data with region "/edm/plant_v1"
 
     And I will remove all data with region "/plan/cns_material_plan_status"
-
 
     And I will remove all data with region "/plan/cns_spl_pln_loc"
 
