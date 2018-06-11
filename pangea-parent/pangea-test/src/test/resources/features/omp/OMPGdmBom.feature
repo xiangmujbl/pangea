@@ -187,11 +187,11 @@ Feature: OMPGdmBom AEAZ-4254
     Then A file is found on sink application with name "GDMBOM_MASTER.tsv"
     Then I check file data for filename "GDMBOM_MASTER.tsv" by keyFields "bomId"
 #    Then I check region data "/omp/gdm_bom" by keyFields "bomId"
-      | bomId                            | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
-      | V01/42/CONS_LATAM/BR12/19/1/1/10 | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
-      | V01/24/CONS_LATAM/BR12/2/1/1/10  | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
-      | V01/25/CONS_LATAM/BR12/3/1/1/10  | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
-      | V01/23/CONS_LATAM/BR12/1/1/1/10  | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
+      | bomId                               | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
+      | V01/42/CONS_LATAM/BR12/19/01/1/0010 | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
+      | V01/24/CONS_LATAM/BR12/2/01/1/0010  | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
+      | V01/25/CONS_LATAM/BR12/3/01/1/0010  | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
+      | V01/23/CONS_LATAM/BR12/1/01/1/0010  | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
 
 
   @Scenario2
@@ -241,9 +241,9 @@ Feature: OMPGdmBom AEAZ-4254
     Then A file is found on sink application with name "GDMBOM_MASTER.tsv"
     Then I check file data for filename "GDMBOM_MASTER.tsv" by keyFields "bomId"
 #    Then I check region data "/omp/gdm_bom" by keyFields "bomId"
-      | bomId                           | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
-      | V01/24/CONS_LATAM/BR12/2/1/1/10 | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
-      | V01/23/CONS_LATAM/BR12/1/1/1/10 | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
+      | bomId                              | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
+      | V01/24/CONS_LATAM/BR12/2/01/1/0010 | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
+      | V01/23/CONS_LATAM/BR12/1/01/1/0010 | YES    | NO           | YES          | NO           |          | 2998/12/31 23:59:59 | CONS_LATAM_BR12 | 2000/10/19 00:00:00 |
 
 
   @Scenario3
@@ -293,9 +293,9 @@ Feature: OMPGdmBom AEAZ-4254
     Then A file is found on sink application with name "GDMBOM_MASTER.tsv"
     Then I check file data for filename "GDMBOM_MASTER.tsv" by keyFields "bomId"
 #    Then I check region data "/omp/gdm_bom" by keyFields "bomId"
-      | bomId                           | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
-      | V01/24/CONS_LATAM/BR12/2/1/1/10 | YES    | NO           | YES          | NO           |          | 2045/07/12 00:00:00 | CONS_LATAM_BR12 | 2045/12/19 00:00:00 |
-      | V01/23/CONS_LATAM/BR12/1/1/1/10 | YES    | NO           | YES          | NO           |          | 2023/10/13 00:00:00 | CONS_LATAM_BR12 | 2023/12/15 00:00:00 |
+      | bomId                              | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
+      | V01/24/CONS_LATAM/BR12/2/01/1/0010 | YES    | NO           | YES          | NO           |          | 2045/07/12 00:00:00 | CONS_LATAM_BR12 | 2045/12/19 00:00:00 |
+      | V01/23/CONS_LATAM/BR12/1/01/1/0010 | YES    | NO           | YES          | NO           |          | 2023/10/13 00:00:00 | CONS_LATAM_BR12 | 2023/12/15 00:00:00 |
 
 #
   @Scenario4
@@ -359,14 +359,19 @@ Feature: OMPGdmBom AEAZ-4254
     Then A file is found on sink application with name "GDMBOM_MASTER.tsv"
     Then I check file data for filename "GDMBOM_MASTER.tsv" by keyFields "bomId"
 #    Then I check region data "/omp/gdm_bom" by keyFields "bomId"
-      | bomId                           | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
-      | V01/24/CONS_LATAM/BR12/2/1/1/10 | YES    | NO           | YES          | NO           |          | 2045/07/12 00:00:00 | CONS_LATAM_BR12 | 2045/12/19 00:00:00 |
-      | V01/26/CONS_LATAM/BR12/4/1/1/10 | YES    | NO           | YES          | NO           |          | 2045/07/12 00:00:00 | CONS_LATAM_BR12 | 2045/12/19 00:00:00 |
-      | V01/25/CONS_LATAM/BR12/3/1/1/10 | YES    | NO           | YES          | NO           |          | 2023/10/13 00:00:00 | CONS_LATAM_BR12 | 2023/12/15 00:00:00 |
-      | V01/23/CONS_LATAM/BR12/1/1/1/10 | YES    | NO           | YES          | NO           |          | 2023/10/13 00:00:00 | CONS_LATAM_BR12 | 2023/12/15 00:00:00 |
+      | bomId                              | active | activeFCTERP | activeOPRERP | activeSOPERP | comments | endEff              | locationId      | startEff            |
+      | V01/24/CONS_LATAM/BR12/2/01/1/0010 | YES    | NO           | YES          | NO           |          | 2045/07/12 00:00:00 | CONS_LATAM_BR12 | 2045/12/19 00:00:00 |
+      | V01/26/CONS_LATAM/BR12/4/01/1/0010 | YES    | NO           | YES          | NO           |          | 2045/07/12 00:00:00 | CONS_LATAM_BR12 | 2045/12/19 00:00:00 |
+      | V01/25/CONS_LATAM/BR12/3/01/1/0010 | YES    | NO           | YES          | NO           |          | 2023/10/13 00:00:00 | CONS_LATAM_BR12 | 2023/12/15 00:00:00 |
+      | V01/23/CONS_LATAM/BR12/1/01/1/0010 | YES    | NO           | YES          | NO           |          | 2023/10/13 00:00:00 | CONS_LATAM_BR12 | 2023/12/15 00:00:00 |
 
     And I delete the test data
 
     And I will remove all data with region "/omp/gdm_bom"
 
     And I will remove all data with region "/plan/edm_failed_data"
+
+  @Scenario5
+  Scenario: merge file
+
+    And I execute xd job to merge file "GDMBOM_*" to "GDMBOM.tsv" by keyFields "bomId"

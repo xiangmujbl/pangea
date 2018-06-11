@@ -17,6 +17,7 @@ public interface IConstant {
         String EDM_SOURCE_LIST_V1 = "/edm/source_list_v1";
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
         String EDM_PLANT_V1 = "/edm/plant_v1";
+        String EDM_PLANT_INPUT = "/edm/edm_plant_input";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
@@ -478,6 +479,12 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+    }
+
+    interface EDM_PLANT_INPUT {
+        String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANNING_RELEVANT = "localPlanningRelevant";
     }
 
     interface CNS_PLAN_PARAMETER {
@@ -1037,6 +1044,7 @@ public interface IConstant {
             String OMP_GDM_POS = "OMPGdmPos";
             String OMP_GDM_LFU = "OMPGdmLfu";
             String OMP_GDM_COUNTRY="OMPGdmCountry";
+            String EDM_PLANT = "EDMPlant";
         }
 
         interface ERROR_CODE {
