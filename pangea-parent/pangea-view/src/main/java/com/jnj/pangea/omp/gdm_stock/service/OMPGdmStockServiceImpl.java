@@ -6,7 +6,6 @@ import com.jnj.pangea.common.dao.impl.edm.EDMAdvancedShipNotificationV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsCertKeyDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
@@ -42,7 +41,7 @@ public class OMPGdmStockServiceImpl implements ICommonService {
     private EDMPurchaseOrderOAV1DaoImpl purchaseDao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
     private PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
-    private PlanCnsCertKeyDaoImpl cnsCertKeyDao = PlanCnsCertKeyDaoImpl.getInstance();
+    //private PlanCnsCertKeyDaoImpl cnsCertKeyDao = PlanCnsCertKeyDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2){
@@ -50,7 +49,7 @@ public class OMPGdmStockServiceImpl implements ICommonService {
 
         OMPGdmStockBo stockBo = new OMPGdmStockBo();
 
-        EDMAdvancedShipNotificationV1Entity shipNotifEntity = advanceShipNotificationDao.getEntityByDelvDocId(key);
+        EDMAdvancedShipNotificationV1Entity shipNotifEntity = (EDMAdvancedShipNotificationV1Entity) o ;
         EDMMaterialGlobalV1Entity materialGlobalEntity = materialGlobalDao.getEntityWithLocalMaterialNumberAndSourceSystem(shipNotifEntity.getMatlNum(),shipNotifEntity.getSrcSysCd());
         EDMPlantV1Entity plantEntity = plantDao.getPlantWithSourceSystemAndLocalPlant(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getLocalReceivingPlant());
         EDMPurchaseOrderOAV1Entity purchaseEntity = purchaseDao.getEntityByPoNumAndPoLineNumberAndSourceSystem(shipNotifEntity.getLocalRefDocNum(), shipNotifEntity.getLocRefDocLineNum(), shipNotifEntity.getSrcSysCd());
