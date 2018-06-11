@@ -1,5 +1,5 @@
 package com.jnj.pangea.util;
-import com.jnj.pangea.common.IConstant;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -128,8 +128,32 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static String derivationDate(String dateString, int num) {
+        int dayForWeek = 1;
+        int numWeekend = 2;
+        int numWeekday = 5;
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = DateUtils.stringToDate(dateString, DateUtils.yyyy_MM_dd);
+        if (null != date) {
+            calendar.setTime(date);
+            dayForWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+            if (dayForWeek == 6) {
+                num -= 1;
+            }
+            int numWeek = (num) / numWeekday;
+            if (dayForWeek + (num) % numWeekday > numWeekday) {
+                numWeek = numWeek + 1;
+            }
+            num = num + numWeek * numWeekend;
+            calendar.add(Calendar.DATE, num);
+            return DateUtils.dateToString(calendar.getTime(), DateUtils.yyyy_MM_dd);
+        }
+        return "";
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(dateToString(stringToDate("201805", J_yyyyWW), yyyy_MM_dd_HHmmssSSS));
+        System.out.println(derivationDate("2018/06/07", 1));
     }
 }
