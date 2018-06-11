@@ -288,7 +288,7 @@ public interface IConstant {
     }
 
     interface PLAN_CNS_PLAN_REGION {
-        String PLANNING_REGION_ID = "planningRegionID";
+        String PLANNING_REGION_ID  = "planningRegionID";
     }
 
 
