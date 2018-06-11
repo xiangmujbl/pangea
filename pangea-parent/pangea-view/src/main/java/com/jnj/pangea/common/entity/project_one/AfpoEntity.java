@@ -20,6 +20,24 @@ public class AfpoEntity extends CommonEntity {
     private String umrez;
     private String umren;
     private String webaz;
+    private String pwerk;
+    private String xloek;
+
+    public String getPwerk() {
+        return pwerk;
+    }
+
+    public void setPwerk(String pwerk) {
+        this.pwerk = pwerk;
+    }
+
+    public String getXloek() {
+        return xloek;
+    }
+
+    public void setXloek(String xloek) {
+        this.xloek = xloek;
+    }
 
     public AfpoEntity(Map<String, Object> map) {
         super(map);
@@ -38,6 +56,9 @@ public class AfpoEntity extends CommonEntity {
         setUmrez((String) map.get("umrez"));
         setUmren((String) map.get("umren"));
         setWebaz((String) map.get("webaz"));
+        setPwerk((String) map.get("pwerk"));
+        setXloek((String) map.get("xloek"));
+
     }
 
     public String getAufnr() {

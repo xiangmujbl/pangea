@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = {"src/test/resources/features/edm/material/auom/EDMMaterialAUOM_Projectone.feature"},
         tags = {"@pangea_test"},
-        plugin = {"pretty", "html:target/Destination"},
-        glue = "com.jnj.pangea.sentence")
+        glue = "com.jnj.pangea.sentence",
+        plugin = {"pretty", "json:target/reports/json/AEAZ-511 EDMMaterialAUOM.json"})
 public class MaterialAuomTest_ProjectOne {
 
 }

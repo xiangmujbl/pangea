@@ -17,7 +17,7 @@ public class OMPGdmPosBo extends BaseBo {
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("aggregationId", this.aggregationId)
-                .add("unitId", this.unitId)
+                .add("forecastUploadId", this.forecastUploadId)
                 .toJsonString();
     }
 

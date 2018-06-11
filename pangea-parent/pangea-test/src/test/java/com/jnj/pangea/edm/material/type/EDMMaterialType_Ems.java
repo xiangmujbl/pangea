@@ -9,6 +9,6 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/edm/material/type/EDMMaterialType_Ems.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "html:target/Destination"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-494 EDMMaterialType.json"})
 public class EDMMaterialType_Ems {
 }

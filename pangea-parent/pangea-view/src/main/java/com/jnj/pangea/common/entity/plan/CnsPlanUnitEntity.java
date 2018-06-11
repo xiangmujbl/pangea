@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class CnsPlanUnitEntity extends CommonEntity {
 
-    private String plantFlag;
+    private String planFlag;
     private String unit;
     private String localUom;
     private String sourceSystem;
@@ -14,17 +14,17 @@ public class CnsPlanUnitEntity extends CommonEntity {
     public CnsPlanUnitEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("sourceSystem"));
-        setPlantFlag((String) map.get("plantFlag"));
+        setPlanFlag((String) map.get("planFlag"));
         setUnit((String) map.get("unit"));
         setLocalUom((String) map.get("localUom"));
     }
 
-    public String getPlantFlag() {
-        return plantFlag;
+    public String getPlanFlag() {
+        return planFlag;
     }
 
-    public void setPlantFlag(String plantFlag) {
-        this.plantFlag = plantFlag;
+    public void setPlanFlag(String planFlag) {
+        this.planFlag = planFlag;
     }
 
     public String getUnit() {

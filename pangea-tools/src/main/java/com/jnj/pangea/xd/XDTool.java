@@ -1,8 +1,11 @@
 package com.jnj.pangea.xd;
 
-import com.jnj.pangea.generator.metadata.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,21 +22,20 @@ import java.util.regex.Pattern;
 public class XDTool {
 
     private static String USER_NAME = "";
-    private static String PASSWORD = null;
+    private static String PASSWORD = "";
     private static String HOST = "awsamenva3025.jnj.com";
 
     public static void main(String[] args) {
 
         Map<String, String> job2Run = readScripts();
 
-        if (PASSWORD == null) {
+        if (StringUtils.isNotEmpty(PASSWORD)) {
             PASSWORD = XDTool.readPassword();
         }
 
         XdClient xdClient = new XdClient(HOST, USER_NAME, PASSWORD);
 
         job2Run.forEach((name, definition) -> {
-            System.out.println("launch job: " + name);
             if (xdClient.runAsny(name, definition)) {
                 System.out.println("execute success: " + name);
             } else {
@@ -76,11 +78,11 @@ public class XDTool {
         return map;
     }
 
-    private static String readPassword () {
+    private static String readPassword() {
 
         File file = new File("pangea-tools/src/main/resources/xd_script/config.txt");
 
-        if(file.exists() && !file.isDirectory()) {
+        if (file.exists() && !file.isDirectory()) {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
                 return XDTool.decode(br.readLine());

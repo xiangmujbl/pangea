@@ -68,7 +68,7 @@ node ('ADFSlaveLarge'){
 				//rtMaven.run pom:'pangea-parent/pangea-test/pom.xml',goals:'-Dtest=BaseFlowTest -DgridName=grid -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsacinva1110[15006] -Dgs.bind.ip=localhost -Dnaming.server._COMPUTING=awsacinva1110[15007] -Dsecurity-service-account-username=SA-ITS-UNITYRestUser -Dsecurity-service-account-password=khtYa7I3wRfkVEzyuP+mkg== -Dmaven.test.skip=false -Dtesting.compute.seedNode=awsacinva1110:2551 -Dtesting.compute.remote=true clean verify'
 				//sh 'mvn -DgridName=atom -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsacinva1110[15006] -Dgs.bind.ip=localhost -Dnaming.server._COMPUTING=awsacinva1110[15007] -Dsecurity-service-account-username=SA-ITS-UNITYRestUser -Dsecurity-service-account-password=khtYa7I3wRfkVEzyuP+mkg== -Dmaven.test.skip=false -Dtesting.compute.seedNode=awsacinva1110:2551 -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
 				//sh 'mvn -DgridName=grid -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsacinva1110[15006] -Dgs.bind.ip=localhost -Dnaming.server._COMPUTING=awsacinva1110[15007] -Dlogin.name=SA-ITS-ADFXD_TST -Dlogin.password=encrypted(3F91D85500E1FA91571CD8BAF47B592F) -Dmaven.test.skip=false -DcomputingNode=awsacinva1110:2551 -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
-				sh 'mvn -DgridName=EDGAD101 -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsamenva1179[14000],awsamenva1180[14000] -Dlogin.name=pulse -Dlogin.password=QL0AFWMIX8NRZTKeof9cXsvbvu8= -Dmaven.test.skip=false -DcomputingNode=awsamenva3010:2551,awsamenva3011:2551 -DmboxSink=awsamenva3025:8099 -Denv=dev -DceRegionAlias=dev_region_alias.properties -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
+				sh 'mvn -DgridName=EDGAD101 -DfailIfNoTests=false -Dgs.home=/apps/tmp/gemlite -Dnaming.server=awsamenva1179[14000],awsamenva1180[14000] -Dlogin.name=pulse -Dlogin.password=QL0AFWMIX8NRZTKeof9cXsvbvu8= -Dmaven.test.skip=false -DcomputingNode=awsamenva3010:2551,awsamenva3011:2551 -DkafkaSink=awsamenva3025:8099 -Denv=dev -DceRegionAlias=dev_region_alias.properties -Dtesting.compute.remote=true clean verify -f pangea-parent/pom.xml'
 
 				junit 'pangea-parent/pangea-test/target/surefire-reports/*.xml'
 				cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'pangea-parent/pangea-test/target/Destination', sortingMethod: 'ALPHABETICAL'
@@ -234,7 +234,7 @@ def String getJenkinsConfigurationId (){
     def configurationId = ''
     if (ws.find('/sa-itsus-taan-ciuser/')) {		
         echo 'Matched taan-ci-build Jenkins'
-        configurationId = '34ebbea8-f90f-4c87-83ca-9f0523f11bf6'
+        configurationId = '8b87f930-ab20-4da8-a22e-4398a7f66c65'
     } else if (ws.find('/sa-itsus-taan-cduser/')) {
         echo 'Matched taan-cd-deploy Jenkins'
         configurationId = '*****TODO'

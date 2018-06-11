@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class LipsEntity extends CommonEntity {
 
+    private String mandt;
     private String vbeln;
     private String posnr;
     private String pstyv;
@@ -293,6 +294,7 @@ public class LipsEntity extends CommonEntity {
     public LipsEntity(Map<String, Object> map) {
         super(map);
 
+        setMandt((String) map.get("mandt"));
         setAbart((String) map.get("abart"));
         setAbeln((String) map.get("abeln"));
         setAbelp((String) map.get("abelp"));
@@ -2840,4 +2842,9 @@ public class LipsEntity extends CommonEntity {
     public void setCons_order(String cons_order) {
         this.cons_order = cons_order;
     }
+
+    public String getMandt() { return mandt; }
+
+    public void setMandt(String mandt) { this.mandt = mandt; }
+
 }

@@ -40,7 +40,7 @@ public class Merge implements Tasklet {
     private boolean duplicationFlag = false;
     private Resource[] sPattern = new Resource[0];
 
-    private final static String newline = System.getProperty("line.separator", "\n");
+    private final static String CRLF = "\r\n";
 
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
@@ -75,7 +75,7 @@ public class Merge implements Tasklet {
                 String strLine;
                 List<Integer> keyNum = new ArrayList<Integer>();
                 while ((strLine = br.readLine()) != null) {
-                    strLine = strLine + newline;
+                    strLine = strLine + CRLF;
                     numFlag++;
                     if (numFlag == 1) {
                         String origHeaderRow = strLine;
@@ -207,9 +207,5 @@ public class Merge implements Tasklet {
 
     public void setsPattern(Resource[] sPattern) {
         this.sPattern = sPattern;
-    }
-
-    public static String getNewline() {
-        return newline;
     }
 }

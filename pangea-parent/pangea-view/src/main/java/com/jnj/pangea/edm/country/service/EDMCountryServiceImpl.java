@@ -4,6 +4,8 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.ems.EMSFMdmCountriesDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsCountryInputDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanRegionDaoImpl;
 import com.jnj.pangea.common.entity.ems.EMSFMdmCountriesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.country.bo.EDMCountryBo;
@@ -19,7 +21,8 @@ public class EDMCountryServiceImpl implements ICommonService {
 
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private EMSFMdmCountriesDaoImpl emsfMdmCountriesDao = EMSFMdmCountriesDaoImpl.getInstance();
-
+    private PlanCnsCountryInputDaoImpl planCnsCountryInputDao = PlanCnsCountryInputDaoImpl.getInstance();
+    private PlanCnsPlanRegionDaoImpl planCnsPlanRegionDao = PlanCnsPlanRegionDaoImpl.getInstance();
     public static ICommonService getInstance() {
         if (instance == null) {
             instance = new EDMCountryServiceImpl();
@@ -52,6 +55,16 @@ public class EDMCountryServiceImpl implements ICommonService {
             EMSFMdmCountriesEntity emsfMdmCountriesEntity = emsfMdmCountriesDao.getMdmNameWithzSourceSystemAndMdmCode(IConstant.VALUE.EMS, zEntCodeIso3166Alpha2);
             if (emsfMdmCountriesEntity != null) {
                 edmCountryBo.setCountryName(emsfMdmCountriesEntity.getMdmName());
+            }
+        }
+        //  J2
+        String consumerPlanningRegion = planCnsCountryInputDao.getConsumerPlanningRegion( edmCountryBo.getSourceSystem(), edmCountryBo.getLocalCountry());
+        if(StringUtils.isNotBlank(consumerPlanningRegion)){
+            edmCountryBo.setConsumerPlanningRegion(consumerPlanningRegion);
+            //J3
+            String planningRegionDesc = planCnsPlanRegionDao.getPlanningRegionDesc(edmCountryBo.getConsumerPlanningRegion());
+            if(StringUtils.isNotBlank(planningRegionDesc)){
+                edmCountryBo.setConsumerPlannRegDesc(planningRegionDesc);
             }
         }
 

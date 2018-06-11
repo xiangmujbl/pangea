@@ -1,0 +1,96 @@
+<adf-curation>
+    <curation mainRegion="/edm/mfg_order" viewRegion="/omp/gdm_bom_element" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_bom_element_Process.controller.OMPGdmbomelementController"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_bom_element_process">
+        <regions>
+
+            <region path="/edm/mfg_order">
+                <columns>sourceSysCd,mfgOrdrNum,rsrvtnNum,ordrRtngNum,bomCatCd,bomNum,actRlseDt</columns>
+                <relations>
+                    <relation path="/edm/mfg_order_itm" isPrimaryKey="false">
+                        <expression>srcSysCd=/edm/mfg_order.sourceSysCd,mfgOrdrNum=/edm/mfg_order.mfgOrdrNum</expression>
+                    </relation>
+                    <relation path="/edm/reserv_itm" isPrimaryKey="false">
+                        <expression>sourceSysCd=/edm/mfg_order.sourceSysCd,rsrvtnNum=/edm/mfg_order.rsrvtnNum</expression>
+                    </relation>
+                    <relation path="/edm/mfg_order_rtng">
+                        <expression>srcSysCd=/edm/mfg_order.sourceSysCd,ordrRtngNum=/edm/mfg_order.ordrRtngNum</expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression>sourceSystem=/edm/mfg_order.sourceSysCd,attribute=/edm/mfg_order.sourceSysCd</expression>
+                    </relation>
+                    <relation path="/edm/bom_item" isPrimaryKey="false">
+                        <expression>srcSysCd=/edm/mfg_order.sourceSysCd,bomCatCd=/edm/mfg_order.bomCatCd,bomNum=/edm/mfg_order.bomNum</expression>
+                    </relation>
+                        <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+                        </relation>
+                        <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+                        </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/mfg_order_itm">
+                <columns>srcSysCd,mfgOrdrNum,matlNum,plntCd,prdntVrsnNum,btchNum,rcvdQty,goodRcptLdDaysQty,lnItmNbr,itmQty</columns>
+                <relations>
+                    <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
+                        <expression>srcSysCd=/edm/mfg_order_itm.srcSysCd,matlNum=/edm/mfg_order_itm.matlNum,plntCd=/edm/mfg_order_itm.plntCd,prdntVrsnNum=/edm/mfg_order_itm.prdntVrsnNum</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant</columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>sourceSystem,localMaterialNumber,primaryPlanningCode,localDpParentCode</columns>
+            </region>
+
+
+            <region path="/edm/bom_item">
+                <columns>srcSysCd,bomCatCd,bomNum,dstrbtnKeyCd</columns>
+            </region>
+
+            <region path="/edm/reserv_itm">
+                <columns>sourceSysCd,rsrvtnNum,delInd,qtyFxInd,bomItmNum,btchNum,matlNum,leadTimeOffset,rqmtQty,wthdrnQty</columns>
+                <filter>(*:* -delInd:X) OR (*:* -delInd:x)</filter>
+            </region>
+
+            <region path="/plan/cns_plan_parameter">
+                <columns>attribute,sourceSystem,dataObject,parameterValue</columns>
+                <filter>dataObject:SEND_TO_OMP</filter>
+            </region>
+
+
+            <region path="/edm/mfg_order_rtng">
+                <columns>srcSysCd,ordrRtngNum,operNum</columns>
+                <relations>
+                    <relation path="/edm/mfg_order_seq" isPrimaryKey="false">
+                        <expression>srcSysCd=/edm/mfg_order_rtng.srcSysCd,ordrRtngNum=/edm/mfg_order_rtng.ordrRtngNum</expression>
+                    </relation>
+                </relations>
+            </region>
+
+
+            <region path="/edm/mfg_order_seq">
+                <columns>srcSysCd,ordrRtngNum,rtngSqncNum</columns>
+            </region>
+
+
+
+            <region path="/edm/matl_prod_versn">
+                <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,dstrbtnKeyCd</columns>
+            </region>
+
+
+
+
+            <region path="/omp/gdm_bom_element">
+                <columns>bomElementId,Active,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,BatchId,BOMId,BOMType,BOMUsage,Comments,EndEff,ERPFeedbackQuantity,LocationId,Offset,OffsetCalendarId,OffsetPercentage,OffsetPercType,PlanLevelId,ProductId,Quantity,StartEff</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
