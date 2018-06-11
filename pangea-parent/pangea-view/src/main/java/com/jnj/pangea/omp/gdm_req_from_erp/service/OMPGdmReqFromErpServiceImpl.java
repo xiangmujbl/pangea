@@ -77,7 +77,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                 cal.add(Calendar.DATE, 1);
             }
             Date d2 = cal.getTime();
-            deliveryDate = sdfTo.format(d2);
+            deliveryDate = sdfTo.format(d2) + IConstant.VALUE.HH_NN_SS_ZERO;
             gdmReqFromErpBo.setDeliveryDate(deliveryDate);
         } catch (ParseException e) {
             e.printStackTrace();
