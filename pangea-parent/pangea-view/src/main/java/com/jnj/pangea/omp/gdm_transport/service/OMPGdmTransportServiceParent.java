@@ -48,7 +48,7 @@ public abstract class OMPGdmTransportServiceParent {
 
 		//check for 3rd scenario, vendor id at end
 		if (locArrayList.get(1).contains("$")) {
-			String[] tmp = locArrayList.get(1).split("$");
+			String[] tmp = locArrayList.get(1).split("\\$");
 			String plant = tmp[0];
 			String vendor = tmp[1];
 			locArrayList.set(1, plant);

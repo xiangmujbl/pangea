@@ -520,6 +520,7 @@ public interface IConstant {
 
     interface CNS_TLANE_ITEM_EXCEPTION {
         String REF_SEQ_NUM_TLANE_ITEM = "refSeqNumTlaneItem";
+        String SEQ_NUM_TLANE_ITEM = "sequenceNumber";
         String MATERIAL_NUMBER = "materialNumber";
         String TLANE_NAME = "tlaneName";
     }

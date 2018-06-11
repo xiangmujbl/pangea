@@ -149,12 +149,12 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		if (!matGlobV1EntityList.isEmpty()) {
 			locMatNum = matGlobV1EntityList.get(0).getLocalMaterialNumber();
 		}
-//		else {
-//			matGlobV1EntityList = this.materialGlobalV1Dao.getEntitiesWithMaterialNumber(tlaneItemEntity.getMaterialNumber());
-//			if (!matGlobV1EntityList.isEmpty()) {
-//				locMatNum = matGlobV1EntityList.get(0).getLocalMaterialNumber();
-//			}
-//		}
+		else {
+			matGlobV1EntityList = this.materialGlobalV1Dao.getEntitiesWithMaterialNumber(tlaneItemEntity.getMaterialNumber());
+			if (!matGlobV1EntityList.isEmpty()) {
+				locMatNum = matGlobV1EntityList.get(0).getLocalMaterialNumber();
+			}
+		}
 
 		return locMatNum;
 	}
@@ -173,7 +173,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		String rule = "N1";
 
 		List<CnsTlaneItemExceptionEntity> tlaneItemExceptionEntities =
-				this.tlaneExceptionDao.getEntitiesWithRefSeqNumMatNumTlaneName(
+				this.tlaneExceptionDao.getEntitiesWithSeqNumMatNumTlaneName(
 						tlaneItemEntity.getSequenceNumber(),
 						tlaneItemEntity.getMaterialNumber(),
 						tlaneItemEntity.getTlaneName()

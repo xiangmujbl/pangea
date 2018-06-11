@@ -191,10 +191,10 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
      * @param tlaneItemExceptionEntity
      * @return
      */
-    private String getMaterialNumber (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity) {
+    private String getMaterialNumber (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity, String srcSystem) {
 
         String locMatNum = null;
-        List<EDMMaterialGlobalV1Entity> matGlobV1EntityList = this.materialGlobalV1Dao.getEntitiesWithPrimaryPlanningCode(tlaneItemExceptionEntity.getMaterialNumber());
+        List<EDMMaterialGlobalV1Entity> matGlobV1EntityList = this.materialGlobalV1Dao.getEntitiesWithPrimaryPlanningCodeAndSourceSystem(tlaneItemExceptionEntity.getMaterialNumber(),srcSystem);
 
         if (!matGlobV1EntityList.isEmpty()) {
             locMatNum = matGlobV1EntityList.get(0).getLocalMaterialNumber();
@@ -309,7 +309,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         String localPlantNum = this.getLocalPlantNum(tlaneItemExceptionEntity.getDestinationLocation());
         String sourceSystem = this.getSourceSystem(tlaneItemExceptionEntity.getDestinationLocation());
 
-        locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity);
+        locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity,sourceSystem);
 
         //skip rest if no mat num was found
         if (locMatNum == null) {
@@ -323,8 +323,9 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             purchaseGroup = materialPlantV1EntityList.get(0).getPurchsngGrpCd();
         }
         else {
-            this.curationSkip = true;
-            return null;
+//            this.curationSkip = true;
+//            return null;
+			purchaseGroup = "";
         }
 
         return purchaseGroup;
@@ -343,7 +344,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
 
         String localPlantNum = this.getLocalPlantNum(tlaneItemExceptionEntity.getDestinationLocation());
         String sourceSystem = this.getSourceSystem(tlaneItemExceptionEntity.getDestinationLocation());
-        String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity);
+        String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity,sourceSystem);
 
         //skip rest if no mat num was found
         if (locMatNum == null) {
@@ -358,7 +359,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             sourceListV1Entity = sourceListV1EntityList.get(0);
         }
         else {
-            this.curationSkip = true;
+//            this.curationSkip = true;
             return null;
         }
 
@@ -399,7 +400,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         String fromProdId = null;
         String srcSys = this.getSourceSystem(location);
         String locPlant = this.getLocalPlantNum(location);
-        String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity);
+        String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity,srcSys);
 
         if (locMatNum == null) {
             this.curationSkip = true;
