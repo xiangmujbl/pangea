@@ -1,69 +1,25 @@
 <adf-curation xmlns="http://www.jnj.com/adf-curation">
-    <curation mainRegion="/atom/gdm/sales_history" viewRegion="/atom/gdm/sales_history_consolidate"
-              chunkSize="1000" partitionPerServer="2" chunkBytes="40096" parallelism="2"
-    >
+    <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/edm/purchase_order_oa_v1_aggr"
+              chunkSize="1000" partitionPerServer="2" chunkBytes="40096" parallelism="2">
+
+        <!--a simple aggregation test-->
         <regions>
-            <region path="/atom/gdm/sales_history" mvel="true">
-                <filter>sourceSystem=='anspach'</filter>
+            <region path="/edm/purchase_order_oa_v1" mvel="true">
+                <columns>poNum,matlNum,recvQty</columns>
+                <filter>matlNum==91661</filter>
                 <aggregator>
                     <fields>
-                        <field name="quantity" aggr="SUM" type="NUMBER" scale="7"/>
-                        <field name="certaintyId"/>
-                        <field name="sourceSystem"/>
-                        <field name="productId"/>
-                        <field name="customerId"/>
-                        <field name="locationId"/>
-                        <field name="salesUnit"/>
-                        <field name="currency"/>
-                        <field name="demandStreamId"/>
-                        <field name="orderType"/>
-                        <field name="orderSubType"/>
-                        <field name="orderReason"/>
-                        <field name="fromDueDate">
-                            <expr>fmtDate(toDate(consolidatedDate,'dd/MM/yyyy'),'dd/MM/yyyy HH:mm:ss')</expr>
-                        </field>
-                        <field name="dueDate">
-                            <expr>fmtDate(addSecond(toDate(consolidatedDate,'dd/MM/yyyy'),1),'dd/MM/yyyy HH:mm:ss')
-                            </expr>
-                        </field>
-                        <field name="salesHistoryId" asKey="true">
-                            <expr>substringBefore(salesHistoryId,
-                                '_')+"_"+productId+"_"+certaintyId+"_"+demandStreamId+"_"+orderType+"_"+orderSubType+"_"+orderReason+"_"+customerId+"_"+locationId
-                                +"_"+fmtDate(toDate(consolidatedDate,'dd/MM/yyyy'),'dd-MM-yyyy')+"_"+salesUnit+"_"+currency
-                            </expr>
-                        </field>
-                        <field name="factorQuantity1" aggr="SUM" type="NUMBER" scale="7">
-                            <expr>quantity*conversionFactor01</expr>
-                        </field>
-                        <field name="conversionFactor01">
-                            <expr>divideToString(factorQuantity1,quantity, 7)</expr>
-                        </field>
-                        <field name="factorQuantity2" aggr="SUM" type="NUMBER" scale="7">
-                            <expr>quantity*conversionFactor02</expr>
-                        </field>
-                        <field name="conversionFactor02">
-                            <expr>divideToString(factorQuantity2,quantity, 7)</expr>
-                        </field>
-                        <!--set as default value-->
-                        <field name="forecastItemId">
-                            <expr>""</expr>
-                        </field>
-                        <field name="validValue01">
-                            <expr>"1"</expr>
-                        </field>
-                        <field name="validValue02">
-                            <expr>"1"</expr>
-                        </field>
+                        <field name="recvQty" aggr="SUM" type="NUMBER" scale="3"/>
+                        <field name="matlNum" asKey="true"/>
+                        <field name="poNum" asKey="true"/>
                     </fields>
                     <groupBy>
-                        productId,certaintyId,demandStreamId,orderType,orderSubType,orderReason,customerId,locationId,consolidatedDate,salesUnit,currency,sourceSystem
+                        matlNum,poNum
                     </groupBy>
                 </aggregator>
             </region>
-            <region path="/atom/gdm/sales_history_consolidate">
-                <columns>
-                    salesHistoryId,certaintyId,productId,customerId,locationId,forecastItemId,fromDueDate,dueDate,quantity,conversionFactor01,validValue01,conversionFactor02,validValue02,salesUnit,currency,demandStreamId,orderType,orderSubType,orderReason
-                </columns>
+            <region path="/edm/purchase_order_oa_v1_aggr">
+                <columns>poNum,matlNum,recvQty</columns>
             </region>
         </regions>
     </curation>
