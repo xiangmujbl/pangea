@@ -39,6 +39,10 @@ public abstract class OMPGdmTransportServiceParent {
 		ArrayList<String> locArrayList = new ArrayList<>();
 		if (location.contains("_V_")) {
 			locArrayList = new ArrayList<>(Arrays.asList(location.split("_V_")));
+
+			if(locArrayList.size()>1) {
+				locArrayList.add(locArrayList.get(1));
+			}
 		} else {
 			ArrayList<String> tempLocList = new ArrayList<>(Arrays.asList(location.split("_")));
 			String plant = tempLocList.remove(tempLocList.size()-1);

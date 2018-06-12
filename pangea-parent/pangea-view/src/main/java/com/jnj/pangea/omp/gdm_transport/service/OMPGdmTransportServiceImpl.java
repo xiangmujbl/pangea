@@ -182,7 +182,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		if (!tlaneItemExceptionEntities.isEmpty()) {
 			for (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity : tlaneItemExceptionEntities) {
 				if (tlaneItemExceptionEntity.getDeletionIndicator().equals("X")) {
-					this.curationSkip = true;
+					//this.curationSkip = true;
 					return null;
 				}
 			}
@@ -215,7 +215,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//skip rest if no mat num was found
 		if (locMatNum == null) {
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 
@@ -226,7 +226,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		}
 		else {
 
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 
@@ -250,7 +250,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//skip rest if no mat num was found
 		if (locMatNum == null) {
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 
@@ -261,7 +261,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			sourceListV1Entity = sourceListV1EntityList.get(0);
 		}
 		else {
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 

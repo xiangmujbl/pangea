@@ -325,7 +325,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         //skip rest if no mat num was found
         if (locMatNum == null) {
             this.curationSkip = true;
-            return null;
+            return " ";
         }
 
         List<EDMMaterialPlantV1Entity> materialPlantV1EntityList = this.materialPlantV1Dao.getEntitiesWithLocalMaterialNumberLocalPlantNumberSourceSystem(locMatNum,localPlantNum,sourceSystem);
@@ -432,11 +432,11 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             this.curationSkip = true;
             return null;
         }
-        if (!this.checkPlantRelevant(srcSys, locPlant)) {
+        if (this.checkPlantRelevant(srcSys, locPlant)) {
             planRevelant=true;
         }
 
-        if (!this.checkSpecialPlanLocRelevant(srcSys, locPlant)) {
+        if (this.checkSpecialPlanLocRelevant(srcSys, locPlant)) {
             specialPlanRelevant=true;
         }
 
