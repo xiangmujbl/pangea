@@ -632,8 +632,12 @@ public interface IConstant {
         String SOURCE_OBJECT_TECHNAME = "sourceObjectTechName";
         String SOURCE_OBJECT_ATTRIBUTE1 = "sourceObjectAttribute1";
         String SOURCE_OBJECT_ATTRIBUTE1_VALUE = "sourceObjectAttribute1Value";
-        String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
+        String SOURCE_OBJECT_PLANT_ATTRIBUTE1 = "sourceObjectAttribute1";
+        String SOURCE_OBJECT_ATTRIBUTE2_VALUE = "sourceObjectAttribute2Value";
+        String SOURCE_OBJECT_PLANT_ATTRIBUTE2 = "sourceObjectAttribute2";
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
+        String SOURCE_FILTER_INCLUSIONEXCLUSION = "inclusionExclusion";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION= "purchase_requisition";
     }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
@@ -996,7 +1000,6 @@ public interface IConstant {
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
         String THIRTY = "30";
-
     }
 
     interface FAILED {
