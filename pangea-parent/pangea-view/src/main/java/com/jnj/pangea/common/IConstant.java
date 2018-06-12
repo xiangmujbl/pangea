@@ -561,6 +561,8 @@ public interface IConstant {
         String EV_TYPE_CD = "evTypeCd";
         String PLNTCD = "plntCd";
         String PRCHSNG_ORG_NUM = "prchsngOrgNum";
+        String PO_TYPE_CD = "poTypeCd";
+        String PURCHASE_ORDER_OA = "purchase_order_oa";
     }
 
     interface PLAN_CONS_TIME_DEP_XCHANGE {
