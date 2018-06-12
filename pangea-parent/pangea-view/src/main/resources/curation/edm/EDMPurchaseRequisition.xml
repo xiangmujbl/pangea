@@ -1,11 +1,17 @@
 <adf-curation>
-    <curation mainRegion="/project_one/eban" viewRegion="/edm/purchase_requisition_v1" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/project_one/eban" viewRegion="/edm/purchase_requisition_v1" chunkSize="1000"
+              chunkBytes="40096"
               executionClassName="com.jnj.pangea.edm.purchase_requisition_v1.controller.EDMPurchaseRequisitionController">
         <regions>
 
             <region path="/project_one/eban">
                 <columns>
-                    banfn, bnfpo, werks, matnr, meins, bsart, bstyp, bsakz, loekz, statu, estkz, ekgrp, ernam, erdat, txz01, ematn, lgort, bednr, matkl, reswk, menge, badat, lfdat, frgdt, webaz, pstyp, knttp, wepos, lifnr, flief, ekorg, vrtyp, konnr, ktpnr, infnr, zugba, qunum, qupos, wadatist, sernr, ebeln, ebelp, bedat, bsmng, ebakz, werks, sobkz, fixkz, bmein, frgrl, charg, umsok, verid, adrnr, adrn2, kunnr, emlif, lblkz, waers, gsfrg, mfrpn, mfrnr, emnfr, plifz, berid, memory, banpr, blckd, blckt, beswk, reslo, banfnCs, bnfpoCs, itemCs
+                    banfn, bnfpo, werks, matnr, meins, bsart, bstyp, bsakz, loekz, statu, estkz, ekgrp, ernam, erdat,
+                    txz01, ematn, lgort, bednr, matkl, reswk, menge, badat, lfdat, frgdt, webaz, pstyp, knttp, wepos,
+                    lifnr, flief, ekorg, vrtyp, konnr, ktpnr, infnr, zugba, qunum, qupos, dispo, sernr, ebeln, ebelp,
+                    bedat, bsmng, ebakz, rsnum, sobkz, fixkz, bmein, frgrl, charg, umsok, verid, adrnr, adrn2, kunnr,
+                    emlif, lblkz, waers, gsfrg, mfrpn, mfrnr, emnfr, plifz, berid, memory, banpr, blckd, blckt, beswk,
+                    reslo, banfnCs, bnfpoCs, itemCs
                 </columns>
                 <filter>statu:N</filter>
                 <relations>
@@ -24,7 +30,17 @@
 
             <region path="/edm/purchase_requisition_v1">
                 <columns>
-                    sourceSystem, prNum, prLineNbr, plntCd, matlNum,prLineUomCd, prTypeCd, prCatCd, localControlInd, delInd, prStsCd, recCrtInd, prchsngGrpNum, crtByNm, chngOnDt, prchInfoDesc, mfrPartNum, slocCd, intrnlRefNum, locaalMaterialGroup, suplPlntCd, prLineQty, prRqstDt, needByDt, apprByDt, localPrGRLeadTimeDays, prLineCatCd, acctAsgnmtCatCd, localGRInd, localSupNum, localFixedVendor, prchsngOrgNum, poTypeCd, localAgreement, localAgreementItem, localInfoRecord, asgnSuplSrcInd, localQuotaArr, localQuotaArrItem, bomNum, localPurchaseOrder, localItem, localPODate, localPOQuantity, prClseInd, localReservation, splStkInd, fxInd, localOrderUnit, localSubjToRelease, localBatch, localSpIndStckTfr, localProdVersion, localdelvAddrADRNR, localdelvAddrADRN2, localCustomer, supNum, localSCVendor, localCurrency, localOverallReqRel, localManufacturer, localExternalManuf, localPDT, prMrpHrzn, localIncomplete, lineStsCd, blokInd, localBlockingText, localProcuringPlant, localIssStorLoc, localXSysPReqNo, localXSysPReqItem, localXSysItemCat
+                    sourceSystem, prNum, prLineNbr, plntCd, matlNum,prLineUomCd, prTypeCd, prCatCd, localControlInd,
+                    delInd, prStsCd, recCrtInd, prchsngGrpNum, crtByNm, chngOnDt, prchInfoDesc, mfrPartNum, slocCd,
+                    intrnlRefNum, locaalMaterialGroup, suplPlntCd, prLineQty, prRqstDt, needByDt, apprByDt,
+                    localPrGRLeadTimeDays, prLineCatCd, acctAsgnmtCatCd, localGRInd, localSupNum, localFixedVendor,
+                    prchsngOrgNum, poTypeCd, localAgreement, localAgreementItem, localInfoRecord, asgnSuplSrcInd,
+                    localQuotaArr, localQuotaArrItem, bomNum, localPurchaseOrder, localItem, localPODate,
+                    localPOQuantity, prClseInd, localReservation, splStkInd, fxInd, localOrderUnit, localSubjToRelease,
+                    localBatch, localSpIndStckTfr, localProdVersion, localdelvAddrADRNR, localdelvAddrADRN2,
+                    localCustomer, supNum, localSCVendor, localCurrency, localOverallReqRel, localManufacturer,
+                    localExternalManuf, localPDT, prMrpHrzn, localIncomplete, lineStsCd, blokInd, localBlockingText,
+                    localProcuringPlant, localIssStorLoc, localXSysPReqNo, localXSysPReqItem, localXSysItemCat
                 </columns>
             </region>
 

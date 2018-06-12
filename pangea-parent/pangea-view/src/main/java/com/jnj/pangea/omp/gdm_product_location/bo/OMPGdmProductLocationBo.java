@@ -10,18 +10,16 @@ public class OMPGdmProductLocationBo extends BaseBo {
     private String activeFCTERP;
     private String activeOPRERP;
     private String activeSOPERP;
-    private String basmg;
+    private String ProductTypeId;
     private String beskz;
     private String bstfe;
     private String bstma;
     private String bstmi;
     private String bstrf;
-    private String cost;
     private String disls;
     private String dismm;
     private String dispo;
     private String dzeit;
-    private String eisbe;
     private String eislo;
     private String fevor;
     private String fixedHorizon;
@@ -34,55 +32,38 @@ public class OMPGdmProductLocationBo extends BaseBo {
     private String leadTime;
     private String locationId;
     private String maabc;
-    private String mabst;
     private String minmrsl;
     private String minRemainingShelfLife;
     private String mmsta;
     private String mtvfp;
-    private String peinh;
-    private String plifz;
-    private String productTypeId;
     private String replenishmentLotSize;
-    private String sbdkz;
-    private String shelfLifeProductTypeId;
     private String shflg;
-    private String shzet;
     private String sobsl;
-    private String stprs;
     private String strgr;
     private String supplyGroup;
     private String supplySource;
     private String totalShelfLife;
-    private String verpr;
     private String vint1;
     private String vint2;
-    private String vprsv;
     private String vrmod;
     private String webaz;
-    private String xchpf;
-    private String productValue;
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getProductValue() {
-        return productValue;
-    }
-
-    public void setProductValue(String productValue) {
-        this.productValue = productValue;
-    }
+    private String BatchManaged;
+    private String MinInventoryQuantity;
+    private String MaxInventoryQuantity;
 
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("productId", this.productId).add("locationId",this.locationId)
                 .toJsonString();
+    }
+
+    public String getProductTypeId() {
+        return ProductTypeId;
+    }
+
+    public void setProductTypeId(String productTypeId) {
+        ProductTypeId = productTypeId;
     }
 
     public String getProductId() {
@@ -125,14 +106,6 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.activeSOPERP = activeSOPERP;
     }
 
-    public String getBasmg() {
-        return this.basmg;
-    }
-
-    public void setBasmg(String basmg) {
-        this.basmg = basmg;
-    }
-
     public String getBeskz() {
         return this.beskz;
     }
@@ -173,14 +146,6 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.bstrf = bstrf;
     }
 
-    public String getCost() {
-        return this.cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
-
     public String getDisls() {
         return this.disls;
     }
@@ -213,14 +178,6 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.dzeit = dzeit;
     }
 
-    public String getEisbe() {
-        return this.eisbe;
-    }
-
-    public void setEisbe(String eisbe) {
-        this.eisbe = eisbe;
-    }
-
     public String getEislo() {
         return this.eislo;
     }
@@ -237,12 +194,12 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.fevor = fevor;
     }
 
-    public String getMinRemainingShelfLife() {
-        return minRemainingShelfLife;
+    public String getFixedHorizon() {
+        return this.fixedHorizon;
     }
 
-    public void setMinRemainingShelfLife(String minRemainingShelfLife) {
-        this.minRemainingShelfLife = minRemainingShelfLife;
+    public void setFixedHorizon(String fixedHorizon) {
+        this.fixedHorizon = fixedHorizon;
     }
 
     public String getFrtme() {
@@ -262,7 +219,7 @@ public class OMPGdmProductLocationBo extends BaseBo {
     }
 
     public String getItemPlanningCategory() {
-        return itemPlanningCategory;
+        return this.itemPlanningCategory;
     }
 
     public void setItemPlanningCategory(String itemPlanningCategory) {
@@ -285,6 +242,13 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.kzkri = kzkri;
     }
 
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public String getLeadTime() {
         return this.leadTime;
@@ -310,14 +274,6 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.maabc = maabc;
     }
 
-    public String getMabst() {
-        return this.mabst;
-    }
-
-    public void setMabst(String mabst) {
-        this.mabst = mabst;
-    }
-
     public String getMinmrsl() {
         return this.minmrsl;
     }
@@ -326,6 +282,13 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.minmrsl = minmrsl;
     }
 
+    public String getMinRemainingShelfLife() {
+        return this.minRemainingShelfLife;
+    }
+
+    public void setMinRemainingShelfLife(String minRemainingShelfLife) {
+        this.minRemainingShelfLife = minRemainingShelfLife;
+    }
 
     public String getMmsta() {
         return this.mmsta;
@@ -343,52 +306,12 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.mtvfp = mtvfp;
     }
 
-    public String getPeinh() {
-        return this.peinh;
-    }
-
-    public void setPeinh(String peinh) {
-        this.peinh = peinh;
-    }
-
-    public String getPlifz() {
-        return this.plifz;
-    }
-
-    public void setPlifz(String plifz) {
-        this.plifz = plifz;
-    }
-
-    public String getProductTypeId() {
-        return this.productTypeId;
-    }
-
-    public void setProductTypeId(String productTypeId) {
-        this.productTypeId = productTypeId;
-    }
-
     public String getReplenishmentLotSize() {
-        return replenishmentLotSize;
+        return this.replenishmentLotSize;
     }
 
     public void setReplenishmentLotSize(String replenishmentLotSize) {
         this.replenishmentLotSize = replenishmentLotSize;
-    }
-
-    public String getSbdkz() {
-        return this.sbdkz;
-    }
-
-    public void setSbdkz(String sbdkz) {
-        this.sbdkz = sbdkz;
-    }
-
-    public String getShelfLifeProductTypeId() {
-        return shelfLifeProductTypeId;
-    }
-
-    public void setShelfLifeProductTypeId(String shelfLifeProductTypeId) {
-        this.shelfLifeProductTypeId = shelfLifeProductTypeId;
     }
 
     public String getShflg() {
@@ -399,28 +322,12 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.shflg = shflg;
     }
 
-    public String getShzet() {
-        return this.shzet;
-    }
-
-    public void setShzet(String shzet) {
-        this.shzet = shzet;
-    }
-
     public String getSobsl() {
         return this.sobsl;
     }
 
     public void setSobsl(String sobsl) {
         this.sobsl = sobsl;
-    }
-
-    public String getStprs() {
-        return this.stprs;
-    }
-
-    public void setStprs(String stprs) {
-        this.stprs = stprs;
     }
 
     public String getStrgr() {
@@ -448,19 +355,11 @@ public class OMPGdmProductLocationBo extends BaseBo {
     }
 
     public String getTotalShelfLife() {
-        return totalShelfLife;
+        return this.totalShelfLife;
     }
 
     public void setTotalShelfLife(String totalShelfLife) {
         this.totalShelfLife = totalShelfLife;
-    }
-
-    public String getVerpr() {
-        return this.verpr;
-    }
-
-    public void setVerpr(String verpr) {
-        this.verpr = verpr;
     }
 
     public String getVint1() {
@@ -479,14 +378,6 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.vint2 = vint2;
     }
 
-    public String getVprsv() {
-        return this.vprsv;
-    }
-
-    public void setVprsv(String vprsv) {
-        this.vprsv = vprsv;
-    }
-
     public String getVrmod() {
         return this.vrmod;
     }
@@ -503,19 +394,28 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.webaz = webaz;
     }
 
-    public String getXchpf() {
-        return this.xchpf;
+    public String getBatchManaged() {
+        return this.BatchManaged;
     }
 
-    public void setXchpf(String xchpf) {
-        this.xchpf = xchpf;
+    public void setBatchManaged(String batchManaged) {
+        this.BatchManaged = batchManaged;
     }
 
-    public String getFixedHorizon() {
-        return fixedHorizon;
+    public String getMinInventoryQuantity() {
+        return this.MinInventoryQuantity;
     }
 
-    public void setFixedHorizon(String fixedHorizon) {
-        this.fixedHorizon = fixedHorizon;
+    public void setMinInventoryQuantity(String minInventoryQuantity) {
+        this.MinInventoryQuantity = minInventoryQuantity;
     }
+
+    public String getMaxInventoryQuantity() {
+        return this.MaxInventoryQuantity;
+    }
+
+    public void setMaxInventoryQuantity(String maxInventoryQuantity) {
+        this.MaxInventoryQuantity = maxInventoryQuantity;
+    }
+
 }

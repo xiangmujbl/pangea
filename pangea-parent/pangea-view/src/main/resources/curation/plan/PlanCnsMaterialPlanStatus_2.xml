@@ -2,8 +2,7 @@
     <curation mainRegion="/plan/cns_material_incl" viewRegion="/plan/cns_material_plan_status" chunkSize="1000"
               chunkBytes="4096"
               partitionPerServer="2" parallelism="2"
-              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatusController2"
-              writeTo="all" topic="PANGEA_V1_plan_cns_material_plan_status">
+              executionClassName="com.jnj.pangea.plan.cns_material_plan_status.controller.PlanCnsMaterialPlanStatusController2">
     <regions>
             <region path="/plan/cns_material_incl">
                 <columns>sourceSystem,localMaterialNumber,localPlant,planningType</columns>

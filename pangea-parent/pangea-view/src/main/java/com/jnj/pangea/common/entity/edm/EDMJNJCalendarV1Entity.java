@@ -9,7 +9,7 @@ public class EDMJNJCalendarV1Entity extends CommonEntity {
     private String weekFromDate;
     private String weekToDate;
     private String calWeek;
-    private String noOfweek;
+    private String noOfWeek;
 
     public String getCalWeek() {
         return calWeek;
@@ -19,12 +19,23 @@ public class EDMJNJCalendarV1Entity extends CommonEntity {
         this.calWeek = calWeek;
     }
 
-    public String getNoOfweek() {
-        return noOfweek;
+    public String getNoOfWeek() {
+        return noOfWeek;
     }
 
-    public void setNoOfweek(String noOfweek) {
-        this.noOfweek = noOfweek;
+    public void setNoOfWeek(String noOfWeek) {
+        this.noOfWeek = noOfWeek;
+    }
+
+    @Override
+    public String toString() {
+        return "EDMJNJCalendarV1Entity{" +
+                "fiscalPeriod='" + fiscalPeriod + '\'' +
+                ", weekFromDate='" + weekFromDate + '\'' +
+                ", weekToDate='" + weekToDate + '\'' +
+                ", calWeek='" + calWeek + '\'' +
+                ", noOfWeek='" + noOfWeek + '\'' +
+                '}';
     }
 
     public EDMJNJCalendarV1Entity(Map<String, Object> map) {
@@ -33,7 +44,7 @@ public class EDMJNJCalendarV1Entity extends CommonEntity {
         setWeekFromDate((String) map.get("weekFromDate"));
         setWeekToDate((String) map.get("weekToDate"));
         setCalWeek((String) map.get("calWeek"));
-        setNoOfweek((String) map.get("noOfweek"));
+        setNoOfWeek((String) map.get("noOfWeek"));
     }
     public String getFiscalPeriod() {
         return fiscalPeriod;

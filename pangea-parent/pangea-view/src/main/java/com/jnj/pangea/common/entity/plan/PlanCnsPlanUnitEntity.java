@@ -8,7 +8,7 @@ public class PlanCnsPlanUnitEntity extends CommonEntity {
 
     private String localUom;
     private String localUomName;
-    private String plantFlag;
+    private String planFlag;
     private String sourceSystem;
     private String unit;
     private String factor;
@@ -19,7 +19,7 @@ public class PlanCnsPlanUnitEntity extends CommonEntity {
 
         setLocalUom((String) map.get("localUom"));
         setLocalUomName((String) map.get("localUomName"));
-        setPlantFlag((String) map.get("plantFlag"));
+        setPlanFlag((String) map.get("planFlag"));
         setSourceSystem((String) map.get("sourceSystem"));
         setUnit((String) map.get("unit"));
         setFactor((String) map.get("factor"));
@@ -42,12 +42,12 @@ public class PlanCnsPlanUnitEntity extends CommonEntity {
         this.localUomName = localUomName;
     }
 
-    public String getPlantFlag() {
-        return this.plantFlag;
+    public String getPlanFlag() {
+        return this.planFlag;
     }
 
-    public void setPlantFlag(String plantFlag) {
-        this.plantFlag = plantFlag;
+    public void setPlanFlag(String planFlag) {
+        this.planFlag = planFlag;
     }
 
     public String getSourceSystem() {

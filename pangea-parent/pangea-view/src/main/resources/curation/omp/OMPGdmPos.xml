@@ -1,48 +1,85 @@
 <adf-curation>
-    <curation mainRegion="/plan/cns_dp_pos" viewRegion="/omp/gdm_pos" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_pos.controller.OMPGdmPosController">
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_pos" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_pos.controller.OMPGdmPosController"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_pos">
         <regions>
 
-            <region path="/plan/cns_dp_pos">
-                <columns>localMaterial,customer,yearMonth,quantity</columns>
-                <relations>
-                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/plan/cns_dp_pos.localMaterial</expression>
-                    </relation>
-                    <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
-                        <expression>customerShipTo=/plan/cns_dp_pos.customer</expression>
-                    </relation>
-                </relations>
-            </region>
-
             <region path="/edm/material_global_v1">
-                <columns>localMaterialNumber,localBaseUom,localDpParentCode</columns>
+                <columns>localMaterialNumber,sourceSystem,localBaseUom,localDpParentCode</columns>
                 <relations>
+                    <relation path="/plan/cns_dp_pos" isPrimaryKey="false">
+                        <expression>localMaterial=/edm/material_global_v1.localMaterialNumber</expression>
+                    </relation>
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
                         <expression>localUom=/edm/material_global_v1.localBaseUom</expression>
                     </relation>
+                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression>sourceSystem=/edm/material_global_v1.sourceSystem</expression>
+                    </relation>
+
+                    <relation path="/edm/material_global_v1" alias="/edm/material_global_v1_copy" isPrimaryKey="false">
+                        <expression>localDpParentCode=/edm/material_global_v1.localDpParentCode</expression>
+                    </relation>
                 </relations>
+                <!--<filter>localDpParentCode:78910100997250012</filter>-->
+            </region>
+
+            <region path="/plan/cns_dp_pos">
+                <columns>localMaterial,customer,sourceSystem,yearMonth,quantity</columns>
+                <relations>
+                    <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
+                        <expression>customerId=/plan/cns_dp_pos.customer</expression>
+                    </relation>
+                    <relation path="/edm/jnj_calendar_v1" isPrimaryKey="false">
+                        <expression>fiscalPeriod=/plan/cns_dp_pos.yearMonth</expression>
+                    </relation>
+                </relations>
+                <!--<filter>yearMonth:201801</filter>-->
+            </region>
+
+            <region path="/edm/material_global_v1" alias="/edm/material_global_v1_copy">
+                <columns>localMaterialNumber,sourceSystem,localBaseUom,localDpParentCode</columns>
+                <!--<filter>localDpParentCode:78910100997250012</filter>-->
+            </region>
+
+            <region path="/plan/cns_plan_parameter">
+                <columns>attribute,sourceSystem,dataObject</columns>
             </region>
 
             <region path="/plan/cns_plan_unit">
-                <columns>localUom,unit</columns>
+                <columns>localUom,sourceSystem,unit</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression>sourceSystem=/plan/cns_plan_unit.sourceSystem</expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,sourceSystem</columns>
             </region>
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>customerId,customerShip,group</columns>
+                <columns>customerId,demandGroup</columns>
                 <relations>
                     <relation path="/project_one/knvh" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>kunnr=/plan/cns_dem_grp_asgn.customerId</expression>
                     </relation>
                 </relations>
+                <!--<filter>demandGroup:76100007</filter>-->
             </region>
 
             <region path="/project_one/knvh">
                 <columns>kunnr,hkunnr,datbi</columns>
             </region>
 
+            <region path="/edm/jnj_calendar_v1">
+                <columns>fiscalPeriod,noOfWeek,weekToDate,weekFromDate,calWeek</columns>
+                <!--<filter>fiscalPeriod:201801</filter>-->
+            </region>
+
             <region path="/omp/gdm_pos">
-                <columns>aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate,unitId,quantity</columns>
+                <columns>aggregationId,currencyId,dueDate,forecastUploadId,fromDueDate,unitId,volume</columns>
             </region>
 
         </regions>

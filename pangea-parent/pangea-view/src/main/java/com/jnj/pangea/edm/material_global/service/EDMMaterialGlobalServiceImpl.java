@@ -89,14 +89,14 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
                         materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
                         materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
 
-                        // rules J3
-                        if (StringUtils.isNotEmpty(goldenMaterialEntity.getGlobalDpParentCode())) {
-                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getGlobalDpParentCode());
-                        } else if (StringUtils.isEmpty(goldenMaterialEntity.getGlobalDpParentCode()) && StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
-                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getParentCode());
-                        } else if (StringUtils.isEmpty(goldenMaterialEntity.getParentCode())) {
-                            materialGlobalBo.setGlobalDpParentCode("");
-                        }
+//                        // rules J3
+//                        if (StringUtils.isNotEmpty(goldenMaterialEntity.getGlobalDpParentCode())) {
+//                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getGlobalDpParentCode());
+//                        } else if (StringUtils.isEmpty(goldenMaterialEntity.getGlobalDpParentCode()) && StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
+//                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getParentCode());
+//                        } else if (StringUtils.isEmpty(goldenMaterialEntity.getParentCode())) {
+//                            materialGlobalBo.setGlobalDpParentCode("");
+//                        }
                     }
                 }
             }
@@ -114,6 +114,9 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         materialGlobalBo.setBatchManageIndicator(maraEntity.getXchpf());
         materialGlobalBo.setMinRemShelfLife(maraEntity.getMhdrz());
         materialGlobalBo.setTotalShelfLife(maraEntity.getMhdhb());
+
+        //update according 2018-05-16 document
+        materialGlobalBo.setGlobalDpParentCode("");
 
         resultObject.setBaseBo(materialGlobalBo);
         return resultObject;

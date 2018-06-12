@@ -6,8 +6,8 @@ import com.jnj.pangea.common.BaseBo;
 public class OMPGdmLotSizeKeyBo extends BaseBo {
 
     private String lotSizeKey;
-    private String  activeOprerp;
-    private String  activeSoperp;
+    private String  activeOPRERP;
+    private String  activeSOPERP;
     private String  comments;
     private String  description;
     private String  period;
@@ -28,20 +28,20 @@ public class OMPGdmLotSizeKeyBo extends BaseBo {
         this.lotSizeKey = lotSizeKey;
     }
 
-    public String getActiveOprerp() {
-        return activeOprerp;
+    public String getactiveOPRERP() {
+        return activeOPRERP;
     }
 
-    public void setActiveOprerp(String activeOprerp) {
-        this.activeOprerp = activeOprerp;
+    public void setactiveOPRERP(String activeOPRERP) {
+        this.activeOPRERP = activeOPRERP;
     }
 
-    public String getActiveSoperp() {
-        return activeSoperp;
+    public String getactiveSOPERP() {
+        return activeSOPERP;
     }
 
-    public void setActiveSoperp(String activeSoperp) {
-        this.activeSoperp = activeSoperp;
+    public void setactiveSOPERP(String activeSOPERP) {
+        this.activeSOPERP = activeSOPERP;
     }
 
     public String getComments() {

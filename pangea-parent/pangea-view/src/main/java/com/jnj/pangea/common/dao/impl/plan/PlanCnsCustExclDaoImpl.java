@@ -19,8 +19,16 @@ public class PlanCnsCustExclDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
+    public List<PlanCnsCustExclEntity> getEntityListWithSalesOrg(String salesOrg){
+        if (StringUtils.isNotEmpty(salesOrg)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg).toQueryString();
+            return queryForList(IConstant.REGION.PLAN_CNS_CUST_EXCL,queryString,PlanCnsCustExclEntity.class);
+        }
+        return null;
+    }
+
     public PlanCnsCustExclEntity getEntityWithSalesOrgAndCustomerShipTo(String salesOrg, String customerShipTo){
-        if (!salesOrg.isEmpty() && !customerShipTo.isEmpty()){
+        if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(customerShipTo)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
                     .and(IConstant.PLAN_CNS_CUST_EXCL.CUSTOMER_SHIP_TO).is(customerShipTo).toQueryString();
             return queryForObject(IConstant.REGION.PLAN_CNS_CUST_EXCL,queryString,PlanCnsCustExclEntity.class);
@@ -37,12 +45,14 @@ public class PlanCnsCustExclDaoImpl extends CommonDaoImpl {
     }
 
     public PlanCnsCustExclEntity getEntityWithSalesOrgAndNotCustomerShipTo(String salesOrg, String customerShipTo){
-        if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(customerShipTo)){
+        if (StringUtils.isNotEmpty(salesOrg)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg).toQueryString();
             List<PlanCnsCustExclEntity> custExclEntityList = queryForList(IConstant.REGION.PLAN_CNS_CUST_EXCL,queryString,PlanCnsCustExclEntity.class);
-            for (PlanCnsCustExclEntity custExclEntity:custExclEntityList) {
-                if(customerShipTo.equals(custExclEntity.getCustomerShipTo())){
-                    return custExclEntity;
+            if (StringUtils.isNotEmpty(customerShipTo)){
+                for (PlanCnsCustExclEntity custExclEntity:custExclEntityList) {
+                    if(customerShipTo.equals(custExclEntity.getCustomerShipTo())){
+                        return custExclEntity;
+                    }
                 }
             }
         }

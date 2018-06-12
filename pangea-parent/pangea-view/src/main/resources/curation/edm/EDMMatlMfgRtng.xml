@@ -1,0 +1,37 @@
+<adf-curation>
+    <curation mainRegion="/project_one/mapl" viewRegion="/edm/matl_mfg_rtng" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.matl_mfg_rtng.controller.MATLMFGRTNGController">
+        <regions>
+
+            <region path="/project_one/mapl">
+                <columns>matnr,werks,plnty,plnnr,plnal,zkriz,zaehl,datuv,aennr,loekz,andat,aedat</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/mapl" alias="/project_one/mapl_clone" isPrimaryKey="false">
+                        <expression>plnty=/project_one/mapl.plnty,plnnr=/project_one/mapl.plnnr,plnal=/project_one/mapl.plnal,zkriz=/project_one/mapl.zkriz</expression>
+                    </relation>
+                </relations>
+                <filter>plnty:2 OR plnty:N</filter>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/project_one/mapl" alias="/project_one/mapl_clone">
+                <columns>matnr,werks,plnty,plnnr,plnal,zkriz,zaehl,datuv,aennr,loekz,andat,aedat</columns>
+                <filter>plnty:2 OR plnty:N</filter>
+            </region>
+
+            <region path="/edm/matl_mfg_rtng">
+                <columns>
+                    srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

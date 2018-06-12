@@ -65,15 +65,16 @@ public class GDMProductCountryServiceImpl implements ICommonService {
                 return resultObject;
             }
             //T3
-            PlanCnsMaterialPlanStatusEntity entityWithLocalParentCode = planCnsMaterialPlanStatusDao.getEntityWithLocalParentCode(dpParentCode);
-            if(entityWithLocalParentCode != null && entityWithLocalParentCode.getDpRelevant() != null ){
-                if(!entityWithLocalParentCode.getDpRelevant().equals(IConstant.VALUE.X)){
+            
+            PlanCnsMaterialPlanStatusEntity entityWithLocalParentCode = planCnsMaterialPlanStatusDao.
+            		getEntityWithLocalParentCodeAndDp(dpParentCode);
+            if(entityWithLocalParentCode == null ){
                     return resultObject;
                 }else{
                     String productId = IConstant.VALUE.LA_ + prodCtyAfflEntity.getDpParentCode();
                     productCountryBo.setProductId(productId);
-                }
-            }
+             }
+            
             productCountryBo.setRootSize(prodCtyAfflEntity.getRootSize());
             productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
             resultObject.setBaseBo(productCountryBo);

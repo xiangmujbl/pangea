@@ -16,9 +16,10 @@ public class PlanCnsClustersDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsClustersEntity getEntityWithCountryID(String countryId) {
+    public PlanCnsClustersEntity getEntityWithCountryIdAndSourceSystem(String countryId, String sourceSystem) {
 
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CLUSTERS.COUNTRY_ID).is(countryId).toQueryString();
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CLUSTERS.COUNTRY_ID).is(countryId)
+                .and(IConstant.PLAN_CNS_CLUSTERS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_CLUSTERS, queryString, PlanCnsClustersEntity.class);
     }
 }

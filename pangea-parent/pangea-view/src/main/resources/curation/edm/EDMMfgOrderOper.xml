@@ -1,0 +1,71 @@
+<adf-curation>
+    <curation mainRegion="/project_one/afvv" viewRegion="/edm/mfg_order_oper" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.mfg_order_oper.controller.EDMMfgOrderOperController">
+        <regions>
+
+            <region path="/project_one/afvv">
+                <columns>
+                    aufpl,aplzl,meinh,umren,umrez,bmsch,
+                    vge01,vgw01,vge02,vgw02,vge03,vgw03,vge04,
+                    vgw04,vge05,vgw05,vge06,vgw06,zeimu,zminu,
+                    minwe,zeimb,zminb,zeilm,zlmax,zeilp,zlpro,
+                    zeiwn,zwnor,zeiwm,zwmin,zeitn,ztnor,zeitm,
+                    ztmin
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/edm/mfg_order_oper">
+                <columns>
+                    srcSysCd,
+                    ordrRtngNum,
+                    ordrRtngCtrNum,
+                    oprUomCd,
+                    factDenomMeas,
+                    factNumrtrMeas,
+                    baseQty,
+                    actv1UomCd,
+                    actv1Qty,
+                    actv2UomCd,
+                    actv2Qty,
+                    actv3UomCd,
+                    actv3Qty,
+                    actv4UomCd,
+                    actv4Qty,
+                    actv5UomCd,
+                    actv5Qty,
+                    actv6UomCd,
+                    actv6Qty,
+                    minOvrlapTimeUomCd,
+                    minOvrlapTimeInDaysQty,
+                    minSendAhdQty,
+                    minPrcsgTimeUomCd,
+                    minPrcsgTimeInDaysQty,
+                    maxWaitTimeUomCd,
+                    maxWaitTimeInDaysQty,
+                    minWaitTimeUomCd,
+                    minWaitTimeInDaysQty,
+                    stdQueTimeUomCd,
+                    stdQueTimeInDaysQty,
+                    minQueTimeUomCd,
+                    minQueTimeInDaysQty,
+                    stdMoveTimeUomCd,
+                    stdMoveTimeInDaysQty,
+                    minMoveTimeUomCd,
+                    minMoveTimeInDaysQty
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

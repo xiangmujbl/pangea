@@ -33,7 +33,7 @@ Feature: EDMSalesOrder AEAZ-493
       | 0000001981 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
       | 0000001982 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
       | 0000001989 |        | 000000000000005912 | 0.0   | 0.00  |       |       |       | 2.000  | 0.00  |       | 1     |       |       |       | KI    | 2.000 | BR2042 |
-    And I wait "/project_one/vbap" Async Queue complete
+    And I wait "/project_one/lips" Async Queue complete
 
     And I import "/project_one/vbep" by keyFields "posnr,vbeln,etenr"
       | vbeln      | posnr  | etenr | edatu    | wmeng   | bmeng |
@@ -63,8 +63,8 @@ Feature: EDMSalesOrder AEAZ-493
       | CONS_LATAM   | 0000001250   |                | 0001             | 20001005           | 20001005       | 00000000         | 00000000       | I                  | ZSR            | 311              |                    |                   | 000000        | 10                | 10            | B99             | BR90             | 20001010           | 1250            | 0000113212       | 0000003883       | 20001005      | 000000000000005911  | 0.0        | 0.00              |                   |                    |                | 2.000         | 0.00           |                | 1              |                       |                  |                     | KI                   | 2.000              | BR2042     | 20001005              | 110.000         | 0.000                 |                    | ZSREMT                | CIF             | CIF             |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1       | key2 | key3 | key4 | key5 | errorValue          |
-      | DP             | EDMSalesOrder | J1        |              |              | 0000001979 |      |      |      |      | No Sales Item Found |
+      | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1       | key2 | key3 | key4 | key5 | errorValue              |
+      | DP             | EDMSalesOrder | J1        |              |              | 0000001979 |      |      |      |      | No Sales Item Found     |
       | DP             | EDMSalesOrder | J2        |              |              | 0000001980 |      |      |      |      | No Schedule lines Found |
       | DP             | EDMSalesOrder | J2        |              |              | 0000001981 |      |      |      |      | No Schedule lines Found |
       | DP             | EDMSalesOrder | J2        |              |              | 0000001982 |      |      |      |      | No Schedule lines Found |

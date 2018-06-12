@@ -1,6 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_lfu" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_lfu.controller.OMPGdmLfuController">
+              executionClassName="com.jnj.pangea.omp.gdm_lfu.controller.OMPGdmLfuController"
+              writeTo="all" topic="PANGEA_V1_gdm_lfu">
         <regions>
 
             <region path="/edm/material_global_v1">
@@ -8,68 +9,77 @@
                     sourceSystem,localMaterialNumber,localDpParentCode,localBaseUom
                 </columns>
                 <relations>
-                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
-                        <expression>localSourceSystem=/edm/material_global_v1.sourceSystem</expression>
-                    </relation>
                     <relation path="/plan/cns_fin_plan_qty" isPrimaryKey="false">
                         <expression>
-                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber,
-                            unitId=/edm/material_global_v1.localBaseUom.
+                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber
                         </expression>
                     </relation>
                     <relation path="/plan/cns_fin_plan_val" isPrimaryKey="false">
                         <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
                     </relation>
-                    <relation path="/edm/material_auom_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+
+                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
+                        <expression>sourceSystem=/edm/material_global_v1.sourceSystem</expression>
+                    </relation>
+
+                    <relation path="/edm/jnj_calendar_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/edm/country_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/currency_v1" isPrimaryKey="false">
+                        <expression></expression>
                     </relation>
                 </relations>
             </region>
 
             <region path="/plan/cns_fin_plan_qty">
                 <columns>
-                    localMaterialNumber,identifier,country,currency,unitId,quantity
+                    localMaterialNumber,identifier,country,currency,unitId,quantity,yearMonth,sourceSystem
                 </columns>
                 <relations>
-                    <relation path="/edm/country_v1" isPrimaryKey="false">
-                        <expression>localCountry = /plan/cns_fin_plan_qty.country</expression>
-                    </relation>
-                    <relation path="/edm/currency_v1" isPrimaryKey="false">
-                        <expression>localCurrency = /plan/cns_fin_plan_qty.currency</expression>
-                    </relation>
                     <relation path="/edm/material_auom_v1" isPrimaryKey="false">
-                        <expression>localAuom = /plan/cns_fin_plan_qty.unitId</expression>
+                        <expression>localMaterialNumber=/plan/cns_fin_plan_qty.localMaterialNumber,localAuom=/plan/cns_fin_plan_qty.unitId,sourceSystem=/plan/cns_fin_plan_qty.sourceSystem</expression>
                     </relation>
                 </relations>
+                <filter>identifier:LFU</filter>
             </region>
 
-            <region path="/edm/source_system_v1">
-                <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
-                </columns>
+            <region path="/edm/material_auom_v1">
+                <columns>localMaterialNumber,localAuom,sourceSystem,localNumerator,localDenominator</columns>
             </region>
 
             <region path="/plan/cns_fin_plan_val">
                 <columns>
-                    localMaterialNumber,identifier,value
+                    localMaterialNumber,identifier,value,yearMonth,currency,country
+                </columns>
+                <filter>identifier:LFU</filter>
+            </region>
+
+            <region path="/edm/jnj_calendar_v1">
+                <columns>
+                    calWeek,fiscalPeriod,noOfWeek,weekToDate,weekFromDate
                 </columns>
             </region>
 
-            <region path="/edm/material_auom_v1">
+            <region path="/plan/cns_plan_parameter">
                 <columns>
-                    localMaterialNumber,localAuom,localNumerator,localDenominator
+                    attribute,dataObject,parameter,parameterValue,sourceSystem
                 </columns>
+                <filter>dataObject:SEND_TO_OMP</filter>
             </region>
 
             <region path="/edm/country_v1">
                 <columns>
-                    sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion
+                    sourceSystem,localCountry,countryCode,countryName
                 </columns>
             </region>
 
             <region path="/edm/currency_v1">
                 <columns>
-                    sourceSystem,localCurrency,currencyCode,currencyName,isoNumeric
+                    sourceSystem,localCurrency,currencyCode,currencyName
                 </columns>
             </region>
             <region path="/omp/gdm_lfu">

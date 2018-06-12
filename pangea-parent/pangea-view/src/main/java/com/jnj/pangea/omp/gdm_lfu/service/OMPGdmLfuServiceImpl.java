@@ -1,22 +1,27 @@
 package com.jnj.pangea.omp.gdm_lfu.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.edm.*;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
 import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanQtyEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanQtyDaoImpl;
-import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanValEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanValDaoImpl;
-import com.jnj.pangea.common.dao.impl.edm.EDMMaterialAuomV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
-import com.jnj.pangea.common.service.ICommonService;
+import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
+import com.jnj.pangea.common.service.ICommonListService;
 import com.jnj.pangea.omp.gdm_lfu.bo.OMPGdmLfuBo;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
-public class OMPGdmLfuServiceImpl implements ICommonService {
+import static com.jnj.pangea.util.DateUtils.*;
+
+public class OMPGdmLfuServiceImpl implements ICommonListService {
 
     private static OMPGdmLfuServiceImpl instance;
 
@@ -28,71 +33,93 @@ public class OMPGdmLfuServiceImpl implements ICommonService {
     }
 
     private PlanCnsFinPlanQtyDaoImpl cnsFinPlanQtyDao = PlanCnsFinPlanQtyDaoImpl.getInstance();
-    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private PlanCnsPlanParameterDaoImpl planCnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
     private PlanCnsFinPlanValDaoImpl cnsFinPlanValDao = PlanCnsFinPlanValDaoImpl.getInstance();
-    private EDMMaterialAuomV1DaoImpl materialAuomV1Dao = EDMMaterialAuomV1DaoImpl.getInstance();
     private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
     private EDMCurrencyV1DaoImpl currencyV1Dao = EDMCurrencyV1DaoImpl.getInstance();
+    private EDMJNJCalendarV1DaoImpl edmjnjCalendarV1Dao = EDMJNJCalendarV1DaoImpl.getInstance();
+    private EDMMaterialAuomV1DaoImpl edmMaterialAuomV1Dao = EDMMaterialAuomV1DaoImpl.getInstance();
 
     @Override
-    public ResultObject buildView(String key, Object o, Object o2) {
-
-        ResultObject resultObject = new ResultObject();
+    public List<ResultObject> buildView(String key, Object o, Object o2) {
+        List<ResultObject> list = new ArrayList<>();
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
-
+        if (StringUtils.isBlank(materialGlobalV1Entity.getLocalDpParentCode())) {
+            return list;
+        }
+        List<PlanCnsPlanParameterEntity> PlanCnsPlanParameterEntityList = planCnsPlanParameterDao.getEntityWithAttributeListForLFU(materialGlobalV1Entity.getSourceSystem());
+        if (PlanCnsPlanParameterEntityList == null || PlanCnsPlanParameterEntityList.size() == 0) {
+            return list;
+        }
         OMPGdmLfuBo gdmLfuBo = new OMPGdmLfuBo();
-
-        String sourceSystem = materialGlobalV1Entity.getSourceSystem();
-        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(sourceSystem);
-
         String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
-        PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.LFU);
-        PlanCnsFinPlanValEntity finPlanValEntity = cnsFinPlanValDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.LFU);
-
-        String productId = sourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode();
-        gdmLfuBo.setProductId(productId);
-
-        String sequeceNumber = UUID.randomUUID().toString();
-        String lfuId = productId +sequeceNumber;
-        gdmLfuBo.setLfuId(lfuId);
-
-        if (null != finPlanValEntity) {
+        PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithConditions(localMaterialNumber, IConstant.VALUE.LFU);
+        PlanCnsFinPlanValEntity finPlanValEntity = cnsFinPlanValDao.getEntityWithConditions(localMaterialNumber, IConstant.VALUE.LFU);
+        String country = "";
+        String currency = "";
+        String yearMonth = "";
+        String qty = "";
+        if (finPlanValEntity != null) {
+            currency = finPlanValEntity.getCurrency();
             gdmLfuBo.setValue(finPlanValEntity.getValue());
+            yearMonth = finPlanValEntity.getYearMonth();
+        }
+        if (finPlanQtyEntity != null) {
+            country = finPlanQtyEntity.getCountry();
+            yearMonth = finPlanQtyEntity.getYearMonth();
+            EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomV1Dao.getEntityWithConditions(finPlanQtyEntity.getLocalMaterialNumber(), finPlanQtyEntity.getUnitId(), finPlanQtyEntity.getSourceSystem());
+            if(edmMaterialAuomV1Entity!=null){
+                try {
+                    double quantity = Double.parseDouble(finPlanQtyEntity.getQuantity());
+                    double localNumerator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalNumerator());
+                    double localDenominator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
+                    qty = quantity * localNumerator / localDenominator + "";
+                } catch (Exception e) {
+                    LogUtil.getCoreLog().error(e.getMessage());
+                }
+            }
+            gdmLfuBo.setVolume(qty);
+        }
+        List<EDMJNJCalendarV1Entity> EDMJNJCalendarV1EntityList = edmjnjCalendarV1Dao.getEntityWithFiscalPeriod(yearMonth);
+        if (EDMJNJCalendarV1EntityList == null || EDMJNJCalendarV1EntityList.size() == 0) {
+            return list;
+        }
+        Pattern pattern = Pattern.compile(IConstant.LFU.CHCEK_TIME);
+        EDMCountryEntity edmCountryEntity = countryV1Dao.getEntityWithLocalCountry(country);
+        EDMCurrencyV1Entity edmCurrencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
+        if (edmCountryEntity != null) {
+            gdmLfuBo.setCountryId(edmCountryEntity.getCountryCode());
+        }
+        if (edmCurrencyV1Entity != null) {
+            LogUtil.getCoreLog().info(edmCurrencyV1Entity.toString());
+            gdmLfuBo.setCurrencyId(edmCurrencyV1Entity.getCurrencyCode());
         }
 
-        if (null != finPlanQtyEntity) {
-            String country = finPlanQtyEntity.getCountry();
-            EDMCountryEntity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
-            if (null != countryV1Entity) {
-                gdmLfuBo.setCountryId(countryV1Entity.getCountryCode());
-            }
+        for (PlanCnsPlanParameterEntity parameterEntity : PlanCnsPlanParameterEntityList) {
 
-            String currency = finPlanQtyEntity.getCurrency();
-            EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
-            if (null != currencyV1Entity) {
-                gdmLfuBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
-            }
-
-            String unitId = finPlanQtyEntity.getUnitId();
-            if (null != unitId && unitId.equals(materialGlobalV1Entity.getLocalBaseUom())) {
-                EDMMaterialAuomV1Entity materialAuomV1Entity = materialAuomV1Dao.getEntityWithConditions(localMaterialNumber, unitId);
-
-                if (null != materialAuomV1Entity) {
-                    try {
-                        int quantity = Integer.parseInt(finPlanQtyEntity.getQuantity());
-                        int localNumerator = Integer.parseInt(materialAuomV1Entity.getLocalNumerator());
-                        int localDenominator = Integer.parseInt(materialAuomV1Entity.getLocalDenominator());
-                        if (0!=quantity && 0!=localNumerator && 0!=localDenominator){
-                            String volume = quantity*(localNumerator/localDenominator)+"";
-                            gdmLfuBo.setVolume(volume);
-                        }
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
+            for (EDMJNJCalendarV1Entity edmjnjCalendarV1Entity : EDMJNJCalendarV1EntityList) {
+                String dateFrom = edmjnjCalendarV1Entity.getWeekFromDate();
+                if (StringUtils.isNotBlank(dateFrom) && pattern.matcher(dateFrom).matches()) {
+                    dateFrom = dateToString(stringToDate(dateFrom, DATE_FORMAT_1), yyyy_MM_dd_HHmmss_TRUE);
+                    String dateTo = edmjnjCalendarV1Entity.getWeekToDate();
+                    if (StringUtils.isNotBlank(dateTo) && pattern.matcher(dateTo).matches()) {
+                        dateTo = dateToString(stringToDate(dateTo, DATE_FORMAT_1), yyyy_MM_dd_HHmmss_TRUE);
                     }
+                    ResultObject resultObject = new ResultObject();
+                    OMPGdmLfuBo gdmLfuBoV1 = new OMPGdmLfuBo();
+                    gdmLfuBoV1.setProductId(parameterEntity.getParameterValue() + IConstant.LFU.SPLIT + materialGlobalV1Entity.getLocalDpParentCode());
+                    gdmLfuBoV1.setCurrencyId(gdmLfuBo.getCurrencyId());
+                    gdmLfuBoV1.setCountryId(gdmLfuBo.getCountryId());
+                    gdmLfuBoV1.setValue(gdmLfuBo.getValue());
+                    gdmLfuBoV1.setVolume(gdmLfuBo.getVolume());
+                    gdmLfuBoV1.setFromDueDate(dateFrom);
+                    gdmLfuBoV1.setDueDate(dateTo);
+                    gdmLfuBoV1.setLfuId(gdmLfuBoV1.getProductId() + IConstant.LFU.SPLIT + gdmLfuBoV1.getFromDueDate());
+                    resultObject.setBaseBo(gdmLfuBoV1);
+                    list.add(resultObject);
                 }
             }
         }
-        resultObject.setBaseBo(gdmLfuBo);
-        return resultObject;
+        return list;
     }
 }

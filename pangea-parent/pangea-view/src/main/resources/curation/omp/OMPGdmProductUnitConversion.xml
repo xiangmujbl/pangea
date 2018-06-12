@@ -3,38 +3,49 @@
               chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_product_unit_conversion.controller.GDMProductUnitConversionController"
               writeTo="all" topic="PANGEA_V1_gdm_product_unit_conversion">
-        <regions>
 
+        <regions>
             <region path="/edm/material_global_v1">
                 <columns>
-                    localDpParentCode,localBaseUom,primaryPlanningCode,localMaterialNumber
+                    materialNumber,localDpParentCode,localBaseUom,primaryPlanningCode,localMaterialNumber,sourceSystem
                 </columns>
                 <relations>
-                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
-                        <expression></expression>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
                     </relation>
+
                     <relation path="/edm/material_auom_v1" isPrimaryKey="false">
-                        <expression></expression>
+                        <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
                     </relation>
                 </relations>
-
             </region>
 
-            <region path="/plan/cns_plan_unit">
+            <region path="/plan/cns_material_plan_status">
                 <columns>
-                    localUom,unit,localUomName,plantFlag,sourceSystem
+                    localMaterialNumber,materialNumber,active,dpRelevant,spRelevant,localPlant,sourceSystem,noPlanRelevant
                 </columns>
             </region>
 
             <region path="/edm/material_auom_v1">
                 <columns>
-                    localMaterialNumber,localDenominator,localAuom,localNumerator
+                    localMaterialNumber,localDenominator,localAuom,localNumerator,materialNumber,sourceSystem
                 </columns>
+                <relations>
+                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
+                        <expression>localUom=/edm/material_auom_v1.localAuom</expression>
+                    </relation>
+                </relations>
             </region>
 
+            <region path="/plan/cns_plan_unit">
+                <columns>
+                    localUom,unit,localUomName,planFlag,sourceSystem
+                </columns>
+            </region>
+            
             <region path="/omp/gdm_product_unit_conversion">
                 <columns>
-                    gdmProductUnitConversionId,active,activeFCTERP,activeOPRERP,activeSOPERP,factor,productId,unitId
+                    gdmProductUnitConversionId,active,activeFCTERP,activeOPRERP,activeSOPERP,factor,productId,unitId,comments
                 </columns>
             </region>
 

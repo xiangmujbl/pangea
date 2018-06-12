@@ -7,6 +7,7 @@ import com.jnj.pangea.common.dao.impl.ems.EMSFMdmCurrenciesDaoImpl;
 import com.jnj.pangea.common.entity.ems.EMSFMdmCurrenciesEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.currency.bo.EDMCurrencyBo;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by JGUO57 on 2018/3/2.
@@ -38,9 +39,13 @@ public class EDMCurrencyServiceImpl implements ICommonService {
         edmCurrencyBo.setSourceSystem(sourceSystem);
 
         processSystem(mainData, edmCurrencyBo);
-        EMSFMdmCurrenciesEntity emsfMdmCurrenciesEntity = emsfMdmCurrenciesDao.getZnameWithzSourceSystemAndZcode(IConstant.VALUE.EMS, mainData.getzCode());
-        if (emsfMdmCurrenciesEntity != null) {
-            edmCurrencyBo.setCurrencyName(emsfMdmCurrenciesEntity.getzName());
+
+        String code = mainData.getzEntCodeIso4217Alpha();
+        if (StringUtils.isNotEmpty(code)) {
+            EMSFMdmCurrenciesEntity emsfMdmCurrenciesEntity = emsfMdmCurrenciesDao.getZnameWithzSourceSystemAndZcode(IConstant.VALUE.EMS, code);
+            if (emsfMdmCurrenciesEntity != null) {
+                edmCurrencyBo.setCurrencyName(emsfMdmCurrenciesEntity.getzName());
+            }
         }
         return resultObject;
     }

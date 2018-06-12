@@ -7,61 +7,179 @@ import java.util.Map;
 public class AfkoEntity extends CommonEntity {
 
     private String aufnr;
-    private String gltrp;
+    private String mandt;
     private String gstrp;
-    private String gltrs;
+    private String gsuzp;
+    private String gltrp;
+    private String gluzp;
     private String gstrs;
+    private String gsups;
+    private String gltrs;
+    private String glups;
+    private String ftrms;
     private String gstri;
+    private String gsuzi;
     private String gltri;
-    private String ftrmi;
+    private String getri;
+    private String geuzi;
     private String ftrmp;
-    private String dispo;
-    private String fevor;
+    private String ftrmi;
     private String rsnum;
+    private String plnty;
+    private String plnnr;
+    private String plnal;
+    private String stlty;
+    private String stlnr;
+    private String stlal;
+    private String dispo;
+    private String aufpl;
+    private String fevor;
+    private String igmng;
+    private String iasmg;
     private String gasmg;
     private String gamng;
     private String gmein;
     private String plnbez;
-    private String plnty;
-    private String plnnr;
     private String plnaw;
-    private String plnal;
     private String pverw;
     private String stlbez;
     private String terkz;
     private String rueck;
     private String rmzhl;
-    private String igmng;
+
+    public String getGasmg() {
+        return gasmg;
+    }
+
+    public void setGasmg(String gasmg) {
+        this.gasmg = gasmg;
+    }
+
+    public String getGamng() {
+        return gamng;
+    }
+
+    public void setGamng(String gamng) {
+        this.gamng = gamng;
+    }
+
+    public String getGmein() {
+        return gmein;
+    }
+
+    public void setGmein(String gmein) {
+        this.gmein = gmein;
+    }
+
+    public String getPlnbez() {
+        return plnbez;
+    }
+
+    public void setPlnbez(String plnbez) {
+        this.plnbez = plnbez;
+    }
+
+    public String getPlnaw() {
+        return plnaw;
+    }
+
+    public void setPlnaw(String plnaw) {
+        this.plnaw = plnaw;
+    }
+
+    public String getPverw() {
+        return pverw;
+    }
+
+    public void setPverw(String pverw) {
+        this.pverw = pverw;
+    }
+
+    public String getStlbez() {
+        return stlbez;
+    }
+
+    public void setStlbez(String stlbez) {
+        this.stlbez = stlbez;
+    }
+
+    public String getTerkz() {
+        return terkz;
+    }
+
+    public void setTerkz(String terkz) {
+        this.terkz = terkz;
+    }
+
+    public String getRueck() {
+        return rueck;
+    }
+
+    public void setRueck(String rueck) {
+        this.rueck = rueck;
+    }
+
+    public String getRmzhl() {
+        return rmzhl;
+    }
+
+    public void setRmzhl(String rmzhl) {
+        this.rmzhl = rmzhl;
+    }
 
     public AfkoEntity(Map<String, Object> map) {
         super(map);
 
         setAufnr((String) map.get("aufnr"));
-        setGltrp((String) map.get("gltrp"));
+        setMandt((String) map.get("mandt"));
         setGstrp((String) map.get("gstrp"));
-        setGltrs((String) map.get("gltrs"));
+        setGsuzp((String) map.get("gsuzp"));
+        setGltrp((String) map.get("gltrp"));
+        setGluzp((String) map.get("gluzp"));
         setGstrs((String) map.get("gstrs"));
+        setGsups((String) map.get("gsups"));
+        setGltrs((String) map.get("gltrs"));
+        setGlups((String) map.get("glups"));
+        setFtrms((String) map.get("ftrms"));
         setGstri((String) map.get("gstri"));
+        setGsuzi((String) map.get("gsuzi"));
         setGltri((String) map.get("gltri"));
-        setFtrmi((String) map.get("ftrmi"));
+        setGetri((String) map.get("getri"));
+        setGeuzi((String) map.get("geuzi"));
         setFtrmp((String) map.get("ftrmp"));
-        setDispo((String) map.get("dispo"));
-        setFevor((String) map.get("fevor"));
+        setFtrmi((String) map.get("ftrmi"));
         setRsnum((String) map.get("rsnum"));
+        setPlnty((String) map.get("plnty"));
+        setPlnnr((String) map.get("plnnr"));
+        setPlnal((String) map.get("plnal"));
+        setStlty((String) map.get("stlty"));
+        setStlnr((String) map.get("stlnr"));
+        setStlal((String) map.get("stlal"));
+        setDispo((String) map.get("dispo"));
+        setAufpl((String) map.get("aufpl"));
+        setFevor((String) map.get("fevor"));
+        setIgmng((String) map.get("igmng"));
+        setIasmg((String) map.get("iasmg"));
         setGasmg((String) map.get("gasmg"));
         setGamng((String) map.get("gamng"));
         setGmein((String) map.get("gmein"));
         setPlnbez((String) map.get("plnbez"));
-        setPlnty((String) map.get("plnty"));
-        setPlnnr((String) map.get("plnnr"));
         setPlnaw((String) map.get("plnaw"));
-        setPlnal((String) map.get("plnal"));
         setPverw((String) map.get("pverw"));
         setStlbez((String) map.get("stlbez"));
         setTerkz((String) map.get("terkz"));
         setRueck((String) map.get("rueck"));
         setRmzhl((String) map.get("rmzhl"));
-        setIgmng((String) map.get("igmng"));
+
+
+
+
+
+
+
+
+
+
     }
 
     public String getAufnr() {
@@ -72,12 +190,12 @@ public class AfkoEntity extends CommonEntity {
         this.aufnr = aufnr;
     }
 
-    public String getGltrp() {
-        return this.gltrp;
+    public String getMandt() {
+        return this.mandt;
     }
 
-    public void setGltrp(String gltrp) {
-        this.gltrp = gltrp;
+    public void setMandt(String mandt) {
+        this.mandt = mandt;
     }
 
     public String getGstrp() {
@@ -88,12 +206,28 @@ public class AfkoEntity extends CommonEntity {
         this.gstrp = gstrp;
     }
 
-    public String getGltrs() {
-        return this.gltrs;
+    public String getGsuzp() {
+        return this.gsuzp;
     }
 
-    public void setGltrs(String gltrs) {
-        this.gltrs = gltrs;
+    public void setGsuzp(String gsuzp) {
+        this.gsuzp = gsuzp;
+    }
+
+    public String getGltrp() {
+        return this.gltrp;
+    }
+
+    public void setGltrp(String gltrp) {
+        this.gltrp = gltrp;
+    }
+
+    public String getGluzp() {
+        return this.gluzp;
+    }
+
+    public void setGluzp(String gluzp) {
+        this.gluzp = gluzp;
     }
 
     public String getGstrs() {
@@ -104,12 +238,52 @@ public class AfkoEntity extends CommonEntity {
         this.gstrs = gstrs;
     }
 
+    public String getGsups() {
+        return this.gsups;
+    }
+
+    public void setGsups(String gsups) {
+        this.gsups = gsups;
+    }
+
+    public String getGltrs() {
+        return this.gltrs;
+    }
+
+    public void setGltrs(String gltrs) {
+        this.gltrs = gltrs;
+    }
+
+    public String getGlups() {
+        return this.glups;
+    }
+
+    public void setGlups(String glups) {
+        this.glups = glups;
+    }
+
+    public String getFtrms() {
+        return this.ftrms;
+    }
+
+    public void setFtrms(String ftrms) {
+        this.ftrms = ftrms;
+    }
+
     public String getGstri() {
         return this.gstri;
     }
 
     public void setGstri(String gstri) {
         this.gstri = gstri;
+    }
+
+    public String getGsuzi() {
+        return this.gsuzi;
+    }
+
+    public void setGsuzi(String gsuzi) {
+        this.gsuzi = gsuzi;
     }
 
     public String getGltri() {
@@ -120,12 +294,20 @@ public class AfkoEntity extends CommonEntity {
         this.gltri = gltri;
     }
 
-    public String getFtrmi() {
-        return this.ftrmi;
+    public String getGetri() {
+        return this.getri;
     }
 
-    public void setFtrmi(String ftrmi) {
-        this.ftrmi = ftrmi;
+    public void setGetri(String getri) {
+        this.getri = getri;
+    }
+
+    public String getGeuzi() {
+        return this.geuzi;
+    }
+
+    public void setGeuzi(String geuzi) {
+        this.geuzi = geuzi;
     }
 
     public String getFtrmp() {
@@ -136,20 +318,12 @@ public class AfkoEntity extends CommonEntity {
         this.ftrmp = ftrmp;
     }
 
-    public String getDispo() {
-        return this.dispo;
+    public String getFtrmi() {
+        return this.ftrmi;
     }
 
-    public void setDispo(String dispo) {
-        this.dispo = dispo;
-    }
-
-    public String getFevor() {
-        return this.fevor;
-    }
-
-    public void setFevor(String fevor) {
-        this.fevor = fevor;
+    public void setFtrmi(String ftrmi) {
+        this.ftrmi = ftrmi;
     }
 
     public String getRsnum() {
@@ -158,38 +332,6 @@ public class AfkoEntity extends CommonEntity {
 
     public void setRsnum(String rsnum) {
         this.rsnum = rsnum;
-    }
-
-    public String getGasmg() {
-        return this.gasmg;
-    }
-
-    public void setGasmg(String gasmg) {
-        this.gasmg = gasmg;
-    }
-
-    public String getGamng() {
-        return this.gamng;
-    }
-
-    public void setGamng(String gamng) {
-        this.gamng = gamng;
-    }
-
-    public String getGmein() {
-        return this.gmein;
-    }
-
-    public void setGmein(String gmein) {
-        this.gmein = gmein;
-    }
-
-    public String getPlnbez() {
-        return this.plnbez;
-    }
-
-    public void setPlnbez(String plnbez) {
-        this.plnbez = plnbez;
     }
 
     public String getPlnty() {
@@ -208,14 +350,6 @@ public class AfkoEntity extends CommonEntity {
         this.plnnr = plnnr;
     }
 
-    public String getPlnaw() {
-        return this.plnaw;
-    }
-
-    public void setPlnaw(String plnaw) {
-        this.plnaw = plnaw;
-    }
-
     public String getPlnal() {
         return this.plnal;
     }
@@ -224,44 +358,52 @@ public class AfkoEntity extends CommonEntity {
         this.plnal = plnal;
     }
 
-    public String getPverw() {
-        return this.pverw;
+    public String getStlty() {
+        return this.stlty;
     }
 
-    public void setPverw(String pverw) {
-        this.pverw = pverw;
+    public void setStlty(String stlty) {
+        this.stlty = stlty;
     }
 
-    public String getStlbez() {
-        return this.stlbez;
+    public String getStlnr() {
+        return this.stlnr;
     }
 
-    public void setStlbez(String stlbez) {
-        this.stlbez = stlbez;
+    public void setStlnr(String stlnr) {
+        this.stlnr = stlnr;
     }
 
-    public String getTerkz() {
-        return this.terkz;
+    public String getStlal() {
+        return this.stlal;
     }
 
-    public void setTerkz(String terkz) {
-        this.terkz = terkz;
+    public void setStlal(String stlal) {
+        this.stlal = stlal;
     }
 
-    public String getRueck() {
-        return this.rueck;
+    public String getDispo() {
+        return this.dispo;
     }
 
-    public void setRueck(String rueck) {
-        this.rueck = rueck;
+    public void setDispo(String dispo) {
+        this.dispo = dispo;
     }
 
-    public String getRmzhl() {
-        return this.rmzhl;
+    public String getAufpl() {
+        return this.aufpl;
     }
 
-    public void setRmzhl(String rmzhl) {
-        this.rmzhl = rmzhl;
+    public void setAufpl(String aufpl) {
+        this.aufpl = aufpl;
+    }
+
+    public String getFevor() {
+        return this.fevor;
+    }
+
+    public void setFevor(String fevor) {
+        this.fevor = fevor;
     }
 
     public String getIgmng() {
@@ -270,6 +412,14 @@ public class AfkoEntity extends CommonEntity {
 
     public void setIgmng(String igmng) {
         this.igmng = igmng;
+    }
+
+    public String getIasmg() {
+        return this.iasmg;
+    }
+
+    public void setIasmg(String iasmg) {
+        this.iasmg = iasmg;
     }
 
 }

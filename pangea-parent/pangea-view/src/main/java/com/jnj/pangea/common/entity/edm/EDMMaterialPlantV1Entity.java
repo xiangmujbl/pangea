@@ -49,6 +49,7 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
     private String localPostToInspStk;
     private String localComponentScrap;
     private String plant;
+    private String XCHPF;
 
     public EDMMaterialPlantV1Entity(Map<String, Object> map) {
         super(map);
@@ -95,8 +96,16 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         setLocalBatchManagementRequirementIndicator((String) map.get("localBatchManagementRequirementIndicator"));
         setLocalPurchasingGroup((String)map.get("localPurchasingGroup"));
         setPurchsngGrpCd((String)map.get("purchsngGrpCd"));
+        setXCHPF((String)map.get("XCHPF"));
     }
 
+    public String getXCHPF() {
+        return XCHPF;
+    }
+
+    public void setXCHPF(String XCHPF) {
+        this.XCHPF = XCHPF;
+    }
 
     public String getLocalMaterialNumber () {
         return localMaterialNumber;

@@ -21,4 +21,12 @@ public class EDMUnitOfMeasureV1DaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_UNIT_OF_MEASURE_V1.UOM).is(unit).toQueryString();
         return queryForObject(IConstant.REGION.EDM_UNIT_OF_MEASURE_V1, queryString, EDMUnitOfMeasureV1Entity.class);
     }
+
+    public EDMUnitOfMeasureV1Entity getEntityWithUnitAndSourceSystem(String unit,String sourceSystem) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_UNIT_OF_MEASURE_V1.UOM).is(unit)
+                .and(IConstant.EDM_UNIT_OF_MEASURE_V1.SOURCESYSTEM).is(sourceSystem)
+                .toQueryString();
+        return queryForObject(IConstant.REGION.EDM_UNIT_OF_MEASURE_V1, queryString, EDMUnitOfMeasureV1Entity.class);
+    }
 }
