@@ -1,0 +1,32 @@
+<adf-curation>
+    <curation mainRegion="/project_one/vbfa" viewRegion="/edm/sales_history_v1" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.edm.sales_history_v1.controller.EDMSalesHistoryV1Controller"
+              writeTo="all" topic="PANGEA_V1_edm_sales_history">
+        <regions>
+            <region path="/project_one/vbfa">
+                <columns>vbelv,posnv,vbeln,posnn,vbtypN,rfmng,meins,rfmngFlt,vrkme,vbtypV,erdat</columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/vbfa_clone" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>$otherRegionColumns$</columns>
+            </region>
+
+            <region path="/project_one/vbfa" alias="/project_one/vbfa_clone">
+                <columns>vbelv,posnv,vbeln,posnn,vbtypN,rfmng,meins,rfmngFlt,vrkme,vbtypV,erdat</columns>
+            </region>
+
+            <region path="/edm/sales_history_v1">
+                <columns>sourceSystem,localPrecDocNo,localSPrecDocLnNo,localSubsDocNo,localSubsDocLnNo,localSubDocCatg,localBaseQuantity,localBaseUom,localSalesQuantity,localSalesUom,localPrecItemCatg,localCrtDt</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
