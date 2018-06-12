@@ -1,4 +1,4 @@
-package com.jnj.pangea.common.dao.impl.edm;
+package com.jnj.pangea.common.entity.edm;
 
 import com.jnj.pangea.common.entity.CommonEntity;
 

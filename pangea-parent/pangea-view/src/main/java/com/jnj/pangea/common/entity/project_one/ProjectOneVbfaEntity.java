@@ -5,13 +5,14 @@ import com.jnj.pangea.common.entity.CommonEntity;
 import java.util.Map;
 
 /**
+ * @author KG(Kelvin Gu)
  * @Name: ProjectOneVbfaEntity
  * @Description: VBFA entity for project_one system
- * @author KG(Kelvin Gu)   
- * @date 06-12-2018 03:03:58 
-*/
+ * @date 06-12-2018 03:03:58
+ */
 public class ProjectOneVbfaEntity extends CommonEntity {
 
+    private String mandt;
     private String vbelv;
     private String posnv;
     private String vbeln;
@@ -27,6 +28,7 @@ public class ProjectOneVbfaEntity extends CommonEntity {
     public ProjectOneVbfaEntity(Map<String, Object> map) {
         super(map);
 
+        setMandt((String) map.get("mandt"));
         setVbelv((String) map.get("vbelv"));
         setPosnv((String) map.get("posnv"));
         setVbeln((String) map.get("vbeln"));
@@ -40,69 +42,98 @@ public class ProjectOneVbfaEntity extends CommonEntity {
         setErdat((String) map.get("erdat"));
     }
 
+    public String getMandt() {
+        return mandt;
+    }
+
+    public void setMandt(String mandt) {
+        this.mandt = mandt;
+    }
+
     public String getVbelv() {
         return vbelv;
     }
+
     public void setVbelv(String vbelv) {
         this.vbelv = vbelv;
     }
+
     public String getPosnv() {
         return posnv;
     }
+
     public void setPosnv(String posnv) {
         this.posnv = posnv;
     }
+
     public String getVbeln() {
         return vbeln;
     }
+
     public void setVbeln(String vbeln) {
         this.vbeln = vbeln;
     }
+
     public String getPosnn() {
         return posnn;
     }
+
     public void setPosnn(String posnn) {
         this.posnn = posnn;
     }
+
     public String getVbtypN() {
         return vbtypN;
     }
+
     public void setVbtypN(String vbtypN) {
         this.vbtypN = vbtypN;
     }
+
     public String getRfmng() {
         return rfmng;
     }
+
     public void setRfmng(String rfmng) {
         this.rfmng = rfmng;
     }
+
     public String getMeins() {
         return meins;
     }
+
     public void setMeins(String meins) {
         this.meins = meins;
     }
+
     public String getRfmngFlt() {
         return rfmngFlt;
     }
+
     public void setRfmngFlt(String rfmngFlt) {
         this.rfmngFlt = rfmngFlt;
     }
+
     public String getVrkme() {
         return vrkme;
     }
+
     public void setVrkme(String vrkme) {
         this.vrkme = vrkme;
     }
+
     public String getVbtypV() {
         return vbtypV;
     }
+
     public void setVbtypV(String vbtypV) {
         this.vbtypV = vbtypV;
     }
+
     public String getErdat() {
         return erdat;
     }
+
     public void setErdat(String erdat) {
         this.erdat = erdat;
     }
