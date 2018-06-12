@@ -104,8 +104,8 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 					this.processTypeDao.getCnsProcessTypeById(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
 			gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo());
-			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom());
-			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
+			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom() + IConstant.VALUE.HH_NN_SS_ZERO);
+			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId() + IConstant.VALUE.HH_NN_SS_ZERO);
 			gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
 			gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
 			gdmTransportBo.setFromProductId(tlaneItemEntity.getMaterialNumber());

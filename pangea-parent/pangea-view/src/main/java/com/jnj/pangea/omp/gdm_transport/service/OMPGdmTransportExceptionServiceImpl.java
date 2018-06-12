@@ -140,8 +140,8 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             PlanCnsProcessTypeEntity processTypeEntity =
                     this.processTypeDao.getCnsProcessTypeById(tlaneItemExEntity.getProcessTypeId());
             gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
-            gdmTransportBo.setEndEff(tlaneItemExEntity.getValidTo());
-            gdmTransportBo.setStartEff(tlaneItemExEntity.getValidFrom());
+            gdmTransportBo.setEndEff(tlaneItemExEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
+            gdmTransportBo.setStartEff(tlaneItemExEntity.getValidFrom() + IConstant.VALUE.HH_NN_SS_ZERO);
             gdmTransportBo.setProcessTypeId(tlaneItemExEntity.getProcessTypeId());
             gdmTransportBo.setTransportOffset(tlaneItemExEntity.getLeadTime());
             gdmTransportBo.setTransportType(tlaneItemExEntity.getMode());
@@ -160,7 +160,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
                     )
             );
         } else if (this.curationSkip) {
-            resultObject = null;
+             resultObject = null;
 
         } else {
             resultObject.setBaseBo(gdmTransportBo);
@@ -419,7 +419,10 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
      */
     private String ruleN12N14 (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity, String location) {
 
+
         String rule = "N12_N14";
+        boolean planRevelant=false;
+        boolean specialPlanRelevant=false;
         String fromProdId = null;
         String srcSys = this.getSourceSystem(location);
         String locPlant = this.getLocalPlantNum(location);
@@ -429,18 +432,25 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             this.curationSkip = true;
             return null;
         }
+        if (!this.checkPlantRelevant(srcSys, locPlant)) {
+            planRevelant=true;
+        }
 
-        if (!this.checkLocationRelevant(srcSys, locPlant)) {
+        if (!this.checkSpecialPlanLocRelevant(srcSys, locPlant)) {
+            specialPlanRelevant=true;
+        }
+
+        if( !planRevelant && !specialPlanRelevant){
             this.curationSkip = true;
             return null;
         }
 
-
-        if (!this.checkMaterialRelevant(locMatNum, locPlant, srcSys)) {
-            this.curationSkip = true;
-            return null;
+        if( planRevelant){
+            if (!this.checkMaterialRelevant(locMatNum, locPlant, srcSys)) {
+                this.curationSkip = true;
+                return null;
+            }
         }
-
 
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = this.getGlobV1Entity(locMatNum,srcSys);
 
@@ -448,7 +458,6 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             this.curationSkip = true;
             return null;
         }
-
 
         fromProdId = materialGlobalV1Entity.getPrimaryPlanningCode();
         if (fromProdId == null || fromProdId.isEmpty()) {
@@ -469,6 +478,37 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
      * @param tlaneItemExceptionEntity
      * @return
      */
+
+
+    /**
+     * checks if the location is relevant in rules n12 & n14
+     * @param srcSys
+     * @param locPlant
+     * @return
+     */
+    private boolean checkPlantRelevant (String srcSys, String locPlant) {
+        boolean exists = false;
+        List<EDMPlantV1Entity> plantV1Entities = plantV1Dao.getEntitiesWithSourceSystemAndLocalPlant(srcSys,locPlant);
+
+        if (!plantV1Entities.isEmpty()) {
+            exists = true;
+        }
+
+        return exists;
+    }
+
+
+    private boolean checkSpecialPlanLocRelevant (String srcSys, String locPlant) {
+        boolean exists = false;
+
+        List<PlanCnsPlnSplLocEntity> plnSplLocEntityList = plnSplLocDao.getEntitiesWithSourceSystemAndLocalPlantNumber(srcSys,locPlant);
+
+        if (!plnSplLocEntityList.isEmpty())
+            exists = true;
+
+        return exists;
+    }
+
     private String ruleN13 (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity) {
 
         String rule = "N13";
