@@ -11,7 +11,9 @@ public class OMPGdmPosBo extends BaseBo {
     private String forecastUploadId;
     private String fromDueDate;
     private String unitId;
-    private String quantity;
+    private String volume;
+
+    private String yearMonth;
 
     @Override
     public String getKey() {
@@ -69,12 +71,19 @@ public class OMPGdmPosBo extends BaseBo {
         this.unitId = unitId;
     }
 
-    public String getQuantity() {
-        return this.quantity;
+    public String getVolume() {
+        return volume;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    public void setVolume(String volume) {
+        this.volume = volume;
     }
 
+    public String getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
 }

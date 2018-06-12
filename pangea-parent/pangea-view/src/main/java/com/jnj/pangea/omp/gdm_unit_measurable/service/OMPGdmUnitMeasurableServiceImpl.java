@@ -70,44 +70,44 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
         }
 
         if (StringUtils.isNotEmpty(unit) && StringUtils.isNotEmpty(cnsPlanUnitEntity.getSourceSystem())) {
-            EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity = unitOfMeasureV1Dao.getEntityWithUnitAndSourceSystem(unit,cnsPlanUnitEntity.getSourceSystem());
-            if (null != unitOfMeasureV1Entity) {
+            EDMUnitOfMeasureV1Entity unitOfMeasureV1Entity1 = unitOfMeasureV1Dao.getEntityWithUnitAndSourceSystem(unit,cnsPlanUnitEntity.getSourceSystem());
+            if (null != unitOfMeasureV1Entity1) {
 
                 // rules F2
-                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getIsoCode())) {
-                    gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity.getIsoCode());
+                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity1.getIsoCode())) {
+                    gdmUnitMeasurableBo.setIsoCode(unitOfMeasureV1Entity1.getIsoCode());
                 } else {
                     gdmUnitMeasurableBo.setIsoCode(IConstant.VALUE.BLANK);
                 }
 
                 // rules T2
-                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getUomName())) {
-                    gdmUnitMeasurableBo.setLongDescription(unitOfMeasureV1Entity.getUomName());
+                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity1.getUomName())) {
+                    gdmUnitMeasurableBo.setLongDescription(unitOfMeasureV1Entity1.getUomName());
                 } else {
                     gdmUnitMeasurableBo.setLongDescription(cnsPlanUnitEntity.getLocalUomName());
                 }
 
                 // rules T5
-                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getUomName())) {
-                    gdmUnitMeasurableBo.setShortDescription(unitOfMeasureV1Entity.getUomName());
+                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity1.getUomName())) {
+                    gdmUnitMeasurableBo.setShortDescription(unitOfMeasureV1Entity1.getUomName());
                 } else {
                     gdmUnitMeasurableBo.setShortDescription(cnsPlanUnitEntity.getLocalUomName());
                 }
 
                 // rules T3
-                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getMeasure())) {
-                    gdmUnitMeasurableBo.setMeasure(unitOfMeasureV1Entity.getMeasure());
+                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity1.getMeasure())) {
+                    gdmUnitMeasurableBo.setMeasure(unitOfMeasureV1Entity1.getMeasure());
                 } else {
                     gdmUnitMeasurableBo.setMeasure(IConstant.VALUE.AAAADL);
                 }
 
                 // rules T4
-                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity.getRoundingDecimal())) {
-                    gdmUnitMeasurableBo.setPrecision(unitOfMeasureV1Entity.getRoundingDecimal());
-                } else {
-                    gdmUnitMeasurableBo.setPrecision(cnsPlanUnitEntity.getRoundingDecimal());
-                }
+                if (StringUtils.isNotEmpty(unitOfMeasureV1Entity1.getRoundingDecimal())) {
+                    gdmUnitMeasurableBo.setPrecision(unitOfMeasureV1Entity1.getRoundingDecimal());
+                } else {}
             } else {
+                    gdmUnitMeasurableBo.setPrecision(cnsPlanUnitEntity.getRoundingDecimal());
+                
 
                 // rules F2
                 gdmUnitMeasurableBo.setIsoCode(IConstant.VALUE.BLANK);
