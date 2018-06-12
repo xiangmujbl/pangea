@@ -7,7 +7,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
   Background:delete all test data
 
-#    Then I delete the test data
+    Then I delete the test data
 
     And I will remove all data with region "/edm/mfg_order"
 
@@ -131,7 +131,9 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM    | 0000000475 | 0045         |                 |        |          | 0020      | 0025    | 000000000000004475 | 1              | 15.000  | 15.000    |
       | CONS_LATAM    | 0000000476 | 0046         |                 |        |          | 0020      | 0026    | 000000000000004476 | 1              | 15.000  | 15.000    |
 
+
     And I wait "/edm/reserv_itm" Async Queue complete
+
 
     Given I import "/edm/mfg_order_rtng" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
       | srcSysCd      | ordrRtngNum | ordrRtngCtrNum | operNum |
@@ -180,6 +182,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/bom_item" Async Queue complete
 
+
+
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | primaryPlanningCode |
       | CONS_LATAM   | 000000000000004476  | LDPC01            | LBU01               |
@@ -187,6 +191,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM   | 000000000000004770  | LDPC01            | LBU01               |
 
     And I wait "/edm/material_global_v1" Async Queue complete
+
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | spRelevant | noPlanRelevant |
@@ -200,13 +205,16 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     Then A file is found on sink application with name "GDMBOMElement_process.tsv"
 
-    Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "bomElementId"
-     #Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+   #Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "bomElementId"
+
+    Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+
       | bomElementId                             | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                 | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset     | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId | ProductId | Quantity | StartEff            |
       | PRO/CONS_LATAM/1000326/444/10/4776/20/26 | YES    | YES          | YES          | NO           | 0026    | PRO/LA_1000326/346/10 | batchstart | proportional |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR06 | 864000.000 |                  |                  |                | *           | LBU01     | 0.000    | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000326/444/10/4776/1/6   | YES    | YES          | YES          | NO           | 0006    | PRO/LA_1000326/346/10 | batchend   | proportional |          | 31/12/2998 23:59:59 | 15.000              | CONS_LATAM_BR06 | 864000.000 |                  |                  |                | *           | LBU01     | -521.000 | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000426/444/10/4476/20/26 | YES    | YES          | YES          | NO           | 0026    | PRO/LA_1000426/446/10 | batchstart | proportional |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR46 | 864000.000 |                  |                  |                | *           | LBU01     | 0.000    | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000426/444/10/4476/1/16  | YES    | YES          | YES          | NO           | 0016    | PRO/LA_1000426/446/10 | batchend   | proportional |          | 31/12/2998 23:59:59 | 15.000              | CONS_LATAM_BR46 | 864000.000 |                  |                  |                | *           | LBU01     | -521.000 | 01/01/1980 00:00:00 |
+
 
   @Scenario2
   Scenario:  set the BOMType value  according to  BOM_ITEM-dstrbtnKeyCd or MATL_PRD_VERSN-dstrbtnKeyCd   --(T6)
@@ -235,6 +243,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM | 000001000326 | 0001     | 000000000000004776 | BR06   | V006         | 0006    | 5214.000 | 1                 | 521.000 |
 
     And I wait "/edm/mfg_order_itm" Async Queue complete
+
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
       | srcSysCd   | matlNum            | plntCd | prdntVrsnNum | dstrbtnKeyCd |
@@ -282,6 +291,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
+
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | spRelevant | noPlanRelevant |
       | CONS_LATAM   | 000000000000004771  | BR01       | X          | X              |
@@ -290,6 +300,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
+
+
     And I wait "/edm/bom_item" Async Queue complete
 
     When I submit task with xml file "xml/OMP/OMPGdmbomelementProcess.xml" and execute file "jar/pangea-view.jar"
@@ -297,7 +309,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
     Then A file is found on sink application with name "GDMBOMElement_process.tsv"
 
     Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "bomElementId"
-#    Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+     #Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+
       | bomElementId                             | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                 | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset      | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId | ProductId | Quantity | StartEff            |
       | PRO/CONS_LATAM/1000321/444/10/4771/20/21 | YES    | YES          | YES          | NO           | 0021    | PRO/LA_1000321/341/10 | batchstart | proportional |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *           | LBU01     | 0.000    | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000321/444/10/4771/1/1   | YES    | YES          | YES          | NO           | 0001    | PRO/LA_1000321/341/10 | batchend   | proportional |          | 31/12/2998 23:59:59 | 15.000              | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *           | LBU01     | -521.000 | 01/01/1980 00:00:00 |
@@ -325,13 +338,16 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
+
     Given I import "/edm/mfg_order_itm" by keyFields "srcSysCd,mfgOrdrNum,lnItmNbr"
+
       | srcSysCd   | mfgOrdrNum   | lnItmNbr | matlNum            | plntCd | prdntVrsnNum | btchNum | rcvdQty  | goodRcptLdDaysQty | itmQty  |
       | CONS_LATAM | 000001000321 | 0001     | 000000000000004771 | BR01   | V001         | 0001    | 5214.000 | 0                 | 521.000 |
       | CONS_LATAM | 000001000322 | 0001     | 000000000000004772 | BR02   | V002         | 0002    | 5214.000 | 0                 | 521.000 |
       | CONS_LATAM | 000001000326 | 0001     | 000000000000004776 | BR06   | V006         | 0006    | 5214.000 | 1                 | 521.000 |
 
     And I wait "/edm/mfg_order_itm" Async Queue complete
+
 
     Given I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
       | srcSysCd   | matlNum            | plntCd | prdntVrsnNum | dstrbtnKeyCd |
@@ -341,6 +357,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
+
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | primaryPlanningCode |
       | CONS_LATAM   | 000000000000004771  | LDPC01            | LBU01               |
@@ -348,6 +365,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM   | 000000000000004776  | LDPC06            | LBU06               |
 
     And I wait "/edm/material_global_v1" Async Queue complete
+
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | spRelevant | noPlanRelevant |
@@ -357,6 +375,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
+
   # qtyFxInd is blank is X is not X
     Given I import "/edm/reserv_itm" by keyFields "sourceSysCd,rsrvtnNum,rsrvtnItmNum,rsrvtnRcrdTypCd"
       | sourceSysCd | rsrvtnNum  | rsrvtnItmNum | rsrvtnRcrdTypCd | delInd | qtyFxInd | bomItmNum | btchNum | matlNum            | leadTimeOffset | rqmtQty | wthdrnQty |
@@ -365,6 +384,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM  | 0000000576 | 0006         |                 |        | A        | 0020      | 0026    | 000000000000004776 | 1              | 15.000  | 15.000    |
 
     And I wait "/edm/reserv_itm" Async Queue complete
+
 
     Given I import "/edm/mfg_order_rtng" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
       | srcSysCd   | ordrRtngNum | ordrRtngCtrNum | operNum |
@@ -395,7 +415,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
     Then A file is found on sink application with name "GDMBOMElement_process.tsv"
 
     Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "bomElementId"
-#    Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+     #Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+
       | bomElementId                                          | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                 | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset     | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId        | ProductId | Quantity | StartEff            |
       | PRO/CONS_LATAM/1000321/444/10/4771/20/21              | YES    | YES          | YES          | NO           | 0021    | PRO/LA_1000321/341/10 | batchstart | proportional |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR01 | 0.000      |                  |                  |                | *                  | LBU01     | -1.000   | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000321/444/10/4771/1/1                | YES    | YES          | YES          | NO           | 0001    | PRO/LA_1000321/341/10 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000      |                  |                  |                | *                  | LBU01     | -521.000 | 01/01/1980 00:00:00 |
@@ -421,6 +442,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
+
     Given I import "/edm/mfg_order_itm" by keyFields "srcSysCd,mfgOrdrNum,lnItmNbr"
 
       | srcSysCd   | mfgOrdrNum   | lnItmNbr | matlNum            | plntCd | prdntVrsnNum | btchNum | rcvdQty  | goodRcptLdDaysQty | itmQty  |
@@ -441,6 +463,10 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
+
+
+
+
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | primaryPlanningCode |
       | CONS_LATAM   | 000000000000004771  | LDPC01            | LBU01               |
@@ -448,6 +474,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM   | 000000000000004773  | LDPC03            | LBU03               |
 
     And I wait "/edm/material_global_v1" Async Queue complete
+
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | spRelevant | noPlanRelevant |
@@ -488,7 +515,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
     Then A file is found on sink application with name "GDMBOMElement_process.tsv"
 
     Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "bomElementId"
-#    Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+     #Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+
       | bomElementId                             | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                 | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId | ProductId | Quantity | StartEff            |
       | PRO/CONS_LATAM/1000321/444/10/4771/20/21 | YES    | YES          | YES          | NO           | 0021    | PRO/LA_1000321/341/10 | batchstart | proportional |          | 31/12/2998 23:59:59 | 20849.000           | CONS_LATAM_BR01 | 0.000  |                  |                  |                | *           | LBU01     | -1.000   | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000321/444/10/4771/1/1   | YES    | YES          | YES          | NO           | 0001    | PRO/LA_1000321/341/10 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000  |                  |                  |                | *           | LBU01     | -521.000 | 01/01/1980 00:00:00 |
@@ -498,6 +526,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
   @Scenario5
   Scenario:  set productId   --(T9)
+
 
     Given I import "/edm/mfg_order" by keyFields "sourceSysCd,mfgOrdrNum"
       | sourceSysCd | mfgOrdrNum   | rsrvtnNum  | ordrRtngNum | bomCatCd | bomNum     | actRlseDt |
@@ -513,7 +542,9 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
+
     Given I import "/edm/mfg_order_itm" by keyFields "srcSysCd,mfgOrdrNum,lnItmNbr"
+
       | srcSysCd   | mfgOrdrNum   | lnItmNbr | matlNum            | plntCd | prdntVrsnNum | btchNum | rcvdQty  | goodRcptLdDaysQty | itmQty  |
       | CONS_LATAM | 000001000321 | 0001     | 000000000000004771 | BR01   | V001         | 0001    | 5211.000 | 0                 | 521.000 |
       | CONS_LATAM | 000001000321 | 0002     | 000000000000003772 | BR01   | V001         | 0001    | 5212.000 | 0                 | 522.000 |
@@ -525,6 +556,10 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
 
     And I wait "/edm/mfg_order_itm" Async Queue complete
 
+
+
+
+
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | primaryPlanningCode |
       | CONS_LATAM   | 000000000000004771  | LDPC01            | LBU01               |
@@ -532,6 +567,7 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
       | CONS_LATAM   | 000000000000003773  | LDPC03            | LBU03               |
       | CONS_LATAM   | 000000000000004772  | LDPC02            | LBU02               |
       | CONS_LATAM   | 000000000000004776  | LDPC06            | LBU06               |
+
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | primaryPlanningCode |
@@ -603,7 +639,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
     Then A file is found on sink application with name "GDMBOMElement_process.tsv"
 
     Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "bomElementId"
-#    Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+     #Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+
       | bomElementId                             | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                 | BOMType  | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset     | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId | ProductId | Quantity | StartEff            |
       | PRO/CONS_LATAM/1000321/444/10/3772/2/1   | YES    | YES          | YES          | NO           | 0001    | PRO/LA_1000321/341/10 | batchend | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000      |                  |                  |                | *           | LBU02     | -522.000 | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000326/444/10/4776/20/26 | YES    | YES          | YES          | NO           | 0026    | PRO/LA_1000326/346/10 |          |              |          | 31/12/2998 23:59:59 | 5214.000            | CONS_LATAM_BR06 | 864000.000 |                  |                  |                |             | LA_LDPC06 | 0.000    | 01/01/1980 00:00:00 |
@@ -613,8 +650,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
 
       | errorCode | functionalArea | interfaceID             | key1         | key2               | key3 | key4 | key5 | sourceSystem | errorValue                    |
-      | 500       | NA             | OMPGdmbomelementProcess | 000001000321 | 000000000000004771 |      |      |      | CONS_LATAM   | Unable to construct ProductId |
-      | 500       | NA             | OMPGdmbomelementProcess | 000001000322 | 000000000000004772 |      |      |      | CONS_LATAM   | Unable to construct ProductId |
+      | J1       | PP             | OMPGdmbomelementProcess | 000001000321 | 000000000000004771 |      |      |      | CONS_LATAM   | Unable to construct ProductId |
+      | J1       | PP             | OMPGdmbomelementProcess | 000001000322 | 000000000000004772 |      |      |      | CONS_LATAM   | Unable to construct ProductId |
 
   @Scenario6
   Scenario:  full load curation
@@ -719,7 +756,8 @@ Feature: E.2.1.11 GDMBOMElement - Process - Consumption AEAZ-4251
     Then A file is found on sink application with name "GDMBOMElement_process.tsv"
 
     Then I check file data for filename "GDMBOMElement_process.tsv" by keyFields "bomElementId"
-#    Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+     #Then I check region data "/omp/gdm_bom_element" by keyFields "bomElementId"
+
       | bomElementId                                          | Active | ActiveFCTERP | ActiveOPRERP | ActiveSOPERP | BatchId | BOMId                 | BOMType    | BOMUsage     | Comments | EndEff              | ERPFeedbackQuantity | LocationId      | Offset      | OffsetCalendarId | OffsetPercentage | OffsetPercType | PlanLevelId        | ProductId | Quantity | StartEff            |
       | PRO/CONS_LATAM/1000321/444/10/4771/20/21              | YES    | YES          | YES          | NO           | 0021    | PRO/LA_1000321/341/10 | batchstart | proportional |          | 31/12/2998 23:59:59 | 20849.000           | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *                  | LBU01     | -1.000   | 01/01/1980 00:00:00 |
       | PRO/CONS_LATAM/1000321/444/10/4771/1/1                | YES    | YES          | YES          | NO           | 0001    | PRO/LA_1000321/341/10 | batchend   | proportional |          | 31/12/2998 23:59:59 | 16.000              | CONS_LATAM_BR01 | 0.000       |                  |                  |                | *                  | LBU01     | -521.000 | 01/01/1980 00:00:00 |
