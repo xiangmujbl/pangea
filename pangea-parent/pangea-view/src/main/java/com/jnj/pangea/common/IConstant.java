@@ -1,7 +1,5 @@
 package com.jnj.pangea.common;
 
-import org.stringtemplate.v4.ST;
-
 /**
  * Created by XZhan290 on 2018/3/6.
  */
@@ -16,7 +14,9 @@ public interface IConstant {
         String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
         String EDM_SOURCE_LIST_V1 = "/edm/source_list_v1";
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
+        String EDM_MATERIAL_GLOBAL_V1_COPY = "/edm/material_global_v1_copy";
         String EDM_PLANT_V1 = "/edm/plant_v1";
+        String EDM_PLANT_INPUT = "/edm/edm_plant_input";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
@@ -148,6 +148,7 @@ public interface IConstant {
         String EDM_BOM_ITEM = "/edm/bom_item";
         String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
+        String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
     }
 
     interface EDM_INVENTORY_STOCK {
@@ -220,8 +221,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "vendorPurchase";
-        String EXTERNAL_PURCHASE = "externalPurchase";
+        String VENDOR_PURCHASE = "VendorPurchase";
+        String EXTERNAL_PURCHASE = "ExternalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -282,10 +283,12 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_CONSUMPTION_MODE = "localConsumptionMode";
     }
+
     interface PLAN_CNS_COUNTRY_INPUT {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_COUNTRY = "localCountry";
     }
+
     interface PLAN_CNS_PLAN_REGION {
         String PLANNING_REGION_ID  = "planningRegionID";
     }
@@ -478,6 +481,12 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+    }
+
+    interface EDM_PLANT_INPUT {
+        String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANNING_RELEVANT = "localPlanningRelevant";
     }
 
     interface CNS_PLAN_PARAMETER {
@@ -854,13 +863,16 @@ public interface IConstant {
         String FAIL_MSG="localDpParentCode does not exist in edm Material";
     }
 
+    interface PLAN_CNS_DP_POS {
+        String LOCAL_MATERIAL = "localMaterial";
+    }
+
     interface  EDM_COUNT_INPUT{
         String SOURCESYSTEM= "sourceSystem";
         String LOCALCOUNTRY ="localCountry" ;
         String LOCALCURRENCY="localCurrency";
 
     }
-
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT = "LATAM_ROOT";
@@ -999,10 +1011,9 @@ public interface IConstant {
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
+        String THIRTY = "30";
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
-
-
     }
 
     interface FAILED {
@@ -1037,6 +1048,7 @@ public interface IConstant {
             String OMP_GDM_POS = "OMPGdmPos";
             String OMP_GDM_LFU = "OMPGdmLfu";
             String OMP_GDM_COUNTRY="OMPGdmCountry";
+            String EDM_PLANT = "EDMPlant";
         }
 
         interface ERROR_CODE {
@@ -1153,8 +1165,8 @@ public interface IConstant {
         public static final String CLONE_PLANLEVELID = "VolumePlanning";
         public static final String PATTERN_DECIMAL_5 = "#.00000";
         public static final String PATTERN_DECIMAL_3 = "#.000";
-        public static final String INTERFACEID="OMPGdmbomelementProcess";
-        public static final String  PRODUCTID_FAIL_MSG="Unable to construct ProductId";
+        public static final String INTERFACEID = "OMPGdmbomelementProcess";
+        public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
 
 
     }
