@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-1277
-Feature: EDMGlobalBaseUnit AEAZ-1277
+@pangea_test @AEAZ-3217
+Feature: EDMGlobalBaseUnit AEAZ-3217
   # test copy attributes from source system to target system
 
   Scenario: Full Load curation

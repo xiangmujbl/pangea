@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-2828
-Feature: EDMMaterialGlobal AEAZ-2828
+@pangea_test @AEAZ-2828 @AEAZ-4065
+Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065
 
   Scenario: Full Load curation
   # 1. Get maktx from makt where makt-matnr = mara-matnr and makt-spras = E (J1)
@@ -46,22 +46,22 @@ Feature: EDMMaterialGlobal AEAZ-2828
 
     When I submit task with xml file "xml/edm/EDMMaterialGlobal.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/edm/material_global_v2" by keyFields "sourceSystem,localMaterialNumber"
+    Then I check region data "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localRefDescription                | localMaterialType | localBaseUom | materialNumber | refDescription                      | materialType | baseUom | localDpParentCode | parentCode        | globalDpParentCode | form   | category | subBrand | brand  | franchise | globalBusinessUnit | productFamily | localManufacturingTechnology | manufacturingTechnology | localMaterialGroup | materialGroup | flagForDeletion | materialStatus | division | batchManageIndicator | minRemShelfLife | totalShelfLife | primaryPlanningCode |
-      | CONS_LATAM   | 000.670.000-US      | DRILL BIT USAGE                    | FERT              | EA           | 4002           | NAPKIN SL ADPLUS NTDAY SS WING 24X8 | FERT         | EA      |                   | 78910106945930024 | 78910106945930024  | 100722 | 0150     | 5G       | BRD004 | FCH005    | GFO002             |               |                              |                         | 42290000           |               |                 |                | SO       |                      | 0               | 0              | 100722              |
+      | CONS_LATAM   | 000.670.000-US      | DRILL BIT USAGE                    | FERT              | EA           | 4002           | NAPKIN SL ADPLUS NTDAY SS WING 24X8 | FERT         | EA      |                   | 78910106945930024 |                    | 100722 | 0150     | 5G       | BRD004 | FCH005    | GFO002             |               |                              |                         | 42290000           |               |                 |                | SO       |                      | 0               | 0              | 100722              |
       | CONS_LATAM   | 00038100            | HANDLE Ø22*100                     | FERT              | EA           | 7992           | NAPKIN SL ADPLUS UF SV ABA 48x8     | FERT         | EA      |                   |                   |                    | 112365 | 0203     | 1P       | BRD002 | FCH001    | GFO001             |               |                              |                         | 30151900           |               |                 |                | ST       | X                    | 0               | 0              | 112365              |
-      | CONS_LATAM   | 00046500            | CANEVASIT HANDLE Ø22 L115 D0008401 | FERT              | EA           | 36002          | LISTERINE COOL CITRUS 250ML NAT     | FERT         | EA      |                   | 78910109199860006 | 78910109199860007  | 100881 | 0256     | 3D       | BRD006 | FCH002    | GFO002             |               |                              |                         | 30151900           |               |                 |                | WH       | X                    | 0               | 0              | 100881              |
+      | CONS_LATAM   | 00046500            | CANEVASIT HANDLE Ø22 L115 D0008401 | FERT              | EA           | 36002          | LISTERINE COOL CITRUS 250ML NAT     | FERT         | EA      |                   | 78910109199860006 |                    | 100881 | 0256     | 3D       | BRD006 | FCH002    | GFO002             |               |                              |                         | 30151900           |               |                 |                | WH       | X                    | 0               | 0              | 100881              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/project_one/mara" and "/edm/material_global_v2,/plan/edm_failed_data"
+    And I compare the number of records between "/project_one/mara" and "/edm/material_global_v1,/plan/edm_failed_data"
 
   Scenario: delete all test data
 
     Then I delete the test data
 
-    And I will remove all data with region "/edm/material_global_v2"
+    And I will remove all data with region "/edm/material_global_v1"
 
     And I will remove all data with region "/plan/edm_failed_data"
 

@@ -1,8 +1,11 @@
 package com.jnj.pangea.xd;
 
-import com.jnj.pangea.generator.metadata.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,7 +45,6 @@ public class XDTool {
         XdClient xdClient = new XdClient(HOST, USER_NAME, PASSWORD);
 
         job2Run.forEach((name, definition) -> {
-            System.out.println("launch job: " + name);
             if (xdClient.runAsny(name, definition)) {
                 System.out.println("execute success: " + name);
             } else {

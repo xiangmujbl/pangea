@@ -24,4 +24,12 @@ public class PlanCnsCustChannelDaoImpl extends CommonDaoImpl {
         return queryForList(IConstant.REGION.PLAN_CNS_CUST_CHANNEL, queryString, PlanCnsCustChannelEntity.class);
     }
 
+    public List<PlanCnsCustChannelEntity> getEntitiesWithSourceSystemAndSalesOrgAndChannel(String sourceSystem, String salesOrg, String channel) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_CHANNEL.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.PLAN_CNS_CUST_CHANNEL.SALES_ORG).is(salesOrg)
+                .and(IConstant.PLAN_CNS_CUST_CHANNEL.CHANNEL).is(channel).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_CUST_CHANNEL, queryString, PlanCnsCustChannelEntity.class);
+    }
+
 }

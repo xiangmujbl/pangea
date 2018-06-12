@@ -26,10 +26,15 @@ public class DateUtils {
     public final static String F_yyyy_MM_dd_HHmmss = "yyyyMMdd HH:mm:ss";
     public final static String J_yyyyWW = "yyyyWW";
     public final static String yyyy_MM_dd_HHmmss = "yyyy/dd/MM HH:mm:ss";
+    public final static String yyyy_MM_dd_HHmmss_TRUE = "yyyy/MM/dd HH:mm:ss";
     public final static String yyyy_MM_dd = "yyyy/MM/dd";
     public final static String dd_MM_yyyy = "dd/MM/yyyy";
+    public final static String yyyy_MM_ddTHHmmss = "yyyy-MM-dd'T'HH:mm:ss";
+    public final static String ISO_8601 = "yyyy-mm-ddThh:mm:ss.ffffff";
+    public final static String ISO_8602 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
     public final static String J_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
+    public final static String J_yyyy_MM_dd_HHmmss = "yyyy-MM-dd HH:mm:ss";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
@@ -123,8 +128,32 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static String derivationDate(String dateString, int num) {
+        int dayForWeek = 1;
+        int numWeekend = 2;
+        int numWeekday = 5;
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = DateUtils.stringToDate(dateString, DateUtils.yyyy_MM_dd);
+        if (null != date) {
+            calendar.setTime(date);
+            dayForWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+            if (dayForWeek == 6) {
+                num -= 1;
+            }
+            int numWeek = (num) / numWeekday;
+            if (dayForWeek + (num) % numWeekday > numWeekday) {
+                numWeek = numWeek + 1;
+            }
+            num = num + numWeek * numWeekend;
+            calendar.add(Calendar.DATE, num);
+            return DateUtils.dateToString(calendar.getTime(), DateUtils.yyyy_MM_dd);
+        }
+        return "";
+    }
+
     public static void main(String[] args) {
 
-        System.out.println(dateToString(stringToDate("201805", J_yyyyWW), yyyy_MM_dd_HHmmssSSS));
+        System.out.println(derivationDate("2018/06/07", 1));
     }
 }

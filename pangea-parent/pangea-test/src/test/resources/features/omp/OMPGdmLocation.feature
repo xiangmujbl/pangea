@@ -72,8 +72,8 @@ Feature: OMPGdmLocation AEAZ-3685
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID       | errorCode | sourceSystem | businessArea | key1    | key2       | key3 | key4 | key5 | errorValue               |
-      | SP             | OMPGdmLocationEdm | T8        | omp          |              | AR1_T8  | CONS_LATAM |      |      |      | Missing Location Type Id |
-      | SP             | OMPGdmLocationEdm | T10       | omp          |              | AR1_T10 | CONS_LATAM |      |      |      | Missing Country          |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | AR1_T8  | CONS_LATAM |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T10       | project_one  |              | AR1_T10 | CONS_LATAM |      |      |      | Missing Country          |
 
     And I compare the number of records between "/edm/plant_v1" and "/omp/gdm_location,/plan/edm_failed_data"
 
@@ -90,8 +90,8 @@ Feature: OMPGdmLocation AEAZ-3685
 
     And I will remove the test file on sink application "GDMLocation_xref.tsv"
 
-    Given I import "/plan/cns_spl_pln_loc" by keyFields "sourceSystem,vendororCustomer,localNumber,localName"
-      | sourceSystem | vendororCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion | localPlant |
+    Given I import "/plan/cns_spl_pln_loc" by keyFields "sourceSystem,vendorOrCustomer,localNumber,localName"
+      | sourceSystem | vendorOrCustomer | localNumber | localCountry | localCurrency | localName | planLocTypeId | localRegion | localPlant |
       | BtB          | V                | 234500_C1   | US           |               | Silgan    | Silgan234500  | NJ          |            |
       | BtB          | V                | 234555_C1   | US           | USD           | Silgan    | Silgan234500  | NJ          | BR12       |
       | BtB          | C                | 234560_C3   | US           | USD           | Silgan    | Silgan234500  | NJ          | BR12       |

@@ -5,6 +5,8 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanQtyEntity;
 
+import java.util.List;
+
 public class PlanCnsFinPlanQtyDaoImpl extends CommonDaoImpl {
 
     private static PlanCnsFinPlanQtyDaoImpl instance;
@@ -21,6 +23,14 @@ public class PlanCnsFinPlanQtyDaoImpl extends CommonDaoImpl {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_FIN_PLAN_QTY.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
                     .and(IConstant.PLAN_CNS_FIN_PLAN_QTY.IDENTIFIER).is(identifier).toQueryString();
             return queryForObject(IConstant.REGION.PLAN_CNS_FIN_PLAN_QTY, queryString, PlanCnsFinPlanQtyEntity.class);
+        }
+        return null;
+    }
+    public List<PlanCnsFinPlanQtyEntity> getListWithConditions(String localMaterialNumber, String identifier) {
+        if (null != localMaterialNumber && !"".equals(localMaterialNumber)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_FIN_PLAN_QTY.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+                    .and(IConstant.PLAN_CNS_FIN_PLAN_QTY.IDENTIFIER).is(identifier).toQueryString();
+            return queryForList(IConstant.REGION.PLAN_CNS_FIN_PLAN_QTY, queryString, PlanCnsFinPlanQtyEntity.class);
         }
         return null;
     }

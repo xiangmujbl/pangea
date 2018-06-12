@@ -6,11 +6,7 @@
 
             <region path="/edm/source_list_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,localNumberofSourceListRecord,materialNumber,plant,localCreatedOn,
-                    localCreatedBy,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localFixedvendor,
-                    localAgreementNumber,localAgreementItem,localFixedOutlinePurchaseAgreementItem,localPlantfromWhichMaterialisProcured,
-                    localMatForManufPartNumber,localBlockedSourceofSupply,localPurchasingOrganization,localPurchasingDocumentCategory,
-                    localCategoryofSourceListRecord,localSourceListUsageinMaterialsPlanning
+                    sourceSystem,localPlant,localVendorAccountNumber,localMaterialNumber,localNumberofSourceListRecord,localSourceListRecordValidTo,localSourceListRecordValidFrom,localFixedvendor,localFixedOutlinePurchaseAgreementItem,localPurchasingOrganization,localPlantfromWhichMaterialisProcured
                 </columns>
 
                 <relations>
@@ -56,7 +52,7 @@
 
             <region path="/edm/material_global_v1">
                 <columns>
-                     localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode
+                    localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode
                 </columns>
             </region>
 
@@ -74,7 +70,7 @@
 
             <region path="/edm/material_plant_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,materialNumber,plant,localPlantStatus,plantStatus,localProcurementType,localDeletionFlagPlant,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity,localPurchasingGroup
+                    localMaterialNumber,localPlant,sourceSystem,localMaximumLotSize,localMinimumLotSize,purchsngGrpCd,localRoundingValueForPoq,localPurchasingGroup,localSpecialProcurementType
                 </columns>
             </region>
 
@@ -86,13 +82,13 @@
 
             <region path="/plan/cns_spl_pln_loc">
                 <columns>
-                    localNumber,vendorOrCustomer,sourceSystem
+                    localNumber,vendorOrCustomer,sourceSystem,localPlant,localName
                 </columns>
             </region>
 
             <region path="/omp/gdm_supply">
                 <columns>
-                    SupplyId,Active,ActiveOPRERP,ActiveSOPERP,FromDate,LABEL,LocationId,MACHINECAPACITY,MACHINETYPEID,MaxQuantity,MaxQuantityType,MinQuantity,MinQuantityType,PLANLEVELID,Preference,PROCESSTYPEID,ProductId,PURCHASINGGROUP,PURCHASINGORGANIZATION,SupplierId,ToDate,TransportType,VENDOR
+                    SupplyId,Active,ActiveOPRERP,ActiveSOPERP,FromDate,LABEL,LocationId,MaxQuantity,MinQuantity,Preference,PROCESSTYPEID,ProductId,PURCHASINGGROUP,PURCHASINGORGANIZATION,SupplierId,ToDate,TransportType,VENDORID,INCQuantity
                 </columns>
             </region>
         </regions>

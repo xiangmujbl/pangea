@@ -1,9 +1,9 @@
-@pangea_test @AEAZ-2530 @AEAZ-3684
-Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
+@pangea_test @AEAZ-3684
+Feature: OMPGdmSalesHistory AEAZ-3684
 
   Scenario: Full Load curation
 
-    And I will remove the test file on sink application "GDMSaleshistory.tsv"
+    And I will remove the test file on sink application "GDMSalesHistory.tsv"
 
     Given I import "/edm/sales_order_v1" by keyFields "sourceSystem,salesOrderNo,salesOrderItem"
       | sourceSystem | salesOrderNo | salesOrderItem | scheduleLineItem | localSalesOrg | localShipToParty | localOrderCreateDt | localOrderType | localPlant | localMaterialNumber | localItemCategory | localSDItemCurrency | localRequestedDate | localRejReason | salesOrderQty | localNumtoBase | localDentoBase | localRoute |
@@ -40,8 +40,8 @@ Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter"
       | sourceSystem | dataObject       | attribute      | parameter | inclExcl | parameterValue |
-      | CONS_LATAM   | CNS_SalesHistory | restrictSelect | lessMonth | I        | 1              |
-      | CONS_LATAM   | CNS_SalesHistory | initialSelect  | lessMonth | I        | 2              |
+      | CONS_LATAM   | CNS_SalesHistory | restrictSelect | lessMonth | I        | 1095           |
+      | CONS_LATAM   | CNS_SalesHistory | initialSelect  | lessMonth | I        | 1095           |
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/plan/cns_so_type_incl" by keyFields "salesOrg,orderType,country"
@@ -79,12 +79,12 @@ Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
     And I wait "/edm/currency_v1" Async Queue complete
 
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "customerId"
-      | demandGroup | customerId | salesOrganization |
-      | 76100007    | 0000177376 | BR01              |
-      | 76100008    | 0000118476 | BR01              |
-      | 76100009    | 0000185314 | BR01              |
-      | 76100010    | HK0001     | BR01              |
-      | 76100011    | 0000185316 | BR01              |
+      | demandGroup | customerId | salesOrg |
+      | 76100007    | 0000177376 | BR01     |
+      | 76100008    | 0000118476 | BR01     |
+      | 76100009    | 0000185314 | BR01     |
+      | 76100010    | HK0001     | BR01     |
+      | 76100011    | 0000185316 | BR01     |
     And I wait "/plan/cns_dem_grp_asgn" Async Queue complete
 
     Given I import "/project_one/knvh" by keyFields "kunnr"
@@ -98,9 +98,9 @@ Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
 
     Given I import "/project_one/tvro" by keyFields "route"
       | traztd | route  |
-      | 30     | B08002 |
-      | 60     | B08004 |
-      | 90     | B08010 |
+      | 240000 | B08002 |
+      | 480000 | B08004 |
+      | 720000 | B08010 |
     And I wait "/project_one/tvro" Async Queue complete
 
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber"
@@ -124,30 +124,30 @@ Feature: OMPGdmSalesHistory AEAZ-2530 AEAZ-3684
 
     When I submit task with xml file "xml/omp/OMPGdmSalesHistory.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMSaleshistory.tsv"
+    Then A file is found on sink application with name "GDMSalesHistory.tsv"
 
-    Then I check file data for filename "GDMSaleshistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
+    Then I check file data for filename "GDMSalesHistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
       | salesHistoryId       | activeFCTERP | certaintyId | conversionFactorXx | currencyId | customerId | demandStreamId | dueDate             | fromDueDate         | locationId      | productId | quantity | salesUnit | validValueXx |
-      | 0008288860000001_T4  | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288859000003_T3  | YES          | FOC         |                    | ADP        | 76100008   |                | 01/02/2019 00:00:00 | 01/02/2019 00:00:00 | CONS_LATAM_BR08 | PPC02     | 2.0      | CA        |              |
-      | 0008288858000003_D1  | YES          | FOC         |                    | ADP        | 76100007   |                | 03/03/2019 00:00:00 | 03/03/2019 00:00:00 | CONS_LATAM_BR08 | PPC01     | 1.0      | CA        |              |
-      | 0008288862000002_T7  | YES          | FOC         |                    | ADP        | 76100010   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288863000003_T8  | YES          | FOC         |                    | ADP        | 76100011   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288864000004_J2  | YES          | BASE        |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288860000001_T4  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288859000003_T3  | YES          | FOC         |                    | ADP        | 76100008   |                | 2019/03/31 00:00:00 | 2019/03/31 00:00:00 | CONS_LATAM_BR08 | PPC02     | 2.0      | CA        |              |
+      | 0008288858000003_D1  | YES          | FOC         |                    | ADP        | 76100007   |                | 2019/04/01 00:00:00 | 2019/04/01 00:00:00 | CONS_LATAM_BR08 | PPC01     | 1.0      | CA        |              |
+      | 0008288862000002_T7  | YES          | FOC         |                    | ADP        | 76100010   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288863000003_T8  | YES          | FOC         |                    | ADP        | 76100011   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288864000004_J2  | YES          | BASE        |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
 
-      | 0008288865000005_T2  | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288866000006_T2  | YES          | BASE        |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288865000005_T2  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288866000006_T2  | YES          | BASE        |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
 
-      | 0008288867000007_T5  | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |              |
-      | 0008288868000008_T5  | YES          | FOC         |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |              |
-      | 0008288874000014_T9  | YES          | FOC         |                    | ADP        | 76100011   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288875000015_T10 | YES          | BASE        |                    | ADP        | 76100009   |                | 02/01/2019 00:00:00 | 02/01/2019 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288867000007_T5  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |              |
+      | 0008288868000008_T5  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |              |
+      | 0008288874000014_T9  | YES          | FOC         |                    | ADP        | 76100011   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288875000015_T10 | YES          | BASE        |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID        | errorCode | sourceSystem | businessArea | key1       | key2      | key3 | key4 | key5 | errorValue                                  |
-      | DP             | OMPGdmSalesHistory | T4        | CONS_LATAM   |              | 0008288871 | 000011_T4 | 0013 |      |      | Unable to find the Enterprise currency code |
-      | DP             | OMPGdmSalesHistory | T5        | CONS_LATAM   |              | 0008288872 | 000012_T5 | 0014 |      |      | Demand group can not be determined          |
-      | DP             | OMPGdmSalesHistory | T8        | CONS_LATAM   |              | 0008288873 | 000013_T8 | 0015 |      |      | Material not found in material global       |
+      | functionalArea | interfaceID        | errorCode | sourceSystem | businessArea | key1       | key2      | key3 | key4       | key5 | errorValue                                  |
+      | DP             | OMPGdmSalesHistory | T4        | CONS_LATAM   |              | 0008288871 | 000011_T4 | 0013 | 0000185314 | BR01 | Unable to find the Enterprise currency code |
+      | DP             | OMPGdmSalesHistory | T5        | CONS_LATAM   |              | 0008288872 | 000012_T5 | 0014 | 0000185312 | BR01 | Demand group can not be determined          |
+      | DP             | OMPGdmSalesHistory | T8        | CONS_LATAM   |              | 0008288873 | 000013_T8 | 0015 | 0000185314 | BR01 | Material not found in material global       |
 
     #And I compare the number of records between "/edm/sales_order_v1" and "/omp/gdm_sales_history,/plan/edm_failed_data"
 
