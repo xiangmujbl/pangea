@@ -1000,8 +1000,6 @@ public interface IConstant {
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
         String THIRTY = "30";
-
-        String INCLUSION = "I";
     }
 
     interface FAILED {
