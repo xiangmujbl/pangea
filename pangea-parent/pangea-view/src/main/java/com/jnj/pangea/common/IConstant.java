@@ -116,6 +116,7 @@ public interface IConstant {
         String PROJECT_ONE_LIKP = "/project_one/likp";
         String PROJECT_ONE_LIPS = "/project_one/lips";
         String EDM_MATERIAL_GLOBAL_V1_CLONE = "/edm/material_global_v1_clone";
+        String EDM_MATERIAL_GLOBAL_V1_COPY = "/edm/material_global_v1_copy";
         String PROJECT_ONE_MAPL_CLONE = "/project_one/mapl_clone";
         String PROJECT_ONE_STAS = "/project_one/stas";
         String PROJECT_ONE_PLAB_CLONE = "/project_one/plab_clone";
