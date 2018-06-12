@@ -1,7 +1,7 @@
 <adf-curation>
     <curation mainRegion="/edm/advance_shipping_notification_v1" viewRegion="/omp/gdm_stock_asn" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_stock.controller.OMPGdmStockASNController"
-              writeTo="all" topic="PANGEA_V1_omp_gdm_stock_ASN">
+              writeTo="all" topic="PANGEA_V1_omp_gdm_stock_asn">
 
         <regions>
             <region path="/edm/advance_shipping_notification_v1">
@@ -23,8 +23,8 @@
                     </region>
                     <region>
                         <expression path="/edm/purchase_order_oa_v1" isPrimaryKey="false">
-                            poNum=/edm/advance_shipping_notification_v1.localRefDocNum
-                            poLineNbr=sourceSystem=/edm/advance_shipping_notification_v1.locRefDocLineNum
+                            poNum=/edm/advance_shipping_notification_v1.localRefDocNum,
+                            poLineNbr=sourceSystem=/edm/advance_shipping_notification_v1.locRefDocLineNum,
                             sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
                         </expression>
                     </region>
@@ -66,6 +66,13 @@
                     localCountry,localCurrency,localName,localNumber,localPlant,localRegion,pLanlocTypeDesc,pLanlocTypeId,planLocTypeDesc,planLocTypeId,sourceSystem,specLocAtt1,specLocAtt2,specLocAtt3,specLocAttDesc1,specLocAttDesc2,specLocAttDesc3,vendorOrCustomer,vendororCustomer
                 </columns>
             </region>
+
+            <region>
+                <columns path="/omp/gdm_stock_asn">
+                    stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyID,ERPOrderId,inventoryLinkGroupId,vendorId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity
+                </columns>
+            </region>
+
         </regions>
     </curation>
 </adf-curation>
