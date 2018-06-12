@@ -6,51 +6,71 @@
         <regions>
             <region path="/edm/purchase_order_oa_v1">
                 <columns>
-                    delvSchedCntNbr,evTypeCd,localSeqNumActAsgn,localSeqNumVendConf,matlMvmtNum,matlMvmtSeqNbr,matlMvmttYr,poLineNbr,poNum,sourceSystem,matlNum,plntCd,poCatTypeCd,prchsngOrgNum,delInd,lineItemTypeCd,cnfrmQty,poLineQty,localNumerator,localDenominator,recvEaQty
+                    sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,crtOnDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum,localSeqNumActAsgn,localSeqNumVendConf
                 </columns>
                 <relations>
-                    <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
                         <expression>
                             localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,
                             sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
                         </expression>
-                    </region>
-                    <region path="/edm/plant_v1" isPrimaryKey="false">
+                    </relation>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
                         <expression>
                             localPlant=/edm/purchase_order_oa_v1.plntCd
                         </expression>
-                    </region>
-                    <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>
                             localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,
                             sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
                         </expression>
-                    </region>
+                    </relation>
                 </relations>
             </region>
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    localMaterialNumber,materialNumber,primaryPlanningCode,sourceSystem
+                    baseUom,batchManageIndicator,brand,category,division,flagForDeletion,form,franchise,globalBusinessUnit,globalDpParentCode,localBaseUom,localDpParentCode,localManufacturingTechnology,localMaterialGroup,localMaterialNumber,localMaterialType,localRefDescription,manufacturingTechnology,materialGroup,materialNumber,materialStatus,materialType,minRemShelfLife,parentCode,primaryPlanningCode,productFamily,refDescription,sourceSystem,subBrand,totalShelfLife
                 </columns>
+                <relations>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/edm/plant_v1">
                 <columns>
                     country,localCountry,localCurrency,localPlanningRelevant,localPlant,localPlantName,localPlantType,plant,plantType,region,site,sourceSystem
                 </columns>
+                <relations>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/plan/cns_material_plan_status">
                 <columns>
                     active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant
                 </columns>
+                <relations>
+                    <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/plan/cns_plan_object_filter">
                 <columns>
                     comments,inclusionExclusion,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem
                 </columns>
+                <relations>
+                    <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
             </region>
 
             <region path="/plan/cns_spl_pln_loc">

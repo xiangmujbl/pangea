@@ -17,7 +17,7 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
       |  CONS_LATAM  | 3000793997 |    40     |    1     |    2017     | 5006382844  |       1        |        1        |      F      |     NB   | 20170102|  6109  |      MX01     |      M39      |     8302    |   MXN   | 20170102 |           |         |             |    MX01    |              |            |        |  58752  | MX01   |  MX01  |              |   2000    |    EA   |         1      |        1         |     X     |     X        |       3        |                 |    5100003715   |        4950         |          EA  |             |    0     |                   |         |             |                  | 1603571115 |     10    |                       |           |    E        |          101      |     20170103     |   0.000   |            | 20170103 |         |    200   |           |                            |            |                |             |             |         |         |                  |                      |               |                |      1         |         |                    |                     |
       |  CONS_LATAM  | 30007930001|    40     |    1     |    2017     | 5006382844  |       1        |        1        |      F      |     NB   | 20170102|  6109  |      MX01     |      M39      |     8302    |   MXN   | 20170102 |           |         |             |    MX01    |              |            |    X   |  58752  | MX01   |  MX01  |              |   2000    |    EA   |         1      |        1         |     X     |     X        |       3        |                 |    5100003715   |        4950         |          EA  |             |    0     |                   |         |             |                  | 1603571115 |     10    |                       |           |    E        |          101      |     20170103     |   0.000   |            | 20170103 |         |    200   |           |                            |            |                |             |             |         |         |                  |                      |               |                |      1         |         |                    |                     |
 
-    And I wait "/edm/purchase_order_oa_v1" by keyFields" Async Queue complete
+    And I wait "/edm/purchase_order_oa_v1" Async Queue complete
 
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
       | baseUom | batchManageIndicator | brand | category | division | flagForDeletion | form | franchise | globalBusinessUnit | globalDpParentCode | localBaseUom | localDpParentCode | localManufacturingTechnology | localMaterialGroup | localMaterialNumber | localMaterialType |       localRefDescription                | manufacturingTechnology | materialGroup | materialNumber | materialStatus | materialType | minRemShelfLife | parentCode | primaryPlanningCode | productFamily | refDescription | sourceSystem | subBrand | totalShelfLife |
@@ -54,96 +54,96 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectAttribute1,sourceObjectAttribute1,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem"
+    Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem"
      | comments | inclusionExclusion | sourceObjectAttribute1 | sourceObjectAttribute1Value | sourceObjectAttribute2 | sourceObjectAttribute2Value | sourceObjectTechName | sourceSystem |
-     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PA03           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR19           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CO02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR14           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PA03           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR19           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PA03           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CO02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              CO02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              BR19           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_latam |
-     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_latam |
+     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PA03           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR19           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CO02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR14           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PA03           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR19           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              DO01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PA03           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CO02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              UY01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CL01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CO01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR07           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CR02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX01           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              AR01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              EC01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR25           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PA01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR16           |          poTypeCd      |             ZNB             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR12           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              CO02           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              MX02           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              GT01           |          poTypeCd      |             NB              |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              BR19           |          poTypeCd      |             ZLA             |   purchase_order_oa  |   CONS_LATAM |
+     |          |        I           |        plntCd          |              PE01           |          poTypeCd      |             UB              |   purchase_order_oa  |   CONS_LATAM |
 
 
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
@@ -168,9 +168,9 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
 
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete
 
-    When I submit task with xml file "xml/omp/GDMStockPurchaseOrder_aggr.xml"
+    #When I submit aggregation task with xml file "xml/omp/GDMStockPurchaseOrder_aggr.xml"
 
-    When I submit task with xml file "xml/omp/OMPGdmSupply.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/omp/OMPGdmStockPurchaseOrder.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMStock.tsv"
 

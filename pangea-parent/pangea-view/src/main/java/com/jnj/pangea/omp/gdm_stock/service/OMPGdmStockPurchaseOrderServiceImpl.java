@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_stock.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
@@ -99,17 +100,21 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             }
 
             //PO6
-            PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1(
-                    "purchase_order_oa_v1",
+            PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
+                    IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
                     purchaseOrderOAV1Entity.getSourceSystem(),
                     IConstant.EDM_PURCHASE_ORDER_OA_V1.PLNTCD,
+                    purchaseOrderOAV1Entity.getPlntCd(),
+                    IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
                     purchaseOrderOAV1Entity.getPoTypeCd());
             if(cnsPlanObjectFilterEntity == null) {
-                cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1(
-                        "purchase_order_oa_v1",
+                cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
+                        IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
                         purchaseOrderOAV1Entity.getSourceSystem(),
                         IConstant.EDM_PURCHASE_ORDER_OA_V1.PRCHSNG_ORG_NUM,
-                        purchaseOrderOAV1Entity.getPrchsngOrgNum());
+                        purchaseOrderOAV1Entity.getPrchsngOrgNum(),
+                        IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
+                        purchaseOrderOAV1Entity.getPoTypeCd());
             }
 
             if(cnsPlanObjectFilterEntity != null) {
@@ -132,6 +137,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                     stockBo.setConsignment(IConstant.VALUE.NO);
                                 }
 
+                                LogUtil.getCoreLog().info("\n\n\n matlNum = "+purchaseOrderOAV1Entity.getMatlNum()+" srcSys = "+purchaseOrderOAV1Entity.getSourceSystem());
                                 //PO9
                                 PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
                                 if(cnsMaterialPlanStatusEntity != null) {
@@ -144,6 +150,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
 
                                         //PO10
                                         //AGGREGATION TBD
+                                        stockBo.setQuantity("");
 
                                         //PO11
                                         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
@@ -167,7 +174,9 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                             String timeToMove = purchaseOrderOAV1Entity.getGrLeadTimeDays();
                                             Calendar cal = Calendar.getInstance();
                                             cal.setTime(dFrom);
-                                            cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
+                                            if(!timeToMove.isEmpty()) {
+                                                cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
+                                            }
                                             if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
                                                 cal.add(Calendar.DATE, 2);
                                             } else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
