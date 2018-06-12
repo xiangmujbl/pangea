@@ -22,9 +22,9 @@ import com.jnj.pangea.omp.gdm_sales_history.bo.OMPGdmSalesHistoryBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
@@ -56,21 +56,27 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         ResultObject resultObject = new ResultObject();
         EDMSalesOrderV1Entity salesOrderV1Entity = (EDMSalesOrderV1Entity) o;
-        Set<String> scheduleLineItemSet = (Set<String>) o2;
+//        Set<String> scheduleLineItemSet = (Set<String>) o2;
 
         OMPGdmSalesHistoryBo gdmSalesHistoryBo = new OMPGdmSalesHistoryBo();
 
-        if (scheduleLineItemSet.contains(salesOrderV1Entity.getScheduleLineItem())){
+//        if (scheduleLineItemSet.contains(salesOrderV1Entity.getScheduleLineItem())) {
+//            return null;
+//        }
+
+        String localSalesOrg = salesOrderV1Entity.getLocalSalesOrg();
+        String localShipToParty = salesOrderV1Entity.getLocalShipToParty();
+        String localOrderType = salesOrderV1Entity.getLocalOrderType();
+        String localItemCategory = salesOrderV1Entity.getLocalItemCategory();
+
+        PlanCnsCustExclEntity custExclEntity = checkF1(localSalesOrg, localShipToParty);
+        if (null != custExclEntity) {
             return null;
         }
 
         if (!checkJ1(salesOrderV1Entity)) {
             return null;
         }
-        String localSalesOrg = salesOrderV1Entity.getLocalSalesOrg();
-        String localShipToParty = salesOrderV1Entity.getLocalShipToParty();
-        String localOrderType = salesOrderV1Entity.getLocalOrderType();
-        String localItemCategory = salesOrderV1Entity.getLocalItemCategory();
 
         String salesHistoryId = salesOrderV1Entity.getSalesOrderNo() + salesOrderV1Entity.getSalesOrderItem();
         gdmSalesHistoryBo.setSalesHistoryId(salesHistoryId);
@@ -87,9 +93,9 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return resultObject;
         }
 
-        String customerId = checkT5(localShipToParty, localSalesOrg, salesOrderV1Entity.getLocalRequestedDate());
-        if (StringUtils.isNotEmpty(customerId)) {
-            gdmSalesHistoryBo.setCustomerId(customerId);
+        PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = checkT5(localShipToParty, localSalesOrg, salesOrderV1Entity.getLocalRequestedDate());
+        if (null!=demGrpAsgnEntity) {
+            gdmSalesHistoryBo.setCustomerId(demGrpAsgnEntity.getDemandGroup());
         } else {
             FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T5, "Demand group can not be determined");
             resultObject.setFailData(failData);
@@ -99,8 +105,15 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         String fromDueDate = checkT6(salesOrderV1Entity.getLocalRoute(), salesOrderV1Entity.getLocalRequestedDate());
         if (StringUtils.isNotEmpty(fromDueDate)) {
             gdmSalesHistoryBo.setFromDueDate(fromDueDate);
-            gdmSalesHistoryBo.setDueDate(checkF2T6(fromDueDate));
+            if (checkF2T6(fromDueDate)) {
+                gdmSalesHistoryBo.setDueDate(fromDueDate);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
+
         String locationId = salesOrderV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + salesOrderV1Entity.getLocalPlant();
         gdmSalesHistoryBo.setLocationId(locationId);
 
@@ -116,7 +129,8 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         gdmSalesHistoryBo.setQuantity(checkJ2T9(salesOrderV1Entity));
 
-        LogUtil.getCoreLog().info("gdmSalesHistoryBo:"+gdmSalesHistoryBo.toMap());
+//        scheduleLineItemSet.add(salesOrderV1Entity.getScheduleLineItem());
+
         resultObject.setBaseBo(gdmSalesHistoryBo);
         return resultObject;
     }
@@ -133,22 +147,20 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         return cnsCustExclDao.getEntityWithSalesOrgAndNotCustomerShipTo(localSalesOrg, localShipToParty);
     }
 
+
     private String checkT2(String localSalesOrg, String localOrderType, String localItemCategory) {
         PlanCnsCertDeterEntity certDeterEntity = cnsCertDeterDao.getEntitiesWithConditions(localSalesOrg, localOrderType, localItemCategory);
+        if (null == certDeterEntity) {
+            certDeterEntity = cnsCertDeterDao.getEntitiesWithSalesOrgAndItemCategory(localSalesOrg, localItemCategory);
+            if (null == certDeterEntity) {
+                certDeterEntity = cnsCertDeterDao.getEntitiesWithSalesOrgAndOrderType(localSalesOrg, localOrderType);
+            }
+        }
+
         if (null != certDeterEntity) {
             return certDeterEntity.getCertaintyKey();
         } else {
-            certDeterEntity = cnsCertDeterDao.getEntitiesWithSalesOrgAndItemCategory(localSalesOrg, localItemCategory);
-            if (null != certDeterEntity) {
-                return certDeterEntity.getCertaintyKey();
-            } else {
-                certDeterEntity = cnsCertDeterDao.getEntitiesWithSalesOrgAndOrderType(localSalesOrg, localOrderType);
-                if (null != certDeterEntity) {
-                    return certDeterEntity.getCertaintyKey();
-                } else {
-                    return IConstant.VALUE.BASE;
-                }
-            }
+            return IConstant.VALUE.BASE;
         }
     }
 
@@ -160,88 +172,106 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         return null;
     }
 
-    private String checkT5(String localShipToParty, String localSalesOrg, String localRequestedDate) {
-        PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrganization(localShipToParty, localSalesOrg);
-        if (null != demGrpAsgnEntity) {
-            return demGrpAsgnEntity.getDemandGroup();
-        } else {
-            KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorg(localShipToParty, localSalesOrg);
-            if (null != knvhEntity) {
-                String kunnr = knvhEntity.getHkunnr();
-                String datbi = knvhEntity.getDatbi();
-                try {
-                    if (StringUtils.isNotEmpty(kunnr)) {
-                        if (StringUtils.isNotEmpty(localRequestedDate) && StringUtils.isNotEmpty(datbi) && Integer.parseInt(localRequestedDate) <= Integer.parseInt(datbi)) {
-                            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(kunnr);
-                            if (null != demGrpAsgnEntity) {
-                                return demGrpAsgnEntity.getDemandGroup();
-                            } else {
-                                demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrganization(knvhEntity.getKunnr(), localSalesOrg);
-                                if (null != demGrpAsgnEntity) {
-                                    return demGrpAsgnEntity.getDemandGroup();
-                                }
+    private PlanCnsDemGrpAsgnEntity checkT5(String localShipToParty, String localSalesOrg, String localRequestedDate) {
+        PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = null;
+        if (StringUtils.isNotEmpty(localShipToParty) && StringUtils.isNotEmpty(localSalesOrg)) {
+            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrg(localShipToParty, localSalesOrg);
+        }
+
+        if (null==demGrpAsgnEntity){
+            if (StringUtils.isNotEmpty(localShipToParty) && StringUtils.isNotEmpty(localSalesOrg)) {
+                KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorg(localShipToParty, localSalesOrg);
+
+                if (null != knvhEntity) {
+                    String hkunnr = knvhEntity.getHkunnr();
+                    String datbi = knvhEntity.getDatbi();
+                    try{
+                        Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate,DateUtils.F_yyyyMMdd);
+                        Date datbiFormat = DateUtils.stringToDate(datbi,DateUtils.F_yyyyMMdd);
+
+                        if (StringUtils.isNotEmpty(datbi) && StringUtils.isNotEmpty(hkunnr) && localRequestedDateFormat.getTime() <= datbiFormat.getTime()) {
+                            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(hkunnr);
+
+                            if (null != demGrpAsgnEntity && StringUtils.isNotEmpty(demGrpAsgnEntity.getDemandGroup())) {
+                                return demGrpAsgnEntity;
                             }
-                        } else {
-                            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrganization(knvhEntity.getKunnr(), localSalesOrg);
-                            if (null != demGrpAsgnEntity) {
-                                return demGrpAsgnEntity.getDemandGroup();
+                        }
+                    }catch (DateTimeParseException e){
+                        LogUtil.getCoreLog().info(e);
+                    }
+
+
+                    if (null == demGrpAsgnEntity){
+                        String kunnr = knvhEntity.getKunnr();
+                        if (StringUtils.isNotEmpty(kunnr)) {
+                            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrg(kunnr, localSalesOrg);
+                            if (null != demGrpAsgnEntity && StringUtils.isNotEmpty(demGrpAsgnEntity.getDemandGroup())) {
+                                return demGrpAsgnEntity;
                             }
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
                 }
             }
         }
-        return null;
+        return demGrpAsgnEntity;
     }
 
     private String checkT6(String localRoute, String localRequestedDate) {
+        if (StringUtils.isEmpty(localRoute)) {
+            Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
+            return DateUtils.dateToString(localRequestedDateFormat, DateUtils.J_yyyyMMdd_HHmmss);
+        }
 
         TvroEntity tvroEntity = tvroDao.getEntityWithRoute(localRoute);
         if (null != tvroEntity) {
             String traztd = tvroEntity.getTraztd();
             if (StringUtils.isNotEmpty(traztd) && StringUtils.isNotEmpty(localRequestedDate)) {
-
-                int traztdNum = Integer.parseInt(traztd);
+                int traztdNum = Integer.parseInt(traztd) / 240000;
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
                 Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztdNum);
-                return DateUtils.dateToString(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
+                String dueDate = DateUtils.dateToString(fromDueDate, DateUtils.J_yyyyMMdd_HHmmss);
+                return dueDate;
             }
         }
-        return null;
+
+        Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
+        return DateUtils.dateToString(localRequestedDateFormat, DateUtils.J_yyyyMMdd_HHmmss);
+
     }
 
-    private String checkF2T6(String fromDueDate) {
+    private boolean checkF2T6(String fromDueDate) {
         String parameterValue = getParameterValue(IConstant.VALUE.RESTRICT_SELECT);
         if (StringUtils.isNotEmpty(fromDueDate) && StringUtils.isNotEmpty(StringUtils.trim(parameterValue))) {
             Date presentDate = new Date();
             int parameterValueLong = (int) Double.parseDouble(parameterValue);
             Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueLong);
-            Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.dd_MM_yyyy_HHmmss);
-            if (dueDateFormat.getTime() >= resultDate.getTime()) {
-                return fromDueDate;
+            Date dueDateFormat = DateUtils.stringToDate(fromDueDate, DateUtils.J_yyyyMMdd_HHmmss);
+            if (null != dueDateFormat && null != resultDate) {
+                if (dueDateFormat.getTime() >= resultDate.getTime()) {
+                    return true;
+                }
             }
+
         }
-        return null;
+        return false;
     }
 
     private boolean checkJ1(EDMSalesOrderV1Entity salesOrderV1Entity) {
         Date presentDate = new Date();
         Date localOrderCreateDateFormat = DateUtils.stringToDate(salesOrderV1Entity.getLocalOrderCreateDt(), DateUtils.F_yyyyMMdd);
-        int parameterValueInt = Integer.parseInt(getParameterValue(IConstant.VALUE.INITIAL_SELECT));
-        Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueInt);
-        if (localOrderCreateDateFormat.getTime() >= resultDate.getTime()) {
-            PlanCnsSoTypeInclEntity soTypeInclEntity = cnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType());
-            if (null != soTypeInclEntity) {
-                String localPlant = salesOrderV1Entity.getLocalPlant();
-                EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithLocalPlantAndCountry(localPlant, soTypeInclEntity.getCountry());
-
-                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithThereConditions(salesOrderV1Entity.getLocalMaterialNumber(), localPlant, IConstant.VALUE.X);
-
-                if (null != plantV1Entity && null != materialPlanStatusEntity) {
-                    return true;
+        String parameterValue = getParameterValue(IConstant.VALUE.INITIAL_SELECT);
+        if (StringUtils.isNotEmpty(parameterValue)) {
+            int parameterValueInt = Integer.parseInt(parameterValue);
+            Date resultDate = DateUtils.offsetDate(presentDate, -parameterValueInt);
+            if (localOrderCreateDateFormat.getTime() >= resultDate.getTime()) {
+                PlanCnsSoTypeInclEntity soTypeInclEntity = cnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType());
+                if (null != soTypeInclEntity) {
+                    String localPlant = salesOrderV1Entity.getLocalPlant();
+                    EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithLocalPlantAndCountry(localPlant, soTypeInclEntity.getCountry());
+                    PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithThereConditions(salesOrderV1Entity.getLocalMaterialNumber(), localPlant, IConstant.VALUE.X);
+                    if (null != plantV1Entity && null != materialPlanStatusEntity) {
+                        return true;
+                    }
                 }
             }
         }
@@ -249,30 +279,31 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     }
 
     private PlanCnsOrdRejEntity checkJ2(EDMSalesOrderV1Entity salesOrderV1Entity) {
-        return cnsOrdRejDao.getEntityWithSalesOrgAndRejCd(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalRejReason());
+        String localRejReason = StringUtils.trim(salesOrderV1Entity.getLocalRejReason());
+        return cnsOrdRejDao.getEntityWithSalesOrgAndRejCd(salesOrderV1Entity.getLocalSalesOrg(), localRejReason);
     }
 
     private String checkJ2T9(EDMSalesOrderV1Entity salesOrderV1Entity) {
         PlanCnsOrdRejEntity ordRejEntity = null;
-        if (null != salesOrderV1Entity.getLocalRejReason() || !"".equals(salesOrderV1Entity.getLocalRejReason())) {
+        if (StringUtils.isNotEmpty(StringUtils.trim(salesOrderV1Entity.getLocalRejReason()))) {
             ordRejEntity = checkJ2(salesOrderV1Entity);
         }
-        if (null != ordRejEntity || null == salesOrderV1Entity.getLocalRejReason() || "".equals(salesOrderV1Entity.getLocalRejReason())) {
+        if (null != ordRejEntity || StringUtils.isEmpty(StringUtils.trim(salesOrderV1Entity.getLocalRejReason()))) {
             try {
-                Double salesOrderQty = Double.parseDouble(salesOrderV1Entity.getSalesOrderQty());
-                int localNumtoBase = Integer.parseInt(salesOrderV1Entity.getLocalNumtoBase());
-                int localDentoBase = Integer.parseInt(salesOrderV1Entity.getLocalDentoBase());
+                Double salesOrderQty = Double.parseDouble(StringUtils.trim(salesOrderV1Entity.getSalesOrderQty()));
+                int localNumtoBase = Integer.parseInt(StringUtils.trim(salesOrderV1Entity.getLocalNumtoBase()));
+                int localDentoBase = Integer.parseInt(StringUtils.trim(salesOrderV1Entity.getLocalDentoBase()));
                 if (0 != salesOrderQty && 0 != localNumtoBase && 0 != localDentoBase) {
                     return salesOrderQty * localNumtoBase / localDentoBase + "";
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
-                return null;
+                LogUtil.getCoreLog().info(e);
+                return IConstant.VALUE.ZERO;
             }
         } else {
             return IConstant.VALUE.ZERO;
         }
-        return null;
+        return IConstant.VALUE.ZERO;
     }
 
     private String checkT10(String localBaseUom) {
@@ -293,8 +324,8 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         failData.setKey1(salesOrderV1Entity.getSalesOrderNo());
         failData.setKey2(salesOrderV1Entity.getSalesOrderItem());
         failData.setKey3(salesOrderV1Entity.getScheduleLineItem());
-        failData.setKey4("");
-        failData.setKey5("");
+        failData.setKey4(salesOrderV1Entity.getLocalShipToParty());
+        failData.setKey5(salesOrderV1Entity.getLocalSalesOrg());
         return failData;
     }
 }

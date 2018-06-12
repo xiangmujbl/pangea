@@ -42,28 +42,24 @@ public class EDMAdvancedShipNotificationServiceImpl {
 
         List<ResultObject> resultObjects = new ArrayList<>();
 
-        LikpEntity likpEntity = (LikpEntity) o2;
+        LikpEntity likpEntity = (LikpEntity) o;
 
         // J1
         // Join using (LIKP-VBELN) = (LIPS-VBELN) to get value of ( LIPS-POSNR) and there can be multiple values
-        List<LipsEntity> lipsEntities = lipsDao.getLipsEntityWithVbeln(likpEntity.getVbeln());
-
-        if(lipsEntities != null) {
-            for(LipsEntity lipsEntity : lipsEntities) {
-                resultObjects.add(setObjectByPosnr(lipsEntity.getPosnr(), likpEntity, lipsEntity));
-            }
+        List<LipsEntity> lipsEntities = lipsDao.getLipsEntitiesWithVbeln(likpEntity.getVbeln());
+        for(LipsEntity lipsEntity : lipsEntities) {
+            resultObjects.add(setObjectByPosnr(likpEntity, lipsEntity));
         }
-
         return resultObjects;
     }
 
-    private ResultObject setObjectByPosnr(String posnr, LikpEntity likpEntity, LipsEntity lipsEntity) {
+    private ResultObject setObjectByPosnr(LikpEntity likpEntity, LipsEntity lipsEntity) {
 
         ResultObject resultObject = new ResultObject();
 
         EDMAdvancedShipNotificationBo edmAdvancedShipNotificationBo = new EDMAdvancedShipNotificationBo();
 
-        edmAdvancedShipNotificationBo.setDelvLineNbr(posnr);
+        edmAdvancedShipNotificationBo.setDelvLineNbr(lipsEntity.getPosnr());
 
         // N3
         // ERP Date is informat yyyymmdd
@@ -114,8 +110,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // Get sourceSystem from source_system_v1 using below condition:
         // source_system_v1-localSourceSystem = "project_one"
         EDMSourceSystemV1Entity edmSourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
-
-        if(edmSourceSystemV1Entity != null){
+        if (edmSourceSystemV1Entity != null) {
             edmAdvancedShipNotificationBo.setSrcSysCd(edmSourceSystemV1Entity.getSourceSystem());
         }
 
@@ -123,8 +118,10 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // Select only when LIKP-VBTYP= 7
         if(likpEntity.getVbtyp().equals(IConstant.VALUE.SEVEN)) {
             edmAdvancedShipNotificationBo.setLocaldeliveryCatg(likpEntity.getVbtyp());
+        } else {
+            // skip
+            return null;
         }
-
         resultObject.setBaseBo(edmAdvancedShipNotificationBo);
         return resultObject;
     }

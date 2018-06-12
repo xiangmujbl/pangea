@@ -20,8 +20,8 @@ public class PlanConsTimeDepXchangeEntity extends CommonEntity {
         setUniqueId((String) map.get("uniqueId"));
         setSourceSystem((String) map.get("sourceSystem"));
         setFromCurrency((String) map.get("fromCurrency"));
-        setEffectiveEndDate((String) map.get("endEff"));
-        setEffectiveStartDate((String) map.get("startEff"));
+        setEffectiveEndDate((String) map.get("effectiveEndDate"));
+        setEffectiveStartDate((String) map.get("effectiveStartDate"));
         setExchangeRate((String) map.get("exchangeRate"));
         setPreference((String) map.get("preference"));
     }

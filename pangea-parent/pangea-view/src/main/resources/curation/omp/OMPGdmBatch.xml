@@ -6,14 +6,21 @@
 
             <region path="/edm/batch_master_v1">
                 <columns>
-                    localBatchNumber,localBatchExpDate,localBatchMfgDate,srcSysCd,locPrtyId,matlId
+                    btchNum,btchExpDt,btchMfgDt,srcSysCd,localPlant,matlNum
                 </columns>
                 <relations>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/edm/batch_master_v1.matlId</expression>
+                        <expression>localMaterialNumber=/edm/batch_master_v1.matlNum</expression>
+                    </relation>
+                    <relation path="/edm/inventory_stock" isPrimaryKey="false">
+                        <expression>
+                            sourceSystem=/edm/batch_master_v1.srcSysCd,
+                            localBatchId=/edm/batch_master_v1.btchNum,
+                            localMaterial=/edm/batch_master_v1.matlNum
+                        </expression>
                     </relation>
                 </relations>
             </region>
@@ -27,6 +34,12 @@
             <region path="/plan/cns_material_plan_status">
                 <columns>
                     sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant
+                </columns>
+            </region>
+
+            <region path="/edm/inventory_stock">
+                <columns>
+                    sourceSystem,localBatchId,localMaterial,localUnrestrictedStock,localUnrestrictedSpecialStock,localUnrestrictedBatchStock,localUnrestrictedConsignmentStock,localQualityInspectionStock,localQualityInspectionSpecialStock,localQualityInspectionBatchStock,localQualityInspectionConsignmentStock,localRestrictedStock,localRestrictedSpecialStock,localRestrictedBatchStock,localRestrictedConsignmentStock,localBlockedStock,localBlockedBatchStock,localBlockedConsignmentStock,localReturnsStock,localReturnsBatchStock,localStockInTransitStorageLocation,localStockInTransitPlantToPlant,localStockInTransitPlant,localStockInTransitSpecial,localStockInTransitBatch,localRestrictedUseConsignment,localConsignmentStockInQualityInspection,localUnrestrictedUseConsignment,localBlkdConstStkNonBm,localTotalStockAllRestrictedBatches
                 </columns>
             </region>
 

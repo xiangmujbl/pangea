@@ -1,0 +1,64 @@
+<adf-curation>
+    <curation mainRegion="/project_one/marc" viewRegion="/edm/inventory_stock" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.inventory_stock.controller.EDMInventoryStockController">
+        <regions>
+
+            <region path="/project_one/marc">
+                <columns>
+                    abcin,abfac,ahdis,altsl,aplal,apokz,atpkz,auftl,ausdt,ausme,ausss,autru,awsls,basmg,bearz,beskz,bstfe,bstma,bstmi,bstrf,bwesb,bwscl,bwtty,casnr,ccfix,compl,consProcg,convt,copam,cuobj,cuobv,diber,disgr,disls,dismm,dispo,dispr,dplfs,dplho,dplpu,dzeit,eisbe,eislo,ekgrp,eprio,expme,fabkz,fevor,ffrei,fhori,fixls,fprfm,frtme,fvidk,fxhor,fxpru,giPrTime,glgmg,gpmkz,gpnum,herbl,herkl,herkr,indus,insmk,itark,iuidRelevant,iuidType,kausf,kautb,kordb,kzagl,kzaus,kzbed,kzdie,kzdkz,kzech,kzkfk,kzkri,kzkup,kzppv,kzpro,kzpsp,ladgr,lagpr,lfgja,lfmon,lfrhy,lgfsb,lgpro,lgrad,lizyk,loggr,losfx,losgr,ltinc,lvorm,lzeih,maabc,mabst,mandt,matgr,matnr,maxls,maxlz,maxTroc,mcrue,mdach,megru,mfrgr,minbe,minls,minTroc,miskz,mmsta,mmstd,mogru,mownr,mpdau,mrppp,mtver,mtvfp,multipleEkgrp,ncost,nfmat,nkmpr,objid,ocmpf,otype,periv,perkz,pfrei,plifz,plnnr,plnty,plvar,prctr,prefe,prenc,prend,prene,preng,preno,prfrq,pstat,qmata,qmatv,qssys,quazt,qzgtp,rdprf,refSchema,resvp,rgekz,rotationDate,ruezt,rwpro,sauft,sbdkz,schgt,sernp,servg,sfcpf,sfepr,shflg,shpro,shzet,sobsk,sobsl,sproz,ssqss,stawn,stdpd,steuc,stlal,stlan,strgr,takzt,targetStock,trame,tranz,uchkz,ucmat,ueetk,ueeto,uidIea,umlmc,umrsl,uneto,uomgr,usequ,vbamg,vbeaz,verkz,vint1,vint2,vkglg,vktrw,vkumc,vrbdt,vrbfk,vrbmt,vrbwk,vrmod,vrvez,vsorForkDir,vsorLaneNum,vsorPalVend,vsorPkgrp,vspvb,vzusl,webaz,werks,wstgh,wzeit,xchar,xchpf,xmcng,zdtalancprev,zdtalancreal,zindnbnp
+                </columns>
+                <relations>
+
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/project_one/mchb" isPrimaryKey="false">
+                        <expression>matnr=/project_one/marc.matnr,werks=/project_one/marc.werks</expression>
+                    </relation>
+
+                    <relation path="/project_one/mslb" isPrimaryKey="false">
+                        <expression>matnr=/project_one/marc.matnr,werks=/project_one/marc.werks</expression>
+                    </relation>
+
+                    <relation path="/project_one/mkol" isPrimaryKey="false">
+                        <expression>matnr=/project_one/marc.matnr,werks=/project_one/marc.werks</expression>
+                    </relation>
+
+                    <relation path="/project_one/mard" isPrimaryKey="false">
+                        <expression>matnr=/project_one/marc.matnr,werks=/project_one/marc.werks</expression>
+                    </relation>
+
+
+                </relations>
+            </region>
+
+            <region path="/edm/source_system_v1" isPrimaryKey="false">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+
+            <region path="/project_one/mchb">
+                <columns>ceinm,charg,cinsm,clabs,cretm,cspem,cumlm,lgort,matnr,werks</columns>
+            </region>
+
+            <region path="/project_one/mkol">
+                <columns>mandt,matnr,werks,logrt,charg,sobkz,lifnr,slabs,sinsm,seinm ,sspem</columns>
+            </region>
+
+            <region path="/project_one/mard">
+                <columns>mandt,matnr,werks,lgort,labst,umlme,insme,einme,speme,retme,klabs,kinsm,keinm,kspem,umlmc</columns>
+            </region>
+
+            <region path="/project_one/mslb">
+                <columns>mandt,matnr,werks,charg,sobkz,lifnr,lblab,lbins,lbein,lbuml</columns>
+            </region>
+
+            <region path="/edm/inventory_stock">
+                <columns>
+                    sourceSystem,localPlant,localMaterial,localStorageLocation,localBatchId,localVendorNumber,localSpecialStockIndicator,localConsignmentSpecialStockIndicator,localUnrestrictedStock,localUnrestrictedSpecialStock,localUnrestrictedBatchStock,localUnrestrictedConsignmentStock,localQualityInspectionStock,localQualityInspectionSpecialStock,localQualityInspectionBatchStock,localQualityInspectionConsignmentStock,localRestrictedStock,localRestrictedSpecialStock,localRestrictedBatchStock,localRestrictedConsignmentStock,localBlockedStock,localBlockedBatchStock,localBlockedConsignmentStock,localReturnsStock,localReturnsBatchStock,localStockInTransitStorageLocation,localStockInTransitPlantToPlant,localStockInTransitPlant,localStockInTransitSpecial,localStockInTransitBatch,localRestrictedUseConsignment,localConsignmentStockInQualityInspection,localUnrestrictedUseConsignment,standLocalBlockedConsignmentStock,localTotalStockAllRestrictedBatches
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

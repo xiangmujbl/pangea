@@ -67,8 +67,8 @@ Feature: OMPGdmReqFromErp-Consumption
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectTechName,sourceSystem"
-      | sourceObjectTechName | sourceSystem | inclusion_Exclusion | sourceObjectAttribute1Value | sourceObjectAttribute1 | sourceObjectAttribute2Value | sourceObjectAttribute2 |
-      | purchase_requisition |   CONS_LATAM |          I          |          MX02               |          plntCd        |            NB               |          prTypeCd      |
+      | sourceObjectTechName | sourceSystem | inclusionExclusion | sourceObjectAttribute1Value | sourceObjectAttribute1 | sourceObjectAttribute2Value | sourceObjectAttribute2 |
+      | purchase_requisition |   CONS_LATAM |          I         |          MX02               |          plntCd        |            NB               |          prTypeCd      |
 
 
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
@@ -78,13 +78,13 @@ Feature: OMPGdmReqFromErp-Consumption
     Then A file is found on sink application with name "REQFROMERP.tsv"
 
     And I check file data for filename "REQFROMERP.tsv" by keyFields "REQFromERPId"
-      | ManualOffset | REQType |	VERID |	WRK02  |	DELKZ  | BLCKT | PRIO_URG | LocationId      | ProductId   | DeliveryDate | PLIFZ | DELETED | ERPId      | DELPS | DELNR      | TotalQuantity | UnitId | BLCKD| FLIEF   |  REQFromERPId       |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/05/27   | 0     |  FALSE  | 1734545852 |  10   | 1734545852 |	 4890         |	 DPST   |      | 6109    | CONS_LATAM/1734545852 |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/04/02   | 0     |  FALSE  | 1734545850 |  10   | 1734545850 |	 4878         |	 DPSU   |      | 6109    | CONS_LATAM/1734545850 |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2018/04/03   | 0     |  FALSE  | 1734545711 |  10   | 1734545711 |	 4692         |	 DPSP   |      | 6109    | CONS_LATAM/1734545711 |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 7047791     | 2018/04/05   | 0     |  FALSE  | 1734545712 |  10   | 1734545712 |	 4692         |	 DPSG   |      | 6109    | CONS_LATAM/1734545712 |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2018/09/18   | 0     |  FALSE  | 1734545719 |  10   | 1734545719 |	 5352         |	 DPSR   |      | 6109    | CONS_LATAM/1734545719 |
-      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/01/08   | 0     |  FALSE	| 1734545796 |  10   | 1734545796 |	 4728         |	 DPSY   |      | 6109    | CONS_LATAM/1734545796 |
+      | ManualOffset | REQType |	VERID |	WRK02  |	DELKZ  | BLCKT | PRIO_URG | LocationId      | ProductId   |       DeliveryDate    | PLIFZ | DELETED | ERPId      | DELPS | DELNR      |   TotalQuantity | UnitId | BLCKD | FLIEF   |  REQFromERPId         |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/05/27 00:00:00   | 0     |  FALSE  | 1734545852 |  10   | 1734545852 |	 4890         |	 DPST   |      | 6109    | CONS_LATAM/1734545852 |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/04/02 00:00:00   | 0     |  FALSE  | 1734545850 |  10   | 1734545850 |	 4878         |	 DPSU   |      | 6109    | CONS_LATAM/1734545850 |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2018/04/03 00:00:00   | 0     |  FALSE  | 1734545711 |  10   | 1734545711 |	 4692         |	 DPSP   |      | 6109    | CONS_LATAM/1734545711 |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 7047791     | 2018/04/05 00:00:00   | 0     |  FALSE  | 1734545712 |  10   | 1734545712 |	 4692         |	 DPSG   |      | 6109    | CONS_LATAM/1734545712 |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2018/09/18 00:00:00   | 0     |  FALSE  | 1734545719 |  10   | 1734545719 |	 5352         |	 DPSR   |      | 6109    | CONS_LATAM/1734545719 |
+      |              | NB      |	      |	MX01   |	BA     |       |          | CONS_LATAM_MX02 | 99059       | 2019/01/08 00:00:00   | 0     |  FALSE	 | 1734545796 |  10   | 1734545796 |	 4728         |	 DPSY   |      | 6109    | CONS_LATAM/1734545796 |
 
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode |              errorValue                                                                    | functionalArea |  interfaceID     | key1       | key2  | key3 | key4 | key5 | sourceSystem |

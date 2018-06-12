@@ -108,7 +108,6 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
         String insmk = marcEntity.getInsmk();
         materialPlantBo.setLocalPostToInspectionStock(insmk);
 
-
         String kausf = marcEntity.getKausf();
         materialPlantBo.setLocalComponentScrapInPercent(kausf);
 
@@ -166,6 +165,9 @@ public class EDMMaterialPlantServiceImpl implements ICommonService {
 
         String basmg = marcEntity.getBasmg();
         materialPlantBo.setLocalBaseQuantity(basmg);
+
+        String ekgrp = marcEntity.getEkgrp();
+        materialPlantBo.setPurchsngGrpCd(ekgrp);
 
         resultObject.setBaseBo(materialPlantBo);
 

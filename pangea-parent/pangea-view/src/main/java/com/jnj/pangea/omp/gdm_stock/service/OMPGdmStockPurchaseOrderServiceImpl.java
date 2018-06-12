@@ -133,7 +133,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                 }
 
                                 //PO9
-                                PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
+                                PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndSourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
                                 if(cnsMaterialPlanStatusEntity != null) {
                                     if(cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X) || cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)) {
                                         if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {

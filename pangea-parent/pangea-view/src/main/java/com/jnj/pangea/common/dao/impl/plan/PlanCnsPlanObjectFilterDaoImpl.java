@@ -16,9 +16,14 @@ public class PlanCnsPlanObjectFilterDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public PlanCnsPlanObjectFilterEntity getEntityWithSourceObjectTechNameAndSourceSystem(String sourceObjectTechName, String sourceSystem) {
+    public PlanCnsPlanObjectFilterEntity getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(String sourceObjectTechName, String sourceSystem, String prTypeCdValue, String plntCd, String plntCdValue, String prTypeCd, String incExcl) {
         String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_TECHNAME).is(sourceObjectTechName)
-                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE1_VALUE).is(plntCdValue)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_PLANT_ATTRIBUTE1).is(plntCd)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE2_VALUE).is(prTypeCdValue)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_PLANT_ATTRIBUTE2).is(prTypeCd)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_INCLUSIONEXCLUSION).is(incExcl).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER,queryString,PlanCnsPlanObjectFilterEntity.class);
     }
 

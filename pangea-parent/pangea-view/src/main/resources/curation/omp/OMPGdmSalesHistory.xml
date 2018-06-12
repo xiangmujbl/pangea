@@ -1,38 +1,45 @@
 <adf-curation>
     <curation mainRegion="/edm/sales_order_v1" viewRegion="/omp/gdm_sales_history" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_sales_history.controller.OMPGdmSalesHistoryController"
-              writeTo="all" topic="PANGEA_V1_gdm_omp_gdm_sales_history">
+              writeTo="all" topic="PANGEA_V1_omp_gdm_sales_history">
         <regions>
             <region path="/edm/sales_order_v1">
-                <columns>sourceSystem,salesOrderNo,salesOrderItem,scheduleLineItem,localSalesOrg,localShipToParty,localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localItemCategory,localSDItemCurrency,localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute</columns>
+                <columns>sourceSystem,salesOrderNo,salesOrderItem,scheduleLineItem,localSalesOrg,localShipToParty,
+                    localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localItemCategory,localSDItemCurrency,
+                    localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute</columns>
                 <!--<filter>localOrderCreateDt:{20180401 TO *]</filter>-->
                 <relations>
                     <relation path="/plan/cns_cust_excl" isPrimaryKey="false">
-                        <expression>salesOrg=/edm/sales_order_v1.localSalesOrg,customerShipTo=/edm/sales_order_v1.localShipToParty</expression>
+                        <expression></expression>
+                        <!--salesOrg=/edm/sales_order_v1.localSalesOrg,customerShipTo=/edm/sales_order_v1.localShipToParty-->
                     </relation>
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/plan/cns_so_type_incl" isPrimaryKey="false">
-                        <expression>salesOrg=/edm/sales_order_v1.localSalesOrg,orderType=/edm/sales_order_v1.localOrderType</expression>
+                        <expression></expression>
+                        <!--salesOrg=/edm/sales_order_v1.localSalesOrg,orderType=/edm/sales_order_v1.localOrderType-->
                     </relation>
                     <relation path="/edm/plant_v1" isPrimaryKey="false">
-                        <expression>localPlant=/edm/sales_order_v1.localPlant</expression>
+                        <expression></expression>
+                        <!--localPlant=/edm/sales_order_v1.localPlant-->
                     </relation>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>localPlant=/edm/sales_order_v1.localPlant,localMaterialNumber=/edm/sales_order_v1.localMaterialNumber</expression>
                     </relation>
                     <relation path="/plan/cns_cert_deter" isPrimaryKey="false">
-                        <expression>salesOrg=/edm/sales_order_v1.localSalesOrg,orderType=/edm/sales_order_v1.localOrderType,itemCategory=/edm/sales_order_v1.localItemCategory</expression>
+                        <expression></expression>
+                        <!--salesOrg=/edm/sales_order_v1.localSalesOrg,orderType=/edm/sales_order_v1.localOrderType,itemCategory=/edm/sales_order_v1.localItemCategory-->
                     </relation>
                     <relation path="/edm/currency_v1" isPrimaryKey="false">
                         <expression>localCurrency=/edm/sales_order_v1.localSDItemCurrency</expression>
                     </relation>
                     <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
-                        <expression>customerId=/edm/sales_order_v1.localShipToParty,salesOrganization=/edm/sales_order_v1.localSalesOrg</expression>
+                        <expression>customerId=/edm/sales_order_v1.localShipToParty,salesOrg=/edm/sales_order_v1.localSalesOrg</expression>
                     </relation>
                     <relation path="/project_one/knvh" isPrimaryKey="false">
-                        <expression>kunnr=/edm/sales_order_v1.localShipToParty,vkorg=/edm/sales_order_v1.localSalesOrg</expression>
+                        <expression></expression>
+                        <!--kunnr=/edm/sales_order_v1.localShipToParty,vkorg=/edm/sales_order_v1.localSalesOrg-->
                     </relation>
                     <relation path="/project_one/tvro" isPrimaryKey="false">
                         <expression>route=/edm/sales_order_v1.localRoute</expression>
@@ -41,7 +48,8 @@
                         <expression>localMaterialNumber=/edm/sales_order_v1.localMaterialNumber</expression>
                     </relation>
                     <relation path="/plan/cns_ord_rej" isPrimaryKey="false">
-                        <expression>salesOrg=/edm/sales_order_v1.localSalesOrg,rejCd=/edm/sales_order_v1.localRejReason</expression>
+                        <expression></expression>
+                        <!--salesOrg=/edm/sales_order_v1.localSalesOrg,rejCd=/edm/sales_order_v1.localRejReason-->
                     </relation>
                 </relations>
             </region>
@@ -56,11 +64,6 @@
 
             <region path="/plan/cns_so_type_incl">
                 <columns>salesOrg,orderType,country</columns>
-                <relations>
-                    <relation path="/edm/plant_v1" isPrimaryKey="false">
-                        <expression>country=/edm/cns_so_type_incl.country</expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/edm/plant_v1">
@@ -80,12 +83,7 @@
             </region>
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>demandGroup,customerId,salesOrganization</columns>
-                <relations>
-                    <relation path="/project_one/knvh" isPrimaryKey="false">
-                        <expression>hkunnr=/plan/cns_dem_grp_asgn.customerId,kunnr=/plan/cns_dem_grp_asgn.customerId</expression>
-                    </relation>
-                </relations>
+                <columns>demandGroup,customerId,salesOrg</columns>
             </region>
             <region path="/project_one/knvh">
                 <columns>kunnr,vkorg,datbi,hkunnr</columns>
@@ -93,11 +91,12 @@
             <region path="/project_one/tvro">
                 <columns>traztd,route</columns>
             </region>
+
             <region path="/edm/material_global_v1">
                 <columns>localMaterialNumber,primaryPlanningCode,localBaseUom</columns>
                 <relations>
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
-                        <expression>localUom=/edm/sales_order_v1.localBaseUom</expression>
+                        <expression>localUom=/edm/material_global_v1.localBaseUom</expression>
                     </relation>
                 </relations>
             </region>

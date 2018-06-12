@@ -30,10 +30,10 @@ Feature: EDMPlannedOrder AEAZ-2370
 
 #    And I compare the number of records between "/project_one/plaf" and "/edm/planned_order_v1,/plan/edm_failed_data"
 
-  Scenario: delete all test data
-
-    Then I delete the test data
-
-    And I will remove all data with region "/edm/planned_order_v1"
-
-    And I will remove all data with region "/plan/edm_failed_data"
+#  Scenario: delete all test data
+#
+#    Then I delete the test data
+#
+#    And I will remove all data with region "/edm/planned_order_v1"
+#
+#    And I will remove all data with region "/plan/edm_failed_data"

@@ -69,4 +69,16 @@ public class PlanCnsPlanParameterEntity extends CommonEntity {
     public void setInclExcl(String inclExcl) {
         this.inclExcl = inclExcl;
     }
+
+    @Override
+    public String toString() {
+        return "PlanCnsPlanParameterEntity{" +
+                "sourceSystem='" + sourceSystem + '\'' +
+                ", dataObject='" + dataObject + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", parameter='" + parameter + '\'' +
+                ", inclExcl='" + inclExcl + '\'' +
+                ", parameterValue='" + parameterValue + '\'' +
+                '}';
+    }
 }

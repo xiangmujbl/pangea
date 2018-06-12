@@ -6,7 +6,6 @@ import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.BaseController;
 import com.jnj.pangea.common.entity.plan.PlanCnsDpPriceEntity;
@@ -14,7 +13,6 @@ import com.jnj.pangea.omp.gdm_conversion_storage.service.OMPGdmConversionStorage
 import com.jnj.pangea.util.BeanUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class OMPGdmConversionStorageController extends BaseController {
@@ -31,9 +29,9 @@ public class OMPGdmConversionStorageController extends BaseController {
 
             PlanCnsDpPriceEntity planCnsDpPriceEntity = BeanUtil.mapToBean(rawValue.toMap(), PlanCnsDpPriceEntity.class);
 
-            List<ResultObject> resultObjectList = service.buildView(raw.getKey(),planCnsDpPriceEntity , null);
+            List<ResultObject> resultObjectList = service.buildView(raw.getKey(), planCnsDpPriceEntity, null);
 
-            for (ResultObject resultObject:resultObjectList) {
+            for (ResultObject resultObject : resultObjectList) {
                 if (resultObject.isSuccess()) {
                     BaseBo baseBo = resultObject.getBaseBo();
                     ViewResultItem viewRaw = ViewResultBuilder.newResultItem(baseBo.getKey(), baseBo.toMap());

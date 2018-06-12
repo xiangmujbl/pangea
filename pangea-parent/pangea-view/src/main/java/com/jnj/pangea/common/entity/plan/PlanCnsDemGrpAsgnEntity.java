@@ -6,28 +6,38 @@ import java.util.Map;
 
 public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
 
+    private String sourceSystem;
     private String countryAffiliate;
     private String customerId;
     private String demandGroup;
     private String channel;
     private String channelDescription;
     private String customerName;
-    private String customerShipTo;
     private String group;
+    private String salesOrg;
     private String salesOrganization;
 
     public PlanCnsDemGrpAsgnEntity(Map<String, Object> map) {
         super(map);
 
+        setSourceSystem((String) map.get("sourceSystem"));
         setCountryAffiliate((String) map.get("countryAffiliate"));
         setCustomerId((String) map.get("customerId"));
         setDemandGroup((String) map.get("demandGroup"));
         setChannel((String) map.get("channel"));
         setChannelDescription((String) map.get("channelDescription"));
         setCustomerName((String) map.get("customerName"));
-        setCustomerShipTo((String) map.get("customerShipTo"));
         setGroup((String) map.get("group"));
+        setSalesOrg((String) map.get("salesOrg"));
         setSalesOrganization((String) map.get("salesOrganization"));
+    }
+
+    public String getSourceSystem() {
+        return this.sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
     }
 
     public String getCountryAffiliate() {
@@ -78,20 +88,20 @@ public class PlanCnsDemGrpAsgnEntity extends CommonEntity {
         this.group = group;
     }
 
-    public String getCustomerShipTo() {
-        return this.customerShipTo;
-    }
-
-    public void setCustomerShipTo(String customerShipTo) {
-        this.customerShipTo = customerShipTo;
-    }
-
     public String getCustomerName() {
         return this.customerName;
     }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public String getSalesOrg() {
+        return salesOrg;
+    }
+
+    public void setSalesOrg(String salesOrg) {
+        this.salesOrg = salesOrg;
     }
 
     public String getSalesOrganization() {

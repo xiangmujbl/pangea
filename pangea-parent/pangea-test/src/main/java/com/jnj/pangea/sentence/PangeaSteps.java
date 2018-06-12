@@ -249,7 +249,7 @@ public class PangeaSteps extends CommonSteps {
             client.connect(computingNode);
 
             if (StringUtils.isNotEmpty(ENV) && StringUtils.isNotEmpty(ceRegionAlias)) {
-//                client.submitTask(taskId, xml, jar, commandString, ceRegionAlias, computingPartition);
+                //client.submitTask(taskId, xml, drl, commandString, ceRegionAlias, computingPartition);
             } else {
                 if (StringUtils.isEmpty(jar)) {
                     commandString = "-type Aggr";
