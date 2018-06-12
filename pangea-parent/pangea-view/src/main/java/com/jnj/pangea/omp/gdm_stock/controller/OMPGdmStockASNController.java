@@ -4,13 +4,12 @@ import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.controller.CommonController;
 import com.jnj.pangea.common.entity.edm.EDMAdvancedShipNotificationV1Entity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_stock.service.OMPGdmStockASNServiceImpl;
 import com.jnj.pangea.util.BeanUtil;
 
 public class OMPGdmStockASNController extends CommonController {
 
-    private ICommonService stockService = OMPGdmStockASNServiceImpl.getInstance();
+    private OMPGdmStockASNServiceImpl stockService = OMPGdmStockASNServiceImpl.getInstance();
 
     @Override
     public ResultObject process(RawDataEvent raw) {

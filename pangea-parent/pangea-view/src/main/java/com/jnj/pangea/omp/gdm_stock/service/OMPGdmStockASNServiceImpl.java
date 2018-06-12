@@ -1,15 +1,13 @@
 package com.jnj.pangea.omp.gdm_stock.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.dao.impl.edm.EDMAdvancedShipNotificationV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
-import com.jnj.pangea.common.entity.CommonEntity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseOrderOAV1Entity;
@@ -21,8 +19,8 @@ import com.jnj.pangea.common.entity.edm.EDMAdvancedShipNotificationV1Entity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class OMPGdmStockASNServiceImpl implements ICommonService {
 
@@ -36,16 +34,17 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     }
 
     private EDMMaterialGlobalV1DaoImpl materialGlobalDao = EDMMaterialGlobalV1DaoImpl.getInstance();
+    private EDMAdvancedShipNotificationV1DaoImpl advanceShipNotificationDao = EDMAdvancedShipNotificationV1DaoImpl.getInstance();
     private EDMPlantV1DaoImpl plantDao = EDMPlantV1DaoImpl.getInstance();
     private EDMPurchaseOrderOAV1DaoImpl purchaseDao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
     private PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
-
+    //private PlanCnsCertKeyDaoImpl cnsCertKeyDao = PlanCnsCertKeyDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2){
         ResultObject resultObject = new ResultObject();
-        ResultObject resultObjectSkip = new ResultObject();
+
         OMPGdmStockBo stockBo = new OMPGdmStockBo();
 
         EDMAdvancedShipNotificationV1Entity shipNotifEntity = (EDMAdvancedShipNotificationV1Entity) o ;
@@ -53,47 +52,53 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         EDMPlantV1Entity plantEntity = plantDao.getPlantWithSourceSystemAndLocalPlant(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getLocalReceivingPlant());
         EDMPurchaseOrderOAV1Entity purchaseEntity = purchaseDao.getEntityByPoNumAndPoLineNumberAndSourceSystem(shipNotifEntity.getLocalRefDocNum(), shipNotifEntity.getLocRefDocLineNum(), shipNotifEntity.getSrcSysCd());
         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndSourceSystem(shipNotifEntity.getMatlNum(), shipNotifEntity.getSrcSysCd());
-        //ASN rules
 
+        //ASN rules
+        String locationId = "";
+        String productId = "";
+        boolean skip = false;
         stockBo.setVendorId(shipNotifEntity.getVendorID());
 
         //ASN 1
-        String asn1_locationId = "";
-        String asn1_productId = "";
-        asn1_productId = materialGlobalEntity.getPrimaryPlanningCode();
-        if(null == asn1_productId || asn1_productId.isEmpty()){
-            asn1_productId = materialGlobalEntity.getMaterialNumber();
+        productId = materialGlobalEntity.getPrimaryPlanningCode();
+        if(null == productId || productId.isEmpty()){
+            productId = materialGlobalEntity.getMaterialNumber();
         }
-        asn1_locationId = shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant();
-        stockBo.setStockId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvDocID() + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvLineNbr());
+        locationId = shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant();
+        stockBo.setStockId(productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvDocID() + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvLineNbr());
 
         //ASN 2
         stockBo.setActive(IConstant.VALUE.YES);
         stockBo.setActiveOPRERP(IConstant.VALUE.YES);
 
         //ASN 3
-        stockBo.setBatchId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getLocalbatchNo());
+        stockBo.setBatchId(locationId + IConstant.VALUE.BACK_SLANT + productId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getLocalbatchNo());
 
         //ASN 4
-        stockBo.setInventoryLinkGroupId("");
+        stockBo.setInventoryLinkGroupId(IConstant.VALUE.SPACE);
 
         //ASN 5
-        stockBo.setCertaintyId(IConstant.VALUE.LA); //default
+        stockBo.setCertaintyID(IConstant.VALUE.LA); //default
 
-        //ASN 6
+        //ASN 6 //to be corrected
         if(shipNotifEntity.getLocaldeliveryCatg().equals(IConstant.VALUE.SEVEN) && shipNotifEntity.getActGRDt().isEmpty()){
-            String erp = asn6Rule(shipNotifEntity);
-            if(erp.isEmpty()){
-                return resultObjectSkip;
+            PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystem(IConstant.VALUE.ADVANCE_SHIP_NOTIFICATIONS, shipNotifEntity.getSrcSysCd());
+            if(cnsPlanObjectFilterEntity.getSourceObjectAttribute1().equals(IConstant.VALUE.LOCAL_RECEIVING_PLANT) && cnsPlanObjectFilterEntity.getSourceObjectAttribute1Value().equals(shipNotifEntity.getLocalReceivingPlant())) {
+                stockBo.setErpOrderId(shipNotifEntity.getDelvDocID());
+            } else {
+                //skip record
+                skip = true;
             }
-            stockBo.setErpOrderId(erp);
+        } else {
+            //skip record
+            skip = true;
         }
 
         //ASN 7
         if(plantEntity.getLocalPlanningRelevant().equals(IConstant.VALUE.X)){
             stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant());
         } else {
-            return resultObjectSkip;
+            skip = true;
         }
 
         //ASN 8
@@ -101,23 +106,42 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
         //ASN 9
         if(cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X) || cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)){
-            if(!materialGlobalEntity.getPrimaryPlanningCode().isEmpty()){
-                stockBo.setProductId(materialGlobalEntity.getPrimaryPlanningCode());
-            } else if(!materialGlobalEntity.getMaterialNumber().isEmpty()){
+            if(materialGlobalEntity.getPrimaryPlanningCode().isEmpty()){
                 stockBo.setProductId(materialGlobalEntity.getMaterialNumber());
             } else {
-                //reject
-                FailData failData = writeFailData(materialGlobalEntity, IConstant.FAILED.ERROR_CODE.ASN9, "Both Primary Planning Code and Material Number are missing");
-                resultObject.setFailData(failData);
-                return resultObject;
+                stockBo.setProductId(materialGlobalEntity.getPrimaryPlanningCode());
             }
+
         } else {
-            return resultObjectSkip;
+            skip = true;
         }
 
         //ASN 10
         if(null != purchaseEntity){
-            stockBo.setStartDate(asn10Rule(shipNotifEntity, purchaseEntity));
+            try {
+                int gr = Integer.parseInt(purchaseEntity.getGrLeadTimeDays());
+                String deliveryDateStr = purchaseEntity.getLocaldelvDt();
+                //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");         // TO BE CHECKED
+                Date d = dateFormat.parse(deliveryDateStr);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(d);
+
+                cal.add(Calendar.DATE,gr);
+                //determine weekday
+                int dow = cal.get(Calendar.DAY_OF_WEEK);
+                if(dow == 6){
+                    cal.add(Calendar.DATE,2);
+                } else if (dow == 7) {
+                    cal.add(Calendar.DATE, 1);
+                }
+
+                //TODO: format date
+                stockBo.setStartDate(cal.getTime().toString());
+
+            } catch (Exception e){
+                //TO LOG
+            }
         }
 
         //ASN 11
@@ -127,7 +151,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         // unused
 
         //ASN 13
-        stockBo.setReceiptDate(asn13Rule(shipNotifEntity));
+        stockBo.setReceiptDate(shipNotifEntity.getLocaldeliveryDate()); //may need formatting
 
         //ASN 14
         stockBo.setBlockedQuantity(IConstant.VALUE.ZEROZERO);
@@ -140,168 +164,69 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         //ASN 15
         stockBo.setActiveSOPERP(IConstant.VALUE.NO);
 
+
         if(null != purchaseEntity){
+            String processTypeId = "";
+            String processId = "";
+
             //ASN 16 17
-            stockBo.setProcessId(asn16Rule(purchaseEntity, stockBo));
-            stockBo.setProcessTypeId(asn17Rule(purchaseEntity));
-            if(stockBo.getProcessId().isEmpty() || stockBo.getProcessTypeId().isEmpty()){
-                return resultObjectSkip;
+            String poTypeCd = purchaseEntity.getPoTypeCd();
+            switch(poTypeCd){
+                case "NB":
+                    if(purchaseEntity.getLineItemTypeCd().isEmpty()){
+                        processId = "SU" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() + IConstant.VALUE.BACK_SLANT + "Default";
+                        processTypeId = IConstant.VALUE.VENDOR_TRANSPORT;
+                    } else {
+                        processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
+                    }
+                    break;
+                case "UB":
+                    processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
+                    processTypeId = IConstant.VALUE.INTERNAL_TRANSPORT;
+                    break;
+                case "ZLA":
+                case "ZNB":
+                    processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
+                    processTypeId = IConstant.VALUE.EXTERNAL_TRANSPORT;
+                    break;
+                default:
+                    skip = true;
             }
+            stockBo.setProcessId(processId);
+            stockBo.setProcessTypeId(processTypeId);
 
             //ASN 18
             if(purchaseEntity.getLineItemTypeCd().equals(IConstant.VALUE.TWO)){
                 stockBo.setConsignment(IConstant.VALUE.YES);
             } else {
-                stockBo.setConsignment("");
+                stockBo.setConsignment(IConstant.VALUE.SPACE);
             }
 
         } else {
-            return resultObjectSkip;
+            skip = true;
         }
 
 
         //ASN 19
         double delvQty = Double.parseDouble(shipNotifEntity.getActlSkuDelvQty());
         if(delvQty > 0.0){
-            stockBo.setQuantity(String.format("%.2f",delvQty));
+            stockBo.setQuantity(Double.toString(delvQty));
         } else {
-            return resultObjectSkip;
+            skip = true;
         }
 
 
         //ASN rules end
 
-        resultObject.setBaseBo(stockBo);
+        if(skip){
+            resultObject = null;
+        } else {
+            resultObject.setBaseBo(stockBo);
+        }
+
         return resultObject;
     }
 
-    private String asn6Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity){
-        ArrayList<PlanCnsPlanObjectFilterEntity> cnsPlanObjectFilterEntityList = new ArrayList<>(cnsPlanObjectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem(IConstant.VALUE.ADVANCE_SHIP_NOTIFICATIONS, shipNotifEntity.getSrcSysCd()));
 
-        if(!cnsPlanObjectFilterEntityList.isEmpty()) {
-            for(PlanCnsPlanObjectFilterEntity filterEntity : cnsPlanObjectFilterEntityList) {
-                if(filterEntity.getSourceObjectAttribute1().equals(IConstant.VALUE.LOCAL_RECEIVING_PLANT) && filterEntity.getSourceObjectAttribute1Value().equals(shipNotifEntity.getLocalReceivingPlant())){
-                    //stockBo.setErpOrderId(shipNotifEntity.getDelvDocID());
-                    return shipNotifEntity.getDelvDocID();
-                }
-            }
-        }
-        return "";
-    }
-
-    private String asn10Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, EDMPurchaseOrderOAV1Entity purchaseEntity){
-        try {
-            if(!shipNotifEntity.getLocaldeliveryDate().isEmpty()) {
-                int gr = 0;
-                if (!purchaseEntity.getGrLeadTimeDays().isEmpty()) {
-                    gr = Integer.parseInt(purchaseEntity.getGrLeadTimeDays());
-                }
-                DateFormat df1 = new SimpleDateFormat("yyyyMMdd");
-                SimpleDateFormat df2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(df1.parse(shipNotifEntity.getLocaldeliveryDate()));
-
-                cal.add(Calendar.DATE, gr);
-                //determine weekday
-                int dow = cal.get(Calendar.DAY_OF_WEEK);
-                if (dow == 6) {
-                    cal.add(Calendar.DATE, 2);
-                } else if (dow == 7) {
-                    cal.add(Calendar.DATE, 1);
-                }
-                cal.set(Calendar.HOUR, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-
-                //stockBo.setStartDate(df2.format(cal.getTime()));
-                return df2.format(cal.getTime());
-            }
-        } catch (Exception e){
-            LogUtil.getCoreLog().catching(e);
-        }
-        return "";
-    }
-
-    private String asn13Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity){
-        try{
-            if(!shipNotifEntity.getLocaldeliveryDate().isEmpty()) {
-                Calendar cal = Calendar.getInstance();
-                DateFormat dt1 = new SimpleDateFormat("yyyyMMdd");
-                SimpleDateFormat dt2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                cal.setTime(dt1.parse(shipNotifEntity.getLocaldeliveryDate()));
-                cal.set(Calendar.HOUR, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                //stockBo.setReceiptDate(dt2.format(cal.getTime()));
-                return dt2.format(cal.getTime());
-            }
-        } catch (Exception e) {
-            LogUtil.getCoreLog().catching(e);
-        }
-        return "";
-    }
-
-    private String asn16Rule(EDMPurchaseOrderOAV1Entity purchaseEntity, OMPGdmStockBo stockBo){
-        String processId = "";
-        String poTypeCd = purchaseEntity.getPoTypeCd();
-        switch(poTypeCd){
-            case "NB":
-                if(purchaseEntity.getLineItemTypeCd().isEmpty()){
-                    processId = "SU" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() + IConstant.VALUE.BACK_SLANT + "Default";
-                } else {
-                    processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
-                }
-                break;
-            case "UB":
-                processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
-                break;
-            case "ZLA":
-            case "ZNB":
-                processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
-                break;
-            default:
-                break;
-        }
-        return processId;
-    }
-
-    private String asn17Rule(EDMPurchaseOrderOAV1Entity purchaseEntity){
-        String processTypeId = "";
-        String poTypeCd = purchaseEntity.getPoTypeCd();
-
-        switch(poTypeCd){
-            case "NB":
-                if(purchaseEntity.getLineItemTypeCd().isEmpty()){
-                    processTypeId = IConstant.VALUE.VENDOR_TRANSPORT;
-                }
-                break;
-            case "UB":
-                processTypeId = IConstant.VALUE.INTERNAL_TRANSPORT;
-                break;
-            case "ZLA":
-            case "ZNB":
-                processTypeId = IConstant.VALUE.EXTERNAL_TRANSPORT;
-                break;
-            default:
-                break;
-        }
-        return processTypeId;
-    }
-
-    private FailData writeFailData(EDMMaterialGlobalV1Entity materialEntity, String errorCode, String errorValue) {
-        FailData failData = new FailData();
-        failData.setErrorCode(errorCode);
-        failData.setErrorValue(errorValue);
-        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_STOCK_ASN);
-        failData.setSourceSystem(materialEntity.getSourceSystem());
-        failData.setKey1(materialEntity.getLocalMaterialNumber());
-        failData.setKey2(materialEntity.getSourceSystem());
-        failData.setKey3("");
-        failData.setKey4("");
-        failData.setKey5("");
-
-        return failData;
-    }
 
 }
