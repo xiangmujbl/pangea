@@ -962,6 +962,7 @@ public interface IConstant {
         String VENDOR_TRANSPORT = "VendorTransport";
         String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
         String INTERNAL_TRANSPORT = "InternalTransport";
+        String EXTERNAL_TRANSPORT = "ExternalTransport";
         String SUPPLY = "SUPPLY";
         String INFINITE = "INFINITE";
         String ASTERIX = "*";

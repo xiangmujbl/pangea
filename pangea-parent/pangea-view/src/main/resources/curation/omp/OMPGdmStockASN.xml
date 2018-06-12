@@ -1,0 +1,71 @@
+<adf-curation>
+    <curation mainRegion="/edm/advance_shipping_notification_v1" viewRegion="/omp/gdm_stock_asn" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.gdm_stock.controller.OMPGdmStockASNController"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_stock_ASN">
+
+        <regions>
+            <region path="/edm/advance_shipping_notification_v1">
+                <columns>
+                    srcSysCd,delvDocID,receivingPtID,localdeliveryType,localdeliveryCatg,localdeliveryDate,localcreatedDate,localbillOfLading,localExternalId,actGRDt,vendorID,localShippingPlant,delvLineNbr,matlNum,localbatchNo,localvendorBatchNo,localReceivingPlant,baseUnitOfMeasureCd,actlSkuDelvQty,localRefDocNum,locRefDocLineNum
+                </columns>
+                <relations>
+                    <region path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/advance_shipping_notification_v1.matlNum,
+                            sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
+                        </expression>
+                    </region>
+                    <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/advance_shipping_notification_v1.matlNum,
+                            sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
+                        </expression>
+                    </region>
+                    <region>
+                        <expression path="/edm/purchase_order_oa_v1" isPrimaryKey="false">
+                            poNum=/edm/advance_shipping_notification_v1.localRefDocNum
+                            poLineNbr=sourceSystem=/edm/advance_shipping_notification_v1.locRefDocLineNum
+                            sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
+                        </expression>
+                    </region>
+                </relations>
+            </region>
+
+            <region path="/edm/purchase_order_oa_v1">
+                <columns>
+                    delvSchedCntNbr,evTypeCd,localSeqNumActAsgn,localSeqNumVendConf,matlMvmtNum,matlMvmtSeqNbr,matlMvmttYr,poLineNbr,poNum,sourceSystem,matlNum,plntCd,poCatTypeCd,prchsngOrgNum,delInd,lineItemTypeCd,cnfrmQty,poLineQty,localNumerator,localDenominator,recvEaQty
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    localMaterialNumber,materialNumber,primaryPlanningCode,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    country,localCountry,localCurrency,localPlanningRelevant,localPlant,localPlantName,localPlantType,plant,plantType,region,site,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant
+                </columns>
+            </region>
+
+            <region path="/plan/cns_plan_object_filter">
+                <columns>
+                    comments,inclusionExclusion,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/plan/cns_spl_pln_loc">
+                <columns>
+                    localCountry,localCurrency,localName,localNumber,localPlant,localRegion,pLanlocTypeDesc,pLanlocTypeId,planLocTypeDesc,planLocTypeId,sourceSystem,specLocAtt1,specLocAtt2,specLocAtt3,specLocAttDesc1,specLocAttDesc2,specLocAttDesc3,vendorOrCustomer,vendororCustomer
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

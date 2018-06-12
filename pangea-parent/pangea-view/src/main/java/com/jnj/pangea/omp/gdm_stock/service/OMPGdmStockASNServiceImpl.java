@@ -11,7 +11,6 @@ import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseOrderOAV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsCertKeyEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 import com.jnj.pangea.common.service.ICommonService;
@@ -20,17 +19,16 @@ import com.jnj.pangea.common.entity.edm.EDMAdvancedShipNotificationV1Entity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
-public class OMPGdmStockServiceImpl implements ICommonService {
+public class OMPGdmStockASNServiceImpl implements ICommonService {
 
-    public static OMPGdmStockServiceImpl instance;
+    public static OMPGdmStockASNServiceImpl instance;
 
-    public static OMPGdmStockServiceImpl getInstance() {
+    public static OMPGdmStockASNServiceImpl getInstance() {
         if(null == instance) {
-            instance = new OMPGdmStockServiceImpl();
+            instance = new OMPGdmStockASNServiceImpl();
         }
         return instance;
     }
@@ -177,19 +175,19 @@ public class OMPGdmStockServiceImpl implements ICommonService {
                 case "NB":
                     if(purchaseEntity.getLineItemTypeCd().isEmpty()){
                         processId = "SU" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() + IConstant.VALUE.BACK_SLANT + "Default";
-                        processTypeId = "VendorTransport";
+                        processTypeId = IConstant.VALUE.VENDOR_TRANSPORT;
                     } else {
                         processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
                     }
                     break;
                 case "UB":
                     processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
-                    processTypeId = "InternalTransport";
+                    processTypeId = IConstant.VALUE.INTERNAL_TRANSPORT;
                     break;
                 case "ZLA":
                 case "ZNB":
                     processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
-                    processTypeId = "ExternalTransport";
+                    processTypeId = IConstant.VALUE.EXTERNAL_TRANSPORT;
                     break;
                 default:
                     skip = true;
