@@ -224,23 +224,26 @@ public class OMPGdmProductLocationServiceImpl {
     public List<OMPGdmProductLocationBo> getFieldWithJ1(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, PlanSplPlnLocEntity planSplPlnLocEntity, EDMMaterialPlantV1Entity materialPlantV1Entity, PlanCnsMaterialPlanStatusEntity planStatusEntity) {
         List<OMPGdmProductLocationBo> boList = new ArrayList<OMPGdmProductLocationBo>();
 
-
         if (edmMaterialGlobalV1Entity == null) {
             return new ArrayList<OMPGdmProductLocationBo>();
         }
 
         if (IConstant.VALUE.X.equals(planStatusEntity.getSpRelevant()) || IConstant.VALUE.X.equals(planStatusEntity.getNoPlanRelevant())) {
             //rules T2
-            if (StringUtils.isEmpty(edmMaterialGlobalV1Entity.getPrimaryPlanningCode()) && StringUtils.isEmpty(edmMaterialGlobalV1Entity.getLocalMaterialNumber())) {
+            if (StringUtils.isEmpty(edmMaterialGlobalV1Entity.getPrimaryPlanningCode()) && StringUtils.isEmpty(edmMaterialGlobalV1Entity.getMaterialNumber())) {
                 return null;
             }
-            
+            //skip the record
+            if (StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode()) && !(edmMaterialGlobalV1Entity.getPrimaryPlanningCode()).equals(edmMaterialGlobalV1Entity.getMaterialNumber())) {
+                return null;
+            }
+
             OMPGdmProductLocationBo OMPGdmProductLocationBo = new OMPGdmProductLocationBo();
             OMPGdmProductLocationBo.setActiveOPRERP(IConstant.VALUE.YES);
             if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
-            	OMPGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getMaterialNumber());
+                OMPGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getMaterialNumber());
             } else {
-            	OMPGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
+                OMPGdmProductLocationBo.setProductId(edmMaterialGlobalV1Entity.getPrimaryPlanningCode());
             }
             OMPGdmProductLocationBo.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant());
             boList.add(OMPGdmProductLocationBo);
@@ -261,25 +264,25 @@ public class OMPGdmProductLocationServiceImpl {
                             if (splPlnLocEntries.size() <= 0) {
                                 return boList;
                             } else {
-                                    for (PlanSplPlnLocEntity splPlnLocEntity : splPlnLocEntries) {
-                                        if(splPlnLocEntity.getVendorOrCustomer().equals("V")){
-                                        	OMPGdmProductLocationBo OMPGdmProductLocationBoVendor = new OMPGdmProductLocationBo();
-                                            OMPGdmProductLocationBoVendor.setActiveOPRERP(OMPGdmProductLocationBo.getActiveOPRERP());
-                                            OMPGdmProductLocationBoVendor.setProductId(OMPGdmProductLocationBo.getProductId());
-                                            if ("".equals(splPlnLocEntity.getLocalPlant())) {
-                                            	OMPGdmProductLocationBoVendor.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getVendorOrCustomer() + "_" + splPlnLocEntity.getLocalNumber());
-                                            } else {
-                                            	OMPGdmProductLocationBoVendor.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant() + "$" + splPlnLocEntity.getLocalNumber());
-                                            }
-                                            boList.add(OMPGdmProductLocationBoVendor);
+                                for (PlanSplPlnLocEntity splPlnLocEntity : splPlnLocEntries) {
+                                    if (splPlnLocEntity.getVendorOrCustomer().equals("V")) {
+                                        OMPGdmProductLocationBo OMPGdmProductLocationBoVendor = new OMPGdmProductLocationBo();
+                                        OMPGdmProductLocationBoVendor.setActiveOPRERP(OMPGdmProductLocationBo.getActiveOPRERP());
+                                        OMPGdmProductLocationBoVendor.setProductId(OMPGdmProductLocationBo.getProductId());
+                                        if ("".equals(splPlnLocEntity.getLocalPlant())) {
+                                            OMPGdmProductLocationBoVendor.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getVendorOrCustomer() + "_" + splPlnLocEntity.getLocalNumber());
+                                        } else {
+                                            OMPGdmProductLocationBoVendor.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant() + "$" + splPlnLocEntity.getLocalNumber());
                                         }
+                                        boList.add(OMPGdmProductLocationBoVendor);
                                     }
+                                }
                             }
                         } else {
                             return boList;
                         }
                     }
-                    break; //break for first record. 
+                    break; //break for first record.
                 }
             }
             return boList;
