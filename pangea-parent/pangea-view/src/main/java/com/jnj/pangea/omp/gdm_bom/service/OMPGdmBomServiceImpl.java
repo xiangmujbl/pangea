@@ -50,11 +50,8 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
         EDMMatlBomEntity matlBomEntity = (EDMMatlBomEntity) o;
 
         if (!IConstant.VALUE.ONE.equals(StringUtils.trim(matlBomEntity.getBomUsgCd())) && !IConstant.VALUE.TWO.equals(StringUtils.trim(matlBomEntity.getBomUsgCd()))) {
-            LogUtil.getCoreLog().info("--------------ONE TWO fail----------------------");
             return resultObjectList;
         }
-
-        LogUtil.getCoreLog().info("--------------ONE TWO pass----------------------");
 
         List<OMPGdmBomBo> gdmBomBoList = checkT1(matlBomEntity);
 
@@ -123,9 +120,8 @@ public class OMPGdmBomServiceImpl implements ICommonListService {
 
                             gdmBomBo.setEndEff(endEff);
                             gdmBomBo.setStartEff(startEff);
+                            gdmBomBoList.add(gdmBomBo);
                         }
-
-                        gdmBomBoList.add(gdmBomBo);
 
                     }
 
