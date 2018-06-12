@@ -6,28 +6,35 @@
         <regions>
             <region path="/edm/advance_shipping_notification_v1">
                 <columns>
-                    srcSysCd,delvDocID,receivingPtID,localdeliveryType,localdeliveryCatg,localdeliveryDate,localcreatedDate,localbillOfLading,localExternalId,actGRDt,vendorID,localShippingPlant,delvLineNbr,matlNum,localbatchNo,localvendorBatchNo,localReceivingPlant,baseUnitOfMeasureCd,actlSkuDelvQty,localRefDocNum,locRefDocLineNum
+                    srcSysCd,delvDocID,receivingPtID,localdeliveryType,localdeliveryCatg,localdeliveryDate,localcreatedDate,localbillOfLading,localExternalId,actGRDt,vendorID,localShippingPlant,
+                    delvLineNbr,matlNum,localbatchNo,localvendorBatchNo,localReceivingPlant,baseUnitOfMeasureCd,actlSkuDelvQty,localRefDocNum,locRefDocLineNum
                 </columns>
                 <relations>
-                    <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <relation path="/edm/purchase_order_oa_v1" isPrimaryKey="false">
                         <expression>
-                            localMaterialNumber=/edm/advance_shipping_notification_v1.matlNum,
-                            sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
-                        </expression>
-                    </region>
-                    <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
-                        <expression>
-                            localMaterialNumber=/edm/advance_shipping_notification_v1.matlNum,
-                            sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
-                        </expression>
-                    </region>
-                    <region>
-                        <expression path="/edm/purchase_order_oa_v1" isPrimaryKey="false">
+                            <!--
                             poNum=/edm/advance_shipping_notification_v1.localRefDocNum,
-                            poLineNbr=sourceSystem=/edm/advance_shipping_notification_v1.locRefDocLineNum,
+                            poLineNbr=/edm/advance_shipping_notification_v1.locRefDocLineNum,
                             sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
+                            -->
                         </expression>
-                    </region>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>
+                            <!--
+                            localMaterialNumber=/edm/advance_shipping_notification_v1.matlNum,
+                            sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
+                            -->
+                        </expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>
+                            <!--
+                            localMaterialNumber=/edm/advance_shipping_notification_v1.matlNum,
+                            sourceSystem=/edm/advance_shipping_notification_v1.srcSysCd
+                            -->
+                        </expression>
+                    </relation>
                 </relations>
             </region>
 
@@ -61,15 +68,10 @@
                 </columns>
             </region>
 
-            <region path="/plan/cns_spl_pln_loc">
-                <columns>
-                    localCountry,localCurrency,localName,localNumber,localPlant,localRegion,pLanlocTypeDesc,pLanlocTypeId,planLocTypeDesc,planLocTypeId,sourceSystem,specLocAtt1,specLocAtt2,specLocAtt3,specLocAttDesc1,specLocAttDesc2,specLocAttDesc3,vendorOrCustomer,vendororCustomer
-                </columns>
-            </region>
-
             <region>
                 <columns path="/omp/gdm_stock_asn">
-                    stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyID,ERPOrderId,inventoryLinkGroupId,vendorId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity
+                    stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyId,erpOrderId,inventoryLinkGroupId,vendorId,locationId,processId,processTypeId,productId,
+                    qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity
                 </columns>
             </region>
 
