@@ -15,55 +15,31 @@
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/edm/plant_v1" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
                     <relation path="/edm/source_list_v1" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                    <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/plan/cns_process_type" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/plan/cns_tlane_item_exception" isPrimaryKey="false">
-                        <expression>refSeqNumTlaneItem=/plan/cns_tlane_item.sequenceNumber</expression>
+                        <expression>sequenceNumber=/plan/cns_tlane_item.sequenceNumber</expression>
                     </relation>
                 </relations>
             </region>
 
             <region path="/edm/material_plant_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,materialNumber,plant,localPlantStatus,plantStatus,localProcurementType,localDeletionFlagPlant,localFixedlotsize,localMaximumLotSize,localMinimumLotSize,localRoundingvalueForPoq,localLotsize,localMrpType,localMrpController,localInHouseProcessingTime,localSafetyStock,localMinimumSafetyStock,localProductionSupervisor,localProductionUnit,localPosttoInspectionStock,localComponentScrapInPercent,localCriticalpart,localAbcIndicator,localMaximumStocklevel,localCheckingGroupforAvailabilityCheck,localPlannedDeliveryTimeInDays,localDependentRequirements,localSafetytimeIndicator,localSafetyTime,localSpecialProcurementType,localPlanningStrategyGroup,localConsumptionPeriodBackward,localConsumptionPeriodForward,localConsumptionMode,localGoodsReceiptProcessingTimeInDays,localBatchManagementRequirmentIndicator,localPlanningTimeFence,localPosttoinspstk,localComponentScrap,localBaseQuantity,localPurchasingGroup, purchsngGrpCd
+                    sourceSystem,localMaterialNumber,localPlant,purchsngGrpCd
                 </columns>
             </region>
             <region path="/edm/material_global_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCod,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
-                </columns>
-            </region>
-            <region path="/edm/plant_v1">
-                <columns>
-                    sourceSystem,localPlant,plant,localPlanningRelevant
+                    materialNumber,primaryPlanningCode,sourceSystem,localMaterialNumber
                 </columns>
             </region>
             <region path="/edm/source_list_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,localNumberofSourceListRecord,materialNumber,plant,localCreatedOn,localCreatedBy,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localFixedvendor,localAgreementNumber,localAgreementItem,localFixedOutlinePurchaseAgreementItem,localPlantfromWhichMaterialisProcured,localMatForManufPartNumber,localBlockedSourceofSupply,localPurchasingOrganization,localPurchasingDocumentCategory,localCategoryofSourceListRecord,localSourceListUsageinMaterialsPlanning
-                </columns>
-            </region>
-            <region path="/plan/cns_spl_pln_loc">
-                <columns>
-                    sourceSystem,localNumber
-                </columns>
-            </region>
-            <region path="/plan/cns_material_plan_status">
-                <columns>
-                    sourceSystem,localMaterialNumber,localPlant,materialNumber,localParentCode,ppc,active,dpRelevant,spRelevant,parentActive,noPlanRelevant
+                    sourceSystem,localMaterialNumber,localPlant,localBlockedSourceofSupply,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localPurchasingOrganization
                 </columns>
             </region>
             <region path="/plan/cns_process_type">
