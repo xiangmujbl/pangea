@@ -58,6 +58,12 @@
                     localCountry,localCurrency,localName,localNumber,localPlant,localRegion,pLanlocTypeDesc,pLanlocTypeId,planLocTypeDesc,planLocTypeId,sourceSystem,specLocAtt1,specLocAtt2,specLocAtt3,specLocAttDesc1,specLocAttDesc2,specLocAttDesc3,vendorOrCustomer,vendororCustomer
                 </columns>
             </region>
+
+            <region path="/omp/gdm_stock_purchase_order">
+                <columns>
+                    stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyID,erpOrderId,inventoryLinkGroupId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity
+                </columns>
+            </region>
         </regions>
     </curation>
 </adf-curation>
