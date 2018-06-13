@@ -7,7 +7,7 @@ Feature: OMPGdmStock AEAZ-5951
     And I will remove the test file on sink application "GDMStock_plannedOrder.tsv"
 
     Given I import "/edm/planned_order_v1" by keyFields "mfgPlanOrdrDocId,srcSysCd"
-      | matlNum | srcSysCd   | mfgPlanOrdrDocId | planPlntCd | prdtnVersNum | planOrdrEndDt | grDaysLeadQty | plngScnroCd | planOrdrTypeCd | planOrdrQty |
+      | matlNum | srcSysCd   | mfgPlanOrdrDocId | plntCd | prdtnVersNum | planOrdrEndDt | grDaysLeadQty | plngScnroCd | planOrdrTypeCd | planOrdrQty |
       | 138821  | CONS_LATAM | 49748397         | BR12       | 0            | 20180610      | 0             | 000         | LA             | 36300       |
       | 441423  | CONS_LATAM | 117229550        | BR12       | 0            | 20180611      | 2             | 000         | LA             | 12132       |
       | 189915  | CONS_LATAM | 95941803         | BR12       | 0            | 20180612      | 4             | 000         | LA             | 86544       |
@@ -75,7 +75,7 @@ Feature: OMPGdmStock AEAZ-5951
     And I will remove the test file on sink application "GDMStock_plannedOrder.tsv"
 
     Given I import "/edm/planned_order_v1" by keyFields "mfgPlanOrdrDocId,srcSysCd"
-      | matlNum | srcSysCd   | mfgPlanOrdrDocId | planPlntCd | prdtnVersNum | planOrdrEndDt | grDaysLeadQty | plngScnroCd | planOrdrTypeCd | planOrdrQty |
+      | matlNum | srcSysCd   | mfgPlanOrdrDocId | plntCd | prdtnVersNum | planOrdrEndDt | grDaysLeadQty | plngScnroCd | planOrdrTypeCd | planOrdrQty |
 #      PLO6(if plngScnroCd = 000)
       | 138821  | CONS_LATAM | 49748397         | BR12       | 0            | 20180610      | 0             | 000         | LA             | 36300       |
       | 441423  | CONS_LATAM | 117229550        | BR12       | 0            | 20180611      | 2             | 000         | EL             | 12132       |
@@ -144,7 +144,7 @@ Feature: OMPGdmStock AEAZ-5951
     And I will remove the test file on sink application "GDMStock_plannedOrder.tsv"
 
     Given I import "/edm/planned_order_v1" by keyFields "mfgPlanOrdrDocId,srcSysCd"
-      | matlNum | srcSysCd   | mfgPlanOrdrDocId | planPlntCd | prdtnVersNum | planOrdrEndDt | grDaysLeadQty | plngScnroCd | planOrdrTypeCd | planOrdrQty |
+      | matlNum | srcSysCd   | mfgPlanOrdrDocId | plntCd | prdtnVersNum | planOrdrEndDt | grDaysLeadQty | plngScnroCd | planOrdrTypeCd | planOrdrQty |
 #     PLO11(if planOrdrEndDt is the weekend and grDaysLeadQty = 0)
       | 138821  | CONS_LATAM | 49748397         | BR12       | 0            | 20180610      | 0             | 000         | LA             | 36300       |
 #     PLO11(if planOrdrEndDt + grDaysLeadQty is the weekday)

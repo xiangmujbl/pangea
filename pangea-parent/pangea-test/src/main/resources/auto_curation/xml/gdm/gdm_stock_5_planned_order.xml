@@ -3,7 +3,7 @@
     <regions>
         <region path="/edm/planned_order_v1" mainRegion="true">
             <columns>
-                matlNum,srcSysCd,mfgPlanOrdrDocId,planPlntCd,prdtnVersNum,planOrdrEndDt,grDaysLeadQty,plngScnroCd,planOrdrTypeCd,planOrdrQty
+                matlNum,srcSysCd,mfgPlanOrdrDocId,plntCd,prdtnVersNum,planOrdrEndDt,grDaysLeadQty,plngScnroCd,planOrdrTypeCd,planOrdrQty
             </columns>
             <relations>
                 <!--material_global_v1-->
@@ -17,14 +17,14 @@
                 <region path="/edm/plant_v1" isPrimaryKey="true">
                     <columns>localPlant,sourceSystem,localPlanningRelevant</columns>
                     <expression>
-                        localPlant=/edm/planned_order_v1.planPlntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
+                        localPlant=/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
                     </expression>
                 </region>
                 <!--cns_material_plan_status-->
                 <region path="/plan/cns_material_plan_status" isPrimaryKey="true">
                     <columns>localMaterialNumber,localPlant,sourceSystem,noPlanRelevant</columns>
                     <expression>
-                        localMaterialNumber=/edm/planned_order_v1.matlNum,localPlant=/edm/planned_order_v1.planPlntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
+                        localMaterialNumber=/edm/planned_order_v1.matlNum,localPlant=/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
                     </expression>
                 </region>
                 <!--cns_plan_object_filter-->
@@ -51,7 +51,7 @@
 
         <method name="joinPlant" isPK="true" resultType="Map" path="/edm/plant_v1">
             <parameters>
-                <parameter name="localPlant" value="planPlntCd" relationship="and"/>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
                 <parameter name="sourceSystem" value="srcSysCd"/>
             </parameters>
         </method>
@@ -59,7 +59,7 @@
         <method name="joinMaterialPlanStatus" isPK="true" resultType="Map" path="/plan/cns_material_plan_status">
             <parameters>
                 <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
-                <parameter name="localPlant" value="planPlntCd" relationship="and"/>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
                 <parameter name="sourceSystem" value="srcSysCd"/>
             </parameters>
         </method>
@@ -97,7 +97,7 @@
             <var name="matlNum" value="matlNum"/>
             <var name="srcSysCd" value="srcSysCd"/>
             <var name="mfgPlanOrdrDocId" value="mfgPlanOrdrDocId"/>
-            <var name="planPlntCd" value="planPlntCd"/>
+            <var name="plntCd" value="plntCd"/>
             <var name="prdtnVersNum" value="prdtnVersNum"/>
             <var name="planOrdrEndDt" value="planOrdrEndDt"/>
             <var name="grDaysLeadQty" value="grDaysLeadQty"/>
@@ -129,11 +129,11 @@
                      resultType="Map">
                     <if test="StringUtils.isNotEmpty(primaryPlanningCode)">
                         <set name="stockId"
-                             value="StringInner.join(primaryPlanningCode,'/',srcSysCd,'_',planPlntCd,'/',mfgPlanOrdrDocId)"/>
+                             value="StringInner.join(primaryPlanningCode,'/',srcSysCd,'_',plntCd,'/',mfgPlanOrdrDocId)"/>
                     </if>
                     <else>
                         <set name="stockId"
-                             value="StringInner.join(materialNumber,'/',srcSysCd,'_',planPlntCd,'/',mfgPlanOrdrDocId)"/>
+                             value="StringInner.join(materialNumber,'/',srcSysCd,'_',plntCd,'/',mfgPlanOrdrDocId)"/>
                     </else>
                 </ref>
             </column>
@@ -162,7 +162,7 @@
             ELES
             Using (cns_plan_object_filter- sourceObjectTechName)  = (planned_order_v1) and (cns_plan_object_filter-sourceSystem) = source system derived as in StockId"" in Rule PLO1. (This may result in multiple records)
 
-            Check if record exists in  table for(cns_plan_object_filter- sourceObjectAttribute1) = planPlntCd from multiple records if resulted.
+            Check if record exists in  table for(cns_plan_object_filter- sourceObjectAttribute1) = plntCd from multiple records if resulted.
             if No
                 then skip
             if Yes then
@@ -189,19 +189,19 @@
                 </else>
             </column>
 
-            <!-- PLO7	Using (planned_order_v1-planPlntCd) = (Plant_v1-localPlant) and (planned_order_v1 - sourceSystem ) = (Plant_v1-sourceSystem)
+            <!-- PLO7	Using (planned_order_v1-plntCd) = (Plant_v1-localPlant) and (planned_order_v1 - sourceSystem ) = (Plant_v1-sourceSystem)
             check value of field (Plant_v1-localPlanningrelevant) = X
             if no then skip the record from Output File
             if Yes then
-            Concatenate (planned_order_v1 - sourceSystem )+”_”+ (planned_order_v1-planPlntCd)
+            Concatenate (planned_order_v1 - sourceSystem )+”_”+ (planned_order_v1-plntCd)
             Example CONS_LATAM_BR16
             -->
             <column name="locationId">
-                <ref method="joinPlant" parameter="planPlntCd,srcSysCd" value="localPlanningRelevant"
+                <ref method="joinPlant" parameter="plntCd,srcSysCd" value="localPlanningRelevant"
                      resultType="Map">
                     <if test="'X'.equals(localPlanningRelevant)">
                         <set name="locationId"
-                             value="StringInner.join(srcSysCd,'_',planPlntCd)"/>
+                             value="StringInner.join(srcSysCd,'_',plntCd)"/>
                     </if>
                     <else>
                         <return/>
@@ -210,7 +210,7 @@
             </column>
 
             <!-- PLO9	Using (planned_order_v1-matlNum) = (cns_material_plan_status_v1-localMaterialNumber),
-            (planned_order_v1-planPlntCd) = (cns_material_plan_status-localPlant),  (planned_order_v1-srcSysCd) = (cns_material_plan_status-sourceSystem)
+            (planned_order_v1-plntCd) = (cns_material_plan_status-localPlant),  (planned_order_v1-srcSysCd) = (cns_material_plan_status-sourceSystem)
             check value of field (cns_material_plan_status-noPlanRelevant) = X
             if No then skip record from adding in Output File
             if Yes thenUsing (planned_order_v1-matlNum) = (material_global_v1-localMaterialNumber),  (planned_order_v1-srcSysCd) = (material_global_v1-sourceSystem)
@@ -223,7 +223,7 @@
             If (material_global_v1-primaryPlanningCode) not same as (material_global_v1-MaterialNumber) then use (material_global_v1-primaryPlanningCode)
             -->
             <column name="productId">
-                <ref method="joinMaterialPlanStatus" parameter="matlNum,planPlntCd,srcSysCd"
+                <ref method="joinMaterialPlanStatus" parameter="matlNum,plntCd,srcSysCd"
                      value="noPlanRelevant" resultType="Map">
                     <if test="'X'.equals(noPlanRelevant)">
                         <ref method="joinMaterialGlobal" parameter="matlNum,srcSysCd"
