@@ -81,7 +81,7 @@ public class OMPGdmProductServiceImpl {
                     
                     PlanCnsMaterialPlanStatusEntity materialPlanStatusEntitySpNoPlan = 
                     		cnsMaterialPlanStatusDao.getEntityWithSPNoPlanRelevantAndLocalMaterialnumber(materialGlobalV1Entity.getLocalMaterialNumber());
-                    if( null != materialPlanStatusEntitySpNoPlan);
+                    if( null != materialPlanStatusEntitySpNoPlan)
                         gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
 
                     productBos.add(gdmProductBo);

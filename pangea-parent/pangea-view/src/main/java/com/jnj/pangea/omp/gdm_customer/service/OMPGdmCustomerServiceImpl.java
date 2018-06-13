@@ -59,7 +59,7 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
                     PlanCnsClustersEntity planCnsClustersEntity = cnsClustersDao.getEntityWithCountryIdAndSourceSystem(countryID, sourceSystem);
                     if (null != planCnsClustersEntity) {
                         gdmCustomerBo.setCUST_Cluster(planCnsClustersEntity.getCluster());
-                        gdmCustomerBo.setSubCluster(planCnsClustersEntity.getSubCluster());
+                        gdmCustomerBo.setSubClusterId(planCnsClustersEntity.getSubCluster());
 
                         // J2
                         String localCountry = cnsDemGrpAsgnEntity.getCountryAffiliate();
@@ -99,7 +99,8 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
                                 gdmCustomerBo.setPartnerName(IConstant.VALUE.BLANK);
                                 gdmCustomerBo.setPartnerRegion(IConstant.VALUE.BLANK);
                                 gdmCustomerBo.setPartnerRole(IConstant.VALUE.BLANK);
-                                gdmCustomerBo.setPlanningCustomerGroupID(cnsPlanDemGrpEntity.getDemandGroupId());
+                                gdmCustomerBo.setPlanningCustomerGroupId(cnsPlanDemGrpEntity.getDemandGroupId());
+                                gdmCustomerBo.setSoldTo(IConstant.VALUE.BLANK);
                                 gdmCustomerBo.setSourceLocationId(IConstant.VALUE.BLANK);
 
                                 resultObject.setBaseBo(gdmCustomerBo);
