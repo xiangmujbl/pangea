@@ -16,6 +16,7 @@ public interface IConstant {
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
         String EDM_MATERIAL_GLOBAL_V1_COPY = "/edm/material_global_v1_copy";
         String EDM_PLANT_V1 = "/edm/plant_v1";
+        String EDM_PLANT_INPUT = "/edm/edm_plant_input";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
@@ -145,6 +146,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
+        String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
     }
@@ -479,6 +481,12 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+    }
+
+    interface EDM_PLANT_INPUT {
+        String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANNING_RELEVANT = "localPlanningRelevant";
     }
 
     interface CNS_PLAN_PARAMETER {
@@ -850,18 +858,27 @@ public interface IConstant {
         String DATA_OBJECT = "dataObject";
         String SPLIT = "-";
         String SPLIT_ = "_";
-        String PATTERN_DECIMAL_3 = "#.000";
-        String PATTERN_DECIMAL_5 = "#.00000";
-        String PATTERN_DECIMAL_0 = "#";
 
-        String VALUE_BLACK = "";
+        //regex expression of time , if it is satisfied, do format.
         String CHCEK_TIME = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
+        String PATTERN_DECIMAL_3="#.000";
+        String PATTERN_DECIMAL_5="#.00000";
+        String PATTERN_DECIMAL_0="#";
+        int VALUE_DECIMAL_3=3;
+        String VALUE_BLACK="";
+        String FAIL_MSG="localDpParentCode does not exist in edm Material";
     }
 
     interface PLAN_CNS_DP_POS {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
+    interface  EDM_COUNT_INPUT{
+        String SOURCESYSTEM= "sourceSystem";
+        String LOCALCOUNTRY ="localCountry" ;
+        String LOCALCURRENCY="localCurrency";
+
+    }
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT = "LATAM_ROOT";
@@ -995,11 +1012,14 @@ public interface IConstant {
         String PROPORTIONAL = "proportional";
         String FIXED = "fixed";
         String ENDEFF = "2998/12/31 23:59:59";
+        String START_EFF = "1980/01/01 00:00:00";
         String BOM_86400 = "86400";
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
         String THIRTY = "30";
+        String END_EFF_CHECK = "2998/12/31";
+        String START_EFF_CHECK = "1980/01/01";
     }
 
     interface FAILED {
@@ -1032,6 +1052,9 @@ public interface IConstant {
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
             String OMP_GDM_POS = "OMPGdmPos";
+            String OMP_GDM_LFU = "OMPGdmLfu";
+            String OMP_GDM_COUNTRY="OMPGdmCountry";
+            String EDM_PLANT = "EDMPlant";
         }
 
         interface ERROR_CODE {
