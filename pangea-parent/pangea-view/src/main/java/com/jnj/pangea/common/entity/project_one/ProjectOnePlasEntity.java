@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class ProjectOnePlasEntity extends CommonEntity {
 
+    private String mandt;
     private String plnty;
     private String plnnr;
     private String plnal;
@@ -18,10 +19,20 @@ public class ProjectOnePlasEntity extends CommonEntity {
     private String andat;
     private String aedat;
     private String aennr;
+    private String parkz;
+
+    public String getParkz() {
+        return parkz;
+    }
+
+    public void setParkz(String parkz) {
+        this.parkz = parkz;
+    }
 
     public ProjectOnePlasEntity(Map<String, Object> map) {
         super(map);
 
+        setMandt((String) map.get("mandt"));
         setPlnty((String) map.get("plnty"));
         setPlnnr((String) map.get("plnnr"));
         setPlnal((String) map.get("plnal"));
@@ -30,10 +41,19 @@ public class ProjectOnePlasEntity extends CommonEntity {
         setZaehl((String) map.get("zaehl"));
         setDatuv((String) map.get("datuv"));
         setLoekz((String) map.get("loekz"));
+        setParkz((String) map.get("parkz"));
         setArnnr((String) map.get("arnnr"));
         setAndat((String) map.get("andat"));
         setAedat((String) map.get("aedat"));
         setAennr((String) map.get("aennr"));
+    }
+
+    public String getMandt() {
+        return mandt;
+    }
+
+    public void setMandt(String mandt) {
+        this.mandt = mandt;
     }
 
     public String getAennr() {
