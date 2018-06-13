@@ -221,8 +221,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "VendorPurchase";
-        String EXTERNAL_PURCHASE = "ExternalPurchase";
+        String VENDOR_PURCHASE = "vendorPurchase";
+        String EXTERNAL_PURCHASE = "externalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -290,7 +290,7 @@ public interface IConstant {
     }
 
     interface PLAN_CNS_PLAN_REGION {
-        String PLANNING_REGION_ID  = "planningRegionID";
+        String PLANNING_REGION_ID = "planningRegionID";
     }
 
 

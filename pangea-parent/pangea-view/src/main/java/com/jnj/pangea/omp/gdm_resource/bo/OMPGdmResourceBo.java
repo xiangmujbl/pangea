@@ -9,7 +9,6 @@ public class OMPGdmResourceBo extends BaseBo {
     private String active;
     private String activeOPRERP;
     private String activeSOPERP;
-    private String calendarId;
     private String description;
     private String locationId;
 
@@ -50,14 +49,6 @@ public class OMPGdmResourceBo extends BaseBo {
 
     public void setActiveSOPERP(String activeSOPERP) {
         this.activeSOPERP = activeSOPERP;
-    }
-
-    public String getCalendarId() {
-        return this.calendarId;
-    }
-
-    public void setCalendarId(String calendarId) {
-        this.calendarId = calendarId;
     }
 
     public String getDescription() {

@@ -42,5 +42,4 @@ public class PlanCnsFinPlanQtyDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
-
 }
