@@ -16,7 +16,9 @@
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
                         <expression>attribute=/edm/material_global_v1.sourceSystem,sourceSystem=/edm/material_global_v1.sourceSystem</expression>
                     </relation>
-
+                    <relation path="/edm/material_global_v1" alias="/edm/material_global_v1_clone" isPrimaryKey="false">
+                        <expression>localDpParentCode=/edm/material_global_v1.localDpParentCode</expression>
+                    </relation>
                 </relations>
             </region>
 
@@ -50,6 +52,9 @@
 
             <region path="/edm/country_v1">
                 <columns>sourceSystem,localCountry,countryCode,countryName,consumerPlanningRegion</columns>
+            </region>
+            <region path="/edm/material_global_v1" alias="/edm/material_global_v1_clone">
+                <columns>sourceSystem,localMaterialNumber,localDpParentCode,localBaseUom</columns>
             </region>
 
             <region path="/edm/currency_v1">
