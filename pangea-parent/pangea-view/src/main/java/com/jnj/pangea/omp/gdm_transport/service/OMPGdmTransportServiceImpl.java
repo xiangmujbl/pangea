@@ -182,7 +182,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		if (!tlaneItemExceptionEntities.isEmpty()) {
 			for (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity : tlaneItemExceptionEntities) {
 				if (tlaneItemExceptionEntity.getDeletionIndicator().equals("X")) {
-					//this.curationSkip = true;
+					this.curationSkip = true;
 					return null;
 				}
 			}
