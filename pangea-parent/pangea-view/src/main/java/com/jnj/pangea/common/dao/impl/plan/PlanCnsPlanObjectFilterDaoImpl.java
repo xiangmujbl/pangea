@@ -19,6 +19,22 @@ public class PlanCnsPlanObjectFilterDaoImpl extends CommonDaoImpl {
     public PlanCnsPlanObjectFilterEntity getEntityWithSourceObjectTechNameAndSourceSystem(String sourceObjectTechName, String sourceSystem) {
         String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_TECHNAME).is(sourceObjectTechName)
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
-        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER,queryString,PlanCnsPlanObjectFilterEntity.class);
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER, queryString, PlanCnsPlanObjectFilterEntity.class);
+    }
+
+    public PlanCnsPlanObjectFilterEntity getEntity(String sourceObjectTechName,
+                                                   String sourceSystem,
+                                                   String sourceObjectAttribute1,
+                                                   String sourceObjectAttribute1Value,
+                                                   String sourceObjectAttribute2,
+                                                   String sourceObjectAttribute2Value) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_TECHNAME).is(sourceObjectTechName)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE1).is(sourceObjectAttribute1)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE1_VALUE).is(sourceObjectAttribute1Value)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE2).is(sourceObjectAttribute2)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE2_VALUE).is(sourceObjectAttribute2Value)
+                .toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER, queryString, PlanCnsPlanObjectFilterEntity.class);
     }
 }

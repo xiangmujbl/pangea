@@ -628,6 +628,8 @@ public interface IConstant {
         String SOURCE_OBJECT_TECHNAME = "sourceObjectTechName";
         String SOURCE_OBJECT_ATTRIBUTE1 = "sourceObjectAttribute1";
         String SOURCE_OBJECT_ATTRIBUTE1_VALUE = "sourceObjectAttribute1Value";
+        String SOURCE_OBJECT_ATTRIBUTE2 = "sourceObjectAttribute2";
+        String SOURCE_OBJECT_ATTRIBUTE2_VALUE = "sourceObjectAttribute2Value";
         String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
     }
