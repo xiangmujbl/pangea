@@ -1,25 +1,29 @@
 package com.jnj.pangea.omp.gdm_fbp.service;
 
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
+import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanQtyAndValEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanQtyEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanQtyDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsFinPlanValEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsFinPlanValDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
+import com.jnj.pangea.common.service.ICommonListService;
 import com.jnj.pangea.omp.gdm_fbp.bo.OMPGdmFbpBo;
-import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
-public class OMPGdmFbpServiceImpl {
+import static com.jnj.pangea.util.DateUtils.*;
+
+public class OMPGdmFbpServiceImpl implements ICommonListService {
 
     private static OMPGdmFbpServiceImpl instance;
 
@@ -31,200 +35,202 @@ public class OMPGdmFbpServiceImpl {
     }
 
     private PlanCnsFinPlanQtyDaoImpl cnsFinPlanQtyDao = PlanCnsFinPlanQtyDaoImpl.getInstance();
-    //private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private PlanCnsPlanParameterDaoImpl planCnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
     private PlanCnsFinPlanValDaoImpl cnsFinPlanValDao = PlanCnsFinPlanValDaoImpl.getInstance();
-    private EDMMaterialAuomV1DaoImpl materialAuomV1Dao = EDMMaterialAuomV1DaoImpl.getInstance();
     private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
     private EDMCurrencyV1DaoImpl currencyV1Dao = EDMCurrencyV1DaoImpl.getInstance();
-    private PlanCnsPlanParameterDaoImpl planCnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
     private EDMJNJCalendarV1DaoImpl edmjnjCalendarV1Dao = EDMJNJCalendarV1DaoImpl.getInstance();
+    private EDMMaterialAuomV1DaoImpl edmMaterialAuomV1Dao = EDMMaterialAuomV1DaoImpl.getInstance();
+    private EDMMaterialGlobalV1DaoImpl edmMaterialGlobalV1Dao=EDMMaterialGlobalV1DaoImpl.getInstance();
 
+    final java.text.DecimalFormat df = new java.text.DecimalFormat(IConstant.OMP_GDMBOMELEMENT.PATTERN_DECIMAL_3);
+
+    @Override
     public List<ResultObject> buildView(String key, Object o, Object o2) {
-        List<ResultObject> resultObjects = new LinkedList<>();
+
+        List<ResultObject> list = new ArrayList<>();
 
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
-        if (null==materialGlobalV1Entity){
-            return resultObjects;
+
+        if (StringUtils.isBlank(materialGlobalV1Entity.getLocalDpParentCode())) {
+            return list;
         }
-        List<OMPGdmFbpBo> gdmfbpBos = new ArrayList<>();
 
-//        String sourceSystem = materialGlobalV1Entity.getSourceSystem();
-//        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getEntityWithLocalSourceSystem(sourceSystem);
-//
-//        String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
-//        PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.fbp);
-//        PlanCnsFinPlanValEntity finPlanValEntity = cnsFinPlanValDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.fbp);
-//
-//        String productId = sourceSystemV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode();
-//        gdmfbpBo.setProductId(productId);
-//
-//        String sequeceNumber = UUID.randomUUID().toString();
-//        String fbpId = productId +sequeceNumber;
-//        gdmfbpBo.setfbpId(fbpId);
+        List<PlanCnsPlanParameterEntity> PlanCnsPlanParameterEntityList = planCnsPlanParameterDao.getEntityWithAttributeListForLFU(materialGlobalV1Entity.getSourceSystem());
 
-//        if (null != finPlanValEntity) {
-//            gdmfbpBo.setValue(finPlanValEntity.getValue());
-//        }
-//
-//        if (null != finPlanQtyEntity) {
-//            String country = finPlanQtyEntity.getCountry();
-//            EDMCountryEntity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
-//            if (null != countryV1Entity) {
-//                gdmfbpBo.setCountryId(countryV1Entity.getCountryCode());
-//            }
-//
-//            String currency = finPlanQtyEntity.getCurrency();
-//            EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
-//            if (null != currencyV1Entity) {
-//                gdmfbpBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
-//            }
-//
-//            String unitId = finPlanQtyEntity.getUnitId();
-//            if (null != unitId && unitId.equals(materialGlobalV1Entity.getLocalBaseUom())) {
-//                EDMMaterialAuomV1Entity materialAuomV1Entity = materialAuomV1Dao.getEntityWithConditions(localMaterialNumber, unitId);
-//                if (null != materialAuomV1Entity) {
-//                    try {
-//                        int quantity = Integer.parseInt(finPlanQtyEntity.getQuantity());
-//                        int localNumerator = Integer.parseInt(materialAuomV1Entity.getLocalNumerator());
-//                        int localDenominator = Integer.parseInt(materialAuomV1Entity.getLocalDenominator());
-//                        if (0!=quantity && 0!=localNumerator && 0!=localDenominator){
-//                            String volume = quantity*(localNumerator/localDenominator)+"";
-//                            gdmfbpBo.setVolume(volume);
-//                        }
-//                    } catch (NumberFormatException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//
-        String sourceSystem = materialGlobalV1Entity.getSourceSystem();
-        PlanCnsPlanParameterEntity planCnsPlanParameterEntity = planCnsPlanParameterDao.getEntityWithSourceSystemAndDataObject(sourceSystem,IConstant.VALUE.SEND_TO_OMP);
-        String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
-        PlanCnsFinPlanQtyEntity finPlanQtyEntity = cnsFinPlanQtyDao.getEntityWithConditions(localMaterialNumber,IConstant.VALUE.FBP);
-        List<PlanCnsFinPlanValEntity> finPlanValEntity = cnsFinPlanValDao.getListWithConditions(localMaterialNumber,IConstant.VALUE.FBP);
-        if (null!=finPlanValEntity &&finPlanValEntity.size()>0){
-            OMPGdmFbpBo gdmfbpBo = new OMPGdmFbpBo();
-            double value =0.0;
-            String sum=null;
-            String currency =null;
-            for (PlanCnsFinPlanValEntity val: finPlanValEntity) {
-                currency = val.getCurrency();
-        //rules  T1
-        String localDpParentCode = materialGlobalV1Entity.getLocalDpParentCode();
-        if (StringUtils.isEmpty(localDpParentCode)){
-            ResultObject resultObject = new ResultObject();
-            String errorValue = "localDpParentCode not found";
-            String errorCode = IConstant.FAILED.ERROR_CODE.J1;
-            FailData failData = new FailData();
-            failData.setErrorCode(errorCode);
-            failData.setErrorValue(errorValue);
-            failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-            failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.GDM_FBP);
-            failData.setSourceSystem(IConstant.VALUE.OMP);
-            failData.setKey1(materialGlobalV1Entity.getSourceSystem());
-            failData.setKey2(materialGlobalV1Entity.getLocalMaterialNumber());
-            failData.setKey3("");
-            failData.setKey4("");
-            failData.setKey5("");
-            resultObject.setFailData(failData);
-            resultObjects.add(resultObject);
-            return resultObjects;
+        if (PlanCnsPlanParameterEntityList == null || PlanCnsPlanParameterEntityList.size() == 0) {
+            return list;
         }
-        String productId= null;
-        if (null!=planCnsPlanParameterEntity && null!=materialGlobalV1Entity)
-         productId =planCnsPlanParameterEntity.getParameterValue()+IConstant.VALUE.UNDERLINE+materialGlobalV1Entity.getLocalDpParentCode();
-        String yearMonth =null;
 
-            if (null!=finPlanQtyEntity && null!=planCnsPlanParameterEntity && null!=finPlanValEntity){
-                //List<PlanCnsPlanParameterEntity> planCnsPlanParameterEntity1 = planCnsPlanParameterDao.getEntityWithAttributeList(sourceSystem);
-                PlanCnsPlanParameterEntity planCnsPlanParameterEntity1 = planCnsPlanParameterDao.getEntityWithAttribute(sourceSystem);
+        List<EDMMaterialGlobalV1Entity> globalList= edmMaterialGlobalV1Dao.getCloneEntitiesWithLocalDpParentCode(materialGlobalV1Entity.getLocalDpParentCode());
+        Map<String,Double> qtyYearMap=new HashMap<>();
+        Map<String,Double> valYearMap=new HashMap<>();
 
-                if (null!=planCnsPlanParameterEntity1){
-                    yearMonth=finPlanQtyEntity.getYearMonth();
-                }else if (null!=finPlanQtyEntity && null!=planCnsPlanParameterEntity){
-                    yearMonth=finPlanQtyEntity.getYearMonth();
-                }else if (null!=planCnsPlanParameterEntity &&null!=finPlanValEntity){
-                    yearMonth=val.getYearMonth();
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setRoundingMode(RoundingMode.HALF_UP);
+        nf.setMinimumFractionDigits(IConstant.OMP_GDMBOMELEMENT.VALUE_DECIMAL_3);
+        nf.setMaximumFractionDigits(IConstant.OMP_GDMBOMELEMENT.VALUE_DECIMAL_3);
+        nf.setGroupingUsed(false);
+        List<String> listMaterialNumber=new ArrayList<> ();
+        for(int i=0;i<globalList.size();i++){
+            listMaterialNumber.add(globalList.get(i).getLocalMaterialNumber());
+        }
+        List<PlanCnsFinPlanQtyEntity>  finPlanQtyEntityList = cnsFinPlanQtyDao.getListWithConditions(listMaterialNumber, IConstant.VALUE.FBP);
+        List<PlanCnsFinPlanValEntity>  finPlanValEntityList = cnsFinPlanValDao.getListWithConditions(listMaterialNumber, IConstant.VALUE.FBP);
+        List<PlanCnsFinPlanQtyAndValEntity> mergeQtyVal =mergeQtyVal(finPlanQtyEntityList,finPlanValEntityList);
+
+        for(int j=0;j<mergeQtyVal.size();j++){
+            PlanCnsFinPlanQtyAndValEntity planCnsFinPlanQtyAndValEntity=mergeQtyVal.get(j);
+            String yearMonth=planCnsFinPlanQtyAndValEntity.getYearMonth();
+
+            if(qtyYearMap.containsKey(yearMonth)){
+                Double qty=  getQualityChangeFromAuom(planCnsFinPlanQtyAndValEntity);
+                if(qty==null){
+                    continue;
+                }
+                qtyYearMap.put(yearMonth,qtyYearMap.get(yearMonth)+qty);
+            }else{
+                Double qty=  getQualityChangeFromAuom(planCnsFinPlanQtyAndValEntity);
+                if(qty==null){
+                    continue;
+                }
+                qtyYearMap.put(yearMonth,qty);
+            }
+
+            if(valYearMap.containsKey(yearMonth)){
+                Double value=valYearMap.get(yearMonth);
+                try {
+                    valYearMap.put(yearMonth,value+Double.parseDouble(planCnsFinPlanQtyAndValEntity.getValue()));
+                }catch (Exception e){
+                    LogUtil.getCoreLog().error("valYearMap add "+yearMonth+" error");
+                }
+            }else{
+                try {
+                    valYearMap.put(yearMonth,Double.parseDouble(planCnsFinPlanQtyAndValEntity.getValue()));
+                }catch (Exception e){
+                    LogUtil.getCoreLog().error("valYearMap add "+yearMonth+" error");
                 }
             }
-        //rules  T5
-            if (null!=yearMonth){
-                List<EDMJNJCalendarV1Entity> edmjnjCalendarV1Entities = edmjnjCalendarV1Dao.getEntityWithFiscalPeriod(yearMonth);
-                if (null!=edmjnjCalendarV1Entities && edmjnjCalendarV1Entities.size()>0) {
-                    for (EDMJNJCalendarV1Entity entity:edmjnjCalendarV1Entities) {
+        }
 
-                        Date dueDate = DateUtils.stringToDate(entity.getWeekToDate(), DateUtils.DATE_FORMAT_1);
-                        gdmfbpBo.setDueDate(DateUtils.dateToString(dueDate, DateUtils.J_yyyyMMdd_HHmmss));
+//        for(int i=0;i<globalList.size();i++){
+//            EDMMaterialGlobalV1Entity globalV1AggrEntity=globalList.get(i);
+//            String localMaterialNumber =globalV1AggrEntity.getLocalMaterialNumber();
+//            List<PlanCnsFinPlanQtyEntity>  finPlanQtyEntityList = cnsFinPlanQtyDao.getListWithConditions(localMaterialNumber, IConstant.VALUE.LFU);
+//            List<PlanCnsFinPlanValEntity>  finPlanValEntityList = cnsFinPlanValDao.getListWithConditions(localMaterialNumber, IConstant.VALUE.LFU);
+//            List<PlanCnsFinPlanQtyAndValEntity> mergeQtyVal =mergeQtyVal(finPlanQtyEntityList,finPlanValEntityList);
+//        }
 
-                        Date weekFromDate = DateUtils.stringToDate(entity.getWeekFromDate(), DateUtils.DATE_FORMAT_1);
-                        gdmfbpBo.setFromDueDate(DateUtils.dateToString(weekFromDate, DateUtils.J_yyyyMMdd_HHmmss));
 
-                        gdmfbpBo.setfbpId(productId + "-" + gdmfbpBo.getFromDueDate());
+        for(PlanCnsFinPlanQtyAndValEntity planCnsFinPlanQtyAndValEntity:mergeQtyVal){
+            String country = IConstant.VALUE.BLANK;
+            String yearMonth = planCnsFinPlanQtyAndValEntity.getYearMonth();
+            String currency= IConstant.VALUE.BLANK;;
+            List<EDMJNJCalendarV1Entity> EDMJNJCalendarV1EntityList = edmjnjCalendarV1Dao.getEntityWithFiscalPeriod(yearMonth);
+            if (EDMJNJCalendarV1EntityList == null || EDMJNJCalendarV1EntityList.size() == 0) {
+                continue;
+            }
+            Pattern pattern = Pattern.compile(IConstant.LFU.CHCEK_TIME);
+            EDMCountryEntity edmCountryEntity = countryV1Dao.getEntityWithLocalCountry( planCnsFinPlanQtyAndValEntity.getCountry());
+            EDMCurrencyV1Entity edmCurrencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(planCnsFinPlanQtyAndValEntity.getCurrency());
+            if (edmCountryEntity != null) {
+                country=edmCountryEntity.getCountryCode();
+            }
+            if (edmCurrencyV1Entity != null) {
+                currency=edmCurrencyV1Entity.getCurrencyCode();
+            }
 
-                        //rules T7,T8
-                        value += Double.parseDouble(val.getValue());
-                        int size = finPlanValEntity.size();
-                        double avg = value/size;
-                        BigDecimal a = new BigDecimal(avg);
-                        double avge = a.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-                        sum = avge+"";
-                        if (null != finPlanQtyEntity) {
-                            String localMaterialNumberQty = finPlanQtyEntity.getLocalMaterialNumber();
-                            String unitIdQty = finPlanQtyEntity.getUnitId();
-                            String sourceSystemQty = finPlanQtyEntity.getSourceSystem();
-                            EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = materialAuomV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumberQty, unitIdQty, sourceSystemQty);
-                            if (null != edmMaterialAuomV1Entity) {
-                                //gdmfbpBo.setVolume(entity.getNoOfWeek());
-                                try {
-                                    double quantity = Double.parseDouble(finPlanQtyEntity.getQuantity());
-                                    double localNumerator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalNumerator());
-                                    double localDenominator = Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
-                                    if (0.0 != quantity && 0 != localNumerator && 0 != localDenominator) {
-                                        double result = quantity * (localNumerator / localDenominator);
-                                        Double avgResult = result/size;
-                                        BigDecimal b = new BigDecimal(avgResult);
-                                        double df = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-                                        String volume = df + "";
-                                        gdmfbpBo.setVolume(volume);
-                                    }
-                                } catch (NumberFormatException e) {
-                                    e.printStackTrace();
+            for (PlanCnsPlanParameterEntity parameterEntity : PlanCnsPlanParameterEntityList) {
 
-                                }
-                            }
+                for (EDMJNJCalendarV1Entity edmjnjCalendarV1Entity : EDMJNJCalendarV1EntityList) {
+                    int noOfWeek=1;
+
+                    String dateFrom = edmjnjCalendarV1Entity.getWeekFromDate();
+                    if (StringUtils.isNotBlank(dateFrom) && pattern.matcher(dateFrom).matches()) {
+                        dateFrom = dateToString(stringToDate(dateFrom, DATE_FORMAT_1), yyyy_MM_dd_HHmmss_TRUE);
+                        String dateTo = edmjnjCalendarV1Entity.getWeekToDate();
+                        if (StringUtils.isNotBlank(dateTo) && pattern.matcher(dateTo).matches()) {
+                            dateTo = dateToString(stringToDate(dateTo, DATE_FORMAT_1), yyyy_MM_dd_HHmmss_TRUE);
                         }
-                        gdmfbpBos.add(gdmfbpBo);
+                        ResultObject resultObject = new ResultObject();
+                        OMPGdmFbpBo gdmFbpBoV1 = new OMPGdmFbpBo();
+                        gdmFbpBoV1.setProductId(parameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
+                        gdmFbpBoV1.setCurrencyId(currency);
+                        gdmFbpBoV1.setCountryId(country);
+                        gdmFbpBoV1.setValue(IConstant.VALUE.BLANK);
+                        gdmFbpBoV1.setVolume(IConstant.VALUE.BLANK);
+                        try {
+                            noOfWeek= Integer.parseInt( edmjnjCalendarV1Entity.getNoOfWeek()) ;
+                        }catch (Exception e){
+                            LogUtil.getCoreLog().error(e.getMessage());
+                        }
+                        try {
+                            gdmFbpBoV1.setVolume(String.valueOf(Math.round(qtyYearMap.get(yearMonth)/noOfWeek)));
+                        }catch (Exception e){
+                            LogUtil.getCoreLog().error(e.getMessage());
+                        }
+                        try {
+                            gdmFbpBoV1.setValue(String.valueOf( nf.format(valYearMap.get(yearMonth)/noOfWeek)));
+                        }catch (Exception e){
+                            LogUtil.getCoreLog().error(e.getMessage());
+                        }
+                        gdmFbpBoV1.setFromDueDate(dateFrom);
+                        gdmFbpBoV1.setDueDate(dateTo);
+                        gdmFbpBoV1.setfbpId(gdmFbpBoV1.getProductId() + IConstant.LFU.SPLIT + gdmFbpBoV1.getFromDueDate());
+                        resultObject.setBaseBo(gdmFbpBoV1);
+                        list.add(resultObject);
                     }
-
                 }
-            }
-            }
-            for (OMPGdmFbpBo fbp:gdmfbpBos) {
-                ResultObject resultObject = new ResultObject();
-                fbp.setValue(sum);
-                //rules  T2,T3
-                if (null != finPlanQtyEntity) {
-                    String country = finPlanQtyEntity.getCountry();
-                    EDMCountryEntity countryV1Entity = countryV1Dao.getEntityWithLocalCountry(country);
-                    if (null != countryV1Entity) {
-                        fbp.setCountryId(countryV1Entity.getCountryCode());
-                    }
-                }
-                if (null != finPlanValEntity) {
-
-                    EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(currency);
-                    if (null != currencyV1Entity) {
-                        fbp.setCurrencyId(currencyV1Entity.getCurrencyCode());
-                    }
-                }
-                if (null != planCnsPlanParameterEntity && null != materialGlobalV1Entity){
-                    fbp.setProductId(planCnsPlanParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
-                }
-                resultObject.setBaseBo(fbp);
-                resultObjects.add(resultObject);
             }
         }
-        return resultObjects;
+        return list;
     }
+
+    public String formatNumber(String result) {
+        if (StringUtils.startsWith(result, IConstant.OMP_GDMBOMELEMENT.PATTERN_POINTER)) {
+            result = IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_0_BLANK + result;
+        }
+        return result;
+    }
+
+    public List<PlanCnsFinPlanQtyAndValEntity> mergeQtyVal(List<PlanCnsFinPlanQtyEntity> qtyList, List<PlanCnsFinPlanValEntity> valList){
+        List<PlanCnsFinPlanQtyAndValEntity> result=new  ArrayList<>();
+        if(valList==null||valList.size()==0){
+            return result;
+        }
+        if(qtyList==null||qtyList.size()==0){
+            return result;
+        }
+
+        Map<String,PlanCnsFinPlanQtyAndValEntity> yearMap=new HashMap<>();
+        for (PlanCnsFinPlanQtyEntity qtyEntity :qtyList){
+            yearMap.put(qtyEntity.getLocalMaterialNumber().trim()+qtyEntity.getYearMonth().trim(),qtyEntity);
+        }
+
+        for (PlanCnsFinPlanValEntity valEntity :valList){
+            if(yearMap.containsKey(valEntity.getLocalMaterialNumber().trim()+valEntity.getYearMonth().trim())){
+                PlanCnsFinPlanQtyAndValEntity planCnsFinPlanQtyAndValEntity=yearMap.get(valEntity.getLocalMaterialNumber().trim()+valEntity.getYearMonth());
+                planCnsFinPlanQtyAndValEntity.setCurrency(valEntity.getCurrency());
+                planCnsFinPlanQtyAndValEntity.setValue(valEntity.getValue());
+                result.add(planCnsFinPlanQtyAndValEntity);
+            }
+        }
+        return result;
+    }
+    public Double getQualityChangeFromAuom(PlanCnsFinPlanQtyAndValEntity planCnsFinPlanQtyAndValEntity){
+        EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = edmMaterialAuomV1Dao.getEntityWithConditions(planCnsFinPlanQtyAndValEntity.getLocalMaterialNumber(), planCnsFinPlanQtyAndValEntity.getUnitId(), planCnsFinPlanQtyAndValEntity.getSourceSystem());
+        if(edmMaterialAuomV1Entity!=null){
+            try {
+                double quantity=Double.parseDouble(planCnsFinPlanQtyAndValEntity.getQuantity());
+                double localNumerator=Double.parseDouble(edmMaterialAuomV1Entity.getLocalNumerator());
+                double localDenominator=Double.parseDouble(edmMaterialAuomV1Entity.getLocalDenominator());
+                return quantity*localNumerator/localDenominator;
+            }catch (Exception e){
+                LogUtil.getCoreLog().error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 }

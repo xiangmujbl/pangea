@@ -112,7 +112,7 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
       | DP       | DP    | BX       | CONS_LATAM   | CONS_LATAM   |
       | DP       | DPSP1 | CA       | CONS_LATAM   | CONS_LATAM   |
       | SP       | SP    | KI       | CONS_LATAM   | CONS_LATAM   |
-      | DPSP     | DPSP1 | BI       | CONS_LATAM   | CONS_LATAM   |
+      | DPSP     | DPSP2 | BI       | CONS_LATAM   | CONS_LATAM   |
 
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
@@ -142,16 +142,17 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
       | 3880DPSP                   | 3880                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
       | 3881DPSP                   | 3881                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
       | 4880DPSP                   | 4880                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4880DPSP1                  | 4880                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2888DPSP1                  | 2888                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | LA_178962124288680039DPSP1 | LA_178962124288680039 | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
+      | 4880DPSP1                  | 4880                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
+      | 4880DPSP2                  | 4880                  | DPSP2  | YES    | YES          | YES          | NO           | 0.20   |          |
+      | 2888DPSP2                  | 2888                  | DPSP2  | YES    | YES          | YES          | NO           | 0.20   |          |
+      | LA_178962124288680039DPSP2 | LA_178962124288680039 | DPSP2  | YES    | YES          | YES          | NO           | 0.20   |          |
       | 2889SP                     | 2889                  | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
       | LA_178962124288680040SP    | LA_178962124288680040 | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
-      | 2892DPSP1                  | 2892                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
+      | 2892DPSP2                  | 2892                  | DPSP2  | YES    | YES          | YES          | NO           | 0.20   |          |
       | 4883DPSP1                  | 4883                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
       | 2893SP                     | 2893                  | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
 
   Scenario:delete all the test data
     And I delete the test data
-#    And I will remove all data with region "/omp/gdm_product_unit_conversion"
+    And I will remove all data with region "/omp/gdm_product_unit_conversion"
     And I will remove all data with region "/plan/edm_failed_data"

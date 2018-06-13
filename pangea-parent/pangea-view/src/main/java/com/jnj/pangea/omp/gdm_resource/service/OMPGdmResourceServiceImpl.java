@@ -38,7 +38,7 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
 
         OMPGdmResourceBo gdmResourceBo = new OMPGdmResourceBo();
 
-        //rule J1,F1,C1
+        //rule J1,C1
         if (null != capyHdrEntity) {
             String src = capyHdrEntity.getSrcSysCd();
             String num = capyHdrEntity.getCapyNum();
@@ -49,11 +49,11 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
                     String usgcd = edmWrkCtrEntity.getWrkCtrUsgCd();
                     if (IConstant.VALUE.STR_TWO.equals(capyCatCd)){
                         if (IConstant.VALUE.STR_ONE.equals(usgcd) || IConstant.VALUE.STR_NINE.equals(usgcd)) {
-                        String srcSysCd = edmWrkCtrEntity.getSrcSysCd();
+                            String srcSysCd = edmWrkCtrEntity.getSrcSysCd();
                         if (StringUtils.isNotEmpty(srcSysCd)) {
                             PlanCnsPlanParameterEntity planCnsPlanParameterEntity = cnsPlanParameterDao.getEntityWithSourceSystem(srcSysCd);
                             if (null != planCnsPlanParameterEntity) {
-                                            gdmResourceBo.setResourceId(capyHdrEntity.getPlntCd() + IConstant.VALUE.BACK_SLANT + edmWrkCtrEntity.getWrkCtrCd() + IConstant.VALUE.BACK_SLANT + capyHdrEntity.getCapyCatCd());
+                                            gdmResourceBo.setResourceId(capyHdrEntity.getSrcSysCd()+IConstant.VALUE.BACK_SLANT+capyHdrEntity.getPlntCd() + IConstant.VALUE.BACK_SLANT + edmWrkCtrEntity.getWrkCtrCd() + IConstant.VALUE.BACK_SLANT + capyHdrEntity.getCapyCatCd());
                                         }else {
                                             return resultObject;
                                         }
@@ -80,23 +80,27 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
         gdmResourceBo.setActive(IConstant.VALUE.YES);
         gdmResourceBo.setActiveOPRERP(IConstant.VALUE.YES);
         gdmResourceBo.setActiveSOPERP(IConstant.VALUE.NO);
-        gdmResourceBo.setCalendarId(IConstant.VALUE.BLANK);
 
         //rule T4
         if (null != capyHdrEntity) {
             String desc = capyHdrEntity.getCapyDesc();
             if (StringUtils.isNotEmpty(desc)) {
                 String[] descT = desc.split("/");
-                if (descT.length>2){
+                if (descT.length>0){
                     String plntcd = capyHdrEntity.getPlntCd();
                     if (StringUtils.isNotEmpty(plntcd)) {
                         if (StringUtils.isNotEmpty(descT[0])) {
                             gdmResourceBo.setDescription(descT[0]);
                         } else{
                             if (plntcd.startsWith(IConstant.VALUE.BR)) {
-                                gdmResourceBo.setDescription(descT[2]);
+                                if (StringUtils.isNotEmpty(descT[2])) {
+                                    gdmResourceBo.setDescription(descT[2]);
+                                }
                             } else if (!plntcd.startsWith(IConstant.VALUE.BR)) {
-                                gdmResourceBo.setDescription(descT[1]);
+                                if (StringUtils.isNotEmpty(descT[1])) {
+                                    gdmResourceBo.setDescription(descT[1]);
+                                }
+
                             }
                         }
                     }
@@ -150,4 +154,10 @@ public class OMPGdmResourceServiceImpl implements ICommonService {
 //        resultObject.setFailData(failData);
 //        return resultObject;
 //    }
+    public  static  void aVoid(){
+               String a ="/PLANIFICADOR DE MANTENIMIETNO/";
+               String[] aa = a.split("/");
+               System.out.println(aa[0]+"====1======"+aa[1]+"=======2======="+aa[2]);
+    }
+
 }
