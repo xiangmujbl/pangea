@@ -32,14 +32,11 @@ public class EDMSalesHistoryV1ServiceImpl implements ICommonService {
 
         ProjectOneVbfaEntity mainData = (ProjectOneVbfaEntity) o;
 
-        EDMSalesHistoryV1Bo viewBo = new EDMSalesHistoryV1Bo();
-        resultObject.setBaseBo(viewBo);
-
         // mapping ViewBo from MainEntity
-        EDMSalesHistoryV1Bo destBo = new EDMSalesHistoryV1Bo();
-        mappingObject(mainData, destBo);
+        EDMSalesHistoryV1Bo viewBo = new EDMSalesHistoryV1Bo();
+        mappingObject(mainData, viewBo);
 
-        resultObject.setBaseBo(destBo);
+        resultObject.setBaseBo(viewBo);
 
         return resultObject;
     }
