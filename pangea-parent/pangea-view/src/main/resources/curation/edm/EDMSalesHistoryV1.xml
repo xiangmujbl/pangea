@@ -16,7 +16,7 @@
             </region>
 
             <region path="/edm/source_system_v1">
-                <columns>$otherRegionColumns$</columns>
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
 
             <region path="/project_one/vbfa" alias="/project_one/vbfa_clone">

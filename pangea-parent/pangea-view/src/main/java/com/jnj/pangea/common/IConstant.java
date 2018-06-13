@@ -30,6 +30,7 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
+        String PROJECT_ONE_VBFA = "/project_one/vbfa";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
@@ -339,6 +340,20 @@ public interface IConstant {
     interface PROJECT_ONE_TMABCT {
         String MAABC = "maabc";
         String SPARS = "spars";
+    }
+
+    interface PROJECT_ONE_VBFA {
+        String VBELV = "vbelv";
+        String POSNV = "posnv";
+        String VBELN = "vbeln";
+        String POSNN = "posnn";
+        String VBTYP_N = "vbtypN";
+        String RFMNG = "rfmng";
+        String MEINS = "meins";
+        String RFMNG_FLT = "rfmngFlt";
+        String VRKME = "vrkme";
+        String VBTYP_V = "vbtypV";
+        String ERDAT = "erdat";
     }
 
     interface PLAN_CNS_DP_PRICE {
