@@ -44,7 +44,17 @@ public class EDMSalesHistoryV1ServiceImpl implements ICommonService {
 
     private void mappingObject(ProjectOneVbfaEntity mainData, EDMSalesHistoryV1Bo viewBo) {
         // to-do: here write your own logic of mapping
-
+        viewBo.setLocalPrecDocNo(mainData.getVbelv());
+        viewBo.setLocalSPrecDocLnNo(mainData.getPosnv());
+        viewBo.setLocalSubsDocNo(mainData.getVbeln());
+        viewBo.setLocalSubsDocLnNo(mainData.getPosnn());
+        viewBo.setLocalSubDocCatg(mainData.getVbtypN());
+        viewBo.setLocalBaseQuantity(mainData.getRfmng());
+        viewBo.setLocalBaseUom(mainData.getMeins());
+        viewBo.setLocalSalesQuantity(mainData.getRfmngFlt());
+        viewBo.setLocalSalesUom(mainData.getVrkme());
+        viewBo.setLocalPrecItemCatg(mainData.getVbtypV());
+        viewBo.setLocalCrtDt(mainData.getErdat());
     }
 
 }
