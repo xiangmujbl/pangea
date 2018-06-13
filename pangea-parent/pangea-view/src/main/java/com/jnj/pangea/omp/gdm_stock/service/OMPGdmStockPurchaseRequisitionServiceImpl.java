@@ -28,7 +28,6 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
 
     private static final String ZERO_POINT_ZERO = "0.0";
     private static final String MOVEMENT = "movement";
-    private static final String TRANSIT_DATE = "1980/01/01 00:00:00";
 
     private static OMPGdmStockPurchaseRequisitionServiceImpl instance;
 
@@ -49,8 +48,8 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
     public ResultObject buildView(String key, Object o, Object o2) {
         try {
             EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity = (EDMPurchaseRequisitionV1Entity) o;
-            OMPGdmStockBo OMPGdmStockBo = new OMPGdmStockBo();
-            LogUtil.getCoreLog().info("\n\nMCX; key: " + key + "\n\n");
+            OMPGdmStockBo oMPGdmStockBo = new OMPGdmStockBo();
+            LogUtil.getCoreLog().info("key: " + key);
 
             // PR5 - we are to skip this record if prCatCd in not "B"
             if (!"B".equals(edmPurchaseRequisitionV1Entity.getPrCatCd())) {
@@ -64,52 +63,52 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             String stockId = productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getPrNum() + "/" +
                     edmPurchaseRequisitionV1Entity.getPrLineNbr();
 
-            OMPGdmStockBo.setStockId(stockId);
-            OMPGdmStockBo.setConsignment(getConsignment(edmPurchaseRequisitionV1Entity));
+            oMPGdmStockBo.setStockId(stockId);
+            oMPGdmStockBo.setConsignment(getConsignment(edmPurchaseRequisitionV1Entity));
 
             checkPlanObjectFilterValid(edmPurchaseRequisitionV1Entity);
-            OMPGdmStockBo.seteRPOrderId(edmPurchaseRequisitionV1Entity.getPrNum());
+            oMPGdmStockBo.seteRPOrderId(edmPurchaseRequisitionV1Entity.getPrNum());
 
             if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getSuplPlntCd())) {
-                OMPGdmStockBo.setInventoryLinkGroupId(stockId);
+                oMPGdmStockBo.setInventoryLinkGroupId(stockId);
             }
-            OMPGdmStockBo.setVendorId(edmPurchaseRequisitionV1Entity.getLocalSupNum());
-            OMPGdmStockBo.setProcessId(getProcessId(productId, locationId, edmPurchaseRequisitionV1Entity));
-            OMPGdmStockBo.setProcessTypeId(getProcessTypeId(edmPurchaseRequisitionV1Entity));
-            OMPGdmStockBo.setLocationId(getLocationId(edmPurchaseRequisitionV1Entity));
+            oMPGdmStockBo.setVendorId(edmPurchaseRequisitionV1Entity.getLocalSupNum());
+            oMPGdmStockBo.setProcessId(getProcessId(productId, locationId, edmPurchaseRequisitionV1Entity));
+            oMPGdmStockBo.setProcessTypeId(getProcessTypeId(edmPurchaseRequisitionV1Entity));
+            oMPGdmStockBo.setLocationId(getLocationId(edmPurchaseRequisitionV1Entity));
 
             checkProductIdValid(edmPurchaseRequisitionV1Entity);
-            OMPGdmStockBo.setProductId(productId);
+            oMPGdmStockBo.setProductId(productId);
 
-            OMPGdmStockBo.setQuantity(String.valueOf(Long.parseLong(edmPurchaseRequisitionV1Entity.getPrLineQty()) -
+            oMPGdmStockBo.setQuantity(String.valueOf(Long.parseLong(edmPurchaseRequisitionV1Entity.getPrLineQty()) -
                     Long.parseLong(edmPurchaseRequisitionV1Entity.getLocalPOQuantity())));
 
             // PR12
             Date needByDate = DateUtils.stringToDate(edmPurchaseRequisitionV1Entity.getNeedByDt(), DateUtils.MM_dd_yyyy);
-            OMPGdmStockBo.setReceiptDate(DateUtils.dateToString(needByDate, DateUtils.yyyy_MM_dd_HHmmss));
+            oMPGdmStockBo.setReceiptDate(DateUtils.dateToString(needByDate, DateUtils.yyyy_MM_dd_HHmmss));
 
             // PR13
-            // TODO - check if weekend and move to Monday
             Date adjustedNeedByDate = DateUtils.offsetDate(needByDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
-            OMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss));
+            adjustedNeedByDate = DateUtils.moveToNextWorkingDay(adjustedNeedByDate);
+            oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss));
 
-            OMPGdmStockBo.setActive(IConstant.VALUE.YES);
-            OMPGdmStockBo.setActiveOPRERP(IConstant.VALUE.YES);
-            OMPGdmStockBo.setActiveSOPERP(IConstant.VALUE.NO);
-            OMPGdmStockBo.setBatchId(IConstant.VALUE.BLANK);
-            OMPGdmStockBo.setCertaintyID(IConstant.VALUE.BA);
-            OMPGdmStockBo.setBlockedQuantity(ZERO_POINT_ZERO);
-            OMPGdmStockBo.setQualityQuantity(ZERO_POINT_ZERO);
-            OMPGdmStockBo.setRestrictedQuantity(ZERO_POINT_ZERO);
-            OMPGdmStockBo.setReturnsQuantity(ZERO_POINT_ZERO);
-            OMPGdmStockBo.setStockType(MOVEMENT);
-            OMPGdmStockBo.setTransferQuantity(ZERO_POINT_ZERO);
-            OMPGdmStockBo.setTransitDate(TRANSIT_DATE);
-            OMPGdmStockBo.setUnrestrictedQuantity(ZERO_POINT_ZERO);
+            oMPGdmStockBo.setActive(IConstant.VALUE.YES);
+            oMPGdmStockBo.setActiveOPRERP(IConstant.VALUE.YES);
+            oMPGdmStockBo.setActiveSOPERP(IConstant.VALUE.NO);
+            oMPGdmStockBo.setBatchId(IConstant.VALUE.BLANK);
+            oMPGdmStockBo.setCertaintyID(IConstant.VALUE.BA);
+            oMPGdmStockBo.setBlockedQuantity(ZERO_POINT_ZERO);
+            oMPGdmStockBo.setQualityQuantity(ZERO_POINT_ZERO);
+            oMPGdmStockBo.setRestrictedQuantity(ZERO_POINT_ZERO);
+            oMPGdmStockBo.setReturnsQuantity(ZERO_POINT_ZERO);
+            oMPGdmStockBo.setStockType(MOVEMENT);
+            oMPGdmStockBo.setTransferQuantity(ZERO_POINT_ZERO);
+            oMPGdmStockBo.setTransitDate(IConstant.VALUE.START_EFF);
+            oMPGdmStockBo.setUnrestrictedQuantity(ZERO_POINT_ZERO);
 
             ResultObject resultObject = new ResultObject();
-            resultObject.setBaseBo(OMPGdmStockBo);
-            LogUtil.getCoreLog().info("OMPGdmStockBo: " + ToStringBuilder.reflectionToString(OMPGdmStockBo));
+            resultObject.setBaseBo(oMPGdmStockBo);
+            LogUtil.getCoreLog().info("OMPGdmStockBo: " + ToStringBuilder.reflectionToString(oMPGdmStockBo));
             return resultObject;
         } catch (SkipRecordException e) {
             // we're skipping this record
@@ -250,12 +249,11 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
      * @throws SkipRecordException skip the record if no/bad match
      */
     private void checkPlanObjectFilterValid(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
-        PlanCnsPlanObjectFilterEntity planCnsPlanObjectFilterDaoEntity = planCnsPlanObjectFilterDao.getEntity(
-                "purchase_requisition", edmPurchaseRequisitionV1Entity.getSourceSystem(),
-                "plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(),
-                "prTypeCd", edmPurchaseRequisitionV1Entity.getPrTypeCd());
-        if (planCnsPlanObjectFilterDaoEntity == null ||
-                !"I".equals(planCnsPlanObjectFilterDaoEntity.getInclusion_Exclusion())) {
+        PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
+                IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
+                edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
+                "plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), "prTypeCd", IConstant.VALUE.INCLUSION);
+        if (planObjectFilterEntity == null) {
             throw new SkipRecordException("PR6");
         }
     }

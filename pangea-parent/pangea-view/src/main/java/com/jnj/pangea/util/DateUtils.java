@@ -148,8 +148,26 @@ public class DateUtils {
         return "";
     }
 
-    public static void main(String[] args) {
+    /**
+     * moveToNextWorkingDay - move the input date to the next Monday if the input date is a Saturday
+     * or a Sunday. If it is neither then return the input date as is
+     *
+     * @param inputDate Date to check for working day
+     * @return Date moved to the next Monday if input is Sat/Sun
+     */
+    public static Date moveToNextWorkingDay(Date inputDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(inputDate);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == Calendar.SATURDAY) {
+            calendar.add(Calendar.DAY_OF_WEEK, 2);
+        } else if (dayOfWeek == Calendar.SUNDAY) {
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
+        }
+        return calendar.getTime();
+    }
 
-        System.out.println(derivationDate("2018/06/07", 1));
+    public static void main(String[] args) {
+        System.out.println(moveToNextWorkingDay(stringToDate("2018/06/30", yyyy_MM_dd)));
     }
 }
