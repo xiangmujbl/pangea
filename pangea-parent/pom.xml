@@ -15,6 +15,7 @@
 
     <modules>
         <module>job-file-merger</module>
+        <module>pangea-hook</module>
         <module>pangea-test</module>
         <module>pangea-view</module>
     </modules>
