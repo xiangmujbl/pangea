@@ -148,6 +148,8 @@ public interface IConstant {
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
+        String EDM_PURCHASE_ORDER_OA_V1_AGGREGATION_CNFRM_QTY = "/edm/purchase_order_oa_v1_aggregation_cnfrmQty";
+        String EDM_PURCHASE_ORDER_OA_V1_AGGREGATION_RECVEAQTY = "/edm/purchase_order_oa_v1_aggregation_recvEaQty";
     }
 
     interface EDM_INVENTORY_STOCK {
@@ -563,6 +565,7 @@ public interface IConstant {
         String PRCHSNG_ORG_NUM = "prchsngOrgNum";
         String PO_TYPE_CD = "poTypeCd";
         String PURCHASE_ORDER_OA = "purchase_order_oa";
+        String RECVEAQTY = "recvEaQty";
     }
 
     interface PLAN_CONS_TIME_DEP_XCHANGE {

@@ -26,6 +26,24 @@
                             sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
                         </expression>
                     </relation>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/purchase_order_oa_v1_aggregation_cnfrmQty" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/purchase_order_oa_v1_aggregation_recvEaQty" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                 </relations>
             </region>
 
@@ -33,49 +51,41 @@
                 <columns>
                     baseUom,batchManageIndicator,brand,category,division,flagForDeletion,form,franchise,globalBusinessUnit,globalDpParentCode,localBaseUom,localDpParentCode,localManufacturingTechnology,localMaterialGroup,localMaterialNumber,localMaterialType,localRefDescription,manufacturingTechnology,materialGroup,materialNumber,materialStatus,materialType,minRemShelfLife,parentCode,primaryPlanningCode,productFamily,refDescription,sourceSystem,subBrand,totalShelfLife
                 </columns>
-                <relations>
-                    <relation path="/edm/plant_v1" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/edm/plant_v1">
                 <columns>
                     country,localCountry,localCurrency,localPlanningRelevant,localPlant,localPlantName,localPlantType,plant,plantType,region,site,sourceSystem
                 </columns>
-                <relations>
-                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/plan/cns_material_plan_status">
                 <columns>
                     active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant
                 </columns>
-                <relations>
-                    <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/plan/cns_plan_object_filter">
                 <columns>
                     comments,inclusionExclusion,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem
                 </columns>
-                <relations>
-                    <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/plan/cns_spl_pln_loc">
                 <columns>
                     localCountry,localCurrency,localName,localNumber,localPlant,localRegion,pLanlocTypeDesc,pLanlocTypeId,planLocTypeDesc,planLocTypeId,sourceSystem,specLocAtt1,specLocAtt2,specLocAtt3,specLocAttDesc1,specLocAttDesc2,specLocAttDesc3,vendorOrCustomer,vendororCustomer
+                </columns>
+            </region>
+
+            <region path="/edm/purchase_order_oa_v1_aggregation_cnfrmQty">
+                <columns>
+                    cnfrmQty
+                </columns>
+            </region>
+
+            <region path="/edm/purchase_order_oa_v1_aggregation_recvEaQty">
+                <columns>
+                    recvEaQty
                 </columns>
             </region>
 

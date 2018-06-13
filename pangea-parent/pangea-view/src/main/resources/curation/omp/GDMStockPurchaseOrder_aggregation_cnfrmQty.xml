@@ -1,0 +1,19 @@
+<adf-curation>
+    <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/edm/purchase_order_oa_v1_aggregation_cnfrmQty"
+              chunkSize="1000" partitionPerServer="2" chunkBytes="40096" parallelism="2">
+        <regions>
+            <region path="/edm/purchase_order_oa_v1" mvel="true">
+                <columns>cnfrmQty</columns>
+                <aggregator>
+                    <fields>
+                        <field name="cnfrmQty" aggr="SUM" type="NUMBER" scale="3" asKey="true"/>
+                    </fields>
+                    <groupBy></groupBy>
+                </aggregator>
+            </region>
+            <region path="/edm/purchase_order_oa_v1_aggregation_cnfrmQty">
+                <columns>cnfrmQty</columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

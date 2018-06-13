@@ -1,29 +1,22 @@
 package com.jnj.pangea.omp.gdm_stock.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
-import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
-import com.jnj.pangea.common.entity.edm.EDMPurchaseOrderOAV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsClustersEntity;
+import com.jnj.pangea.common.entity.edm.*;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
-import com.jnj.pangea.omp.gdm_subcluster.bo.OMPGdmSubClusterBo;
-import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
@@ -41,6 +34,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
     PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
+    EDMPurchaseOrderOAV1DaoImpl purchaseOrderOAV1DaoAggregation = EDMPurchaseOrderOAV1DaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -137,7 +131,6 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                     stockBo.setConsignment(IConstant.VALUE.NO);
                                 }
 
-                                LogUtil.getCoreLog().info("\n\n\n matlNum = "+purchaseOrderOAV1Entity.getMatlNum()+" srcSys = "+purchaseOrderOAV1Entity.getSourceSystem());
                                 //PO9
                                 PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndSourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
                                 if(cnsMaterialPlanStatusEntity != null) {
@@ -149,8 +142,42 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                         }
 
                                         //PO10
-                                        //AGGREGATION TBD
-                                        stockBo.setQuantity("");
+                                        EDMPurchaseOrderOAV1Entity aggrEntity = purchaseOrderOAV1DaoAggregation.getCnfrmQtySum();
+                                        boolean getRecvEaQtySum = true;
+                                        boolean bothZero = true;
+                                        int orderUnit = 0;
+                                        int baseUnit = 0;
+                                        if(aggrEntity != null) {
+                                            getRecvEaQtySum = false;
+                                            bothZero = false;
+                                            int cnfrmQtySum = Integer.parseInt(aggrEntity.getCnfrmQty());
+                                            if(!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()){
+                                                orderUnit = Integer.parseInt(purchaseOrderOAV1Entity.getPoLineQty()) - cnfrmQtySum;
+                                            }
+                                        }
+                                        if(getRecvEaQtySum) {
+                                            aggrEntity = purchaseOrderOAV1DaoAggregation.getRecvEaQtySum();
+                                            if(aggrEntity != null) {
+                                                int recvEaQtySum = Integer.parseInt(aggrEntity.getRecvEaQty());
+                                                bothZero = false;
+                                                if(!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()){
+                                                    orderUnit = Integer.parseInt(purchaseOrderOAV1Entity.getPoLineQty()) - recvEaQtySum;
+                                                }
+                                            }
+                                        }
+
+                                        if(bothZero) {
+                                            if(!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()){
+                                                orderUnit = Integer.parseInt(purchaseOrderOAV1Entity.getPoLineQty());
+
+                                            }
+                                        }
+                                        if(!purchaseOrderOAV1Entity.getLocalNumerator().isEmpty() && !purchaseOrderOAV1Entity.getLocalDenominator().isEmpty()) {
+                                            baseUnit = orderUnit * Integer.parseInt(purchaseOrderOAV1Entity.getLocalNumerator()) / Integer.parseInt(purchaseOrderOAV1Entity.getLocalDenominator());
+                                        }
+                                        stockBo.setQuantity(Integer.toString(baseUnit));
+
+
 
                                         //PO11
                                         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
