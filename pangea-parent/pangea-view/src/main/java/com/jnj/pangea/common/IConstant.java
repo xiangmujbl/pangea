@@ -481,6 +481,8 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+        String FIRLD_BLANK="";
+        String SPLIT_=",";
     }
 
     interface EDM_PLANT_INPUT {
