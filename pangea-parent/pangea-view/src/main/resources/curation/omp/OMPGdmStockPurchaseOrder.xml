@@ -79,13 +79,13 @@
 
             <region path="/edm/purchase_order_oa_v1_aggregation_cnfrmQty">
                 <columns>
-                    cnfrmQty
+                    cnfrmQty,poNum,poLineNbr
                 </columns>
             </region>
 
             <region path="/edm/purchase_order_oa_v1_aggregation_recvEaQty">
                 <columns>
-                    recvEaQty
+                    recvEaQty,poNum,poLineNbr
                 </columns>
             </region>
 
