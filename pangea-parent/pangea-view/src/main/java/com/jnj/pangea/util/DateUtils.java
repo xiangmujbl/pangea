@@ -28,7 +28,6 @@ public class DateUtils {
     public static final String yyyy_MM_dd_HHmmss = "yyyy/dd/MM HH:mm:ss";
     public static final String yyyy_MM_dd_HHmmss_TRUE = "yyyy/MM/dd HH:mm:ss";
     public static final String yyyy_MM_dd = "yyyy/MM/dd";
-    public static final String MM_dd_yyyy = "MM/dd/yyyy";
     public static final String dd_MM_yyyy = "dd/MM/yyyy";
     public static final String yyyy_MM_ddTHHmmss = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String ISO_8601 = "yyyy-mm-ddThh:mm:ss.ffffff";
