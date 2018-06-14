@@ -84,13 +84,13 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
                     Long.parseLong(edmPurchaseRequisitionV1Entity.getLocalPOQuantity())));
 
             // PR12
-            Date needByDate = DateUtils.stringToDate(edmPurchaseRequisitionV1Entity.getNeedByDt(), DateUtils.MM_dd_yyyy);
-            oMPGdmStockBo.setReceiptDate(DateUtils.dateToString(needByDate, DateUtils.yyyy_MM_dd_HHmmss));
+            Date needByDate = DateUtils.stringToDate(edmPurchaseRequisitionV1Entity.getNeedByDt(), DateUtils.dd_MM_yyyy);
+            oMPGdmStockBo.setReceiptDate(DateUtils.dateToString(needByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
 
             // PR13
             Date adjustedNeedByDate = DateUtils.offsetDate(needByDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
             adjustedNeedByDate = DateUtils.moveToNextWorkingDay(adjustedNeedByDate);
-            oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss));
+            oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
 
             oMPGdmStockBo.setActive(IConstant.VALUE.YES);
             oMPGdmStockBo.setActiveOPRERP(IConstant.VALUE.YES);
@@ -172,11 +172,16 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
                                 EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) {
         String processId;
         if ("7".equals(edmPurchaseRequisitionV1Entity.getPrLineCatCd())) {
-            processId = "TR/" + productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getSourceSystem() +
-                    "_" + edmPurchaseRequisitionV1Entity.getSuplPlntCd() + "/Default";
+            processId = "TR/" + productId + "/" + locationId + "/";
+            if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getSuplPlntCd())) {
+                // only include this section if suplPlntCd is set
+                processId += edmPurchaseRequisitionV1Entity.getSourceSystem() +
+                        "_" + edmPurchaseRequisitionV1Entity.getSuplPlntCd() + "/";
+            }
+            processId += IConstant.VALUE.DEFAULT;
         } else {
-            processId = "SU/" + productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getLocalFixedVendor() +
-                    "/Default";
+            processId = "SU/" + productId + "/" + locationId + "/" +
+                    edmPurchaseRequisitionV1Entity.getLocalFixedVendor() + "/" + IConstant.VALUE.DEFAULT;
         }
         return processId;
     }
