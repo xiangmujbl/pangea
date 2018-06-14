@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,16 +20,26 @@ import java.util.regex.Pattern;
  */
 public class XDTool {
 
-    private static String USER_NAME = "";
-    private static String PASSWORD = "";
+    private static String USER_NAME = null;
+    private static String PASSWORD = null;
     private static String HOST = "awsamenva3025.jnj.com";
 
     public static void main(String[] args) {
 
+        // HOW TO:
+        // 1 - if USER_NAME or PASSWORD are left null, the config file will be checked for them.
+        // 2 - if you edit USER_NAME or PASSWORD above, they will be used instead.
+
+        // * see how to set up config file in the PasswordEncoder class
+
         Map<String, String> job2Run = readScripts();
 
-        if (StringUtils.isNotEmpty(PASSWORD)) {
-            PASSWORD = XDTool.readPassword();
+        if (USER_NAME == null) {
+            USER_NAME = PasswordEncoder.getPropertiesFile().getProperty("user");
+        }
+
+        if (PASSWORD == null) {
+            PASSWORD = PasswordEncoder.getPropertiesFile().getProperty("pass");
         }
 
         XdClient xdClient = new XdClient(HOST, USER_NAME, PASSWORD);
@@ -42,7 +51,6 @@ public class XDTool {
                 System.err.println("execute error: " + name);
             }
         });
-
     }
 
     private static Map<String, String> readScripts() {
@@ -76,41 +84,6 @@ public class XDTool {
             e.printStackTrace();
         }
         return map;
-    }
-
-    private static String readPassword() {
-
-        File file = new File("pangea-tools/src/main/resources/xd_script/config.txt");
-
-        if (file.exists() && !file.isDirectory()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-
-                return XDTool.decode(br.readLine());
-
-            } catch (Exception ioe) {
-                ioe.printStackTrace();
-            }
-        } else {
-            System.err.println("Missing config.txt file. No Password Provided.");
-        }
-        return null;
-    }
-
-    private static String encode(String plain) {
-        String b64encoded = Base64.getEncoder().encodeToString(plain.getBytes());
-        return new StringBuffer(b64encoded).reverse().toString();
-    }
-
-    private static String decode(String secret) {
-        String reversed = new StringBuffer(secret).reverse().toString();
-        String decoded = "";
-        try {
-            decoded = new String(Base64.getDecoder().decode(reversed));
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        } finally {
-            return decoded;
-        }
     }
 
 }
