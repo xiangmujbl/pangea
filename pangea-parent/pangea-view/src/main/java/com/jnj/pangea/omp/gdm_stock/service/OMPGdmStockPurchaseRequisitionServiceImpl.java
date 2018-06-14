@@ -175,7 +175,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             processId = "TR/" + productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getSourceSystem() +
                     "_" + edmPurchaseRequisitionV1Entity.getSuplPlntCd() + "/Default";
         } else {
-            processId = "SU/" + productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getLocalSupNum() +
+            processId = "SU/" + productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getLocalFixedVendor() +
                     "/Default";
         }
         return processId;
@@ -210,11 +210,9 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             processTypeId = "Subcontracting";
         } else if ("7".equals(edmPurchaseRequisitionV1Entity.getPrLineCatCd())) {
             processTypeId = "InternalTransport";
-        } else if (StringUtils.isBlank(edmPurchaseRequisitionV1Entity.getLocalSupNum())) {
-            processTypeId = "TODO"; // TODO Q to Nitin
         } else {
             List<PlanSplPlnLocEntity> entityListWithConditions = planSplPlnLocDao.getEntityListWithConditions(edmPurchaseRequisitionV1Entity.getSourceSystem(),
-                    edmPurchaseRequisitionV1Entity.getLocalSupNum());
+                    edmPurchaseRequisitionV1Entity.getLocalFixedVendor());
             if (entityListWithConditions != null && !entityListWithConditions.isEmpty()) {
                 processTypeId = "VendorTransport";
             } else {
