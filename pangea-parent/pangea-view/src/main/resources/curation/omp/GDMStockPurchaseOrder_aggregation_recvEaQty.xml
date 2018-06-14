@@ -3,17 +3,19 @@
               chunkSize="1000" partitionPerServer="2" chunkBytes="40096" parallelism="2">
         <regions>
             <region path="/edm/purchase_order_oa_v1" mvel="true">
-                <columns>recvEaQty,evTypeCd</columns>
-                <filter>evTypeCd==1</filter>
+                <columns>recvEaQty,evTypeCd,poNum,poLineNbr,cnfrmQty</columns>
+                <filter>evTypeCd==1,cnfrmQty==0</filter>
                 <aggregator>
                     <fields>
-                        <field name="recvEaQty" aggr="SUM" type="NUMBER" scale="3" asKey="true"/>
+                        <field name="recvEaQty" aggr="SUM" type="NUMBER" scale="3"/>
+                        <field name="poNum" asKey="true"/>
+                        <field name="poLineNbr" asKey="true"/>
                     </fields>
-                    <groupBy></groupBy>
+                    <groupBy>poNum,poLineNbr</groupBy>
                 </aggregator>
             </region>
             <region path="/edm/purchase_order_oa_v1_aggregation_recvEaQty">
-                <columns>recvEaQty</columns>
+                <columns>recvEaQty,poNum,poLineNbr</columns>
             </region>
         </regions>
     </curation>
