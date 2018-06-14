@@ -1,8 +1,10 @@
-<adf-curation executionClassName="com.jnj.pangea.GDMStock5PlannedOrder">
+<adf-curation executionClassName="com.jnj.pangea.GDMStock5PlannedOrder" writeTo="all" topic="PANGEA_V1_gdm_stock_planned_order">
 
     <regions>
         <region path="/edm/planned_order_v1" mainRegion="true">
-            <columns>matlNum,srcSysCd,mfgPlanOrdrDocId,planPlntCd,prdtnVersNum,planOrdrEndDt,grDaysLeadQty,plngScnroCd,planOrdrTypeCd,planOrdrQty</columns>
+            <columns>
+                matlNum,srcSysCd,mfgPlanOrdrDocId,plntCd,prdtnVersNum,planOrdrEndDt,grDaysLeadQty,plngScnroCd,planOrdrTypeCd,planOrdrQty
+            </columns>
             <relations>
                 <!--material_global_v1-->
                 <region path="/edm/material_global_v1" isPrimaryKey="true">
@@ -15,19 +17,21 @@
                 <region path="/edm/plant_v1" isPrimaryKey="true">
                     <columns>localPlant,sourceSystem,localPlanningRelevant</columns>
                     <expression>
-                        localPlant=/edm/planned_order_v1.planPlntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
+                        localPlant=/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
                     </expression>
                 </region>
                 <!--cns_material_plan_status-->
                 <region path="/plan/cns_material_plan_status" isPrimaryKey="true">
                     <columns>localMaterialNumber,localPlant,sourceSystem,noPlanRelevant</columns>
                     <expression>
-                        localMaterialNumber=/edm/planned_order_v1.matlNum,localPlant=/edm/planned_order_v1.planPlntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
+                        localMaterialNumber=/edm/planned_order_v1.matlNum,localPlant=/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
                     </expression>
                 </region>
                 <!--cns_plan_object_filter-->
                 <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
-                    <columns>sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute2,sourceObjectAttribute2Value</columns>
+                    <columns>
+                        sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute2,sourceObjectAttribute2Value
+                    </columns>
                     <expression>
                         sourceSystem=/edm/planned_order_v1.srcSysCd,sourceObjectAttribute2Value=/edm/planned_order_v1.planOrdrTypeCd
                     </expression>
@@ -47,7 +51,7 @@
 
         <method name="joinPlant" isPK="true" resultType="Map" path="/edm/plant_v1">
             <parameters>
-                <parameter name="localPlant" value="planPlntCd" relationship="and"/>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
                 <parameter name="sourceSystem" value="srcSysCd"/>
             </parameters>
         </method>
@@ -55,16 +59,16 @@
         <method name="joinMaterialPlanStatus" isPK="true" resultType="Map" path="/plan/cns_material_plan_status">
             <parameters>
                 <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
-                <parameter name="localPlant" value="planPlntCd" relationship="and"/>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
                 <parameter name="sourceSystem" value="srcSysCd"/>
             </parameters>
         </method>
 
         <method name="joinPlanObjectFilter" isPK="false" resultType="Map" path="/plan/cns_plan_object_filter">
             <parameters>
-                <parameter name="sourceObjectTechName" value="'planned_order_v1'" relationship="and"/>
+                <parameter name="sourceObjectTechName" value="'planned_order'" relationship="and"/>
                 <parameter name="sourceSystem" value="srcSysCd" relationship="and"/>
-                <parameter name="sourceObjectAttribute1" value="'planPlntCd'" relationship="and"/>
+                <parameter name="sourceObjectAttribute1" value="'plntCd'" relationship="and"/>
                 <parameter name="sourceObjectAttribute2" value="'planOrdrTypeCd'" relationship="and"/>
                 <parameter name="sourceObjectAttribute2Value" value="planOrdrTypeCd"/>
             </parameters>
@@ -75,6 +79,7 @@
     <udfs>
         <udf name="calcDate" resultType="String" parameter="planOrdrEndDt,grDaysLeadQty">
             Calendar startDate = Calendar.getInstance();
+
             startDate.setTime(DateInner.offsetDate(DateInner.stringToDate(planOrdrEndDt, "yyyyMMdd"),
             Integer.parseInt(grDaysLeadQty)));
 
@@ -84,7 +89,7 @@
             } else if (dayOfWeek == 7) {
             startDate.add(Calendar.DATE, 2);
             }
-            return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd");
+            return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd HH:mm:ss");
         </udf>
     </udfs>
 
@@ -93,7 +98,7 @@
             <var name="matlNum" value="matlNum"/>
             <var name="srcSysCd" value="srcSysCd"/>
             <var name="mfgPlanOrdrDocId" value="mfgPlanOrdrDocId"/>
-            <var name="planPlntCd" value="planPlntCd"/>
+            <var name="plntCd" value="plntCd"/>
             <var name="prdtnVersNum" value="prdtnVersNum"/>
             <var name="planOrdrEndDt" value="planOrdrEndDt"/>
             <var name="grDaysLeadQty" value="grDaysLeadQty"/>
@@ -125,11 +130,11 @@
                      resultType="Map">
                     <if test="StringUtils.isNotEmpty(primaryPlanningCode)">
                         <set name="stockId"
-                             value="StringInner.join(primaryPlanningCode,'/',srcSysCd,'_',planPlntCd,'/',mfgPlanOrdrDocId)"/>
+                             value="StringInner.join(primaryPlanningCode,'/',srcSysCd,'_',plntCd,'/',mfgPlanOrdrDocId)"/>
                     </if>
                     <else>
                         <set name="stockId"
-                             value="StringInner.join(materialNumber,'/',srcSysCd,'_',planPlntCd,'/',mfgPlanOrdrDocId)"/>
+                             value="StringInner.join(materialNumber,'/',srcSysCd,'_',plntCd,'/',mfgPlanOrdrDocId)"/>
                     </else>
                 </ref>
             </column>
@@ -143,9 +148,9 @@
             <column name="consignment" hardCode="'NO'"/>
 
             <!-- PLO4	Send as " " -->
-            <column name="batchId" hardCode="'0.0'"/>
-            <column name="inventoryLinkGroupId" hardCode="'0.0'"/>
-            <column name="vendorId" hardCode="'0.0'"/>
+            <column name="batchId" hardCode="''"/>
+            <column name="inventoryLinkGroupId" hardCode="''"/>
+            <column name="vendorId" hardCode="''"/>
 
             <!-- PLO5	"Default = ""PA"" -->
             <column name="certaintyId" hardCode="'PA'"/>
@@ -158,7 +163,7 @@
             ELES
             Using (cns_plan_object_filter- sourceObjectTechName)  = (planned_order_v1) and (cns_plan_object_filter-sourceSystem) = source system derived as in StockId"" in Rule PLO1. (This may result in multiple records)
 
-            Check if record exists in  table for(cns_plan_object_filter- sourceObjectAttribute1) = planPlntCd from multiple records if resulted.
+            Check if record exists in  table for(cns_plan_object_filter- sourceObjectAttribute1) = plntCd from multiple records if resulted.
             if No
                 then skip
             if Yes then
@@ -170,7 +175,8 @@
 
             <column name="quantity">
                 <if test="'000'.equals(plngScnroCd)">
-                    <ref method="joinPlanObjectFilter" parameter="srcSysCd,planOrdrTypeCd" resultType="Map" value="sourceObjectAttribute2Value">
+                    <ref method="joinPlanObjectFilter" parameter="srcSysCd,planOrdrTypeCd" resultType="Map"
+                         value="sourceObjectAttribute2Value">
                         <if test="StringUtils.isNotEmpty(sourceObjectAttribute2Value)">
                             <set name="quantity" value="planOrdrQty"/>
                         </if>
@@ -184,19 +190,19 @@
                 </else>
             </column>
 
-            <!-- PLO7	Using (planned_order_v1-planPlntCd) = (Plant_v1-localPlant) and (planned_order_v1 - sourceSystem ) = (Plant_v1-sourceSystem)
+            <!-- PLO7	Using (planned_order_v1-plntCd) = (Plant_v1-localPlant) and (planned_order_v1 - sourceSystem ) = (Plant_v1-sourceSystem)
             check value of field (Plant_v1-localPlanningrelevant) = X
             if no then skip the record from Output File
             if Yes then
-            Concatenate (planned_order_v1 - sourceSystem )+”_”+ (planned_order_v1-planPlntCd)
+            Concatenate (planned_order_v1 - sourceSystem )+”_”+ (planned_order_v1-plntCd)
             Example CONS_LATAM_BR16
             -->
             <column name="locationId">
-                <ref method="joinPlant" parameter="planPlntCd,srcSysCd" value="localPlanningRelevant"
+                <ref method="joinPlant" parameter="plntCd,srcSysCd" value="localPlanningRelevant"
                      resultType="Map">
                     <if test="'X'.equals(localPlanningRelevant)">
                         <set name="locationId"
-                             value="StringInner.join(srcSysCd,'_',planPlntCd)"/>
+                             value="StringInner.join(srcSysCd,'_',plntCd)"/>
                     </if>
                     <else>
                         <return/>
@@ -205,7 +211,7 @@
             </column>
 
             <!-- PLO9	Using (planned_order_v1-matlNum) = (cns_material_plan_status_v1-localMaterialNumber),
-            (planned_order_v1-planPlntCd) = (cns_material_plan_status-localPlant),  (planned_order_v1-srcSysCd) = (cns_material_plan_status-sourceSystem)
+            (planned_order_v1-plntCd) = (cns_material_plan_status-localPlant),  (planned_order_v1-srcSysCd) = (cns_material_plan_status-sourceSystem)
             check value of field (cns_material_plan_status-noPlanRelevant) = X
             if No then skip record from adding in Output File
             if Yes thenUsing (planned_order_v1-matlNum) = (material_global_v1-localMaterialNumber),  (planned_order_v1-srcSysCd) = (material_global_v1-sourceSystem)
@@ -218,12 +224,12 @@
             If (material_global_v1-primaryPlanningCode) not same as (material_global_v1-MaterialNumber) then use (material_global_v1-primaryPlanningCode)
             -->
             <column name="productId">
-                <ref method="joinMaterialPlanStatus" parameter="matlNum,planPlntCd,srcSysCd"
+                <ref method="joinMaterialPlanStatus" parameter="matlNum,plntCd,srcSysCd"
                      value="noPlanRelevant" resultType="Map">
                     <if test="'X'.equals(noPlanRelevant)">
                         <ref method="joinMaterialGlobal" parameter="matlNum,srcSysCd"
                              value="primaryPlanningCode,materialNumber" resultType="Map">
-                            <if test="StringUtils.isEmpty(materialNumber)">
+                            <if test="StringUtils.isNotEmpty(primaryPlanningCode)">
                                 <set name="productId" value="primaryPlanningCode"/>
                             </if>
                             <else>
@@ -248,7 +254,7 @@
             -->
             <column name="receiptDate">
                 <set name="receiptDate"
-                     value="DateInner.dateToString(DateInner.stringToDate(planOrdrEndDt,'yyyyMMdd'),'yyyy/MM/dd')"/>
+                     value="DateInner.dateToString(DateInner.stringToDate(planOrdrEndDt,'yyyyMMdd'),'yyyy/MM/dd HH:mm:ss')"/>
             </column>
 
             <!-- PLO11	"Derive StartDate = (planned_order_v1-planOrdrEndDt) + (planned_order_v1-grDaysLeadQty) Example 2018/05/31 + 10
@@ -276,7 +282,7 @@
             <column name="processTypeId" hardCode="'Production'"/>
 
             <!--PLO15	send as "1980/01/01 ((HH:NN:SS populated as 00:00:00))-->
-            <column name="transitDate" hardCode="'1980/01/01'"/>
+            <column name="transitDate" hardCode="'1980/01/01 00:00:00'"/>
 
             <column name="erpOrderId">
                 <set name="erpOrderId" value="mfgPlanOrdrDocId"/>

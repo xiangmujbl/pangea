@@ -223,3 +223,4 @@
 /plan/cns_tlane_item
 /plan/cns_tlane_item_exception
 /project_one/stpo
+/omp/gdm_stock
