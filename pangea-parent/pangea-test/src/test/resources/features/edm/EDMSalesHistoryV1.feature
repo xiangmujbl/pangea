@@ -26,4 +26,44 @@ Feature: EDMSalesHistoryV1 AEAZ-6188
       | 120   | 85771970  | 900001  | 4914665712  | 1     | R      | 20.000   | EA    | 240.00   | CA    | J      | 20120206 |
       | 120   | 85771970  | 900002  | 4914665712  | 2     | R      | 30.000   | EA    | 360.00   | CA    | J      | 20120206 |
       | 120   | 85771970  | 900003  | 4914665712  | 3     | R      | 40.000   | EA    | 480.00   | CA    | J      | 20120206 |
+    And I wait "/project_one/vbfa" Async Queue complete
+
+    And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
+      | localSourceSystem        | localSourceSystemName    | sourceSystem | sourceSystemName   |
+      | [MDD FASE]               | [MDD FASE]               | CONS_LATAM   | Consumer Latam Ent |
+      | [EMS]                    | EMS                      | EMS          | EMS Ent            |
+      | project_one              | [AEAZ-6188 by KG]        | CONS_LATAM   | Consumer Latam Ent |
+    And I wait "/edm/source_system_v1" Async Queue complete
+
+    When I submit task with xml file "xml/edm/EDMSalesHistoryV1.xml" and execute file "jar/pangea-view.jar"
+
+    Then I check region data "/edm/sales_history_v1" by keyFields "sourceSystem,localPrecDocNo,localSPrecDocLnNo,localSubsDocNo,localSubsDocLnNo,localSubDocCatg"
+      | sourceSystem | localPrecDocNo | localSPrecDocLnNo | localSubsDocNo | localSubsDocLnNo | localSubDocCatg | localBaseQuantity | localBaseUom | localSalesQuantity | localSalesUom | localPrecItemCatg | localCrtDt |
+      | CONS_LATAM   | 3515417        | 110               | 4914665711     | 11               | R               | 1.000             | EA           | 1.00               | EA            | C                 | 20120206   |
+      | CONS_LATAM   | 3515419        | 10                | 4914665712     | 1                | R               | 1.000             | EA           | 1.00               | EA            | C                 | 20120206   |
+      | CONS_LATAM   | 3515419        | 20                | 4914665712     | 2                | R               | 1.000             | EA           | 1.00               | EA            | C                 | 20120206   |
+      | CONS_LATAM   | 3515419        | 40                | 4914665712     | 4                | R               | 10.000            | EA           | 10.00              | EA            | C                 | 20120206   |
+      | CONS_LATAM   | 3515419        | 50                | 4914665712     | 5                | R               | 3.000             | EA           | 3.00               | EA            | C                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900001            | 4914665711     | 1                | R               | 3.000             | EA           | 3.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900002            | 4914665711     | 2                | R               | 3.000             | EA           | 3.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900003            | 4914665711     | 3                | R               | 2.000             | EA           | 2.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900004            | 4914665711     | 4                | R               | 5.000             | EA           | 5.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900005            | 4914665711     | 5                | R               | 1.000             | EA           | 1.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900006            | 4914665711     | 6                | R               | 5.000             | EA           | 5.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900008            | 4914665711     | 8                | R               | 1.000             | EA           | 1.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900009            | 4914665711     | 9                | R               | 3.000             | EA           | 3.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900010            | 4914665711     | 10               | R               | 2.000             | EA           | 2.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771969       | 900011            | 4914665711     | 11               | R               | 1.000             | EA           | 1.00               | EA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771970       | 900001            | 4914665712     | 1                | R               | 20.000            | EA           | 240.00             | CA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771970       | 900002            | 4914665712     | 2                | R               | 30.000            | EA           | 360.00             | CA            | J                 | 20120206   |
+      | CONS_LATAM   | 85771970       | 900003            | 4914665712     | 3                | R               | 40.000            | EA           | 480.00             | CA            | J                 | 20120206   |
+
+  Scenario: delete all test data
+
+    Then I delete the test data
+
+    And I will remove all data with region "/edm/sales_history_v1"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+
 
