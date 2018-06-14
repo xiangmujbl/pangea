@@ -79,6 +79,7 @@
     <udfs>
         <udf name="calcDate" resultType="String" parameter="planOrdrEndDt,grDaysLeadQty">
             Calendar startDate = Calendar.getInstance();
+
             startDate.setTime(DateInner.offsetDate(DateInner.stringToDate(planOrdrEndDt, "yyyyMMdd"),
             Integer.parseInt(grDaysLeadQty)));
 
@@ -88,7 +89,7 @@
             } else if (dayOfWeek == 7) {
             startDate.add(Calendar.DATE, 2);
             }
-            return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd");
+            return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd HH:mm:ss");
         </udf>
     </udfs>
 
@@ -147,9 +148,9 @@
             <column name="consignment" hardCode="'NO'"/>
 
             <!-- PLO4	Send as " " -->
-            <column name="batchId" hardCode="'0.0'"/>
-            <column name="inventoryLinkGroupId" hardCode="'0.0'"/>
-            <column name="vendorId" hardCode="'0.0'"/>
+            <column name="batchId" hardCode="''"/>
+            <column name="inventoryLinkGroupId" hardCode="''"/>
+            <column name="vendorId" hardCode="''"/>
 
             <!-- PLO5	"Default = ""PA"" -->
             <column name="certaintyId" hardCode="'PA'"/>
@@ -253,7 +254,7 @@
             -->
             <column name="receiptDate">
                 <set name="receiptDate"
-                     value="DateInner.dateToString(DateInner.stringToDate(planOrdrEndDt,'yyyyMMdd'),'yyyy/MM/dd')"/>
+                     value="DateInner.dateToString(DateInner.stringToDate(planOrdrEndDt,'yyyyMMdd'),'yyyy/MM/dd HH:mm:ss')"/>
             </column>
 
             <!-- PLO11	"Derive StartDate = (planned_order_v1-planOrdrEndDt) + (planned_order_v1-grDaysLeadQty) Example 2018/05/31 + 10
@@ -281,7 +282,7 @@
             <column name="processTypeId" hardCode="'Production'"/>
 
             <!--PLO15	send as "1980/01/01 ((HH:NN:SS populated as 00:00:00))-->
-            <column name="transitDate" hardCode="'1980/01/01'"/>
+            <column name="transitDate" hardCode="'1980/01/01 00:00:00'"/>
 
             <column name="erpOrderId">
                 <set name="erpOrderId" value="mfgPlanOrdrDocId"/>
