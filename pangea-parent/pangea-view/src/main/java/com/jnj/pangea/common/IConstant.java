@@ -144,7 +144,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_ADVANCE_SHIP_NOTIFICATION_V1= "/edm/avance_ship_notification_v1";
+        String EDM_ADVANCED_SHIP_NOTIFICATION_V1= "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
     }
 

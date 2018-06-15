@@ -81,6 +81,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         stockBo.setCertaintyId(IConstant.VALUE.LA); //default
 
         //ASN 6 //to be corrected
+        /*
         if(shipNotifEntity.getLocaldeliveryCatg().equals(IConstant.VALUE.SEVEN) && shipNotifEntity.getActGRDt().isEmpty()){
             PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystem(IConstant.VALUE.ADVANCE_SHIP_NOTIFICATIONS, shipNotifEntity.getSrcSysCd());
             if(cnsPlanObjectFilterEntity.getSourceObjectAttribute1().equals(IConstant.VALUE.LOCAL_RECEIVING_PLANT) && cnsPlanObjectFilterEntity.getSourceObjectAttribute1Value().equals(shipNotifEntity.getLocalReceivingPlant())) {
@@ -93,7 +94,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
             //skip record
             skip = true;
         }
-
+        */
         //ASN 7
         if(plantEntity.getLocalPlanningRelevant().equals(IConstant.VALUE.X)){
             stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant());

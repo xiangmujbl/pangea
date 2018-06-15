@@ -21,7 +21,7 @@ public class EDMAdvancedShipNotificationV1DaoImpl extends CommonDaoImpl {
         if(StringUtils.isNotEmpty(delvDocId)){
             String queryString = QueryHelper.buildCriteria(IConstant.EDM_ADVANCE_SHIP_NOTIFICATION_V1.DELV_DOC_ID).is(delvDocId)
                     .toQueryString();
-            return queryForObject(IConstant.REGION.EDM_ADVANCE_SHIP_NOTIFICATION_V1, queryString, EDMAdvancedShipNotificationV1Entity.class);
+            return queryForObject(IConstant.REGION.EDM_ADVANCED_SHIP_NOTIFICATION_V1, queryString, EDMAdvancedShipNotificationV1Entity.class);
         }
         return null;
     }
@@ -32,7 +32,7 @@ public class EDMAdvancedShipNotificationV1DaoImpl extends CommonDaoImpl {
                     .and(IConstant.EDM_ADVANCE_SHIP_NOTIFICATION_V1.DELV_LINE_NBR).is(delvLineNbr)
                     .and(IConstant.EDM_ADVANCE_SHIP_NOTIFICATION_V1.SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
-            return queryForObject(IConstant.REGION.EDM_ADVANCE_SHIP_NOTIFICATION_V1, queryString, EDMAdvancedShipNotificationV1Entity.class);
+            return queryForObject(IConstant.REGION.EDM_ADVANCED_SHIP_NOTIFICATION_V1, queryString, EDMAdvancedShipNotificationV1Entity.class);
         }
         return null;
     }
