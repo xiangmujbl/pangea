@@ -26,5 +26,12 @@ public class CnsTlaneItemExceptionDaoImpl extends CommonDaoImpl {
                 .toQueryString();
         return queryForList(IConstant.REGION.CNS_TLANE_ITEM_EXCEPTION,queryString,CnsTlaneItemExceptionEntity.class);
     }
+    public List<CnsTlaneItemExceptionEntity> getEntitiesWithSeqNumMatNumTlaneName(String sequenceNumber,String materialNumber,String tlaneName) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_TLANE_ITEM_EXCEPTION.SEQ_NUM_TLANE_ITEM).is(sequenceNumber)
+                .and(IConstant.CNS_TLANE_ITEM_EXCEPTION.MATERIAL_NUMBER).is(materialNumber)
+                .and(IConstant.CNS_TLANE_ITEM_EXCEPTION.TLANE_NAME).is(tlaneName)
+                .toQueryString();
+        return queryForList(IConstant.REGION.CNS_TLANE_ITEM_EXCEPTION,queryString,CnsTlaneItemExceptionEntity.class);
+    }
 }
 

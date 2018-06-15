@@ -12,7 +12,7 @@ public class PlanCnsPlanObjectFilterEntity extends CommonEntity {
     private String sourceObjectAttribute1Value;
     private String sourceObjectAttribute2;
     private String sourceObjectAttribute2Value;
-    private String inclusion_Exclusion;
+    private String inclusionExclusion;
     private String Comments;
 
 
@@ -24,7 +24,7 @@ public class PlanCnsPlanObjectFilterEntity extends CommonEntity {
         setSourceObjectAttribute1Value((String) map.get("sourceObjectAttribute1Value"));
         setSourceObjectAttribute2((String) map.get("sourceObjectAttribute2"));
         setSourceObjectAttribute2Value((String) map.get("sourceObjectAttribute2Value"));
-        setInclusion_Exclusion((String) map.get("inclusion_Exclusion"));
+        setInclusionExclusion((String) map.get("inclusionExclusion"));
         setComments((String) map.get("Comments"));
     }
 
@@ -76,12 +76,12 @@ public class PlanCnsPlanObjectFilterEntity extends CommonEntity {
         this.sourceObjectAttribute2Value = sourceObjectAttribute2Value;
     }
 
-    public String getInclusion_Exclusion() {
-        return inclusion_Exclusion;
+    public String getInclusionExclusion() {
+        return inclusionExclusion;
     }
 
-    public void setInclusion_Exclusion(String inclusion_Exclusion) {
-        this.inclusion_Exclusion = inclusion_Exclusion;
+    public void setInclusionExclusion(String inclusionExclusion) {
+        this.inclusionExclusion = inclusionExclusion;
     }
 
     public String getComments() {
