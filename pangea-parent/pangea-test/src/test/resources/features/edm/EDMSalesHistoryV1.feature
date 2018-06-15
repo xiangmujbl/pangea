@@ -2,7 +2,10 @@
 Feature: EDMSalesHistoryV1 AEAZ-6188
 
   Scenario: Full Load curation
-    #  1. test get sourceSystem from sourceSystem using below condition (rule T1)
+    #  1. EDG has all the curated Purchasing Info record records generated in the target view with all the fields as defined in the mapping document "DOMD_sales_historynew"
+    #  2. For each curated record, all the field mappings and transformation rules are applied as defined in the mapping document.
+    #  3. EDG should capture the rejected records that do not match the mapping rules.
+    #  4. The sum of curated records and rejected records should match the number of records from ECC tables specified in DOMD.
 
     And I will remove the test file on sink application "EDMSalesHistoryV1.tsv"
 
