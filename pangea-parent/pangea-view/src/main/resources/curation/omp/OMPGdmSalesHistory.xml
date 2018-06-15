@@ -56,7 +56,7 @@
             </region>
 
             <region path="/plan/cns_cust_excl">
-                <columns>salesOrg,customerShipTo</columns>
+                <columns>salesOrg,customerShipTo,inclExcl</columns>
             </region>
 
             <region path="/plan/cns_plan_parameter">
@@ -64,7 +64,7 @@
             </region>
 
             <region path="/plan/cns_so_type_incl">
-                <columns>salesOrg,orderType,country</columns>
+                <columns>salesOrg,orderType,country,inclExcl</columns>
             </region>
 
             <region path="/edm/plant_v1">
