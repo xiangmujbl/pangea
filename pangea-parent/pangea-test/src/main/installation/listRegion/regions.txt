@@ -233,3 +233,9 @@
 /plan/cns_oor_forecast
 /omp/gdm_forecast
 /edm/fail_data
+/plan/cns_productcustomer
+
+
+
+
+
