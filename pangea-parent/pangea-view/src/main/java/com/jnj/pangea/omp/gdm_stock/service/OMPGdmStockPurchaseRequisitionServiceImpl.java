@@ -1,6 +1,5 @@
 package com.jnj.pangea.omp.gdm_stock.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
@@ -19,7 +18,6 @@ import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -49,7 +47,6 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
         try {
             EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity = (EDMPurchaseRequisitionV1Entity) o;
             OMPGdmStockBo oMPGdmStockBo = new OMPGdmStockBo();
-            LogUtil.getCoreLog().info("key: " + key);
 
             // PR5 - we are to skip this record if prCatCd in not "B"
             if (!"B".equals(edmPurchaseRequisitionV1Entity.getPrCatCd())) {
@@ -108,11 +105,9 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
 
             ResultObject resultObject = new ResultObject();
             resultObject.setBaseBo(oMPGdmStockBo);
-            LogUtil.getCoreLog().info("OMPGdmStockBo: " + ToStringBuilder.reflectionToString(oMPGdmStockBo));
             return resultObject;
         } catch (SkipRecordException e) {
             // we're skipping this record
-            LogUtil.getCoreLog().info("skipping this record: " + e.getMessage());
             return null;
         }
     }
