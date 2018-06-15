@@ -35,7 +35,6 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
     PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
-    EDMPurchaseOrderOAV1DaoImpl purchaseOrderOAV1DaoAggregation = EDMPurchaseOrderOAV1DaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -71,7 +70,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         //A
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
         if(edmMaterialGlobalV1Entity != null){
-            if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
+            if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode() != null && edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
                 productId = edmMaterialGlobalV1Entity.getMaterialNumber();
             } else{
                 productId = edmMaterialGlobalV1Entity.getPrimaryPlanningCode();
@@ -136,7 +135,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                 //PO9
                                 PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndsourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
                                 if(cnsMaterialPlanStatusEntity != null) {
-                                    if(cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X) || cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)) {
+                                    if((cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) || (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null &&cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X))) {
                                         if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
                                             stockBo.setProductId(edmMaterialGlobalV1Entity.getMaterialNumber());
                                         } else {
@@ -144,114 +143,128 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                         }
 
                                         //PO10
-                                        boolean getRecvEaQtySum = true;
-                                        boolean bothZero = true;
                                         Float orderUnit = new Float(0.0);
                                         Float baseUnit = new Float(0.0);
-                                        if(!purchaseOrderOAV1Entity.getCnfrmQty().isEmpty()) {
-                                            Float cnfrmQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getCnfrmQty());
-                                            if(cnfrmQtySum > 0) {
-                                                getRecvEaQtySum = false;
-                                                bothZero = false;
-                                                if (!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()) {
-                                                    orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty()) - cnfrmQtySum;
-                                                }
-                                            }
-                                        }
-                                        if(getRecvEaQtySum) {
-                                            if(!purchaseOrderOAV1Entity.getRecvEaQty().isEmpty()) {
-                                                Float recvEaQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getRecvEaQty());
-                                                if(recvEaQtySum > 0) {
+                                        boolean getRecvEaQtySum = true;
+                                        boolean bothZero = true;
+                                        boolean orderUnitNotZero = true;
+                                        try {
+                                            if (!purchaseOrderOAV1Entity.getCnfrmQty().isEmpty()) {
+                                                Float cnfrmQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getCnfrmQty().trim());
+                                                if (cnfrmQtySum > 0) {
+                                                    getRecvEaQtySum = false;
                                                     bothZero = false;
                                                     if (!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()) {
-                                                        orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty()) - recvEaQtySum;
+                                                        orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim()) - cnfrmQtySum;
+                                                        if(orderUnit == 0){
+                                                            orderUnitNotZero = false;
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-
-                                        if(bothZero) {
-                                            if(!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()){
-                                                orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty());
+                                            if (getRecvEaQtySum && purchaseOrderOAV1Entity.getEvTypeCd().trim().equals("1")) {
+                                                if (!purchaseOrderOAV1Entity.getRecvEaQty().isEmpty()) {
+                                                    Float recvEaQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getRecvEaQty().trim());
+                                                    if (recvEaQtySum > 0) {
+                                                        bothZero = false;
+                                                        if (!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()) {
+                                                            orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim()) - recvEaQtySum;
+                                                            if(orderUnit == 0){
+                                                                orderUnitNotZero = false;
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
-                                        }
-                                        if(!purchaseOrderOAV1Entity.getLocalNumerator().isEmpty() && !purchaseOrderOAV1Entity.getLocalDenominator().isEmpty()) {
-                                            baseUnit = orderUnit * Integer.parseInt(purchaseOrderOAV1Entity.getLocalNumerator()) / Integer.parseInt(purchaseOrderOAV1Entity.getLocalDenominator());
-                                        }
-                                        stockBo.setQuantity(Float.toString(baseUnit));
 
-                                        //PO11
-                                        SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-                                        SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
-                                        String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
-                                        try {
-                                            Date from  = sdfFrom.parse(purchaseOrderOAV1Entity.getDelvDt());
-                                            String to = sdfTo.format(from);
-                                            String newDate = to + defaultTime;
-                                            stockBo.setReceiptDate(newDate);
-                                        } catch (ParseException e) {
-                                            stockBo.setReceiptDate(IConstant.VALUE.EMPTY);
-                                            e.printStackTrace();
-                                        }
-
-                                        //PO12
-                                        try {
-                                            String dateToFormat = purchaseOrderOAV1Entity.getDelvDt();
-                                            Date dFrom = sdfFrom.parse(dateToFormat);
-
-                                            String timeToMove = purchaseOrderOAV1Entity.getGrLeadTimeDays();
-                                            Calendar cal = Calendar.getInstance();
-                                            cal.setTime(dFrom);
-                                            if(!timeToMove.isEmpty()) {
-                                                cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
+                                            if (bothZero) {
+                                                if (!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()) {
+                                                    orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim());
+                                                }
                                             }
-                                            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                                                cal.add(Calendar.DATE, 2);
-                                            } else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                                                cal.add(Calendar.DATE, 1);
+                                            if (!purchaseOrderOAV1Entity.getLocalNumerator().isEmpty() && !purchaseOrderOAV1Entity.getLocalDenominator().isEmpty()) {
+                                                baseUnit = orderUnit * Integer.parseInt(purchaseOrderOAV1Entity.getLocalNumerator().trim()) / Integer.parseInt(purchaseOrderOAV1Entity.getLocalDenominator().trim());
                                             }
-                                            Date d2 = cal.getTime();
-                                            String deliveryDate = sdfTo.format(d2) + defaultTime;
-                                            stockBo.setStartDate(deliveryDate);
-                                        } catch (ParseException e) {
-                                            stockBo.setStartDate(IConstant.VALUE.EMPTY);
-                                            e.printStackTrace();
+                                        } catch(NumberFormatException nfe){
+                                            LogUtil.getCoreLog().error("PO10 float parse error OMPGdmStockPurchaseOrderServiceImpl");
+                                            nfe.printStackTrace();
                                         }
+                                        if(orderUnitNotZero) {
+                                            stockBo.setQuantity(Float.toString(baseUnit));
 
-                                        //PO17
-                                        if(purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
-                                            if(purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.THREE_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.L)) {
-                                                stockBo.setInventoryLinkGroupId(stockBo.getStockId());
-                                            } else{
-                                                stockBo.setInventoryLinkGroupId(IConstant.VALUE.EMPTY);
+                                            //PO11
+                                            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+                                            SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+                                            String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
+                                            try {
+                                                Date from = sdfFrom.parse(purchaseOrderOAV1Entity.getDelvDt().trim());
+                                                String to = sdfTo.format(from);
+                                                String newDate = to + defaultTime;
+                                                stockBo.setReceiptDate(newDate);
+                                            } catch (ParseException e) {
+                                                stockBo.setReceiptDate(IConstant.VALUE.EMPTY);
+                                                e.printStackTrace();
                                             }
-                                        } else {
-                                            if(purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.UB) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZNB)) {
-                                                stockBo.setInventoryLinkGroupId(stockBo.getStockId());
-                                            } else{
-                                                stockBo.setInventoryLinkGroupId(IConstant.VALUE.EMPTY);
+
+                                            //PO12
+                                            try {
+                                                String dateToFormat = purchaseOrderOAV1Entity.getDelvDt().trim();
+                                                Date dFrom = sdfFrom.parse(dateToFormat);
+
+                                                String timeToMove = purchaseOrderOAV1Entity.getGrLeadTimeDays().trim();
+                                                Calendar cal = Calendar.getInstance();
+                                                cal.setTime(dFrom);
+                                                if (!timeToMove.isEmpty()) {
+                                                    cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
+                                                }
+                                                if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                                                    cal.add(Calendar.DATE, 2);
+                                                } else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                                                    cal.add(Calendar.DATE, 1);
+                                                }
+                                                Date d2 = cal.getTime();
+                                                String deliveryDate = sdfTo.format(d2) + defaultTime;
+                                                stockBo.setStartDate(deliveryDate);
+                                            } catch (ParseException e) {
+                                                stockBo.setStartDate(IConstant.VALUE.EMPTY);
+                                                e.printStackTrace();
                                             }
-                                        }
 
-                                        //PO18
-                                        if(purchaseOrderOAV1Entity.getSuplPlntCd().isEmpty()) {
-                                            stockBo.setProcessId(IConstant.VALUE.SU + IConstant.VALUE.BACK_SLANT + productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSupNum() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
-                                        } else {
-                                            stockBo.setProcessId(IConstant.VALUE.TR + IConstant.VALUE.BACK_SLANT + productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + purchaseOrderOAV1Entity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
-                                        }
+                                            //PO17
+                                            if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
+                                                if (purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.THREE_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.L)) {
+                                                    stockBo.setInventoryLinkGroupId(stockBo.getStockId());
+                                                } else {
+                                                    stockBo.setInventoryLinkGroupId(IConstant.VALUE.EMPTY);
+                                                }
+                                            } else {
+                                                if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.UB) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZNB)) {
+                                                    stockBo.setInventoryLinkGroupId(stockBo.getStockId());
+                                                } else {
+                                                    stockBo.setInventoryLinkGroupId(IConstant.VALUE.EMPTY);
+                                                }
+                                            }
 
-                                        //PO19
-                                        if(purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
-                                            stockBo.setProcessTypeId(IConstant.VALUE.VENDOR_TRANSPORT);
-                                        } else if(purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.UB)) {
-                                            stockBo.setProcessTypeId(IConstant.VALUE.INTERNAL_TRANSPORT);
-                                        } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZNB)) {
-                                            stockBo.setProcessTypeId(IConstant.VALUE.EXTERNAL_TRANSPORT);
-                                        } else {
-                                            stockBo.setProcessTypeId(IConstant.VALUE.EMPTY);
-                                        }
+                                            //PO18
+                                            if (purchaseOrderOAV1Entity.getSuplPlntCd().isEmpty()) {
+                                                stockBo.setProcessId(IConstant.VALUE.SU + IConstant.VALUE.BACK_SLANT + productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSupNum() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
+                                            } else {
+                                                stockBo.setProcessId(IConstant.VALUE.TR + IConstant.VALUE.BACK_SLANT + productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + purchaseOrderOAV1Entity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
+                                            }
 
-                                        resultObject.setBaseBo(stockBo); //Skipped if doesn't get to this point
+                                            //PO19
+                                            if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
+                                                stockBo.setProcessTypeId(IConstant.VALUE.VENDOR_TRANSPORT);
+                                            } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.UB)) {
+                                                stockBo.setProcessTypeId(IConstant.VALUE.INTERNAL_TRANSPORT);
+                                            } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZNB)) {
+                                                stockBo.setProcessTypeId(IConstant.VALUE.EXTERNAL_TRANSPORT);
+                                            } else {
+                                                stockBo.setProcessTypeId(IConstant.VALUE.EMPTY);
+                                            }
+
+                                            resultObject.setBaseBo(stockBo); //Skipped if doesn't get to this point
+                                        }
                                     }
                                 }
                             }
