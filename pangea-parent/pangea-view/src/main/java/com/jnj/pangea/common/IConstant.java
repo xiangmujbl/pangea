@@ -692,6 +692,7 @@ public interface IConstant {
     interface PLAN_CNS_CUST_EXCL {
         String SALES_ORG = "salesOrg";
         String CUSTOMER_SHIP_TO = "customerShipTo";
+        String INCL_EXCL = "inclExcl";
     }
 
     interface EDM_CURRENCY {
@@ -707,10 +708,12 @@ public interface IConstant {
     interface PLAN_CNS_SO_TYPE_INCL {
         String SALES_ORG = "salesOrg";
         String ORDER_TYPE = "orderType";
+        String INCL_EXCL = "inclExcl";
     }
 
     interface CNS_TLANE_ITEM_EXCEPTION {
         String REF_SEQ_NUM_TLANE_ITEM = "refSeqNumTlaneItem";
+        String SEQ_NUM_TLANE_ITEM = "sequenceNumber";
         String MATERIAL_NUMBER = "materialNumber";
         String TLANE_NAME = "tlaneName";
     }
