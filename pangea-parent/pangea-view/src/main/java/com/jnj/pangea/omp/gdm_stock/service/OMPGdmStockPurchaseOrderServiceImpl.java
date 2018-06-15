@@ -143,26 +143,28 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                                         }
 
                                         //PO10
-                                        EDMPurchaseOrderOAV1Entity cnfrmAggrEntity = purchaseOrderOAV1DaoAggregation.getCnfrmQtySumWithPoNumAndPoLineNbr(purchaseOrderOAV1Entity.getPoNum(), purchaseOrderOAV1Entity.getPoLineNbr());
                                         boolean getRecvEaQtySum = true;
                                         boolean bothZero = true;
                                         Float orderUnit = new Float(0.0);
                                         Float baseUnit = new Float(0.0);
-                                        if(cnfrmAggrEntity != null && (!cnfrmAggrEntity.getCnfrmQty().isEmpty() || !cnfrmAggrEntity.getCnfrmQty().equals("0") || !cnfrmAggrEntity.getCnfrmQty().equals("0.000"))) {
-                                            getRecvEaQtySum = false;
-                                            bothZero = false;
-                                            Float cnfrmQtySum = Float.parseFloat(cnfrmAggrEntity.getCnfrmQty());
-                                            if(!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()){
-                                                orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty()) - cnfrmQtySum;
+                                        if(!purchaseOrderOAV1Entity.getCnfrmQty().isEmpty()) {
+                                            Float cnfrmQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getCnfrmQty());
+                                            if(cnfrmQtySum > 0) {
+                                                getRecvEaQtySum = false;
+                                                bothZero = false;
+                                                if (!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()) {
+                                                    orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty()) - cnfrmQtySum;
+                                                }
                                             }
                                         }
                                         if(getRecvEaQtySum) {
-                                            EDMPurchaseOrderOAV1Entity recvAggrEntity = purchaseOrderOAV1DaoAggregation.getRecvEaQtySumWithPoNumAndPoLineNbr(purchaseOrderOAV1Entity.getPoNum(), purchaseOrderOAV1Entity.getPoLineNbr());
-                                            if(recvAggrEntity != null && (!recvAggrEntity.getRecvEaQty().isEmpty() || !recvAggrEntity.getRecvEaQty().equals("0") || !recvAggrEntity.getRecvEaQty().equals("0.000"))) {
-                                                Float recvEaQtySum = Float.parseFloat(recvAggrEntity.getRecvEaQty());
-                                                bothZero = false;
-                                                if(!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()){
-                                                    orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty()) - recvEaQtySum;
+                                            if(!purchaseOrderOAV1Entity.getRecvEaQty().isEmpty()) {
+                                                Float recvEaQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getRecvEaQty());
+                                                if(recvEaQtySum > 0) {
+                                                    bothZero = false;
+                                                    if (!purchaseOrderOAV1Entity.getPoLineQty().isEmpty()) {
+                                                        orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty()) - recvEaQtySum;
+                                                    }
                                                 }
                                             }
                                         }

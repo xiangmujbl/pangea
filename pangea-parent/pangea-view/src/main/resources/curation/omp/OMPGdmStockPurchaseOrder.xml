@@ -1,10 +1,10 @@
 <adf-curation>
-    <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/omp/gdm_stock_purchase_order" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/edm/purchase_order_oa_v1_aggregation" viewRegion="/omp/gdm_stock_purchase_order" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_stock.controller.OMPGdmStockPurchaseOrderController"
               writeTo="all" topic="PANGEA_V1_omp_gdm_stock_purchase_order">
 
         <regions>
-            <region path="/edm/purchase_order_oa_v1">
+            <region path="/edm/purchase_order_oa_v1_aggregation">
                 <columns>
                     sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,crtOnDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum,localSeqNumActAsgn,localSeqNumVendConf
                 </columns>
@@ -38,12 +38,6 @@
                     <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/edm/purchase_order_oa_v1_aggregation_cnfrmQty" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                    <relation path="/edm/purchase_order_oa_v1_aggregation_recvEaQty" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
                 </relations>
             </region>
 
@@ -74,18 +68,6 @@
             <region path="/plan/cns_spl_pln_loc">
                 <columns>
                     localCountry,localCurrency,localName,localNumber,localPlant,localRegion,pLanlocTypeDesc,pLanlocTypeId,planLocTypeDesc,planLocTypeId,sourceSystem,specLocAtt1,specLocAtt2,specLocAtt3,specLocAttDesc1,specLocAttDesc2,specLocAttDesc3,vendorOrCustomer,vendororCustomer
-                </columns>
-            </region>
-
-            <region path="/edm/purchase_order_oa_v1_aggregation_cnfrmQty">
-                <columns>
-                    cnfrmQty,poNum,poLineNbr
-                </columns>
-            </region>
-
-            <region path="/edm/purchase_order_oa_v1_aggregation_recvEaQty">
-                <columns>
-                    recvEaQty,poNum,poLineNbr
                 </columns>
             </region>
 
