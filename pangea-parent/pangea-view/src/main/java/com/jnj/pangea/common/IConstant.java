@@ -1304,7 +1304,7 @@ public interface IConstant {
         public static final String PATTERN_DECIMAL_3 = "#.000";
         public static final String INTERFACEID = "OMPGdmbomelementProcess";
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
-        public static final int VALUE_DECIMAL_3 = 3;
+        public static final int VALUE_DECIMAL_3= 3;
 
     }
 
