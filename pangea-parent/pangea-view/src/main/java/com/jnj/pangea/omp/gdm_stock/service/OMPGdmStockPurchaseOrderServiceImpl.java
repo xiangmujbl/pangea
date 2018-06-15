@@ -45,6 +45,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
 
         OMPGdmStockBo stockBo = new OMPGdmStockBo();
 
+        stockBo.setVendorId(purchaseOrderOAV1Entity.getSupNum());
         //PO2
         stockBo.setActive(IConstant.VALUE.YES);
         stockBo.setActiveOPRERP(IConstant.VALUE.YES);
