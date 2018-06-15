@@ -48,11 +48,35 @@ public class OMPGdmBatchServiceImpl implements ICommonService {
             if (StringUtils.isNotEmpty(matlNum)){
 
                 EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(matlNum);
-                if(StringUtils.isNotEmpty(materialGlobalV1Entity.getPrimaryPlanningCode()) && StringUtils.isNotEmpty(materialGlobalV1Entity.getMaterialNumber())){
+                if (null != materialGlobalV1Entity) {
 
-                    if (materialGlobalV1Entity.getPrimaryPlanningCode().equals(materialGlobalV1Entity.getMaterialNumber())) {
+                    if(StringUtils.isEmpty(materialGlobalV1Entity.getPrimaryPlanningCode()) && StringUtils.isEmpty(materialGlobalV1Entity.getMaterialNumber())){
 
-                        gdmBatchBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+                        FailData failData = new FailData();
+                        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
+                        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_BATCH);
+                        failData.setErrorCode(IConstant.FAILED.ERROR_CODE.N2);
+                        failData.setSourceSystem("");
+                        failData.setKey1(batchMasterV1Entity.getBtchNum());
+                        failData.setKey2("");
+                        failData.setKey3("");
+                        failData.setKey4("");
+                        failData.setKey5("");
+                        failData.setErrorValue("");
+                        resultObject.setFailData(failData);
+                        return resultObject;
+                    } else {
+
+                        if (StringUtils.isNotEmpty(materialGlobalV1Entity.getPrimaryPlanningCode()) && StringUtils.isEmpty(materialGlobalV1Entity.getMaterialNumber())) {
+
+                            gdmBatchBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+                        } else if (StringUtils.isEmpty(materialGlobalV1Entity.getPrimaryPlanningCode()) && StringUtils.isNotEmpty(materialGlobalV1Entity.getMaterialNumber())) {
+
+                            gdmBatchBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
+                        } else {
+
+                            gdmBatchBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
+                        }
 
                         if (StringUtils.isNotEmpty(srcSysCd) && StringUtils.isNotEmpty(btchNum)) {
 
@@ -70,27 +94,29 @@ public class OMPGdmBatchServiceImpl implements ICommonService {
                                 gdmBatchBo.setActiveOPRERP(IConstant.VALUE.YES);
                                 // rules N4
                                 gdmBatchBo.setActiveSOPERP(IConstant.VALUE.NO);
+
                                 // rules N5
-                                gdmBatchBo.setExpirationDate(batchMasterV1Entity.getBtchExpDt());
-                                gdmBatchBo.setManufacturingDate(batchMasterV1Entity.getBtchMfgDt());
+                                if (StringUtils.isNotEmpty(batchMasterV1Entity.getBtchExpDt())) {
+
+                                    gdmBatchBo.setExpirationDate(batchMasterV1Entity.getBtchExpDt());
+                                } else{
+
+                                    gdmBatchBo.setExpirationDate(IConstant.VALUE.END_EFF_CHECK + IConstant.VALUE.HH_NN_SS_ZERO);
+                                }
+
+                                // rules N6
+                                if (StringUtils.isNotEmpty(batchMasterV1Entity.getBtchMfgDt())) {
+
+                                    gdmBatchBo.setManufacturingDate(batchMasterV1Entity.getBtchMfgDt());
+                                } else {
+
+                                    gdmBatchBo.setManufacturingDate(IConstant.VALUE.START_EFF_CHECK + IConstant.VALUE.HH_NN_SS_ZERO);
+                                }
+
                                 resultObject.setBaseBo(gdmBatchBo);
                             }
                         }
                     }
-                } else {
-                    FailData failData = new FailData();
-                    failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.SP);
-                    failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_BATCH);
-                    failData.setErrorCode(IConstant.FAILED.ERROR_CODE.N2);
-                    failData.setSourceSystem("");
-                    failData.setKey1(batchMasterV1Entity.getBtchNum());
-                    failData.setKey2("");
-                    failData.setKey3("");
-                    failData.setKey4("");
-                    failData.setKey5("");
-                    failData.setErrorValue("");
-                    resultObject.setFailData(failData);
-                    return resultObject;
                 }
             }
         }
