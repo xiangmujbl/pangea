@@ -29,6 +29,10 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
+        String PLAN_CNS_PRODUCTCUSTOMER = "/plan/cns_productcustomer";
+
+
+
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
@@ -464,6 +468,20 @@ public interface IConstant {
         String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
 
+    interface PLAN_CNS_PRODUCT_CUSTOMER {
+        String PRODUCT_ID = "productId";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String DEMAND_GROUP = "demandGroup";
+        String PRODUCT_STATUS = "productStatus";
+        String MIN_STOCK = "minStock";
+        String MAX_STOCK = "maxStock";
+        String STOCK_LEVEL = "stockLevel";
+        String UOM = "uom";
+        String PREFERRED_DC = "preferredDC";
+        String LEAD_TIME = "leadTime";
+        String REVENUE_RECOGNITION_OFFSET = "revenueRecognitionOffset";
+    }
+
     interface EDM_MATERIAL_AUOM_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String MATERIAL_NUMBER = "materialNumber";
@@ -845,6 +863,8 @@ public interface IConstant {
         String PATTERN_DECIMAL_3="#.000";
         String PATTERN_DECIMAL_5="#.00000";
         String PATTERN_DECIMAL_0="#";
+        
+        int VALUE_DECIMAL_6 =6;
 
         String VALUE_BLACK="";
         String CHCEK_TIME = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
@@ -1010,6 +1030,7 @@ public interface IConstant {
             String GDM_UNIT_CURRENCY = "GdmUnitCurrency";
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
+            String OMP_GDM_PRODUCTCUSTOMER = "GDMProductCustomer";
             String OMP_GDM_BATCH = "OMPGdmBatch";
             String EDM_BATCH_MASTER = "EdmBatchMaster";
             String GDM_UNIT_EVOL = "GDMUnitEvol";
