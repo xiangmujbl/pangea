@@ -96,7 +96,7 @@ public class OMPGdmBatchServiceImpl implements ICommonService {
                                 gdmBatchBo.setActiveSOPERP(IConstant.VALUE.NO);
 
                                 // rules N5
-                                if (StringUtils.isNotEmpty(batchMasterV1Entity.getBtchExpDt())) {
+                                if (StringUtils.isNotEmpty(batchMasterV1Entity.getBtchExpDt()) && !IConstant.VALUE.YYYY_MM_DD_ZERO.equals(batchMasterV1Entity.getBtchExpDt())) {
 
                                     gdmBatchBo.setExpirationDate(batchMasterV1Entity.getBtchExpDt());
                                 } else{
@@ -105,7 +105,7 @@ public class OMPGdmBatchServiceImpl implements ICommonService {
                                 }
 
                                 // rules N6
-                                if (StringUtils.isNotEmpty(batchMasterV1Entity.getBtchMfgDt())) {
+                                if (StringUtils.isNotEmpty(batchMasterV1Entity.getBtchMfgDt()) && !IConstant.VALUE.YYYY_MM_DD_ZERO.equals(batchMasterV1Entity.getBtchMfgDt())) {
 
                                     gdmBatchBo.setManufacturingDate(batchMasterV1Entity.getBtchMfgDt());
                                 } else {

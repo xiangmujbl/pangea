@@ -17,7 +17,9 @@ Feature: OMPGdmBatch AEAZ-5865
     # 13.If ((material_global_v1-Material Number) AND (material_global_v1-PrimaryPlanningCode) is Blank, reject the record (rule N2)
     # 14.If value of all fields with Data Type as "Float"  <= 0, skip the record (N3)
     # 15.If batch_master_v1-btchExpDt = " " then populate 2998/12/31 00:00:00 (N5)
-    # 16.If batch_master_v1-btchMfgDt = " " then populate 1980/01/01 00:00:00 (N6)
+    # 16.If batch_master_v1-btchMfgDt = "" then populate 1980/01/01 00:00:00 (N6)
+    # 17.If batch_master_v1-btchExpDt = "0000/00/00" then populate 2998/12/31 00:00:00 (N5)
+    # 18.If batch_master_v1-btchMfgDt = "0000/00/00" then populate 1980/01/01 00:00:00 (N6)
 
     And I will remove the test file on sink application "GDMBatch.tsv"
 
@@ -31,6 +33,10 @@ Feature: OMPGdmBatch AEAZ-5865
       | 90407   | 2034/08/05 00:00:00 | 2007/03/21 00:00:00 | 7502768        | VE02       | 000000000007502768 | CONS_LATAM |
       | 927C6 D | 2008/04/28 00:00:00 | 2006/04/29 00:00:00 | 7044811        | PE01       | 000000000007044811 | CONS_LATAM |
       | 930F6 A | 2008/07/06 00:00:00 | 2006/07/07 00:00:00 | 7043867        | PE01       | 000000000007043867 | CONS_LATAM |
+
+      | 788L6   | 0000/00/00          | 2007/03/21 00:00:00 | 7043867        | EC01       | 000000000007043868 | CONS_LATAM |
+      | 791E7   | 2008/04/28 00:00:00 | 0000/00/00          | 7040606        | EC01       | 000000000007040606 | CONS_LATAM |
+      | 791L6 B | 0000/00/00          | 0000/00/00          | 7043872        | PE01       | 000000000007043872 | CONS_LATAM |
 
       # skip record
       | 920K5 B | 0000/00/00          | 0000/00/00          | 7090325        | PE01       | 000000000007090325 | CONS_LATAM |
@@ -63,13 +69,17 @@ Feature: OMPGdmBatch AEAZ-5865
       | 000000000007044811  | 7044811        |                     |
 
       # (material_global_v1-primaryPlanningCode) not equal to  (material_global_v1-MaterialNumber), send (material_global_v1-primaryPlanningCode) to productId
-      | 000000000007043867  | 7043867        | 7043866             |
+      | 000000000007043867  | 7043869        | 7043866             |
 
       # (material_global_v1-MaterialNumber) not available, send (material_global_v1-primaryPlanningCode) to productId
       | 000000000007502768  |                | 7502768             |
 
       # If ((material_global_v1-Material Number) AND (material_global_v1-PrimaryPlanningCode) is Blank, reject the record
       | 000000000007622071  |                |                     |
+
+      | 000000000007043868  | 7043868        | 7043868             |
+      | 000000000007040606  | 7040606        | 7040606             |
+      | 000000000007043872  | 7043872        | 7043872             |
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
@@ -101,6 +111,10 @@ Feature: OMPGdmBatch AEAZ-5865
 
       | CONS_LATAM   | 000000000007701851  | PE01       | X          | X              |
 
+      | CONS_LATAM   | 000000000007043868  | EC01       | X          | X              |
+      | CONS_LATAM   | 000000000007040606  | EC01       | X          | X              |
+      | CONS_LATAM   | 000000000007043872  | PE01       | X          | X              |
+
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/edm/inventory_stock" by keyFields "sourceSystem,localBatchId,localMaterial"
@@ -112,6 +126,10 @@ Feature: OMPGdmBatch AEAZ-5865
       | CONS_LATAM   | 90407        | 000000000007502768 | 6285.3                 | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
       | CONS_LATAM   | 927C6 D      | 000000000007044811 | 521                    | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
       | CONS_LATAM   | 930F6 A      | 000000000007043867 | 95788                  | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
+
+      | CONS_LATAM   | 788L6        | 000000000007043868 | 88.5                   | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
+      | CONS_LATAM   | 791E7        | 000000000007040606 | 95                     | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
+      | CONS_LATAM   | 791L6 B      | 000000000007043872 | 578                    | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
 
       # If value of all fields with Data Type as "Float"  <= 0, skip the record
       | CONS_LATAM   | 90904        | 000000000000070365 | 0.000                  | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
@@ -131,6 +149,9 @@ Feature: OMPGdmBatch AEAZ-5865
       | 7044811/CONS_LATAM_PE01/927C6 D | YES    | YES          | NO           | 2008/04/28 00:00:00 | 2006/04/29 00:00:00 | 7044811   |
       | 7043866/CONS_LATAM_PE01/930F6 A | YES    | YES          | NO           | 2008/07/06 00:00:00 | 2006/07/07 00:00:00 | 7043866   |
       | 7502768/CONS_LATAM_VE02/90407   | YES    | YES          | NO           | 2034/08/05 00:00:00 | 2007/03/21 00:00:00 | 7502768   |
+      | 7043868/CONS_LATAM_EC01/788L6   | YES    | YES          | NO           | 2998/12/31 00:00:00 | 2007/03/21 00:00:00 | 7043868   |
+      | 7040606/CONS_LATAM_EC01/791E7   | YES    | YES          | NO           | 2008/04/28 00:00:00 | 1980/01/01 00:00:00 | 7040606   |
+      | 7043872/CONS_LATAM_PE01/791L6 B | YES    | YES          | NO           | 2998/12/31 00:00:00 | 1980/01/01 00:00:00 | 7043872   |
 
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
