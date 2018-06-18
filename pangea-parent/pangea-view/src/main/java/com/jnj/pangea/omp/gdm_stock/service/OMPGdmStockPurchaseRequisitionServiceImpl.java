@@ -69,7 +69,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getSuplPlntCd())) {
                 oMPGdmStockBo.setInventoryLinkGroupId(stockId);
             }
-            oMPGdmStockBo.setVendorId(edmPurchaseRequisitionV1Entity.getLocalSupNum());
+            oMPGdmStockBo.setVendorId(edmPurchaseRequisitionV1Entity.getLocalFixedVendor());
             oMPGdmStockBo.setProcessId(getProcessId(productId, locationId, edmPurchaseRequisitionV1Entity));
             oMPGdmStockBo.setProcessTypeId(getProcessTypeId(edmPurchaseRequisitionV1Entity));
             oMPGdmStockBo.setLocationId(getLocationId(edmPurchaseRequisitionV1Entity));
