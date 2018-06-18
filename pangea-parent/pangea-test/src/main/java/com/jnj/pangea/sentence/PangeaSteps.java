@@ -45,7 +45,7 @@ public class PangeaSteps extends CommonSteps {
             submitComputeTask(xml, executeFile);
         });
 
-        When("^I submit task with xml file \"([^\"]*)\"", (String xml) -> {
+        When("^I submit aggregation task with xml file \"([^\"]*)\"", (String xml) -> {
 
             submitComputeTask(xml, null);
         });
