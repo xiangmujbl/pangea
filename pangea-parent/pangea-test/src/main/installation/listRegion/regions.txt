@@ -225,3 +225,4 @@
 /project_one/stpo
 /omp/gdm_stock_purchase_order
 /edm/purchase_order_oa_v1_aggregation
+/omp/gdm_stock

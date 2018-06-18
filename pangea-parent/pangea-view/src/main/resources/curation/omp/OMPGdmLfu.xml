@@ -32,12 +32,21 @@
                     <relation path="/edm/currency_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+                    <relation path="/edm/material_global_v1" alias="/edm/material_global_v1_clone" isPrimaryKey="false">
+                        <expression>localDpParentCode=/edm/material_global_v1.localDpParentCode</expression>
+                    </relation>
                 </relations>
+            </region>
+
+            <region path="/edm/material_global_v1" alias="/edm/material_global_v1_clone">
+                <columns>
+                    sourceSystem,localMaterialNumber,localDpParentCode,localBaseUom
+                </columns>
             </region>
 
             <region path="/plan/cns_fin_plan_qty">
                 <columns>
-                    localMaterialNumber,identifier,country,currency,unitId,quantity,yearMonth,sourceSystem
+                    localMaterialNumber,identifier,country,unitId,quantity,yearMonth,sourceSystem
                 </columns>
                 <relations>
                     <relation path="/edm/material_auom_v1" isPrimaryKey="false">
@@ -53,7 +62,7 @@
 
             <region path="/plan/cns_fin_plan_val">
                 <columns>
-                    localMaterialNumber,identifier,value,yearMonth,currency,country
+                    localMaterialNumber,identifier,value,yearMonth,currency
                 </columns>
                 <filter>identifier:LFU</filter>
             </region>
