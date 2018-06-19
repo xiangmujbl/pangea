@@ -68,8 +68,9 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
 
         // rules J2
         String sourceSystem = sourceSystemV1Entity.getSourceSystem();
-        String localMaterialNumber = maraEntity.getMatnr();        
+        String localMaterialNumber = maraEntity.getMatnr();
         String sourceSystemType = sourceSystemV1Entity.getSourceSystemType();
+
         if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(localMaterialNumber) && StringUtils.isNotEmpty(sourceSystemType) && IConstant.VALUE.NGEMS.equalsIgnoreCase(sourceSystemType)) { 
             MaterialLinkageEntity materialLinkageEntity = materialLinkageDao.
                     getEntityWithLocalMaterialNumberAndSourceSystem(localMaterialNumber, sourceSystem);
@@ -127,9 +128,6 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
             	materialGlobalBo.setLocalManufacturingTechnology(edmMatInputEntity.getLocalTechnology());    	
             }
         }
-        materialGlobalBo.setLocalManufacturingTechnology("");
-        
-        materialGlobalBo.setLocalManufacturingTechnology("");
         materialGlobalBo.setLocalMaterialGroup(maraEntity.getMatkl());
         materialGlobalBo.setFlagForDeletion(maraEntity.getLvorm());
         materialGlobalBo.setMaterialStatus(maraEntity.getMstae());
