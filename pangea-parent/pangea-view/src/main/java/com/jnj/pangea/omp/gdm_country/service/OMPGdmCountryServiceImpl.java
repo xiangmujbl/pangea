@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_country.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -57,7 +58,8 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
                     resultObject.setFailData(failData);
                     return resultObject;
                 }
-                gdmCountryBo.setCurrencyId(EDMCurrencyV1Entity.getLocalCurrency());
+                LogUtil.getCoreLog().info("))))))))))))))))))))"+EDMCurrencyV1Entity.getCurrencyCode());
+                gdmCountryBo.setCurrencyId(EDMCurrencyV1Entity.getCurrencyCode());
 
 
                 resultObject.setBaseBo(gdmCountryBo);
@@ -72,7 +74,7 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
 
                     List<PlanCnsPlanParameterEntity> planCnsPlanParameterEntityList = planCnsPlanParameterDao.getEntitiesWithSourceSystem(sourceSystem);
 
-                    if (null != planCnsPlanParameterEntityList && planCnsPlanParameterEntityList.size() > 0) {
+                    if (planCnsPlanParameterEntityList.size() > 0) {
                         // rules T1
                         for (PlanCnsPlanParameterEntity entity:planCnsPlanParameterEntityList) {
                             if (countryV1Entity.getSourceSystem().equals(entity.getSourceSystem()) ){
@@ -89,7 +91,8 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
                         // rules D2
                         gdmCountryBo.setActiveSOPERP(IConstant.VALUE.NO);
 
-                    } else{
+                    }
+                    else{
                         return null;
                     }
                 }
