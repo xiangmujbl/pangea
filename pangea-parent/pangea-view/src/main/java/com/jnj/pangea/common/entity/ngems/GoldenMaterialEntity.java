@@ -22,6 +22,7 @@ public class GoldenMaterialEntity extends CommonEntity {
     private String productFamily;
     private String globalBusinessUnit;
     private String primaryPlanningCode;
+    private String materialGroup;
 
     public GoldenMaterialEntity(Map<String, Object> map) {
         super(map);
@@ -42,6 +43,7 @@ public class GoldenMaterialEntity extends CommonEntity {
         setProductFamily((String) map.get("productFamily"));
         setGlobalBusinessUnit((String) map.get("globalBusinessUnit"));
         setPrimaryPlanningCode((String) map.get("primaryPlanningCode"));
+        setMaterialGroup((String) map.get("materialGroup"));
     }
 
     public String getMaterialNumber() {
@@ -172,4 +174,12 @@ public class GoldenMaterialEntity extends CommonEntity {
     public void setPrimaryPlanningCode(String primaryPlanningCode) {
         this.primaryPlanningCode = primaryPlanningCode;
     }
+
+	public String getMaterialGroup() {
+		return materialGroup;
+	}
+
+	public void setMaterialGroup(String materialGroup) {
+		this.materialGroup = materialGroup;
+	}
 }
