@@ -66,7 +66,6 @@ public class EDMMfgRtngItmV2Bo extends BaseBo {
                 .toJsonString();
     }
 
-
     public String getSrcSysCd() {
         return this.srcSysCd;
     }

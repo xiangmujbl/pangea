@@ -11,5 +11,4 @@ import org.junit.runner.RunWith;
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "json:target/reports/json/6663 EDMMfgRtngItmV2.json"})
 public class EDMMfgRtngItmV2Test {
-
 }

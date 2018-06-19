@@ -107,7 +107,6 @@ public class EDMMfgRtngItmV2ServiceImpl implements ICommonService {
         String zaehl = plpoEntity.getZaehl();
         List<PlpoEntity> plpoEntityList = plpoDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
         if (plpoEntityList != null && plpoEntityList.size() > 0) {
-
             if (plpoEntityList.size() == 1) {
                 List<ProjectOnePlasEntity> plasEntityList1 = plasDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
                 if (plasEntityList1 != null && plasEntityList1.size() > 0) {
