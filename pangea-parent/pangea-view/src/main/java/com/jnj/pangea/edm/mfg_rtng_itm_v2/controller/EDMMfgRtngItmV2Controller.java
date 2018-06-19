@@ -14,6 +14,7 @@ public class EDMMfgRtngItmV2Controller extends CommonController {
 
     @Override
     public ResultObject process(RawDataEvent raw) {
+
         return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), PlpoEntity.class), null);
     }
 }
