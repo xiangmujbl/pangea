@@ -1,6 +1,5 @@
 @pangea_test @6663
 Feature: E.2.1.9 EDMRouting-MFG_RTNG_ITEM_V2
-
   As a Data user,
   I want EDG to curate Routing item node raw data from ECC LATAM
   so that there is an Enterprise Data Model that contains Routing-level supply chain data consistent with Enterprise standards, and ready for consumption by reports and/or cross-functional applications.
