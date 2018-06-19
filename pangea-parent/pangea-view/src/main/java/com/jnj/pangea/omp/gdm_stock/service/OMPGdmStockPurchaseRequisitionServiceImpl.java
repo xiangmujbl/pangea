@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_stock.service;
 
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
@@ -44,6 +45,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
+
         try {
             EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity = (EDMPurchaseRequisitionV1Entity) o;
             OMPGdmStockBo oMPGdmStockBo = new OMPGdmStockBo();
@@ -81,15 +83,21 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
                     Long.parseLong(edmPurchaseRequisitionV1Entity.getLocalPOQuantity())));
 
             // PR12
-            Date needByDate = DateUtils.stringToDate(edmPurchaseRequisitionV1Entity.getNeedByDt(), DateUtils.dd_MM_yyyy);
-            oMPGdmStockBo.setReceiptDate(DateUtils.dateToString(needByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
+            if( StringUtils.isNotBlank( edmPurchaseRequisitionV1Entity.getNeedByDt())) {
+                Date needByDate = DateUtils.stringToDate(edmPurchaseRequisitionV1Entity.getNeedByDt(), DateUtils.dd_MM_yyyy);
+                if (null != needByDate && StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays())) {
+                    oMPGdmStockBo.setReceiptDate(DateUtils.dateToString(needByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
 
-            // PR13
-            Date adjustedNeedByDate = DateUtils.offsetDate(needByDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
-            adjustedNeedByDate = DateUtils.moveToNextWorkingDay(adjustedNeedByDate);
-            oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
+                    // PR13
+                    Date adjustedNeedByDate = DateUtils.offsetDate(needByDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
+                    if (null != adjustedNeedByDate) {
+                        adjustedNeedByDate = DateUtils.moveToNextWorkingDay(adjustedNeedByDate);
+                        oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
+                    }
+                }
+            }
 
-            oMPGdmStockBo.setActive(IConstant.VALUE.YES);
+                oMPGdmStockBo.setActive(IConstant.VALUE.YES);
             oMPGdmStockBo.setActiveOPRERP(IConstant.VALUE.YES);
             oMPGdmStockBo.setActiveSOPERP(IConstant.VALUE.NO);
             oMPGdmStockBo.setBatchId(IConstant.VALUE.BLANK);
@@ -107,7 +115,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             resultObject.setBaseBo(oMPGdmStockBo);
             return resultObject;
         } catch (SkipRecordException e) {
-            // we're skipping this record
+
             return null;
         }
     }
@@ -122,14 +130,14 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
     private String getProductId(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
         String productId;
         // read in the matching materialGlobalV1 region data
-        List<EDMMaterialGlobalV1Entity> edmMaterialGlobalV1EntityList = edmMaterialGlobalV1Dao.getEntitiesWithMaterialNumberAndSourceSystem(
+        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = edmMaterialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(
                 edmPurchaseRequisitionV1Entity.getMatlNum(), edmPurchaseRequisitionV1Entity.getSourceSystem());
-        if (edmMaterialGlobalV1EntityList == null || edmMaterialGlobalV1EntityList.size() != 1) {
+        if (edmMaterialGlobalV1Entity == null ) {
             // if we don't find 1 match skip this record
             throw new SkipRecordException("PR1");
         }
 
-        EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = edmMaterialGlobalV1EntityList.get(0);
+
         if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
             productId = edmMaterialGlobalV1Entity.getMaterialNumber();
         } else {
