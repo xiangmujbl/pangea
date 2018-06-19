@@ -22,12 +22,12 @@ public class ProjectOneVbfaDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public ProjectOneVbfaEntity getVbfaEntityByaAndb(String a, String b) {
+    /*public ProjectOneVbfaEntity getVbfaEntityByaAndb(String a, String b) {
         String queryString = QueryHelper.buildCriteria
              (IConstant.PROJECT_ONE_VBFA.A1).is(a)
              .and(IConstant.PROJECT_ONE_VBFA.B1).is(b)
             .toQueryString();
         ProjectOneVbfaEntity entity = queryForObject(IConstant.REGION.PROJECT_ONE_VBFA_CLONE, queryString, ProjectOneVbfaEntity.class);
         return entity;
-    }
+    }*/
 }

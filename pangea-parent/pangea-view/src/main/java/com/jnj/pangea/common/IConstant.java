@@ -16,6 +16,7 @@ public interface IConstant {
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
         String EDM_MATERIAL_GLOBAL_V1_COPY = "/edm/material_global_v1_copy";
         String EDM_PLANT_V1 = "/edm/plant_v1";
+        String EDM_PLANT_INPUT = "/edm/edm_plant_input";
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
@@ -30,6 +31,7 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
+        String PROJECT_ONE_VBFA = "/project_one/vbfa";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
@@ -145,6 +147,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
+        String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
     }
@@ -219,8 +222,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "VendorPurchase";
-        String EXTERNAL_PURCHASE = "ExternalPurchase";
+        String VENDOR_PURCHASE = "vendorPurchase";
+        String EXTERNAL_PURCHASE = "externalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -288,7 +291,7 @@ public interface IConstant {
     }
 
     interface PLAN_CNS_PLAN_REGION {
-        String PLANNING_REGION_ID  = "planningRegionID";
+        String PLANNING_REGION_ID = "planningRegionID";
     }
 
 
@@ -339,6 +342,20 @@ public interface IConstant {
     interface PROJECT_ONE_TMABCT {
         String MAABC = "maabc";
         String SPARS = "spars";
+    }
+
+    interface PROJECT_ONE_VBFA {
+        String VBELV = "vbelv";
+        String POSNV = "posnv";
+        String VBELN = "vbeln";
+        String POSNN = "posnn";
+        String VBTYP_N = "vbtypN";
+        String RFMNG = "rfmng";
+        String MEINS = "meins";
+        String RFMNG_FLT = "rfmngFlt";
+        String VRKME = "vrkme";
+        String VBTYP_V = "vbtypV";
+        String ERDAT = "erdat";
     }
 
     interface PLAN_CNS_DP_PRICE {
@@ -479,6 +496,12 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+    }
+
+    interface EDM_PLANT_INPUT {
+        String LOCAL_PLANT = "localPlant";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_PLANNING_RELEVANT = "localPlanningRelevant";
     }
 
     interface CNS_PLAN_PARAMETER {
@@ -632,8 +655,12 @@ public interface IConstant {
         String SOURCE_OBJECT_TECHNAME = "sourceObjectTechName";
         String SOURCE_OBJECT_ATTRIBUTE1 = "sourceObjectAttribute1";
         String SOURCE_OBJECT_ATTRIBUTE1_VALUE = "sourceObjectAttribute1Value";
-        String SOURCE_OBJECT_PLANT_ATTRIBUTE = "sourceObjectPlantAttribute";
+        String SOURCE_OBJECT_PLANT_ATTRIBUTE1 = "sourceObjectAttribute1";
+        String SOURCE_OBJECT_ATTRIBUTE2_VALUE = "sourceObjectAttribute2Value";
+        String SOURCE_OBJECT_PLANT_ATTRIBUTE2 = "sourceObjectAttribute2";
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
+        String SOURCE_FILTER_INCLUSIONEXCLUSION = "inclusionExclusion";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION= "purchase_requisition";
     }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
@@ -697,6 +724,7 @@ public interface IConstant {
 
     interface CNS_TLANE_ITEM_EXCEPTION {
         String REF_SEQ_NUM_TLANE_ITEM = "refSeqNumTlaneItem";
+        String SEQ_NUM_TLANE_ITEM = "sequenceNumber";
         String MATERIAL_NUMBER = "materialNumber";
         String TLANE_NAME = "tlaneName";
     }
@@ -846,18 +874,27 @@ public interface IConstant {
         String DATA_OBJECT = "dataObject";
         String SPLIT = "-";
         String SPLIT_ = "_";
-        String PATTERN_DECIMAL_3 = "#.000";
-        String PATTERN_DECIMAL_5 = "#.00000";
-        String PATTERN_DECIMAL_0 = "#";
 
-        String VALUE_BLACK = "";
+        //regex expression of time , if it is satisfied, do format.
         String CHCEK_TIME = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
+        String PATTERN_DECIMAL_3="#.000";
+        String PATTERN_DECIMAL_5="#.00000";
+        String PATTERN_DECIMAL_0="#";
+        int VALUE_DECIMAL_3=3;
+        String VALUE_BLACK="";
+        String FAIL_MSG="localDpParentCode does not exist in edm Material";
     }
 
     interface PLAN_CNS_DP_POS {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
+    interface  EDM_COUNT_INPUT{
+        String SOURCESYSTEM= "sourceSystem";
+        String LOCALCOUNTRY ="localCountry" ;
+        String LOCALCURRENCY="localCurrency";
+
+    }
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT = "LATAM_ROOT";
@@ -991,12 +1028,14 @@ public interface IConstant {
         String PROPORTIONAL = "proportional";
         String FIXED = "fixed";
         String ENDEFF = "2998/12/31 23:59:59";
+        String START_EFF = "1980/01/01 00:00:00";
         String BOM_86400 = "86400";
         String VOLUMEPLANNING = "VolumePlanning";
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
         String THIRTY = "30";
-
+        String END_EFF_CHECK = "2998/12/31";
+        String START_EFF_CHECK = "1980/01/01";
     }
 
     interface FAILED {
@@ -1029,6 +1068,9 @@ public interface IConstant {
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
             String OMP_GDM_POS = "OMPGdmPos";
+            String OMP_GDM_LFU = "OMPGdmLfu";
+            String OMP_GDM_COUNTRY="OMPGdmCountry";
+            String EDM_PLANT = "EDMPlant";
         }
 
         interface ERROR_CODE {
@@ -1147,7 +1189,7 @@ public interface IConstant {
         public static final String PATTERN_DECIMAL_3 = "#.000";
         public static final String INTERFACEID = "OMPGdmbomelementProcess";
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
-
+        public static final int VALUE_DECIMAL_3= 3;
 
     }
 

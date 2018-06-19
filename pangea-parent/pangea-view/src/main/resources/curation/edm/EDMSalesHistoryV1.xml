@@ -16,11 +16,11 @@
             </region>
 
             <region path="/edm/source_system_v1">
-                <columns>$otherRegionColumns$</columns>
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
 
             <region path="/project_one/vbfa" alias="/project_one/vbfa_clone">
-                <columns>vbelv,posnv,vbeln,posnn,vbtypN,rfmng,meins,rfmngFlt,vrkme,vbtypV,erdat</columns>
+                <columns>mandt,vbelv,posnv,vbeln,posnn,vbtypN,rfmng,meins,rfmngFlt,vrkme,vbtypV,erdat</columns>
             </region>
 
             <region path="/edm/sales_history_v1">

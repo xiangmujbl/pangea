@@ -6,7 +6,7 @@
 
             <region path="/edm/purchase_requisition_v1">
                 <columns>
-                    sourceSystem,prNum,prLineNbr,plntCd,matlNum,prLineUomCd,prTypeCd,prCatCd,localControlInd,delInd,prStsCd,recCrtInd,prchsngGrpNum,crtByNm,chngOnDt,prchInfoDesc,mfrPartNum,slocCd,intrnlRefNum,locaalMaterialGroup,suplPlntCd,prLineQty,prRqstDt,needByDt,apprByDt,localPrGRLeadTimeDays,prLineCatCd,acctAsgnmtCatCd,localGRInd,localSupNum,localFixedVendor,prchsngOrgNum,poTypeCd,localAgreement,localAgreementItem,localInfoRecord,asgnSuplSrcInd,localQuotaArr,localQuotaArrItem,prMrpHrzn,bomNum,localPurchaseOrder,localItem,localPODate,localPOQuantity,prClseInd,localReservation,splStkInd,fxInd,localOrderUnit,localSubjToRelease,localBatch,localSpIndStckTfr,localProdVersion,localdelvAddrADRNR,localdelvAddrADRN2,localCustomer,supNum,localSCVendor,localCurrency,localOverallReqRel,mfrPartNum,localManufacturer,localExternalManuf,localPDT,localIncomplete,lineStsCd,blokInd,localBlockingText,localProcuringPlant,localIssStorLoc,localXSysPReqNo,localXSysPReqItem,localXSysItemCat,prDocId
+                    sourceSystem,prNum,prLineNbr,plntCd,matlNum,prLineUomCd,prTypeCd,prCatCd,localControlInd,delInd,prStsCd,recCrtInd,prchsngGrpNum,crtByNm,chngOnDt,prchInfoDesc,mfrPartNum,slocCd,intrnlRefNum,locaalMaterialGroup,suplPlntCd,prLineQty,prRqstDt,needByDt,apprByDt,localPrGRLeadTimeDays,prLineCatCd,acctAsgnmtCatCd,localGRInd,localSupNum,localFixedVendor,prchsngOrgNum,poTypeCd,localAgreement,localAgreementItem,localInfoRecord,asgnSuplSrcInd,localQuotaArr,localQuotaArrItem,prMrpHrzn,bomNum,localPurchaseOrder,localItem,localPODate,localPOQuantity,prClseInd,localReservation,splStkInd,fxInd,localOrderUnit,localSubjToRelease,localBatch,localSpIndStckTfr,localProdVersion,localdelvAddrADRNR,localdelvAddrADRN2,localCustomer,supNum,localSCVendor,localCurrency,localOverallReqRel,mfrPartNum,localManufacturer,localExternalManuf,localPDT,localIncomplete,lineStsCd,blokInd,localBlockingText,localProcuringPlant,localIssStorLoc,localXSysPReqNo,localXSysPReqItem,localXSysItemCat
                 </columns>
                 <relations>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
@@ -61,7 +61,7 @@
 
             <region path="/plan/cns_plan_object_filter">
                 <columns>
-                    sourceObjectTechName,sourceSystem,inclusion_Exclusion,sourceObjectAttribute1Value,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute2
+                    sourceObjectTechName,sourceSystem,inclusionExclusion,sourceObjectAttribute1Value,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute2
                 </columns>
             </region>
 

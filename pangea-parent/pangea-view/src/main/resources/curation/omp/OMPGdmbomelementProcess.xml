@@ -3,7 +3,6 @@
               executionClassName="com.jnj.pangea.omp.gdm_bom_element_Process.controller.OMPGdmbomelementController"
               writeTo="all" topic="PANGEA_V1_omp_gdm_bom_element_process">
         <regions>
-
             <region path="/edm/mfg_order">
                 <columns>sourceSysCd,mfgOrdrNum,rsrvtnNum,ordrRtngNum,bomCatCd,bomNum,actRlseDt</columns>
                 <relations>
@@ -22,12 +21,12 @@
                     <relation path="/edm/bom_item" isPrimaryKey="false">
                         <expression>srcSysCd=/edm/mfg_order.sourceSysCd,bomCatCd=/edm/mfg_order.bomCatCd,bomNum=/edm/mfg_order.bomNum</expression>
                     </relation>
-                        <relation path="/edm/material_global_v1" isPrimaryKey="false">
-                            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
-                        </relation>
-                        <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
-                            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
-                        </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+                    </relation>
                 </relations>
             </region>
 
@@ -41,13 +40,12 @@
             </region>
 
             <region path="/plan/cns_material_plan_status">
-                <columns>sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant</columns>
+                <columns>sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant,dpRelevant</columns>
             </region>
 
             <region path="/edm/material_global_v1">
                 <columns>sourceSystem,localMaterialNumber,primaryPlanningCode,localDpParentCode</columns>
             </region>
-
 
             <region path="/edm/bom_item">
                 <columns>srcSysCd,bomCatCd,bomNum,dstrbtnKeyCd</columns>
@@ -63,7 +61,6 @@
                 <filter>dataObject:SEND_TO_OMP</filter>
             </region>
 
-
             <region path="/edm/mfg_order_rtng">
                 <columns>srcSysCd,ordrRtngNum,operNum</columns>
                 <relations>
@@ -73,19 +70,13 @@
                 </relations>
             </region>
 
-
             <region path="/edm/mfg_order_seq">
                 <columns>srcSysCd,ordrRtngNum,rtngSqncNum</columns>
             </region>
 
-
-
             <region path="/edm/matl_prod_versn">
                 <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,dstrbtnKeyCd</columns>
             </region>
-
-
-
 
             <region path="/omp/gdm_bom_element">
                 <columns>bomElementId,Active,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,BatchId,BOMId,BOMType,BOMUsage,Comments,EndEff,ERPFeedbackQuantity,LocationId,Offset,OffsetCalendarId,OffsetPercentage,OffsetPercType,PlanLevelId,ProductId,Quantity,StartEff</columns>

@@ -24,6 +24,7 @@ public abstract class OMPGdmTransportServiceParent {
 
 	boolean curationSkip;
 	boolean curationFail;
+	String curationSkipReason;
 	protected List<Map<String, String>> failedRules;
 
 
@@ -38,6 +39,10 @@ public abstract class OMPGdmTransportServiceParent {
 		ArrayList<String> locArrayList = new ArrayList<>();
 		if (location.contains("_V_")) {
 			locArrayList = new ArrayList<>(Arrays.asList(location.split("_V_")));
+
+			if(locArrayList.size()>1) {
+				locArrayList.add(locArrayList.get(1));
+			}
 		} else {
 			ArrayList<String> tempLocList = new ArrayList<>(Arrays.asList(location.split("_")));
 			String plant = tempLocList.remove(tempLocList.size()-1);
@@ -48,7 +53,7 @@ public abstract class OMPGdmTransportServiceParent {
 
 		//check for 3rd scenario, vendor id at end
 		if (locArrayList.get(1).contains("$")) {
-			String[] tmp = locArrayList.get(1).split("$");
+			String[] tmp = locArrayList.get(1).split("\\$");
 			String plant = tmp[0];
 			String vendor = tmp[1];
 			locArrayList.set(1, plant);
@@ -78,6 +83,15 @@ public abstract class OMPGdmTransportServiceParent {
 		return locList.get(0);
 	}
 
+
+	protected String getVendorId (String location) {
+		ArrayList<String> locList = getLocationStringArray(location);
+		String vendorId="";
+		if( locList != null && locList.size() > 2 && locList.get(2) != null )
+			vendorId=locList.get(2).trim();
+
+		return vendorId;
+	}
 	/**
 	 * set the class's failed rule list and flag
 	 * @param rule

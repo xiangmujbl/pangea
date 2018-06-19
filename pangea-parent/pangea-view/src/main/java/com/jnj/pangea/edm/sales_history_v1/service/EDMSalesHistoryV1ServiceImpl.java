@@ -1,7 +1,8 @@
 package com.jnj.pangea.edm.sales_history_v1.service;
 
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.project_one.ProjectOneVbfaDaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.project_one.ProjectOneVbfaEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.sales_history_v1.bo.EDMSalesHistoryV1Bo;
@@ -14,7 +15,7 @@ import com.jnj.pangea.edm.sales_history_v1.bo.EDMSalesHistoryV1Bo;
 */
 public class EDMSalesHistoryV1ServiceImpl implements ICommonService {
 
-    private ProjectOneVbfaDaoImpl projectOneVbfaDao = ProjectOneVbfaDaoImpl.getInstance();
+    private EDMSourceSystemV1DaoImpl edmSourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
     private static ICommonService instance;
 
@@ -32,14 +33,11 @@ public class EDMSalesHistoryV1ServiceImpl implements ICommonService {
 
         ProjectOneVbfaEntity mainData = (ProjectOneVbfaEntity) o;
 
-        EDMSalesHistoryV1Bo viewBo = new EDMSalesHistoryV1Bo();
-        resultObject.setBaseBo(viewBo);
-
         // mapping ViewBo from MainEntity
-        EDMSalesHistoryV1Bo destBo = new EDMSalesHistoryV1Bo();
-        mappingObject(mainData, destBo);
+        EDMSalesHistoryV1Bo viewBo = new EDMSalesHistoryV1Bo();
+        mappingObject(mainData, viewBo);
 
-        resultObject.setBaseBo(destBo);
+        resultObject.setBaseBo(viewBo);
 
         return resultObject;
     }
@@ -48,6 +46,22 @@ public class EDMSalesHistoryV1ServiceImpl implements ICommonService {
     private void mappingObject(ProjectOneVbfaEntity mainData, EDMSalesHistoryV1Bo viewBo) {
         // to-do: here write your own logic of mapping
 
+        // get sourceSystem from T1
+        String sourceSystem = edmSourceSystemV1Dao.getSourceSystemWithLocalSourceSystem("project_one");
+        viewBo.setSourceSystem(sourceSystem);
+
+        // simple mapping logic
+        viewBo.setLocalPrecDocNo(mainData.getVbelv());
+        viewBo.setLocalSPrecDocLnNo(mainData.getPosnv());
+        viewBo.setLocalSubsDocNo(mainData.getVbeln());
+        viewBo.setLocalSubsDocLnNo(mainData.getPosnn());
+        viewBo.setLocalSubDocCatg(mainData.getVbtypN());
+        viewBo.setLocalBaseQuantity(mainData.getRfmng());
+        viewBo.setLocalBaseUom(mainData.getMeins());
+        viewBo.setLocalSalesQuantity(mainData.getRfmngFlt());
+        viewBo.setLocalSalesUom(mainData.getVrkme());
+        viewBo.setLocalPrecItemCatg(mainData.getVbtypV());
+        viewBo.setLocalCrtDt(mainData.getErdat());
     }
 
 }
