@@ -16,7 +16,6 @@
                     </relation>
                 </relations>
             </region>
-
             <region path="/edm/source_system_v1">
                 <columns>
                     localSourceSystem,sourceSystem
