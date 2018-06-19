@@ -29,15 +29,25 @@ public class EDMCurrencyServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
-
         EMSFMdmCurrenciesEntity mainData = (EMSFMdmCurrenciesEntity) o;
-
         EDMCurrencyBo edmCurrencyBo = new EDMCurrencyBo();
-        resultObject.setBaseBo(edmCurrencyBo);
 
         String sourceSystem = sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(mainData.getzSourceSystem());
+        
+        //T3 zSourceSystem
+        if (StringUtils.isBlank(sourceSystem)) {
+        	//skip this record
+        	return resultObject;
+        }
+        
         edmCurrencyBo.setSourceSystem(sourceSystem);
 
+        //T3 for zCode
+        if (StringUtils.isBlank(mainData.getzCode())) {
+        	//skip this record
+        	return resultObject;
+        }
+        
         processSystem(mainData, edmCurrencyBo);
 
         String code = mainData.getzEntCodeIso4217Alpha();
@@ -47,6 +57,7 @@ public class EDMCurrencyServiceImpl implements ICommonService {
                 edmCurrencyBo.setCurrencyName(emsfMdmCurrenciesEntity.getzName());
             }
         }
+        resultObject.setBaseBo(edmCurrencyBo);
         return resultObject;
     }
 
