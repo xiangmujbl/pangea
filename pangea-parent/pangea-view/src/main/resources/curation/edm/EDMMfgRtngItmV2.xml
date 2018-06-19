@@ -2,7 +2,6 @@
     <curation mainRegion="/project_one/plpo" viewRegion="/edm/mfg_rtng_itm" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.edm.mfg_rtng_itm_v2.controller.EDMMfgRtngItmV2Controller">
         <regions>
-
             <region path="/project_one/plpo">
                 <columns>madat,plnty,plnnr,plnkn,zaehl,datuv,aennr,loekz,andat,aedat,sumnr,vornr,steus,arbid,werks,ltxa1,meinh,bmsch,lar01,vge01,vgw01,lar02,vge02,vgw02,lar03,vge03,vgw03,lar04,vge04,vgw04,lar05,vge05,vgw05,lar06,vge06,vgw06,dauno,daune,daumi,daume,phflg,usr00,usr01,usr02,usr03,usr04,usr10</columns>
                 <relations>

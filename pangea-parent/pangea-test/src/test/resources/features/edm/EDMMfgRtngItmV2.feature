@@ -5,7 +5,6 @@ Feature: E.2.1.9 EDMRouting-MFG_RTNG_ITEM_V2
   so that there is an Enterprise Data Model that contains Routing-level supply chain data consistent with Enterprise standards, and ready for consumption by reports and/or cross-functional applications.
 
   Scenario: Full Load curation
-
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | sourceSystem |
       | project_one       | CONS_LATAM   |
