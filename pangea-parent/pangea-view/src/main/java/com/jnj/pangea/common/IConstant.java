@@ -11,7 +11,7 @@ public interface IConstant {
         String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
         String EDM_WRK_CTR = "/edm/wrk_ctr";
         String PROJECT_ONE_Qave = "/project_one/qave";
-        String EDM_SOURCE_SYSTEM_V1 = "/dev/edm/source_system_v1";
+        String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
         String EDM_SOURCE_LIST_V1 = "/edm/source_list_v1";
         String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";
         String EDM_MATERIAL_GLOBAL_V1_COPY = "/edm/material_global_v1_copy";
@@ -20,9 +20,9 @@ public interface IConstant {
         String EDM_CURRENCY_V1 = "/edm/currency_v1";
         String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
         String EDM_MAT_PLANT_STAT_V1 = "/edm/mat_plant_stat_v1";
-        String PROJECT_ONE_MAKT = "/dev/project_one/makt";
-        String NGEMS_MATERIAL_LINKAGE = "/dev/ngems/material_linkage";
-        String NGEMS_GOLDEN_MATERIAL = "/dev/ngems/golden_material";
+        String PROJECT_ONE_MAKT = "/project_one/makt";
+        String NGEMS_MATERIAL_LINKAGE = "/ngems/material_linkage";
+        String NGEMS_GOLDEN_MATERIAL = "/ngems/golden_material";
         String EMS_F_MDM_COUNTRIES_CLONE = "/ems/ems_f_mdm_countries_clone";
         String EMS_F_Z_CURRENCIES_CLONE = "/ems/ems_f_z_currencies_clone";
         String EMS_F_MDM_UNITS_CLONE = "/ems/ems_f_mdm_units_clone";
@@ -149,7 +149,7 @@ public interface IConstant {
         String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
-        String PLAN_EDM_MAT_INPUT = "/dev/plan/edm_mat_input";
+        String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
     }
 
     interface EDM_INVENTORY_STOCK {
