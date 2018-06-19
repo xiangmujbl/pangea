@@ -3,7 +3,7 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 
   Scenario: Full Load curation
 
-    Given I import "/dev/project_one/mara" by keyFields "matnr,mandt"
+    Given I import "/project_one/mara" by keyFields "matnr,mandt"
 		|	matnr		|	mtart	|	meins	|	zzplnrootid 		|	matkl	|	lvorm	|	mstae	|	spart	|	xchpf	|	mhdrz	|	mhdhb	|	mandt	|
 		|	414.740V	|	FERT	|	ST		|	8105080005140010	|	999999	|	X		|	L		|	10		|	X		|	18		|			|	100		|
 		|	456.770S	|	FERT	|	ST		|	8105080005070012	|	999999	|	X		|	I		|	10		|	X		|	36		|			|	100		|
@@ -38,9 +38,9 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 		|	498.225VS	|	FERT	|	ST		|	8105080004150024	|	999999	|	X		|	L		|	10		|	X		|	180		|	0		|	100		|
 		|	498.250VS	|	FERT	|	ST		|	8105080004150024	|	999999	|	X		|	L		|	10		|	X		|	18		|			|	100		|
 		|	498.251VS	|	FERT	|	ST		|	8105080004150024	|	999999	|	X		|	L		|	10		|	X		|	36		|	0		|	100		|
-    And I wait "/dev/project_one/mara" Async Queue complete
+    And I wait "/project_one/mara" Async Queue complete
 
-    Given I import "/dev/project_one/makt" by keyFields "mandt,matnr,spras"
+    Given I import "/project_one/makt" by keyFields "mandt,matnr,spras"
 		|	matnr		|	maktx										|	spras	|	mandt	|
 		|	414.740V	|	SUNDOWN REGULAR FPS 60 STARCK				|	E		|	100		|
 		|	456.770S	|	J'S BABY WIPES COOLING TOUCH BIL			|	E		|	100		|
@@ -78,15 +78,15 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 		|	498.225VS	|	ABS HIG SL TRI-PR MAX SV S/ABA 4X12X8UN		|	E		|	100		|
 		|	498.250VS	|	ROC MINESOL ACT UNIFY FPS60 AG 240X5G		|	E		|	100		|
 		|	498.251VS	|	NTG SUNFRESH RADIANCE SPF60 200ML			|	E		|	100		|
-    And I wait "/dev/project_one/makt" Async Queue complete
+    And I wait "/project_one/makt" Async Queue complete
 
-    Given I import "/dev/edm/source_system_v1" by keyFields "localSourceSystem"
+    Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
         | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   | sourceSystemType |
         | Project_One       | Project One           | CONS_LATAM   | Consumer Latam Ent | NGEMS            |
         | EMS               | EMS                   | EMS          | ems                | SAP              |
-    And I wait "/dev/edm/source_system_v1" Async Queue complete
+    And I wait "/edm/source_system_v1" Async Queue complete
 
-    Given I import "/dev/ngems/material_linkage" by keyFields "localMaterialNumber,sourceSystem"
+    Given I import "/ngems/material_linkage" by keyFields "localMaterialNumber,sourceSystem"
 		|	sourceSystem	|	localMaterialNumber	|	materialNumber	|
 		|	CONS_LATAM		|	414.740V			|	99131			|
 		|	CONS_LATAM		|	456.770S			|	97424			|
@@ -121,9 +121,9 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 		|	CONS_LATAM		|	498.225VS			|	56228			|
 		|	CONS_LATAM		|	498.250VS			|	56322			|
 		|	CONS_LATAM		|	498.251VS			|	83563			|
-    And I wait "/dev/ngems/material_linkage" Async Queue complete
+    And I wait "/ngems/material_linkage" Async Queue complete
 
-    Given I import "/dev/ngems/golden_material" by keyFields "materialNumber"
+    Given I import "/ngems/golden_material" by keyFields "materialNumber"
 		|	materialNumber	|	materialDescription							|	primaryPlanningCode	|	materialType	|	baseUom	|	parentCode				|	globalDpParentCode		|	form	|	category	|	subBrand	|	brand	|	franchise	|	globalBusinessUnit	 	|	productFamily	|	manufTechnology	|	materialGroup	|
 		|	99131			|	New_SUNDOWN REGULAR FPS 60 STARCK			|	ppc-99131			|	FERT			|	EA		|	New_8105080005140012	|	GLB_8105080005140012	|	250		|	1120		|	5E			|	BRD010	|	FCH002		|	GFO001					|	prod_fam_1		|	manu_tech_1		|	matl_grp_1		|
 		|	97424			|	New_J'S BABY WIPES COOLING TOUCH BIL		|						|	FERT			|	EA		|	New_8105080005070012	|	GLB_8105080005070012	|	100048	|	215			|	4Z			|	BRD002	|	FCH001		|	GFO001					|	prod_fam_1		|	manu_tech_2		|	matl_grp_2		|
@@ -156,9 +156,9 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 		|	56228			|	New_ABS HIG SL TRI-PR MAX SV S/ABA 4X12X8UN	|	ppc-56228			|	FERT			|	EA		|	New_8105080004150024	|	GLB_8105080004150024	|	100011	|	1811		|	1K			|	BRD002	|	FCH001		|	GFO001					|	prod_fam_6		|	manu_tech_12	|	matl_grp_11		|
 		|	56322			|	New_ROC MINESOL ACT UNIFY FPS60 AG 240X5G	|	ppc-56322			|	FERT			|	EA		|	New_8105080004150024	|	GLB_8105080004150024	|	101450	|	1811		|	1K			|	BRD002	|	FCH001		|	GFO001					|	prod_fam_6		|	manu_tech_13	|	matl_grp_12		|
 		|	83563			|	New_NTG SUNFRESH RADIANCE SPF60 200ML		|	ppc-83563			|	FERT			|	EA		|	New_8105080004150024	|	GLB_8105080004150024	|	101450	|	1811		|	1K			|	BRD002	|	FCH001		|	GFO001					|	prod_fam_6		|	manu_tech_14	|	matl_grp_13		|
-    And I wait "/dev/ngems/golden_material" Async Queue complete
+    And I wait "/ngems/golden_material" Async Queue complete
     
-    Given I import "/dev/plan/edm_mat_input" by keyFields "sourceSystem,localMaterialNumber"
+    Given I import "/plan/edm_mat_input" by keyFields "sourceSystem,localMaterialNumber"
 		|	sourceSystem	|	localMaterialNumber	|	localTechnology		|
 		|	CONS_LATAM		|	414.740V			|	Toothbrushes		|
 		|	CONS_LATAM		|	456.770S			|	Toothbrushes		|
@@ -193,11 +193,11 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 		|	CONS_LATAM		|	498.225VS			|	Listerne			|
 		|	CONS_LATAM		|	498.250VS			|	Listerne			|
 		|	CONS_LATAM		|	498.251VS			|	Listerne			|
-    And I wait "/dev/plan/edm_mat_input" Async Queue complete
+    And I wait "/plan/edm_mat_input" Async Queue complete
 
     When I submit task with xml file "xml/edm/EDMMaterialGlobal.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/dev/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
+    Then I check region data "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
 		|	sourceSystem	|	localMaterialNumber	|	localRefDescription							|	localMaterialType	|	localBaseUom	|	materialNumber	|	refDescription									|	materialType	|	baseUom	|	localDpParentCode	|	parentCode				|	globalDpParentCode		|	form	|	category	|	subBrand	|	brand	|	franchise	|	globalBusinessUnit	|	productFamily	|	localManufacturingTechnology	|	manufacturingTechnology	|	localMaterialGroup	|	materialGroup	|	flagForDeletion	|	materialStatus	|	division	|	batchManageIndicator	|	minRemShelfLife	|	totalShelfLife	|	primaryPlanningCode	|				
 		|	CONS_LATAM		|	414.740V			|	SUNDOWN REGULAR FPS 60 STARCK				|	FERT				|	ST				|	99131			|	New_SUNDOWN REGULAR FPS 60 STARCK				|	FERT			|	EA		|	8105080005140012	|	New_8105080005140012	|	GLB_8105080005140012	|	250		|	1120		|	5E			|	BRD010	|	FCH002		|	GFO001				|	prod_fam_1		|	Toothbrushes					|	manu_tech_1				|	999999				|	matl_grp_1		|	X				|	L				|	10			|	X						|	18				|	0				|	ppc-99131			|				
 		|	CONS_LATAM		|	456.770S			|	J'S BABY WIPES COOLING TOUCH BIL			|	FERT				|	ST				|	97424			|	New_J'S BABY WIPES COOLING TOUCH BIL			|	FERT			|	EA		|	8105080005070012	|	New_8105080005070012	|	GLB_8105080005070012	|	100048	|	215			|	4Z			|	BRD002	|	FCH001		|	GFO001				|	prod_fam_1		|	Toothbrushes					|	manu_tech_2				|	999999				|	matl_grp_2		|	X				|	I				|	10			|	X						|	36				|	0				|	97424				|				
@@ -233,7 +233,7 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 		|	CONS_LATAM		|	498.250VS			|	ROC MINESOL ACT UNIFY FPS60 AG 240X5G		|	FERT				|	ST				|	56322			|	New_ROC MINESOL ACT UNIFY FPS60 AG 240X5G		|	FERT			|	EA		|	8105080004150024	|	New_8105080004150024	|	GLB_8105080004150024	|	101450	|	1811		|	1K			|	BRD002	|	FCH001		|	GFO001				|	prod_fam_6		|	Listerne						|	manu_tech_13			|	999999				|	matl_grp_12		|	X				|	L				|	10			|	X						|	18				|	0				|	ppc-56322			|				
 		|	CONS_LATAM		|	498.251VS			|	NTG SUNFRESH RADIANCE SPF60 200ML			|	FERT				|	ST				|	83563			|	New_NTG SUNFRESH RADIANCE SPF60 200ML			|	FERT			|	EA		|	8105080004150024	|	New_8105080004150024	|	GLB_8105080004150024	|	101450	|	1811		|	1K			|	BRD002	|	FCH001		|	GFO001				|	prod_fam_6		|	Listerne						|	manu_tech_14			|	999999				|	matl_grp_13		|	X				|	L				|	10			|	X						|	36				|	0				|	ppc-83563			|				
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+   Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
     And I compare the number of records between "/project_one/mara" and "/edm/material_global_v1,/plan/edm_failed_data"
@@ -242,7 +242,7 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
 
     Then I delete the test data
 
-    And I will remove all data with region "/dev/edm/material_global_v1"
+    And I will remove all data with region "/edm/material_global_v1"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
