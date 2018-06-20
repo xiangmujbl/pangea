@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-2828 @AEAZ-4065 @AEAZ-6809
-Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
+@pangea_test @AEAZ-6809
+Feature: EDMMaterialGlobal AEAZ-6809
 
   Background: delete all test data
 
@@ -95,9 +95,12 @@ Feature: EDMMaterialGlobal AEAZ-2828 AEAZ-4065 AEAZ-6809
     And I wait "/project_one/makt" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
-      | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   | sourceSystemType |
-      | Project_One       | Project One           | CONS_LATAM   | Consumer Latam Ent | NGEMS            |
-      | EMS               | EMS                   | EMS          | ems                | SAP              |
+      | localSourceSystem    	| localSourceSystemName | sourceSystem | sourceSystemName  						  | sourceSystemType |
+      | Project_One       		| Project One           | CONS_LATAM   | Consumer Latam Ent 					  | SAP   		     |
+      | [EMS]             		| EMS                   | EMS          | Enterprise Master Data Management System | NGEMS            |
+      | [Consumer LATAM]  		| Consumer Latam        | CONS_LATAM   | Consumer Latam Ent 					  | NGEMS            |
+      | [MD DePuy Spine JDE XE] | Spine                 | MDDePuy      | MD DePuy Ent							  | JDE              |
+      | ems             		| EMS                   | EMS          | Enterprise Master Data Management System | EMS              |
     And I wait "/edm/source_system_v1" Async Queue complete
 
     Given I import "/ngems/material_linkage" by keyFields "localMaterialNumber,sourceSystem"
