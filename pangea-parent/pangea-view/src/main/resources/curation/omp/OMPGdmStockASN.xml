@@ -34,19 +34,14 @@
 
             <region path="/edm/purchase_order_oa_v1">
                 <columns>
-                    sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,
-                    suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,
-                    prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,
-                    localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,
-                    localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum,localSeqNumActAsgn,localSeqNumVendConf
+                    sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,
+                    poDt,suplPlntCd,matlNum,plntCd,slocCd,poLineQty,lineItemTypeCd,localPostingDate,recvEaQty,localdelvDt,grLeadTimeDays,custNum,localSeqNumActAsgn,localSeqNumVendConf
                 </columns>
             </region>
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    baseUom,batchManageIndicator,brand,category,division,flagForDeletion,form,franchise,globalBusinessUnit,globalDpParentCode,
-                    localBaseUom,localDpParentCode,localManufacturingTechnology,localMaterialGroup,localMaterialNumber,localMaterialType,localRefDescription,
-                    manufacturingTechnology,materialGroup,materialNumber,materialStatus,materialType,minRemShelfLife,parentCode,primaryPlanningCode,productFamily,refDescription,sourceSystem,subBrand,totalShelfLife
+                    localMaterialGroup,localMaterialNumber,localMaterialType,materialNumber,materialStatus,materialType,minRemShelfLife,parentCode,primaryPlanningCode,sourceSystem,totalShelfLife
                 </columns>
             </region>
 
@@ -68,8 +63,8 @@
                 </columns>
             </region>
 
-            <region>
-                <columns path="/omp/gdm_stock_asn">
+            <region path="/omp/gdm_stock_asn">
+                <columns>
                     stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyId,erpOrderId,inventoryLinkGroupId,vendorId,locationId,processId,processTypeId,productId,
                     qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity
                 </columns>
