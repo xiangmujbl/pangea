@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-498
-Feature: EDMCurrency AEAZ-498
+@pangea_test @AEAZ-498 @AEAZ-6273
+Feature: EDMCurrency AEAZ-498 AEAZ-6273
 
   Scenario: Full Load curation
     #  1. test filter zSourceSystem <> '[EMS]'
@@ -10,7 +10,10 @@ Feature: EDMCurrency AEAZ-498
       | zSourceSystem            | zCode | zEntCodeIso4217Alpha | zName          | zIso4217Numeric |
       | [MD Synthes SAP Anspach] | ADP   | -                    | Andoran peseta | -               |
       | [MDD FASE]               | AED   | AED                  | UAE Dirham     | -               |
+      | [BtB]	 				 | 		 | -                    | Andoran peseta | -               |
       | [EMS]                    | AED   | AED                  | UAE Dirham     | 784             |
+      | [MD Synthes SAP P01 EMEA]| QAR   | QAR                  | Qatar Rial     |                 |
+      
     And I wait "/ems/ems_f_z_currencies" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -18,6 +21,8 @@ Feature: EDMCurrency AEAZ-498
       | [MDD FASE]               | [MDD FASE]               | CONS_LATAM   | Consumer Latam Ent |
       | [EMS]                    | EMS                      | EMS          | EMS Ent            |
       | [MD Synthes SAP Anspach] | [MD Synthes SAP Anspach] | CONS_LATAM   | Consumer Latam Ent |
+      | [BtB]					 | Back to Basics - MDG		| MDD_BtB	   | 					|
+      
     And I wait "/edm/source_system_v1" Async Queue complete
 
     When I submit task with xml file "xml/edm/currency.xml" and execute file "jar/pangea-view.jar"
@@ -30,12 +35,10 @@ Feature: EDMCurrency AEAZ-498
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
 
-  Scenario: delete all test data
+#  Scenario: delete all test data
 
-    Then I delete the test data
+#    Then I delete the test data
 
-    And I will remove all data with region "/edm/currency_v1"
+#    And I will remove all data with region "/edm/currency_v1"
 
-    And I will remove all data with region "/plan/edm_failed_data"
-
-
+#    And I will remove all data with region "/plan/edm_failed_data"
