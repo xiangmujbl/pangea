@@ -229,6 +229,7 @@ public interface IConstant {
     interface EDM_SOURCE_SYSTEM_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
         String SOURCE_SYSTEM = "sourceSystem";
+        String SOURCE_SYSTEM_TYPE = "sourceSystemType";
     }
 
     interface PLAN_CNS_FIN_PLAN_VAL {
