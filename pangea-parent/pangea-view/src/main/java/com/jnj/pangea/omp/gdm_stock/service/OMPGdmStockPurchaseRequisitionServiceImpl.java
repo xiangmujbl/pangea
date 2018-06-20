@@ -20,6 +20,8 @@ import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +84,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             oMPGdmStockBo.setQuantity(String.valueOf(Long.parseLong(edmPurchaseRequisitionV1Entity.getPrLineQty()) -
                     Long.parseLong(edmPurchaseRequisitionV1Entity.getLocalPOQuantity())));
 
-            // PR12
+            /*// PR12
             if( StringUtils.isNotBlank( edmPurchaseRequisitionV1Entity.getNeedByDt())) {
                 Date needByDate = DateUtils.stringToDate(edmPurchaseRequisitionV1Entity.getNeedByDt(), DateUtils.dd_MM_yyyy);
                 if (null != needByDate && StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays())) {
@@ -95,9 +97,32 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
                         oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
                     }
                 }
+            }*/
+
+
+            //PR12 && PR13
+            if( StringUtils.isNotBlank( edmPurchaseRequisitionV1Entity.getNeedByDt()) || ( StringUtils.isNotBlank( edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()))) {
+                try {
+                    String validDateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
+                    SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+                    SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+                    Date dReceivedDate = sdfFrom.parse(validDateToFormat);
+                    String receivedDateConverted = sdfTo.format(dReceivedDate) + IConstant.VALUE.HH_NN_SS_ZERO;
+                    oMPGdmStockBo.setReceiptDate(receivedDateConverted);
+
+                    Date adjustedNeedByDate = DateUtils.offsetDate( dReceivedDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
+                    if (null != adjustedNeedByDate) {
+                        adjustedNeedByDate = DateUtils.moveToNextWorkingDay(adjustedNeedByDate);
+                        oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
+                    }
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
-                oMPGdmStockBo.setActive(IConstant.VALUE.YES);
+            oMPGdmStockBo.setActive(IConstant.VALUE.YES);
             oMPGdmStockBo.setActiveOPRERP(IConstant.VALUE.YES);
             oMPGdmStockBo.setActiveSOPERP(IConstant.VALUE.NO);
             oMPGdmStockBo.setBatchId(IConstant.VALUE.BLANK);
