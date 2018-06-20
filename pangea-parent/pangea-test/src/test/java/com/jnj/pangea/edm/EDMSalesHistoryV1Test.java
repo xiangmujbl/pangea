@@ -21,3 +21,4 @@ import org.junit.runner.RunWith;
 public class EDMSalesHistoryV1Test {
 
 }
+
