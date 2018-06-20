@@ -259,7 +259,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
         try {
-            Date from = sdfFrom.parse(purchaseOrderOAV1Entity.getDelvDt().trim());
+            Date from = sdfFrom.parse(purchaseOrderOAV1Entity.getLocaldelvDt().trim());
             String to = sdfTo.format(from);
             String newDate = to + defaultTime;
             stockBo.setReceiptDate(newDate);
@@ -275,7 +275,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
 
         try {
-            String dateToFormat = purchaseOrderOAV1Entity.getDelvDt().trim();
+            String dateToFormat = purchaseOrderOAV1Entity.getLocaldelvDt().trim();
             Date dFrom = sdfFrom.parse(dateToFormat);
 
             String timeToMove = purchaseOrderOAV1Entity.getGrLeadTimeDays().trim();
