@@ -150,6 +150,7 @@ public interface IConstant {
         String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
+        String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
     }
 
     interface EDM_INVENTORY_STOCK {
@@ -496,6 +497,8 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+        String FIRLD_BLANK="";
+        String SPLIT_=",";
     }
 
     interface EDM_PLANT_INPUT {
@@ -1036,6 +1039,7 @@ public interface IConstant {
         String THIRTY = "30";
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
+        String NGEMS = "NGEMS";
     }
 
     interface FAILED {
@@ -1191,6 +1195,11 @@ public interface IConstant {
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
         public static final int VALUE_DECIMAL_3= 3;
 
+    }
+    
+    interface PLAN_EDM_MAT_INPUT {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface FAILDATA {
