@@ -53,6 +53,7 @@ public class EDMAdvancedShipNotificationV1Entity extends CommonEntity {
         setLocalRefDocNum((String) map.get("localRefDocNum"));
         setLocRefDocLineNum((String) map.get("locRefDocLineNum"));
         setDelvLineNbr((String) map.get("delvLineNbr"));
+        setMatlNum((String) map.get("matlNum"));
         setLocalVendorBatchNo((String) map.get("localVendorBatchNo"));
     }
 

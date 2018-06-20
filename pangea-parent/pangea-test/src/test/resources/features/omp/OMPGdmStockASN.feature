@@ -99,4 +99,8 @@ Feature:  OMPGdmStockASN-Curation
 
     And I will remove all data with region "/plan/cns_material_plan_status"
 
+    And I will remove all data with region "/plan/cns_plan_object_filter"
+
+    And I will remove all data with region "/omp/gdm_stock_asn"
+
     And I will remove the test file on sink application "GDMStock.tsv"
