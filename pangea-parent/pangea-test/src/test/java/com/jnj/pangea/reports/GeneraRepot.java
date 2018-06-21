@@ -12,7 +12,7 @@ public class GeneraRepot {
     public static void main(String[] arg) {
 
         String pathRoot = System.getProperty("user.dir");
-        String path = pathRoot + "/pangea-parent/pangea-test/target/reports/json/";
+        String path = pathRoot + "/pangea-test/target/reports/json/";
         File fileParent = new File(path);
         File[] fileList = fileParent.listFiles();
         for (File file : fileList) {
@@ -23,11 +23,11 @@ public class GeneraRepot {
 
     private static void createReport(String pathRoot, String fileName) {
 
-        String filePath = pathRoot + "/pangea-parent/pangea-test/target/reports/html/";
+        String filePath = pathRoot + "/pangea-test/target/reports/html/";
         File reportOutputDirectory = new File(filePath);
         List<String> jsonFiles = new ArrayList<>();
 
-        String jsonPath = pathRoot + "/pangea-parent/pangea-test/target/reports/json/" + fileName + ".json";
+        String jsonPath = pathRoot + "/pangea-test/target/reports/json/" + fileName + ".json";
         jsonFiles.add(jsonPath);
 
         String projectName = fileName;
