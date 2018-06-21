@@ -13,6 +13,7 @@ public class EDMSourceSystemV1Entity extends CommonEntity {
     private String sourceSystemName;
     private String localSourceSystemName;
     private String localSourceSystem;
+    private String sourceSystemType;
 
     public EDMSourceSystemV1Entity(Map<String, Object> map) {
         super(map);
@@ -20,8 +21,9 @@ public class EDMSourceSystemV1Entity extends CommonEntity {
         setSourceSystemName((String) map.get("sourceSystemName"));
         setLocalSourceSystem((String) map.get("localSourceSystem"));
         setLocalSourceSystemName((String) map.get("localSourceSystemName"));
+        setSourceSystemType((String) map.get("sourceSystemType"));
     }
-
+    
     public String getSourceSystem() {
         return sourceSystem;
     }
@@ -53,4 +55,13 @@ public class EDMSourceSystemV1Entity extends CommonEntity {
     public void setLocalSourceSystem(String localSourceSystem) {
         this.localSourceSystem = localSourceSystem;
     }
+
+	public String getSourceSystemType() {
+		return sourceSystemType;
+	}
+
+	public void setSourceSystemType(String sourceSystemType) {
+		this.sourceSystemType = sourceSystemType;
+	}
+    
 }
