@@ -22,7 +22,6 @@ import com.jnj.pangea.omp.gdm_sales_history.bo.OMPGdmSalesHistoryBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.text.ParseException;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 
@@ -114,8 +113,16 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumber(salesOrderV1Entity.getLocalMaterialNumber());
         if (null != materialGlobalV1Entity) {
+
             gdmSalesHistoryBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
-            gdmSalesHistoryBo.setSalesUnit(checkT10(materialGlobalV1Entity.getLocalBaseUom()));
+            PlanCnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
+            if (null == planUnitEntity) {
+                FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T10, "cns_plan_unit-unit do not exist in edm material");
+                resultObject.setFailData(failData);
+                return resultObject;
+            }
+            gdmSalesHistoryBo.setSalesUnit(planUnitEntity.getUnit());
+
         } else {
             FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T8, "Material not found in material global");
             resultObject.setFailData(failData);
@@ -290,7 +297,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         Boolean plantFlag2 = false;
         PlanCnsSoTypeInclEntity soTypeInclEntity2 = cnsSoTypeInclDao.getEntityWithSalesOrgAndNotOrderTypeAndInclExcl(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType(), IConstant.VALUE.EN);
         if (null != soTypeInclEntity2) {
-            EDMPlantV1Entity plantV1Entity = checkPlant(salesOrderV1Entity.getLocalPlant(), soTypeInclEntity1.getCountry());
+            EDMPlantV1Entity plantV1Entity = checkPlant(salesOrderV1Entity.getLocalPlant(), soTypeInclEntity2.getCountry());
             if (null != plantV1Entity) {
                 plantFlag2 = true;
             }
@@ -333,14 +340,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             return IConstant.VALUE.ZERO;
         }
         return IConstant.VALUE.ZERO;
-    }
-
-    private String checkT10(String localBaseUom) {
-        PlanCnsPlanUnitEntity planUnitEntity = cnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(localBaseUom);
-        if (null != planUnitEntity) {
-            return planUnitEntity.getUnit();
-        }
-        return null;
     }
 
     private FailData writeFailData(EDMSalesOrderV1Entity salesOrderV1Entity, String errorCode, String errorValue) {
