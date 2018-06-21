@@ -1032,6 +1032,7 @@ public interface IConstant {
             String OMP_GDM_SALES_HISTORY = "OMPGdmSalesHistory";
             String OMP_GDM_CONVERSION_STORAGE = "OMPGdmConversionStorage";
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
+            String OMP_GDM_STOCK_ASN = "OMPGdmStockASN";
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
             String OMP_GDM_POS = "OMPGdmPos";
         }
@@ -1064,6 +1065,7 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
+            String ASN9 =  "ASN9";
         }
 
         interface ERROR_VALUE {
