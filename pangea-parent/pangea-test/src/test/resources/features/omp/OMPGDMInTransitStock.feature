@@ -70,7 +70,7 @@ Feature:  AEAZ-5745
 
         Then A file is found on sink application with name "GDMInTransitStock.tsv"
 
-         Then I check file data for filename "GDMInTransitStock" by keyFields "customerId,productId,quantity"
+         Then I check file data for filename "GDMInTransitStock.tsv" by keyFields "customerId,productId,quantity"
             | customerId | productId     | dueDate             | quantity |
             | 76100006   | LA_4567890123 | 17/01/2018 00:00:00 | 10500    |
             | 76100006   | LA_9876543210 | 17/01/2018 00:00:00 | 10050    |
@@ -81,11 +81,11 @@ Feature:  AEAZ-5745
             | 76100010   | LA_1234567890 | 17/01/2018 00:00:00 | 40500    |
             | 76100010   | LA_4567890123 | 17/01/2018 00:00:00 | 7645     |
             | 76100010   | LA_9876543210 | 17/01/2018 00:00:00 | 750      |
-        Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3"
-            | errorCode | functionalArea | interfaceID          | sourceSystem | key1       | key2     | key3        | errorValue                                     |
-            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | ATLM_LATAM | 76100009 | 878188888   | productId do not exist in edm_material         |
-            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | CONS_LATAM | 76100010 | 777777777   | unit do not exist in edm_Auom                  |
-            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | CONS_LATAM | 76100010 | 99998881111 | localDpParentCode do not exist in edm material |
-            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | CONS_LATAM | 76100010 | 999999999   | localDpParentCode do not exist in edm material |
+#        Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3"
+#            | errorCode | functionalArea | interfaceID          | sourceSystem | key1       | key2     | key3        | errorValue                                     |
+#            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | ATLM_LATAM | 76100009 | 878188888   | productId do not exist in edm_material         |
+#            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | CONS_LATAM | 76100010 | 777777777   | unit do not exist in edm_Auom                  |
+#            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | CONS_LATAM | 76100010 | 99998881111 | localDpParentCode do not exist in edm material |
+#            | J1        | DP             | OMPGDMInTransitStock | sourceSystem | CONS_LATAM | 76100010 | 999999999   | localDpParentCode do not exist in edm material |
         And I delete the test data
 
