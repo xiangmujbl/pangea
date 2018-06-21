@@ -1,22 +1,9 @@
 @pangea_test @AEAZ-3216
 Feature: CnsMaterialPlanStatus AEAZ-3216
 
-  Background:
-
-    And I will remove all data with region "/plan/cns_material_plan_status"
-    And I will remove all data with region "/plan/cns_material_incl"
-    And I will remove all data with region "/edm/material_global_v1"
-    And I will remove all data with region "/plan/edm_failed_data"
-    And I will remove all data with region "/edm/material_plant_v1"
-    And I will remove all data with region "/edm/source_system_v1"
-    And I will remove all data with region "/plan/cns_plan_parameter"
-    And I will remove all data with region "/edm/sales_order_v1"
-    And I will remove all data with region "/plan/cns_cust_excl"
-    And I will remove all data with region "/plan/cns_so_type_incl"
-    And I will remove all data with region "/edm/plant_v1"
-
-   @Scenario1
+  @Scenario1
   Scenario: Full Load curation
+
 
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
       | localMaterialNumber   | localPlant | materialNumber | localMrpType | localPlantStatus | localMrpController |
@@ -126,6 +113,11 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 #    And I compare the number of records between "/edm/material_plant_v1" and "/plan/cns_material_plan_status,/plan/edm_failed_data"
 
     And I delete the test data
+
+    And I will remove all data with region "/plan/cns_material_plan_status"
+    And I will remove all data with region "/plan/cns_material_incl"
+    And I will remove all data with region "/edm/material_global_v1"
+    And I will remove all data with region "/plan/edm_failed_data"
 
   @Scenario2
   Scenario: Full Load curation
@@ -273,15 +265,6 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | VE10       | ZBEF         | JN      |
     And I wait "/edm/plant_v1" Async Queue complete
 
-#    And I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-#      | sourceSystem | localMaterialNumber       | localPlant | dpRelevant | parentActive |
-#      | PLAN_DD      | 000000000000056504        | VE06       | X          | X            |
-#      | TTTT_DA      | 111111111111122222        | VE07       | X          | X            |
-#      | BBBB_GD      | 162312313231112312        | VE08       | X          | X            |
-#      | CCCC_AD      | 162312313231112312_J2     | VE09       | X          | X            |
-#      | CCCC_AD      | 162312313231112312_T2&&T3 | VE10       | X          | X            |
-#    And I wait "/plan/cns_material_plan_status" Async Queue complete
-
     When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus_3.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
@@ -297,10 +280,10 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
 #    And I compare the number of records between "/edm/plant_v1" and "/plan/cns_plant_attr,/plan/edm_failed_data"
 
-#  Scenario: delete all test data
-#
-#    Then I delete the test data
-#
-#    And I will remove all data with region "/plan/cns_material_plan_status"
-#
-#    And I will remove all data with region "/plan/edm_failed_data"
+  Scenario: delete all test data
+
+    Then I delete the test data
+
+    And I will remove all data with region "/plan/cns_material_plan_status"
+
+    And I will remove all data with region "/plan/edm_failed_data"

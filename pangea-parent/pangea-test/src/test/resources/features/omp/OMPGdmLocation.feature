@@ -74,8 +74,13 @@ Feature: OMPGdmLocation AEAZ-3685
       | functionalArea | interfaceID       | errorCode | sourceSystem | businessArea | key1    | key2       | key3 | key4 | key5 | errorValue               |
       | SP             | OMPGdmLocationEdm | T8        | project_one  |              | AR1_T8  | CONS_LATAM |      |      |      | Missing Location Type Id |
       | SP             | OMPGdmLocationEdm | T10       | project_one  |              | AR1_T10 | CONS_LATAM |      |      |      | Missing Country          |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | BR07    | CONS_LATAM |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | VE06    | ZLSR       |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | VE07    | ZBEF       |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | VE08    | ZBEF       |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | VE09    | ZBEF       |      |      |      | Missing Location Type Id |
+      | SP             | OMPGdmLocationEdm | T8        | project_one  |              | VE10    | ZBEF       |      |      |      | Missing Location Type Id |
 
-    And I compare the number of records between "/edm/plant_v1" and "/omp/gdm_location,/plan/edm_failed_data"
 
   Scenario: delete all test data
 
