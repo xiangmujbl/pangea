@@ -15,7 +15,7 @@ job create --name Pangea_QA_importCsv_edm_jnj_calendar --definition 'csv-adf --c
 
 ### STEP 2
 
-job create --name Pangea_QA_Trigger_Edm_MaterialGlobal --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/material/global/EDMMaterialGlobal_ProjectOne.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/mara,/edm/source_system_v1,/project_one/makt,/ngems/golden_material,/ngems/material_linkage,/edm/material_global_v1" --partition=2 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_QA_Trigger_Edm_MaterialGlobal --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMMaterialGlobal.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/mara,/edm/source_system_v1,/project_one/makt,/ngems/golden_material,/ngems/material_linkage,/edm/material_global_v1" --partition=2 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_QA_Trigger_OMP_GdmLocationDetail --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLocationDetail.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /plan/cns_plant_attr,/omp/gdm_location_detail" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
