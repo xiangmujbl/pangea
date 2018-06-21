@@ -61,7 +61,7 @@ public interface IConstant {
         String PLAN_CNS_CUST_EXCL = "/plan/cns_cust_excl";
         String PLAN_CNS_SO_TYPE_INCL = "/plan/cns_so_type_incl";
         String PLAN_CNS_PLANT_ATTR = "/plan/cns_plant_attr";
-        String PLAN_CNS_COUNTRY_INPUT = "/plan/cns_country_input";
+        String PLAN_EDM_COUNTRY_INPUT = "/plan/edm_country_input";
         String PLAN_CNS_PLAN_REGION = "/plan/cns_plan_region";
         String EDM_PRODUCT_FAMILY_V1 = "/edm/product_family_v1";
         String EDM_FORM_V1 = "/edm/form_v1";
@@ -290,7 +290,7 @@ public interface IConstant {
     }
 
     interface PLAN_CNS_PLAN_REGION {
-        String PLANNING_REGION_ID = "planningRegionID";
+        String PLANNING_REGION_ID = "planningRegionId";
     }
 
 
