@@ -5,6 +5,7 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
@@ -17,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
@@ -34,6 +36,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
     PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
+    EDMPurchaseOrderOAV1DaoImpl purchaseOrderOAV1Dao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
 
     String productId = "";
     String locationId = "";
@@ -132,12 +135,17 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         if(!po10Rule(purchaseOrderOAV1Entity)) {
             return resultObjectSkip;
         }
-
+        EDMPurchaseOrderOAV1Entity purchDateEntity = getLocalDelvDate(purchaseOrderOAV1Entity);
+        if(purchDateEntity == null){
+            return resultObjectSkip;
+        }
+        String localDelvDate = purchDateEntity.getLocaldelvDt().trim();
+        String leadTime = purchDateEntity.getGrLeadTimeDays().trim();
         //PO11
-        po11Rule(purchaseOrderOAV1Entity);
+        po11Rule(purchaseOrderOAV1Entity, localDelvDate);
 
         //PO12
-        po12Rule(purchaseOrderOAV1Entity);
+        po12Rule(purchaseOrderOAV1Entity, localDelvDate, leadTime);
 
         //PO17
         po17Rule(purchaseOrderOAV1Entity);
@@ -254,12 +262,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return orderUnitNotZero;
     }
 
-    private void po11Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
+    private void po11Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, String localDelvDate){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
         try {
-            Date from = sdfFrom.parse(purchaseOrderOAV1Entity.getLocaldelvDt().trim());
+            Date from = sdfFrom.parse(localDelvDate);
             String to = sdfTo.format(from);
             String newDate = to + defaultTime;
             stockBo.setReceiptDate(newDate);
@@ -269,20 +277,19 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
-    private void po12Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
+    private void po12Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, String localDelvDate, String leadTime){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
 
         try {
-            String dateToFormat = purchaseOrderOAV1Entity.getLocaldelvDt().trim();
+            String dateToFormat = localDelvDate;
             Date dFrom = sdfFrom.parse(dateToFormat);
 
-            String timeToMove = purchaseOrderOAV1Entity.getGrLeadTimeDays().trim();
             Calendar cal = Calendar.getInstance();
             cal.setTime(dFrom);
-            if (!timeToMove.isEmpty()) {
-                cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
+            if (!leadTime.isEmpty()) {
+                cal.add(Calendar.DATE, Integer.parseInt(leadTime));
             }
             if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
                 cal.add(Calendar.DATE, 2);
@@ -332,5 +339,17 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         } else {
             stockBo.setProcessTypeId(IConstant.VALUE.EMPTY);
         }
+    }
+
+    private EDMPurchaseOrderOAV1Entity getLocalDelvDate(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
+        List<EDMPurchaseOrderOAV1Entity> porders = purchaseOrderOAV1Dao.getPurchaseOrderListByPoNumPoLineNbr(purchaseOrderOAV1Entity.getPoNum(), purchaseOrderOAV1Entity.getPoLineNbr());
+        if(porders != null) {
+            for(EDMPurchaseOrderOAV1Entity e : porders) {
+                if(!e.getLocaldelvDt().trim().isEmpty()) {
+                    return e;
+                }
+            }
+        }
+        return null;
     }
 }
