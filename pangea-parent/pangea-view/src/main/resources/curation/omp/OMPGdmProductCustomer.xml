@@ -1,35 +1,12 @@
 <adf-curation>
-    <curation mainRegion="/edm/material_global_v1" viewRegion="/omp/gdm_productcustomer" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/plan/cns_productcustomer" viewRegion="/omp/gdm_productcustomer" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_productcustomer.controller.OMPGdmProductCustomerController"
               writeTo="all" topic="PANGEA_V1_gdm_productcustomer">
         <regions>
 
-            <region path="/edm/material_global_v1">
-                <columns>
-                    sourceSystem,localMaterialNumber,localDpParentCode
-                </columns>
-                <relations>
-                    <relation path="/plan/cns_productcustomer" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                    <relation path="/edm/material_global_v1" alias="/edm/material_global_v1_clone" isPrimaryKey="false">
-                        <expression>
-                            localDpParentCode=/edm/material_global_v1.localDpParentCode
-                        </expression>
-                    </relation>
-
-                </relations>
-            </region>
-
-            <region path="/edm/material_global_v1" alias="/edm/material_global_v1_clone">
-                <columns>
-                    sourceSystem,localMaterialNumber,localDpParentCode
-                </columns>
-            </region>
-
             <region path="/plan/cns_productcustomer">
                 <columns>
-                    sourceSystem,productId,demandGroup,productStatus,minStock,maxStock,stockLevel,uom,preferredDC,leadTime,revenueRecognitionOffset
+                    sourceSystem,customerId,productId,productStatus,moq,ioq,stockLevel,uom,locationId,norm,leadTime,roundingThreshold
                 </columns>
                 <relations>
                     <relation path="/edm/material_auom_v1" isPrimaryKey="false">
@@ -37,18 +14,67 @@
                             sourceSystem=/plan/cns_productcustomer.sourceSystem,localMaterialNumber=/plan/cns_productcustomer.productId,localAuom=/plan/cns_productcustomer.uom
                         </expression>
                     </relation>
+                    <relation path="/plan/cns_plan_dem_grp" isPrimaryKey="false">
+                        <expression>
+                            sourceSystem=/plan/cns_productcustomer.sourceSystem,demandGroupId=/plan/cns_productcustomer.customerId
+                        </expression>
+                    </relation>
+
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/plan/cns_productcustomer" alias="/plan/cns_productcustomer_clone">
+                        <expression></expression>
+                    </relation>
+
                 </relations>
             </region>
 
+            <region path="/plan/cns_productcustomer" alias="/plan/cns_productcustomer_clone">
+                <columns>
+                    sourceSystem,customerId,productId,productStatus,moq,ioq,stockLevel,uom,locationId,norm,leadTime,roundingThreshold
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    sourceSystem,localMaterialNumber,localDpParentCode,baseUom
+                </columns>
+                <!--<relations>-->
+                    <!--<relation path="/plan/cns_productcustomer" isPrimaryKey="false">-->
+                    <!--<expression></expression>-->
+                    <!--</relation>-->
+                    <!--<relation path="/edm/material_global_v1" alias="/edm/material_global_v1_clone" isPrimaryKey="false">-->
+                    <!--<expression>-->
+                    <!--localDpParentCode=/edm/material_global_v1.localDpParentCode-->
+                    <!--</expression>-->
+                    <!--</relation>-->
+
+                <!--</relations>-->
+            </region>
+
+            <!--<region path="/edm/material_global_v1" alias="/edm/material_global_v1_clone">-->
+            <!--<columns>-->
+            <!--sourceSystem,localMaterialNumber,localDpParentCode,baseUom-->
+            <!--</columns>-->
+            <!--</region>-->
+
             <region path="/edm/material_auom_v1">
                 <columns>
-                    sourceSystem,localAuom,localDenominator,localMaterialNumber,localNumerator,materialNumber,numerator
+                    localAuom,localDenominator,localMaterialNumber,localNumerator,materialNumber,numerator,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/plan/cns_plan_dem_grp">
+                <columns>
+                    sourceSystem,demandGroupId,demandGroupDesc,localCurrency,locationId
                 </columns>
             </region>
 
             <region path="/omp/gdm_productcustomer">
                 <columns>
-                    productCustomerId,productStatus,minStock,maxStock,preferredDC,leadTime,revenueRecognitionOffset,stockLevel
+                    customerId,productId,productStatus,moq,ioq,locationId,norm,leadTime,roundingThreshold,stockLevel
                 </columns>
             </region>
 

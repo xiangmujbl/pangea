@@ -5,28 +5,39 @@ import com.jnj.pangea.common.BaseBo;
 
 public class OMPGdmProductCustomerBo extends BaseBo {
 
-    private String productCustomerId;
+    private String customerId;
+    private String productId;
     private String productStatus;
-    private String minStock;
-    private String maxStock;
-    private String preferredDC;
+    private String moq;
+    private String ioq;
+    private String locationId;
+    private String norm;
     private String leadTime;
-    private String revenueRecognitionOffset;
+    private String roundingThreshold;
     private String stockLevel;
 
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
-                .makeJsonObject("productCustomerId", this.productCustomerId)
+                .makeJsonObject("customerId", this.customerId)
+                .add("productId",productId)
                 .toJsonString();
     }
 
-    public String getProductCustomerId() {
-        return productCustomerId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setProductCustomerId(String productCustomerId) {
-        this.productCustomerId = productCustomerId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getProductStatus() {
@@ -37,28 +48,36 @@ public class OMPGdmProductCustomerBo extends BaseBo {
         this.productStatus = productStatus;
     }
 
-    public String getMinStock() {
-        return minStock;
+    public String getMoq() {
+        return moq;
     }
 
-    public void setMinStock(String minStock) {
-        this.minStock = minStock;
+    public void setMoq(String moq) {
+        this.moq = moq;
     }
 
-    public String getMaxStock() {
-        return maxStock;
+    public String getIoq() {
+        return ioq;
     }
 
-    public void setMaxStock(String maxStock) {
-        this.maxStock = maxStock;
+    public void setIoq(String ioq) {
+        this.ioq = ioq;
     }
 
-    public String getPreferredDC() {
-        return preferredDC;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setPreferredDC(String preferredDC) {
-        this.preferredDC = preferredDC;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
+
+    public String getNorm() {
+        return norm;
+    }
+
+    public void setNorm(String norm) {
+        this.norm = norm;
     }
 
     public String getLeadTime() {
@@ -69,12 +88,12 @@ public class OMPGdmProductCustomerBo extends BaseBo {
         this.leadTime = leadTime;
     }
 
-    public String getRevenueRecognitionOffset() {
-        return revenueRecognitionOffset;
+    public String getRoundingThreshold() {
+        return roundingThreshold;
     }
 
-    public void setRevenueRecognitionOffset(String revenueRecognitionOffset) {
-        this.revenueRecognitionOffset = revenueRecognitionOffset;
+    public void setRoundingThreshold(String roundingThreshold) {
+        this.roundingThreshold = roundingThreshold;
     }
 
     public String getStockLevel() {
