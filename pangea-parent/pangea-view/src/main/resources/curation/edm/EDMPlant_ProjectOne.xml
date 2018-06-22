@@ -9,7 +9,7 @@
                 <filter>(*:* -zPlantSourceSystem:\[EMS\])</filter>
 
                 <relations>
-                    <relation path="/edm/source_system_v1" isPrimaryKey="true">
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression>localSourceSystem=/ems/ems_f_z_enterprise_plants.zPlantSourceSystem</expression>
                     </relation>
 
@@ -18,6 +18,10 @@
                     </relation>
 
                     <relation path="/edm/country_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+
+                    <relation path="/edm/edm_plant_input" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
 
@@ -52,6 +56,10 @@
 
             <region path="/edm/country_v1">
                 <columns>countryCode,countryName,localCountry</columns>
+            </region>
+
+            <region path="/edm/edm_plant_input">
+                <columns>sourceSystem,localPlant,localPlanningRelevant</columns>
             </region>
 
             <region path="/edm/plant_v1">
