@@ -77,7 +77,7 @@ Feature: OMPGdmStock AEAZ-5951
       | X      | X          | 441369              |                   | CR01       | 441369         | X              |              | 441369 | CONS_LATAM   |            |
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectAttribute1,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem"
+    Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem"
       | inclusionExclusion | sourceObjectAttribute1 | sourceObjectAttribute1Value | sourceObjectAttribute2 | sourceObjectAttribute2Value | sourceObjectTechName | sourceSystem |
       | I                  | plntCd                 | CO01                        | planOrdrTypeCd         | NB                          | planned_order        | CONS_LATAM   |
       | I                  | plntCd                 | CO01                        | planOrdrTypeCd         | NB                          | planned_order        | CONS_LATAM   |
