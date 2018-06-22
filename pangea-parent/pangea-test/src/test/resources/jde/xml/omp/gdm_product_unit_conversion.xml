@@ -1,0 +1,88 @@
+<adf-curation xmlPathPrefix="/jde/omp/product"
+              executionClassName="com.jnj.omega.jde.omp.product.GDMProductUnitConversion" chunkSize="500"
+              writeTo="all" topic="OMEGA_omp_gdm_product_unit_conversion">
+
+    <regions>
+        <region path="/edm/matl_alt_uom" mainRegion="true">
+            <columns>srcSysCd,matlNum,altUomCd,materialNumber,factNumrtrMeas,factDenomMeas,auom,numerator,denominator
+            </columns>
+            <relations>
+                <region path="/plan/mdd_mat_plant_scope" isPrimaryKey="false">
+                    <columns>srcSysCd,matlNum,plntCd,entrpMatlNum,entrpPrmryPlngCd</columns>
+                    <expression>entrpMatlNum=/edm/matl_alt_uom.matlNum</expression>
+                </region>
+                <region path="/edm/unit_of_measure_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,localUom,uom</columns>
+                    <expression>localUom=/edm/matl_alt_uom.altUomCd</expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
+
+    <methods>
+        <method name="getMaterialPlantRecord" resultType="Map" isPK="false" path="/plan/mdd_mat_plant_scope">
+            <parameters>
+                <parameter name="entrpMatlNum" value="entrpMatlNum"/>
+            </parameters>
+        </method>
+        <method name="getUnitOfMeasureRecord" resultType="Map" isPK="false" path="/edm/unit_of_measure_v1">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localUom" value="localUom"/>
+            </parameters>
+        </method>
+    </methods>
+
+    <viewRegion name="/omp/gdm_product_unit_conversion">
+        <vars>
+            <var name="srcSysCd" value="srcSysCd"/>
+            <var name="matlNum" value="matlNum"/>
+            <var name="altUomCd" value="altUomCd"/>
+            <var name="factNumrtrMeas" value="factNumrtrMeas"/>
+            <var name="factDenomMeas" value="factDenomMeas"/>
+        </vars>
+        <columns>
+            <column name="gdmProductUnitConversionId" isPK="true">
+                <if test="StringUtils.isNotEmpty(matlNum)">
+                    <ref method="getMaterialPlantRecord" parameter="matlNum" resultType="Map"
+                         value="entrpPrmryPlngCd">
+                        <if test="StringUtils.isNotEmpty(altUomCd) &amp;&amp; StringUtils.isNotEmpty(srcSysCd)">
+                            <ref method="getUnitOfMeasureRecord" parameter="srcSysCd,altUomCd" resultType="Map"
+                                 value="uom">
+                                <if test="StringUtils.isNotEmpty(entrpPrmryPlngCd) &amp;&amp; StringUtils.isNotEmpty(uom)">
+                                    <set name="gdmProductUnitConversionId"
+                                         value="StringInner.join(entrpPrmryPlngCd,uom)"/>
+                                </if>
+                                <else><return/></else>
+                            </ref>
+                            <if><return/></if>
+                        </if>
+                        <else><return/></else>
+                    </ref>
+                    <if><return/></if>
+                </if>
+                <else><return/></else>
+            </column>
+            <column name="active" hardCode="YES"/>
+            <column name="activeFctErp" hardCode="NO"/>
+            <column name="activeOprErp" hardCode="YES"/>
+            <column name="activeSopErp" hardCode="NO"/>
+            <column name="factor">
+                <if test="StringUtils.isNotEmpty(factNumrtrMeas) &amp;&amp; StringUtils.isNotEmpty(factDenomMeas)">
+                    <ref hook="Utils.calculateDivide(factNumrtrMeas,factDenomMeas)"/>
+                </if>
+                <else><return/></else>
+            </column>
+            <column name="productId" var="entrpPrmryPlngCd"/>
+            <column name="unitId" var="uom">
+                <if test="StringUtils.isNotEmpty(altUomCd) &amp;&amp; StringUtils.isNotEmpty(srcSysCd)">
+                    <ref method="getUnitOfMeasureRecord" parameter="srcSysCd,altUomCd" resultType="Map"
+                         value="uom"/>
+                    <if><return/></if>
+                </if>
+                <else><return/></else>
+            </column>
+        </columns>
+    </viewRegion>
+
+</adf-curation>

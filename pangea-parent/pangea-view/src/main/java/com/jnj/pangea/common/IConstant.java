@@ -31,6 +31,7 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
+        String PROJECT_ONE_VBFA = "/project_one/vbfa";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
@@ -149,9 +150,8 @@ public interface IConstant {
         String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
+        String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
-        String EDM_PURCHASE_ORDER_OA_V1_AGGREGATION_CNFRM_QTY = "/edm/purchase_order_oa_v1_aggregation_cnfrmQty";
-        String EDM_PURCHASE_ORDER_OA_V1_AGGREGATION_RECVEAQTY = "/edm/purchase_order_oa_v1_aggregation_recvEaQty";
     }
 
     interface EDM_INVENTORY_STOCK {
@@ -346,6 +346,20 @@ public interface IConstant {
         String SPARS = "spars";
     }
 
+    interface PROJECT_ONE_VBFA {
+        String VBELV = "vbelv";
+        String POSNV = "posnv";
+        String VBELN = "vbeln";
+        String POSNN = "posnn";
+        String VBTYP_N = "vbtypN";
+        String RFMNG = "rfmng";
+        String MEINS = "meins";
+        String RFMNG_FLT = "rfmngFlt";
+        String VRKME = "vrkme";
+        String VBTYP_V = "vbtypV";
+        String ERDAT = "erdat";
+    }
+
     interface PLAN_CNS_DP_PRICE {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     }
@@ -484,6 +498,8 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+        String FIRLD_BLANK="";
+        String SPLIT_=",";
     }
 
     interface EDM_PLANT_INPUT {
@@ -1055,6 +1071,7 @@ public interface IConstant {
         String DEFAULTSM = "Default";
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
+        String NGEMS = "NGEMS";
     }
 
     interface FAILED {
@@ -1210,6 +1227,11 @@ public interface IConstant {
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
         public static final int VALUE_DECIMAL_3= 3;
 
+    }
+    
+    interface PLAN_EDM_MAT_INPUT {
+        String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
+        String SOURCE_SYSTEM = "sourceSystem";
     }
 
     interface FAILDATA {
