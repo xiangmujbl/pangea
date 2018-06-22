@@ -1,3 +1,4 @@
+/project_one/vbfa
 /project_one/vbpa
 /project_one/vbkd
 /project_one/vbep
@@ -152,6 +153,7 @@
 /ngems/form_v1
 /ngems/category_v1
 /ngems/brand_v1
+/edm/sales_history_v1
 /ems/ems_f_z_enterprise_plants
 /ems/ems_f_z_currencies
 /ems/ems_f_mdm_units
@@ -224,3 +226,4 @@
 /plan/cns_tlane_item
 /plan/cns_tlane_item_exception
 /project_one/stpo
+/omp/gdm_stock

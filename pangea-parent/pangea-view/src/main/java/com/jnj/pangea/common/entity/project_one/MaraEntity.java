@@ -16,6 +16,7 @@ public class MaraEntity extends CommonEntity {
     private String xchpf;
     private String mhdrz;
     private String mhdhb;
+    private String zzplnrootid;
 
     public MaraEntity(Map<String, Object> map) {
         super(map);
@@ -29,6 +30,7 @@ public class MaraEntity extends CommonEntity {
         setXchpf((String) map.get("xchpf"));
         setMhdrz((String) map.get("mhdrz"));
         setMhdhb((String) map.get("mhdhb"));
+        setZzplnrootid((String) map.get("zzplnrootid"));
     }
 
 
@@ -111,4 +113,15 @@ public class MaraEntity extends CommonEntity {
     public void setSpart(String spart) {
         this.spart = spart;
     }
+
+
+	public String getZzplnrootid() {
+		return zzplnrootid;
+	}
+
+
+	public void setZzplnrootid(String zzplnrootid) {
+		this.zzplnrootid = zzplnrootid;
+	}
+    
 }

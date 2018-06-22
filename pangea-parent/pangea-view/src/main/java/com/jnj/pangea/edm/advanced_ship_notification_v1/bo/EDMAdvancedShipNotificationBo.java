@@ -203,6 +203,7 @@ public class EDMAdvancedShipNotificationBo extends BaseBo {
         return RawDataHelper.getInstance()
                 .makeJsonObject("srcSysCd", this.srcSysCd)
                 .add("delvDocID", this.delvDocID)
+                .add("delvLineNbr", this.delvLineNbr)
                 .toJsonString();
     }
 }

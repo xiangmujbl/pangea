@@ -34,7 +34,7 @@
 
             <region path="/omp/gdm_resource">
                 <columns>
-                    resourceId,active,activeOPRERP,activeSOPERP,calendarId,description,locationId
+                    resourceId,active,activeOPRERP,activeSOPERP,description,locationId
                 </columns>
             </region>
 

@@ -103,8 +103,8 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			PlanCnsProcessTypeEntity processTypeEntity =
 					this.processTypeDao.getCnsProcessTypeById(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
-			gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo());
-			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom());
+			gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
+			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom() + IConstant.VALUE.HH_NN_SS_ZERO);
 			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
 			gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
@@ -149,12 +149,12 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		if (!matGlobV1EntityList.isEmpty()) {
 			locMatNum = matGlobV1EntityList.get(0).getLocalMaterialNumber();
 		}
-//		else {
-//			matGlobV1EntityList = this.materialGlobalV1Dao.getEntitiesWithMaterialNumber(tlaneItemEntity.getMaterialNumber());
-//			if (!matGlobV1EntityList.isEmpty()) {
-//				locMatNum = matGlobV1EntityList.get(0).getLocalMaterialNumber();
-//			}
-//		}
+		else {
+			matGlobV1EntityList = this.materialGlobalV1Dao.getEntitiesWithMaterialNumber(tlaneItemEntity.getMaterialNumber());
+			if (!matGlobV1EntityList.isEmpty()) {
+				locMatNum = matGlobV1EntityList.get(0).getLocalMaterialNumber();
+			}
+		}
 
 		return locMatNum;
 	}
@@ -173,7 +173,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		String rule = "N1";
 
 		List<CnsTlaneItemExceptionEntity> tlaneItemExceptionEntities =
-				this.tlaneExceptionDao.getEntitiesWithRefSeqNumMatNumTlaneName(
+				this.tlaneExceptionDao.getEntitiesWithSeqNumMatNumTlaneName(
 						tlaneItemEntity.getSequenceNumber(),
 						tlaneItemEntity.getMaterialNumber(),
 						tlaneItemEntity.getTlaneName()
@@ -215,7 +215,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//skip rest if no mat num was found
 		if (locMatNum == null) {
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 
@@ -226,7 +226,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		}
 		else {
 
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 
@@ -250,7 +250,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//skip rest if no mat num was found
 		if (locMatNum == null) {
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 
@@ -261,7 +261,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			sourceListV1Entity = sourceListV1EntityList.get(0);
 		}
 		else {
-			this.curationSkip = true;
+			//this.curationSkip = true;
 			return null;
 		}
 
