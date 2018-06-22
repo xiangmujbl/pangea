@@ -124,7 +124,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             return resultObjectSkip;
         }
 
-        if((cnsMaterialPlanStatusEntity.getSpRelevant() == null || !cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) || (cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null || !cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X))) {
+        if(po9RuleChecks(cnsMaterialPlanStatusEntity)){
             return resultObjectSkip;
         }
 
@@ -142,10 +142,10 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         String localDelvDate = purchDateEntity.getLocaldelvDt().trim();
         String leadTime = purchDateEntity.getGrLeadTimeDays().trim();
         //PO11
-        po11Rule(purchaseOrderOAV1Entity, localDelvDate);
+        po11Rule(localDelvDate);
 
         //PO12
-        po12Rule(purchaseOrderOAV1Entity, localDelvDate, leadTime);
+        po12Rule(localDelvDate, leadTime);
 
         //PO17
         po17Rule(purchaseOrderOAV1Entity);
@@ -228,22 +228,28 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         boolean getRecvEaQtySum = true;
         boolean bothZero = true;
         boolean orderUnitNotZero = true;
+        Float cnfrmQtySum = Float.valueOf(0);
+        Float recvEaQtySum;
         try {
-            Float cnfrmQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getCnfrmQty().trim());
+            if(!purchaseOrderOAV1Entity.getCnfrmQty().isEmpty()) {
+                cnfrmQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getCnfrmQty().trim());
+            }
+
             if (cnfrmQtySum > 0) {
                 getRecvEaQtySum = false;
                 bothZero = false;
                 orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim()) - cnfrmQtySum;
-                if(orderUnit == 0){
+                if (orderUnit == 0) {
                     orderUnitNotZero = false;
                 }
             }
-            if (getRecvEaQtySum && purchaseOrderOAV1Entity.getEvTypeCd().trim().equals("1")) {
-                Float recvEaQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getRecvEaQty().trim());
+
+            if (getRecvEaQtySum && purchaseOrderOAV1Entity.getEvTypeCd().trim().equals("1") && !purchaseOrderOAV1Entity.getRecvEaQty().isEmpty()) {
+                recvEaQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getRecvEaQty().trim());
                 if (recvEaQtySum > 0) {
                     bothZero = false;
                     orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim()) - recvEaQtySum;
-                    if(orderUnit == 0){
+                    if (orderUnit == 0) {
                         orderUnitNotZero = false;
                     }
                 }
@@ -262,7 +268,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return orderUnitNotZero;
     }
 
-    private void po11Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, String localDelvDate){
+    private void po11Rule(String localDelvDate){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
@@ -277,7 +283,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
-    private void po12Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, String localDelvDate, String leadTime){
+    private void po12Rule(String localDelvDate, String leadTime){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
@@ -351,5 +357,17 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             }
         }
         return null;
+    }
+
+    private boolean po9RuleChecks(PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity){
+
+        if(cnsMaterialPlanStatusEntity.getSpRelevant() == null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null ){
+            return true;
+        }
+
+        if(cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)){
+            return false;
+        }
+        return (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X));
     }
 }
