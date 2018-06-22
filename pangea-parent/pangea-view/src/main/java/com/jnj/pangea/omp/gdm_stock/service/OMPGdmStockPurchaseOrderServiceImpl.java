@@ -124,7 +124,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             return resultObjectSkip;
         }
 
-        if((cnsMaterialPlanStatusEntity.getSpRelevant() == null && !cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) || (cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null && !cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X))) {
+        if((cnsMaterialPlanStatusEntity.getSpRelevant() == null || !cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) || (cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null || !cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X))) {
             return resultObjectSkip;
         }
 
