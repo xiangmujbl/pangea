@@ -4,7 +4,6 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
   @Scenario1
   Scenario: Full Load curation
 
-
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
       | localMaterialNumber   | localPlant | materialNumber | localMrpType | localPlantStatus | localMrpController |
       | 000000000000203700_F1 | BR12       | -              | PD           |                  | 999                |
