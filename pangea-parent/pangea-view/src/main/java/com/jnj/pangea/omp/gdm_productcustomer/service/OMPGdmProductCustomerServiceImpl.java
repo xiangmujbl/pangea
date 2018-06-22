@@ -62,7 +62,7 @@ public class OMPGdmProductCustomerServiceImpl {
                     //rule T3
                     Boolean productStatusFlag = false;
                     for (PlanCnsProductCustomerEntity planCnsProductCustomerEntity1 : planCnsProductCustomer) {
-                        if (!planCnsProductCustomerEntity1.getProductStatus().equals(null) && planCnsProductCustomerEntity1.getProductStatus().equals("ACTIVE")){
+                        if (StringUtils.isNotBlank(planCnsProductCustomerEntity1.getProductStatus()) && planCnsProductCustomerEntity1.getProductStatus().equals("ACTIVE")){
                             productStatusFlag = true;
                         }
                     }
