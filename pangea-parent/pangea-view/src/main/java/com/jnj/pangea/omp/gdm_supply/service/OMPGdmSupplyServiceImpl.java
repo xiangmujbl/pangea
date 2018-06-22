@@ -110,7 +110,7 @@ public class OMPGdmSupplyServiceImpl {
                                     }
 
                                     // N10
-                                    if (!(edmSourceListV1Entity.getLocalFixedvendor().isEmpty()) || (!(edmSourceListV1Entity.getLocalFixedOutlinePurchaseAgreementItem().isEmpty()))) {
+                                    if (!(edmSourceListV1Entity.getLocalFixedvendor().trim().isEmpty()) || (!(edmSourceListV1Entity.getLocalFixedOutlinePurchaseAgreementItem().trim().isEmpty()))) {
                                         gdmSupplyBo.setPreference(IConstant.VALUE.ZERO);
                                     } else {
                                         gdmSupplyBo.setPreference(IConstant.VALUE.ONE);
@@ -209,7 +209,7 @@ public class OMPGdmSupplyServiceImpl {
                                                     return skipObjects;
                                                 } else {
                                                         // skip if EDM Source List V1 Entity Local Plant from Which Material is Procured is not blank
-                                                        if (edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) {
+                                                        if (edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim().isEmpty()) {
 
                                                             // set Vendor to EDM Source List V1 local vendor account number
                                                             gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
@@ -221,6 +221,7 @@ public class OMPGdmSupplyServiceImpl {
                                                         }
                                                     }
                                                 }
+                                                
                                             } else {
                                                 gdmSupplyBo.setVENDORID(edmSourceListV1Entity.getLocalVendorAccountNumber());
                                             }
