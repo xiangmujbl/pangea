@@ -4,7 +4,6 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
   @Scenario1
   Scenario: Full Load curation
 
-
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
       | localMaterialNumber   | localPlant | materialNumber | localMrpType | localPlantStatus | localMrpController |
       | 000000000000203700_F1 | BR12       | -              | PD           |                  | 999                |
@@ -26,7 +25,7 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | 000000000000214005_T5 | BR12       | -              | PD           | 9                | 999                |
       | 000000000000214006_T6 | BR12       | -              | PD           | 9                | 999                |
 
-    And I wait "/edm/material_plant_v1" Async Queue complete|
+    And I wait "/edm/material_plant_v1" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
@@ -216,19 +215,24 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     And I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
-      | localMaterialNumber | localPlant | materialNumber | localMrpType |
-      | 000000000000056504  | ND         | -              | PD           |
-      | 111111111111122222  | BR12       | -              | PR           |
-      | 0000000000002139_F1 | PD23       | -              | PD23         |
-      | 000000000000213998  | PD23       | -              | PD           |
-      | 162312313231112312  | PD23       | -              | PD           |
+      | localMaterialNumber       | localPlant | materialNumber | localMrpType |
+      | 000000000000056504        | ND         | -              | PD           |
+      | 111111111111122222        | BR12       | -              | PR           |
+      | 0000000000002139_F1       | PD23       | -              | PD23         |
+      | 000000000000213998        | PD23       | -              | PD           |
+      | 162312313231112312        | PD23       | -              | PD           |
+      | 162312313231112312_J2     | VE09       | -              | PD           |
+      | 162312313231112312_T2&&T3 | VE10       | -              | PR           |
     And I wait "/edm/material_plant_v1" Async Queue complete
 
     And I import "/plan/cns_cust_excl" by keyFields "country,customerShipTo,salesOrg,sourceSystem"
-      | country | customerShipTo | salesOrg | sourceSystem |
-      | BR      | 116538         | VE03     | CON_LATAM    |
-      | BR      | 0000174002     | BR01_F2  | CON_LATAM    |
-      | BR      | 178991         | BR01     | CON_LATAM    |
+      | country | customerShipTo | salesOrg | sourceSystem | inclExcl |
+      | BR      | 116538         | VE03     | CON_LATAM    | I        |
+      | BR      | 0000174002     | BR01_F2  | CON_LATAM    | I        |
+      | BR      | 178991         | BR01     | CON_LATAM    | I        |
+      | BR      | 123451223      | ED01     | CON_LATAM    | I        |
+      | BR      | 8492803        | ED01     | CON_LATAM    | I        |
+
     And I wait "/plan/cns_cust_excl" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -244,15 +248,15 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
       | HALB              | 111111111111122222        | 22222          | 27896212           | 978                 |
       | HALB              | 000000000000213998        | 66666          | 37896212           | 988                 |
       | FBLB              | 162312313231112312        | 44444          | 37896212           | 990                 |
-      | CBBBB             | 162312313231112312_T2&&T3 | 5555           | 37896212           | 1090                |
+      | CBBBB             | 162312313231112312_T2&&T3 | 5555           | 37896213           | 1090                |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     And I import "/plan/cns_so_type_incl" by keyFields "country,orderType,salesOrg,sourceSystem"
-      | country | orderType | salesOrg | sourceSystem |
-      | BR      | ZLSR      | VE03     | CONS_LATAM   |
-      | CN      | ZBEF      | BR01     | CONS_LATAM   |
-      | BC      | ZBEF      | BR01_J1  | CONS_LATAM   |
-      | JN      | EDCD      | ED01     | CONS_LATAM   |
+      | country | orderType | salesOrg | sourceSystem | inclExcl |
+      | BR      | ZLSR      | VE03     | CONS_LATAM   | I        |
+      | CN      | ZBEF      | BR01     | CONS_LATAM   | I        |
+      | BC      | ZBEF      | BR01_J1  | CONS_LATAM   | I        |
+      | JN      | EDCD      | ED01     | CONS_LATAM   | I        |
 
     And I wait "/plan/cns_so_type_incl" Async Queue complete
 
@@ -267,13 +271,15 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
 
     When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus_3.xml" and execute file "jar/pangea-view.jar"
 
+    And wait 3000 millisecond
+
     Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-      | sourceSystem | localMaterialNumber       | localPlant | materialNumber | localParentCode    | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
-      | CONS_LATAM   | 000000000000056504        | VE06       | 11111          | 178962124094540036 | 945 | X      | X          |            | X            |                |
-      | CONS_LATAM   | 111111111111122222        | VE07       | 22222          | 27896212           | 978 | X      | X          |            | X            |                |
-      | CONS_LATAM   | 162312313231112312        | VE08       | 44444          | 37896212           | 990 | X      | X          |            | X            |                |
-      | CONS_LATAM   | 162312313231112312_J2     | VE09       |                |                    |     | X      | X          |            |              |                |
-      | CONS_LATAM   | 162312313231112312_T2&&T3 | VE10       | 5555           |                    |     | X      | X          |            |              |                |
+      | sourceSystem | localMaterialNumber       | localPlant | materialNumber | localParentCode    | ppc  | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
+      | CONS_LATAM   | 000000000000056504        | VE06       | 11111          | 178962124094540036 | 945  | X      | X          |            | X            |                |
+      | CONS_LATAM   | 111111111111122222        | VE07       | 22222          | 27896212           | 978  | X      | X          |            | X            |                |
+      | CONS_LATAM   | 162312313231112312        | VE08       | 44444          | 37896212           | 990  | X      | X          |            | X            |                |
+      #| CONS_LATAM   | 162312313231112312_J2     | VE09       |                |                    |     | X      | X          |            |              |                |
+      | CONS_LATAM   | 162312313231112312_T2&&T3 | VE10       | 5555           | 37896213           | 1090 | X      | X          |            | X            |                |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |

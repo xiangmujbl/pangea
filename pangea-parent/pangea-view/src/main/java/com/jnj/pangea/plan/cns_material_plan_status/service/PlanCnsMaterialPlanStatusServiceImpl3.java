@@ -54,6 +54,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         boolean checkF1 = checkF1(edmSalesOrderV1Entity, f1ASet, f1BSet, f1CSet);
         boolean checkF2 = checkF2(edmSalesOrderV1Entity);
         if (!checkF1) {
+
             return null;
         }
 
@@ -106,12 +107,15 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         String localPlant = salesOrderV1Entity.getLocalPlant();
         boolean f1A = (f1ASet.isEmpty() || f1ASet.contains(StringUtils.trim(localPlant)));
         boolean f1B = (f1BSet.isEmpty() || !f1BSet.contains(StringUtils.trim(localPlant)));
+
         if (f1A && f1B) {
             String localMaterialNumber = salesOrderV1Entity.getLocalMaterialNumber();
             List<EDMMaterialPlantV1Entity> materialPlantV1EntityList = edmMaterialPlantV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+
             for (EDMMaterialPlantV1Entity materialPlantV1Entity : materialPlantV1EntityList) {
                 String localMrpType = materialPlantV1Entity.getLocalMrpType();
                 boolean f1C = (f1CSet.isEmpty() || f1CSet.contains(StringUtils.trim(localMrpType)));
+
                 if (f1C) {
                     return true;
                 }
@@ -121,10 +125,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
     }
 
     private boolean checkF2(EDMSalesOrderV1Entity salesOrderV1Entity) {
-        PlanCnsCustExclEntity cnsCustExclEntity = planCnsCustExclDao.getEntityWithSalesOrgAndCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
-        List<PlanCnsCustExclEntity> cnsCustExclEntityList = planCnsCustExclDao.getEntityListWithSalesOrg(salesOrderV1Entity.getLocalSalesOrg());
-
-        if (cnsCustExclEntityList.size()>0 && null == cnsCustExclEntity) {
+        PlanCnsCustExclEntity cnsCustExclEntity = planCnsCustExclDao.getEntityWithSalesOrgNotCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
+        if (null != cnsCustExclEntity) {
             return true;
         }
         return false;
@@ -152,7 +154,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
                 flagThree = true;
             }
         }
-        return flag && flagTwo && flagThree;
+        return flag && flagTwo;
     }
 
     private boolean Determine(String time, EDMSalesOrderV1Entity edmSalesOrderV1Entity) {
