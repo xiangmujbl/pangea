@@ -4,7 +4,7 @@
     <regions>
         <region path="/edm/sales_order_v1" mainRegion="true">
             <columns>
-                localBillingBlock,localBillingBlockItem,localChangeDt,localCustomerGroup,localCustomerPO,localDeliveryBlock,localDentoBase,localDistrChannel,localDivision,localDocumentCateg,localIncoTerms1,localIncoTerms2,localItemBillRlvnt,localItemCategory,localItemDlvRlvnt,localMaterialNumber,localNumtoBase,localOrderCreateDt,localOrderDate,localOrderReason,localOrderType,localPlant,localPricingProcedure,localRejReason,localRequestedDate,localRoute,localSDItemCurrency,localSDItemValue,localSalesGroup,localSalesOffice,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem
+                localBillingBlock,localBillingBlockItem,localChangeDt,localCustomerGroup,localCustomerPO,localDeliveryBlock,localDentoBase,localDistrChannel,localDivision,localDocumentCateg,localIncoTerms1,localIncoTerms2,localItemBillRlvnt,localItemCategory,localItemDlvRlvnt,localMaterialNumber,localNumtoBase,localOrderCreateDt,localOrderDate,localOrderReason,localOrderType,localPlant,localPricingProcedure,localRejReason,localRequestedDate,localRoute,localSDItemCurrency,localSDItemValue,localSalesGroup,localSalesOffice,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem,localRejStat,localDelvStat
             </columns>
             <relations>
                 <region path="/plan/prod_loc_min_shelf" isPrimaryKey="true">
@@ -39,15 +39,14 @@
                         customerId=/edm/sales_order_v1.localShipToParty,salesOrganization=/edm/sales_order_v1.localSalesOrg
                     </expression>
                 </region>
-
-
-                <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                <region path="/plan/cns_plan_unit" isPrimaryKey="false">
                     <columns>
-                        sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute2,sourceObjectAttribute2Value
+                        factor,localUom,localUomName,planFlag,plantFlag,roundingDecimal,sourceSystem,unit
                     </columns>
-                    <expression></expression>
+                    <expression>
+                        sourceSystem=/edm/sales_order_v1.sourceSystem
+                    </expression>
                 </region>
-
             </relations>
         </region>
     </regions>
@@ -77,6 +76,12 @@
                 <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
                 <parameter name="localPlant" value="localPlant" relationship="and"/>
                 <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+        <method name="joinCnsPlanUnit" isPK="true" resultType="Map" path="/plan/cns_plan_unit">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localUom" value="localBaseUom"/>
             </parameters>
         </method>
     </methods>
@@ -109,6 +114,8 @@
             <var name="localRejReason" value="localRejReason"/>
             <var name="salesOrderNo" value="salesOrderNo"/>
             <var name="salesOrderItem" value="salesOrderItem"/>
+            <var name="localRejStat" value="localRejStat"/>
+            <var name="localDelvStat" value="localDelvStat"/>
         </vars>
         <columns>
             <!-- fixed value fields first -->
@@ -207,10 +214,11 @@
 
             <!-- SO06 -->
             <column name="demandId">
-                <!-- TODO localRegStat/localDelvStat in SO06 - but doesn't exist in input data (or DEV grid) -->
                 <if test="Integer.parseInt(scheduleLineItem) != 1 ||
                             Integer.parseInt(salesOrderQty) &lt;= 0 ||
-                            StringInner.isStringNotEmpty(localRejReason)">
+                            StringInner.isStringNotEmpty(localRejReason) ||
+                            'C'.equals(localRejStat) ||
+                            'C'.equals(localDelvStat)">
                     <return/>
                 </if>
                 <else>
@@ -226,9 +234,17 @@
             </column>
 
             <!-- SO14 -->
-            <column name="unitId">
-                <!-- TODO rejection "file" question-->
-                <set name="unitId" value="'0'"/>
+            <column name="unitId" var="unitId">
+                <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
+                     value="localBaseUom" resultType="Map"/>
+                <ref method="joinCnsPlanUnit" parameter="sourceSystem,localBaseUom" value="unit" resultType="Map">
+                    <if test="unit != null">
+                        <set name="unitId" value="unit"/>
+                    </if>
+                    <else>
+                        <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO14'" errorValue="'Plan unit is null'" sourceSystem="sourceSystem" key1="salesOrderNo" key2="salesOrderItem" key3="scheduleLineItem"/>
+                    </else>
+                </ref>
             </column>
         </columns>
     </viewRegion>
