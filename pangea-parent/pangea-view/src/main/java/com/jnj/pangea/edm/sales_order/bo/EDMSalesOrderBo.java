@@ -51,6 +51,16 @@ public class EDMSalesOrderBo extends BaseBo {
     private String localPricingProcedure;
     private String localIncoTerms1;
     private String localIncoTerms2;
+    private String hdrOvrStat;
+    private String hdrRejStat;
+    private String hdrDelvStat;
+    private String hdrOvrDelvStat;
+    private String hdrBillStat;
+    private String lineOvrStat;
+    private String lineRejStat;
+    private String lineDelvStat;
+    private String lineOvrDelvStat;
+    private String lineBillStat;
 
     @Override
     public String getKey() {
@@ -428,5 +438,85 @@ public class EDMSalesOrderBo extends BaseBo {
 
     public void setLocalIncoTerms2(String localIncoTerms2) {
         this.localIncoTerms2 = localIncoTerms2;
+    }
+
+    public String getHdrOvrStat() {
+        return hdrOvrStat;
+    }
+
+    public void setHdrOvrStat(String hdrOvrStat) {
+        this.hdrOvrStat = hdrOvrStat;
+    }
+
+    public String getHdrRejStat() {
+        return hdrRejStat;
+    }
+
+    public void setHdrRejStat(String hdrRejStat) {
+        this.hdrRejStat = hdrRejStat;
+    }
+
+    public String getHdrDelvStat() {
+        return hdrDelvStat;
+    }
+
+    public void setHdrDelvStat(String hdrDelvStat) {
+        this.hdrDelvStat = hdrDelvStat;
+    }
+
+    public String getHdrOvrDelvStat() {
+        return hdrOvrDelvStat;
+    }
+
+    public void setHdrOvrDelvStat(String hdrOvrDelvStat) {
+        this.hdrOvrDelvStat = hdrOvrDelvStat;
+    }
+
+    public String getHdrBillStat() {
+        return hdrBillStat;
+    }
+
+    public void setHdrBillStat(String hdrBillStat) {
+        this.hdrBillStat = hdrBillStat;
+    }
+
+    public String getLineOvrStat() {
+        return lineOvrStat;
+    }
+
+    public void setLineOvrStat(String lineOvrStat) {
+        this.lineOvrStat = lineOvrStat;
+    }
+
+    public String getLineRejStat() {
+        return lineRejStat;
+    }
+
+    public void setLineRejStat(String lineRejStat) {
+        this.lineRejStat = lineRejStat;
+    }
+
+    public String getLineDelvStat() {
+        return lineDelvStat;
+    }
+
+    public void setLineDelvStat(String lineDelvStat) {
+        this.lineDelvStat = lineDelvStat;
+    }
+
+    public String getLineOvrDelvStat() {
+        return lineOvrDelvStat;
+    }
+
+    public void setLineOvrDelvStat(String lineOvrDelvStat) {
+        this.lineOvrDelvStat = lineOvrDelvStat;
+    }
+
+    public String getLineBillStat() {
+        return lineBillStat;
+    }
+
+    public void setLineBillStat(String lineBillStat) {
+        this.lineBillStat = lineBillStat;
     }
 }
