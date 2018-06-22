@@ -7,30 +7,32 @@ import java.util.Map;
 public class PlanCnsProductCustomerEntity extends CommonEntity {
 
     private String sourceSystem;
+    private String customerId;
     private String productId;
-    private String demandGroup;
     private String productStatus;
-    private String minStock;
-    private String maxStock;
+    private String moq;
+    private String ioq;
     private String stockLevel;
     private String uom;
-    private String preferredDC;
+    private String locationId;
+    private String norm;
     private String leadTime;
-    private String revenueRecognitionOffset;
+    private String roundingThreshold;
 
     public PlanCnsProductCustomerEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("sourceSystem"));
+        setCustomerId((String) map.get("customerId"));
         setProductId((String) map.get("productId"));
-        setDemandGroup((String) map.get("demandGroup"));
         setProductStatus((String) map.get("productStatus"));
-        setMinStock((String) map.get("minStock"));
-        setMaxStock((String) map.get("maxStock"));
+        setMoq((String) map.get("moq"));
+        setIoq((String) map.get("ioq"));
         setStockLevel((String) map.get("stockLevel"));
         setUom((String) map.get("uom"));
-        setPreferredDC((String) map.get("preferredDC"));
+        setLocationId((String) map.get("locationId"));
+        setNorm((String) map.get("norm"));
         setLeadTime((String) map.get("leadTime"));
-        setRevenueRecognitionOffset((String) map.get("revenueRecognitionOffset"));
+        setRoundingThreshold((String) map.get("roundingThreshold"));
     }
 
     public String getSourceSystem() {
@@ -41,20 +43,20 @@ public class PlanCnsProductCustomerEntity extends CommonEntity {
         this.sourceSystem = sourceSystem;
     }
 
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
     public String getProductId() {
         return productId;
     }
 
     public void setProductId(String productId) {
         this.productId = productId;
-    }
-
-    public String getDemandGroup() {
-        return demandGroup;
-    }
-
-    public void setDemandGroup(String demandGroup) {
-        this.demandGroup = demandGroup;
     }
 
     public String getProductStatus() {
@@ -65,20 +67,20 @@ public class PlanCnsProductCustomerEntity extends CommonEntity {
         this.productStatus = productStatus;
     }
 
-    public String getMinStock() {
-        return minStock;
+    public String getMoq() {
+        return moq;
     }
 
-    public void setMinStock(String minStock) {
-        this.minStock = minStock;
+    public void setMoq(String moq) {
+        this.moq = moq;
     }
 
-    public String getMaxStock() {
-        return maxStock;
+    public String getIoq() {
+        return ioq;
     }
 
-    public void setMaxStock(String maxStock) {
-        this.maxStock = maxStock;
+    public void setIoq(String ioq) {
+        this.ioq = ioq;
     }
 
     public String getStockLevel() {
@@ -97,12 +99,20 @@ public class PlanCnsProductCustomerEntity extends CommonEntity {
         this.uom = uom;
     }
 
-    public String getPreferredDC() {
-        return preferredDC;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setPreferredDC(String preferredDC) {
-        this.preferredDC = preferredDC;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
+
+    public String getNorm() {
+        return norm;
+    }
+
+    public void setNorm(String norm) {
+        this.norm = norm;
     }
 
     public String getLeadTime() {
@@ -113,28 +123,29 @@ public class PlanCnsProductCustomerEntity extends CommonEntity {
         this.leadTime = leadTime;
     }
 
-    public String getRevenueRecognitionOffset() {
-        return revenueRecognitionOffset;
+    public String getRoundingThreshold() {
+        return roundingThreshold;
     }
 
-    public void setRevenueRecognitionOffset(String revenueRecognitionOffset) {
-        this.revenueRecognitionOffset = revenueRecognitionOffset;
+    public void setRoundingThreshold(String roundingThreshold) {
+        this.roundingThreshold = roundingThreshold;
     }
 
     @Override
     public String toString() {
         return "PlanCnsProductCustomerEntity{" +
                 "sourceSystem='" + sourceSystem + '\'' +
+                ", customerId='" + customerId + '\'' +
                 ", productId='" + productId + '\'' +
-                ", demandGroup='" + demandGroup + '\'' +
                 ", productStatus='" + productStatus + '\'' +
-                ", minStock='" + minStock + '\'' +
-                ", maxStock='" + maxStock + '\'' +
+                ", moq='" + moq + '\'' +
+                ", ioq='" + ioq + '\'' +
                 ", stockLevel='" + stockLevel + '\'' +
                 ", uom='" + uom + '\'' +
-                ", preferredDC='" + preferredDC + '\'' +
+                ", locationId='" + locationId + '\'' +
+                ", norm='" + norm + '\'' +
                 ", leadTime='" + leadTime + '\'' +
-                ", revenueRecognitionOffset='" + revenueRecognitionOffset + '\'' +
+                ", roundingThreshold='" + roundingThreshold + '\'' +
                 '}';
     }
 }
