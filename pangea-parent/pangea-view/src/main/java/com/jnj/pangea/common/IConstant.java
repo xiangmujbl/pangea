@@ -709,6 +709,7 @@ public interface IConstant {
         String SALES_ORG = "salesOrg";
         String ORDER_TYPE = "orderType";
         String INCL_EXCL = "inclExcl";
+        String COUNTRY= "country";
     }
 
     interface CNS_TLANE_ITEM_EXCEPTION {
