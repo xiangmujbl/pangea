@@ -22,9 +22,7 @@ import com.jnj.pangea.common.entity.edm.EDMAdvancedShipNotificationV1Entity;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Calendar;
-import java.util.Date;
 
 public class OMPGdmStockASNServiceImpl implements ICommonService {
 
@@ -43,14 +41,12 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     private PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
 
-    private OMPGdmStockBo stockBo = new OMPGdmStockBo();
-    private boolean skip = false;
-    private String tmp = "";
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2){
         ResultObject resultObject = new ResultObject();
         ResultObject resultObjectSkip = new ResultObject();
+        OMPGdmStockBo stockBo = new OMPGdmStockBo();
 
         EDMAdvancedShipNotificationV1Entity shipNotifEntity = (EDMAdvancedShipNotificationV1Entity) o ;
         EDMMaterialGlobalV1Entity materialGlobalEntity = materialGlobalDao.getEntityWithLocalMaterialNumberAndSourceSystem(shipNotifEntity.getMatlNum(),shipNotifEntity.getSrcSysCd());
@@ -86,7 +82,6 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
         //ASN 6
         if(shipNotifEntity.getLocaldeliveryCatg().equals(IConstant.VALUE.SEVEN) && shipNotifEntity.getActGRDt().isEmpty()){
-            //asn6Rule(shipNotifEntity);
             String erp = asn6Rule(shipNotifEntity);
             if(erp.isEmpty()){
                 return resultObjectSkip;
@@ -98,7 +93,6 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         if(plantEntity.getLocalPlanningRelevant().equals(IConstant.VALUE.X)){
             stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant());
         } else {
-            tmp = "ASN7";
             return resultObjectSkip;
         }
 
@@ -118,13 +112,11 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
                 return resultObject;
             }
         } else {
-            tmp = "ASN9";
             return resultObjectSkip;
         }
 
         //ASN 10
         if(null != purchaseEntity){
-            //asn10Rule(purchaseEntity);
             stockBo.setStartDate(asn10Rule(shipNotifEntity, purchaseEntity));
         }
 
@@ -150,7 +142,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
         if(null != purchaseEntity){
             //ASN 16 17
-            stockBo.setProcessId(asn16Rule(purchaseEntity));
+            stockBo.setProcessId(asn16Rule(purchaseEntity, stockBo));
             stockBo.setProcessTypeId(asn17Rule(purchaseEntity));
             if(stockBo.getProcessId().isEmpty() || stockBo.getProcessTypeId().isEmpty()){
                 return resultObjectSkip;
@@ -164,7 +156,6 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
             }
 
         } else {
-            tmp = "purchase null "+shipNotifEntity.getLocalRefDocNum()+" "+shipNotifEntity.getLocRefDocLineNum();
             return resultObjectSkip;
         }
 
@@ -174,7 +165,6 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         if(delvQty > 0.0){
             stockBo.setQuantity(String.format("%.2f",delvQty));
         } else {
-            tmp = "ASN19";
             return resultObjectSkip;
         }
 
@@ -251,7 +241,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         return "";
     }
 
-    private String asn16Rule(EDMPurchaseOrderOAV1Entity purchaseEntity){
+    private String asn16Rule(EDMPurchaseOrderOAV1Entity purchaseEntity, OMPGdmStockBo stockBo){
         String processId = "";
         String poTypeCd = purchaseEntity.getPoTypeCd();
         switch(poTypeCd){
@@ -270,12 +260,8 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
                 processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
                 break;
             default:
-                tmp = "ASN16 "+poTypeCd+" "+purchaseEntity.getPoNum()+"/"+purchaseEntity.getPoLineNbr();
-                LogUtil.getCoreLog().info(tmp);
-                skip = true;
                 break;
         }
-        //stockBo.setProcessId(processId);
         return processId;
     }
 
@@ -297,12 +283,8 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
                 processTypeId = IConstant.VALUE.EXTERNAL_TRANSPORT;
                 break;
             default:
-                tmp = "ASN17 "+poTypeCd+" "+purchaseEntity.getPoNum()+"/"+purchaseEntity.getPoLineNbr();
-                LogUtil.getCoreLog().info(tmp);
-                skip = true;
                 break;
         }
-        //stockBo.setProcessTypeId(processTypeId);
         return processTypeId;
     }
 
@@ -315,6 +297,9 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         failData.setSourceSystem(materialEntity.getSourceSystem());
         failData.setKey1(materialEntity.getLocalMaterialNumber());
         failData.setKey2(materialEntity.getSourceSystem());
+        failData.setKey3("");
+        failData.setKey4("");
+        failData.setKey5("");
 
         return failData;
     }

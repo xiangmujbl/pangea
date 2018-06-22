@@ -58,18 +58,18 @@ Feature:  OMPGdmStockASN-Curation
     And I wait "/edm/plant_v1" Async Queue complete
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-      | active | dpRelevant | localMaterialNumber | localParentCode | localPlant | materialNumber | noPlanRelevant | parentActive | ppc   | sourceSystem | spRelevant |
-      | X      |            | 58722               | 7.89101E+16     | BR19       |                |                | X            | 58722 | CONS_LATAM   | X          |
-      | X      |            | 68874               | 7.89101E+16     | BR19       |                |                | X            | 68874 | CONS_LATAM   | X          |
-      | X      |            | 55735               | 7.89101E+16     | BR19       |                |                | X            | 55735 | CONS_LATAM   | X          |
-      | X      |            | 57039               | 7.89101E+16     | BR19       |                |                | X            | 57039 | CONS_LATAM   | X          |
-      | X      |            | 97360               | 7.89101E+16     | BR01       | 97360          |                | X            | 97360 | CONS_LATAM   | X          |
-      | X      |            | 96161               | 7.89101E+16     | BR19       | 96161          |                | X            |       | CONS_LATAM   | X          |
-      | X      |            | 80990               | 7.89101E+16     | BR19       |                |                | X            |       | CONS_LATAM   | X          |
-      | X      |            | 59573               | 7.89101E+16     | BR19       | 8640           |                | X            | 8641  | CONS_LATAM   | X          |
-      | X      |            | 91732               | 7.89101E+16     | BR21       |                | X              | X            | 91732 | CONS_LATAM   |            |
-      | X      |            | 441424              | 7.89101E+16     | BR20       | 441424         | X              |              |       | CONS_LATAM   |            |
-      | X      |            | 441425              | 7.89101E+16     | BR20       | 441425         | X              |              |       | CONS_LATAM   |            |
+      | active | dpRelevant | localMaterialNumber | localParentCode   | localPlant | materialNumber | noPlanRelevant | parentActive | ppc   | sourceSystem | spRelevant |
+      | X      |            | 58722               | 78910109411230000 | BR19       |                |                | X            | 58722 | CONS_LATAM   | X          |
+      | X      |            | 68874               | 78910100877220000 | BR19       |                |                | X            | 68874 | CONS_LATAM   | X          |
+      | X      |            | 55735               | 78910100877220000 | BR19       |                |                | X            | 55735 | CONS_LATAM   | X          |
+      | X      |            | 57039               | 78910100877220000 | BR19       |                |                | X            | 57039 | CONS_LATAM   | X          |
+      | X      |            | 97360               | 78910100877220000 | BR01       | 97360          |                | X            | 97360 | CONS_LATAM   | X          |
+      | X      |            | 96161               | 78910100877220000 | BR19       | 96161          |                | X            |       | CONS_LATAM   | X          |
+      | X      |            | 80990               | 78910100877220000 | BR19       |                |                | X            |       | CONS_LATAM   | X          |
+      | X      |            | 59573               | 78910100877220000 | BR19       | 8640           |                | X            | 8641  | CONS_LATAM   | X          |
+      | X      |            | 91732               | 78910100877220000 | BR21       |                | X              | X            | 91732 | CONS_LATAM   |            |
+      | X      |            | 441424              | 78910100877220000 | BR20       | 441424         | X              |              |       | CONS_LATAM   |            |
+      | X      |            | 441425              | 78910100877220000 | BR20       | 441425         | X              |              |       | CONS_LATAM   |            |
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem"
@@ -95,7 +95,6 @@ Feature:  OMPGdmStockASN-Curation
       | 91732/CONS_LATAM_BR21/1800054578/10    | YES    | YES          | NO           | 91732/CONS_LATAM_BR21/2436B041  | 0.0             | YES         | LA          | 1800054578 |                      | 8917     | CONS_LATAM_BR21 | TR/91732/CONS_LATAM_BR21/MX01/6109    | ExternalTransport | 91732     | 0.0             | 2593.00  | 2016/04/21 00:00:00 | 0.0                | 0.0             | 2016/04/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
       | 441424/CONS_LATAM_BR20/1800054579/10   | YES    | YES          | NO           | 441424/CONS_LATAM_BR20/2436B042 | 0.0             | YES         | LA          | 1800054579 |                      | 8918     | CONS_LATAM_BR20 | TR/441424/CONS_LATAM_BR20/MX01/6109   | ExternalTransport | 441424    | 0.0             | 2593.00  | 2016/04/21 00:00:00 | 0.0                | 0.0             | 2016/04/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
       | 8641/CONS_LATAM_BR19/180005499/900001  | YES    | YES          | NO           | 8641/CONS_LATAM_BR19/0086B      | 0.0             | YES         | LA          | 180005499  |                      | 6754     | CONS_LATAM_BR19 | TR/8641/CONS_LATAM_BR19/MX02/7654     | ExternalTransport | 8641      | 0.0             | 1975.00  | 2016/04/21 00:00:00 | 0.0                | 0.0             | 2016/04/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
-
 
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | errorValue                                                 | functionalArea | interfaceID    | key1  | key2       | key3 | key4 | key5 | sourceSystem |
