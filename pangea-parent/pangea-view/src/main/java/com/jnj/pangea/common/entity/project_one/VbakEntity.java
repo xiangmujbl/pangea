@@ -26,6 +26,7 @@ public class VbakEntity extends CommonEntity {
     private String kunnr;
     private String aedat;
     private String kalsm;
+    private String mandt;
 
     public VbakEntity(Map<String, Object> map) {
         super(map);
@@ -50,6 +51,7 @@ public class VbakEntity extends CommonEntity {
         setKunnr((String) map.get("kunnr"));
         setAedat((String) map.get("aedat"));
         setKalsm((String) map.get("kalsm"));
+        setMandt((String) map.get("mandt"));
     }
 
     public String getVbeln() {
@@ -210,5 +212,13 @@ public class VbakEntity extends CommonEntity {
 
     public void setKalsm(String kalsm) {
         this.kalsm = kalsm;
+    }
+
+    public String getMandt() {
+        return mandt;
+    }
+
+    public void setMandt(String mandt) {
+        this.mandt = mandt;
     }
 }
