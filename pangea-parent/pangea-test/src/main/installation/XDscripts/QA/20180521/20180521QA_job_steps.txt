@@ -1,5 +1,6 @@
 module upload --file /fitdata/QA/pangeaData/module/job-csv-adf-0.3.04.jar --name csv-adf --type job
 module upload --file /fitdata/QA/pangeaData/module/app-compute-trigger-0.0.1.jar --name pangea-triggerCeModule --type job
+module upload --file /fitdata/QA/pangeaData/module/job-file-merger-0.0.1.jar --name pangea-file-merger --type job
 
 ### STEP 1
 
@@ -113,7 +114,7 @@ job create --name Pangea_QA_Trigger_Edm_MatPlantStat --definition 'pangea-trigge
 
 job create --name Pangea_QA_Trigger_Edm_MaterialGlobal --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/material/global/EDMMaterialGlobal_ProjectOne.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/mara,/edm/source_system_v1,/project_one/makt,/ngems/golden_material,/ngems/material_linkage,/edm/material_global_v1" --partition=2 --waitJobDone=true --projectName=pangea' --deploy
 
-job create --name Pangea_QA_Trigger_Edm_SalesOrder --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMSalesOrder.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/vbak,/edm/source_system_v1,/project_one/vbap,/project_one/vbep,/project_one/vbpa,/project_one/vbkd,/edm/sales_order_v1" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_QA_Trigger_Edm_SalesOrder --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMSalesOrder.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/vbak,/edm/source_system_v1,/project_one/vbap,/project_one/vbep,/project_one/vbpa,/project_one/vbkd,/edm/sales_order_v1" --partition=2 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_QA_Trigger_Plan_cns_abc_ind --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsAbcInd_ProjectOne.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/tmabc,/project_one/tmabct,/edm/source_system_v1,/plan/cns_abc_ind" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
@@ -122,7 +123,7 @@ job create --name Pangea_QA_Trigger_Plan_cns_abc_ind --definition 'pangea-trigge
 
 job create --name Pangea_QA_Trigger_Edm_Plant --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMPlant_ProjectOne.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /ems/ems_f_z_enterprise_plants,/edm/source_system_v1,/project_one/t001w,/project_one/t001k,/project_one/t001,/edm/country_v1,/edm/plant_v1" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
-job create --name Pangea_QA_Trigger_Edm_MaterialAUOM --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/material/auom/EDMMaterialAUOM_Projectone.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/marm,/edm/material_global_v1,/edm/source_system_v1,/edm/material_auom_v1" --partition=3 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_QA_Trigger_Edm_MaterialAUOM --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/material/auom/EDMMaterialAUOM_Projectone.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /project_one/marm,/edm/material_global_v1,/edm/source_system_v1,/edm/material_auom_v1" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
 ### STEP 5
 

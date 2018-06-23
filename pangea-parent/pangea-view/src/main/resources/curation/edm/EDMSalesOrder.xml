@@ -18,7 +18,6 @@
                         <expression>vbeln=/project_one/vbak.vbeln</expression>
                     </relation>
                 </relations>
-                <filter>erdat:{20150531 TO *] AND vkorg:BR*</filter>
             </region>
             <region path="/edm/source_system_v1">
                 <columns>localSourceSystem,sourceSystem</columns>
@@ -39,12 +38,10 @@
 
             <region path="/project_one/vbpa">
                 <columns>vbeln,posnr,parvw,kunnr</columns>
-                <filter>(*:* -posnr:[* TO *]) OR posnr:/\s*/ AND parvw:WE</filter>
             </region>
 
             <region path="/project_one/vbkd">
                 <columns>vbeln,posnr,inco1,inco2,kdgrp</columns>
-                <filter>(*:* -posnr:[* TO *]) OR posnr:/\s*/</filter>
             </region>
 
             <region path="/edm/sales_order_v1">
