@@ -17,7 +17,8 @@
                 <region path="/edm/plant_v1" isPrimaryKey="true">
                     <columns>localPlant,sourceSystem,localPlanningRelevant</columns>
                     <expression>
-                        localPlant=/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
+                         ma
+                        =/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd
                     </expression>
                 </region>
                 <!--cns_material_plan_status-->
