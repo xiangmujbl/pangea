@@ -38,7 +38,6 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
       | 000000000000006881  | 6881           |                    | KK           | 6881                | CONS_LATAM   |
     And I wait "/edm/material_global_v1" Async Queue complete
 
-    #material_global_V1-materialNumber = cns_material_plan_status-materialNumber
     And I import "/plan/cns_material_plan_status" by keyFields "localMaterialNumber,localPlant,sourceSystem"
       | localMaterialNumber | localPlant | sourceSystem | materialNumber | active | dpRelevant | spRelevant | noPlanRelevant |
       | 000000000000000017  | BR07       | CONS_LATAM   | 17             | X      | X          | X          | X              |
@@ -112,7 +111,7 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
       | DP       | DP    | BX       | CONS_LATAM   | CONS_LATAM   |
       | DP       | DPSP1 | CA       | CONS_LATAM   | CONS_LATAM   |
       | SP       | SP    | KI       | CONS_LATAM   | CONS_LATAM   |
-      | DPSP     | DPSP1 | BI       | CONS_LATAM   | CONS_LATAM   |
+      | DPSP     | DPSP2 | BI       | CONS_LATAM   | CONS_LATAM   |
 
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
@@ -121,37 +120,35 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
     Then A file is found on sink application with name "GDMProductUnitConversion.tsv"
 
     Then I check file data for filename "GDMProductUnitConversion.tsv" by keyFields "gdmProductUnitConversionId"
-#    Then I check region data "/omp/gdm_product_unit_conversion" by keyFields "gdmProductUnitConversionId"
-      | gdmProductUnitConversionId | productId             | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | comments |
-      | 945DPSP                    | 945                   | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | LA_178962124094540035DPSP  | LA_178962124094540035 | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 55735DP                    | 55735                 | DP     | YES    | YES          | NO           | NO           | 0.10   |          |
-      | 58723DPSP                  | 58723                 | DPSP   | YES    | YES          | YES          | NO           | 12.00  |          |
-      | 4000DPSP                   | 4000                  | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | LA_178962124094540036DPSP  | LA_178962124094540036 | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 4002DPSP                   | 4002                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 58722DPSP                  | 58722                 | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | LA_178962124094540038DPSP  | LA_178962124094540038 | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2886DPSP                   | 2886                  | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | LA_178962124288680037DPSP  | LA_178962124288680037 | DPSP   | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 2887DPSP1                  | 2887                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
-      | LA_178962124288680038DPSP1 | LA_178962124288680038 | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 2890DPSP                   | 2890                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2891DPSP1                  | 2891                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 2894DPSP                   | 2894                  | DPSP   | YES    | NO           | YES          | NO           | 0.20   |          |
-      | 3880DPSP                   | 3880                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 3881DPSP                   | 3881                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4880DPSP                   | 4880                  | DPSP   | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4880DPSP1                  | 4880                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2888DPSP1                  | 2888                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | LA_178962124288680039DPSP1 | LA_178962124288680039 | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2889SP                     | 2889                  | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
-      | LA_178962124288680040SP    | LA_178962124288680040 | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
-      | 2892DPSP1                  | 2892                  | DPSP1  | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4883DPSP1                  | 4883                  | DPSP1  | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 2893SP                     | 2893                  | SP     | YES    | NO           | YES          | NO           | 0.20   |          |
-
+	|	gdmProductUnitConversionId	|	comments	|	productId				|	activeFCTERP	|	active	|	unitId	|	factor	|	activeOPRERP	|	activeSOPERP	|
+	|	3881DPSP					|				|	3881					|	YES				|	YES		|	DPSP	|	0.20	|	YES				|	NO				|				
+	|	2887DPSP1					|	 			|	2887					|	YES				|	YES		|	DPSP1	|	0.20	|	NO				|	NO				|				
+	|	LA_178962124288680038DPSP1	|	 			|	LA_178962124288680038	|	YES				|	YES		|	DPSP1	|	0.20	|	NO				|	NO				|				
+	|	58722DPSP					|	 			|	58722					|	NO				|	YES		|	DPSP	|	0.20	|	YES				|	NO				|				
+	|	LA_178962124094540038DPSP	|	 			|	LA_178962124094540038	|	YES				|	YES		|	DPSP	|	0.20	|	NO				|	NO				|				
+	|	2892DPSP2					|	 			|	2892					|	YES				|	YES		|	DPSP2	|	0.20	|	YES				|	NO				|				
+	|	2888DPSP2					|	 			|	2888					|	YES				|	YES		|	DPSP2	|	0.20	|	YES				|	NO				|				
+	|	LA_178962124288680039DPSP2	|	 			|	LA_178962124288680039	|	YES				|	YES		|	DPSP2	|	0.20	|	NO				|	NO				|				
+	|	2891DPSP1					|	 			|	2891					|	YES				|	YES		|	DPSP1	|	0.20	|	NO				|	NO				|				
+	|	58723DPSP					|	 			|	58723					|	YES				|	YES		|	DPSP	|	12.00	|	YES				|	NO				|				
+	|	2894DPSP					|	 			|	2894					|	NO				|	YES		|	DPSP	|	0.20	|	YES				|	NO				|				
+	|	3880DPSP					|	 			|	3880					|	YES				|	YES		|	DPSP	|	0.20	|	YES				|	NO				|				
+	|	4000DPSP					|	 			|	4000					|	YES				|	YES		|	DPSP	|	2.00	|	YES				|	NO				|			
+	|	LA_178962124094540036DPSP	|	 			|	LA_178962124094540036	|	YES				|	YES		|	DPSP	|	2.00	|	NO				|	NO				|				
+	|	2889SP						|	 			|	2889					|	NO				|	YES		|	SP		|	0.20	|	YES				|	NO				|				
+	|	55735DP						|	 			|	55735					|	YES				|	YES		|	DP		|	0.10	|	NO				|	NO				|				
+	|	4002DPSP					|	 			|	4002					|	YES				|	YES		|	DPSP	|	0.20	|	YES				|	NO				|				
+	|	2893SP						|	 			|	2893					|	NO				|	YES		|	SP		|	0.20	|	YES				|	NO				|				
+	|	2890DPSP					|	 			|	2890					|	YES				|	YES		|	DPSP	|	0.20	|	YES				|	NO				|				
+	|	945DPSP						|	 			|	945						|	YES				|	YES		|	DPSP	|	2.00	|	YES				|	NO				|				
+	|	LA_178962124094540035DPSP	|	 			|	LA_178962124094540035	|	YES				|	YES		|	DPSP	|	2.00	|	NO				|	NO				|				
+	|	4883DPSP1					|	 			|	4883					|	YES				|	YES		|	DPSP1	|	0.20	|	NO				|	NO				|				
+	|	2886DPSP					|	 			|	2886					|	YES				|	YES		|	DPSP	|	2.00	|	YES				|	NO				|				
+	|	LA_178962124288680037DPSP	|	 			|	LA_178962124288680037	|	YES				|	YES		|	DPSP	|	2.00	|	NO				|	NO				|				
+	|	4880DPSP2					|	 			|	4880					|	YES				|	YES		|	DPSP2	|	0.20	|	YES				|	NO				|				
+	|	4880DPSP1					|	 			|	4880					|	YES				|	YES		|	DPSP1	|	0.20	|	NO				|	NO				|				
+	|	4880DPSP					|	 			|	4880					|	YES				|	YES		|	DPSP	|	0.20	|	YES				|	NO				|				
+	
   Scenario:delete all the test data
     And I delete the test data
-#    And I will remove all data with region "/omp/gdm_product_unit_conversion"
     And I will remove all data with region "/plan/edm_failed_data"

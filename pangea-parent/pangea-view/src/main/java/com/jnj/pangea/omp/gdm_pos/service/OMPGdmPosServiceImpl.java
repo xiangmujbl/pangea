@@ -110,11 +110,6 @@ public class OMPGdmPosServiceImpl {
                                         String keyAfterCustomerFixed = mapKey + IConstant.VALUE.UNDERLINE + fixField(customer);
                                         if (!customerIdList.contains(keyAfterCustomerFixed)) {
                                             customerIdList.add(keyAfterCustomerFixed);
-
-//                                            LogUtil.getCoreLog().info("================ mapKey = " + mapKey + ",cnsDpPosEntity.getQuantity() = "
-//                                                    + cnsDpPosEntity.getQuantity() + "================ quantityMap = " + quantityMap.toString()
-//                                                    + ",customer = " + customer + ",quantityMap size = " + quantityMap.size());
-
                                             if (quantityMap.containsKey(mapKey)) {
                                                 String quantity = (String) quantityMap.get(mapKey);
                                                 quantity = sumQuantity(quantity, cnsDpPosEntity.getQuantity());
@@ -169,7 +164,6 @@ public class OMPGdmPosServiceImpl {
                                         }
 
                                     } else {
-//                                        LogUtil.getCoreLog().info("============== demandGroup is null  ");
                                         ResultObject resultObject = new ResultObject();
                                         resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
                                                 IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", edmMaterialGlobalV1Entity.getLocalMaterialNumber(),
@@ -178,7 +172,6 @@ public class OMPGdmPosServiceImpl {
                                     }
                                 }
                             } else {
-//                                LogUtil.getCoreLog().info("============== planCnsDemGrpAsgnEntityList is null ,customer = " + customer);
                                 ResultObject resultObject = new ResultObject();
                                 resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
                                         IConstant.FAILED.INTERFACE_ID.OMP_GDM_POS, "", "Unable to find Root", "", edmMaterialGlobalV1Entity.getLocalMaterialNumber(),
@@ -204,7 +197,6 @@ public class OMPGdmPosServiceImpl {
                     edmMaterialGlobalV1Entity.getSourceSystem()));
             list.add(resultObject);
         }
-//        LogUtil.getCoreLog().info("================ gdmPosBoList size = " + gdmPosBoList.size());
         for (OMPGdmPosBo bo : gdmPosBoList) {
             ResultObject resultObject = new ResultObject();
 
@@ -214,7 +206,6 @@ public class OMPGdmPosServiceImpl {
             try {
                 Double NoOfWeekValue = Double.parseDouble(noOfWeek);
                 Double quantityValue = Double.parseDouble(quantity);
-//                LogUtil.getCoreLog().info("============== NoOfWeekValue= " + NoOfWeekValue + ",quantityValue = " + quantityValue);
                 if (0 != NoOfWeekValue) {
                     long result = Math.round(quantityValue / NoOfWeekValue);
                     bo.setVolume(result + "");
@@ -242,7 +233,6 @@ public class OMPGdmPosServiceImpl {
         if (null == planCnsDemGrpAsgnEntity) {
 
             if (null != kunnrList && kunnrList.size() > 0) {
-
                 for (KnvhEntity kunnr : kunnrList) {
                     PlanCnsDemGrpAsgnEntity planCnsDemGrpAsgnEntity1 = cnsDemGrpAsgnDao.getEntityWithCustomerId(kunnr.getHkunnr());
                     if (null != planCnsDemGrpAsgnEntity1) {
@@ -266,7 +256,9 @@ public class OMPGdmPosServiceImpl {
                 }
             }
         } else {
-            planCnsDemGrpAsgnEntityList.add(planCnsDemGrpAsgnEntity);
+            if (kunnrList.size() > 0) {
+                planCnsDemGrpAsgnEntityList.add(planCnsDemGrpAsgnEntity);
+            }
         }
 
         return planCnsDemGrpAsgnEntityList;
@@ -292,7 +284,6 @@ public class OMPGdmPosServiceImpl {
                 quantity2 = Double.parseDouble(value2);
             }
             result = quantity1 + quantity2;
-//            LogUtil.getCoreLog().info("============== result= " + result + ",quantity1 = " + quantity1 + "quantity2 = " + quantity2);
             return result + "";
         } catch (Exception e) {
             e.printStackTrace();
