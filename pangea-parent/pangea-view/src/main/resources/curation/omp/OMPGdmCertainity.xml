@@ -6,7 +6,7 @@
 
             <region path="/plan/cns_cert_key">
                 <columns>
-                    certainityKey,certainityKeyDesc
+                    certaintyKey,certaintyKeyDesc
                 </columns>
             </region>
 

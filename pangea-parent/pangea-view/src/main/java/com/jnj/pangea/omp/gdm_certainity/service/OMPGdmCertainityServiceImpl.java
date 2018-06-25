@@ -28,8 +28,8 @@ public class OMPGdmCertainityServiceImpl implements ICommonService {
         if (cnsCertKeyEntity==null){
             return resultObject;
         }
-        certainityBo.setCertaintyId(cnsCertKeyEntity.getCertainityKey());
-        certainityBo.setLabel(cnsCertKeyEntity.getCertainityKeyDesc());
+        certainityBo.setCertaintyId(cnsCertKeyEntity.getCertaintyKey());
+        certainityBo.setLabel(cnsCertKeyEntity.getCertaintyKeyDesc());
         //rules N1
         certainityBo.setActiveFCTERP(IConstant.VALUE.YES);
         certainityBo.setActiveOPRERP(IConstant.VALUE.YES);
