@@ -17,7 +17,9 @@ CR: put pangea to na qa env
 
 		2-4. copy xml folder to /apps/adf/spring-xd-1.3.1.RELEASE/xd/curation/pangea/xml/.
 
-		2-5. create springXD job by 20180627QA_job_steps.txt file.
+		2-5. copy *_alias.properties folder to /apps/adf/spring-xd-1.3.1.RELEASE/xd/curation/pangea/alias/.
+
+		2-6. create springXD job by 20180627QA_job_steps.txt file.
 
 ---------------------------Pangea team:--------------------------------------------
 	1. download files from sharepoint to csv folder.(https://jnj.sharepoint.com/teams/ConsumerGlobalPlan/plan/Shared%20Documents/Forms/AllItems.aspx?RootFolder=%2Fteams%2FConsumerGlobalPlan%2Fplan%2FShared%20Documents%2FGlobal%20Plan%20Projects%202018%2FLATAM%20E2E%20Phase%201%2F05%20Data%20Stream%2F08%20QA%20Release%2F01%20QA%20R1%20DP%205_21%2FData%20Files%2FCSV%20Versions&FolderCTID=0x012000D5081E0C56EF6A4694B18DEDCC4168BA&View=%7B23A58EDB-B645-453A-886F-46093FFF8E33%7D)
