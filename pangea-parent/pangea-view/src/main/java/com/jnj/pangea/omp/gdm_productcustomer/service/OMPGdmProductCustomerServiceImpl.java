@@ -35,7 +35,7 @@ public class OMPGdmProductCustomerServiceImpl {
     public List<ResultObject> buildView(String key, Object o, Object o2) {
         List<ResultObject> resultObjects = new LinkedList<>();
         PlanCnsProductCustomerEntity planCnsProductCustomerEntity = (PlanCnsProductCustomerEntity) o;
-        List<EDMMaterialGlobalV1Entity> edmMaterialGlobalV1FirstList = materialGlobalV1Dao.getEntitiesWithLocalMaterialNumberAndSourceSystem(planCnsProductCustomerEntity.getProductId(), planCnsProductCustomerEntity.getSourceSystem());
+        List<EDMMaterialGlobalV1Entity> edmMaterialGlobalV1FirstList = materialGlobalV1Dao.getEntitiesWithLocalMaterialNumberAndSourceSystem(localMaterialNumber(planCnsProductCustomerEntity.getProductId()), planCnsProductCustomerEntity.getSourceSystem());
         //rule J1
         if (edmMaterialGlobalV1FirstList == null || edmMaterialGlobalV1FirstList.size() < 1) {
             FailData failData = writeFailDataToRegion(planCnsProductCustomerEntity, IConstant.FAILED.ERROR_CODE.J1, "ProductId do not exist in edm material");
@@ -133,7 +133,7 @@ public class OMPGdmProductCustomerServiceImpl {
     private boolean calculateField(CustomerField customerField, PlanCnsProductCustomerEntity planCnsProductCustomerEntity) {
         customerField.setLeadTime(getlargestValue(customerField.getLeadTime(), planCnsProductCustomerEntity.getLeadTime()));
         customerField.setNorm(getlargestValue(customerField.getNorm(), planCnsProductCustomerEntity.getNorm()));
-        EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = materialAuomV1Dao.getListWithLocalMaterialNumber(planCnsProductCustomerEntity.getProductId(), planCnsProductCustomerEntity.getUom(), planCnsProductCustomerEntity.getSourceSystem());
+        EDMMaterialAuomV1Entity edmMaterialAuomV1Entity = materialAuomV1Dao.getListWithLocalMaterialNumber(localMaterialNumber(planCnsProductCustomerEntity.getProductId()), planCnsProductCustomerEntity.getUom(), planCnsProductCustomerEntity.getSourceSystem());
         customerField.setLocationId(planCnsProductCustomerEntity.getLocationId());
         if (edmMaterialAuomV1Entity == null) {
             return false;
@@ -189,6 +189,19 @@ public class OMPGdmProductCustomerServiceImpl {
 //        nf.setMaximumFractionDigits(IConstant.LFU.VALUE_DECIMAL_6);
         nf.setGroupingUsed(false);
         return nf;
+    }
+
+    public static String localMaterialNumber(String productId){
+        if(StringUtils.isNotEmpty(productId)){
+            int a = 18-productId.length();
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int x = 0;x<a;x++){
+                stringBuilder.append("0");
+            }
+            stringBuilder.append(productId);
+            return stringBuilder.toString();
+        }
+        return null;
     }
 
     private List<ResultObject> setData(List<PlanCnsProductCustomerEntity> planCnsProductCustomerList, EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity) {

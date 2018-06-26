@@ -11,7 +11,7 @@
                 <relations>
                     <relation path="/edm/material_auom_v1" isPrimaryKey="false">
                         <expression>
-                            sourceSystem=/plan/cns_productcustomer.sourceSystem,localMaterialNumber=/plan/cns_productcustomer.productId,localAuom=/plan/cns_productcustomer.uom
+                            <!--sourceSystem=/plan/cns_productcustomer.sourceSystem,localMaterialNumber=/plan/cns_productcustomer.productId,localAuom=/plan/cns_productcustomer.uom-->
                         </expression>
                     </relation>
                     <relation path="/plan/cns_plan_dem_grp" isPrimaryKey="false">
