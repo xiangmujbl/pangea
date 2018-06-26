@@ -1,0 +1,2 @@
+module upload --file /fitdata/QA/pangeaData/module/job-compute-trigger-0.0.1.jar --name pangea-triggerCeModule --type job
+

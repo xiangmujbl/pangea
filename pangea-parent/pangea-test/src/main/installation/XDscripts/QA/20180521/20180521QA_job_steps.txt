@@ -1,5 +1,5 @@
 module upload --file /fitdata/QA/pangeaData/module/job-csv-adf-0.3.04.jar --name csv-adf --type job
-module upload --file /fitdata/QA/pangeaData/module/app-compute-trigger-0.0.1.jar --name pangea-triggerCeModule --type job
+module upload --file /fitdata/QA/pangeaData/module/job-compute-trigger-0.0.1.jar --name pangea-triggerCeModule --type job
 module upload --file /fitdata/QA/pangeaData/module/job-file-merger-0.0.1.jar --name pangea-file-merger --type job
 
 ### STEP 1
