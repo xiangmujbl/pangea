@@ -13,7 +13,8 @@ public class CustomerizeTemplate {
 
         Template template = new CETemplateImpl();
         String customizeXml = "auto_curation/xml/gdm/gdm_stock_5_planned_order.xml";
-        template.generateAll(customizeXml);
+        String customizeHook = "auto_curation/lib/pangea-hook.jar";
+        template.generateAll(customizeHook, customizeXml);
     }
 
 }
