@@ -1,3 +1,4 @@
+job create --name Pangea_Dev_Trigger_Edm_SalesHistoryV1 --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMSalesHistoryV1.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva3010:2551,awsamenva3011:2551 ----launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_Dev_Trigger_Edm_Country --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMCountry.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva1176:2551,awsamenva1177:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
