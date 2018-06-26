@@ -22,8 +22,8 @@ Feature:  OMPGdmProduct AEAZ-6098
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber,localDpParentCode"
       | sourceSystem | localMaterialNumber | localDpParentCode  | baseUom |
-      | CONS_LATAM   | 6000700             | 178962124094540500 | EA      |
-      | CONS_LATAM   | 95299               |                    | EA      |
+      | CONS_LATAM   | 000000000006000700  | 178962124094540500 | EA      |
+      | CONS_LATAM   | 000000000000095299  |                    | EA      |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_productcustomer" by keyFields "sourceSystem,customerId,productId,locationId"
@@ -34,9 +34,9 @@ Feature:  OMPGdmProduct AEAZ-6098
     And I wait "/plan/cns_productcustomer" Async Queue complete
 
     Given I import "/edm/material_auom_v1" by keyFields "localAuom,sourceSystem,localMaterialNumber"
-      | localAuom | localDenominator | localMaterialNumber | localNumerator | materialNumber | numerator | sourceSystem |
-      | EA        | 40               | 6000700             | 1              | 6000700        |           | CONS_LATAM   |
-      | CS        | 42               | 95299               | 1              | 95299          |           | CONS_LATAM   |
+      | localAuom | localDenominator | localMaterialNumber | localNumerator | materialNumber     | numerator | sourceSystem |
+      | EA        | 40               | 000000000006000700  | 1              | 000000000006000700 |           | CONS_LATAM   |
+      | CS        | 42               | 000000000000095299  | 1              | 000000000000095299 |           | CONS_LATAM   |
     And I wait "/edm/material_auom_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmProductCustomer.xml" and execute file "jar/pangea-view.jar"
@@ -53,13 +53,13 @@ Feature:  OMPGdmProduct AEAZ-6098
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber,localDpParentCode"
       | sourceSystem | localMaterialNumber | localDpParentCode  | baseUom |
-      | CONS_LATAM   | 87818               | 178962124094540036 | EA      |
-      | CONS_LATAM   | 91838               | 178962124094540036 | CS      |
-      | CONS_LATAM   | 7550641             | 178962124094540036 | PL      |
-      | CONS_LATAM   | 87819               | 178962124094540099 | EA      |
-      | CONS_LATAM   | 91839               | 178962124094540099 | EA      |
-      | CONS_LATAM   | 7550642             | 178962124094540099 | CS      |
-      | CONS_LATAM   | 6000701             | 178962124094540500 | EA      |
+      | CONS_LATAM   | 000000000000087818  | 178962124094540036 | EA      |
+      | CONS_LATAM   | 000000000000091838  | 178962124094540036 | CS      |
+      | CONS_LATAM   | 000000000007550641  | 178962124094540036 | PL      |
+      | CONS_LATAM   | 000000000000087819  | 178962124094540099 | EA      |
+      | CONS_LATAM   | 000000000000091839  | 178962124094540099 | EA      |
+      | CONS_LATAM   | 000000000007550642  | 178962124094540099 | CS      |
+      | CONS_LATAM   | 000000000006000701  | 178962124094540500 | EA      |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_productcustomer" by keyFields "sourceSystem,customerId,productId,locationId"
@@ -77,13 +77,13 @@ Feature:  OMPGdmProduct AEAZ-6098
 
     Given I import "/edm/material_auom_v1" by keyFields "localAuom,sourceSystem,localMaterialNumber"
       | localAuom | localMaterialNumber | localNumerator | localDenominator | materialNumber | sourceSystem |
-      | EA        | 87818               | 1              | 24               | 87818          | CONS_LATAM   |
-      | CS        | 91838               | 2              | 26               | 91838          | CONS_LATAM   |
-      | PL        | 7550641             | 1              | 28               | 7550641        | CONS_LATAM   |
-      | EA        | 87819               | 5              | 30               | 87818          | CONS_LATAM   |
-      | EA        | 91839               | 6              | 32               | 91838          | CONS_LATAM   |
-      | CS        | 7550642             | 2              | 34               | 87818          | CONS_LATAM   |
-      | EA        | 6000701             | 8              | 36               | 91838          | CONS_LATAM   |
+      | EA        | 000000000000087818  | 1              | 24               | 87818          | CONS_LATAM   |
+      | CS        | 000000000000091838  | 2              | 26               | 91838          | CONS_LATAM   |
+      | PL        | 000000000007550641  | 1              | 28               | 7550641        | CONS_LATAM   |
+      | EA        | 000000000000087819  | 5              | 30               | 87818          | CONS_LATAM   |
+      | EA        | 000000000000091839  | 6              | 32               | 91838          | CONS_LATAM   |
+      | CS        | 000000000007550642  | 2              | 34               | 87818          | CONS_LATAM   |
+      | EA        | 000000000006000701  | 8              | 36               | 91838          | CONS_LATAM   |
     And I wait "/edm/material_auom_v1" Async Queue complete
 
     Given I import "/plan/cns_plan_dem_grp" by keyFields "sourceSystem,demandGroupId,locationId"
