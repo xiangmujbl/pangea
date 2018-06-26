@@ -34,7 +34,7 @@ public class OMPGdmProductLocationServiceImpl {
 
     private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private EDMSourceSystemV1DaoImpl systemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
-    private EDMMatPlantFiV1DaoImpl matPlantFinV1Dao = EDMMatPlantFiV1DaoImpl.getInstance();
+    private EDMMatPlantFiV1DaoImpl matPlantFiV1Dao = EDMMatPlantFiV1DaoImpl.getInstance();
     private PlanCnsSplProcTypDaoImpl cnsSplProcTypDao = PlanCnsSplProcTypDaoImpl.getInstance();
     private PlanCnsProdLocAttribDaoImpl cnsProdLocAttribDao = PlanCnsProdLocAttribDaoImpl.getInstance();
     private PlanLocMinShelfDaoImpl locMinShelfDao = PlanLocMinShelfDaoImpl.getInstance();
@@ -212,6 +212,28 @@ public class OMPGdmProductLocationServiceImpl {
                 bo.setWebaz(materialPlantV1Entity.getLocalGoodsReceiptProcessingTimeInDays());
 
             }
+            
+            //rule J2
+            EDMMatPlantFiV1Entity eDMMatPlantFiV1Entity = getFieldWithJ2(localMaterialNumber, localPlant);
+            
+            String productValue = "";
+            if(null == eDMMatPlantFiV1Entity) {
+            	bo.setProductValue(productValue);
+            } else {
+            	if (IConstant.VALUE.V.equals(eDMMatPlantFiV1Entity.getPriceControl())) {
+            		if(null != eDMMatPlantFiV1Entity.getLocalPriceUnit() && Double.valueOf(eDMMatPlantFiV1Entity.getLocalPriceUnit()) > 0) {
+            			productValue =  String.valueOf(Double.valueOf(eDMMatPlantFiV1Entity.getLocalMvp()) / Double.valueOf(eDMMatPlantFiV1Entity.getLocalPriceUnit()));
+            			bo.setProductValue(productValue);
+            		}
+            	} else if(IConstant.VALUE.S.equals(eDMMatPlantFiV1Entity.getPriceControl())) {
+            		if(null != eDMMatPlantFiV1Entity.getLocalPriceUnit() && Double.valueOf(eDMMatPlantFiV1Entity.getLocalPriceUnit()) >0) {
+            			productValue = String.valueOf(Double.valueOf(eDMMatPlantFiV1Entity.getLocalStandardPrice()) / Double.valueOf(eDMMatPlantFiV1Entity.getLocalPriceUnit()));
+            			bo.setProductValue(productValue);
+            		}
+            	} else {
+            		bo.setProductValue(productValue);
+            	}
+            }
             ResultObject resultObject = new ResultObject();
             resultObject.setBaseBo(bo);
             resultObjectList.add(resultObject);
@@ -271,10 +293,11 @@ public class OMPGdmProductLocationServiceImpl {
                                         OMPGdmProductLocationBoVendor.setProductId(OMPGdmProductLocationBo.getProductId());
                                         if ("".equals(splPlnLocEntity.getLocalPlant())) {
                                             OMPGdmProductLocationBoVendor.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + splPlnLocEntity.getVendorOrCustomer() + "_" + splPlnLocEntity.getLocalNumber());
-                                        } else {
+                                            boList.add(OMPGdmProductLocationBoVendor);
+                                        } /*else {
                                             OMPGdmProductLocationBoVendor.setLocationId(materialPlantV1Entity.getSourceSystem() + "_" + materialPlantV1Entity.getLocalPlant() + "$" + splPlnLocEntity.getLocalNumber());
-                                        }
-                                        boList.add(OMPGdmProductLocationBoVendor);
+                                        } */
+                                        
                                     }
                                 }
                             }
@@ -412,5 +435,19 @@ public class OMPGdmProductLocationServiceImpl {
         }
         PlanCnsLotSizeKeyTransEntity planCnsLotSizeKeyTransEntity = cnsLotSizeKeyTransDao.getEntityWithLocalLotSizeKeyAndSourceSystem(localLotSize, sourceSystem);
         return planCnsLotSizeKeyTransEntity;
+    }
+    
+    /**
+     * rules J2
+     *
+     * @param localMaterialNumber
+     * @param localPlant
+     */
+    private EDMMatPlantFiV1Entity getFieldWithJ2(String localMaterialNumber, String localPlant) {
+    	if(StringUtils.isEmpty(localMaterialNumber) || StringUtils.isEmpty(localPlant)) {
+    		return null;
+    	}
+    	EDMMatPlantFiV1Entity eDMMatPlantFiV1Entity = matPlantFiV1Dao.getEntityWithLocalMaterialNumberAndLocalPlant(localMaterialNumber, localPlant);
+    	return eDMMatPlantFiV1Entity;
     }
 }

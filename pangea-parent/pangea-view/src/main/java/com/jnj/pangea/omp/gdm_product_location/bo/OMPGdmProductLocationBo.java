@@ -50,6 +50,7 @@ public class OMPGdmProductLocationBo extends BaseBo {
     private String BatchManaged;
     private String MinInventoryQuantity;
     private String MaxInventoryQuantity;
+    private String productValue;
 
     @Override
     public String getKey() {
@@ -417,5 +418,14 @@ public class OMPGdmProductLocationBo extends BaseBo {
     public void setMaxInventoryQuantity(String maxInventoryQuantity) {
         this.MaxInventoryQuantity = maxInventoryQuantity;
     }
+
+	public String getProductValue() {
+		return productValue;
+	}
+
+	public void setProductValue(String productValue) {
+		this.productValue = productValue;
+	}
+
 
 }
