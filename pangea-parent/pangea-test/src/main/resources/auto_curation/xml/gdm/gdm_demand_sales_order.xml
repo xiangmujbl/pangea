@@ -47,6 +47,13 @@
                         sourceSystem=/edm/sales_order_v1.sourceSystem
                     </expression>
                 </region>
+                <region path="/edm/sales_history_v1_aggregation" isPrimaryKey="false">
+                    <columns>
+                        localBaseQuantity,localPrecDocNo,localSPrecDocLnNo,localSubDocCatg
+                    </columns>
+                    <expression>
+                    </expression>
+                </region>
             </relations>
         </region>
     </regions>
@@ -84,6 +91,13 @@
                 <parameter name="localUom" value="localBaseUom"/>
             </parameters>
         </method>
+        <method name="joinSalesHistoryAggr" isPK="true" resultType="Map" path="/edm/sales_history_v1_aggregation">
+            <parameters>
+                <parameter name="localPrecDocNo" value="salesOrderNo" relationship="and"/>
+                <parameter name="localSPrecDocLnNo" value="salesOrderItem" relationship="and"/>
+                <parameter name="localSubDocCatg" value="localSubDocCatg"/>
+            </parameters>
+        </method>
     </methods>
 
     <udfs>
@@ -116,6 +130,9 @@
             <var name="salesOrderItem" value="salesOrderItem"/>
             <var name="localRejStat" value="localRejStat"/>
             <var name="localDelvStat" value="localDelvStat"/>
+            <var name="localNumtoBase" value="localNumtoBase"/>
+            <var name="localDentoBase" value="localDentoBase"/>
+            <var name="localSubDocCatg" value="'J'"/>
         </vars>
         <columns>
             <!-- fixed value fields first -->
@@ -229,8 +246,19 @@
 
             <!-- SO13 -->
             <column name="quantity">
-                <!-- TODO aggregation required here -->
-                <set name="quantity" value="'0'"/>
+                <ref method="joinSalesHistoryAggr" parameter="salesOrderNo,salesOrderItem,localSubDocCatg"
+                     value="localBaseQuantity" resultType="Map">
+                    <if test="(Double.parseDouble(salesOrderQty) *
+                                    Integer.parseInt(localNumtoBase) / Integer.parseInt(localDentoBase)) >
+                                    Double.parseDouble(localBaseQuantity)">
+                        <set name="quantity"
+                             value="String.valueOf((Double.parseDouble(salesOrderQty) * Integer.parseInt(localNumtoBase) / Integer.parseInt(localDentoBase)) -
+                             Double.parseDouble(localBaseQuantity))"/>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </ref>
             </column>
 
             <!-- SO14 -->

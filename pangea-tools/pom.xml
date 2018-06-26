@@ -72,7 +72,7 @@
         <dependency>
             <groupId>com.jnj.adf</groupId>
             <artifactId>adf-compute-client</artifactId>
-            <version>0.3.04-0.3-SNAPSHOT</version>
+            <version>0.3.04-0.8</version>
         </dependency>
 
     </dependencies>
