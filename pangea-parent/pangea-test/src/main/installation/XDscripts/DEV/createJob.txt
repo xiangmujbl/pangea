@@ -144,3 +144,5 @@ job create --name Pangea_Dev_Trigger_Edm_mfg_rtng_itm_nde --definition 'triggerC
 job create --name Pangea_Dev_Trigger_Gdm_Bom_Element --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/OMPGdmBomElement.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva3010:2551,awsamenva3011:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_Trigger_gdm_stock_5_planned_order --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/gdm_stock_5_planned_order.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva3010:2551,awsamenva3011:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_Trigger_Edm_purchase_order_oa --definition 'triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMPurchaseOrderOA.xml --executeFile=pangea/pangea-view.jar --computingNode=awsamenva3010:2551,awsamenva3011:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
