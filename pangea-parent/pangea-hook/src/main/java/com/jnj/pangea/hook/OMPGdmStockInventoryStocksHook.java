@@ -1,7 +1,7 @@
-package com.jnj.pangea;
+package com.jnj.pangea.hook;
 
 import com.jnj.adf.client.api.JsonObject;
-import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.hook.common.IConstant;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
