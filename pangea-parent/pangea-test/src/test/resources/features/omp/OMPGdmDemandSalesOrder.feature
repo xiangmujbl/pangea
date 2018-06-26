@@ -352,7 +352,7 @@ Feature:  OMPGdmDemandSalesOrder-Curation
       | BR      | I        | ZSRT      | BR14  | BR01     | CONS_LATAM   |
     And I wait "/plan/cns_so_type_incl_excl" Async Queue complete
 
-#    When I submit aggregation task with xml file "xml/edm/EDMSalesHistoryAggregation.xml"
+    When I submit aggregation task with xml file "xml/edm/EDMSalesHistoryAggregation.xml"
 
     When I submit task with xml file "xml/gdm_demand_sales_order.xml" and execute file "jar/pangea-view.jar"
 
