@@ -1058,6 +1058,7 @@ public interface IConstant {
             String GDM_RESOURCE = "GDMResource";
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
             String OMP_GDM_PRODUCT = "OMPGdmProduct";
+            String OMP_GDM_PRODUCT_DETAIL = "OMPGdmProductDetail";
             String OMP_GDM_PRODUCT_UNIT_CONVERSION = "OMPGdmProductUnitConversion";
             String GDM_UNIT_CURRENCY = "GdmUnitCurrency";
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
