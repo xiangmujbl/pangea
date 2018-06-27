@@ -35,9 +35,9 @@ job create --name Pangea_QA_Trigger_OMP_certainty --definition 'pangea-triggerCe
 
 job create --name Pangea_QA_Trigger_Omp_lot_size_key --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmLotSizeKey.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /plan/cns_lot_size_key,/omp/gdm_lot_size_key" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
-job create --name Pangea_QA_Trigger_OMP_ProcessType --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPProcessType.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /plan/cns_process_type,/omp/gdm_process_type" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_QA_Trigger_OMP_ProcessType --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProcessType.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /plan/cns_process_type,/omp/gdm_process_type" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
-job create --name Pangea_QA_Trigger_Omp_product_type --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPProductType.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /edm/material_type_v1,/omp/gdm_product_type" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_QA_Trigger_Omp_product_type --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProductType.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /edm/material_type_v1,/omp/gdm_product_type" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
 ### STEP 3
 

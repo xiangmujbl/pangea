@@ -130,3 +130,9 @@ job create --name Pangea_QA_Trigger_OMP_ProductDetail --definition 'pangea-trigg
 
 job create --name Pangea_QA_Trigger_Omp_gdm_product --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProduct.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /edm/material_global_v1,/plan/cns_material_plan_status,/plan/cns_plan_parameter,/edm/product_family_v1,/edm/form_v1,/edm/category_v1,/edm/sub_brand_v1,/edm/brand_v1,/edm/franchise_v1,/edm/global_business_unit_v1,/plan/cns_plan_unit,/plan/cns_root_description,/omp/gdm_product" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
+### modified
+
+job create --name Pangea_QA_Trigger_OMP_ProcessType --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProcessType.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /plan/cns_process_type,/omp/gdm_process_type" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_QA_Trigger_Omp_product_type --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProductType.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /edm/material_type_v1,/omp/gdm_product_type" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
