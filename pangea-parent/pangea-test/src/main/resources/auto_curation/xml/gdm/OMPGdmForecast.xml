@@ -1,8 +1,8 @@
-<adf-curation executionClassName="com.jnj.pangea.curation.OMPGdmForecast" failRegion="/edm/fail_data" >
+<adf-curation executionClassName="com.jnj.pangea.curation.OMPGdmForecast" failRegion="/edm/fail_data">
 
     <regions>
         <region path="/plan/cns_oor_forecast" mainRegion="true">
-            <columns>sourceSystem,demandGrp,PPC,localPlant,mthWeekInd,oorPeriod,localUOM,loadDate,quantity
+            <columns>sourceSystem,demandGrp,ppc,localPlant,mthWeekInd,oorPeriod,localUom,loadDate,quantity
             </columns>
 
             <relations>
@@ -11,7 +11,7 @@
                         weekFromDate,weekToDate,fiscalPeriod,calWeek
                     </columns>
                     <expression>
-                        fiscalPeriod=/plan/cns_oor_forecast.oorPeriod,calWeek=/plan/cns_oor_forecast.oorPeriod
+                        <!--fiscalPeriod=/plan/cns_oor_forecast.oorPeriod,calWeek=/plan/cns_oor_forecast.oorPeriod-->
                     </expression>
                 </region>
 
@@ -20,17 +20,17 @@
                         sourceSystem,localMaterialNumber,materialNumber,primaryPlanningCode,localBaseUom
                     </columns>
                     <expression>
-                        primaryPlanningCode=/plan/cns_oor_forecast.PPC,sourceSystem=/plan/cns_oor_forecast.sourceSystem,localBaseUom=/plan/cns_oor_forecast.localUOM
+                        primaryPlanningCode=/plan/cns_oor_forecast.ppc,sourceSystem=/plan/cns_oor_forecast.sourceSystem
                     </expression>
 
 
                     <relations>
                         <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
                             <columns>
-                                sourceSystem,localMaterialNumber,noPlanRelevant,localPlant
+                                sourceSystem,localMaterialNumber,spRelevant,localPlant
                             </columns>
                             <expression>
-                                localMaterialNumber=/edm/material_global_v1.localMaterialNumber,sourceSystem=/edm/material_global_v1.sourceSystem,localPlant=/plan/cns_oor_forecast.localPlant
+                                localMaterialNumber=/edm/material_global_v1.localMaterialNumber,sourceSystem=/edm/material_global_v1.sourceSystem
                             </expression>
                         </region>
 
@@ -39,7 +39,7 @@
                                 sourceSystem,localNumerator,localMaterialNumber,localAuom,localDenominator
                             </columns>
                             <expression>
-                                sourceSystem=/edm/material_global_v1.sourceSystem,localMaterialNumber=/edm/material_global_v1.localMaterialNumber,localAuom=/plan/cns_oor_forecast.localUOM
+                                sourceSystem=/edm/material_global_v1.sourceSystem,localMaterialNumber=/edm/material_global_v1.localMaterialNumber
                             </expression>
                         </region>
                     </relations>
@@ -54,7 +54,7 @@
     <methods>
         <method name="getJnjCalendarFiscalPeriod" resultType="List" isPK="false" path="/edm/jnj_calendar_v1">
             <parameters>
-                <parameter name="fiscalPeriod" value="oorPeriod" />
+                <parameter name="fiscalPeriod" value="oorPeriod"/>
             </parameters>
         </method>
         <method name="getJnjCalendarCalWeek" resultType="List" isPK="false" path="/edm/jnj_calendar_v1">
@@ -63,10 +63,10 @@
             </parameters>
         </method>
 
-        <method name="getMaterialGlobal" resultType="Map" isPK="false" path="/edm/material_global_v1">
+        <method name="getMaterialGlobal" resultType="List" isPK="false" path="/edm/material_global_v1">
             <parameters>
-                <parameter name="primaryPlanningCode" value="PPC" relationship="and"/>
-                <parameter name="sourceSystem" value="sourceSystem" />
+                <parameter name="primaryPlanningCode" value="ppc" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
                 <!--<parameter name="localBaseUom" value="localUOM"/>-->
             </parameters>
         </method>
@@ -75,7 +75,7 @@
             <parameters>
                 <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
                 <parameter name="localPlant" value="localPlant" relationship="and"/>
-                <parameter name="localMaterialNumber" value="localMaterialNumber" />
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
             </parameters>
         </method>
 
@@ -83,7 +83,7 @@
             <parameters>
                 <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
                 <parameter name="localMaterialNumber" value="localMaterialNumber" relationship="and"/>
-                <parameter name="localAuom" value="localUOM"/>
+                <parameter name="localAuom" value="localUom"/>
             </parameters>
         </method>
     </methods>
@@ -100,19 +100,12 @@
             <var name="loadDate" value="loadDate"/>
             <var name="mthWeekInd" value="mthWeekInd"/>
             <var name="oorPeriod" value="oorPeriod"/>
-            <var name="PPC" value="PPC"/>
+            <var name="ppc" value="ppc"/>
             <var name="primaryPlanningCode" value="primaryPlanningCode"/>
             <var name="quantity" value="quantity"/>
-            <var name="localUOM" value="localUOM"/>
+            <var name="localUom" value="localUom"/>
             <var name="sourceSystem" value="sourceSystem"/>
             <var name="localPlant" value="localPlant"/>
-            <var name="localNumerator"/>
-            <var name="localAuom"/>
-            <var name="localDenominator"/>
-            <var name="localBaseUom"/>
-            <var name="localMaterialNumber"/>
-            <var name="materialNumber"/>
-            <var name="noPlanRelevant"/>
         </vars>
 
         <columns>
@@ -150,22 +143,25 @@
              If record is not found if record is Blank then Reject the Record-->
             <column name="fromDueDate">
                 <if test="StringInner.equal(mthWeekInd,'M')">
-                    <ref method="getJnjCalendarFiscalPeriod" parameter="oorPeriod" resultType="List" var="listJnjCalendar">
-                        <if test="listJnjCalendar != null">
-                            <ref hook="CustomMethod.sortOfCalWeek(listJnjCalendar)"/>
-                        </if>
-                    </ref>
+                    <if test="StringInner.isStringNotEmpty(oorPeriod)">
+                        <ref method="getJnjCalendarFiscalPeriod" parameter="oorPeriod" resultType="List"
+                             var="listJnjCalendar">
+                            <if test="listJnjCalendar != null">
+                                <ref hook="CustomMethod.sortOfCalWeek(listJnjCalendar)"/>
+                            </if>
+                        </ref>
+                    </if>
                 </if>
                 <else>
-                    <if test="StringInner.equal(mthWeekInd,'W')">
+                    <if test="StringInner.equal(mthWeekInd,'W')&amp;&amp;StringInner.isStringNotEmpty(oorPeriod)">
                         <ref method="getJnjCalendarCalWeek" parameter="oorPeriod" resultType="List"
                              var="listJnjCalendar">
                             <if test="listJnjCalendar != null">
                                 <ref hook="CustomMethod.getFirstRecord(listJnjCalendar)"/>
                             </if>
                             <else>
-                                <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
-                                          errorValue="' no record is found for jnj_calendar_v1'"
+                                <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T1'"
+                                          errorValue="'no record is found for jnj_calendar_v1'"
                                           sourceSystem="sourceSystem" key1="fromDueDate" key2=""/>
                             </else>
                         </ref>
@@ -196,45 +192,23 @@
             Check for any one of localMaterialNumber records found above
             Using (material_global_v1-localMaterialNumber) = (cns_material_plan_status_v1-localMaterialNumber), (cns_oor_forecast-localPlant) = (cns_material_plan_status-localPlant)
             ((material_global_v1-sourceSystem) = (cns_material_plan_status-sourceSystem)  AND
-            If  (cns_material_plan_status-noPlanRelevant) = X
+            If  (cns_material_plan_status-spRelevant) = X
 
             if No record is found then skip record from adding in Output File
             if record is found as Yes then Use (material_global_v1-primaryPlanningCode)-->
             <column name="productId" isPK="true">
-                <ref method="getMaterialGlobal" parameter="PPC,sourceSystem" resultType="Map"
-                     value="localMaterialNumber,materialNumber,primaryPlanningCode,localBaseUom"
-                     var="mapMaterialGlobal">
-                    <if test="mapMaterialGlobal != null">
-                        <ref method="getCnsMaterial" parameter="sourceSystem,localPlant,localMaterialNumber"
-                             resultType="Map"
-                             value="sourceSystem,localMaterialNumber,noPlanRelevant" var="mapCnsMaterial">
-                        </ref>
-                        <if test="mapCnsMaterial !=null">
-                            <if test="!StringInner.equal(noPlanRelevant,'X')">
-                                <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
-                                          errorValue="'noPlanRelevant is not equal X'"
-                                          sourceSystem="sourceSystem" key1="primaryPlanningCode" key2="noPlanRelevant"/>
+                <if test="StringInner.isStringNotEmpty(ppc)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)">
+                    <ref method="getMaterialGlobal" parameter="ppc,sourceSystem" resultType="List" var="listMaterialGlobal">
+                        <if test="listMaterialGlobal.size() >= 1">
+                            <ref hook="CustomMethod.CheckAnyOne(listMaterialGlobal,localPlant,failMap)"/>
+                            <if test="productId == ''">
+                                <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T3'"
+                                          errorValue="'no record is found for cns_material_plan_status'"
+                                          sourceSystem="sourceSystem" key1="productId" key2=""/>
                             </if>
-                            <else>
-                                <if test="StringInner.equal(noPlanRelevant,'X')">
-                                    <if test="StringUtils.isNotEmpty(primaryPlanningCode)">
-                                        <set name="productId" value="primaryPlanningCode"/>
-                                    </if>
-                                </if>
-                            </else>
                         </if>
-                        <else>
-                            <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
-                                      errorValue="' no record is found for material_global_v1'"
-                                      sourceSystem="sourceSystem" key1="primaryPlanningCode" key2="noPlanRelevant"/>
-                        </else>
-                    </if>
-                    <else>
-                        <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
-                                  errorValue="' no record is found for material_global_v1'"
-                                  sourceSystem="sourceSystem" key1="localMaterialNumber" key2="materialNumber"/>
-                    </else>
-                </ref>
+                    </ref>
+                </if>
             </column>
 
             <!--#Default with current data (todays date)
@@ -258,27 +232,11 @@
             Else record found, Convert to Base UOM Qty
             GDMForecast-Quantity =  cns_oor_forecast-quantity * material_auom_v1-localNumerator/ material_auom_v1-localDenominator-->
             <column name="quantity">
-                <if test="mapMaterialGlobal != null">
-                    <if test="StringInner.equal(localBaseUom,localUOM)">
-                        <set name="quantity" value="quantity"/>
-                    </if>
-                    <else>
-                        <if test="!StringInner.equal(localBaseUom,localUOM)">
-                            <ref method="getMaterialAumo" parameter="sourceSystem,localMaterialNumber,localUOM"
-                                 resultType="Map"
-                                 value="sourceSystem,localNumerator,localMaterialNumber,localAuom,localDenominator"
-                                 var="mapMaterialAumo">
-                            </ref>
-                            <if test="mapMaterialAumo == null">
-                                <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
-                                          errorValue="'mapMaterialAumo is null'" sourceSystem="sourceSystem"
-                                          key1="'mapMaterialAumo'" key2="null"/>
-                            </if>
-                            <else>
-                                <ref hook="CustomMethod.handleQuantity(quantity,localNumerator,localDenominator)"/>
-                            </else>
-                        </if>
-                    </else>
+                <ref hook="CustomMethod.getQuantity(listMaterialGlobal,localUom,quantity,failMap)"/>
+                <if test="quantity == ''">
+                    <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
+                              errorValue="'no record is found for material_auom_v1'"
+                              sourceSystem="sourceSystem" key1="quantity" key2=""/>
                 </if>
             </column>
 

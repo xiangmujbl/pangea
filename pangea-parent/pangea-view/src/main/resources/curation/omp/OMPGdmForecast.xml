@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<adf-curation> 
+<adf-curation>
   <curation mainRegion="/plan/cns_oor_forecast" viewRegion="/omp/gdm_forecast" chunkSize="1000" chunkBytes="40096"
             partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_forecast.OMPGdmForecast"
             writeTo="all" topic="PANGEA_V1_omp_gdm_forecast">
     <regions> 
       <region path="/plan/cns_oor_forecast"> 
-        <columns>sourceSystem,demandGrp,PPC,localPlant,mthWeekInd,oorPeriod,localUOM,loadDate,quantity</columns>  
+        <columns>sourceSystem,demandGrp,ppc,localPlant,mthWeekInd,oorPeriod,localUom,loadDate,quantity</columns>
         <relations> 
           <relation path="/edm/jnj_calendar_v1" isPrimaryKey="false"> 
-            <expression></expression>
+            <expression/> 
           </relation>  
           <relation path="/edm/material_global_v1" isPrimaryKey="false"> 
-            <expression>primaryPlanningCode=/plan/cns_oor_forecast.PPC,sourceSystem=/plan/cns_oor_forecast.sourceSystem,localBaseUom=/plan/cns_oor_forecast.localUOM</expression> 
+            <expression>primaryPlanningCode=/plan/cns_oor_forecast.PPC,sourceSystem=/plan/cns_oor_forecast.sourceSystem</expression> 
           </relation> 
         </relations> 
       </region>  
@@ -20,10 +20,10 @@
         <columns>sourceSystem,localMaterialNumber,materialNumber,primaryPlanningCode,localBaseUom</columns>  
         <relations> 
           <relation path="/plan/cns_material_plan_status" isPrimaryKey="false"> 
-            <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber,sourceSystem=/edm/material_global_v1.sourceSystem</expression>
+            <expression>localMaterialNumber=/edm/material_global_v1.localMaterialNumber,sourceSystem=/edm/material_global_v1.sourceSystem</expression> 
           </relation>  
           <relation path="/edm/material_auom_v1" isPrimaryKey="false"> 
-            <expression>sourceSystem=/edm/material_global_v1.sourceSystem,localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression>
+            <expression>sourceSystem=/edm/material_global_v1.sourceSystem,localMaterialNumber=/edm/material_global_v1.localMaterialNumber</expression> 
           </relation> 
         </relations> 
       </region>  
@@ -31,7 +31,7 @@
         <columns>weekFromDate,weekToDate,fiscalPeriod,calWeek</columns> 
       </region>  
       <region path="/plan/cns_material_plan_status"> 
-        <columns>sourceSystem,localMaterialNumber,noPlanRelevant,localPlant</columns> 
+        <columns>sourceSystem,localMaterialNumber,spRelevant,localPlant</columns> 
       </region>  
       <region path="/edm/material_auom_v1"> 
         <columns>sourceSystem,localNumerator,localMaterialNumber,localAuom,localDenominator</columns> 
