@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/mfg_order" viewRegion="/omp/gdm_link" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_link.OMPGdmLinkProcessController" writeTo="all" topic="PANGEA_V1_omp_gdm_link_process"> 
+    <regions> 
+      <region path="/edm/mfg_order_seq" lucene="true"> 
+        <columns>srcSysCd,ordrRtngNum,ordrRtngCtrNum,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rtngSqncNum,rtngSqncVrsnCntrNbr,chgNum,rtngSqncCtgryCd,strtNdeNum,endNdeNum,fromLtSzQty,toLtSzQty,brnchOperNum,retrnOperNum</columns>  
+        <filter>rtngSqncCtgryCd:0 OR rtngSqncCtgryCd:1</filter>  
+        <relations> 
+          <relation path="/edm/mfg_order_rtng" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/mfg_order_seq.srcSysCd,ordrRtngNum=/edm/mfg_order_seq.ordrRtngNum,ordrRtngCtrNum=/edm/mfg_order_seq.ordrRtngCtrNum</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/mfg_order"> 
+        <columns>sourceSysCd,mfgOrdrNum,mfgOrdrTypCd,plntCd,crtdDttm,chgDttm,delInd,strtDt,strtTm,endDt,endTm,schdStrtDt,schdStrtTm,schdEndDt,schdEndTm,schRelDt,actStrtDt,actStrtTm,prdtnEndDt,cnfrmdEndDt,cnfrmdEndTm,planRlseDt,actRlseDt,rsrvtnNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,bomCatCd,bomNum,bomAltNum,mrpCntrllrCd,ordrRtngNum,prdSpvsrCd,cnfrmdYldQty,cnfrmdScrpQty,Object number,mfgOrdrSttsCd</columns>  
+        <relations> 
+          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false" lucene="true"> 
+            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>  
+            <filter>dataObject:SEND_TO_OMP</filter> 
+          </relation>  
+          <relation path="/edm/mfg_order_seq" isPrimaryKey="false" lucene="true"> 
+            <expression>srcSysCd=/edm/mfg_order.sourceSysCd,rtngTypCd=/edm/mfg_order.rtngTypCd,rntgGrpCd=/edm/mfg_order.rtngGrpCd,rntgGrpCntrNbr=/edm/mfg_order.rtngGrpCntrNum,ordrRtngNum=/edm/mfg_order.ordrRtngNum</expression>  
+            <filter>rtngSqncCtgryCd:0 OR rtngSqncCtgryCd:1</filter> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/cns_plan_parameter"> 
+        <columns>attribute,sourceSystem,dataObject</columns> 
+      </region>  
+      <region path="/edm/mfg_order_rtng"> 
+        <columns>srcSysCd,ordrRtngNum,ordrRtngCtrNum,rtngSqncNum,operNum,operCd,wrkCntrId,operDesc</columns> 
+      </region>  
+      <region path="/omp/gdm_link"> 
+        <columns>linkId,active,activeOPRERP,activeOPROMP,activeSOPERP,activeSOPOMP,comments,endEff,firstOccupied,operationId,planLevelId,prevOperationId,processId,secondOccupied,startEff</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>
