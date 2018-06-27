@@ -1,0 +1,4 @@
+/edm/advanced_ship_notification_v1
+/edm/outbound_delivery_header_v1
+/edm/outbound_delivery_line_v1
+/edm/inventory_stock
