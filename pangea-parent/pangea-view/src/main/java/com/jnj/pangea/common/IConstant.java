@@ -148,6 +148,7 @@ public interface IConstant {
         String EDM_BOM_ITEM = "/edm/bom_item";
         String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
+        String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
     }
 
