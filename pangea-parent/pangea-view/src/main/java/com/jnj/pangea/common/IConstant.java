@@ -1041,6 +1041,10 @@ public interface IConstant {
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
         String NGEMS = "NGEMS";
+        String ENDEFF_NOHMS = "2998/12/31";
+        String STARTEFF_NOHMS = "1980/01/01";
+        String STARTEFF_HMS = "1980/01/01 00:00:00";
+        String HHMMSS = " 23:59:59";
     }
 
     interface FAILED {
