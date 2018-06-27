@@ -11,4 +11,5 @@ import org.junit.runner.RunWith;
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "json:target/reports/json/AEAZ-6662 OMPGdmMachine.json"})
 public class OMPGdmMachine {
+
 }
