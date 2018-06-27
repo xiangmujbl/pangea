@@ -26,6 +26,7 @@ public interface IConstant {
         String EMS_F_MDM_COUNTRIES_CLONE = "/ems/ems_f_mdm_countries_clone";
         String EMS_F_Z_CURRENCIES_CLONE = "/ems/ems_f_z_currencies_clone";
         String EMS_F_MDM_UNITS_CLONE = "/ems/ems_f_mdm_units_clone";
+        String EMS_EDM_UNIT_INPUT = "/ems/edm_unit_input";
         String PROJECT_ONE_T001W = "/project_one/t001w";
         String PROJECT_ONE_T001K = "/project_one/t001k";
         String PROJECT_ONE_T001 = "/project_one/t001";
@@ -464,6 +465,10 @@ public interface IConstant {
     interface EMS_F_MDM_UNITS {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
         String MDM_SAP_CODE = "mdmSapCode";
+    }
+    interface EMS_EDM_UNIT_INPUT {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String LOCAL_UOM = "localUom";
     }
 
     interface EMS_F_MDM_COUNTRIES {
