@@ -8,14 +8,17 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
     private String salesHistoryId;
     private String activeFCTERP;
     private String certaintyId;
+    private String conversionFactorXx;
     private String currencyId;
     private String customerId;
+    private String demandStreamId;
     private String dueDate;
     private String fromDueDate;
     private String locationId;
     private String productId;
     private String quantity;
     private String salesUnit;
+    private String validValueXx;
 
     @Override
     public String getKey() {
@@ -49,6 +52,14 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
         this.certaintyId = certaintyId;
     }
 
+    public String getConversionFactorXx() {
+        return this.conversionFactorXx;
+    }
+
+    public void setConversionFactorXx(String conversionFactorXx) {
+        this.conversionFactorXx = conversionFactorXx;
+    }
+
     public String getCurrencyId() {
         return this.currencyId;
     }
@@ -63,6 +74,14 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public String getDemandStreamId() {
+        return this.demandStreamId;
+    }
+
+    public void setDemandStreamId(String demandStreamId) {
+        this.demandStreamId = demandStreamId;
     }
 
     public String getDueDate() {
@@ -111,6 +130,14 @@ public class OMPGdmSalesHistoryBo extends BaseBo {
 
     public void setSalesUnit(String salesUnit) {
         this.salesUnit = salesUnit;
+    }
+
+    public String getValidValueXx() {
+        return this.validValueXx;
+    }
+
+    public void setValidValueXx(String validValueXx) {
+        this.validValueXx = validValueXx;
     }
 
 }

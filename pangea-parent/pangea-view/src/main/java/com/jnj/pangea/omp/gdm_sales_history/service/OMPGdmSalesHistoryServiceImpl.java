@@ -145,11 +145,9 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
     private Boolean checkF1(String localSalesOrg, String localShipToParty) {
 
-        PlanCnsCustExclEntity custExclEntity1 = cnsCustExclDao.getEntityWithSalesOrgAndCustomerShipToAndInclExcl(localSalesOrg, localShipToParty, IConstant.VALUE.I);
+        PlanCnsCustExclEntity custExclEntity = cnsCustExclDao.getEntityWithSalesOrgAndNotCustomerShipTo(localSalesOrg, localShipToParty);
 
-        PlanCnsCustExclEntity custExclEntity2 = cnsCustExclDao.getEntityWithSalesOrgAndNotCustomerShipToAndInclExcl(localSalesOrg, localShipToParty, IConstant.VALUE.EN);
-
-        if (null != custExclEntity1 || null != custExclEntity2) {
+        if (null != custExclEntity) {
             return true;
         }
         return false;
@@ -188,26 +186,18 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         if (null == demGrpAsgnEntity) {
             if (StringUtils.isNotEmpty(localShipToParty) && StringUtils.isNotEmpty(localSalesOrg)) {
-                KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorg(localShipToParty, localSalesOrg);
+                KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorgAndDatbi(localShipToParty, localSalesOrg,localRequestedDate);
 
                 if (null != knvhEntity) {
                     String hkunnr = knvhEntity.getHkunnr();
-                    String datbi = knvhEntity.getDatbi();
                     try {
-                        Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
-                        Date datbiFormat = DateUtils.stringToDate(datbi, DateUtils.F_yyyyMMdd);
-
-                        if (StringUtils.isNotEmpty(datbi) && StringUtils.isNotEmpty(hkunnr) && localRequestedDateFormat.getTime() <= datbiFormat.getTime()) {
-                            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(hkunnr);
-
-                            if (null != demGrpAsgnEntity && StringUtils.isNotEmpty(demGrpAsgnEntity.getDemandGroup())) {
-                                return demGrpAsgnEntity;
-                            }
+                        demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntityWithCustomerId(hkunnr);
+                        if (null != demGrpAsgnEntity && StringUtils.isNotEmpty(demGrpAsgnEntity.getDemandGroup())) {
+                            return demGrpAsgnEntity;
                         }
                     } catch (DateTimeParseException e) {
                         LogUtil.getCoreLog().info(e);
                     }
-
 
                     if (null == demGrpAsgnEntity) {
                         String kunnr = knvhEntity.getKunnr();
@@ -264,7 +254,6 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
         return false;
     }
 
-
     private boolean checkJ1(EDMSalesOrderV1Entity salesOrderV1Entity) {
 
         Boolean createDtFlag = false;
@@ -285,33 +274,20 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             statusFlag = true;
         }
 
-        Boolean plantFlag1 = false;
-        PlanCnsSoTypeInclEntity soTypeInclEntity1 = cnsSoTypeInclDao.getEntityWithSalesOrgAndOrderTypeAndInclExcl(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType(), IConstant.VALUE.I);
-        if (null != soTypeInclEntity1) {
-            EDMPlantV1Entity plantV1Entity = checkPlant(salesOrderV1Entity.getLocalPlant(), soTypeInclEntity1.getCountry());
+        Boolean plantFlag = false;
+        PlanCnsSoTypeInclEntity soTypeInclEntity = cnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType());
+        if (null != soTypeInclEntity) {
+            EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithLocalPlantAndCountry(salesOrderV1Entity.getLocalPlant(), soTypeInclEntity.getCountry());
             if (null != plantV1Entity) {
-                plantFlag1 = true;
+                plantFlag = true;
             }
         }
 
-        Boolean plantFlag2 = false;
-        PlanCnsSoTypeInclEntity soTypeInclEntity2 = cnsSoTypeInclDao.getEntityWithSalesOrgAndNotOrderTypeAndInclExcl(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderType(), IConstant.VALUE.EN);
-        if (null != soTypeInclEntity2) {
-            EDMPlantV1Entity plantV1Entity = checkPlant(salesOrderV1Entity.getLocalPlant(), soTypeInclEntity2.getCountry());
-            if (null != plantV1Entity) {
-                plantFlag2 = true;
-            }
-        }
-
-        if (createDtFlag && statusFlag && (plantFlag1 || plantFlag2)) {
+        if (createDtFlag && statusFlag && plantFlag) {
             return true;
         }
 
         return false;
-    }
-
-    private EDMPlantV1Entity checkPlant(String localPlant, String country) {
-        return plantV1Dao.getPlantWithLocalPlantAndCountry(localPlant, country);
     }
 
     private PlanCnsOrdRejEntity checkJ2(EDMSalesOrderV1Entity salesOrderV1Entity) {
