@@ -4,7 +4,9 @@ Feature: EDMUnitOfMeasure AEAZ-7319
   Scenario: Full Load curation
     #  1. test filter zSourceSystem <> '[EMS]'
     #  2. test get sourceSystem from source_system_v1 (rule T1)
-    #  3. test get mdm_name as uomName from ems_f_mdm_units and if initial, leave blank ( rule T2 )
+    #  3. test get mdm_name as uomName from ems_f_mdm_units and if initial, leave blank  rule T2 )
+
+
 
     Given I import "/ems/ems_f_mdm_units" by keyFields "zSourceSystem,mdmSapCode"
       | zSourceSystem    | mdmSapCode | mdmName         | zEnterpriseCode | mdmIsoCode | zUnitsDimension |
