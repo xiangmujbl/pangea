@@ -73,6 +73,7 @@
 /plan/cns_root_description_user_override
 /plan/cns_root_description
 /plan/cns_prod_loc_attrib
+/plan/cns_prod_loc_min_shelf
 /plan/cns_prod_cty_affl
 /plan/cns_prod_country_aff
 /plan/cns_process_type
@@ -85,6 +86,7 @@
 /plan/cns_plan_parameter
 /plan/cns_plan_object_filter
 /plan/cns_plan_dem_grp
+/plan/cns_plan_so_type_incl_excl
 /plan/cns_ord_rej
 /plan/cns_material_plan_status
 /plan/cns_material_incl
@@ -141,6 +143,7 @@
 /omp/gdm_bom_element
 /omp/gdm_bom
 /omp/gdm_batch
+/omp/gdm_demand_obd
 /omp/certainity
 /ngems/sub_brand_v1
 /ngems/source_system
