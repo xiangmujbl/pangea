@@ -27,7 +27,7 @@ public class CustomMethod {
 //
 //        String data = stampToDate(String.valueOf(System.currentTimeMillis()));
 //        System.out.println(data);
-        System.out.println(CycleStartDate("20180523"));
+        System.out.println(CycleStartDate("20180623"));
 //
 //
 //        List<Map.Entry<String, String>> list = new ArrayList<>();
@@ -62,20 +62,14 @@ public class CustomMethod {
     //exchange date
     public static String CycleStartDate(String s) {
         String data;
-        String s1 = s.replaceAll("[0-9]{4}$", "/05/01");
-        data = s1 + " " + "00:00:00";
+        String s1 = s.substring(0,4);
+        String s2 = s.substring(4,8);
+
+        String s3 = s1 + "/" + s2.replaceAll("[0-9]{2}$", "/01");
+        data = s3 + " " + "00:00:00";
         return data;
     }
 
-
-    //get first global record
-    public static Map getFirstGlobal(List<Map<String, Object>> list) {
-        Map mapMaterialGlobal = null;
-        if (list != null && list.size() > 0) {
-            mapMaterialGlobal = list.get(0);
-        }
-        return mapMaterialGlobal;
-    }
 
     //sort by CalWeek from jnj
     public static String sortOfCalWeek(List<Map.Entry<String, String>> list) {
@@ -88,7 +82,7 @@ public class CustomMethod {
             Object calWeek = map1.get("calWeek");
         }
 
-        if (list1.size() >= 1) {
+        if (list != null) {
             Collections.sort(list1, (o1, o2) -> {
                 Double name1 = Double.valueOf(Double.valueOf(o1.get("calWeek").toString()));
                 Double name2 = Double.valueOf(Double.valueOf(o2.get("calWeek").toString()));
@@ -118,7 +112,7 @@ public class CustomMethod {
             Object calWeek = map1.get("calWeek");
         }
 
-        if (list1.size() >= 1) {
+        if (list != null) {
             Map map1 = list1.get(0);
             String weekFromDate1 = String.valueOf(map1.get("weekFromDate"));
             weekFromDate = weekFromDate1.replaceAll("-", "/") + " " + "00:00:00";
@@ -128,24 +122,30 @@ public class CustomMethod {
     }
 
 
+    private static OMPGdmForecast oMPGdmForecast = new OMPGdmForecast();
+
+
     //check any one
-    public static String CheckAnyOne(List<Map.Entry<String, String>> list, String localPlant) {
+    public static String CheckAnyOne(List<Map.Entry<String, String>> list, String localPlant, Map<String, RawDataBuilder> failMap) {
         String productId = "";
-        List<String> list1 = new ArrayList();
-        if (list.size() >= 1) {
+        if (list != null) {
             for (Map.Entry<String, String> map : list) {
                 Map<String, Object> mapMaterial = JsonObject.append(map.getValue()).toMap();
                 String localMaterialNumber = String.valueOf(mapMaterial.get("localMaterialNumber"));
                 String sourceSystem = String.valueOf(mapMaterial.get("sourceSystem"));
-                Map<String, Object> mapCnsMaterial = getCnsMaterial(sourceSystem, localPlant, localMaterialNumber);
-                if (mapCnsMaterial != null){
-                    String noPlanRelevant = String.valueOf(mapCnsMaterial.get("noPlanRelevant"));
-                    if (StringInner.equal(noPlanRelevant,"X")){
-                        productId = String.valueOf(mapMaterial.get("primaryPlanningCode"));
-                        list1.add(productId);
+
+                if (StringInner.isStringNotEmpty(sourceSystem) && StringInner.isStringNotEmpty(localMaterialNumber) && StringInner.isStringNotEmpty(localPlant)) {
+                    Map<String, Object> mapCnsMaterial = oMPGdmForecast.getCnsMaterial(sourceSystem, localPlant, localMaterialNumber);
+                    if (mapCnsMaterial != null) {
+                        String spRelevant = String.valueOf(mapCnsMaterial.get("spRelevant"));
+                        if (StringInner.equal(spRelevant, "X")) {
+                            productId = String.valueOf(mapMaterial.get("primaryPlanningCode"));
+                        } else {
+                            return "";
+                        }
+                    } else {
+                        return "";
                     }
-                }else {
-                    return "";
                 }
             }
         }
@@ -154,25 +154,31 @@ public class CustomMethod {
 
 
     //deal quantity
-    public static String getQuantity(List<Map.Entry<String, String>> list, String localUOM,String quantity) {
+    public static String getQuantity(List<Map.Entry<String, String>> list, String localUom, String quantity, Map<String, RawDataBuilder> failMap) {
 
         String Quantity = "";
-        if (list.size() >= 1) {
-            for (Map.Entry<String, String> map : list) {
-                Map<String, Object> mapMaterial = JsonObject.append(map.getValue()).toMap();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                //get first record
+                Map<String, Object> mapMaterial = JsonObject.append(list.get(0).getValue()).toMap();
                 String localMaterialNumber = String.valueOf(mapMaterial.get("localMaterialNumber"));
                 String sourceSystem = String.valueOf(mapMaterial.get("sourceSystem"));
                 String localBaseUom = String.valueOf(mapMaterial.get("localBaseUom"));
-                if (StringInner.equal(localBaseUom,localUOM)){
+
+                if (StringInner.equal(localBaseUom, localUom)) {
                     Quantity = quantity;
-                }else {
-                    Map<String, Object> MaterialAumo = getMaterialAumo(sourceSystem,localMaterialNumber,localUOM);
-                    if (MaterialAumo != null){
-                        String localNumerator = String.valueOf(MaterialAumo.get("localNumerator"));
-                        String localDenominator = String.valueOf(MaterialAumo.get("localDenominator"));
-                        Quantity = handleQuantity(quantity, localNumerator, localDenominator);
-                    }else{
-                        return "";
+                } else {
+                    if (StringInner.isStringNotEmpty(sourceSystem) && StringInner.isStringNotEmpty(localMaterialNumber) && StringInner.isStringNotEmpty(localUom)) {
+
+                        Map<String, Object> MaterialAumo = oMPGdmForecast.getMaterialAumo(sourceSystem, localMaterialNumber, localUom);
+
+                        if (MaterialAumo != null) {
+                            String localNumerator = String.valueOf(MaterialAumo.get("localNumerator"));
+                            String localDenominator = String.valueOf(MaterialAumo.get("localDenominator"));
+                            Quantity = handleQuantity(quantity, localNumerator, localDenominator);
+                        } else {
+                            return "";
+                        }
                     }
 
                 }
@@ -215,64 +221,6 @@ public class CustomMethod {
         }
 
         return "";
-
-    }
-
-
-    public static Map getCnsMaterial(String sourceSystem, String localPlant,
-                                     String localMaterialNumber) {
-
-        ADFCriteria adfCriteria5 = QueryHelper.buildCriteria("sourceSystem")
-                .is(sourceSystem);
-        ADFCriteria adfCriteria6 = QueryHelper.buildCriteria("localPlant").is(
-                localPlant);
-        ADFCriteria adfCriteria7 = QueryHelper.buildCriteria(
-                "localMaterialNumber").is(localMaterialNumber);
-        ADFCriteria groupCriteria13 = adfCriteria7.and(adfCriteria6).and(
-                adfCriteria5);
-
-        ADFCriteria adfCriteria = groupCriteria13;
-        String queryStr = adfCriteria.toQueryString();
-        System.out.println("---------------------CnsMaterial query is:"+queryStr);
-        List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
-                "/plan/cns_material_plan_status_v1", queryStr, -1);
-        if (retList != null && retList.size() > 0) {
-            Map.Entry<String, String> entry = retList.get(0);
-            Map<String, Object> map = JsonObject.append(entry.getValue())
-                    .toMap();
-            return map;
-        }
-
-        return null;
-
-    }
-
-
-    public static Map getMaterialAumo(String sourceSystem, String localMaterialNumber,
-                               String localUOM) {
-
-        ADFCriteria adfCriteria8 = QueryHelper.buildCriteria("sourceSystem")
-                .is(sourceSystem);
-        ADFCriteria adfCriteria9 = QueryHelper.buildCriteria(
-                "localMaterialNumber").is(localMaterialNumber);
-        ADFCriteria adfCriteria10 = QueryHelper.buildCriteria("localAuom").is(
-                localUOM);
-        ADFCriteria groupCriteria14 = adfCriteria10.and(adfCriteria9).and(
-                adfCriteria8);
-
-        ADFCriteria adfCriteria = groupCriteria14;
-        String queryStr = adfCriteria.toQueryString();
-        System.out.println("---------------------MaterialAumo query is:"+queryStr);
-        List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
-                "/edm/material_auom_v1", queryStr, -1);
-        if (retList != null && retList.size() > 0) {
-            Map.Entry<String, String> entry = retList.get(0);
-            Map<String, Object> map = JsonObject.append(entry.getValue())
-                    .toMap();
-            return map;
-        }
-
-        return null;
 
     }
 
