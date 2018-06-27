@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.plant.service;
 
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -56,10 +57,10 @@ public class EDMPlantServiceImpl implements ICommonService {
 
             plantBo.setLocalPlantName(t001WEntity.getName1());
             // rule T3
-            String LocalCountry = t001WEntity.getLand1();
-            plantBo.setLocalCountry(LocalCountry);
+            String localCountry = t001WEntity.getLand1();
+            plantBo.setLocalCountry(localCountry);
             // rule T4
-            plantBo.setCountry(getFieldWithT4(LocalCountry));
+            plantBo.setCountry(getFieldWithT4(localCountry));
             plantBo.setLocalPlantType(t001WEntity.getNodetype());
             // rule J1
             plantBo.setLocalCurrency(getFieldWithJ1(t001WEntity.getBwkey()));
@@ -69,6 +70,7 @@ public class EDMPlantServiceImpl implements ICommonService {
         plantBo.setSite(enterprisePlants.getzSite());
         plantBo.setPlantType(enterprisePlants.getzEntPlantType());
         plantBo.setRegion(enterprisePlants.getzRegion());
+        plantBo.setLocalPlanningRelevant(IConstant.VALUE.X);
 
         resultObject.setBaseBo(plantBo);
 
@@ -92,7 +94,7 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(zPlant)) {
             return null;
         }
-        return t001WDao.getEntityWithZPlant(zPlant);
+        return t001WDao.getEntityWithZPlantAndLand1(zPlant);
     }
 
     private String getFieldWithT4(String land1) {
@@ -100,7 +102,7 @@ public class EDMPlantServiceImpl implements ICommonService {
         if (StringUtils.isEmpty(land1)) {
             return "";
         }
-        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountry(land1);
+        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountryAndCountryCode(land1);
         if (null != countryEntity) {
             return countryEntity.getCountryCode();
         }

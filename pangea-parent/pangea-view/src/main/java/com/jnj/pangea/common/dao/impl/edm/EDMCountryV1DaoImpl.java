@@ -19,6 +19,14 @@ public class EDMCountryV1DaoImpl extends CommonDaoImpl {
         return instance;
     }
 
+    public EDMCountryEntity getEntityWithLocalCountryAndCountryCode(String localCountry) {
+        if (null != localCountry && !"".equals(localCountry)) {
+            String localQueryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(localCountry)
+                    .and(IConstant.EDM_COUNTRY_V1.COUNTRY_CODE).isNotNull().toQueryString();
+            return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+        }
+        return null;
+    }
 
     public EDMCountryEntity getEntityWithLocalCountry(String localCountry) {
         if (null != localCountry && !"".equals(localCountry)) {

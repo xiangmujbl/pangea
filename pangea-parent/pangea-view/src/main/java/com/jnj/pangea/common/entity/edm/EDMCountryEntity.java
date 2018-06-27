@@ -60,4 +60,15 @@ public class EDMCountryEntity extends CommonEntity {
     public void setConsumerPlanningRegion(String consumerPlanningRegion) {
         this.consumerPlanningRegion = consumerPlanningRegion;
     }
+
+    @Override
+    public String toString() {
+        return "EDMCountryEntity{" +
+                "sourceSystem='" + sourceSystem + '\'' +
+                ", localCountry='" + localCountry + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", consumerPlanningRegion='" + consumerPlanningRegion + '\'' +
+                '}';
+    }
 }
