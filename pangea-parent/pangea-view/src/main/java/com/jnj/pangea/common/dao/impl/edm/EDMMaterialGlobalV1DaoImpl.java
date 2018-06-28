@@ -109,4 +109,10 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_DP_PARENT_CODE).is(localDpParentCode).toQueryString();
         return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1_CLONE, queryString, EDMMaterialGlobalV1Entity.class);
     }
+
+    public List<EDMMaterialGlobalV1Entity> getEntitiesWithLocalDpParentCodeClone(String localDpParentCode) {
+
+        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_DP_PARENT_CODE).is(localDpParentCode).toQueryString();
+        return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1_CLONE, queryString, EDMMaterialGlobalV1Entity.class);
+    }
 }
