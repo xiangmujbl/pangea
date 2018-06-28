@@ -101,6 +101,7 @@
 /plan/cns_dem_grp_asgn
 /plan/cns_cust_excl
 /plan/cns_cust_channel
+/plan/cns_cust_excl_incl
 /plan/cns_con_mode
 /plan/cns_clusters
 /plan/cns_certainty_determine

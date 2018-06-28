@@ -3,22 +3,22 @@ Feature: OMPGdmDemand AEAZ-6828
 
   Scenario: Full Load Consumption
 
-    Given I import "/edm/outbound_delivery_header_v1" by keyFields "delvDocId, srcSysCd"
-      | srcSysCd   | delvDocId | shippingPtNum | delvTypeCd | slsOrdrCarCd | delvDt   | crtDttm  | soldToCustNum | shipToCustNum | billOfLdngNum | delvNum | planGiDt | actlGiDt | shippingCondCd | shippingPtNum | supNum | plntCd | localSalesOrg |
-      | CONS_LATAM | 82793652  | BR12          | ZDLI       | J            | 20090723 | 20090723 | 164115        | 164115        |               | 0,00    | 20090723 |          | 01             | BR12          |        |        | BR01          |
-      | CONS_LATAM | 81123645  | CO01          | ZDLI       | J            | 20060517 | 20060517 | 109527        | 109527        |               | 0,00    | 20060517 |          | 01             | CO01          |        |        | CO01          |
-      | CONS_LATAM | 82794385  | BR12          | ZDLI       | J            | 20090723 | 20090723 | 789456        | 789456        |               | 0,00    | 20090723 |          | 01             | BR12          |        |        | BR01          |
-      | CONS_LATAM | 82812920  | BR12          | ZDLI       | J            | 20090108 | 20090108 | 897001        | 897001        |               | 0,00    | 20090108 |          | 01             | BR12          |        |        | BR01          |
-      | CONS_LATAM | 81156058  | BR12          | ZITL       | J            | 20060628 | 20060628 | 109524        | 109524        |               | 0,00    | 20060628 |          | 01             | BR12          |        |        | BR01          |
-      | CONS_LATAM | 81156060  | CO01          | ZDLI       | J            | 20060628 | 20060628 | 109555        | 109555        |               | 0,00    | 20060628 |          | 01             | CO01          |        |        | CO01          |
-      | CONS_LATAM | 81123738  | UY01          | ZITL       | J            | 20170111 | 20170102 | 149680        | 149680        |               | 0,00    | 20170109 | 20170103 | 01             | UY01          |        |        |               |
-      | CONS_LATAM | 81123547  | UY01          | ZITL       | J            | 20170111 | 20170102 | 149680        | 149680        |               | 0,00    | 20170109 | 20170103 | 01             | UY01          |        |        |               |
-      | CONS_LATAM | 82812921  | AR01          | ZVCI       | J            | 20090108 | 20090108 | 164115        | 164115        |               | 0,00    | 20090108 | 20090108 | 01             | AR01          |        |        |               |
-      | CONS_LATAM | 82812345  | CO01          | ZVIC       | J            | 20060517 | 20060517 | 109527        | 109527        |               | 0,00    | 20060517 | 20060517 | 01             | CO01          |        |        |               |
-      | CONS_LATAM | 81156059  | BR12          | ZITL       | J            | 20060628 | 20060628 | 109524        | 109524        |               | 0,00    | 20060628 |          | 01             | BR12          |        |        |               |
+    Given I import "/edm/outbound_delivery_header_v1" by keyFields "srcSysCd,delvDocId,delvTypeCd"
+      | srcSysCd   | delvDocId | shippingPtNum | delvTypeCd | slsOrdrCarCd | delvDt   | crtDttm  | soldToCustNum | shipToCustNum | billOfLdngNum | delvNum | planGiDt | actlGiDt | shippingCondCd | supNum | plntCd | localSalesOrg |
+      | CONS_LATAM | 82793652  | BR12          | ZDLI       | J            | 20090723 | 20090723 | 164115        | 164115        |               | 0,00    | 20090723 |          | 01             |        |        | BR01          |
+      | CONS_LATAM | 81123645  | CO01          | ZDLI       | J            | 20060517 | 20060517 | 109527        | 109527        |               | 0,00    | 20060517 |          | 01             |        |        | CO01          |
+      | CONS_LATAM | 82794385  | BR12          | ZDLI       | J            | 20090723 | 20090723 | 789456        | 789456        |               | 0,00    | 20090723 |          | 01             |        |        | BR01          |
+      | CONS_LATAM | 82812920  | BR12          | ZDLI       | J            | 20090108 | 20090108 | 897001        | 897001        |               | 0,00    | 20090108 |          | 01             |        |        | BR01          |
+      | CONS_LATAM | 81156058  | BR12          | ZITL       | J            | 20060628 | 20060628 | 109524        | 109524        |               | 0,00    | 20060628 |          | 01             |        |        | BR01          |
+      | CONS_LATAM | 81156060  | CO01          | ZDLI       | J            | 20060628 | 20060628 | 109555        | 109555        |               | 0,00    | 20060628 |          | 01             |        |        | CO01          |
+      | CONS_LATAM | 81123738  | UY01          | ZITL       | J            | 20170111 | 20170102 | 149680        | 149680        |               | 0,00    | 20170109 | 20170103 | 01             |        |        |               |
+      | CONS_LATAM | 81123547  | UY01          | ZITL       | J            | 20170111 | 20170102 | 149680        | 149680        |               | 0,00    | 20170109 | 20170103 | 01             |        |        |               |
+      | CONS_LATAM | 82812921  | AR01          | ZVCI       | J            | 20090108 | 20090108 | 164115        | 164115        |               | 0,00    | 20090108 | 20090108 | 01             |        |        |               |
+      | CONS_LATAM | 82812345  | CO01          | ZVIC       | J            | 20060517 | 20060517 | 109527        | 109527        |               | 0,00    | 20060517 | 20060517 | 01             |        |        |               |
+      | CONS_LATAM | 81156059  | BR12          | ZITL       | J            | 20060628 | 20060628 | 109524        | 109524        |               | 0,00    | 20060628 |          | 01             |        |        |               |
     And I wait "/edm/outbound_delivery_header_v1" Async Queue complete
 
-    Given I import "/edm/outbound_delivery_line_v1" by keyFields "delvDocId, delvLineNbr"
+    Given I import "/edm/outbound_delivery_line_v1" by keyFields "delvDocId,delvLineNbr,btchNum,slsOrdrNum,slsOrdrLineNbr,baseUnitOfMeasureCd"
       | actlSkuDelvQty | baseUnitOfMeasureCd | btchNum    | delvDocId | delvLineNbr | matlNum | shippedQty | shippingPlntCd | slsOrdrLineNbr | slsOrdrNum | srcSysCd   | vendBtchNum |
       | 352820         | TS                  | 4000613556 | 82793652  | 10          | 135768  | 0          | BR12           | 10             | 4000007574 | CONS_LATAM | 13680       |
       | 225,000        | KG                  |            | 81123645  | 10          | 7058161 | 27         | CO01           | 20             | 3000187317 | CONS_LATAM | 183229      |
@@ -58,7 +58,7 @@ Feature: OMPGdmDemand AEAZ-6828
       | 20160812      | Z5                 | 1219                 |                    |               | 1              | 10                | 11            | C                  | CIF             | COSTO,SEGURO,FLETE     | A                  | ZLTD              |                   | 86539               | 1              | 20160812           | 20160812       |                  | ZLVE           | AR03       | ZARG03                |                |              | 20160812           | AR2000     | ARS                 | 0                | A11             | AR14             | AR02          | EA             | 0                     | 1               | 20160812              | 149030           | AR03               | 149030           |                      | 0                | 0              | 40             | 116912232    | 1             | 1                | CONS_LATAM   |
     And I wait "/edm/sales_order_v1" Async Queue complete
 
-    Given I import "/edm/sales_history_v1" by keyFields "<string>"
+    Given I import "/edm/sales_history_v1" by keyFields "localSubsDocNo,localSubsDocLnNo,localSubDocCatg,sourceSystem"
       | localBaseQuantity | localBaseUom | localCrtDt | localPrecDocNo | localPrecItemCatg | localSPrecDocLnNo | localSalesQuantity | localSalesUom | localSubDocCatg | localSubsDocLnNo | localSubsDocNo | sourceSystem |
       | 42672             | EA           | 20090406   | 3000192789     | J                 | 10                | 42700              | EA            | J               | 10               | 81156060       | CONS_LATAM   |
       | 42672             | EA           | 20090406   | 3000192789     | J                 | 10                | 42700              | EA            | J               | 10               | 81156060       | CONS_LATAM   |
@@ -91,7 +91,7 @@ Feature: OMPGdmDemand AEAZ-6828
       | I                  | shippingPtNum          | BR12                        | delvDocId              | ZVCI                        | outbound_delivery_header   | CONS_LATAM   |
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
     
-    Given  I import "/plan/prod_loc_min_shelf" by keyFields "localMaterialNumber"
+    Given  I import "/plan/prod_loc_min_shelf" by keyFields "localMaterialNumber,localPlant,sourceSystem"
       | localMaterialNumber | localPlant | minMinShelfLife | minShelfLife | sourceSystem |
       | *                   | BR16       |                 | 270          | CONS_LATAM   |
       | 4002                | BR12       |                 | 150          | CONS_LATAM   |
@@ -113,18 +113,18 @@ Feature: OMPGdmDemand AEAZ-6828
       | X      |            | 70391               |                   | BR12       | 70391          |                |              | 70391   | CONS_LATAM   | X          |
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
+    Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,materialNumber,sourceSystem"
       | localMaterialGroup | localMaterialNumber | localMaterialType | materialNumber | materialStatus | materialType | minRemShelfLife | parentCode | primaryPlanningCode | sourceSystem | totalShelfLife |
-      |                    | 1                   | 135768            |                |8               | FERT         | 180             |            | 135768              | CONS_LATAM   | 9999           |
-      |                    | 1                   | 7058161           | 7058161        |8               | FERT         | 180             |            |                     | CONS_LATAM   | 730            |
-      |                    | 1                   |                   | 71503          |8               | FERT         | 180             |            | 71503               | CONS_LATAM   | 730            |
-      |                    | 1                   | 84033             | 84300          |8               | FERT         | 180             |            | 84303               | CONS_LATAM   | 730            |
-      |                    | 1                   | 189915            |                |8               | FERT         | 183             |            | 189915              | CONS_LATAM   | 730            |
-      | ImpoC              | 1                   | 174461            | 174461         |8               | FERT         | 0               |            |                     | CONS_LATAM   | 0              |
-      |                    | 3                   | 170196            | 171960         |8               | FERT         | 183             |            | 170196              | CONS_LATAM   | 730            |
-      |                    | 1                   | 123456            | 123456         |8               | FERT         | 146             |            | 123456A             | CONS_LATAM   | 730            |
-      | Toiletries BRA     | 1                   | 70391             | 70391          |8               | FERT         | 180             |            | 70391               | CONS_LATAM   | 730            |
-      |                    |                     | 65759             | 65758          |8               | FERT         | 180             |            | 65759               |              | 730            |
+      | 1                  | 135768              | FERT              |                | 8              | FERT         | 180             |            | 135768              | CONS_LATAM   | 9999           |
+      | 1                  | 7058161             | FERT              | 7058161        | 8              | FERT         | 180             |            |                     | CONS_LATAM   | 730            |
+      | 1                  |                     | FERT              | 71503          | 8              | FERT         | 180             |            | 71503               | CONS_LATAM   | 730            |
+      | 1                  | 84033               | FERT              | 84300          | 8              | FERT         | 180             |            | 84303               | CONS_LATAM   | 730            |
+      | 1                  | 189915              | SAPR              |                | 8              | FERT         | 183             |            | 189915              | CONS_LATAM   | 730            |
+      | 1                  | 174461              | FERT              | 174461         | 8              | FERT         | 0               |            |                     | CONS_LATAM   | 0              |
+      | 3                  | 170196              | FERT              | 171960         | 8              | FERT         | 183             |            | 170196              | CONS_LATAM   | 730            |
+      | 1                  | 123456              | FERT              | 123456         | 8              | FERT         | 146             |            | 123456A             | CONS_LATAM   | 730            |
+      | 1                  | 70391               | FERT              | 70391          | 8              | FERT         | 180             |            | 70391               | CONS_LATAM   | 730            |
+      |                    | 65759               | FERT              | 65758          | 8              | FERT         | 180             |            | 65759               |              | 730            |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_plan_unit" by keyFields "plantFlag,unit,localUom,sourceSystem,localUomName"
@@ -142,7 +142,7 @@ Feature: OMPGdmDemand AEAZ-6828
       | 1      | TH       | Thousand            | SP       |           | 6               | CONS_LATAM   | TS     |
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
-    Given I import "/plan/cns_plan_so_type_incl_excl" by keyFields "country"
+    Given I import "/plan/cns_plan_so_type_incl_excl" by keyFields "country,orderType,plant,salesOrg,sourceSystem"
       | country | inclExcl | orderType | plant | salesOrg | sourceSystem |
       | CO      | I        | ZLVE      | CO01  | CO01     | CONS_LATAM   |
       | BR      | I        | ZVLO      | BR12  | BR01     | CONS_LATAM   |
@@ -159,8 +159,27 @@ Feature: OMPGdmDemand AEAZ-6828
       | AR      | I        | ZLGR      | AR02  | AR02     | CONS_LATAM   |
       | CR      | I        | ZLVE      | CR01  | CR01     | CONS_LATAM   |
     And I wait "/plan/cns_plan_so_type_incl_excl" Async Queue complete
+    
+    Given I import "/plan/cns_cust_excl_incl" by keyFields "country,customerShipTo,salesOrg,sourceSystem"
+      | country | customerShipTo | inclExcl | salesOrg | sourceSystem  |
+      | BR      | 164115         | I        | BR01     | CONS_LATAM    |
+      | GT      | ALL            | I        | CO01     | CONS_LATAM    |
+      | CR      | 789456         | I        | BR01     | CONS_LATAM    |
+      | PA      | 897001         | I        | BR01     | CONS_LATAM    |
+      | AR      | 109524         | I        | BR01     | CONS_LATAM    |
+      | CR      | 109555         | I        | CO01     | CONS_LATAM    |
+      | UY      | 191049         | E        | UY01     | CONS_LATAM    |
+      | PA      | 155266         | E        | PA01     | CONS_LATAM    |
+      | CL      | 179304         | E        | CL01     | CONS_LATAM    |
+      | PA      | 187011         | E        | PA01     | CONS_LATAM    |
+      | GT      | 161892         | E        | GT01     | CONS_LATAM    |
+      | GT      | 189403         | E        | GT01     | CONS_LATAM    |
+      | PA      | 162763         | E        | PA01     | CONS_LATAM    |
+      | GT      | 157381         | E        | GT01     | CONS_LATAM    |
+      | AR      | 125097         | E        | AR02     | CONS_LATAM    |
+    And I wait "/plan/cns_cust_excl_incl" Async Queue complete
 
-    When I submit task with xml file "xml/omp/OMPGdmDemandSTR.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/omp/OMPGdmDemandOBD.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMDemand.tsv"
 
@@ -178,12 +197,20 @@ Feature: OMPGdmDemand AEAZ-6828
 
     And I will remove all data with region "/edm/outbound_delivery_line_v1"
 
-    And I will remove all data with region "/plan/cns_material_plan_status_v1"
+    And I will remove all data with region "/edm/sales_order_v1"
+
+    And I will remove all data with region "/edm/sales_history_v1"
+
+    And I will remove all data with region "/plan/cns_material_plan_status"
 
     And I will remove all data with region "/plan/cns_plan_unit"
 
     And I will remove all data with region "/plan/cns_plan_object_filter"
 
+    And I will remove all data with region "/plan/cns_plan_so_type_incl_excl"
+
     And I will remove all data with region "/plan/prod_loc_min_shelf"
+
+    And I will remove all data with region "/plan/cns_cust_excl_incl"
 
     And I will remove the test file on sink application "GDMDemand.tsv"
