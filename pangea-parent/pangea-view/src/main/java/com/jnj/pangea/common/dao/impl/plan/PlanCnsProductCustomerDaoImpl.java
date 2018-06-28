@@ -25,4 +25,11 @@ public class PlanCnsProductCustomerDaoImpl extends CommonDaoImpl {
         LogUtil.getCoreLog().info(queryString);
         return queryForList(IConstant.REGION.PLAN_CNS_PRODUCTCUSTOMER, queryString, PlanCnsProductCustomerEntity.class);
     }
+    public List<PlanCnsProductCustomerEntity> getListWithProductIdAndSourceSystemClone(String productId, String sourceSystem){
+        String localMaterialNumber = productId.replaceAll("^(0+)", "");
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PRODUCT_CUSTOMER.PRODUCT_ID).is(localMaterialNumber)
+                .and(IConstant.PLAN_CNS_PRODUCT_CUSTOMER.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        LogUtil.getCoreLog().info(queryString);
+        return queryForList(IConstant.REGION.PLAN_CNS_PRODUCTCUSTOMERCLONE, queryString, PlanCnsProductCustomerEntity.class);
+    }
 }

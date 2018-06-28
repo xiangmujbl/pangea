@@ -27,9 +27,9 @@ public class OMPGdmProductCustomerController extends BaseController {
 
             RawDataValue rawValue = raw.getValue();
 
-            EDMMaterialGlobalV1Entity materialGlobalV1Entity = BeanUtil.mapToBean(rawValue.toMap(), EDMMaterialGlobalV1Entity.class);
+            PlanCnsProductCustomerEntity planCnsProductCustomerEntity = BeanUtil.mapToBean(rawValue.toMap(), PlanCnsProductCustomerEntity.class);
 
-            List<ResultObject> resultObjectList = service.buildView(raw.getKey(), materialGlobalV1Entity, null);
+            List<ResultObject> resultObjectList = service.buildView(raw.getKey(), planCnsProductCustomerEntity, null);
 
             for (ResultObject resultObject:resultObjectList) {
                 if (resultObject.isSuccess()) {
