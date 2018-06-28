@@ -1243,4 +1243,7 @@ public interface IConstant {
         String BOM_VlD_ToDt = "99991231";
     }
 
+    interface MFGRTNGITM{
+        String BOM_VlD_ToDt = "99991231";
+    }
 }
