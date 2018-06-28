@@ -180,6 +180,7 @@ Feature:  OMPGdmDemandSalesOrder-Curation
       | CR      | 187012         | E        | CR01     | CONS_LATAM   |
       | UY      | 164133         | E        | UY01     | CONS_LATAM   |
       | BR      | 11548          | I        | BR01     | CONS_LATAM   |
+      | BR      | 109038         | I        | BR01     | CONS_LATAM   |
       | CR      | 162763         | E        | CR01     | CONS_LATAM   |
       | MX      | 165139         | E        | MX02     | CONS_LATAM   |
       | GT      | 165139         | E        | GT01     | CONS_LATAM   |
