@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/planned_order_v1" viewRegion="/omp/gdm_stock" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.GDMStock5PlannedOrder" writeTo="all" topic="PANGEA_V1_gdm_stock_planned_order"> 
+    <regions> 
+      <region path="/edm/planned_order_v1"> 
+        <columns>matlNum,srcSysCd,mfgPlanOrdrDocId,plntCd,prdtnVersNum,planOrdrEndDt,grDaysLeadQty,plngScnroCd,planOrdrTypeCd,planOrdrQty</columns>  
+        <relations> 
+          <relation path="/edm/material_global_v1" isPrimaryKey="true"> 
+            <expression>localMaterialNumber=/edm/planned_order_v1.matlNum,sourceSystem=/edm/planned_order_v1.srcSysCd</expression> 
+          </relation>  
+          <relation path="/edm/plant_v1" isPrimaryKey="true"> 
+            <expression>localPlant=/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd</expression> 
+          </relation>  
+          <relation path="/plan/cns_material_plan_status" isPrimaryKey="true"> 
+            <expression>localMaterialNumber=/edm/planned_order_v1.matlNum,localPlant=/edm/planned_order_v1.plntCd,sourceSystem=/edm/planned_order_v1.srcSysCd</expression> 
+          </relation>  
+          <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false"> 
+            <expression>sourceSystem=/edm/planned_order_v1.srcSysCd,sourceObjectAttribute1Value=/edm/planned_order_v1.plntCd,sourceObjectAttribute2Value=/edm/planned_order_v1.planOrdrTypeCd</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/material_global_v1"> 
+        <columns>localMaterialNumber,sourceSystem,primaryPlanningCode,materialNumber</columns> 
+      </region>  
+      <region path="/edm/plant_v1"> 
+        <columns>localPlant,sourceSystem,localPlanningRelevant</columns> 
+      </region>  
+      <region path="/plan/cns_material_plan_status"> 
+        <columns>localMaterialNumber,localPlant,sourceSystem,noPlanRelevant</columns> 
+      </region>  
+      <region path="/plan/cns_plan_object_filter"> 
+        <columns>sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value</columns> 
+      </region>  
+      <region path="/omp/gdm_stock"> 
+        <columns>stockId,active,activeOPRERP,activeSOPERP,consignment,batchId,inventoryLinkGroupId,vendorId,certaintyId,quantity,locationId,productId,processId,receiptDate,startDate,stockType,blockedQuantity,qualityQuantity,restrictedQuantity,returnsQuantity,transferQuantity,unrestrictedQuantity,processTypeId,transitDate,erpOrderId</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class PlpoEntity extends CommonEntity {
 
+    private String madat;
     private String plnty;
     private String plnnr;
     private String plnkn;
@@ -46,10 +47,18 @@ public class PlpoEntity extends CommonEntity {
     private String daumi;
     private String daume;
     private String phflg;
+    private String usr00;
+    private String usr01;
+    private String usr02;
+    private String usr03;
+    private String usr04;
+    private String usr10;
+
+
 
     public PlpoEntity(Map<String, Object> map) {
         super(map);
-
+        setMadat((String) map.get("madat"));
         setPlnty((String) map.get("plnty"));
         setPlnnr((String) map.get("plnnr"));
         setPlnkn((String) map.get("plnkn"));
@@ -90,6 +99,20 @@ public class PlpoEntity extends CommonEntity {
         setDaumi((String) map.get("daumi"));
         setDaume((String) map.get("daume"));
         setPhflg((String) map.get("phflg"));
+        setUsr00((String) map.get("usr00"));
+        setUsr01((String) map.get("usr01"));
+        setUsr02((String) map.get("usr02"));
+        setUsr03((String) map.get("usr03"));
+        setUsr04((String) map.get("usr04"));
+        setUsr10((String) map.get("usr10"));
+    }
+
+    public String getMadat() {
+        return madat;
+    }
+
+    public void setMadat(String madat) {
+        this.madat = madat;
     }
 
     public String getPlnty() {
@@ -412,4 +435,51 @@ public class PlpoEntity extends CommonEntity {
         this.phflg = phflg;
     }
 
+    public String getUsr00() {
+        return usr00;
+    }
+
+    public void setUsr00(String usr00) {
+        this.usr00 = usr00;
+    }
+
+    public String getUsr01() {
+        return usr01;
+    }
+
+    public void setUsr01(String usr01) {
+        this.usr01 = usr01;
+    }
+
+    public String getUsr02() {
+        return usr02;
+    }
+
+    public void setUsr02(String usr02) {
+        this.usr02 = usr02;
+    }
+
+    public String getUsr03() {
+        return usr03;
+    }
+
+    public void setUsr03(String usr03) {
+        this.usr03 = usr03;
+    }
+
+    public String getUsr04() {
+        return usr04;
+    }
+
+    public void setUsr04(String usr04) {
+        this.usr04 = usr04;
+    }
+
+    public String getUsr10() {
+        return usr10;
+    }
+
+    public void setUsr10(String usr10) {
+        this.usr10 = usr10;
+    }
 }

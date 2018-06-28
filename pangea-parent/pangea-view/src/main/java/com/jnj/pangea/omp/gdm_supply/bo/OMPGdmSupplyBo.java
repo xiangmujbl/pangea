@@ -35,8 +35,10 @@ public class OMPGdmSupplyBo extends BaseBo {
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("supplyId", this.SupplyId)
+                .add("preference", this.Preference)
                 .toJsonString();
     }
+
 
     public String getSupplyId() {
         return SupplyId;
