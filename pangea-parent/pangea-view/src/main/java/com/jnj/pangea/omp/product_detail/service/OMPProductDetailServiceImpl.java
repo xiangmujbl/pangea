@@ -11,13 +11,11 @@ import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.omp.product_detail.bo.OMPProductDetailBo;
 import org.apache.commons.lang3.StringUtils;
-import sun.reflect.generics.reflectiveObjects.LazyReflectiveObjectGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,10 +42,10 @@ public class OMPProductDetailServiceImpl {
         List<OMPProductDetailBo> BoList = new ArrayList<OMPProductDetailBo>();
 
         //rules J1
-        LogUtil.getCoreLog().info("-----------------------{}---------------",materialGlobalV1Entity.getPrimaryPlanningCode());
-        if(StringUtils.isBlank(materialGlobalV1Entity.getPrimaryPlanningCode())){
-        	ResultObject resultObject = new ResultObject();
-        	FailData failData = new FailData();
+        LogUtil.getCoreLog().info("-----------------------{}---------------", materialGlobalV1Entity.getPrimaryPlanningCode());
+        if (StringUtils.isBlank(materialGlobalV1Entity.getPrimaryPlanningCode())) {
+            ResultObject resultObject = new ResultObject();
+            FailData failData = new FailData();
             failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
             failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_PRODUCT_DETAIL);
             failData.setErrorCode("J1");
@@ -57,16 +55,16 @@ public class OMPProductDetailServiceImpl {
             failData.setKey3("");
             failData.setKey4("");
             failData.setKey5("");
-            LogUtil.getCoreLog().info("-----------------------{}---------------",materialGlobalV1Entity.getLocalMaterialNumber());
+            LogUtil.getCoreLog().info("-----------------------{}---------------", materialGlobalV1Entity.getLocalMaterialNumber());
             failData.setErrorValue("PPC does not exist for localMaterialNumber in edm material");
-            
-			resultObject.setFailData(failData);
+
+            resultObject.setFailData(failData);
             resultObjectList.add(resultObject);
             return resultObjectList;
         }
-        
+
         String localMaterialNumber = materialGlobalV1Entity.getLocalMaterialNumber();
-        
+
 
         List<PlanCnsMaterialPlanStatusEntity> cnsMaterialPlanStatusEntityList = cnsMaterialPlanStatusDao.getEntitiesWithLocalMaterialNumberAndSourceSystem(localMaterialNumber, IConstant.VALUE.CONS_LATAM);
         if (!cnsMaterialPlanStatusEntityList.isEmpty()) {
@@ -97,7 +95,7 @@ public class OMPProductDetailServiceImpl {
                         bo.setCLASS(IConstant.VALUE.PGA);
                         bo.setDescription(IConstant.VALUE.PANGEA);
                     }
-                    
+
 //                    
 //                    UUID uuid = UUID.randomUUID();
 //                    String randomUUIDString = uuid.toString();
@@ -139,19 +137,19 @@ public class OMPProductDetailServiceImpl {
             OMPProductDetailBo productDetailBo1 = new OMPProductDetailBo();
             productDetailBo1.setName(IConstant.VALUE.LATAM_SKU);
 
-            if (isNumeric(materialGlobalV1Entity.getLocalMaterialNumber())){
+            if (isNumeric(materialGlobalV1Entity.getLocalMaterialNumber())) {
 
                 productDetailBo1.setValue(materialGlobalV1Entity.getLocalMaterialNumber().replaceFirst("^0*", ""));
             } else {
 
                 productDetailBo1.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
             }
-            
+
             productDetailBo1.setProductDetailId(materialGlobalV1Entity.getPrimaryPlanningCode() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.PGA + IConstant.VALUE.BACK_SLANT +
                     IConstant.VALUE.LATAM_SKU + IConstant.VALUE.BACK_SLANT + productDetailBo1.getValue());
-            
-        //    extraParam.put(productDetailBo1.getProductDetailId(), String.valueOf(extraParam.size() + 1));
-            
+
+            //    extraParam.put(productDetailBo1.getProductDetailId(), String.valueOf(extraParam.size() + 1));
+
             productDetailBo1.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
 
             for (PlanCnsMaterialPlanStatusEntity materialGlobalV1EntityTmp : cnsMaterialPlanStatusEntityList) {
@@ -192,25 +190,24 @@ public class OMPProductDetailServiceImpl {
         }
 
 
-
         // two and three data
         if (checkDpRelevant && StringUtils.isNotEmpty(materialGlobalV1Entity.getLocalDpParentCode())
                 && cnsPlanParameterEntity != null && StringUtils.isNotEmpty(cnsPlanParameterEntity.getParameterValue())) {
             OMPProductDetailBo productDetailBo2 = new OMPProductDetailBo();
-            
-           // extraParam.put(productDetailBo2.getProductDetailId(), String.valueOf(extraParam.size() + 1));
-            
+
+            // extraParam.put(productDetailBo2.getProductDetailId(), String.valueOf(extraParam.size() + 1));
+
             productDetailBo2.setProductId(cnsPlanParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
             productDetailBo2.setName(IConstant.VALUE.LATAM_SKU);
 
-            if (isNumeric(materialGlobalV1Entity.getLocalMaterialNumber())){
+            if (isNumeric(materialGlobalV1Entity.getLocalMaterialNumber())) {
 
                 productDetailBo2.setValue(materialGlobalV1Entity.getLocalMaterialNumber().replaceFirst("^0*", ""));
             } else {
 
                 productDetailBo2.setValue(materialGlobalV1Entity.getLocalMaterialNumber());
             }
-            
+
             productDetailBo2.setProductDetailId(cnsPlanParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode() +
                     IConstant.VALUE.BACK_SLANT + IConstant.VALUE.PGA + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.LATAM_SKU + IConstant.VALUE.BACK_SLANT
                     + productDetailBo2.getValue());
@@ -219,14 +216,14 @@ public class OMPProductDetailServiceImpl {
             productDetailBo2.setActiveOPRERP(IConstant.VALUE.NO);
             boList.add(productDetailBo2);
 
-           // extraParam.put(productDetailBo3.getProductDetailId(), String.valueOf(extraParam.size() + 1));
-            
+            // extraParam.put(productDetailBo3.getProductDetailId(), String.valueOf(extraParam.size() + 1));
+
             OMPProductDetailBo productDetailBo3 = new OMPProductDetailBo();
             productDetailBo3.setName(IConstant.VALUE.LATAM_ROOT);
             productDetailBo3.setValue(cnsPlanParameterEntity.getParameterValue() + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode());
             productDetailBo3.setProductDetailId(materialGlobalV1Entity.getPrimaryPlanningCode() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.PGA +
                     IConstant.VALUE.BACK_SLANT + IConstant.VALUE.LATAM_ROOT + IConstant.VALUE.BACK_SLANT + productDetailBo3.getValue());
-            
+
             productDetailBo3.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
             productDetailBo3.setActiveFCTERP(IConstant.VALUE.YES);
             productDetailBo3.setActiveOPRERP(IConstant.VALUE.NO);
@@ -234,16 +231,17 @@ public class OMPProductDetailServiceImpl {
 
         }
     }
+
     /**
      * check Numeric
      *
      * @param str
      * @return
      */
-    public boolean isNumeric(String str){
+    public boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
-        if( !isNum.matches() ){
+        if (!isNum.matches()) {
             return false;
         }
         return true;
