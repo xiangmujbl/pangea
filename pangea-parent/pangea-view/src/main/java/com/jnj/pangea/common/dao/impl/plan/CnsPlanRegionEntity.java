@@ -1,4 +1,4 @@
-package com.jnj.pangea.common.entity.plan;
+package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.pangea.common.entity.CommonEntity;
 

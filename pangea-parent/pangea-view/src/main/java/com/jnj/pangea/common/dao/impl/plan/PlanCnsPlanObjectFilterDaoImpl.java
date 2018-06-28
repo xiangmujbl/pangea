@@ -5,6 +5,8 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 
+import java.util.List;
+
 public class PlanCnsPlanObjectFilterDaoImpl extends CommonDaoImpl {
 
     private static PlanCnsPlanObjectFilterDaoImpl instance;
@@ -25,5 +27,11 @@ public class PlanCnsPlanObjectFilterDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_PLANT_ATTRIBUTE2).is(prTypeCd)
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_INCLUSIONEXCLUSION).is(incExcl).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER,queryString,PlanCnsPlanObjectFilterEntity.class);
+    }
+
+    public List<PlanCnsPlanObjectFilterEntity> getEntitiesWithSourceObjectTechNameAndSourceSystem(String sourceObjectTechName, String sourceSystem) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_TECHNAME).is(sourceObjectTechName)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER,queryString,PlanCnsPlanObjectFilterEntity.class);
     }
 }

@@ -1,4 +1,4 @@
-package com.jnj.pangea.edm;
+package com.jnj.pangea.omp;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
@@ -6,9 +6,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/edm/EDMBomHdr.feature"},
+        features = {"src/test/resources/features/omp/OMPGdmStockASN.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-7478 EDMBomHdr.json"})
-public class EDMBomHdrTest {
+        plugin = {"pretty", "json:target/reports/json/OMPGdmStockASN.json"})
+public class OMPGdmStockASN {
 }
