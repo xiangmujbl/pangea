@@ -31,7 +31,6 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
-        String PROJECT_ONE_VBFA = "/project_one/vbfa";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
@@ -1220,7 +1219,7 @@ public interface IConstant {
         public static final int VALUE_DECIMAL_3= 3;
 
     }
-    
+
     interface PLAN_EDM_MAT_INPUT {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
@@ -1236,6 +1235,12 @@ public interface IConstant {
 
     interface RKPF {
         String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
+    }
+    interface BOMHDR{
+        String BOM_VlD_ToDt = "99991231";
+    }
+    interface MFGRTNGITM{
+        String BOM_VlD_ToDt = "99991231";
     }
 
 }
