@@ -7,9 +7,9 @@ Feature:  OMPGdmDemandSalesOrder-Curation
       | localBillingBlock | localBillingBlockItem | localChangeDt | localCustomerGroup | localCustomerPO | localDeliveryBlock | localDentoBase | localDistrChannel | localDivision | localDocumentCateg | localIncoTerms1 | localIncoTerms2 | localItemBillRlvnt | localItemCategory | localItemDlvRlvnt | localMaterialNumber | localNumtoBase | localOrderCreateDt | localOrderDate | localOrderReason | localOrderType | localPlant | localPricingProcedure | localRejReason | localRequestedDate | localRoute | localSDItemCurrency | localSDItemValue | localSalesGroup | localSalesOffice | localSalesOrg | localSalesUnit | localSchLineConfimQty | localSchLineQty | localScheduleLineDate | localShipToParty | localShippingPoint | localSoldToParty | localStorageLocation | localValidFromDt | localValidToDt | salesOrderItem | salesOrderNo | salesOrderQty | scheduleLineItem | sourceSystem | localRejStat | localDelvStat |
       |                   |                       | 20160701      |                    | 4506056414      |                    | 1              | 10                | 10            | C                  |                 |                 | A                  | ZTBN              |                   | 58752               | 10             | 20160525           | 20160525       |                  | ZORB           | BR16       | ZBRA01                |                | 20160607           | BR4006     | BRL                 | 1543.23          | NE4             | BR60             | BR01          | KI             | 34                    | 0               | 20160603              | 109038           | BR01               | 174574           |                      | 0                | 0              | 490            | 116708516    | 34            | 1                | CONS_LATAM   | N            | N             |
       |                   |                       | 20171020      |                    | 1322163         |                    | 1              | 10                | 10            | C                  |                 |                 | A                  | ZTBN              |                   | 57039               | 1              | 20171011           | 20171011       |                  | ZORB           | BR14       | ZBRA01                |                | 20171019           | B19029     | BRL                 | 1626.9           | SP4             | BR62             | BR01          | KI             | 0                     | 15              | 20171019              | 182493           | BR19               | 182493           |                      | 0                | 0              | 20             | 8306862      | 38            | 1                | CONS_LATAM   | N            | N             |
-      |                   |                       | 20171020      |                    | 8306863         |                    | 1              | 10                | 10            | C                  |                 |                 | A                  | ZLBN              |                   | 60520               | 1              | 20161121           | 20161121       |                  | ZLVE           | BR13       | ZECU01                |                | 20161121           | ECGUAY     | USE                 | 23.68            | E01             | E100             | EC01          | KI             | 1                     | 0               | 20161122              | 139938           | EC01               | 139938           |                      | 0                | 0              | 150            | 8306863      | 2020          | 1                | CONS_LATAM   | N            | N             |
+      |                   |                       | 20171020      |                    | 8306863         |                    | 1              | 10                | 10            | C                  |                 |                 | A                  | ZLBN              |                   | 60520               | 1              | 20161121           | 20161121       |                  | ZLVE           | BR13       | ZECU01                |                | 20161121           | ECGUAY     | USE                 | 23.68            | E01             | E100             | EC01          | KI             | 1                     | 0               | 20161122              | 7368             | EC01               | 139938           |                      | 0                | 0              | 150            | 8306863      | 2020          | 1                | CONS_LATAM   | N            | N             |
       |                   |                       | 20150904      |                    | 3092015         |                    | 1              | 12                | 10            | C                  |                 |                 | A                  | ZLTQ              |                   | 68062               | 1              | 20150903           | 20150903       |                  | ZLVE           | CO02       | ZCOL01                | 121            | 20150907           | C02022     | COP                 | 545.03           | C27             | CO60             | BR01          | EA             | 80                    | 80              | 20150907              | 188002           | CO02               | 188002           |                      | 0                | 0              | 180            | 116043204    | 80            | 2                | CONS_LATAM   | C            | C             |
-      |                   |                       | 0             |                    | 115689885       |                    | 1              | 10                | 11            | I                  |                 |                 | A                  | ZSRT              |                   | 91732               | 1              | 20150414           | 20150414       | 337              | ZSRT           | BR14       | ZBRA04                |                | 20171019           | B08004     | BRL                 | 2.11             | B63             | BR29             | BR01          | EA             | 1                     | 0               | 20150416              | 109038           | BR08               | 108733           |                      | 0                | 0              | 60             | 115689885    | 38            | 1                | CONS_LATAM   | N            | N             |
+      |                   |                       | 0             |                    | 115689885       |                    | 1              | 10                | 11            | I                  |                 |                 | A                  | ZSRT              |                   | 91732               | 1              | 20150414           | 20150414       | 337              | ZSRT           | BR14       | ZBRA04                |                | 20171019           | B08004     | BRL                 | 2.11             | B63             | BR29             | BR01          | EA             | 1                     | 0               | 20150416              | 11548            | BR08               | 108733           |                      | 0                | 0              | 60             | 115689885    | 38            | 1                | CONS_LATAM   | N            | N             |
       |                   |                       | 20171212      |                    | 412699          |                    | 1              | 11                | 10            | C                  |                 |                 | A                  | ZLBN              |                   | 68052               | 1              | 20171211           | 20171211       |                  | ZLVE           | AR02       | ZARG01                | 55             | 20171211           | AR4000     | ARS                 | 545.03           | A03             | AR12             | AR02          | KI             | 0                     | 1               | 20171211              | 147885           | AR02               | 147885           | AR02                 | 0                | 0              | 220            | 118191240    | 1             | 2                | CONS_LATAM   | C            | C             |
     And I wait "/edm/sales_order_v1" Async Queue complete
 
@@ -37,24 +37,6 @@ Feature:  OMPGdmDemandSalesOrder-Curation
       | X      |            | 68062               | 78910100877220000 | BR12       | 68062          |                | X            | 68062 | CONS_LATAM   | x          |
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/plan/cns_spl_pln_loc" by keyFields "localName,localNumber,sourceSystem,vendorOrCustomer"
-      | localCountry | localCurrency | localName                           | localNumber | localPlant | localRegion | pLanlocTypeDesc | pLanlocTypeId | planLocTypeDesc           | planLocTypeId | sourceSystem | specLocAtt1 | specLocAtt2 | specLocAtt3 | specLocAttDesc1 | specLocAttDesc2 | specLocAttDesc3 | vendorOrCustomer |
-      | BR           | BRL           | SUPPORT PACK IND E COM LTDA         | 1189        | BR12       | 103         |                 |               | Mfg Plant Copacker        | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | EC           | USE           | LODISAL S.A.                        | 528395      | BR12       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | US           |               | JOHNSON & JOHNSON CONSUMER INC.     | 50161       | BR01       | 101         |                 |               | Ext Manufacturer FG       | VENDOR        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | UY           | UYU           | MODYLER SA                          | 65659       | UY01       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | GT           | GTQ           | DHL GLOBAL FORWARDING (GUATEMALA)   | 36191       | GT01       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | CO           | COP           | SUPPLA SA                           | 44776       | CO01       | 103         |                 |               | Mfg Plant Copacker        | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | CL           | CLP           | Apl Logistics Chile S.A.            | 79232       | BR14       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | DO           | DOP           | YOBEL SRL? ? ? ? ? ? ? ?            | 34427       | DO01       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | MX           | MXN           | AVP MAQUILA DE MEXICO S DE RL DE CV | 86017       | MX02       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | CO           | COP           | ASPRILLA ORTIZ FABIO                | 15574       | CO01       | 103         |                 |               | Mfg Plant Copacker        | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | CR           | CRC           | D.H.L. COSTA RICA (CORMAR) S.A.     | 36328       | CR01       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | MX           | MXN           | CILAG AG INTERNATIONAL              | 6109        | MX01       | 104         |                 |               | Ext Manufacturer FG       | VENDOR        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | PA           | USD           | J CAIN & CO                         | 36124       | PA03       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-      | PE           | USD           | YOBEL SUPPLY CHAIN MANAGEMENT S.A.  | 20667       | PE01       | 103         |                 |               | Affiliate/Market Copacker | SUBCON        | CONS_LATAM   |             |             |             |                 |                 |                 | V                |
-    And I wait "/plan/cns_spl_pln_loc" Async Queue complete
-
     Given I import "/plan/prod_loc_min_shelf" by keyFields "localMaterialNumber,localPlant,sourceSystem"
       | localMaterialNumber | localPlant | minMinShelfLife | minShelfLife | sourceSystem |
       | 58752               | BR16       |                 | 150          | CONS_LATAM   |
@@ -79,26 +61,26 @@ Feature:  OMPGdmDemandSalesOrder-Curation
 
     Given I import "/edm/sales_history_v1" by keyFields "localPrecDocNo,localSPrecDocLnNo,localSubDocCatg,localSubsDocLnNo,localSubsDocNo,sourceSystem"
       | sourceSystem | localPrecDocNo | localSPrecDocLnNo | localSubsDocNo | localSubsDocLnNo | localSubDocCatg | localBaseQuantity | localBaseUom | localSalesQuantity | localSalesUom | localPrecItemCatg | localCrtDt |
-      | CONS_LATAM   | 116708516      | 490               | 195007613      | 10               | J               | 10.000            | CRT          | 1                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 8306862        | 20                | 195007613      | 20               | J               | 5.000             | CRT          | 1                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 8306862        | 20                | 195007613      | 20               | J               | 5.000             | CRT          | 1                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 8306863        | 150               | 195007613      | 30               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 116043204      | 180               | 195007613      | 40               | J               | 90.000            | CRT          | 5                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 115689885      | 60                | 195007613      | 50               | J               | 1.000             | CRT          | 1                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 40075674       | 60                | 195007613      | 60               | J               | 5.000             | CRT          | 5                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 40075674       | 70                | 195007613      | 70               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 40075674       | 80                | 195007613      | 80               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 40075674       | 90                | 195007613      | 90               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 40075674       | 100               | 195007613      | 100              | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 40075674       | 110               | 195007613      | 110              | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624 |
-      | CONS_LATAM   | 40075674       | 120               | 195007613      | 120              | J               | 1.000             | CRT          | 1                  | CRT           | J                 | 20150624 |
+      | CONS_LATAM   | 116708516      | 490               | 195007613      | 10               | J               | 10.000            | CRT          | 1                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 8306862        | 20                | 195007613      | 20               | J               | 5.000             | CRT          | 1                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 8306862        | 20                | 195007613      | 30               | J               | 5.000             | CRT          | 1                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 8306863        | 150               | 195007613      | 30               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 116043204      | 180               | 195007613      | 40               | J               | 90.000            | CRT          | 5                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 115689885      | 60                | 195007613      | 50               | J               | 1.000             | CRT          | 1                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 40075674       | 60                | 195007613      | 60               | J               | 5.000             | CRT          | 5                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 40075674       | 70                | 195007613      | 70               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 40075674       | 80                | 195007613      | 80               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 40075674       | 90                | 195007613      | 90               | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 40075674       | 100               | 195007613      | 100              | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 40075674       | 110               | 195007613      | 110              | J               | 3.000             | CRT          | 3                  | CRT           | J                 | 20150624   |
+      | CONS_LATAM   | 40075674       | 120               | 195007613      | 120              | J               | 1.000             | CRT          | 1                  | CRT           | J                 | 20150624   |
     And I wait "/edm/sales_history_v1" Async Queue complete
 
     Given I import "/project_one/knvh" by keyFields "kunnr"
       | bokre | datab    | datbi    | grpno | hityp | hkunnr | hspart | hvkorg | hvtweg | hzuor | kunnr  | mandt | prfre | spart | vkorg | vtweg |
       | X     | 20171006 | 99991231 | 0     | A     | 13231  | 11     | BR01   | 10     | 0     | 192514 | 120   | X     | 11    | BR01  | 10    |
       | X     | 20180130 | 99991231 | 0     | A     | 361    | 10     | BR01   | 10     | 0     | 182493 | 120   | X     | 10    | BR01  | 10    |
-      | X     | 20070901 | 99991231 | 0     | A     | 7386   | 11     | BR01   | 10     | 0     | 105032 | 120   | X     | 11    | BR01  | 10    |
+      | X     | 20070901 | 99991231 | 0     | A     | 105032 | 11     | BR01   | 10     | 0     | 7368   | 120   | X     | 11    | EC01  | 10    |
       | X     | 20100629 | 99991231 | 0     | A     | 1185   | 10     | CO01   | 10     | 0     | 167049 | 120   | X     | 10    | CO01  | 10    |
       | X     | 20090504 | 99991231 | 0     | A     | 977    | 10     | CO01   | 10     | 0     | 163574 | 120   | X     | 10    | CO01  | 10    |
       | X     | 20170222 | 99991231 | 0     | A     | 13016  | 10     | MX02   | 11     | 0     | 193706 | 120   | X     | 10    | MX02  | 11    |
@@ -110,9 +92,9 @@ Feature:  OMPGdmDemandSalesOrder-Curation
     Given I import "/plan/cns_dem_grp_asgn" by keyFields "companyCode,countryAffiliate,customerId,region,sourceSystem"
       | channel | channelDescription       | companyCode | countryAffiliate | customerId | customerName                        | customerShipTo | demandGroup | demandGroupDescription | demandGrpDescription           | fromDate | group | region | salesOrg | salesOrganization | sourceSystem | subFranchise | toDate |
       | CH010   | Other Mass               |             | BR               | 109038     | GRUPO COMERCIAL 15 DE NOVEMBRO LTDA |                | 76100007    |                        | OTHER MASS OTHER               |          |       |        | BR01     | BR01              | CONS_LATAM   |              |        |
-      | CH010   | Other Mass               |             | BR               | 182493     | GRUPO PALHETA REFEICOES COLETIVAS L |                | 76100014    |                        | OTHER MASS OTHER               |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
-      | CH010   | Other Mass               |             | BR               | 283        | GRUPO MICROLITE S/A                 |                | 76100007    |                        | OTHER MASS OTHER               |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
-      | CH011   | Door to Doore/E-commerce |             | BR               | 12046      | DENTAL CRUZEIRO LTDA                |                | 76100014    |                        | Door to Doore/E-commerce OTHER |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
+      | CH010   | Other Mass               |             | BR               | 361        | GRUPO PALHETA REFEICOES COLETIVAS L |                | 76100014    |                        | OTHER MASS OTHER               |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
+      | CH010   | Other Mass               |             | BR               | 7386       | GRUPO MICROLITE S/A                 |                | 76100007    |                        | OTHER MASS OTHER               |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
+      | CH011   | Door to Doore/E-commerce |             | BR               | 105032     | DENTAL CRUZEIRO LTDA                |                | 76100014    |                        | Door to Doore/E-commerce OTHER |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
       | CH006   | Distributor Traditional  |             | BR               | 96         | GRUPO RECOL REPR.E COMERCIO LTDA    |                | 76100031    |                        | RECOL                          |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
       | CH011   | Door to Doore/E-commerce |             | BR               | 12518      | GRUPO BEBEDAMOUR                    |                | 76100014    |                        | Door to Doore/E-commerce OTHER |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
       | CH011   | Door to Doore/E-commerce |             | BR               | 9385       | GRUPO PLUS COM DE PROD E EQUIP ODON |                | 76100014    |                        | Door to Doore/E-commerce OTHER |          |       |        | BR01     |                   | CONS_LATAM   |              |        |
@@ -162,137 +144,137 @@ Feature:  OMPGdmDemandSalesOrder-Curation
 
     Given I import "/plan/cns_cust_excl_incl" by keyFields "country,customerShipTo,inclExcl,salesOrg,sourceSystem"
       | country | customerShipTo | inclExcl | salesOrg | sourceSystem |
-      | CL      | 179318         | E        | CL01     | CON_LATAM    |
-      | GT      | 163106         | E        | GT01     | CON_LATAM    |
-      | DO      | 170131         | E        | DO01     | CON_LATAM    |
-      | EC      | ALL            | I        | EC01     | CON_LATAM    |
-      | CR      | 155266         | E        | CR01     | CON_LATAM    |
-      | MX      | 155266         | E        | MX02     | CON_LATAM    |
-      | PA      | 194044         | E        | PA01     | CON_LATAM    |
-      | CO      | ALL            | I        | CO01     | CON_LATAM    |
-      | PA      | 160654         | I        | PA01     | CON_LATAM    |
-      | MX      | 163105         | E        | MX02     | CON_LATAM    |
-      | PA      | 161325         | E        | PA01     | CON_LATAM    |
-      | PA      | 160663         | I        | PA01     | CON_LATAM    |
-      | DO      | 187013         | E        | DO01     | CON_LATAM    |
-      | GT      | 194044         | E        | GT01     | CON_LATAM    |
-      | PA      | 155266         | E        | PA01     | CON_LATAM    |
-      | MX      | 194044         | E        | MX02     | CON_LATAM    |
-      | GT      | 170155         | E        | GT01     | CON_LATAM    |
-      | PA      | 160665         | I        | PA01     | CON_LATAM    |
-      | CL      | 179302         | E        | CL01     | CON_LATAM    |
-      | GT      | 187013         | E        | GT01     | CON_LATAM    |
-      | DO      | 194044         | E        | DO01     | CON_LATAM    |
-      | PA      | 187013         | E        | PA01     | CON_LATAM    |
-      | CR      | 157293         | E        | CR01     | CON_LATAM    |
-      | GT      | 157293         | E        | GT01     | CON_LATAM    |
-      | PA      | 162763         | E        | PA01     | CON_LATAM    |
-      | CR      | 187013         | E        | CR01     | CON_LATAM    |
-      | PA      | 157293         | E        | PA01     | CON_LATAM    |
-      | DO      | 162763         | E        | DO01     | CON_LATAM    |
-      | PA      | 160664         | I        | PA01     | CON_LATAM    |
-      | GT      | 157381         | E        | GT01     | CON_LATAM    |
-      | MX      | 162763         | E        | MX02     | CON_LATAM    |
-      | DO      | 155266         | E        | DO01     | CON_LATAM    |
-      | PA      | 157294         | E        | PA01     | CON_LATAM    |
-      | CR      | 187012         | E        | CR01     | CON_LATAM    |
-      | UY      | 164133         | E        | UY01     | CON_LATAM    |
-      | BR      | 109038         | I        | BR01     | CON_LATAM    |
-      | CR      | 162763         | E        | CR01     | CON_LATAM    |
-      | MX      | 165139         | E        | MX02     | CON_LATAM    |
-      | GT      | 165139         | E        | GT01     | CON_LATAM    |
-      | CR      | 170155         | E        | CR01     | CON_LATAM    |
-      | AR      | 172904         | E        | AR02     | CON_LATAM    |
-      | CL      | 189954         | E        | CL01     | CON_LATAM    |
-      | MX      | 160548         | E        | MX02     | CON_LATAM    |
-      | PE      | ALL            | I        | PE01     | CON_LATAM    |
-      | DO      | 170155         | E        | DO01     | CON_LATAM    |
-      | MX      | 187013         | E        | MX02     | CON_LATAM    |
-      | CL      | 179321         | E        | CL01     | CON_LATAM    |
-      | GT      | 189403         | E        | GT01     | CON_LATAM    |
-      | AR      | 171110         | E        | AR02     | CON_LATAM    |
-      | MX      | 161325         | E        | MX02     | CON_LATAM    |
-      | CR      | 163106         | E        | CR01     | CON_LATAM    |
-      | PA      | 176913         | I        | PA01     | CON_LATAM    |
-      | DO      | 161325         | E        | DO01     | CON_LATAM    |
-      | MX      | 157381         | E        | MX02     | CON_LATAM    |
-      | CR      | 161325         | E        | CR01     | CON_LATAM    |
-      | PA      | 170131         | E        | PA01     | CON_LATAM    |
-      | PA      | 171845         | I        | PA01     | CON_LATAM    |
-      | AR      | 149410         | I        | AR01     | CON_LATAM    |
-      | CR      | 194044         | E        | CR01     | CON_LATAM    |
-      | PA      | 163106         | E        | PA01     | CON_LATAM    |
-      | MX      | 157295         | E        | MX02     | CON_LATAM    |
-      | PA      | 170155         | E        | PA01     | CON_LATAM    |
-      | PA      | 172249         | I        | PA01     | CON_LATAM    |
-      | AR      | 170961         | E        | AR02     | CON_LATAM    |
-      | CR      | 160548         | E        | CR01     | CON_LATAM    |
-      | MX      | 187012         | E        | MX02     | CON_LATAM    |
-      | PA      | 160548         | E        | PA01     | CON_LATAM    |
-      | CR      | 157381         | E        | CR01     | CON_LATAM    |
-      | CR      | 170131         | E        | CR01     | CON_LATAM    |
-      | GT      | 155266         | E        | GT01     | CON_LATAM    |
-      | GT      | 162763         | E        | GT01     | CON_LATAM    |
-      | AR      | 125097         | E        | AR02     | CON_LATAM    |
-      | MX      | 187011         | E        | MX02     | CON_LATAM    |
-      | DO      | 157381         | E        | DO01     | CON_LATAM    |
-      | PA      | 160652         | I        | PA01     | CON_LATAM    |
-      | DO      | 189403         | E        | DO01     | CON_LATAM    |
-      | CR      | 157295         | E        | CR01     | CON_LATAM    |
-      | UY      | 149649         | E        | UY01     | CON_LATAM    |
-      | GT      | 157294         | E        | GT01     | CON_LATAM    |
-      | MX      | 161892         | E        | MX02     | CON_LATAM    |
-      | GT      | 187012         | E        | GT01     | CON_LATAM    |
-      | DO      | 187012         | E        | DO01     | CON_LATAM    |
-      | DO      | 157293         | E        | DO01     | CON_LATAM    |
-      | PY      | 146111         | E        | PY01     | CON_LATAM    |
-      | GT      | 161325         | E        | GT01     | CON_LATAM    |
-      | DO      | 163105         | E        | DO01     | CON_LATAM    |
-      | CR      | 161892         | E        | CR01     | CON_LATAM    |
-      | PA      | 161892         | E        | PA01     | CON_LATAM    |
-      | DO      | 157294         | E        | DO01     | CON_LATAM    |
-      | PA      | 189403         | E        | PA01     | CON_LATAM    |
-      | DO      | 187011         | E        | DO01     | CON_LATAM    |
-      | PA      | 157381         | E        | PA01     | CON_LATAM    |
-      | MX      | 170131         | E        | MX02     | CON_LATAM    |
-      | PA      | 165139         | E        | PA01     | CON_LATAM    |
-      | AR      | 163990         | E        | AR02     | CON_LATAM    |
-      | MX      | 163106         | E        | MX02     | CON_LATAM    |
-      | CL      | 179304         | E        | CL01     | CON_LATAM    |
-      | MX      | 170155         | E        | MX02     | CON_LATAM    |
-      | CR      | 189403         | E        | CR01     | CON_LATAM    |
-      | DO      | 163106         | E        | DO01     | CON_LATAM    |
-      | CL      | 179311         | E        | CL01     | CON_LATAM    |
-      | GT      | 187011         | E        | GT01     | CON_LATAM    |
-      | PA      | 163105         | E        | PA01     | CON_LATAM    |
-      | MX      | 189403         | E        | MX02     | CON_LATAM    |
-      | PA      | 160644         | I        | PA01     | CON_LATAM    |
-      | UY      | 161713         | E        | UY01     | CON_LATAM    |
-      | PA      | 160658         | I        | PA01     | CON_LATAM    |
-      | UY      | 149875         | E        | UY01     | CON_LATAM    |
-      | DO      | 160548         | E        | DO01     | CON_LATAM    |
-      | GT      | 157295         | E        | GT01     | CON_LATAM    |
-      | GT      | 163105         | E        | GT01     | CON_LATAM    |
-      | UY      | 191049         | E        | UY01     | CON_LATAM    |
-      | CR      | 163105         | E        | CR01     | CON_LATAM    |
-      | DO      | 161892         | E        | DO01     | CON_LATAM    |
-      | DO      | 157295         | E        | DO01     | CON_LATAM    |
-      | DO      | 165139         | E        | DO01     | CON_LATAM    |
-      | AR      | 182664         | E        | AR02     | CON_LATAM    |
-      | GT      | 182661         | E        | GT01     | CON_LATAM    |
-      | GT      | 170131         | E        | GT01     | CON_LATAM    |
-      | CR      | 157294         | E        | CR01     | CON_LATAM    |
-      | MX      | 157293         | E        | MX02     | CON_LATAM    |
-      | CR      | 165139         | E        | CR01     | CON_LATAM    |
-      | PA      | 187011         | E        | PA01     | CON_LATAM    |
-      | PA      | 187012         | E        | PA01     | CON_LATAM    |
-      | BR      | 182493         | I        | BR01     | CON_LATAM    |
-      | CL      | 193714         | E        | CL01     | CON_LATAM    |
-      | PA      | 157295         | E        | PA01     | CON_LATAM    |
-      | CR      | 187011         | E        | CR01     | CON_LATAM    |
-      | MX      | 157294         | E        | MX02     | CON_LATAM    |
-      | GT      | 161892         | E        | GT01     | CON_LATAM    |
-      | GT      | 160548         | E        | GT01     | CON_LATAM    |
+      | CL      | 179318         | E        | CL01     | CONS_LATAM   |
+      | GT      | 163106         | E        | GT01     | CONS_LATAM   |
+      | DO      | 170131         | E        | DO01     | CONS_LATAM   |
+      | EC      | ALL            | I        | EC01     | CONS_LATAM   |
+      | CR      | 155266         | E        | CR01     | CONS_LATAM   |
+      | MX      | 155266         | E        | MX02     | CONS_LATAM   |
+      | PA      | 194044         | E        | PA01     | CONS_LATAM   |
+      | CO      | ALL            | I        | CO01     | CONS_LATAM   |
+      | PA      | 160654         | I        | PA01     | CONS_LATAM   |
+      | MX      | 163105         | E        | MX02     | CONS_LATAM   |
+      | PA      | 161325         | E        | PA01     | CONS_LATAM   |
+      | PA      | 160663         | I        | PA01     | CONS_LATAM   |
+      | DO      | 187013         | E        | DO01     | CONS_LATAM   |
+      | GT      | 194044         | E        | GT01     | CONS_LATAM   |
+      | PA      | 155266         | E        | PA01     | CONS_LATAM   |
+      | MX      | 194044         | E        | MX02     | CONS_LATAM   |
+      | GT      | 170155         | E        | GT01     | CONS_LATAM   |
+      | PA      | 160665         | I        | PA01     | CONS_LATAM   |
+      | CL      | 179302         | E        | CL01     | CONS_LATAM   |
+      | GT      | 187013         | E        | GT01     | CONS_LATAM   |
+      | DO      | 194044         | E        | DO01     | CONS_LATAM   |
+      | PA      | 187013         | E        | PA01     | CONS_LATAM   |
+      | CR      | 157293         | E        | CR01     | CONS_LATAM   |
+      | GT      | 157293         | E        | GT01     | CONS_LATAM   |
+      | PA      | 162763         | E        | PA01     | CONS_LATAM   |
+      | CR      | 187013         | E        | CR01     | CONS_LATAM   |
+      | PA      | 157293         | E        | PA01     | CONS_LATAM   |
+      | DO      | 162763         | E        | DO01     | CONS_LATAM   |
+      | PA      | 160664         | I        | PA01     | CONS_LATAM   |
+      | GT      | 157381         | E        | GT01     | CONS_LATAM   |
+      | MX      | 162763         | E        | MX02     | CONS_LATAM   |
+      | DO      | 155266         | E        | DO01     | CONS_LATAM   |
+      | PA      | 157294         | E        | PA01     | CONS_LATAM   |
+      | CR      | 187012         | E        | CR01     | CONS_LATAM   |
+      | UY      | 164133         | E        | UY01     | CONS_LATAM   |
+      | BR      | 11548          | I        | BR01     | CONS_LATAM   |
+      | CR      | 162763         | E        | CR01     | CONS_LATAM   |
+      | MX      | 165139         | E        | MX02     | CONS_LATAM   |
+      | GT      | 165139         | E        | GT01     | CONS_LATAM   |
+      | CR      | 170155         | E        | CR01     | CONS_LATAM   |
+      | AR      | 172904         | E        | AR02     | CONS_LATAM   |
+      | CL      | 189954         | E        | CL01     | CONS_LATAM   |
+      | MX      | 160548         | E        | MX02     | CONS_LATAM   |
+      | PE      | ALL            | I        | PE01     | CONS_LATAM   |
+      | DO      | 170155         | E        | DO01     | CONS_LATAM   |
+      | MX      | 187013         | E        | MX02     | CONS_LATAM   |
+      | CL      | 179321         | E        | CL01     | CONS_LATAM   |
+      | GT      | 189403         | E        | GT01     | CONS_LATAM   |
+      | AR      | 171110         | E        | AR02     | CONS_LATAM   |
+      | MX      | 161325         | E        | MX02     | CONS_LATAM   |
+      | CR      | 163106         | E        | CR01     | CONS_LATAM   |
+      | PA      | 176913         | I        | PA01     | CONS_LATAM   |
+      | DO      | 161325         | E        | DO01     | CONS_LATAM   |
+      | MX      | 157381         | E        | MX02     | CONS_LATAM   |
+      | CR      | 161325         | E        | CR01     | CONS_LATAM   |
+      | PA      | 170131         | E        | PA01     | CONS_LATAM   |
+      | PA      | 171845         | I        | PA01     | CONS_LATAM   |
+      | AR      | 149410         | I        | AR01     | CONS_LATAM   |
+      | CR      | 194044         | E        | CR01     | CONS_LATAM   |
+      | PA      | 163106         | E        | PA01     | CONS_LATAM   |
+      | MX      | 157295         | E        | MX02     | CONS_LATAM   |
+      | PA      | 170155         | E        | PA01     | CONS_LATAM   |
+      | PA      | 172249         | I        | PA01     | CONS_LATAM   |
+      | AR      | 170961         | E        | AR02     | CONS_LATAM   |
+      | CR      | 160548         | E        | CR01     | CONS_LATAM   |
+      | MX      | 187012         | E        | MX02     | CONS_LATAM   |
+      | PA      | 160548         | E        | PA01     | CONS_LATAM   |
+      | CR      | 157381         | E        | CR01     | CONS_LATAM   |
+      | CR      | 170131         | E        | CR01     | CONS_LATAM   |
+      | GT      | 155266         | E        | GT01     | CONS_LATAM   |
+      | GT      | 162763         | E        | GT01     | CONS_LATAM   |
+      | AR      | 125097         | E        | AR02     | CONS_LATAM   |
+      | MX      | 187011         | E        | MX02     | CONS_LATAM   |
+      | DO      | 157381         | E        | DO01     | CONS_LATAM   |
+      | PA      | 160652         | I        | PA01     | CONS_LATAM   |
+      | DO      | 189403         | E        | DO01     | CONS_LATAM   |
+      | CR      | 157295         | E        | CR01     | CONS_LATAM   |
+      | UY      | 149649         | E        | UY01     | CONS_LATAM   |
+      | GT      | 157294         | E        | GT01     | CONS_LATAM   |
+      | MX      | 161892         | E        | MX02     | CONS_LATAM   |
+      | GT      | 187012         | E        | GT01     | CONS_LATAM   |
+      | DO      | 187012         | E        | DO01     | CONS_LATAM   |
+      | DO      | 157293         | E        | DO01     | CONS_LATAM   |
+      | PY      | 146111         | E        | PY01     | CONS_LATAM   |
+      | GT      | 161325         | E        | GT01     | CONS_LATAM   |
+      | DO      | 163105         | E        | DO01     | CONS_LATAM   |
+      | CR      | 161892         | E        | CR01     | CONS_LATAM   |
+      | PA      | 161892         | E        | PA01     | CONS_LATAM   |
+      | DO      | 157294         | E        | DO01     | CONS_LATAM   |
+      | PA      | 189403         | E        | PA01     | CONS_LATAM   |
+      | DO      | 187011         | E        | DO01     | CONS_LATAM   |
+      | PA      | 157381         | E        | PA01     | CONS_LATAM   |
+      | MX      | 170131         | E        | MX02     | CONS_LATAM   |
+      | PA      | 165139         | E        | PA01     | CONS_LATAM   |
+      | AR      | 163990         | E        | AR02     | CONS_LATAM   |
+      | MX      | 163106         | E        | MX02     | CONS_LATAM   |
+      | CL      | 179304         | E        | CL01     | CONS_LATAM   |
+      | MX      | 170155         | E        | MX02     | CONS_LATAM   |
+      | CR      | 189403         | E        | CR01     | CONS_LATAM   |
+      | DO      | 163106         | E        | DO01     | CONS_LATAM   |
+      | CL      | 179311         | E        | CL01     | CONS_LATAM   |
+      | GT      | 187011         | E        | GT01     | CONS_LATAM   |
+      | PA      | 163105         | E        | PA01     | CONS_LATAM   |
+      | MX      | 189403         | E        | MX02     | CONS_LATAM   |
+      | PA      | 160644         | I        | PA01     | CONS_LATAM   |
+      | UY      | 161713         | E        | UY01     | CONS_LATAM   |
+      | PA      | 160658         | I        | PA01     | CONS_LATAM   |
+      | UY      | 149875         | E        | UY01     | CONS_LATAM   |
+      | DO      | 160548         | E        | DO01     | CONS_LATAM   |
+      | GT      | 157295         | E        | GT01     | CONS_LATAM   |
+      | GT      | 163105         | E        | GT01     | CONS_LATAM   |
+      | UY      | 191049         | E        | UY01     | CONS_LATAM   |
+      | CR      | 163105         | E        | CR01     | CONS_LATAM   |
+      | DO      | 161892         | E        | DO01     | CONS_LATAM   |
+      | DO      | 157295         | E        | DO01     | CONS_LATAM   |
+      | DO      | 165139         | E        | DO01     | CONS_LATAM   |
+      | AR      | 182664         | E        | AR02     | CONS_LATAM   |
+      | GT      | 182661         | E        | GT01     | CONS_LATAM   |
+      | GT      | 170131         | E        | GT01     | CONS_LATAM   |
+      | CR      | 157294         | E        | CR01     | CONS_LATAM   |
+      | MX      | 157293         | E        | MX02     | CONS_LATAM   |
+      | CR      | 165139         | E        | CR01     | CONS_LATAM   |
+      | PA      | 187011         | E        | PA01     | CONS_LATAM   |
+      | PA      | 187012         | E        | PA01     | CONS_LATAM   |
+      | BR      | 182493         | I        | BR01     | CONS_LATAM   |
+      | CL      | 193714         | E        | CL01     | CONS_LATAM   |
+      | PA      | 157295         | E        | PA01     | CONS_LATAM   |
+      | CR      | 187011         | E        | CR01     | CONS_LATAM   |
+      | MX      | 157294         | E        | MX02     | CONS_LATAM   |
+      | GT      | 161892         | E        | GT01     | CONS_LATAM   |
+      | GT      | 160548         | E        | GT01     | CONS_LATAM   |
     And I wait "/plan/cns_cust_excl_incl" Async Queue complete
 
     Given I import "/plan/cns_so_type_incl_excl" by keyFields "country,orderType,plant,salesOrg,sourceSystem"
@@ -361,14 +343,22 @@ Feature:  OMPGdmDemandSalesOrder-Curation
     And I check file data for filename "GDMDemandSalesOrder.tsv" by keyFields "demandId"
       | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | certaintyId | customerId | demandId                            | dueDate             | fromDueDate         | inventoryLinkGroupId | locationId      | minRemainingShelfLife | planningStrategy        | productId | quantity | unitId | wRK02 |
       | YES    | NO           | YES          | NO           |         | VC          | 76100007   | 58752/CONS_LATAM_BR16/116708516/490 | 2016/06/03 00:00:01 | 2016/06/03 00:00:00 |                      | CONS_LATAM_BR16 | 150                   | ProductLocationBalanced | 58752     | 330.00   | EA     |       |
-      | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 57039/CONS_LATAM_BR14/8306862/20    | 2018/01/16 00:00:01 | 2018/01/16 00:00:00 |                      | CONS_LATAM_BR14 | 120                   | ProductLocationBalanced | 57039     | 28.00    | EA     |       |
-      | YES    | NO           | YES          | NO           |         | VC          |            | 60520/CONS_LATAM_br13/8306863/150   | 2018/02/24 00:00:01 | 2018/02/24 00:00:00 |                      | CONS_LATAM_BR13 | 9                     | ProductLocationBalanced | 60520     | 2017.00  | EA     |       |
-      | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 91732/CONS_LATAM_BR14/115689885/60  | 2018/04/02 00:00:01 | 2018/04/02 00:00:00 |                      | CONS_LATAM_BR14 | 120                   | ProductLocationBalanced | 91732     | 37.00    | EA     |       |
+      | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 57039/CONS_LATAM_BR14/8306862/20    | 2017/10/19 00:00:01 | 2017/10/19 00:00:00 |                      | CONS_LATAM_BR14 | 120                   | ProductLocationBalanced | 57039     | 28.00    | EA     |       |
+      | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 60520/CONS_LATAM_BR13/8306863/150   | 2016/11/22 00:00:01 | 2016/11/22 00:00:00 |                      | CONS_LATAM_BR13 | 9                     | ProductLocationBalanced | 60520     | 2017.00  | EA     |       |
+      | YES    | NO           | YES          | NO           |         | VC          |            | 91732/CONS_LATAM_BR14/115689885/60  | 2015/04/16 00:00:01 | 2015/04/16 00:00:00 |                      | CONS_LATAM_BR14 | 8                     | ProductLocationBalanced | 91732     | 37.00    | EA     |       |
+
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+      | functionalArea | interfaceID         | errorCode | sourceSystem | key1      | key2 | key3 | key4  | key5 | errorValue        |
+      | SP             | GDMDemandSalesOrder | SO14      | CONS_LATAM   | 118191240 | 220  | 2    | 68052 |      | Plan unit is null |
 
   Scenario: delete all test data
 
     Then I delete the test data
 
     And I will remove all data with region "/omp/gdm_demand_sales_order"
+
+    And I will remove all data with region "/edm/sales_history_v1_aggregation"
+
+    And I will remove all data with region "/plan/edm_failed_data"
 
     And I will remove the test file on sink application "GDMDemandSalesOrder.tsv"

@@ -54,6 +54,29 @@
                     <expression>
                     </expression>
                 </region>
+                <region path="/plan/cns_cust_excl_incl" isPrimaryKey="false">
+                    <columns>
+                        country,customerShipTo,inclExcl,salesOrg,sourceSystem
+                    </columns>
+                    <expression>
+                        salesOrg=/edm/sales_order_v1.localSalesOrg,sourceSystem=/edm/sales_order_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/plan/cns_so_type_incl_excl" isPrimaryKey="false">
+                    <columns>
+                        country,inclExcl,orderType,plant,salesOrg,sourceSystem
+                    </columns>
+                    <expression>
+                        orderType=/edm/sales_order_v1.localOrderType,plant=/edm/sales_order_v1.localPlant,salesOrg=/edm/sales_order_v1.localSalesOrg,sourceSystem=/edm/sales_order_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/project_one/knvh" isPrimaryKey="false">
+                    <columns>
+                        bokre,datab,datbi,grpno,hityp,hkunnr,hspart,hvkorg,hvtweg,hzuor,kunnr,mandt,prfre,spart,vkorg,vtweg
+                    </columns>
+                    <expression>
+                    </expression>
+                </region>
             </relations>
         </region>
     </regions>
@@ -63,6 +86,11 @@
             <parameters>
                 <parameter name="customerId" value="localShipToParty" relationship="and"/>
                 <parameter name="salesOrganization" value="localSalesOrg"/>
+            </parameters>
+        </method>
+        <method name="joinCnsDemGrpAsgnCustId" isPK="false" resultType="Map" path="/plan/cns_dem_grp_asgn">
+            <parameters>
+                <parameter name="customerId" value="customerId"/>
             </parameters>
         </method>
         <method name="joinProdLocMinShelf" isPK="true" resultType="Map" path="/plan/prod_loc_min_shelf">
@@ -98,6 +126,34 @@
                 <parameter name="localSubDocCatg" value="localSubDocCatg"/>
             </parameters>
         </method>
+        <method name="joinCnsSoTypeInclExcl" isPK="false" resultType="Map" path="/plan/cns_so_type_incl_excl">
+            <parameters>
+                <parameter name="orderType" value="localOrderType" relationship="and"/>
+                <parameter name="plant" value="localPlant" relationship="and"/>
+                <parameter name="salesOrg" value="localSalesOrg" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="inclExcl" value="incl"/>
+            </parameters>
+        </method>
+        <method name="joinCnsCustExclIncl" isPK="false" resultType="Map" path="/plan/cns_cust_excl_incl">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="salesOrg" value="localSalesOrg" relationship="and"/>
+                <parameter name="inclExcl" value="incl" relationship="and"/>
+                <parameter name="customerShipTo" value="localShipToParty" relationship="or"/>
+                <parameter name="customerShipTo" value="allShipTo"/>
+            </parameters>
+        </method>
+        <method name="joinKnvhOnKunnr" isPK="true" resultType="Map" path="/project_one/knvh">
+            <parameters>
+                <parameter name="kunnr" value="localShipToParty"/>
+            </parameters>
+        </method>
+        <method name="joinKnvhOnHkunnr" isPK="true" resultType="Map" path="/project_one/knvh">
+            <parameters>
+                <parameter name="hkunnr" value="localShipToParty"/>
+            </parameters>
+        </method>
     </methods>
 
     <udfs>
@@ -123,6 +179,8 @@
             <var name="localPlant" value="localPlant"/>
             <var name="localMaterialNumber" value="localMaterialNumber"/>
             <var name="allMaterialNumber" value="'*'"/>
+            <var name="inclFlag" value="'I'"/>
+            <var name="allShipTo" value="'ALL'"/>
             <var name="scheduleLineItem" value="scheduleLineItem"/>
             <var name="salesOrderQty" value="salesOrderQty"/>
             <var name="localRejReason" value="localRejReason"/>
@@ -133,6 +191,8 @@
             <var name="localNumtoBase" value="localNumtoBase"/>
             <var name="localDentoBase" value="localDentoBase"/>
             <var name="localSubDocCatg" value="'J'"/>
+            <var name="localOrderType" value="localOrderType"/>
+            <var name="localRequestedDate" value="localRequestedDate"/>
         </vars>
         <columns>
             <!-- fixed value fields first -->
@@ -146,16 +206,69 @@
             <column name="wRK02" hardCode="''"/>                                    <!-- SO03-->
             <column name="planningStrategy" hardCode="'ProductLocationBalanced'"/>  <!-- SO11-->
 
-            <!-- SO05 -->
-            <column name="customerId">
-                <ref method="joinCnsDemGrpAsgn" parameter="localShipToParty,localSalesOrg"
-                     value="demandGroup" resultType="Map">
-                    <if test="StringInner.isStringNotEmpty(demandGroup)">
-                        <set name="customerId" value="demandGroup"/>
+            <!-- SO14 -->
+            <!-- Do this rule first to process the rejects before skipping any records --> <!-- TODO maybe ?? :) -->
+            <column name="unitId" var="unitId">
+                <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
+                     value="localBaseUom" resultType="Map"/>
+                <ref method="joinCnsPlanUnit" parameter="sourceSystem,localBaseUom" value="unit" resultType="Map">
+                    <if test="unit != null">
+                        <set name="unitId" value="unit"/>
                     </if>
                     <else>
-                        <!-- TODO SO05 questions out to Nitin about this case -->
-                        <set name="customerId" value="'TODO'"/>
+                        <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO14'"
+                                  errorValue="'Plan unit is null'" sourceSystem="sourceSystem" key1="salesOrderNo"
+                                  key2="salesOrderItem" key3="scheduleLineItem" key4="localMaterialNumber"/>
+                    </else>
+                </ref>
+            </column>
+
+            <!-- SO05 -->
+            <column name="customerId">
+                <ref method="joinCnsCustExclIncl" parameter="sourceSystem,localSalesOrg,inclFlag,localShipToParty,allShipTo"
+                     value="inclExcl" resultType="Map">
+                    <if test="inclExcl != null">
+                        <ref method="joinCnsDemGrpAsgn" parameter="localShipToParty,localSalesOrg"
+                             value="demandGroup" resultType="Map">
+                            <if test="StringInner.isStringNotEmpty(demandGroup)">
+                                <set name="customerId" value="demandGroup"/>
+                            </if>
+                        </ref>
+                        <!-- step 2 -->
+                        <if test="StringInner.isStringEmpty(customerId)">
+                            <ref method="joinKnvhOnKunnr" parameter="localShipToParty"
+                                 value="vkorg,datbi,hkunnr" resultType="Map">
+                                <!-- we can do a simple int compare on the dates are they are formatted most significant
+                                     bit first; e.g. yyyymmdd-->
+                                <if test="vkorg.equals(localSalesOrg) &amp;&amp; Integer.parseInt(localRequestedDate) &lt;= Integer.parseInt(datbi)">
+                                    <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
+                                         value="demandGroup" resultType="Map">
+                                        <if test="StringInner.isStringNotEmpty(demandGroup)">
+                                            <set name="customerId" value="demandGroup"/>
+                                        </if>
+                                    </ref>
+                                </if>
+                            </ref>
+                            <!-- step 3 -->
+                            <if test="StringInner.isStringEmpty(customerId)">
+                                <ref method="joinKnvhOnHkunnr" parameter="localShipToParty"
+                                     value="vkorg,datbi,hkunnr" resultType="Map">
+                                    <!-- we can do a simple int compare on the dates are they are formatted most significant
+                                         bit first; e.g. yyyymmdd-->
+                                    <if test="vkorg.equals(localSalesOrg) &amp;&amp; Integer.parseInt(localRequestedDate) &lt;= Integer.parseInt(datbi)">
+                                        <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
+                                             value="demandGroup" resultType="Map">
+                                            <if test="StringInner.isStringNotEmpty(demandGroup)">
+                                                <set name="customerId" value="demandGroup"/>
+                                            </if>
+                                        </ref>
+                                    </if>
+                                </ref>
+                            </if>
+                        </if>
+                    </if>
+                    <else>
+                        <return/>
                     </else>
                 </ref>
             </column>
@@ -190,22 +303,22 @@
                             <if test="minShelfLife != null">
                                 <set name="minRemainingShelfLife" value="minShelfLife"/>
                             </if>
-                            <else>
-                                <!-- if no match, try material_global_v1 region instead -->
-                                <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
-                                     value="minRemShelfLife" resultType="Map">
-                                    <if test="minRemShelfLife != null">
-                                        <set name="minRemainingShelfLife" value="minRemShelfLife"/>
-                                    </if>
-                                    <else>
-                                        <!-- if no match, set blank -->
-                                        <set name="minRemainingShelfLife" value="''"/>
-                                    </else>
-                                </ref>
-                            </else>
                         </ref>
                     </else>
                 </ref>
+                <if test="minRemainingShelfLife == null">
+                    <!-- if no match, try material_global_v1 region instead -->
+                    <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
+                         value="minRemShelfLife" resultType="Map">
+                        <if test="minRemShelfLife != null">
+                            <set name="minRemainingShelfLife" value="minRemShelfLife"/>
+                        </if>
+                        <else>
+                            <!-- if no match, set blank -->
+                            <set name="minRemainingShelfLife" value="''"/>
+                        </else>
+                    </ref>
+                </if>
             </column>
 
             <!-- SO12 -->
@@ -231,17 +344,25 @@
 
             <!-- SO06 -->
             <column name="demandId">
-                <if test="Integer.parseInt(scheduleLineItem) != 1 ||
+                <ref method="joinCnsSoTypeInclExcl" parameter="localOrderType,localPlant,localSalesOrg,sourceSystem,inclFlag"
+                     value="inclExcl" resultType="Map">
+                    <if test="inclExcl != null">
+                        <if test="Integer.parseInt(scheduleLineItem) != 1 ||
                             Integer.parseInt(salesOrderQty) &lt;= 0 ||
                             StringInner.isStringNotEmpty(localRejReason) ||
                             'C'.equals(localRejStat) ||
                             'C'.equals(localDelvStat)">
-                    <return/>
-                </if>
-                <else>
-                    <set name="demandId"
-                         value="StringInner.join(productId,'/',locationId,'/',salesOrderNo,'/',salesOrderItem)"/>
-                </else>
+                            <return/>
+                        </if>
+                        <else>
+                            <set name="demandId"
+                                 value="StringInner.join(productId,'/',locationId,'/',salesOrderNo,'/',salesOrderItem)"/>
+                        </else>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </ref>
             </column>
 
             <!-- SO13 -->
@@ -252,25 +373,11 @@
                                     Integer.parseInt(localNumtoBase) / Integer.parseInt(localDentoBase)) >
                                     Double.parseDouble(localBaseQuantity)">
                         <set name="quantity"
-                             value="String.valueOf((Double.parseDouble(salesOrderQty) * Integer.parseInt(localNumtoBase) / Integer.parseInt(localDentoBase)) -
+                             value="String.format(&quot;%.2f&quot;, (Double.parseDouble(salesOrderQty) * Integer.parseInt(localNumtoBase) / Integer.parseInt(localDentoBase)) -
                              Double.parseDouble(localBaseQuantity))"/>
                     </if>
                     <else>
                         <return/>
-                    </else>
-                </ref>
-            </column>
-
-            <!-- SO14 -->
-            <column name="unitId" var="unitId">
-                <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
-                     value="localBaseUom" resultType="Map"/>
-                <ref method="joinCnsPlanUnit" parameter="sourceSystem,localBaseUom" value="unit" resultType="Map">
-                    <if test="unit != null">
-                        <set name="unitId" value="unit"/>
-                    </if>
-                    <else>
-                        <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO14'" errorValue="'Plan unit is null'" sourceSystem="sourceSystem" key1="salesOrderNo" key2="salesOrderItem" key3="scheduleLineItem"/>
                     </else>
                 </ref>
             </column>
