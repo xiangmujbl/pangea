@@ -116,6 +116,28 @@ job create --name Pangea_DQQA_Trigger_OMP_ProductDetail --definition 'pangea-tri
 
 job create --name Pangea_DQQA_Trigger_Omp_gdm_product --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProduct.xml --alias=pangea/alias/dqqa_region_alias.properties --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
+job create --name Pangea_DQQA_Trigger_EDM_AdvancedShipNotification --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMAdvancedShipNotification.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_EDM_OutboundDeliveryLine --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMOutboundDeliveryLine.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_EDM_InventoryStock --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMInventoryStock.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_OMP_UnitCurrency --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmUnitCurrency.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_OMP_GdmUnitMeasurable --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmUnitMeasurable.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_OMP_GdmProductLocationDetail --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProductLocationDetail.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_OMP_GdmProductUnitConversion --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProductUnitConversion.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_OMP_GdmProductLocation --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmProductLocation.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_OMP_GdmBatch --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmBatch.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_EDM_Plant --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMPlant_ProjectOne.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /ems/ems_f_z_enterprise_plants,/edm/source_system_v1,/project_one/t001,/project_one/t001k,/project_one/t001w,/edm/country_v1,/edm/plant_v1" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_EDM_OutboundDeliveryHeader --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMOutboundDeliveryHeader.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
 ### QA added
 
 job create --name Pangea_QA_Trigger_OMP_GdmCustomer --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmCustomer.xml --executeFile=pangea/pangea-view.jar --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="-type F -qaPaths /plan/cns_plan_dem_grp,/plan/cns_dem_grp_asgn,/plan/cns_clusters,/edm/country_v1,/plan/cns_cust_channel,/omp/gdm_customer" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
