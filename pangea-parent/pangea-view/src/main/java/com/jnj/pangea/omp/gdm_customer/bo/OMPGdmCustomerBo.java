@@ -25,12 +25,12 @@ public class OMPGdmCustomerBo extends BaseBo {
     private String partnerName;
     private String partnerRegion;
     private String partnerRole;
-    private String planningCustomerGroupID;
+    private String planningCustomerGroupId;
     private String regionId;
     private String salesOrganization;
     private String soldTo;
     private String sourceLocationId;
-    private String subCluster;
+    private String subClusterId;
 
     @Override
     public String getKey() {
@@ -199,12 +199,12 @@ public class OMPGdmCustomerBo extends BaseBo {
         this.partnerRole = partnerRole;
     }
 
-    public String getPlanningCustomerGroupID() {
-        return this.planningCustomerGroupID;
+    public String getPlanningCustomerGroupId() {
+        return this.planningCustomerGroupId;
     }
 
-    public void setPlanningCustomerGroupID(String planningCustomerGroupID) {
-        this.planningCustomerGroupID = planningCustomerGroupID;
+    public void setPlanningCustomerGroupId(String planningCustomerGroupId) {
+        this.planningCustomerGroupId = planningCustomerGroupId;
     }
 
     public String getRegionId() {
@@ -239,12 +239,12 @@ public class OMPGdmCustomerBo extends BaseBo {
         this.sourceLocationId = sourceLocationId;
     }
 
-    public String getSubCluster() {
-        return this.subCluster;
+    public String getSubClusterId() {
+        return this.subClusterId;
     }
 
-    public void setSubCluster(String subCluster) {
-        this.subCluster = subCluster;
+    public void setSubClusterId(String subClusterId) {
+        this.subClusterId = subClusterId;
     }
 
 }

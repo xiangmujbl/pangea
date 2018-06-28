@@ -5,7 +5,7 @@
 
             <region path="/project_one/mara">
                 <columns>
-                    matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf,mhdrz,mhdhb,mandt
+                    matnr,mtart,meins,matkl,lvorm,mstae,spart,xchpf,mhdrz,mhdhb,mandt,zzplnrootid
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -16,6 +16,9 @@
                     </relation>
                     <relation path="/ngems/material_linkage" isPrimaryKey="false">
                         <expression>localMaterialNumber=/project_one/mara.matnr</expression>
+                    </relation>
+                    <relation path="/plan/edm_mat_input" isPrimaryKey="false">
+                        <expression></expression>
                     </relation>
                 </relations>
             </region>
@@ -28,7 +31,7 @@
 
             <region path="/edm/source_system_v1">
                 <columns>
-                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName
+                    localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName,sourceSystemType
                 </columns>
             </region>
 
@@ -46,6 +49,12 @@
             <region path="/ngems/golden_material">
                 <columns>
                     materialNumber,materialDescription,materialType,baseUom,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufTechnology,primaryPlanningCode
+                </columns>
+            </region>
+            
+            <region path="/plan/edm_mat_input">
+                <columns>
+                    localMaterialNumber,localTechnology,sourceSystem
                 </columns>
             </region>
 

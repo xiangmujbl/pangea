@@ -48,11 +48,12 @@ public class EDMBomHdrDaoImpl extends CommonDaoImpl {
 
                     Date bomVld_ToDtFormat = DateUtils.stringToDate(bomVld_ToDt,DateUtils.yyyy_MM_dd);
                     Date currentDate = new Date();
+                    Date resultDate = DateUtils.offsetDate(currentDate,-30);
 
                     if (null == bomVld_ToDtFormat){
                         bomVld_ToDtFormat = DateUtils.stringToDate(bomVld_ToDt,DateUtils.F_yyyyMMdd);
                     }
-                    if (bomVld_ToDtFormat.getTime() >= currentDate.getTime()){
+                    if (bomVld_ToDtFormat.getTime() >= resultDate.getTime()){
                         return bomHdrEntity;
                     }
                 }

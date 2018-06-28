@@ -22,4 +22,10 @@ public class EMSFMdmUnitOfMeasureDaoImpl extends CommonDaoImpl {
         EMSFMdmUnitOfMeasureEntity emsfMdmCountriesEntity = queryForObject(IConstant.REGION.EMS_F_MDM_UNITS_CLONE, countryQueryString, EMSFMdmUnitOfMeasureEntity.class);
         return emsfMdmCountriesEntity;
     }
+    public EMSFMdmUnitOfMeasureEntity getMdmNameWithzSourceSystemAndMdmSapCode(String zSourceSystem) {
+        String countryQueryString = QueryHelper.buildCriteria(IConstant.EMS_F_MDM_UNITS.Z_SOURCE_SYSTEM)
+                .is(zSourceSystem).and(IConstant.EMS_F_MDM_UNITS.MDM_SAP_CODE).isNull().toQueryString();
+        EMSFMdmUnitOfMeasureEntity emsfMdmCountriesEntity = queryForObject(IConstant.REGION.EMS_F_MDM_UNITS_CLONE, countryQueryString, EMSFMdmUnitOfMeasureEntity.class);
+        return emsfMdmCountriesEntity;
+    }
 }

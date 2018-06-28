@@ -13,6 +13,9 @@
                     <relation path="/ems/ems_f_mdm_units_clone" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+                    <relation path="/ems/edm_unit_input" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                 </relations>
             </region>
 
@@ -29,7 +32,9 @@
             <region path="/edm/unit_of_measure_v1">
                 <columns>sourceSystem,localUom,localUomName,uom,uomName,isoCode,measure,factor,roundingDecimal</columns>
             </region>
-
+            <region path="/ems/edm_unit_input">
+                <columns>factor,roundingDecimal,sourceSystem,localUom</columns>
+            </region>
         </regions>
     </curation>
 </adf-curation>
