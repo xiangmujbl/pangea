@@ -42,8 +42,7 @@ public class EDMBomHdrServiceImpl implements ICommonService {
         edmBomHdrV1Bo.setBomNum(mainData.getStlnr());
         edmBomHdrV1Bo.setAltBomNum(mainData.getStlal());
         edmBomHdrV1Bo.setBomCntrNbr(mainData.getStkoz());
-        Date dueDate = DateUtils.stringToDate(mainData.getDatuv(), DateUtils.F_yyyyMMdd);
-        edmBomHdrV1Bo.setBomVldFromDt(DateUtils.dateToString(dueDate, DateUtils.yyyy_MM_dd));
+        edmBomHdrV1Bo.setBomVldFromDt(mainData.getDatuv());
         edmBomHdrV1Bo.setChgNum(mainData.getAennr());
         edmBomHdrV1Bo.setDelInd(mainData.getLoekz());
         edmBomHdrV1Bo.setPrvCntrNbr(mainData.getVgkzl());
@@ -59,17 +58,16 @@ public class EDMBomHdrServiceImpl implements ICommonService {
         if (stkoEntityList.size() > 1) {
             sort( stkoEntityList);
             if ((stkoEntityList.get(stkoEntityList.size() - 1).getStkoz().equals(stkoz))) {
-                edmBomHdrV1Bo.setBomVld_ToDt(IConstant.VALUE.BOM_VlD_ToDt);
+                edmBomHdrV1Bo.setBomVld_ToDt(IConstant.BOMHDR.BOM_VlD_ToDt);
             }
             for (StkoEntity st : stkoEntityList) {
                 if (Integer.parseInt(st.getStkoz()) > Integer.parseInt(stkoz)) {
-                    Date date = DateUtils.stringToDate(st.getDatuv(), DateUtils.F_yyyyMMdd);
-                    edmBomHdrV1Bo.setBomVld_ToDt(DateUtils.dateToString(date, DateUtils.yyyy_MM_dd));
+                    edmBomHdrV1Bo.setBomVld_ToDt(minusOneDay(st.getDatuv()));
                     break;
                 }
             }
         } else {
-            edmBomHdrV1Bo.setBomVld_ToDt(IConstant.VALUE.BOM_VlD_ToDt);
+            edmBomHdrV1Bo.setBomVld_ToDt(IConstant.BOMHDR.BOM_VlD_ToDt);
         }
         resultObject.setBaseBo(edmBomHdrV1Bo);
         return resultObject;
@@ -95,5 +93,14 @@ public class EDMBomHdrServiceImpl implements ICommonService {
                     }
                 });
         return stkoEntityList;
+    }
+
+    public String minusOneDay(String date){
+        Date fromDueDate = DateUtils.stringToDate(date,DateUtils.F_yyyyMMdd);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fromDueDate);
+        calendar.add(Calendar.DATE, -1);
+        String matlRtngValid_To = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
+        return matlRtngValid_To;
     }
 }

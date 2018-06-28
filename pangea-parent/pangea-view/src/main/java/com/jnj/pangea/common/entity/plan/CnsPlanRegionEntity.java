@@ -9,11 +9,11 @@ public class CnsPlanRegionEntity extends CommonEntity {
     public CnsPlanRegionEntity(Map<String, Object> map) {
         super(map);
         setPlanningRegionDesc((String) map.get("planningRegionDesc"));
-        setPlanningRegionID((String) map.get("planningRegionID"));
+        setPlanningRegionID((String) map.get("planningRegionId"));
     }
     private String planningRegionDesc;
 
-    private String planningRegionID;
+    private String planningRegionId;
 
     public String getPlanningRegionDesc() {
         return planningRegionDesc;
@@ -24,10 +24,10 @@ public class CnsPlanRegionEntity extends CommonEntity {
     }
 
     public String getPlanningRegionID() {
-        return planningRegionID;
+        return planningRegionId;
     }
 
     public void setPlanningRegionID(String planningRegionID) {
-        this.planningRegionID = planningRegionID;
+        this.planningRegionId = planningRegionID;
     }
 }
