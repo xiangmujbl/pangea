@@ -1084,6 +1084,7 @@ public interface IConstant {
             String T2 = "T2";
             String T4 = "T4";
             String T5 = "T5";
+            String T6 = "T6";
             String T8 = "T8";
             String C1 = "C1";
             String C2 = "C2";

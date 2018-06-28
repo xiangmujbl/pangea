@@ -65,11 +65,17 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         Boolean checkF1 = checkF1(localSalesOrg, localShipToParty);
         if (!checkF1) {
-            return null;
+            FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F1, "cns_cust_excl_incl can't matched");
+            resultObject.setFailData(failData);
+            return resultObject;
+//            return null;
         }
 
         if (!checkJ1(salesOrderV1Entity)) {
-            return null;
+            FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.J1, "sales_order_V1,cns_so_type_incl,plant_V1,cns_material_plan_status can't matched");
+            resultObject.setFailData(failData);
+            return resultObject;
+//            return null;
         }
 
         String salesHistoryId = salesOrderV1Entity.getSalesOrderNo() + salesOrderV1Entity.getSalesOrderItem();
@@ -102,10 +108,16 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             if (checkF2T6(fromDueDate)) {
                 gdmSalesHistoryBo.setDueDate(fromDueDate);
             } else {
-                return null;
+                FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.F2, "DueDate not same with fromDueData");
+                resultObject.setFailData(failData);
+                return resultObject;
+//                return null;
             }
         } else {
-            return null;
+            FailData failData = writeFailData(salesOrderV1Entity, IConstant.FAILED.ERROR_CODE.T6, "No record found in TVRO");
+            resultObject.setFailData(failData);
+            return resultObject;
+//            return null;
         }
 
         String locationId = salesOrderV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + salesOrderV1Entity.getLocalPlant();
@@ -145,9 +157,11 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
     private Boolean checkF1(String localSalesOrg, String localShipToParty) {
 
-        PlanCnsCustExclEntity custExclEntity = cnsCustExclDao.getEntityWithSalesOrgAndNotCustomerShipTo(localSalesOrg, localShipToParty);
+        PlanCnsCustExclEntity custExclEntityOne = cnsCustExclDao.getEntityWithSalesOrg(localSalesOrg);
 
-        if (null != custExclEntity) {
+        PlanCnsCustExclEntity custExclEntityTwo = cnsCustExclDao.getEntityWithSalesOrgAndCustomerShipTo(localSalesOrg, localShipToParty);
+
+        if (null != custExclEntityOne && null == custExclEntityTwo) {
             return true;
         }
         return false;
@@ -186,7 +200,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         if (null == demGrpAsgnEntity) {
             if (StringUtils.isNotEmpty(localShipToParty) && StringUtils.isNotEmpty(localSalesOrg)) {
-                KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorgAndDatbi(localShipToParty, localSalesOrg,localRequestedDate);
+                KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorgAndDatbi(localShipToParty, localSalesOrg, localRequestedDate);
 
                 if (null != knvhEntity) {
                     String hkunnr = knvhEntity.getHkunnr();
@@ -226,9 +240,9 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
             if (StringUtils.isNotEmpty(traztd) && StringUtils.isNotEmpty(localRequestedDate)) {
                 int traztdNum = Integer.parseInt(traztd) / 240000;
                 Date localRequestedDateFormat = DateUtils.stringToDate(localRequestedDate, DateUtils.F_yyyyMMdd);
-                Date fromDueDate = DateUtils.offsetDate(localRequestedDateFormat, -traztdNum);
-                String dueDate = DateUtils.dateToString(fromDueDate, DateUtils.J_yyyyMMdd_HHmmss);
-                return dueDate;
+                Date fromDueDateFormat = DateUtils.offsetDate(localRequestedDateFormat, -traztdNum);
+                String fromDueDate = DateUtils.dateToString(fromDueDateFormat, DateUtils.J_yyyyMMdd_HHmmss);
+                return fromDueDate;
             }
         }
 
