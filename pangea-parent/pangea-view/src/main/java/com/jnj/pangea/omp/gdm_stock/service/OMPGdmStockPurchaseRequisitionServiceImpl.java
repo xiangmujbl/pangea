@@ -66,7 +66,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             oMPGdmStockBo.setConsignment(getConsignment(edmPurchaseRequisitionV1Entity));
 
             checkPlanObjectFilterValid(edmPurchaseRequisitionV1Entity);
-            oMPGdmStockBo.seteRPOrderId(edmPurchaseRequisitionV1Entity.getPrNum());
+            oMPGdmStockBo.setErpOrderId(edmPurchaseRequisitionV1Entity.getPrNum());
 
             if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getSuplPlntCd())) {
                 oMPGdmStockBo.setInventoryLinkGroupId(stockId);
@@ -107,7 +107,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             oMPGdmStockBo.setActiveOPRERP(IConstant.VALUE.YES);
             oMPGdmStockBo.setActiveSOPERP(IConstant.VALUE.NO);
             oMPGdmStockBo.setBatchId(IConstant.VALUE.BLANK);
-            oMPGdmStockBo.setCertaintyID(IConstant.VALUE.BA);
+            oMPGdmStockBo.setCertaintyId(IConstant.VALUE.BA);
             oMPGdmStockBo.setBlockedQuantity(ZERO_POINT_ZERO);
             oMPGdmStockBo.setQualityQuantity(ZERO_POINT_ZERO);
             oMPGdmStockBo.setRestrictedQuantity(ZERO_POINT_ZERO);
