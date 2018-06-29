@@ -245,15 +245,16 @@ public class PlanCnsTlaneItemServiceImpl {
             }
         }
 
-        List<String> materialNumberList = new ArrayList<>();
 
         Set<String> keySet = queryStringMap.keySet();
+
+        List<List<String>> materialNumberList = new ArrayList<>();
         for (String tableName : keySet) {
             QueryObject object = queryStringMap.get(tableName);
             String queryString = object.getAdfCriteria().and(IConstant.VALUE.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
 
             if (StringUtils.isNotBlank(queryString)) {
-                List<Map.Entry<String, String>> entryList = AdfViewHelper.queryForList(object.getRegionPath(), queryString,-1);
+                List<Map.Entry<String, String>> entryList = AdfViewHelper.queryForList(object.getRegionPath(), queryString, -1);
                 List<String> list = new ArrayList();
                 for (Map.Entry<String, String> entry : entryList) {
                     Map<String, Object> pMap = JsonUtils.jsonToObject(entry.getValue(), Map.class);
@@ -264,13 +265,17 @@ public class PlanCnsTlaneItemServiceImpl {
                         }
                     }
                 }
-
-                //union merge list
-                materialNumberList = unionMergeList(materialNumberList, list);
+                materialNumberList.add(list);
             }
         }
 
-        return materialNumberList;
+        //union merge list
+        List<String> resultList = materialNumberList.get(0);
+        for (List<String> list : materialNumberList) {
+            resultList.retainAll(list);
+        }
+
+        return resultList;
     }
 
     class QueryObject {
@@ -294,28 +299,6 @@ public class PlanCnsTlaneItemServiceImpl {
         }
     }
 
-    private List unionMergeList(List<String> list1, List<String> list2) {
-
-        List<String> resultList = new ArrayList<>();
-        if (null != list1 && list1.size() > 0 && null != list2 && list2.size() > 0) {
-//            for (String s : list1) {
-//                if (list2.contains(s)) {
-//                    resultList.add(s);
-//                }
-//            }
-
-            resultList.addAll(list1);
-            resultList.addAll(list2);
-
-            return resultList;
-        } else if (null == list1 || list1.size() == 0) {
-            return list2;
-        } else if (null == list2 || list2.size() == 0) {
-            return list1;
-        } else {
-            return resultList;
-        }
-    }
 
     private ADFCriteria combineQueryStringAccordingOperator(String field, String operator, String value, String criticalParameterIE) {
         ADFCriteria adfCriteria = QueryHelper.buildCriteria(field);
