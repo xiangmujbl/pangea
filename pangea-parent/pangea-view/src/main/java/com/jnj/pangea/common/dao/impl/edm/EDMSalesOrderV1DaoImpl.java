@@ -21,8 +21,8 @@ public class EDMSalesOrderV1DaoImpl extends CommonDaoImpl {
 
     public EDMSalesOrderV1Entity getSalesOrderForHistoryDoc(String salesOrderNo, String salesOrderItem, String sourceSystem){
         if(StringUtils.isNotEmpty(salesOrderNo) && StringUtils.isNotEmpty(salesOrderItem)){
-            String queryString = QueryHelper.buildCriteria(IConstant.EDM_SALES_ORDER_V1.LOCAL_SALES_ORDER_NO).is(salesOrderNo)
-                    .and(IConstant.EDM_SALES_ORDER_V1.LOCAL_SALES_ORDER_ITEM).is(salesOrderItem)
+            String queryString = QueryHelper.buildCriteria(IConstant.EDM_SALES_ORDER_V1.SALES_ORDER_NO).is(salesOrderNo)
+                    .and(IConstant.EDM_SALES_ORDER_V1.SALES_ORDER_ITEM).is(salesOrderItem)
                     .and(IConstant.EDM_SALES_ORDER_V1.SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
             return queryForObject(IConstant.REGION.EDM_SALES_ORDER_V1, queryString, EDMSalesOrderV1Entity.class);

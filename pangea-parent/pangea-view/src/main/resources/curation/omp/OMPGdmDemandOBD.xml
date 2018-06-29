@@ -44,7 +44,7 @@
                 </relations>
             </region>
             <region path="/edm/outbound_delivery_line_v1">
-                <columns>actlSkuDelvQty,baseUnitOfMeasureCd,btchNum,delvDocId,delvLineNbr,matlNum,shippedQty,shippingPlntCd,slsOrdrLineNbr,slsOrdrNum,srcSysCd,vendBtchNum</columns>
+                <columns>actlSkuDelvQty,baseUnitOfMeasureCd,btchNum,shippingPtNum,delvDocId,delvLineNbr,delvTypeCd,matlNum,shippedQty,shippingPlntCd,slsOrdrLineNbr,slsOrdrNum,srcSysCd,vendBtchNum</columns>
             </region>
             <region path="/edm/sales_history_v1">
                 <columns>localBaseQuantity,localBaseUom,localCrtDt,localPrecDocNo,localPrecItemCatg,localSPrecDocLnNo,localSalesQuantity,localSalesUom,localSubDocCatg,localSubsDocLnNo,localSubsDocNo,sourceSystem</columns>
@@ -56,7 +56,7 @@
                     localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem</columns>
             </region>
             <region path="/plan/cns_plan_object_filter">
-                <columns>sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute2,sourceObjectAttribute2Value</columns>
+                <columns>sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value</columns>
             </region>
             <region path="/plan/prod_loc_min_shelf">
                 <columns>minMinShelfLife,sourceSystem,localPlant,localMaterialNumber,minShelfLife</columns>
@@ -77,7 +77,7 @@
                 <columns>country,customerShipTo,inclExcl,salesOrg,sourceSystem</columns>
             </region>
             <region path="/omp/gdm_demand_obd">
-                <columns>active,activeOPRERP,activeSOPERP,activeFCTERP,batchId,certaintyId,planningStrategy,fromDueDate,dueDate,locationId,minRemainingShelfLife,productId,demandId,inventoryLinkGroupId,quantity,unitId,WRK02</columns>
+                <columns>active,activeOPRERP,activeOBDPERP,activeFCTERP,batchId,certaintyId,customerId,planningStrategy,fromDueDate,dueDate,locationId,minRemainingShelfLife,productId,demandId,inventoryLinkGroupId,quantity,unitId,WRK02</columns>
             </region>
         </regions>
     </curation>

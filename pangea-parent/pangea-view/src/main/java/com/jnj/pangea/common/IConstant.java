@@ -276,8 +276,8 @@ public interface IConstant {
     }
 
     interface EDM_SALES_ORDER_V1 {
-        String LOCAL_SALES_ORDER_NO = "localSalesOrderNo";
-        String LOCAL_SALES_ORDER_ITEM = "localSalesOrderItem";
+        String SALES_ORDER_NO = "salesOrderNo";
+        String SALES_ORDER_ITEM = "salesOrderItem";
         String SOURCE_SYSTEM = "sourceSystem";
     }
 

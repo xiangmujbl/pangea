@@ -1,7 +1,6 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanSoTypeInclExclEntity;
@@ -28,7 +27,6 @@ public class PlanCnsPlanSoTypeInclExclDaoImpl extends CommonDaoImpl{
                     .and(IConstant.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL.PLANT).is(plant)
                     .and(IConstant.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL.SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
-            LogUtil.getLogger().info("++++++ QUERY : "+queryString);
             return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL, queryString, PlanCnsPlanSoTypeInclExclEntity.class);
         }
         return null;

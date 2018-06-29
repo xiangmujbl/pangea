@@ -62,7 +62,7 @@ public class OMPGdmDemandOBDServiceImpl {
 
         EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity = (EDMOutboundDeliveryHeaderV1Entity) o;
 
-        ArrayList<EDMOutboundDeliveryLineV1Entity> lineV1EntityList = new ArrayList(deliverLineDao.getOutboundDeliveryLinesByDelivceryDocId(obdHeaderEntity.getDelvDocId()));
+        ArrayList<EDMOutboundDeliveryLineV1Entity> lineV1EntityList = new ArrayList(deliverLineDao.getOutboundDeliveryLinesByDeliveryDocId(obdHeaderEntity.getDelvDocId()));
         PlanCnsPlanUnitEntity unitEntity;
         ArrayList<PlanCnsPlanObjectFilterEntity> objectFilterEntityList = new ArrayList(objectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem( "outbound_delivery_header", obdHeaderEntity.getSrcSysCd()));
         ArrayList<PlanCnsCustExclInclEntity>  custExclInclEntityList;
@@ -75,23 +75,27 @@ public class OMPGdmDemandOBDServiceImpl {
 
         String locationId;
         String productId;
-        String tmp="";
         boolean skip;
+        boolean fail;
 
         SimpleDateFormat dtf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Calendar asn7date = asn6and7Rule(obdHeaderEntity);
-        Calendar asn6date = asn7date;
-        asn6date.set(Calendar.SECOND, 1);
+        Calendar obd7date = obd6and7Rule(obdHeaderEntity);
+        Calendar obd6date = Calendar.getInstance();
+        obd6date.setTime(obd7date.getTime());
+        obd6date.add(Calendar.SECOND, 1);
 
         OMPGdmDemandBo gdmDemandBo;
         ResultObject resultObject;
+        FailData failData;
 
         for(EDMOutboundDeliveryLineV1Entity obdLineEntity : lineV1EntityList) {
             skip = false;
+            fail = false;
             gdmDemandBo = new OMPGdmDemandBo();
             resultObject = new ResultObject();
+            failData = new FailData();
             locationId = obdLineEntity.getSrcSysCd()+"_"+obdLineEntity.getShippingPlntCd();
-            productId = asn12Rule(obdLineEntity);
+            productId = obd12Rule(obdLineEntity);
 
             //
 
@@ -114,36 +118,39 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo.setCertaintyId(IConstant.VALUE.CERTAINTY_VJ);
 
             //OBD 5
-            if(asn5Rule(obdHeaderEntity,obdLineEntity)){
+            if(obd5Rule(obdHeaderEntity,obdLineEntity)){
                 gdmDemandBo.setDemandId(productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvLineNbr());
             } else {
                 skip = true;
-                tmp = "ASN 5 * "+obdHeaderEntity.getDelvDocId();
             }
 
             //OBD 6
-            gdmDemandBo.setDueDate(dtf.format(asn6date.getTime()));
+            gdmDemandBo.setDueDate(dtf.format(obd6date.getTime()));
 
             //OBD 7
-            gdmDemandBo.setFromDueDate(dtf.format(asn7date.getTime()));
+            gdmDemandBo.setFromDueDate(dtf.format(obd7date.getTime()));
 
             //OBD 8
+            boolean empty = true;
             for(PlanCnsPlanObjectFilterEntity filterEntity : objectFilterEntityList){
-                if(filterEntity.getSourceObjectAttribute1().equals("") && filterEntity.getSourceObjectAttribute1Value().equals(obdLineEntity.getShippingPlntCd())){
-                    if(filterEntity.getSourceObjectAttribute2Value().equals(obdLineEntity.getDelvDocId())){
-                        //to check
+                if(filterEntity.getSourceObjectAttribute1().equals("shippingPtNum") && filterEntity.getSourceObjectAttribute1Value().equals(obdLineEntity.getShippingPlntCd())){
+                    if(filterEntity.getSourceObjectAttribute2Value().equals(obdHeaderEntity.getDelvTypeCd())){
                         gdmDemandBo.setInventoryLinkGroupId(gdmDemandBo.getDemandId());
+                        empty = false;
                         break;
                     }
 
                 }
+            }
+            if(empty){
+                skip = true;
             }
 
             //OBD 9
             gdmDemandBo.setLocationId(locationId);
 
             //OBD 10
-            gdmDemandBo.setMinRemainingShelfLife(asn10Rule(obdLineEntity));
+            gdmDemandBo.setMinRemainingShelfLife(obd10Rule(obdLineEntity));
 
             //OBD 11
             gdmDemandBo.setPlanningStrategy("ProductLocationBalanced");
@@ -151,9 +158,7 @@ public class OMPGdmDemandOBDServiceImpl {
             //OBD 12  (See top)
             if(productId.isEmpty()){
                 skip = true;
-                tmp = "ASN 12 * "+obdHeaderEntity.getDelvDocId();
             } else {
-                //LogUtil.getLogger().info("product ID ++++++ "+productId);
                 gdmDemandBo.setProductId(productId);
             }
 
@@ -162,66 +167,71 @@ public class OMPGdmDemandOBDServiceImpl {
             if(null != unitEntity){
                 gdmDemandBo.setUnitId(unitEntity.getLocalUom());
             } else {
-                //todo: reject record.
+                //reject record.
+                failData = new FailData(
+                        IConstant.VALUE.SP,
+                        OMPGdmDemandOBDServiceImpl.class.getName(),
+                        "OBD13",
+                        "Missing Enterprise Unit",
+                        IConstant.VALUE.OMP,
+                        obdLineEntity.getDelvDocId(),
+                        obdLineEntity.getDelvLineNbr(),
+                        obdLineEntity.getBaseUnitOfMeasureCd(),
+                        obdLineEntity.getSrcSysCd());
+                fail = true;
             }
 
             //OBD 14
             gdmDemandBo.setWRK02("");
 
             //OBD 15
-            if(obdLineEntity.getShippedQty().isEmpty() || obdLineEntity.getShippedQty().equals("0")){
+            if(obdLineEntity.getActlSkuDelvQty().isEmpty() || obdLineEntity.getActlSkuDelvQty().equals("0")){
                 skip = true;
-                tmp = "ASN 15 * "+obdHeaderEntity.getDelvDocId() +" ship qty: "+obdLineEntity.getShippedQty();
             }
-            gdmDemandBo.setQuantity(obdLineEntity.getShippedQty());
+            gdmDemandBo.setQuantity(obdLineEntity.getActlSkuDelvQty());
 
             //OBD 16
-            if(asn16Rule(custExclInclEntityList,obdHeaderEntity)){
+            if(obd16Rule(custExclInclEntityList,obdHeaderEntity)){
                 gdmDemandBo.setCustomerId(obdHeaderEntity.getShipToCustNum());
             } else {
                 skip = true;
-                tmp = "ASN 16 * "+obdHeaderEntity.getDelvDocId();
             }
 
             //
-            if(!skip) {
-                LogUtil.getLogger().info("++++++++++++++++++++++++++ OK");
-                resultObject.setBaseBo(gdmDemandBo);
+            if(fail){
+                resultObject.setFailData(failData);
                 resultList.add(resultObject);
             } else {
-                LogUtil.getLogger().info("++++++++++++++++++++++++++ "+tmp);
-                //resultObject.setBaseBo(gdmDemandBo);
-                //resultList.add(resultObject);
+                if (!skip) {
+                    resultObject.setBaseBo(gdmDemandBo);
+                    resultList.add(resultObject);
+                } else {
+                }
             }
 
         }
-
         return resultList;
     }
 
-    private boolean asn5Rule(EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity, EDMOutboundDeliveryLineV1Entity obdLineEntity){
+    private boolean obd5Rule(EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity, EDMOutboundDeliveryLineV1Entity obdLineEntity){
         if(obdHeaderEntity.getActlGiDt().isEmpty()) {
-            EDMSalesHistoryV1Entity salesHistoryEntity = salesHistoryDao.getFirstSalesHistoryForDeliveryDoc(obdHeaderEntity.getDelvDocId(), obdLineEntity.getDelvLineNbr(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.J); //use first record of result to derive the value
+            //use first record of result to derive the value
+            EDMSalesHistoryV1Entity salesHistoryEntity = salesHistoryDao.getFirstSalesHistoryForDeliveryDoc(obdHeaderEntity.getDelvDocId(), obdLineEntity.getDelvLineNbr(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.J);
             if(null != salesHistoryEntity){
                 EDMSalesOrderV1Entity salesOrderEntity = salesOrderDao.getSalesOrderForHistoryDoc(salesHistoryEntity.getLocalPrecDocNo(), salesHistoryEntity.getLocalSPrecDocLnNo(), obdHeaderEntity.getSrcSysCd());
-                PlanCnsPlanSoTypeInclExclEntity inclExclEntity = inclExclDao.getEntityWithParam(obdHeaderEntity.getLocalSalesOrg(), salesOrderEntity.getLocalOrderType(), salesOrderEntity.getLocalPlant(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.I);
+                if(null != salesOrderEntity) {
+                    PlanCnsPlanSoTypeInclExclEntity inclExclEntity = inclExclDao.getEntityWithParam(obdHeaderEntity.getLocalSalesOrg(), salesOrderEntity.getLocalOrderType(), salesOrderEntity.getLocalPlant(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.I);
 
-                if (null != inclExclEntity) {
-                    //return (productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvLineNbr());
-                    return true;
-                } else {
-                    LogUtil.getLogger().info("++++++ inclExclEntity EMPTY ");
+                    if (null != inclExclEntity) {
+                        return true;
+                    }
                 }
-            } else {
-                LogUtil.getLogger().info("++++++ salesHistoryEntity EMPTY "+obdLineEntity.getDelvDocId());
             }
-        } else {
-            LogUtil.getLogger().info("++++++ ActlGiDt : "+obdHeaderEntity.getActlGiDt());
         }
         return false;
     }
 
-    private Calendar asn6and7Rule(EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity){
+    private Calendar obd6and7Rule(EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity){
         try{
             if(!obdHeaderEntity.getPlanGiDt().isEmpty()) {
                 Calendar cal = Calendar.getInstance();
@@ -230,7 +240,6 @@ public class OMPGdmDemandOBDServiceImpl {
                 cal.set(Calendar.HOUR, 0);
                 cal.set(Calendar.MINUTE, 0);
                 cal.set(Calendar.SECOND, 0);
-                //return dt2.format(cal.getTime());
                 return cal;
             }
         } catch (Exception e) {
@@ -239,14 +248,14 @@ public class OMPGdmDemandOBDServiceImpl {
         return null;
     }
 
-    private String asn10Rule(EDMOutboundDeliveryLineV1Entity obdLineEntity){
+    private String obd10Rule(EDMOutboundDeliveryLineV1Entity obdLineEntity){
         PlanLocMinShelfEnity minShelfEntity = minShelfDao.getEntityWithLocalMaterialNumberAndLocalPlant(obdLineEntity.getMatlNum(),obdLineEntity.getShippingPlntCd());
         if(null != minShelfEntity){
             return minShelfEntity.getMinShelfLife();
         } else {
-            minShelfEntity = minShelfDao.getEntityWithLocalMaterialNumberAndLocalPlant(IConstant.VALUE.STAR,obdLineEntity.getShippingPlntCd());
+            minShelfEntity = minShelfDao.getEntityWithLocalPlant(obdLineEntity.getShippingPlntCd());
             if(null != minShelfEntity){
-                minShelfEntity.getMinShelfLife();
+                return minShelfEntity.getMinShelfLife();
             } else {
                 EDMMaterialGlobalV1Entity materialGlobalEntity = materialGlobalDao.getEntityWithLocalMaterialNumberAndSourceSystem(obdLineEntity.getMatlNum(),obdLineEntity.getSrcSysCd());
                 if(null != materialGlobalEntity){
@@ -256,10 +265,9 @@ public class OMPGdmDemandOBDServiceImpl {
                 }
             }
         }
-        return "";
     }
 
-    private String asn12Rule(EDMOutboundDeliveryLineV1Entity obdLineEntity){
+    private String obd12Rule(EDMOutboundDeliveryLineV1Entity obdLineEntity){
         PlanCnsMaterialPlanStatusEntity materialStatusEntity;
         EDMMaterialGlobalV1Entity materialGlobalEntity;
         materialStatusEntity = materialStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(obdLineEntity.getMatlNum(),obdLineEntity.getShippingPlntCd(),obdLineEntity.getSrcSysCd());
@@ -274,26 +282,19 @@ public class OMPGdmDemandOBDServiceImpl {
                         } else {
                             return materialGlobalEntity.getPrimaryPlanningCode();
                         }
-                    } else {
-                        LogUtil.getLogger().info("Material Global not found ++++++ "+obdLineEntity.getMatlNum());
                     }
 
-                } else {
-                    LogUtil.getLogger().info("Relevant not found ++++++ "+materialStatusEntity.getSpRelevant()+" + "+materialStatusEntity.getNoPlanRelevant());
                 }
-            } else {
-                LogUtil.getLogger().info("Material not found ++++++ "+obdLineEntity.getMatlNum()+" + "+obdLineEntity.getShippingPlntCd()+" + "+obdLineEntity.getSrcSysCd());
             }
 
         } catch (Exception e){
-            //LogUtil.getLogger().info("Exception ++++++ "+materialStatusEntity.toString());
             LogUtil.getLogger().catching(e);
         }
 
         return "";
     }
 
-    private boolean asn16Rule(ArrayList<PlanCnsCustExclInclEntity>  custExclInclEntities, EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity){
+    private boolean obd16Rule(ArrayList<PlanCnsCustExclInclEntity>  custExclInclEntities, EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity){
         for(PlanCnsCustExclInclEntity entity : custExclInclEntities){
             if(entity.getInclExcl().equals(IConstant.VALUE.I)){
                 if(entity.getCustomerShipTo().equals("ALL") || entity.getCustomerShipTo().equals(obdHeaderEntity.getShipToCustNum())){

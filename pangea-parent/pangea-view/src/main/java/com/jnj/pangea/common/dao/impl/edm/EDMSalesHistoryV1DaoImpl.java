@@ -1,7 +1,6 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +26,6 @@ public class EDMSalesHistoryV1DaoImpl extends CommonDaoImpl {
                     .and(IConstant.EDM_SALES_HISTORY_V1.SOURCE_SYSTEM).is(sourceSystem)
                     .and(IConstant.EDM_SALES_HISTORY_V1.LOCAL_SUBS_DOC_CATG).is(docCatg)
                     .toQueryString();
-            LogUtil.getLogger().info("++++++ QUERY : "+queryString);
             return queryForList(IConstant.REGION.EDM_SALES_HISTORY_V1, queryString, EDMSalesHistoryV1Entity.class);
         }
         return null;

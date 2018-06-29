@@ -4,6 +4,7 @@ import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.BaseBo;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
@@ -20,11 +21,6 @@ import java.util.List;
 public class OMPGdmDemandOBDController extends BaseController {
 
     private OMPGdmDemandOBDServiceImpl service = OMPGdmDemandOBDServiceImpl.getInstance();
-/*
-    @Override
-    public ResultObject process(RawDataEvent raw) {
-        return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), EDMOutboundDeliveryHeaderV1Entity.class), null);
-    }*/
 
     public List<ViewResultItem> process(List<RawDataEvent> list) {
 
@@ -52,6 +48,7 @@ public class OMPGdmDemandOBDController extends BaseController {
             }
 
         });
+
         return result;
     }
 }

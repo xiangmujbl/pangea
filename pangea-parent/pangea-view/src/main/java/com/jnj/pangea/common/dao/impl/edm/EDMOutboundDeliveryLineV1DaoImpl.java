@@ -19,7 +19,7 @@ public class EDMOutboundDeliveryLineV1DaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<EDMOutboundDeliveryLineV1Entity> getOutboundDeliveryLinesByDelivceryDocId(String devlDocId){
+    public List<EDMOutboundDeliveryLineV1Entity> getOutboundDeliveryLinesByDeliveryDocId(String devlDocId){
         if(StringUtils.isNotEmpty(devlDocId)){
             String queryString = QueryHelper.buildCriteria(IConstant.EDM_OUTBOUND_DELIVERY_LINE_V1.DELVDOCID).is(devlDocId)
                     .toQueryString();
