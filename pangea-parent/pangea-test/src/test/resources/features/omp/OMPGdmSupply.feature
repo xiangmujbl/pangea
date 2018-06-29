@@ -206,15 +206,15 @@ Feature:  OMPGdmSupply-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmSupply.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMSupply.tsv"
+    Then A file is found on sink application with name "OMPGdmSupply.tsv"
 
-    And I check file data for filename "GDMSupply.tsv" by keyFields "SupplyId"
+    And I check file data for filename "OMPGdmSupply.tsv" by keyFields "SupplyId"
     | PROCESSTYPEID    | PURCHASINGORGANIZATION | PURCHASINGGROUP | LocationId        | INCQuantity | ProductId | MinQuantity | ActiveSOPERP |   SupplierId      | Active | VENDORID | Preference | ActiveOPRERP | LABEL             |  FromDate           | ToDate              | MaxQuantity | TransportType | SupplyId                   |
-    | ExternalPurchase |  MX01                  | VE00            | CONS_LATAM_MX23   |  0.001      |  92137    |             |  NO          | CONS_LATAM_MX23   | YES    |  6359    | 0          | YES          | External Purchase | 2009/05/08 00:00:00 | 9999/12/30 00:00:00 |             | DEFAULT       | 92137/CONS_LATAM_MX23/6359 |
-    | VendorPurchase   |  BR00                  | BR00            | CONS_LATAM_V_2519 |  0.001      |  946      |  12         |  NO          | CONS_LATAM_V_2519 | YES    |  2519    | 1          | YES          | Vendor Purchase   | 2015/07/31 00:00:00 | 9999/12/30 00:00:00 | 0           | DEFAULT       | 946/CONS_LATAM_BR20/2519   |
-    | VendorPurchase   |  BR00                  | BR00            | CONS_LATAM_V_2519 |  100.000    |  945      |  2          |  NO          | CONS_LATAM_V_2519 | YES    |  2519    | 1          | YES          | Vendor Purchase   | 2015/07/31 00:00:00 | 9999/12/30 00:00:00 | 100         | DEFAULT       | 945/CONS_LATAM_BR16/2519   |
-    | ExternalPurchase |  MX01                  | MX01            | CONS_LATAM_MX03   |  100.000    |  92129    |             |  NO          | CONS_LATAM_MX03   | YES    |  6359    | 1          | YES          | External Purchase | 2009/05/08 00:00:00 | 9999/12/30 00:00:00 | 50          | DEFAULT       | 92129/CONS_LATAM_MX03/6359 |
-    | VendorPurchase   |  MX01                  | MX01            | CONS_LATAM_V_6109 |  0.001      |  51178    |  1          |  NO          | CONS_LATAM_V_6109 | YES    |  6109    | 1          | YES          | Vendor Purchase   | 2012/07/18 00:00:00 | 9999/12/30 00:00:00 | 10          | DEFAULT       | 51178/CONS_LATAM_MX02/6109 |
+    | externalPurchase |  MX01                  | VE00            | CONS_LATAM_MX23   |  0.001      |  92137    |             |  NO          | CONS_LATAM_MX23   | YES    |  6359    | 0          | YES          | External Purchase | 2009/05/08 00:00:00 | 9999/12/30 00:00:00 |             | DEFAULT       | 92137/CONS_LATAM_MX23/6359 |
+    | vendorPurchase   |  BR00                  | BR00            | CONS_LATAM_V_2519 |  0.001      |  946      |  12         |  NO          | CONS_LATAM_V_2519 | YES    |  2519    | 1          | YES          | Vendor Purchase   | 2015/07/31 00:00:00 | 9999/12/30 00:00:00 | 0           | DEFAULT       | 946/CONS_LATAM_BR20/2519   |
+    | vendorPurchase   |  BR00                  | BR00            | CONS_LATAM_V_2519 |  100.000    |  945      |  2          |  NO          | CONS_LATAM_V_2519 | YES    |  2519    | 1          | YES          | Vendor Purchase   | 2015/07/31 00:00:00 | 9999/12/30 00:00:00 | 100         | DEFAULT       | 945/CONS_LATAM_BR16/2519   |
+    | externalPurchase |  MX01                  | MX01            | CONS_LATAM_MX03   |  100.000    |  92129    |             |  NO          | CONS_LATAM_MX03   | YES    |  6359    | 1          | YES          | External Purchase | 2009/05/08 00:00:00 | 9999/12/30 00:00:00 | 50          | DEFAULT       | 92129/CONS_LATAM_MX03/6359 |
+    | vendorPurchase   |  MX01                  | MX01            | CONS_LATAM_V_6109 |  0.001      |  51178    |  1          |  NO          | CONS_LATAM_V_6109 | YES    |  6109    | 1          | YES          | Vendor Purchase   | 2012/07/18 00:00:00 | 9999/12/30 00:00:00 | 10          | DEFAULT       | 51178/CONS_LATAM_MX02/6109 |
 
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | errorValue                                                             | functionalArea | interfaceID  | key1        | key2    | key3 |    key4    |    key5    | sourceSystem |
@@ -225,6 +225,9 @@ Feature:  OMPGdmSupply-Curation
       | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM  | 31      | VE37 |            |            | CONS_LATAM   |
       | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM  | 9       | BR17 |            |            | CONS_LATAM   |
       | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM  |         | VE32 |            |            | CONS_LATAM   |
+
+#    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+#      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
 
     And I will remove all data with region "/edm/source_list_v1"
 
@@ -240,5 +243,5 @@ Feature:  OMPGdmSupply-Curation
 
     And I will remove all data with region "/plan/cns_spl_pln_loc"
 
-    And I will remove the test file on sink application "GDMSupply.tsv"
+    And I will remove the test file on sink application "OMPGdmSupply.tsv"
 
