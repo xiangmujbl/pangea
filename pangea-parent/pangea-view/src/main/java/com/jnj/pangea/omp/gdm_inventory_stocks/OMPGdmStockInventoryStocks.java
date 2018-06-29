@@ -1,20 +1,23 @@
-package com.jnj.pangea;
+package com.jnj.pangea.omp.gdm_inventory_stocks;
 
+import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.JsonObject;
+import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.client.api.remote.RawDataValue;
 import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.data.raw.RawDataBuilder;
-import com.jnj.adf.grid.view.common.AdfViewHelper;
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.inner.StringInner;
 import com.jnj.pangea.hook.OMPGdmStockInventoryStocksHook;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unchecked")
 public class OMPGdmStockInventoryStocks implements IEventProcessor {
@@ -79,41 +82,41 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 		Map map = raw.toMap();
 
-		String localPlanningRelevant = "";
+		String sourceSystem = StringInner.getString(map, "sourceSystem");
 
-		String productId = "";
+		String localPlant = StringInner.getString(map, "localPlant");
 
-		String primaryPlanningCode = null;
+		String localBatchManagementRequirementIndicator = StringInner
+				.getString(map, "localBatchManagementRequirementIndicator");
 
-		String sourceSystem = String.valueOf(map.get("sourceSystem"));
-
-		String localSpecialStockIndicator = "";
-
-		String localConsignmentSpecialStockIndicator = "";
-
-		String localBatchId = "";
+		String localMaterialNumber = StringInner.getString(map,
+				"localMaterialNumber");
 
 		String vendorOrCustomer = "V";
 
-		String localBatchManagementRequirementIndicator = String.valueOf(map
-				.get("localBatchManagementRequirementIndicator"));
-
-		String localMaterial = "";
-
-		String localMaterialNumber = String.valueOf(map
-				.get("localMaterialNumber"));
+		String productId = "";
 
 		String localNumber = "";
 
+		String localPlanningRelevant = "";
+
 		String spRelevant = null;
-
-		String materialNumber = null;
-
-		String localVendorNumber = "";
 
 		String noPlanRelevant = null;
 
-		String localPlant = String.valueOf(map.get("localPlant"));
+		String primaryPlanningCode = null;
+
+		String materialNumber = null;
+
+		String localConsignmentSpecialStockIndicator = "";
+
+		String localSpecialStockIndicator = "";
+
+		String localMaterial = "";
+
+		String localBatchId = "";
+
+		String localVendorNumber = "";
 
 		List<Map.Entry<String, String>> inventoryStockList = null;
 		inventoryStockList = getInventoryStock(sourceSystem, localPlant,
@@ -122,22 +125,21 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 			for (Map.Entry<String, String> inventoryStockListEntry : inventoryStockList) {
 				Map<String, Object> inventoryStockListMap = JsonObject.append(
 						inventoryStockListEntry.getValue()).toMap();
-				localConsignmentSpecialStockIndicator = String
-						.valueOf(inventoryStockListMap
-								.get("localConsignmentSpecialStockIndicator"));
-				localSpecialStockIndicator = String
-						.valueOf(inventoryStockListMap
-								.get("localSpecialStockIndicator"));
-				sourceSystem = String.valueOf(inventoryStockListMap
-						.get("sourceSystem"));
-				localPlant = String.valueOf(inventoryStockListMap
-						.get("localPlant"));
-				localMaterial = String.valueOf(inventoryStockListMap
-						.get("localMaterial"));
-				localBatchId = String.valueOf(inventoryStockListMap
-						.get("localBatchId"));
-				localVendorNumber = String.valueOf(inventoryStockListMap
-						.get("localVendorNumber"));
+				localConsignmentSpecialStockIndicator = StringInner.getString(
+						inventoryStockListMap,
+						"localConsignmentSpecialStockIndicator");
+				localSpecialStockIndicator = StringInner.getString(
+						inventoryStockListMap, "localSpecialStockIndicator");
+				sourceSystem = StringInner.getString(inventoryStockListMap,
+						"sourceSystem");
+				localPlant = StringInner.getString(inventoryStockListMap,
+						"localPlant");
+				localMaterial = StringInner.getString(inventoryStockListMap,
+						"localMaterial");
+				localBatchId = StringInner.getString(inventoryStockListMap,
+						"localBatchId");
+				localVendorNumber = StringInner.getString(
+						inventoryStockListMap, "localVendorNumber");
 
 				RawDataBuilder builder = new RawDataBuilder();
 
