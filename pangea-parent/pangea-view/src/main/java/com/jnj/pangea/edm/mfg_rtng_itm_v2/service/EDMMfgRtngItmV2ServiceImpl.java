@@ -11,8 +11,11 @@ import com.jnj.pangea.common.entity.project_one.PlpoEntity;
 import com.jnj.pangea.common.entity.project_one.ProjectOnePlasEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mfg_rtng_itm_v2.bo.EDMMfgRtngItmV2Bo;
+import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class EDMMfgRtngItmV2ServiceImpl implements ICommonService {
@@ -111,11 +114,11 @@ public class EDMMfgRtngItmV2ServiceImpl implements ICommonService {
                 List<ProjectOnePlasEntity> plasEntityList1 = plasDao.getEntityWithPlntyAndPlnnrAndPlnkn(plpoEntity.getPlnty(), plpoEntity.getPlnnr(), plpoEntity.getPlnkn());
                 if (plasEntityList1 != null && plasEntityList1.size() > 0) {
                     if (plasEntityList1.size() == 1) {
-                        mfgRtngItmBo.setRtgItemEndDate(IConstant.VALUE.BOM_VlD_ToDt);
+                        mfgRtngItmBo.setRtgItemEndDate(IConstant.MFGRTNGITM.BOM_VlD_ToDt);
                     } else if (plasEntityList1.size() > 1) {
                         for (ProjectOnePlasEntity plasEntity : plasEntityList1) {
                             if (plasEntity.getLoekz().equals(IConstant.VALUE.X)) {
-                                mfgRtngItmBo.setRtgItemEndDate(plasEntity.getDatuv());
+                                mfgRtngItmBo.setRtgItemEndDate(minusOneDay(plasEntity.getDatuv()));
                                 break;
                             } else if (StringUtils.isBlank(plasEntity.getLoekz())) {
                                 continue;
@@ -125,11 +128,11 @@ public class EDMMfgRtngItmV2ServiceImpl implements ICommonService {
                 }
             } else if (plpoEntityList.size() > 1) {
                 if ((plpoEntityList.get(plpoEntityList.size() - 1).getZaehl().equals(zaehl))) {
-                    mfgRtngItmBo.setRtgItemEndDate(IConstant.VALUE.BOM_VlD_ToDt);
+                    mfgRtngItmBo.setRtgItemEndDate(IConstant.MFGRTNGITM.BOM_VlD_ToDt);
                 }
                 for (PlpoEntity pp : plpoEntityList) {
                     if (Integer.parseInt(pp.getZaehl()) > Integer.parseInt(zaehl)) {
-                        mfgRtngItmBo.setRtgItemEndDate(pp.getDatuv());
+                        mfgRtngItmBo.setRtgItemEndDate(minusOneDay(pp.getDatuv()));
                         break;
                     }
                 }
@@ -138,5 +141,15 @@ public class EDMMfgRtngItmV2ServiceImpl implements ICommonService {
         resultObject.setBaseBo(mfgRtngItmBo);
 
         return resultObject;
+    }
+    public String minusOneDay(String date){
+        LogUtil.getCoreLog().info("--------------date----------"+date);
+        Date fromDueDate = DateUtils.stringToDate(date,DateUtils.F_yyyyMMdd);
+        LogUtil.getCoreLog().info("--------------fromDueDate----------"+fromDueDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fromDueDate);
+        calendar.add(Calendar.DATE, -1);
+        String matlRtngValid_To = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
+        return matlRtngValid_To;
     }
 }

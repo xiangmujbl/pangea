@@ -85,4 +85,12 @@ public class StringInner {
         return s==null?s:s.trim();
     }
 
+    public static String getString(Map<String, Object> m, String field) {
+        if (m != null) {
+            Object o = m.get(field);
+            return o != null ? o.toString() : null;
+        }
+        return null;
+    }
+
 }

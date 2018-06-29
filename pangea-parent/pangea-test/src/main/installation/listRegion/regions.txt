@@ -144,6 +144,7 @@
 /omp/gdm_bom_element
 /omp/gdm_bom
 /omp/gdm_batch
+/omp/gdm_stock_asn
 /omp/gdm_demand_obd
 /omp/certainity
 /ngems/sub_brand_v1

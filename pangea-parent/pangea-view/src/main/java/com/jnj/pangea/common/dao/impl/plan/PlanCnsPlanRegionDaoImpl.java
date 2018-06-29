@@ -1,6 +1,7 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.CnsPlanRegionEntity;
@@ -23,8 +24,10 @@ public class PlanCnsPlanRegionDaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_REGION.PLANNING_REGION_ID).is(consumerPlanningRegion).toQueryString();
         CnsPlanRegionEntity cnsPlanRegionEntity = queryForObject(IConstant.REGION.PLAN_CNS_PLAN_REGION, queryString, CnsPlanRegionEntity.class);
         if(cnsPlanRegionEntity!=null&&StringUtils.isNotBlank(cnsPlanRegionEntity.getPlanningRegionDesc())){
+
             return cnsPlanRegionEntity.getPlanningRegionDesc();
         }
+
         return null;
     }
 }
