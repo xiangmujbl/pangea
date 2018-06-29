@@ -677,6 +677,7 @@ public interface IConstant {
     interface PLAN_CNS_DEM_GRP_ASGN {
         String CUSTOMER_ID = "customerId";
         String SALES_ORG = "salesOrg";
+        String SALES_ORGANIZATION = "salesOrganization";
         String CUSTOMER_SHIP_TO = "customerShipTo";
         String SOURCE_SYSTEM = "sourceSystem";
         String DEMAND_GROUP = "demandGroup";
