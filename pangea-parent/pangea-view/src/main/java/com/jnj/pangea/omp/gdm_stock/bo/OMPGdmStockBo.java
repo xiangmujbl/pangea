@@ -12,8 +12,8 @@ public class OMPGdmStockBo extends BaseBo {
     private String batchId;
     private String blockedQuantity;
     private String consignment;
-    private String certaintyID;
-    private String eRPOrderId;
+    private String certaintyId;
+    private String erpOrderId;
     private String inventoryLinkGroupId;
     private String vendorId;
     private String locationId;
@@ -31,6 +31,7 @@ public class OMPGdmStockBo extends BaseBo {
     private String transitDate;
     private String unrestrictedQuantity;
 
+    //No keys currently in the DOMD so using stockId for the moment
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
@@ -94,20 +95,20 @@ public class OMPGdmStockBo extends BaseBo {
         this.consignment = consignment;
     }
 
-    public String getCertaintyID() {
-        return certaintyID;
+    public String getCertaintyId() {
+        return certaintyId;
     }
 
-    public void setCertaintyID(String certaintyID) {
-        this.certaintyID = certaintyID;
+    public void setCertaintyId(String certaintyId) {
+        this.certaintyId = certaintyId;
     }
 
-    public String geteRPOrderId() {
-        return eRPOrderId;
+    public String getErpOrderId() {
+        return erpOrderId;
     }
 
-    public void seteRPOrderId(String eRPOrderId) {
-        this.eRPOrderId = eRPOrderId;
+    public void setErpOrderId(String erpOrderId) {
+        this.erpOrderId = erpOrderId;
     }
 
     public String getInventoryLinkGroupId() {
@@ -205,6 +206,7 @@ public class OMPGdmStockBo extends BaseBo {
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
+
 
     public String getStockType() {
         return stockType;

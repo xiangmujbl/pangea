@@ -10,6 +10,7 @@ public class OMPGdmCountryBo extends BaseBo {
     private String activeOPRERP;
     private String activeSOPERP;
     private String countryDescription;
+    private String currencyId;
     private String mrc;
 
     @Override
@@ -18,6 +19,16 @@ public class OMPGdmCountryBo extends BaseBo {
                 .makeJsonObject("countryId", this.countryId)
                 .toJsonString();
     }
+
+    public void setCurrencyId(String currencyId) {
+        this.currencyId = currencyId;
+    }
+
+    public String getCurrencyId() {
+
+        return currencyId;
+    }
+
 
     public String getCountryId() {
         return countryId;
