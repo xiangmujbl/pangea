@@ -6,6 +6,7 @@ import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlnSplLocDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsProcessTypeDaoImpl;
@@ -42,7 +43,6 @@ public class OMPGdmSupplyServiceImpl {
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanCnsPlnSplLocDaoImpl planCnsPlnSplLocDao = PlanCnsPlnSplLocDaoImpl.getInstance();
 
-
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
@@ -53,6 +53,10 @@ public class OMPGdmSupplyServiceImpl {
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
         // N1
+        if (edmSourceListV1Entity.getLocalAgreementNumber().isEmpty() || !edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) {
+            return skipObjects;
+        }
+
         String partA;
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(edmSourceListV1Entity.getLocalMaterialNumber());
         if (null != materialGlobalV1Entity && (!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty() && materialGlobalV1Entity.getMaterialNumber().isEmpty()))) {
