@@ -50,10 +50,8 @@
                 <columns>localBaseQuantity,localBaseUom,localCrtDt,localPrecDocNo,localPrecItemCatg,localSPrecDocLnNo,localSalesQuantity,localSalesUom,localSubDocCatg,localSubsDocLnNo,localSubsDocNo,sourceSystem</columns>
             </region>
             <region path="/edm/sales_order_v1">
-                <columns>localChangeDt,localCustomerGroup,localCustomerPO,localDeliveryBlock,localDelvStat,localDentoBase,localDistrChannel,localDivision,localDocumentCateg,localIncoTerms1,localIncoTerms2,localItemBillRlvnt,
-                    localItemCategory,localItemDlvRlvnt,localMaterialNumber,localNumtoBase,localOrderCreateDt,localOrderDate,localOrderReason,localOrderType,localPlant,localPricingProcedure,localRejReason,localRejStat,
-                    localRequestedDate,localRoute,localSDItemCurrency,localSDItemValue,localSalesGroup,localSalesOffice,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,
-                    localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem</columns>
+                <columns>localMaterialNumber,localOrderDate,localOrderReason,localOrderType,localPlant,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,
+                    localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,sourceSystem</columns>
             </region>
             <region path="/plan/cns_plan_object_filter">
                 <columns>sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value</columns>

@@ -25,7 +25,6 @@ import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustExclInclDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanLocMinShelfDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_demand.bo.OMPGdmDemandBo;
 
 import java.text.DateFormat;
@@ -94,7 +93,7 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo = new OMPGdmDemandBo();
             resultObject = new ResultObject();
             failData = new FailData();
-            locationId = obdLineEntity.getSrcSysCd()+"_"+obdLineEntity.getShippingPlntCd();
+            locationId = obdLineEntity.getSrcSysCd()+IConstant.VALUE.UNDERLINE+obdLineEntity.getShippingPlntCd();
             productId = obd12Rule(obdLineEntity);
 
             //
@@ -133,7 +132,7 @@ public class OMPGdmDemandOBDServiceImpl {
             //OBD 8
             boolean empty = true;
             for(PlanCnsPlanObjectFilterEntity filterEntity : objectFilterEntityList){
-                if(filterEntity.getSourceObjectAttribute1().equals("shippingPtNum") && filterEntity.getSourceObjectAttribute1Value().equals(obdLineEntity.getShippingPlntCd())){
+                if(filterEntity.getSourceObjectAttribute1().equals(IConstant.VALUE.SHIPPING_PLANT_NUMBER) && filterEntity.getSourceObjectAttribute1Value().equals(obdLineEntity.getShippingPlntCd())){
                     if(filterEntity.getSourceObjectAttribute2Value().equals(obdHeaderEntity.getDelvTypeCd())){
                         gdmDemandBo.setInventoryLinkGroupId(gdmDemandBo.getDemandId());
                         empty = false;
@@ -153,7 +152,7 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo.setMinRemainingShelfLife(obd10Rule(obdLineEntity));
 
             //OBD 11
-            gdmDemandBo.setPlanningStrategy("ProductLocationBalanced");
+            gdmDemandBo.setPlanningStrategy(IConstant.VALUE.PRODUCT_LOCATION_BALANCED);
 
             //OBD 12  (See top)
             if(productId.isEmpty()){

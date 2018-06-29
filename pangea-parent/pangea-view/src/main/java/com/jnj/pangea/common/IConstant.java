@@ -1031,6 +1031,8 @@ public interface IConstant {
         String AAAADL = "AAAADL";
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
+        String PRODUCT_LOCATION_BALANCED = "ProductLocationBalanced";
+        String SHIPPING_PLANT_NUMBER = "shippingPtNum";
         String LESS_DAYS = "LessDays";
         String BOM_VlD_ToDt = "9999/12/31";
         String EN_CAPY = "E";
@@ -1146,6 +1148,7 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
+            String OBD13 = "OBD13";
         }
 
         interface ERROR_VALUE {
