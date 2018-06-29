@@ -195,7 +195,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
     private PlanCnsDemGrpAsgnEntity checkT5(String localShipToParty, String localSalesOrg, String localRequestedDate) {
         PlanCnsDemGrpAsgnEntity demGrpAsgnEntity = null;
         if (StringUtils.isNotEmpty(localShipToParty) && StringUtils.isNotEmpty(localSalesOrg)) {
-            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrg(localShipToParty, localSalesOrg);
+            demGrpAsgnEntity = cnsDemGrpAsgnDao.getEntitiesWithCustomerIdAndSalesOrganization(localShipToParty, localSalesOrg);
         }
 
         if (null == demGrpAsgnEntity) {

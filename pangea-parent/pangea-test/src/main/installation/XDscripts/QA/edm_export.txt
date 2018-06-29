@@ -27,9 +27,11 @@ job name: Pangea_QA_export_EDM
 /edm/purchasing_info_record_v1
 /edm/source_list_v1
 /edm/outbound_delivery_header_v1
-/edm/outbound_delivery_line_v1
 /edm/inventory_stock
 
 job name: Pangea_QA_export_SalesOrder
 /edm/sales_order_v1
+
+job name: Pangea_QA_export_EDM_OutboundDeliveryLine
+/edm/outbound_delivery_line_v1
 
