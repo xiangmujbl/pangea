@@ -1,0 +1,28 @@
+<adf-curation>
+    <curation mainRegion="/project_one/crhs" viewRegion="/edm/wrk_ctr_hier" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.wrk_ctr_hier.controller.EDMWrkCtrHierController">
+        <regions>
+
+            <region path="/project_one/crhs">
+                <columns>objtyHy,objidHy,objtyUp,objidUp,objtyHo,objidHo,objtyLe,objidLe,flgav,vcxpos,vcypos,mandt
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,sourceSystem
+                </columns>
+            </region>
+            <region path="/edm/wrk_ctr_hier">
+                <columns>srcSysCd,topWrkCtrTypeCd,topWrkCtrNum,parntWrkCtrTypeCd,parntWrkCtrNum,childWrkCtrTypeCd,childWrkCtrNum,
+                wrkCtrTypeCd,wrkCtrNum,stopExplsInd
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
