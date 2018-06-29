@@ -18,6 +18,7 @@ import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatus
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -54,13 +55,13 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         boolean checkF1 = checkF1(edmSalesOrderV1Entity, f1ASet, f1BSet, f1CSet);
         boolean checkF2 = checkF2(edmSalesOrderV1Entity);
         if (!checkF1) {
+
             return null;
         }
 
         if (!checkF2) {
             return null;
         }
-
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
         //J1
         if (checkJ1(time, edmSalesOrderV1Entity)) {
@@ -97,7 +98,6 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         if (StringUtils.isNotEmpty(materialPlanStatusBo.getLocalParentCode())) {
             materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
         }
-
         resultObject.setBaseBo(materialPlanStatusBo);
         return resultObject;
     }
@@ -106,12 +106,15 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         String localPlant = salesOrderV1Entity.getLocalPlant();
         boolean f1A = (f1ASet.isEmpty() || f1ASet.contains(StringUtils.trim(localPlant)));
         boolean f1B = (f1BSet.isEmpty() || !f1BSet.contains(StringUtils.trim(localPlant)));
-        if (f1A && f1B) {
+
+        if (f1A || f1B) {
             String localMaterialNumber = salesOrderV1Entity.getLocalMaterialNumber();
             List<EDMMaterialPlantV1Entity> materialPlantV1EntityList = edmMaterialPlantV1Dao.getEntityWithLocalMaterialNumber(localMaterialNumber);
+
             for (EDMMaterialPlantV1Entity materialPlantV1Entity : materialPlantV1EntityList) {
                 String localMrpType = materialPlantV1Entity.getLocalMrpType();
                 boolean f1C = (f1CSet.isEmpty() || f1CSet.contains(StringUtils.trim(localMrpType)));
+
                 if (f1C) {
                     return true;
                 }
@@ -121,10 +124,9 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
     }
 
     private boolean checkF2(EDMSalesOrderV1Entity salesOrderV1Entity) {
-        PlanCnsCustExclEntity cnsCustExclEntity = planCnsCustExclDao.getEntityWithSalesOrgAndCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
-        List<PlanCnsCustExclEntity> cnsCustExclEntityList = planCnsCustExclDao.getEntityListWithSalesOrg(salesOrderV1Entity.getLocalSalesOrg());
-
-        if (cnsCustExclEntityList.size()>0 && null == cnsCustExclEntity) {
+        PlanCnsCustExclEntity cnsCustExclEntityF2A = planCnsCustExclDao.getEntityWithSalesOrgNotCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
+        PlanCnsCustExclEntity cnsCustExclEntityF2B = planCnsCustExclDao.getEntityWithSalesOrgIsCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
+        if (null != cnsCustExclEntityF2A||null !=cnsCustExclEntityF2B) {
             return true;
         }
         return false;
@@ -133,26 +135,24 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
     private boolean checkJ1(String time, EDMSalesOrderV1Entity edmSalesOrderV1Entity) {
         boolean flag = false;
         if (StringUtils.isNotEmpty(time)) {
-            flag = Determine(time, edmSalesOrderV1Entity);
+                flag = Determine(time, edmSalesOrderV1Entity);
         }
         boolean flagTwo = false;
         if (StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalSalesOrg()) && StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalOrderType())) {
-            PlanCnsSoTypeInclEntity entityWithSalesOrgAndOrderType = planCnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
-            if (entityWithSalesOrgAndOrderType != null) {
-                EDMPlantV1Entity plantWithLocalPlantAndCountry = edmPlantV1Dao.getPlantWithLocalPlantAndCountry(edmSalesOrderV1Entity.getLocalPlant(), entityWithSalesOrgAndOrderType.getCountry());
-                if (plantWithLocalPlantAndCountry != null) {
-                    flagTwo = true;
+            PlanCnsSoTypeInclEntity entityWithSalesOrgAndOrderTypeA = planCnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
+            PlanCnsSoTypeInclEntity entityWithSalesOrgAndOrderTypeB = planCnsSoTypeInclDao.getEntityWithSalesOrgAndNotOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
+            List<PlanCnsSoTypeInclEntity> planCnsSoTypeInclEntityList = Arrays.asList(entityWithSalesOrgAndOrderTypeA,entityWithSalesOrgAndOrderTypeB);
+            for(PlanCnsSoTypeInclEntity planCnsSoTypeInclEntity:planCnsSoTypeInclEntityList){
+                if(planCnsSoTypeInclEntity!=null){
+                    EDMPlantV1Entity plantWithLocalPlantAndCountry = edmPlantV1Dao.getPlantWithLocalPlantAndCountry(edmSalesOrderV1Entity.getLocalPlant(), planCnsSoTypeInclEntity.getCountry());
+                    if (plantWithLocalPlantAndCountry != null) {
+                        flagTwo = true;
+                    }
+                    break;
                 }
             }
         }
-        boolean flagThree = false;
-        if (StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalPlant()) && StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalMaterialNumber())) {
-            PlanCnsMaterialPlanStatusEntity entityWithLocalMaterialNumberAndlLocalPlant = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlant(edmSalesOrderV1Entity.getLocalMaterialNumber(), edmSalesOrderV1Entity.getLocalPlant());
-            if (entityWithLocalMaterialNumberAndlLocalPlant == null || !IConstant.VALUE.X.equals(entityWithLocalMaterialNumberAndlLocalPlant.getDpRelevant())) {
-                flagThree = true;
-            }
-        }
-        return flag && flagTwo && flagThree;
+        return flag && flagTwo;
     }
 
     private boolean Determine(String time, EDMSalesOrderV1Entity edmSalesOrderV1Entity) {

@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
@@ -27,8 +28,18 @@ public class PlanCnsSoTypeInclDaoImpl extends CommonDaoImpl {
     public PlanCnsSoTypeInclEntity getEntityWithSalesOrgAndOrderType(String salesOrg, String orderType) {
         if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(orderType)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_SO_TYPE_INCL.SALES_ORG).is(salesOrg)
-                    .and(IConstant.PLAN_CNS_SO_TYPE_INCL.ORDER_TYPE).is(orderType).toQueryString();
-            return queryForObject(IConstant.REGION.PLAN_CNS_SO_TYPE_INCL, queryString, PlanCnsSoTypeInclEntity.class);
+                    .and(IConstant.PLAN_CNS_SO_TYPE_INCL.ORDER_TYPE).is(orderType).and(IConstant.PLAN_CNS_SO_TYPE_INCL.INCL_EXCL)
+                    .is("I").toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_SO_TYPE_INCL_EXCL, queryString, PlanCnsSoTypeInclEntity.class);
+        }
+        return null;
+    }
+    public PlanCnsSoTypeInclEntity getEntityWithSalesOrgAndNotOrderType(String salesOrg, String orderType) {
+        if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(orderType)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_SO_TYPE_INCL.SALES_ORG).is(salesOrg)
+                    .and(IConstant.PLAN_CNS_SO_TYPE_INCL.ORDER_TYPE).not().is(orderType).and(IConstant.PLAN_CNS_SO_TYPE_INCL.INCL_EXCL)
+                    .is("E").toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_SO_TYPE_INCL_EXCL, queryString, PlanCnsSoTypeInclEntity.class);
         }
         return null;
     }

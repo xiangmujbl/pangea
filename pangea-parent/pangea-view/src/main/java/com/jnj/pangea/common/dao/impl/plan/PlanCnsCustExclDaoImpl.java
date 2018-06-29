@@ -18,6 +18,24 @@ public class PlanCnsCustExclDaoImpl extends CommonDaoImpl {
         }
         return instance;
     }
+public PlanCnsCustExclEntity getEntityWithSalesOrgNotCustomerShipTo(String salesOrg, String customerShipTo){
+        if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(customerShipTo)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
+                    .and(IConstant.PLAN_CNS_CUST_EXCL.CUSTOMER_SHIP_TO).not().is(customerShipTo)
+                    .and(IConstant.CNS_PLAN_PARAMETER.INCL_EXCL).is("E").toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_CUST_EXCL_INCL,queryString,PlanCnsCustExclEntity.class);
+        }
+        return null;
+    }
+public PlanCnsCustExclEntity getEntityWithSalesOrgIsCustomerShipTo(String salesOrg, String customerShipTo){
+        if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(customerShipTo)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
+                    .and(IConstant.PLAN_CNS_CUST_EXCL.CUSTOMER_SHIP_TO).is(customerShipTo)
+                    .and(IConstant.CNS_PLAN_PARAMETER.INCL_EXCL).is("I").toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_CUST_EXCL_INCL,queryString,PlanCnsCustExclEntity.class);
+        }
+        return null;
+    }
 
     public List<PlanCnsCustExclEntity> getEntityListWithSalesOrg(String salesOrg){
         if (StringUtils.isNotEmpty(salesOrg)){
