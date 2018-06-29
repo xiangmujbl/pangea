@@ -34,7 +34,7 @@
 
 
             <region path="/edm/currency_v1">
-                <columns>sourceSystem,localCurrency</columns>
+                <columns>sourceSystem,localCurrency,currencyCode</columns>
             </region>
 
             <region path="/plan/cns_plan_parameter">

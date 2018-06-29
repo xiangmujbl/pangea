@@ -1,0 +1,220 @@
+<adf-curation type="M" executionClassName="com.jnj.pangea.omp.gdm_stock.GdmStock">
+    <regions>
+        <region path="/edm/process_order_v1" mainRegion="true">
+            <columns>matlNum,plntCd,mfgOrdrNum,sourceSystem,mfgOrdrItemNum,ordrType,ordrStts,ordrQty,rcvdQty,fctrNmrtrMeas,fctrDnmntrMeas,planClseDt,goodRcptLdDaysQty,prdtnSchdEndDt,prdntVrsnNum,delInd</columns>
+            <relations>
+                <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <columns>localMaterialNumber,localPlant,sourceSystem,primaryPlanningCode,materialNumber</columns>
+                    <expression>localMaterialNumber=/edm/process_order_v1.matlNum,localPlant=/edm/process_order_v1.plntCd</expression>
+                </region>
+
+                <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                    <columns>sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value</columns>
+                    <expression></expression>
+                </region>
+
+                <region path="/edm/plant_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,localPlant,localPlanningRelevant</columns>
+                    <expression></expression>
+                </region>
+
+                <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                    <columns>localMaterialNumber,localPlant,sourceSystem,noPlanRelevant</columns>
+                    <expression></expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
+
+    <methods>
+        <method name="queryMaterialGlobalV1" resultType="Map" isPK="false" path="/edm/material_global_v1">
+            <parameters>
+                <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+
+        <method name="queryCnsMaterialPlanStatus" resultType="String" resultColumn="noPlanRelevant" isPK="false" path="/plan/cns_material_plan_status">
+            <parameters>
+                <parameter name="localMaterialNumber" value="matlNum"  relationship="and"/>
+                <parameter name="localPlant" value="plntCd"  relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+
+        <method name="queryPlantV1" resultType="String" resultColumn="localPlanningRelevant" isPK="false" path="/edm/plant_v1">
+            <parameters>
+                <parameter name="localPlant" value="plntCd"  relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+
+        <method name="queryCnsPlanObjectFilter" resultType="List" isPK="false" path="/plan/cns_plan_object_filter">
+            <parameters>
+                <!--TODO-->
+                <parameter name="sourceObjectTechName" value="'process_order'"  relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+    </methods>
+
+    <viewRegion name="/omp/gdm_stock">
+        <vars>
+            <var name="matlNum" value="matlNum"/>
+            <var name="plntCd" value="plntCd"/>
+            <var name="sourceSystem" value="sourceSystem"/>
+            <var name="stockId"/>
+            <var name="delnr" value="mfgOrdrNum"/>
+            <var name="delps" value="mfgOrdrItemNum"/>
+            <var name="mfgOrdrNum" value="mfgOrdrNum"/>
+            <var name="mfgOrdrItemNum" value="mfgOrdrItemNum"/>
+            <var name="locationId"/>
+            <var name="prdntVrsnNum" value="prdntVrsnNum"/>
+            <var name="delInd" value="delInd"/>
+            <var name="ordrStts" value="ordrStts"/>
+            <var name="ordrType" value="ordrType"/>
+            <var name="erpOrderId"/>
+            <var name="prdtnSchdEndDt" value="prdtnSchdEndDt"/>
+            <var name="ordrQty" value="ordrQty"/>
+            <var name="rcvdQty" value="rcvdQty"/>
+            <var name="fctrNmrtrMeas" value="fctrNmrtrMeas"/>
+            <var name="fctrDnmntrMeas" value="fctrDnmntrMeas"/>
+            <var name="quantity"/>
+            <var name="prdtnSchdEndDt" value="prdtnSchdEndDt"/>
+            <var name="goodRcptLdDaysQty" value="goodRcptLdDaysQty"/>
+        </vars>
+        <columns>
+            <!--1-5-->
+            <column name="stockId" var="stockId"  isPK="true">
+                <ref method="queryMaterialGlobalV1" parameter="matlNum,sourceSystem" value="primaryPlanningCode,materialNumber" resultType="Map">
+                    <if test="StringInner.isStringEmpty(primaryPlanningCode)">
+                        <set name="stockId" value="StringInner.join(materialNumber,'/',StringInner.join(sourceSystem,'_',plntCd),'/',mfgOrdrNum)"/>
+                    </if>
+                    <else>
+                        <set name="stockId" value="StringInner.join(primaryPlanningCode,'/',StringInner.join(sourceSystem,'_',plntCd),'/',mfgOrdrNum)"/>
+                    </else>
+                </ref>
+            </column>
+            <!--PRO02-->
+            <column name="active" hardCode="'YES'"/>
+            <column name="activeOPRERP" hardCode="'YES'"/>
+            <!--PRO03-->
+            <column name="activeSOPERP" hardCode="'NO'"/>
+            <!--PRO04-->
+            <column name="batchId" hardCode="''"/>
+            <!--6-10-->
+            <!--PRO14-->
+            <column name="blockedQuantity"  hardCode="'0.0'"/>
+            <!--PRO3-->
+            <column name="consignment" hardCode="'NO'"/>
+            <!--PRO05-->
+            <column name="certaintyId" hardCode="'FE'"/>
+            <column name="erpOrderId" var="erpOrderId">
+                <multiply method="queryCnsPlanObjectFilter" parameter="sourceSystem" var="sourceObjectAttribute1,sourceObjectAttribute2Value"/>
+                <if test="('').equals(delInd)">
+                    <if test="ordrStts.indexOf('CRTD')!=-1 || ordrStts.indexOf('REL')!=-1 || ordrStts.indexOf('PCNF')!=-1">
+                        <if test="('plntCd').equals(sourceObjectAttribute1)">
+                            <if test="(sourceObjectAttribute2Value).equals(ordrType)">
+                                <set name="erpOrderId" value="mfgOrdrNum"/>
+                            </if>
+                            <else>
+                                <continue/>
+                            </else>
+                        </if>
+                        <else>
+                            <continue/>
+                        </else>
+                    </if>
+                    <else>
+                        <continue/>
+                    </else>
+                </if>
+                <else>
+                    <continue/>
+                </else>
+            </column>
+            <!--PRO04-->
+            <column name="inventoryLinkGroupId" hardCode="''"/>
+            <!--11-15-->
+            <!--PRO04-->
+            <column name="vendorId" hardCode="''"/>
+            <!--PRO7-->
+            <column name="locationId" var="locationId">
+                <ref method="queryPlantV1" parameter="plntCd,sourceSystem" value="localPlanningRelevant" resultType="String"/>
+                <if test="('X').equals(localPlanningRelevant)">
+                    <set name="locationId" value="StringInner.join(sourceSystem,'_',plntCd)"/>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <!--PRO8-->
+            <column name="processId">
+                <ref method="queryMaterialGlobalV1" parameter="matlNum,sourceSystem" value="primaryPlanningCode,materialNumber" resultType="Map">
+                    <if test="StringInner.isStringEmpty(primaryPlanningCode)">
+                        <set name="processId" value="StringInner.join(prdntVrsnNum,'/',materialNumber,'/',sourceSystem,'_',plntCd)"/>
+                    </if>
+                    <else>
+                        <set name="processId" value="StringInner.join(prdntVrsnNum,'/',primaryPlanningCode,'/',sourceSystem,'_',plntCd)"/>
+                    </else>
+                </ref>
+                <!--<set name="processIdValue" value="StringInner.join('sourceSystem','_',plntCd)"/>-->
+                <!--<set name="processIdValue" value="StringInner.join(prdntVrsnNum,'/',productId_temp,'/',locationId_temp)"/>-->
+            </column>
+            <!--PRO15-->
+            <column name="processTypeId" hardCode="'Production'"/>
+            <!--PRO9-->
+            <column name="productId" var="productId">
+                <ref method="queryCnsMaterialPlanStatus" parameter="matlNum,plntCd,sourceSystem" value="noPlanRelevant" resultType="String"/>
+                <if test="('X').equals(noPlanRelevant)">
+                    <ref method="queryMaterialGlobalV1" parameter="matlNum,plntCd" value="primaryPlanningCode,materialNumber" resultType="Map"/>
+                    <if test="StringInner.isStringEmpty(primaryPlanningCode) &amp;&amp; StringInner.isStringEmpty(materialNumber)">
+                       <continue/>
+                    </if>
+                    <else>
+                        <if test="StringInner.isStringEmpty(primaryPlanningCode)">
+                            <set name="productId" value="materialNumber"/>
+                        </if>
+                        <else>
+                            <set name="productId" value="primaryPlanningCode"/>
+                        </else>
+                    </else>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <!--16-20-->
+            <!--PRO14-->
+            <column name="qualityQuantity" hardCode="'0.0'"/>
+            <!--PRO10-->
+            <column name="quantity">
+                <ref hook="OMPGDMStockHook.setQuantityValue(ordrQty,rcvdQty,fctrNmrtrMeas,fctrDnmntrMeas)"/>
+            </column>
+            <!--PRO11-->
+            <column name="receiptDate">
+                <ref hook="OMPGDMStockHook.setReceiptDateValue(prdtnSchdEndDt)"/>
+            </column>
+            <!--PRO19-->
+            <column name="restrictedQuantity" hardCode="'0.0'"/>
+            <column name="returnsQuantity" hardCode="'0.0'"/>
+            <!--21-25-->
+            <!--PRO2-->
+            <column name="startDate">
+                <ref hook="OMPGDMStockHook.setStartDateValue(prdtnSchdEndDt,goodRcptLdDaysQty)"/>
+            </column>
+            <!--PRO13-->
+            <column name="stockType" hardCode="'movement'"/>
+            <!--PRO14-->
+            <column name="transferQuantity" hardCode="'0.0'"/>
+            <!--PRO16-->
+            <column name="transitDate" hardCode="'1980/01/01 00:00:00'"/>
+            <!--PRO14-->
+            <column name="unrestrictedQuantity" hardCode="'0.0'"/>
+            <!--26-30-->
+
+
+        </columns>
+    </viewRegion>
+
+</adf-curation>
