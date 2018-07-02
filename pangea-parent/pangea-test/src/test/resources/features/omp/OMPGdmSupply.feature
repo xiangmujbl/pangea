@@ -232,8 +232,7 @@ Feature:  OMPGdmSupply-Curation
       | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM | 9    | BR17 |      |      | CONS_LATAM   |
       | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM |      | VE32 |      |      | CONS_LATAM   |
       | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM | 34   | MX40 |      |      | CONS_LATAM   |
-      | N1        | Material Global V1 Primary planning code and Material Number are blank | SP             | OMPGdmSupply | CONS_LATAM | 35   | MX41 |      |      | CONS_LATAM   |
-
+      
 #    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
 #      | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1  | key2 | key3 | key4 | key5 | errorValue |
 
