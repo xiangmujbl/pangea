@@ -291,6 +291,7 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_CONSUMPTION_MODE = "localConsumptionMode";
     }
+
     interface PLAN_CNS_COUNTRY_INPUT {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_COUNTRY = "localCountry";
@@ -459,6 +460,7 @@ public interface IConstant {
         String Z_SOURCE_SYSTEM = "zSourceSystem";
         String MDM_SAP_CODE = "mdmSapCode";
     }
+
     interface EMS_EDM_UNIT_INPUT {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_UOM = "localUom";
@@ -1094,6 +1096,9 @@ public interface IConstant {
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
         String NGEMS = "NGEMS";
+        String FLOAT_ZERO = "0.0";
+        String K = "K";
+        String O = "O";
         String ENDEFF_NOHMS = "2998/12/31";
         String STARTEFF_NOHMS = "1980/01/01";
         String STARTEFF_HMS = "1980/01/01 00:00:00";
@@ -1258,7 +1263,7 @@ public interface IConstant {
         public static final int VALUE_DECIMAL_3= 3;
 
     }
-
+    
     interface PLAN_EDM_MAT_INPUT {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";
@@ -1275,9 +1280,11 @@ public interface IConstant {
     interface RKPF {
         String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
     }
+
     interface BOMHDR{
         String BOM_VlD_ToDt = "99991231";
     }
+
     interface MFGRTNGITM{
         String BOM_VlD_ToDt = "99991231";
     }
