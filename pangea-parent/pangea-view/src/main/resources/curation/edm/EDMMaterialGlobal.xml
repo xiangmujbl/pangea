@@ -48,7 +48,13 @@
 
             <region path="/ngems/golden_material">
                 <columns>
-                    materialNumber,materialDescription,materialType,baseUom,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufTechnology,primaryPlanningCode
+                    materialNumber,materialDescription,materialType,baseUom,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufTechnology,primaryPlanningCode,materialGroup
+                </columns>
+            </region>
+            
+            <region path="/plan/edm_mat_input">
+                <columns>
+                    localMaterialNumber,localTechnology,sourceSystem
                 </columns>
             </region>
             
