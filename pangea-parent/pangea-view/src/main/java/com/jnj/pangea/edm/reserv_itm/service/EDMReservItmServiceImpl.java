@@ -42,7 +42,7 @@ public class EDMReservItmServiceImpl implements ICommonService {
         }
         //rule T2
         Date dueDate = DateUtils.stringToDate(resbEntity.getBdter(), DateUtils.F_yyyyMMdd);
-        reservItmBo.setRqmtDt(DateUtils.dateToString(dueDate, DateUtils.ISO_8602));
+        reservItmBo.setRqmtDt(DateUtils.dateToString(dueDate, DateUtils.ISO_8601));
 
         reservItmBo.setRsrvtnNum(resbEntity.getRsnum());
         reservItmBo.setRsrvtnItmNum(resbEntity.getRspos());
@@ -75,9 +75,6 @@ public class EDMReservItmServiceImpl implements ICommonService {
         reservItmBo.setLeadTimeOffset(resbEntity.getNlfzt());
         reservItmBo.setFctrNmrtrMeas(resbEntity.getUmrez());
 
-        LogUtil.getCoreLog().info("==============resbEntity.getUmrez()================="+resbEntity.getUmrez());
-        LogUtil.getCoreLog().info("==============reservItmBo================="+reservItmBo.getFctrNmrtrMeas());
-
         reservItmBo.setFctrDnmntrMeas(resbEntity.getUmren());
 
         reservItmBo.setLnItmNbr(resbEntity.getAufps());
@@ -87,6 +84,9 @@ public class EDMReservItmServiceImpl implements ICommonService {
         reservItmBo.setCoProdInd(resbEntity.getKzkup());
         reservItmBo.setGrProcTime(resbEntity.getWebaz());
         reservItmBo.setVndNum(resbEntity.getLifnr());
+        reservItmBo.setBaseUomCd(resbEntity.getMeins());
+        reservItmBo.setOprNum(resbEntity.getVornr());
+
 
 
         resultObject.setBaseBo(reservItmBo);
