@@ -21,7 +21,7 @@ public class OMPGdmSupplyController extends BaseController {
 
     private OMPGdmSupplyServiceImpl service = OMPGdmSupplyServiceImpl.getInstance();
 
-
+    @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
         List<ViewResultItem> result = new ArrayList<>();
 
