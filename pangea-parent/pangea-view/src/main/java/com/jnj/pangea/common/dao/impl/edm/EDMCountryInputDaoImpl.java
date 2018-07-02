@@ -20,7 +20,7 @@ public class EDMCountryInputDaoImpl extends CommonDaoImpl {
     }
 
     public EDMCountryInputEntity getEntityWithFormName(String sourcesystem,String localcountry) {
-        if(StringUtil.isNotBlank(sourcesystem)&&StringUtil.isNotBlank(localcountry)){
+        if(StringUtil.isNotBlank(sourcesystem) && StringUtil.isNotBlank(localcountry)){
             String queryString = QueryHelper.buildCriteria(
                     IConstant.EDM_COUNT_INPUT.SOURCESYSTEM).is(sourcesystem)
                     .and(IConstant.EDM_COUNT_INPUT.LOCALCOUNTRY).is(localcountry)
