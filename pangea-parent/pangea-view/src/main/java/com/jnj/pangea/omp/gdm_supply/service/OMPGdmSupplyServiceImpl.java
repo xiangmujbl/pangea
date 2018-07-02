@@ -1,5 +1,7 @@
 package com.jnj.pangea.omp.gdm_supply.service;
 
+import com.jnj.adf.grid.utils.DateUtil;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -17,15 +19,18 @@ import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlnSplLocEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsProcessTypeEntity;
+import com.jnj.pangea.common.service.ICommonListService;
+import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_supply.bo.OMPGdmSupplyBo;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OMPGdmSupplyServiceImpl {
+public class OMPGdmSupplyServiceImpl implements ICommonListService {
 
     private static OMPGdmSupplyServiceImpl instance;
 
@@ -43,6 +48,7 @@ public class OMPGdmSupplyServiceImpl {
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanCnsPlnSplLocDaoImpl planCnsPlnSplLocDao = PlanCnsPlnSplLocDaoImpl.getInstance();
 
+    @Override
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
         ResultObject resultObject = new ResultObject();
@@ -53,7 +59,14 @@ public class OMPGdmSupplyServiceImpl {
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
         // N1
-        if (edmSourceListV1Entity.getLocalAgreementNumber().isEmpty() || !edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().isEmpty()) {
+        LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber:{} ", new Object[]{edmSourceListV1Entity.getLocalAgreementNumber()});
+        LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured:{} ", new Object[]{edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured()});
+        if (edmSourceListV1Entity.getLocalAgreementNumber() == null || edmSourceListV1Entity.getLocalAgreementNumber().equals("")) {
+            LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber is null or empty");
+            return skipObjects;
+        }
+        if (!edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().equals("")) {
+            LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured is not empty");
             return skipObjects;
         }
 
@@ -204,6 +217,16 @@ public class OMPGdmSupplyServiceImpl {
                                                 // if no value returned use ExternalPurchase
                                                 gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.EXTERNAL_PURCHASE);
                                             }
+
+                                            // N21
+                                            String strToDate = "";
+                                            Date localSourceListRecordValidToDate = DateUtil.stringToDate(edmSourceListV1Entity.getLocalSourceListRecordValidTo(), IConstant.VALUE.YYYYMMDD);
+                                            if (localSourceListRecordValidToDate.compareTo(DateUtil.stringToDate("2998/12/31", IConstant.VALUE.YYYYMMDDBS)) > 0) {
+                                                strToDate = "2998/12/31 23:59:59";
+                                            } else {
+                                                strToDate = DateUtil.dateToString(localSourceListRecordValidToDate, "yyyy/MM/dd") + " 00:00:00";
+                                            }
+                                            gdmSupplyBo.setToDate(strToDate);
 
                                             // N16
                                             if (planCnsPlnSplLocEntity != null) {
