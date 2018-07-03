@@ -12,6 +12,7 @@ import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
@@ -69,9 +70,9 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			//N4
 			gdmTransportBo.setMachineTypeId(IConstant.VALUE.TRANSPORT);
 
-			//N5
-			gdmTransportBo.setMinQuantity("");
-			gdmTransportBo.setRequirementOffset("");
+			//N5 version3 set default as 0.0
+			gdmTransportBo.setMinQuantity(IConstant.VALUE.ZEROZERO);
+			gdmTransportBo.setRequirementOffset(IConstant.VALUE.ZEROZERO);
 
 			//N6
 			gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
@@ -89,7 +90,13 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//N9 & N10
 		if (!this.curationSkip && !this.curationFail && srcListV1Entity != null) {
-			gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
+			if(srcListV1Entity.getLocalPurchasingOrganization() == null
+					|| "".equals(srcListV1Entity.getLocalPurchasingOrganization())){
+				gdmTransportBo.setPurchasingOrganization(IConstant.VALUE.BLANK);
+			}else{
+				gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
+
+			}
 			gdmTransportBo.setVendorId(srcListV1Entity.getLocalVendorAccountNumber());
 		}
 
@@ -98,12 +105,28 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			gdmTransportBo.setActiveSOPERP(IConstant.VALUE.NO);
 		}
 
+		//N13
+		String validTo = tlaneItemEntity.getValidTo();
+		SimpleDateFormat sdf = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+		try {
+			Date validToDate = sdf.parse(validTo);
+			Date maxDate = sdf.parse(IConstant.VALUE.MAX_DATE_VALIDTO);
+			if(validToDate.getTime() > maxDate.getTime()){
+				gdmTransportBo.setEndEff(IConstant.VALUE.MAX_DATE_VALIDTO + IConstant.VALUE.HH_NN_SS_ZERO);
+			}else{
+				gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
 		//No Rules
 		if (!this.curationSkip && !this.curationFail) {
 			PlanCnsProcessTypeEntity processTypeEntity =
 					this.processTypeDao.getCnsProcessTypeById(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
-			gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
+			//gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
 			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom() + IConstant.VALUE.HH_NN_SS_ZERO);
 			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
