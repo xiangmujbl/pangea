@@ -90,8 +90,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//N9 & N10
 		if (!this.curationSkip && !this.curationFail && srcListV1Entity != null) {
-			if(srcListV1Entity.getLocalPurchasingOrganization() == null
-					|| "".equals(srcListV1Entity.getLocalPurchasingOrganization())){
+			if(srcListV1Entity.getLocalPurchasingOrganization() == null || "".equals(srcListV1Entity.getLocalPurchasingOrganization())){
 				gdmTransportBo.setPurchasingOrganization(IConstant.VALUE.BLANK);
 			}else{
 				gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
@@ -270,6 +269,8 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		String localPlantNum = this.getLocalPlantNum(tlaneItemEntity.getDestinationLocation());
 		String sourceSystem = this.getSourceSystem(tlaneItemEntity.getDestinationLocation());
 		String locMatNum = this.getMaterialNumber(tlaneItemEntity,sourceSystem);
+		String vendorId = this.getVendorId(tlaneItemEntity.getOriginLocation());
+
 
 		//skip rest if no mat num was found
 		if (locMatNum == null) {
@@ -282,6 +283,18 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		if (!sourceListV1EntityList.isEmpty()) {
 			sourceListV1Entity = sourceListV1EntityList.get(0);
+
+			//Look for exact matching record for vendorId
+			if( !"".equals(vendorId)) {
+				for (EDMSourceListV1Entity edmSourceListV1Entity : sourceListV1EntityList) {
+					if (edmSourceListV1Entity != null && edmSourceListV1Entity.getLocalVendorAccountNumber() != null
+							&& vendorId.equals(edmSourceListV1Entity.getLocalVendorAccountNumber().trim())) {
+						sourceListV1Entity = edmSourceListV1Entity;
+						break;
+					}
+				}
+			}
+
 		}
 		else {
 			//this.curationSkip = true;
