@@ -31,7 +31,6 @@ Feature: OMPGdmDemand AEAZ-6828
       | 1              | KI                  | B00LLC6    | 81123547  | 100         | 84033   | 1          | UY01           | 150            | 117915919  | CONS_LATAM | B00LLC6     |
       | 8              | TS                  | 4000616A   | 82812921  | 10          | 170196  | 1          | AR01           | 10             | 4000007771 | CONS_LATAM | 88812       |
       | 1              | TS                  |            | 82812345  | 10          | 123456  | 1          | CO01           | 10             | 4000007771 | CONS_LATAM | 323339      |
-      #| 12,000         | KG                  | 110506     | 81156058  | 10          | 70391   | 10         | BR12           | 10             | 3000192787 | CONS_LATAM |             |
     And I wait "/edm/outbound_delivery_line_v1" Async Queue complete
 
     Given I import "/edm/sales_order_v1" by keyFields "salesOrderNo"
@@ -96,7 +95,6 @@ Feature: OMPGdmDemand AEAZ-6828
       | *                   | BR16       |                 | 270          | CONS_LATAM   |
       | 4002                | BR12       |                 | 150          | CONS_LATAM   |
       | *                   | BR12       |                 | 180          | CONS_LATAM   |
-      | *                   | CO01       |                 | 120          | CONS_LATAM   |
     And I wait "/plan/prod_loc_min_shelf" Async Queue complete
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
@@ -116,7 +114,7 @@ Feature: OMPGdmDemand AEAZ-6828
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,materialNumber,sourceSystem"
       | localMaterialGroup | localMaterialNumber | localMaterialType | materialNumber | materialStatus | materialType | minRemShelfLife | parentCode | primaryPlanningCode | sourceSystem | totalShelfLife |
       | 1                  | 135768              | FERT              |                | 8              | FERT         | 180             |            | 135768              | CONS_LATAM   | 9999           |
-      | 1                  | 7058161             | FERT              | 7058161        | 8              | FERT         | 180             |            |                     | CONS_LATAM   | 730            |
+      | 1                  | 7058161             | FERT              | 7058161        | 8              | FERT         | 220             |            |                     | CONS_LATAM   | 730            |
       | 1                  |                     | FERT              | 71503          | 8              | FERT         | 180             |            | 71503               | CONS_LATAM   | 730            |
       | 1                  | 84033               | FERT              | 84300          | 8              | FERT         | 180             |            | 84303               | CONS_LATAM   | 730            |
       | 1                  | 189915              | SAPR              |                | 8              | FERT         | 183             |            | 189915              | CONS_LATAM   | 730            |
@@ -124,7 +122,7 @@ Feature: OMPGdmDemand AEAZ-6828
       | 3                  | 170196              | FERT              | 171960         | 8              | FERT         | 183             |            | 170196              | CONS_LATAM   | 730            |
       | 1                  | 123456              | FERT              | 123456         | 8              | FERT         | 146             |            | 123456A             | CONS_LATAM   | 730            |
       | 1                  | 70391               | FERT              | 70391          | 8              | FERT         | 180             |            | 70391               | CONS_LATAM   | 730            |
-      |                    | 65759               | FERT              | 65758          | 8              | FERT         | 180             |            | 65759               | CONS_LATAM   | 730            |
+      |                    | 65759               | FERT              | 65758          | 8              | FERT         | 200             |            | 65759               | CONS_LATAM   | 730            |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_plan_unit" by keyFields "plantFlag,unit,localUom,sourceSystem,localUomName"
@@ -186,12 +184,12 @@ Feature: OMPGdmDemand AEAZ-6828
     And I check file data for filename "GDMDemand.tsv" by keyFields "demandId"
       | active | activeFCTERP | activeOPRERP | activeOBDPERP | batchId                           | certaintyId | customerId | demandId                            | dueDate             | fromDueDate         | inventoryLinkGroupId                | locationId      | minRemainingShelfLife | planningStrategy        | productId | quantity   | unitId | WRK02 |
       | YES    | NO           | YES          | NO            | 135768/CONS_LATAM_BR12/4000613556 | VJ          | 164115     | 135768/CONS_LATAM_BR12/82793652/10  | 2009/07/23 00:00:01 | 2009/07/23 00:00:00 | 135768/CONS_LATAM_BR12/82793652/10  | CONS_LATAM_BR12 | 180                   | ProductLocationBalanced | 135768    | 352820     | TS     |       |
-      | YES    | NO           | YES          | NO            |                                   | VJ          | 109527     | 7058161/CONS_LATAM_CO01/81123645/10 | 2006/05/17 00:00:01 | 2006/05/17 00:00:00 | 7058161/CONS_LATAM_CO01/81123645/10 | CONS_LATAM_CO01 | 120                   | ProductLocationBalanced | 7058161   | 225,000    | KG     |       |
+      | YES    | NO           | YES          | NO            |                                   | VJ          | 109527     | 7058161/CONS_LATAM_CO01/81123645/10 | 2006/05/17 00:00:01 | 2006/05/17 00:00:00 | 7058161/CONS_LATAM_CO01/81123645/10 | CONS_LATAM_CO01 | 220                   | ProductLocationBalanced | 7058161   | 225,000    | KG     |       |
       | YES    | NO           | YES          | NO            | 189915/CONS_LATAM_BR12/1336COA    | VJ          | 789456     | 189915/CONS_LATAM_BR12/82794385/10  | 2009/07/23 00:00:01 | 2009/07/23 00:00:00 | 189915/CONS_LATAM_BR12/82794385/10  | CONS_LATAM_BR12 | 180                   | ProductLocationBalanced | 189915    | 35.040,000 | TS     |       |
       | YES    | NO           | YES          | NO            | 174461/CONS_LATAM_BR12/4000616293 | VJ          | 897001     | 174461/CONS_LATAM_BR12/82812920/10  | 2009/01/08 00:00:01 | 2009/01/08 00:00:00 | 174461/CONS_LATAM_BR12/82812920/10  | CONS_LATAM_BR12 | 180                   | ProductLocationBalanced | 174461    | 5.276,000  | TS     |       |
       | YES    | NO           | YES          | NO            | 70391/CONS_LATAM_BR12/110506      | VJ          | 109524     | 70391/CONS_LATAM_BR12/81156058/10   | 2006/06/28 00:00:01 | 2006/06/28 00:00:00 | 70391/CONS_LATAM_BR12/81156058/10   | CONS_LATAM_BR12 | 180                   | ProductLocationBalanced | 70391     | 12,000     | EA     |       |
-      | YES    | NO           | YES          | NO            | 65759/CONS_LATAM_CO01/110ABC      | VJ          | 109555     | 65759/CONS_LATAM_CO01/81156060/10   | 2006/06/28 00:00:01 | 2006/06/28 00:00:00 | 65759/CONS_LATAM_CO01/81156060/10   | CONS_LATAM_CO01 | 120                   | ProductLocationBalanced | 65759     | 11,000     | EA     |       |
-      | YES    | NO           | YES          | NO            | 65759/CONS_LATAM_CO01/110ABC      | VJ          | 109555     | 65759/CONS_LATAM_CO01/81156060/20   | 2006/06/28 00:00:01 | 2006/06/28 00:00:00 | 65759/CONS_LATAM_CO01/81156060/20   | CONS_LATAM_CO01 | 120                   | ProductLocationBalanced | 65759     | 1,000      | EA     |       |
+      | YES    | NO           | YES          | NO            | 65759/CONS_LATAM_CO01/110ABC      | VJ          | 109555     | 65759/CONS_LATAM_CO01/81156060/10   | 2006/06/28 00:00:01 | 2006/06/28 00:00:00 | 65759/CONS_LATAM_CO01/81156060/10   | CONS_LATAM_CO01 | 200                   | ProductLocationBalanced | 65759     | 11,000     | EA     |       |
+      | YES    | NO           | YES          | NO            | 65759/CONS_LATAM_CO01/110ABC      | VJ          | 109555     | 65759/CONS_LATAM_CO01/81156060/20   | 2006/06/28 00:00:01 | 2006/06/28 00:00:00 | 65759/CONS_LATAM_CO01/81156060/20   | CONS_LATAM_CO01 | 200                   | ProductLocationBalanced | 65759     | 1,000      | EA     |       |
 
     And I will remove all data with region "/edm/outbound_delivery_header_v1"
 
