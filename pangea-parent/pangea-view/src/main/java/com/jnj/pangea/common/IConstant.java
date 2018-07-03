@@ -1066,6 +1066,9 @@ public interface IConstant {
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
         String NGEMS = "NGEMS";
+        int VALUE_24 = 24;
+        int VALUE_60 = 60;
+        
     }
 
     interface FAILED {
@@ -1249,7 +1252,4 @@ public interface IConstant {
         String BOM_VlD_ToDt = "99991231";
     }
 
-    interface MFGRTNGITM{
-        String BOM_VlD_ToDt = "99991231";
-    }
 }

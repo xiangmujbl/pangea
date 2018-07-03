@@ -112,15 +112,9 @@ public class OMPGdmProductLocationServiceImpl {
             //rule E10
             bo.setActiveSOPERP(IConstant.VALUE.NO);
 
-            if (planStatusEntity != null) {
-                //rules T1
-                if (IConstant.VALUE.X.equals(planStatusEntity.getDpRelevant())) {
-                    bo.setActiveFCTERP(IConstant.VALUE.YES);
-                } else {
-                    bo.setActiveFCTERP(IConstant.VALUE.NO);
-                }
-
-            }
+            //rule T1
+            bo.setActiveFCTERP(IConstant.VALUE.NO);
+            
             //rules E1
             PlanCnsProcTypeEntity planCnsProcTypeEntity = getFieldWithE1(materialPlantV1Entity.getLocalProcurementType(), materialPlantV1Entity.getSourceSystem());
             if (planCnsProcTypeEntity != null) {
@@ -136,11 +130,31 @@ public class OMPGdmProductLocationServiceImpl {
             PlanLocMinShelfEnity planLocMinShelfEnity1 = getFieldWithlocalPlant(materialPlantV1Entity.getLocalPlant());
             //rules E4   rules E5
             if (planLocMinShelfEnity != null) {
-                bo.setMinmrsl(planLocMinShelfEnity.getMinMinShelfLife());
-                bo.setMinRemainingShelfLife(planLocMinShelfEnity.getMinShelfLife());
+            	if(StringUtils.isNotBlank(planLocMinShelfEnity.getMinMinShelfLife())) {
+            		long time = Long.valueOf(planLocMinShelfEnity.getMinMinShelfLife()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+            		bo.setMinmrsl(String.valueOf(time));
+            	} else {
+            		bo.setMinmrsl(planLocMinShelfEnity.getMinMinShelfLife());
+            	}
+            	if(StringUtils.isNotBlank(planLocMinShelfEnity.getMinShelfLife())) {
+            		long time = Long.valueOf(planLocMinShelfEnity.getMinShelfLife()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+            		bo.setMinRemainingShelfLife(String.valueOf(time));
+            	} else {
+            		bo.setMinRemainingShelfLife(planLocMinShelfEnity.getMinShelfLife());
+            	}
             } else if (planLocMinShelfEnity1 != null) {
-                bo.setMinmrsl(planLocMinShelfEnity1.getMinMinShelfLife());
-                bo.setMinRemainingShelfLife(planLocMinShelfEnity1.getMinShelfLife());
+            	if(StringUtils.isNotBlank(planLocMinShelfEnity1.getMinMinShelfLife())) {
+                	long time = Long.valueOf(planLocMinShelfEnity1.getMinMinShelfLife()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+                    bo.setMinmrsl(String.valueOf(time));
+                } else {
+                	bo.setMinmrsl(planLocMinShelfEnity1.getMinMinShelfLife());
+                }
+            	if(StringUtils.isNotBlank(planLocMinShelfEnity1.getMinShelfLife())) {
+            		long time = Long.valueOf(planLocMinShelfEnity1.getMinShelfLife()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+            		bo.setMinRemainingShelfLife(String.valueOf(time));
+            	} else {
+            		bo.setMinRemainingShelfLife(planLocMinShelfEnity1.getMinShelfLife());
+            	}
             } else {
                 bo.setMinmrsl("");
                 bo.setMinRemainingShelfLife(edmMaterialGlobalV1Entity.getMinRemShelfLife());
@@ -175,7 +189,10 @@ public class OMPGdmProductLocationServiceImpl {
             //No rules
             if (edmMaterialGlobalV1Entity != null) {
                 bo.setLabel(edmMaterialGlobalV1Entity.getLocalRefDescription());
-                bo.setTotalShelfLife(edmMaterialGlobalV1Entity.getTotalShelfLife());
+                if(StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getTotalShelfLife())) {
+                	long time = Long.valueOf(edmMaterialGlobalV1Entity.getTotalShelfLife()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+                	bo.setTotalShelfLife(String.valueOf(time));
+                }
                 bo.setProductTypeId(edmMaterialGlobalV1Entity.getMaterialType());
             }
             if (materialPlantV1Entity != null) {
@@ -197,15 +214,25 @@ public class OMPGdmProductLocationServiceImpl {
                 bo.setDzeit(materialPlantV1Entity.getLocalInHouseProcessingTime());
                 bo.setEislo(materialPlantV1Entity.getLocalMinimumSafetyStock());
                 bo.setFevor(materialPlantV1Entity.getLocalProductionSupervisor());
-                bo.setFixedHorizon(materialPlantV1Entity.getLocalPlanningTimeFence());
-                bo.setFrtme(materialPlantV1Entity.getLocalProductionUnit());
+                if(StringUtils.isNotBlank(materialPlantV1Entity.getLocalPlanningTimeFence())) {
+                	long time = Long.valueOf(materialPlantV1Entity.getLocalPlanningTimeFence()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+                	bo.setFixedHorizon(String.valueOf(time));
+                } else {
+                	bo.setFixedHorizon(materialPlantV1Entity.getLocalPlanningTimeFence());
+                }
+               // bo.setFrtme(materialPlantV1Entity.getLocalProductionUnit());
                 bo.setInsmk(materialPlantV1Entity.getLocalPostToInspectionStock());
                 bo.setKausf(materialPlantV1Entity.getLocalComponentScrapInPercent());
                 bo.setKzkri(materialPlantV1Entity.getLocalCriticalPart());
-                bo.setLeadTime(materialPlantV1Entity.getLocalPlannedDeliveryTimeInDays());
-                bo.setMmsta(materialPlantV1Entity.getLocalPlantStatus());
+                if(StringUtils.isNotBlank(materialPlantV1Entity.getLocalPlannedDeliveryTimeInDays())) {
+                	long time = Long.valueOf(materialPlantV1Entity.getLocalPlannedDeliveryTimeInDays()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+                	bo.setLeadTime(String.valueOf(time));
+                } else {
+                	bo.setLeadTime(materialPlantV1Entity.getLocalPlannedDeliveryTimeInDays());
+                }
+                bo.setMmsta(materialPlantV1Entity.getPlantStatus());
                 bo.setMtvfp(materialPlantV1Entity.getLocalCheckingGroupForAvailabilityCheck());
-                bo.setReplenishmentLotSize(materialPlantV1Entity.getLocalInstalledReplenishmentLotSize());
+                //bo.setReplenishmentLotSize(materialPlantV1Entity.getLocalInstalledReplenishmentLotSize());
                 bo.setShflg(materialPlantV1Entity.getLocalSafetyTimeIndicator());
                 bo.setVint1(materialPlantV1Entity.getLocalConsumptionPeriodBackward());
                 bo.setVint2(materialPlantV1Entity.getLocalConsumptionPeriodForward());

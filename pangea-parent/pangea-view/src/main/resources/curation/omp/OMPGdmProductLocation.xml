@@ -42,7 +42,8 @@
                     localConsumptionPeriodBackward,
                     localConsumptionPeriodForward,
                     localGoodsReceiptProcessingTimeInDays,
-                    localBatchManagementRequirementIndicator
+                    localBatchManagementRequirementIndicator,
+                    plantStatus
                 </columns>
                 <relations>
                     <relation path="/edm/source_list_v1" isPrimaryKey="false">
@@ -262,7 +263,6 @@
                     dzeit,
                     fevor,
                     fixedHorizon,
-                    frtme,
                     insmk,
                     itemPlanningCategory,
                     kausf,
@@ -275,7 +275,6 @@
                     minRemainingShelfLife,
                     mmsta,
                     mtvfp,
-                    replenishmentLotSize,
                     shflg,
                     sobsl,
                     strgr,
