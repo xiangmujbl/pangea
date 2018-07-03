@@ -127,7 +127,8 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                                 gdmReqFromErpBo.setDELETED(IConstant.VALUE.NO);
 
                                 //N9
-                                if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
+                                if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()
+                                        && edmPurchaseRequisitionV1Entity.getPrClseInd().isEmpty()) {
                                     PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
                                         IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
                                         edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
