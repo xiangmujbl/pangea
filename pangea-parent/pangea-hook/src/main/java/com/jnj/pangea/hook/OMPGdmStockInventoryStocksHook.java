@@ -1,7 +1,9 @@
 package com.jnj.pangea.hook;
 
 import com.jnj.adf.client.api.JsonObject;
+import com.jnj.pangea.hook.common.DateUtils;
 import com.jnj.pangea.hook.common.IConstant;
+import org.apache.commons.lang.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,12 +14,13 @@ import java.util.Map;
 public class OMPGdmStockInventoryStocksHook {
 
 	/**
+	 * INV4
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
 	 * @return
 	 */
-	public static String getBlockedQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId) {
+	public static String getBlockedQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
 
 		float localBlockedBatchStock =0.0f;
 		float localBlockedStock =0.0f;
@@ -25,7 +28,6 @@ public class OMPGdmStockInventoryStocksHook {
 		float localBlkdConstStkNonBm =0.0f;
 		int countTmp1 = 0;
 		int countTmp2 = 0;
-		int countTmp3 = 0;
 		int count1 = 0;
 		int count2 = 0;
 		int count3 = 0;
@@ -58,6 +60,7 @@ public class OMPGdmStockInventoryStocksHook {
 			String localConsignmentSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localConsignmentSpecialStockIndicator"));
 			String localSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localSpecialStockIndicator"));
 			String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+			String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
 
 			if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.BLANK.equals(localSpecialStockIndicator)) {
 
@@ -65,19 +68,22 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 1
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localBlockedBatchStock")))) {
 						localBlockedBatchStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlockedBatchStock"))) + localBlockedBatchStock;
 					}
 
 					if (countTmp1 == count1) {
-						return String.valueOf(localBlockedBatchStock);
+						return String.valueOf((int)localBlockedBatchStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localBlockedStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlockedStock"))) + localBlockedStock;
+					if (StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localBlockedStock")))) {
+						localBlockedStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlockedStock"))) + localBlockedStock;
+					}
+
 					if (countTmp1 == count1) {
-						return String.valueOf(localBlockedStock);
+						return String.valueOf((int)localBlockedStock);
 					}
 
 				}
@@ -87,37 +93,42 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 2
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
-						localBlockedConsignmentStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlockedConsignmentStock"))) + localBlockedConsignmentStock;
+					if (localBatchIdTmp.equals(localBatchId) && localVendorNumberTmp.equals(localVendorNumber) &&
+							StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localBlockedConsignmentStock")))) {
+							localBlockedConsignmentStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlockedConsignmentStock"))) + localBlockedConsignmentStock;
 					}
 
 					if (countTmp2 == count2) {
-						return String.valueOf(localBlockedConsignmentStock);
+						return String.valueOf((int)localBlockedConsignmentStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localBlkdConstStkNonBm = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlkdConstStkNonBm"))) + localBlkdConstStkNonBm;
+					if (localVendorNumberTmp.equals(localVendorNumber) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localBlkdConstStkNonBm")))) {
+						localBlkdConstStkNonBm = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlkdConstStkNonBm"))) + localBlkdConstStkNonBm;
+					}
+
 					if (countTmp2 == count2) {
-						return String.valueOf(localBlkdConstStkNonBm);
+						return String.valueOf((int)localBlkdConstStkNonBm);
 					}
 				}
 			} else if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.O.equals(localSpecialStockIndicator)) {
 
 				// record 3
-				return IConstant.VALUE.FLOAT_ZERO;
+				return IConstant.VALUE.ZERO;
 			}
 		}
-		return IConstant.VALUE.FLOAT_ZERO;
+		return IConstant.VALUE.ZERO;
 	}
 
 	/**
+	 *INV10
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
 	 * @return
 	 */
-	public static String getQualityQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId) {
+	public static String getQualityQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
 
 		float localQualityInspectionBatchStock = 0.0f;
 		float localQualityInspectionStock = 0.0f;
@@ -159,6 +170,7 @@ public class OMPGdmStockInventoryStocksHook {
 			String localConsignmentSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localConsignmentSpecialStockIndicator"));
 			String localSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localSpecialStockIndicator"));
 			String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+			String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
 
 			if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.BLANK.equals(localSpecialStockIndicator)) {
 
@@ -166,19 +178,22 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 1
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localQualityInspectionBatchStock")))) {
 						localQualityInspectionBatchStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localQualityInspectionBatchStock"))) + localQualityInspectionBatchStock;
 					}
 
 					if (countTmp1 == count1) {
-						return String.valueOf(localQualityInspectionBatchStock);
+						return String.valueOf((int)localQualityInspectionBatchStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localQualityInspectionStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localQualityInspectionStock"))) + localQualityInspectionStock;
+					if (StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localQualityInspectionStock")))) {
+						localQualityInspectionStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localQualityInspectionStock"))) + localQualityInspectionStock;
+					}
+
 					if (countTmp1 == count1) {
-						return String.valueOf(localQualityInspectionStock);
+						return String.valueOf((int)localQualityInspectionStock);
 					}
 
 				}
@@ -188,22 +203,23 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 2
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localBatchIdTmp.equals(localBatchId) && localVendorNumberTmp.equals(localVendorNumber)
+							&& StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localQualityInspectionConsignmentStock")))) {
 						localQualityInspectionConsignmentStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localQualityInspectionConsignmentStock"))) + localQualityInspectionConsignmentStock;
 					}
 
 					if (countTmp2 == count2) {
-						return String.valueOf(localQualityInspectionConsignmentStock);
+						return String.valueOf((int)localQualityInspectionConsignmentStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localVendorNumberTmp.equals(localVendorNumber) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localConsignmentStockInQualityInspection")))) {
 						localConsignmentStockInQualityInspection = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localConsignmentStockInQualityInspection"))) + localConsignmentStockInQualityInspection;
 					}
 
 					if (countTmp2 == count2) {
-						return String.valueOf(localConsignmentStockInQualityInspection);
+						return String.valueOf((int)localConsignmentStockInQualityInspection);
 					}
 
 				}
@@ -211,26 +227,27 @@ public class OMPGdmStockInventoryStocksHook {
 
 				countTmp3 = countTmp3 + 1;
 				// record 3
-				if (localBatchIdTmp.equals(localBatchId)) {
+				if (localVendorNumberTmp.equals(localVendorNumber) && localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localQualityInspectionSpecialStock")))) {
 					localQualityInspectionSpecialStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localQualityInspectionSpecialStock"))) + localQualityInspectionSpecialStock;
 				}
 
 				if (countTmp3 == count3) {
-					return String.valueOf(localQualityInspectionSpecialStock);
+					return String.valueOf((int)localQualityInspectionSpecialStock);
 				}
 
 			}
 		}
-		return IConstant.VALUE.FLOAT_ZERO;
+		return IConstant.VALUE.ZERO;
 	}
 
 	/**
+	 *INV11
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
 	 * @return
 	 */
-	public static String getQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId) {
+	public static String getQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
 
 		float localUnrestrictedBatchStock = 0.0f;
 		float localUnrestrictedStock = 0.0f;
@@ -272,6 +289,7 @@ public class OMPGdmStockInventoryStocksHook {
 			String localConsignmentSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localConsignmentSpecialStockIndicator"));
 			String localSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localSpecialStockIndicator"));
 			String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+			String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
 
 			if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.BLANK.equals(localSpecialStockIndicator)) {
 
@@ -279,19 +297,22 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 1
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localUnrestrictedBatchStock")))) {
 						localUnrestrictedBatchStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localUnrestrictedBatchStock"))) + localUnrestrictedBatchStock;
 					}
 
 					if (countTmp1 == count1) {
-						return String.valueOf(localUnrestrictedBatchStock);
+						return String.valueOf((int)localUnrestrictedBatchStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localUnrestrictedStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localUnrestrictedStock"))) + localUnrestrictedStock;
+					if (StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localUnrestrictedStock")))) {
+						localUnrestrictedStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localUnrestrictedStock"))) + localUnrestrictedStock;
+					}
+
 					if (countTmp1 == count1) {
-						return String.valueOf(localUnrestrictedStock);
+						return String.valueOf((int)localUnrestrictedStock);
 					}
 
 				}
@@ -301,19 +322,23 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 2
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localBatchIdTmp.equals(localBatchId) && localVendorNumberTmp.equals(localVendorNumber)
+							&& StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localUnrestrictedConsignmentStock")))) {
 						localUnrestrictedConsignmentStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localUnrestrictedConsignmentStock"))) + localUnrestrictedConsignmentStock;
 					}
 
 					if (countTmp2 == count2) {
-						return String.valueOf(localUnrestrictedConsignmentStock);
+						return String.valueOf((int)localUnrestrictedConsignmentStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localUnrestrictedUseConsignment = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localUnrestrictedUseConsignment"))) + localUnrestrictedUseConsignment;
+					if (localVendorNumberTmp.equals(localVendorNumber) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localUnrestrictedUseConsignment")))) {
+						localUnrestrictedUseConsignment = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localUnrestrictedUseConsignment"))) + localUnrestrictedUseConsignment;
+					}
+
 					if (countTmp2 == count2) {
-						return String.valueOf(localUnrestrictedUseConsignment);
+						return String.valueOf((int)localUnrestrictedUseConsignment);
 					}
 
 				}
@@ -321,25 +346,26 @@ public class OMPGdmStockInventoryStocksHook {
 
 				countTmp3 = countTmp3 + 1;
 				// record 3
-				if (localBatchIdTmp.equals(localBatchId)) {
+				if (localVendorNumberTmp.equals(localVendorNumber) && localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localUnrestrictedSpecialStock")))) {
 					localUnrestrictedSpecialStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localUnrestrictedSpecialStock"))) + localUnrestrictedSpecialStock;
 				}
 
 				if (countTmp3 == count3) {
-					return String.valueOf(localUnrestrictedSpecialStock);
+					return String.valueOf((int)localUnrestrictedSpecialStock);
 				}
 			}
 		}
-		return IConstant.VALUE.FLOAT_ZERO;
+		return IConstant.VALUE.ZERO;
 	}
 
 	/**
+	 *INV13
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
 	 * @return
 	 */
-	public static String getRestrictedQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId) {
+	public static String getRestrictedQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
 
 		float localRestrictedBatchStock = 0.0f;
 		float localRestrictedStock = 0.0f;
@@ -381,6 +407,7 @@ public class OMPGdmStockInventoryStocksHook {
 			String localConsignmentSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localConsignmentSpecialStockIndicator"));
 			String localSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localSpecialStockIndicator"));
 			String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+			String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
 
 			if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.BLANK.equals(localSpecialStockIndicator)) {
 
@@ -388,19 +415,22 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 1
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if(localBatchIdTmp.equals(localBatchId)){
+					if(localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localRestrictedBatchStock")))){
 						localRestrictedBatchStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localRestrictedBatchStock"))) + localRestrictedBatchStock;
 					}
 
 					if (countTmp1 == count1) {
-						return String.valueOf(localRestrictedBatchStock);
+						return String.valueOf((int)localRestrictedBatchStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localRestrictedStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localRestrictedStock"))) + localRestrictedStock;
+					if (StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localRestrictedStock")))) {
+						localRestrictedStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localRestrictedStock"))) + localRestrictedStock;
+					}
+
 					if (countTmp1 == count1) {
-						return String.valueOf(localRestrictedStock);
+						return String.valueOf((int)localRestrictedStock);
 					}
 
 				}
@@ -410,19 +440,23 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 2
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if(localBatchIdTmp.equals(localBatchId)) {
+					if(localBatchIdTmp.equals(localBatchId) && localVendorNumberTmp.equals(localVendorNumber)
+							&& StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localRestrictedConsignmentStock")))) {
 						localRestrictedConsignmentStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localRestrictedConsignmentStock"))) + localRestrictedConsignmentStock;
 					}
 
 					if (countTmp2 == count2) {
-						return String.valueOf(localRestrictedConsignmentStock);
+						return String.valueOf((int)localRestrictedConsignmentStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localRestrictedUseConsignment = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localRestrictedUseConsignment"))) + localRestrictedUseConsignment;
+					if(localVendorNumberTmp.equals(localVendorNumber) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localRestrictedUseConsignment")))) {
+						localRestrictedUseConsignment = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localRestrictedUseConsignment"))) + localRestrictedUseConsignment;
+					}
+
 					if (countTmp2 == count2) {
-						return String.valueOf(localRestrictedUseConsignment);
+						return String.valueOf((int)localRestrictedUseConsignment);
 					}
 
 				}
@@ -430,17 +464,17 @@ public class OMPGdmStockInventoryStocksHook {
 
 				countTmp3 = countTmp3 + 1;
 				// record 3
-				if(localBatchIdTmp.equals(localBatchId)) {
+				if(localVendorNumberTmp.equals(localVendorNumber) && localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localRestrictedSpecialStock")))) {
 					localRestrictedSpecialStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localRestrictedSpecialStock"))) + localRestrictedSpecialStock;
 				}
 
 				if (countTmp3 == count3) {
-					return String.valueOf(localRestrictedSpecialStock);
+					return String.valueOf((int)localRestrictedSpecialStock);
 				}
 
 			}
 		}
-		return IConstant.VALUE.FLOAT_ZERO;
+		return IConstant.VALUE.ZERO;
 	}
 
 	/**
@@ -493,34 +527,38 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 1
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localReturnsBatchStock")))) {
 						localReturnsBatchStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localReturnsBatchStock"))) + localReturnsBatchStock;
 					}
 
 					if (countTmp1 == count1) {
-						return String.valueOf(localReturnsBatchStock);
+						return String.valueOf((int)localReturnsBatchStock);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localReturnsStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localReturnsStock"))) + localReturnsStock;
+					if (StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localReturnsStock")))) {
+						localReturnsStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localReturnsStock"))) + localReturnsStock;
+					}
+
 					if (countTmp1 == count1) {
-						return String.valueOf(localReturnsStock);
+						return String.valueOf((int)localReturnsStock);
 					}
 
 				}
 			}
 		}
-		return IConstant.VALUE.FLOAT_ZERO;
+		return IConstant.VALUE.ZERO;
 	}
 
 	/**
-	 *
+	 *INV16
+     *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
 	 * @return
 	 */
-	public static String getTransferQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId) {
+	public static String getTransferQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
 
 		float localStockInTransitBatch = 0.0f;
 		float localStockInTransitPlantToPlant = 0.0f;
@@ -560,6 +598,7 @@ public class OMPGdmStockInventoryStocksHook {
 			String localConsignmentSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localConsignmentSpecialStockIndicator"));
 			String localSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localSpecialStockIndicator"));
 			String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+            String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
 
 			if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.BLANK.equals(localSpecialStockIndicator)) {
 
@@ -567,19 +606,22 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 1
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					if (localBatchIdTmp.equals(localBatchId)) {
+					if (localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localStockInTransitBatch")))) {
 						localStockInTransitBatch = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localStockInTransitBatch"))) + localStockInTransitBatch;
 					}
 
 					if (countTmp1 == count1) {
-						return String.valueOf(localStockInTransitBatch);
+						return String.valueOf((int)localStockInTransitBatch);
 					}
 
 				} else if (IConstant.VALUE.BLANK.equals(localBatchManagementRequirementIndicator)) {
 
-					localStockInTransitPlantToPlant = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localStockInTransitPlantToPlant"))) + localStockInTransitPlantToPlant;
+					if (StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localStockInTransitPlantToPlant")))) {
+						localStockInTransitPlantToPlant = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localStockInTransitPlantToPlant"))) + localStockInTransitPlantToPlant;
+					}
+
 					if (countTmp1 == count1) {
-						return String.valueOf(localStockInTransitPlantToPlant);
+						return String.valueOf((int)localStockInTransitPlantToPlant);
 					}
 				}
 			} else if(IConstant.VALUE.K.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.BLANK.equals(localSpecialStockIndicator)) {
@@ -587,22 +629,22 @@ public class OMPGdmStockInventoryStocksHook {
 				// record 2
 				if (IConstant.VALUE.X.equals(localBatchManagementRequirementIndicator)) {
 
-					return IConstant.VALUE.FLOAT_ZERO;
+					return IConstant.VALUE.ZERO;
 				}
 			} else if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.O.equals(localSpecialStockIndicator)) {
 
 				countTmp3 = countTmp3 + 1;
 				// record 3
-				if (localBatchIdTmp.equals(localBatchId)) {
+				if (localVendorNumberTmp.equals(localVendorNumber) && localBatchIdTmp.equals(localBatchId) && StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localStockInTransitSpecial")))) {
 					localStockInTransitSpecial = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localStockInTransitSpecial"))) + localStockInTransitSpecial;
 				}
 
 				if (countTmp3 == count3) {
-					return String.valueOf(localStockInTransitSpecial);
+					return String.valueOf((int)localStockInTransitSpecial);
 				}
 			}
 		}
-		return IConstant.VALUE.FLOAT_ZERO;
+		return IConstant.VALUE.ZERO;
 	}
 
 	/**
@@ -615,9 +657,77 @@ public class OMPGdmStockInventoryStocksHook {
 		String data;
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		long lt = new Long(s);
-		Date date = new Date(lt);
+		Date date = DateUtils.changeDate(new Date(), -1,0,0,0,0,0);
 		res = simpleDateFormat.format(date);
 		data = res + " " + "00:00:00";
 		return data;
+	}
+
+	/**
+	 *
+	 * @param inventoryStockList
+	 * @param localMaterial
+	 * @param localBatchId
+	 * @param localVendorNumber
+	 * @param localStorageLocation
+	 * @return
+	 */
+	public static boolean checkStockId(List<Map.Entry<String, String>> inventoryStockList,
+		String localMaterial, String localBatchId, String localVendorNumber, String localStorageLocation) {
+		String localStorageLocationCheck = "";
+		int count = 0;
+		for (Map.Entry<String, String> inventoryStockListEntry : inventoryStockList) {
+
+			Map<String, Object> inventoryStockListMap = JsonObject.append(inventoryStockListEntry.getValue()).toMap();
+
+			String localMaterialTmp = String.valueOf(inventoryStockListMap.get("localMaterial"));
+			String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+			String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
+
+			if (localMaterialTmp.equals(localMaterial) && localBatchIdTmp.equals(localBatchId)
+					&& localVendorNumberTmp.equals(localVendorNumber)) {
+
+				count++ ;
+			}
+		}
+
+		if (count >= 2) {
+			for (Map.Entry<String, String> inventoryStockListEntry : inventoryStockList) {
+
+				Map<String, Object> inventoryStockListMap = JsonObject.append(inventoryStockListEntry.getValue()).toMap();
+
+				String localMaterialTmp = String.valueOf(inventoryStockListMap.get("localMaterial"));
+				String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+				String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
+				String localStorageLocationTmp = String.valueOf(inventoryStockListMap.get("localStorageLocation"));
+
+				if (localMaterialTmp.equals(localMaterial) && localBatchIdTmp.equals(localBatchId)
+						&& localVendorNumberTmp.equals(localVendorNumber)) {
+
+					localStorageLocationCheck = localStorageLocationTmp;
+					break;
+				}
+			}
+
+			for (Map.Entry<String, String> inventoryStockListEntry : inventoryStockList) {
+
+				Map<String, Object> inventoryStockListMap = JsonObject.append(inventoryStockListEntry.getValue()).toMap();
+
+				String localMaterialTmp = String.valueOf(inventoryStockListMap.get("localMaterial"));
+				String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
+				String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
+
+				if (localMaterialTmp.equals(localMaterial) && localBatchIdTmp.equals(localBatchId)
+						&& localVendorNumberTmp.equals(localVendorNumber) &&
+						(!localStorageLocation.equals(localStorageLocationCheck))) {
+
+					return false;
+				}
+
+			}
+		}
+
+		return true;
+
 	}
 }
