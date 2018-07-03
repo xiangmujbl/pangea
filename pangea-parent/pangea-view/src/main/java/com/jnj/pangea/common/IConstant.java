@@ -45,6 +45,7 @@ public interface IConstant {
         String PROJECT_ONE_VBEP = "/project_one/vbep";
         String PROJECT_ONE_VBAP = "/project_one/vbap";
         String PROJECT_ONE_VBPA = "/project_one/vbpa";
+        String PROJECT_ONE_VBUK = "/project_one/vbuk";
         String PROJECT_ONE_VBKD = "/project_one/vbkd";
         String PROJECT_ONE_VBUK = "/project_one/vbuk";
         String PROJECT_ONE_VBUP = "/project_one/vbup";
@@ -444,6 +445,16 @@ public interface IConstant {
         String VBELN = "vbeln";
         String POSNR = "posnr";
         String PARVW = "parvw";
+    }
+
+    interface PROJECT_ONE_VBUK {
+        String GBSTK="gbstk";
+        String WBSTK="wbstk";
+        String KOSTK="kostk";
+        String LVSTK="lvstk";
+        String FKSTK="fkstk";
+        String MANDT="mandt";
+        String VBELN="vbeln";
     }
 
     interface PROJECT_ONE_Qave {
