@@ -95,7 +95,7 @@
         <!-- INV4 -->
         <multis>
             <multi method="getInventoryStock" parameter="sourceSystem,localPlant,localMaterialNumber" var="inventoryStockList"
-                      value="localConsignmentSpecialStockIndicator,localSpecialStockIndicator,sourceSystem,localPlant,localMaterial,localBatchId,localVendorNumber,localStorageLocation">
+                   value="localConsignmentSpecialStockIndicator,localSpecialStockIndicator,sourceSystem,localPlant,localMaterial,localBatchId,localVendorNumber,localStorageLocation">
             </multi>
         </multis>
         <vars>
