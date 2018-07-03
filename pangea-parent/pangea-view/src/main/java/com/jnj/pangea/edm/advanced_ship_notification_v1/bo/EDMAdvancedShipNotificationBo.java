@@ -11,8 +11,8 @@ import com.jnj.pangea.common.BaseBo;
 public class EDMAdvancedShipNotificationBo extends BaseBo {
 
     private String srcSysCd;
-    private String delvDocID;
-    private String receivingPtID;
+    private String delvDocId;
+    private String receivingPtId;
     private String localdeliveryType;
     private String localdeliveryCatg;
     private String localdeliveryDate;
@@ -38,20 +38,20 @@ public class EDMAdvancedShipNotificationBo extends BaseBo {
         this.srcSysCd = srcSysCd;
     }
 
-    public String getDelvDocID() {
-        return delvDocID;
+    public String getDelvDocId() {
+        return delvDocId;
     }
 
-    public void setDelvDocID(String delvDocID) {
-        this.delvDocID = delvDocID;
+    public void setDelvDocId(String delvDocId) {
+        this.delvDocId = delvDocId;
     }
 
-    public String getReceivingPtID() {
-        return receivingPtID;
+    public String getReceivingPtId() {
+        return receivingPtId;
     }
 
-    public void setReceivingPtID(String receivingPtID) {
-        this.receivingPtID = receivingPtID;
+    public void setReceivingPtId(String receivingPtId) {
+        this.receivingPtId = receivingPtId;
     }
 
     public String getLocaldeliveryType() {
@@ -202,7 +202,7 @@ public class EDMAdvancedShipNotificationBo extends BaseBo {
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("srcSysCd", this.srcSysCd)
-                .add("delvDocID", this.delvDocID)
+                .add("delvDocId", this.delvDocId)
                 .add("delvLineNbr", this.delvLineNbr)
                 .toJsonString();
     }

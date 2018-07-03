@@ -4,11 +4,11 @@ job create --name Pangea_QA_Trigger_EDM_InventoryStock --definition 'pangea-trig
 
 ### STEP 2
 
-job create --name Pangea_QA_Trigger_EDM_AdvancedShipNotification --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMAdvancedShipNotification.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_QA_Trigger_EDM_AdvancedShipNotification --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMAdvancedShipNotification.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=2 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_QA_Trigger_EDM_OutboundDeliveryHeader --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMOutboundDeliveryHeader.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
-job create --name Pangea_QA_Trigger_EDM_OutboundDeliveryLine --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMOutboundDeliveryLine.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+job create --name Pangea_QA_Trigger_EDM_OutboundDeliveryLine --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/edm/EDMOutboundDeliveryLine.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=2 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_QA_Trigger_OMP_GdmBatch --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmBatch.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
