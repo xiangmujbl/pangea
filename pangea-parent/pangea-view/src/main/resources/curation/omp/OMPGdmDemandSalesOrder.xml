@@ -1,0 +1,86 @@
+<adf-curation>
+    <curation mainRegion="/edm/sales_order_v1" viewRegion="/omp/gdm_demand_sales_order" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.GDMDemandSalesOrder"
+              writeTo="all" topic="PANGEA_V1_gdm_demand_sales_order" failRegion="/plan/edm_failed_data">
+
+        <regions>
+            <region path="/edm/sales_order_v1" mainRegion="true">
+                <columns>
+                    localBillingBlock,localBillingBlockItem,localChangeDt,localCustomerGroup,localCustomerPO,localDeliveryBlock,localDentoBase,localDistrChannel,localDivision,localDocumentCateg,localIncoTerms1,localIncoTerms2,localItemBillRlvnt,localItemCategory,localItemDlvRlvnt,localMaterialNumber,localNumtoBase,localOrderCreateDt,localOrderDate,localOrderReason,localOrderType,localPlant,localPricingProcedure,localRejReason,localRequestedDate,localRoute,localSDItemCurrency,localSDItemValue,localSalesGroup,localSalesOffice,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem,localRejStat,localDelvStat
+                </columns>
+                <relations>
+                    <region path="/plan/prod_loc_min_shelf" isPrimaryKey="true">
+                        <columns>
+                            localMaterialNumber,localPlant,minMinShelfLife,minShelfLife,sourceSystem
+                        </columns>
+                        <expression>
+                            sourceSystem=/edm/sales_order_v1.sourceSystem,localPlant=/edm/sales_order_v1.localPlant,localMaterialNumber=/edm/sales_order_v1.localMaterialNumber
+                        </expression>
+                    </region>
+                    <region path="/edm/material_global_v1" isPrimaryKey="true">
+                        <columns>
+                            baseUom,batchManageIndicator,brand,category,division,flagForDeletion,form,franchise,globalBusinessUnit,globalDpParentCode,localBaseUom,localDpParentCode,localManufacturingTechnology,localMaterialGroup,localMaterialNumber,localMaterialType,localRefDescription,manufacturingTechnology,materialGroup,materialNumber,materialStatus,materialType,minRemShelfLife,parentCode,primaryPlanningCode,productFamily,refDescription,sourceSystem,subBrand,totalShelfLife
+                        </columns>
+                        <expression>
+                            sourceSystem=/edm/sales_order_v1.sourceSystem,localMaterialNumber=/edm/sales_order_v1.localMaterialNumber
+                        </expression>
+                    </region>
+                    <region path="/plan/cns_material_plan_status" isPrimaryKey="true">
+                        <columns>
+                            active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant
+                        </columns>
+                        <expression>
+                            localMaterialNumber=/edm/sales_order_v1.localMaterialNumber,localPlant=/edm/sales_order_v1.localPlant,sourceSystem=/edm/sales_order_v1.sourceSystem
+                        </expression>
+                    </region>
+                    <region path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
+                        <columns>
+                            channel,channelDescription,companyCode,countryAffiliate,customerId,customerName,customerShipTo,demandGroup,demandGroupDescription,demandGrpDescription,fromDate,group,region,salesOrg,salesOrganization,sourceSystem,subFranchise,toDate
+                        </columns>
+                        <expression>
+                            customerId=/edm/sales_order_v1.localShipToParty,salesOrganization=/edm/sales_order_v1.localSalesOrg
+                        </expression>
+                    </region>
+                    <region path="/plan/cns_plan_unit" isPrimaryKey="false">
+                        <columns>
+                            factor,localUom,localUomName,planFlag,plantFlag,roundingDecimal,sourceSystem,unit
+                        </columns>
+                        <expression>
+                            sourceSystem=/edm/sales_order_v1.sourceSystem
+                        </expression>
+                    </region>
+                    <region path="/edm/sales_history_v1_aggregation" isPrimaryKey="false">
+                        <columns>
+                            localBaseQuantity,localPrecDocNo,localSPrecDocLnNo,localSubDocCatg
+                        </columns>
+                        <expression>
+                        </expression>
+                    </region>
+                    <region path="/plan/cns_cust_excl_incl" isPrimaryKey="false">
+                        <columns>
+                            country,customerShipTo,inclExcl,salesOrg,sourceSystem
+                        </columns>
+                        <expression>
+                            salesOrg=/edm/sales_order_v1.localSalesOrg,sourceSystem=/edm/sales_order_v1.sourceSystem
+                        </expression>
+                    </region>
+                    <region path="/plan/cns_so_type_incl_excl" isPrimaryKey="false">
+                        <columns>
+                            country,inclExcl,orderType,plant,salesOrg,sourceSystem
+                        </columns>
+                        <expression>
+                            orderType=/edm/sales_order_v1.localOrderType,plant=/edm/sales_order_v1.localPlant,salesOrg=/edm/sales_order_v1.localSalesOrg,sourceSystem=/edm/sales_order_v1.sourceSystem
+                        </expression>
+                    </region>
+                    <region path="/project_one/knvh" isPrimaryKey="false">
+                        <columns>
+                            bokre,datab,datbi,grpno,hityp,hkunnr,hspart,hvkorg,hvtweg,hzuor,kunnr,mandt,prfre,spart,vkorg,vtweg
+                        </columns>
+                        <expression>
+                        </expression>
+                    </region>
+                </relations>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

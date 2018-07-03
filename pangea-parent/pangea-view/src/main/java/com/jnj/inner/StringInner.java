@@ -1,5 +1,4 @@
-package com.jnj.pangea;
-
+package com.jnj.inner;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -7,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * Created by XZhan290 on 2018/4/18.
+ */
 public class StringInner {
 
     public static boolean isStringNotEmpty(String str) {

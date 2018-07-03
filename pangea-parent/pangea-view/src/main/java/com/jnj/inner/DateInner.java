@@ -1,12 +1,13 @@
-package com.jnj.pangea;
-
-
+package com.jnj.inner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * Created by XZhan290 on 2018/4/18.
+ */
 public class DateInner {
 
     public final static String DATE_FORMAT_1 = "yyyy-MM-dd";
@@ -15,6 +16,7 @@ public class DateInner {
     public final static String F_yyyyMMdd_3 = "dd.MM.yyyy";
     public final static String F_yyyyMM = "yyyyMM";
     public final static String F_hhmmss_a = "hh:mm:ss a";
+    public final static String F_HHmmss = "HHmmss";
     public final static String F_yyyyMMddHHmmss = "yyyyMMddHHmmss";
     public final static String yyyyMMdd_HHmmss = "yyyyMMdd_HH-mm-ss";
     public final static String yyyy_MM_dd_HHmmss_SSS = "yyyy/MM/dd HH:mm:ss.SSS";
@@ -104,9 +106,9 @@ public class DateInner {
         return changeDate(date,0,0,0,0,minute,0);
     }
 
-    public static Date offsetSecond(Date date, int second) {
-        return changeDate(date,0,0,0,0,0,second);
-    }
+        public static Date offsetSecond(Date date, int second) {
+            return changeDate(date,0,0,0,0,0,second);
+        }
 
     public static Date changeDate(Date date, int year, int month, int day, int hour, int minute, int second) {
 
@@ -118,6 +120,14 @@ public class DateInner {
         calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + hour);
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + minute);
         calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + second);
+        return calendar.getTime();
+    }
+
+    public static Date offsetDate(Date date, int days) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
         return calendar.getTime();
     }
 
