@@ -32,6 +32,8 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
+        String PLAN_CNS_PRODUCTCUSTOMER = "/plan/cns_productcustomer";
+        String PLAN_CNS_PRODUCTCUSTOMERCLONE = "/plan/cns_productcustomer_clone";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
         String EMS_F_MDM_MATERIAL_TYPES = "/ems/ems_f_mdm_material_types";
         String PROJECT_ONE_T439T = "/project_one/t439t";
@@ -54,6 +56,7 @@ public interface IConstant {
         String PLAN_CNS_MATERIAL_PLAN_STATUS = "/plan/cns_material_plan_status";
         String PLAN_CNS_PROD_CTY_AFFL = "/plan/cns_prod_cty_affl";
         String PLAN_CNS_CLUSTERS = "/plan/cns_clusters";
+        String PLAN_CNS_DEM_GRP = "/plan/cns_dem_grp";
         String PLAN_CNS_DEM_GRP_ASGN = "/plan/cns_dem_grp_asgn";
         String PLAN_CNS_CERT_DETER = "/plan/cns_cert_deter";
         String PROJECT_ONE_KNVH = "/project_one/knvh";
@@ -149,6 +152,7 @@ public interface IConstant {
         String EDM_BOM_ITEM = "/edm/bom_item";
         String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
+        String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
         String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
         String EDM_ADVANCED_SHIP_NOTIFICATION_V1= "/edm/advanced_ship_notification_v1";
@@ -493,6 +497,20 @@ public interface IConstant {
         String LOCAL_DP_PARENT_CODE = "localDpParentCode";
     }
 
+    interface PLAN_CNS_PRODUCT_CUSTOMER {
+        String PRODUCT_ID = "productId";
+        String SOURCE_SYSTEM = "sourceSystem";
+        String DEMAND_GROUP = "demandGroup";
+        String PRODUCT_STATUS = "productStatus";
+        String MIN_STOCK = "minStock";
+        String MAX_STOCK = "maxStock";
+        String STOCK_LEVEL = "stockLevel";
+        String UOM = "uom";
+        String PREFERRED_DC = "preferredDC";
+        String LEAD_TIME = "leadTime";
+        String REVENUE_RECOGNITION_OFFSET = "revenueRecognitionOffset";
+    }
+
     interface EDM_MATERIAL_AUOM_V1 {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String MATERIAL_NUMBER = "materialNumber";
@@ -700,6 +718,14 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
     }
 
+    interface PLAN_CNS_DEM_GRP {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String DEMAND_GROUP_ID = "demandGroupId";
+        String DEMAND_GROUP_DESC = "demandGroupDesc";
+        String LOCAL_CURRENCY = "localCurrency";
+        String LOCATION_ID = "locationId";
+    }
+
     interface PLAN_CNS_DEM_GRP_ASGN {
         String CUSTOMER_ID = "customerId";
         String SALES_ORG = "salesOrg";
@@ -902,7 +928,10 @@ public interface IConstant {
         String PATTERN_DECIMAL_3="#.000";
         String PATTERN_DECIMAL_5="#.00000";
         String PATTERN_DECIMAL_0="#";
-        int VALUE_DECIMAL_3=3;
+
+        int VALUE_DECIMAL_3 =3;
+        int VALUE_DECIMAL_6 =6;
+
         String VALUE_BLACK="";
         String FAIL_MSG="localDpParentCode does not exist in edm Material";
     }
@@ -1068,7 +1097,13 @@ public interface IConstant {
         String NGEMS = "NGEMS";
         int VALUE_24 = 24;
         int VALUE_60 = 60;
-        
+        String FLOAT_ZERO = "0.0";
+        String K = "K";
+        String O = "O";
+        String ENDEFF_NOHMS = "2998/12/31";
+        String STARTEFF_NOHMS = "1980/01/01";
+        String STARTEFF_HMS = "1980/01/01 00:00:00";
+        String HHMMSS = " 23:59:59";
     }
 
     interface FAILED {
@@ -1091,6 +1126,7 @@ public interface IConstant {
             String GDM_UNIT_CURRENCY = "GdmUnitCurrency";
             String GDM_UNIT_MEASURABLE = "GdmUnitMeasurable";
             String GDM_PRODUCT_COUNTRY = "GDMProductCountry";
+            String OMP_GDM_PRODUCTCUSTOMER = "GDMProductCustomer";
             String OMP_GDM_BATCH = "OMPGdmBatch";
             String EDM_BATCH_MASTER = "EdmBatchMaster";
             String GDM_UNIT_EVOL = "GDMUnitEvol";
