@@ -17,6 +17,7 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
+import sun.rmi.runtime.Log;
 
 import java.math.*;
 import java.text.*;
@@ -102,6 +103,7 @@ public class OMPGdmForecast implements IEventProcessor {
         String primaryPlanningCode = String.valueOf(map
                 .get("primaryPlanningCode"));
         String sourceSystem = String.valueOf(map.get("sourceSystem"));
+        String demandGrp = String.valueOf(map.get("demandGrp"));
         String localPlant = String.valueOf(map.get("localPlant"));
         String loadDate = String.valueOf(map.get("loadDate"));
         String oorPeriod = String.valueOf(map.get("oorPeriod"));
@@ -121,7 +123,6 @@ public class OMPGdmForecast implements IEventProcessor {
         cycleStartDate = CustomMethod.CycleStartDate(loadDate);
 
         builder.put("cycleStartDate", cycleStartDate);
-
         String fromDueDate = null;
 
         if (StringInner.equal(mthWeekInd, "M")) {
@@ -130,6 +131,19 @@ public class OMPGdmForecast implements IEventProcessor {
                 List listJnjCalendar = getJnjCalendarFiscalPeriod(oorPeriod);
                 if (listJnjCalendar != null) {
                     fromDueDate = CustomMethod.sortOfCalWeek(listJnjCalendar);
+                    if (StringInner.equal(fromDueDate, "")) {
+                        writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
+                                "FRC8", "Missing oor period",
+                                sourceSystem, demandGrp, ppc, localPlant,
+                                oorPeriod, mthWeekInd, "");
+                        return false;
+                    }
+                } else {
+                    writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
+                            "FRC8", "Missing oor period",
+                            sourceSystem, demandGrp, ppc, localPlant,
+                            oorPeriod, mthWeekInd, "");
+                    return false;
                 }
             }
         } else {
@@ -140,15 +154,26 @@ public class OMPGdmForecast implements IEventProcessor {
                     if (listJnjCalendar != null) {
                         fromDueDate = CustomMethod
                                 .getFirstRecord(listJnjCalendar);
+                        if (StringInner.equal(fromDueDate, "")) {
+                            writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
+                                    "FRC8", "Missing oor period",
+                                    sourceSystem, demandGrp, ppc, localPlant,
+                                    oorPeriod, mthWeekInd, "");
+                            return false;
+                        }
                     } else {
-
                         writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                                "T1", "no record is found for jnj_calendar_v1",
-                                sourceSystem, fromDueDate, "", "", "", "", "");
+                                "FRC8", "Missing oor period",
+                                sourceSystem, demandGrp, ppc, localPlant,
+                                oorPeriod, mthWeekInd, "");
                         return false;
                     }
                 }
             } else {
+                writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
+                        "FRC8", "Missing oor period",
+                        sourceSystem, demandGrp, ppc, localPlant,
+                        oorPeriod, mthWeekInd, "");
                 return false;
             }
         }
@@ -172,16 +197,13 @@ public class OMPGdmForecast implements IEventProcessor {
 
             List listMaterialGlobal = getMaterialGlobal(ppc, sourceSystem);
             if (listMaterialGlobal != null) {
+
                 productId = CustomMethod.CheckAnyOne(listMaterialGlobal,
                         localPlant, failMap);
                 if (StringInner.equal(productId, "")) {
                     return false;
                 }
             } else {
-
-                writeFailDataToRegion(failMap, "SP", "OMPGdmForecast", "T2",
-                        "no record is found for material_global_v1",
-                        sourceSystem, productId, "", "", "", "", "");
                 return false;
             }
         }
@@ -202,11 +224,11 @@ public class OMPGdmForecast implements IEventProcessor {
             if (listMaterialGlobal != null) {
                 quantity = CustomMethod.getQuantity(listMaterialGlobal,
                         localUom, quantity, failMap);
-                if (StringInner.equal(quantity, "")) {
-
+                if (StringInner.equal(quantity, null)) {
                     writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                            "T3", "no record is found for material_auom_v1",
-                            sourceSystem, quantity, "", "", "", "", "");
+                            "FRC13", "Missing UOM Conversion",
+                            sourceSystem, demandGrp, ppc, localPlant,
+                            oorPeriod, mthWeekInd, "");
                     return false;
                 }
             }

@@ -27,7 +27,7 @@ public class CustomMethod {
 //
 //        String data = stampToDate(String.valueOf(System.currentTimeMillis()));
 //        System.out.println(data);
-        System.out.println(CycleStartDate("20180623"));
+        System.out.println(CycleStartDate("20180723"));
 //
 //
 //        List<Map.Entry<String, String>> list = new ArrayList<>();
@@ -77,9 +77,8 @@ public class CustomMethod {
 
         for (Map.Entry<String, String> map : list) {
             Map<String, Object> map1 = JsonObject.append(map.getValue()).toMap();
-            list1.add(map1);
 
-            Object calWeek = map1.get("calWeek");
+            list1.add(map1);
         }
 
         if (list != null) {
@@ -93,6 +92,10 @@ public class CustomMethod {
         Map map2 = list1.get(0);
 
         String weekFromDate = String.valueOf(map2.get("weekFromDate"));
+
+        if (StringInner.equal(weekFromDate,"")){
+            return "";
+        }
 
         String weekFromDate1 = weekFromDate.replaceAll("-", "/") + " " + "00:00:00";
 
@@ -109,12 +112,14 @@ public class CustomMethod {
             Map<String, Object> map1 = JsonObject.append(map.getValue()).toMap();
             list1.add(map1);
 
-            Object calWeek = map1.get("calWeek");
         }
 
         if (list != null) {
             Map map1 = list1.get(0);
             String weekFromDate1 = String.valueOf(map1.get("weekFromDate"));
+            if (StringInner.equal(weekFromDate1,"")){
+                return "";
+            }
             weekFromDate = weekFromDate1.replaceAll("-", "/") + " " + "00:00:00";
         }
 
@@ -177,7 +182,7 @@ public class CustomMethod {
                             String localDenominator = String.valueOf(MaterialAumo.get("localDenominator"));
                             Quantity = handleQuantity(quantity, localNumerator, localDenominator);
                         } else {
-                            return "";
+                            return null;
                         }
                     }
 
