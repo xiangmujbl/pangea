@@ -1,5 +1,10 @@
 package com.jnj.pangea.common.dao.impl.project_one;
 
+import com.jnj.adf.client.api.ADFCriteria;
+import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
+import com.jnj.pangea.common.entity.project_one.VbpaEntity;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
@@ -14,6 +19,13 @@ public class VbukDaoImpl extends CommonDaoImpl {
             instance = new VbukDaoImpl();
         }
         return instance;
+    }
+
+    public VbukEntity getVbukbyLikp(String vbeln, String mandt) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBUK.VBELN).is(vbeln)
+                .and(IConstant.PROJECT_ONE_VBUK.MANDT).is(mandt).toQueryString();
+
+        return queryForObject(IConstant.REGION.PROJECT_ONE_VBUK, queryString, VbukEntity.class);
     }
 
     public VbukEntity getEntityWithVbelnAndMandt(String vbeln, String mandt) {
