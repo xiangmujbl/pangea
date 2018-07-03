@@ -184,7 +184,7 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo.setWRK02("");
 
             //OBD 15
-            if(obdLineEntity.getActlSkuDelvQty().isEmpty() || obdLineEntity.getActlSkuDelvQty().equals("0")){
+            if(obdLineEntity.getActlSkuDelvQty().isEmpty() || obdLineEntity.getActlSkuDelvQty().equals(IConstant.VALUE.ZEROZERO)){
                 skip = true;
             }
             gdmDemandBo.setQuantity(obdLineEntity.getActlSkuDelvQty());
