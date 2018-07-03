@@ -1,16 +1,15 @@
 package com.jnj.pangea.omp.gdm_country.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.edm.EDMCountryInputDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanEdmCountryInputDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMCountryInputEntity;
 import com.jnj.pangea.common.entity.edm.EDMCountryV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
+import com.jnj.pangea.common.entity.plan.PlanEdmCountryInputEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_country.bo.OMPGdmCountryBo;
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class OMPGdmCountryServiceImpl implements ICommonService {
 
-    private EDMCountryInputDaoImpl EDMCountryInputDao=EDMCountryInputDaoImpl.getInstance();
+    private PlanEdmCountryInputDaoImpl EDMCountryInputDao= PlanEdmCountryInputDaoImpl.getInstance();
     private EDMCurrencyV1DaoImpl EDMCurrencyV1Dao=EDMCurrencyV1DaoImpl.getInstance();
     private PlanCnsPlanParameterDaoImpl planCnsPlanParameterDao = PlanCnsPlanParameterDaoImpl.getInstance();
     private static OMPGdmCountryServiceImpl instance;
@@ -42,8 +41,8 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
 
             // rules J1  T2
             if (StringUtils.isNotEmpty(sourceSystem)){
-                EDMCountryInputEntity EDMCountryInputEntity
-                        = EDMCountryInputDao.getEntityWithFormName(countryV1Entity.getSourceSystem(), countryV1Entity.getLocalCountry());
+                PlanEdmCountryInputEntity EDMCountryInputEntity
+                        = EDMCountryInputDao.getEntityWithFormNameAndLocalCountry(countryV1Entity.getSourceSystem(), countryV1Entity.getLocalCountry());
 
                 if (null == EDMCountryInputEntity) {
                     FailData failData = writeFailDataToRegion(countryV1Entity, "J1", "localcountry do not exist in edm country");
@@ -58,7 +57,6 @@ public class OMPGdmCountryServiceImpl implements ICommonService {
                     resultObject.setFailData(failData);
                     return resultObject;
                 }
-                LogUtil.getCoreLog().info("))))))))))))))))))))"+EDMCurrencyV1Entity.getCurrencyCode());
                 gdmCountryBo.setCurrencyId(EDMCurrencyV1Entity.getCurrencyCode());
 
 

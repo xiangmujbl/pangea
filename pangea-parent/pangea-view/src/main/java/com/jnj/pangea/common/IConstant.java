@@ -911,7 +911,7 @@ public interface IConstant {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
-    interface  EDM_COUNT_INPUT{
+    interface  PLAN_EDM_COUNTRY_INPUT{
         String SOURCESYSTEM= "sourceSystem";
         String LOCALCOUNTRY ="localCountry" ;
         String LOCALCURRENCY="localCurrency";
