@@ -68,8 +68,8 @@ Feature: OMPGdmCustomer AEAZ-5744
 
     And I wait "/edm/country_v1" Async Queue complete
 
-    Given I import "/plan/cns_productcustomer" by keyFields "sourceSystem,demandGroup,productId"
-      | sourceSystem | demandGroup | productId |
+    Given I import "/plan/cns_productcustomer" by keyFields "sourceSystem,customerId,productId"
+      | sourceSystem | customerId | productId |
       | CONS_LATAM   | 76100006    | 87818     |
       | CONS_LATAM   | 76100009    | 87818     |
 
