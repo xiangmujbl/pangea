@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <adf-curation> 
-  <curation mainRegion="/edm/wrk_ctr" viewRegion="/omp/gdm_machine" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_machine.controller.OMPGdmMachineController" writeTo="all" topic="PANGEA_V1_omp_gdm_machine"> 
+  <curation mainRegion="/edm/wrk_ctr" viewRegion="/omp/gdm_machine" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_machine.OMPGdmMachineController" writeTo="all" topic="PANGEA_V1_omp_gdm_machine">
     <regions> 
       <region path="/edm/wrk_ctr_hier"> 
         <columns>srcSysCd,topWrkCtrTypeCd,topWrkCtrNum,parntWrkCtrTypeCd,parntWrkCtrNum,childWrkCtrTypeCd,childWrkCtrNum,wrkCtrTypeCd,wrkCtrNum,stopExplsInd</columns>  
