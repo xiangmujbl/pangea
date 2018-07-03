@@ -134,7 +134,7 @@ public class OMPGdmLfuServiceImpl implements ICommonListService {
                 continue;
             }
             Pattern pattern = Pattern.compile(IConstant.LFU.CHCEK_TIME);
-            EDMCountryEntity edmCountryEntity = countryV1Dao.getEntityWithLocalCountry( planCnsFinPlanQtyAndValEntity.getCountry());
+            EDMCountryEntity edmCountryEntity = countryV1Dao.getEntityWithLocalCountryAndSourceSystem(planCnsFinPlanQtyAndValEntity.getCountry(), materialGlobalV1Entity.getSourceSystem());
             EDMCurrencyV1Entity edmCurrencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency(planCnsFinPlanQtyAndValEntity.getCurrency());
             if (edmCountryEntity != null) {
                 country=edmCountryEntity.getCountryCode();

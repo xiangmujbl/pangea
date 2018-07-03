@@ -1,0 +1,122 @@
+<adf-curation executionClassName="com.jnj.pangea.omp.gdm_link.OMPGdmLinkProcessController" type="M2"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_link_process">
+    <regions>
+        <region path="/edm/mfg_order" mainRegion="true">
+            <columns>
+                sourceSysCd,mfgOrdrNum,mfgOrdrTypCd,plntCd,crtdDttm,chgDttm,delInd,strtDt,strtTm,endDt,endTm,schdStrtDt,schdStrtTm,schdEndDt,schdEndTm,schRelDt,actStrtDt,actStrtTm,prdtnEndDt,cnfrmdEndDt,cnfrmdEndTm,planRlseDt,actRlseDt,rsrvtnNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,bomCatCd,bomNum,bomAltNum,mrpCntrllrCd,ordrRtngNum,prdSpvsrCd,cnfrmdYldQty,cnfrmdScrpQty,Object
+                number,mfgOrdrSttsCd
+            </columns>
+            <relations>
+                <region path="/plan/cns_plan_parameter" isPrimaryKey="false" lucene="true">
+                    <columns>
+                        attribute,sourceSystem,dataObject
+                    </columns>
+                    <filter>dataObject:SEND_TO_OMP</filter>
+                    <expression>
+                        sourceSystem=/edm/mfg_order.sourceSysCd
+                    </expression>
+                </region>
+                <region path="/edm/mfg_order_seq" isPrimaryKey="false" lucene="true">
+                    <columns>
+                        srcSysCd,ordrRtngNum,ordrRtngCtrNum,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rtngSqncNum,rtngSqncVrsnCntrNbr,chgNum,rtngSqncCtgryCd,strtNdeNum,endNdeNum,fromLtSzQty,toLtSzQty,brnchOperNum,retrnOperNum
+                    </columns>
+                    <filter>
+                        rtngSqncCtgryCd:0 OR rtngSqncCtgryCd:1
+                    </filter>
+                    <expression>
+                        srcSysCd=/edm/mfg_order.sourceSysCd,rtngTypCd=/edm/mfg_order.rtngTypCd,rntgGrpCd=/edm/mfg_order.rtngGrpCd,rntgGrpCntrNbr=/edm/mfg_order.rtngGrpCntrNum,ordrRtngNum=/edm/mfg_order.ordrRtngNum
+                    </expression>
+                    <relations>
+                        <region path="/edm/mfg_order_rtng" isPrimaryKey="false">
+                            <columns>
+                                srcSysCd,ordrRtngNum,ordrRtngCtrNum,rtngSqncNum,operNum,operCd,wrkCntrId,operDesc
+                            </columns>
+                            <expression>
+                                srcSysCd=/edm/mfg_order_seq.srcSysCd,ordrRtngNum=/edm/mfg_order_seq.ordrRtngNum,ordrRtngCtrNum=/edm/mfg_order_seq.ordrRtngCtrNum
+                            </expression>
+                        </region>
+                    </relations>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="getOrderSeqEntityList" resultType="List" isPK="false" path="/edm/mfg_order_seq">
+            <parameters>
+                <parameter name="srcSysCd" value="sourceSysCd" relationship="and"></parameter>
+                <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
+                <parameter name="rntgGrpCd" value="rtngGrpCd" relationship="and"></parameter>
+                <parameter name="rntgGrpCntrNbr" value="rtngGrpCntrNum" relationship="and"></parameter>
+                <parameter name="ordrRtngNum" value="ordrRtngNum"></parameter>
+            </parameters>
+        </method>
+        <method name="getOrderRtngList" resultType="List" isPK="false" path="/edm/mfg_order_rtng">
+            <parameters>
+                <parameter name="ordrRtngNum" value="ordrRtngNum" relationship="and"></parameter>
+                <parameter name="ordrRtngCtrNum" value="ordrRtngCtrNum" relationship="and"></parameter>
+                <parameter name="srcSysCd" value="srcSysCd"></parameter>
+            </parameters>
+        </method>
+    </methods>
+    <viewRegion name="/omp/gdm_link">
+        <multis>
+            <multi method="getOrderSeqEntityList" parameter="sourceSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,ordrRtngNum"
+                   var="mfgOrderSeqList"
+                   value="srcSysCd,ordrRtngNum,rntgGrpCntrNbr,rtngSqncNum,rtngSqncCtgryCd,ordrRtngCtrNum"/>
+            <multi method="getOrderRtngList" parameter="ordrRtngNum,ordrRtngCtrNum,srcSysCd"
+                   var="orderRtngList" value="srcSysCd,ordrRtngNum,ordrRtngCtrNum,operNum"/>
+        </multis>
+        <filters>
+            <filter hook="OMPGdmLinkProcessHook.check(e.getValue())"/>
+        </filters>
+        <vars>
+            <var name="sourceSysCd" value="sourceSysCd"></var>
+            <var name="rtngTypCd" value="rtngTypCd"></var>
+            <var name="rtngGrpCd" value="rtngGrpCd"></var>
+            <var name="rtngGrpCntrNum" value="rtngGrpCntrNum"></var>
+            <var name="ordrRtngNum" value="ordrRtngNum"></var>
+            <var name="mfgOrdrNum" value="mfgOrdrNum"></var>
+        </vars>
+        <columns>
+            <column name="linkId" isPK="true">
+                <if test="(StringInner.isStringNotEmpty(operNum)&amp;&amp;StringInner.isStringNotEmpty(ordrRtngCtrNum))">
+                    <ref hook="OMPGdmLinkProcessHook.getLinkId(mfgOrdrNum,operNum,rtngSqncNum,orderRtngList,ordrRtngCtrNum)"></ref>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <column name="active" hardCode="'YES'"></column>
+            <column name="activeOPRERP" hardCode="'YES'"></column>
+            <column name="activeOPROMP" hardCode="'YES'"></column>
+            <column name="activeSOPERP" hardCode="'YES'"></column>
+            <column name="activeSOPOMP" hardCode="'NO'"></column>
+            <column name="comments" hardCode="''"></column>
+            <column name="endEff" hardCode="'2998/12/31 23:59:59'"></column>
+            <column name="firstOccupied" hardCode="''"></column>
+            <column name="operationId">
+                <if test="StringInner.isStringNotEmpty(mfgOrdrNum)&amp;&amp;StringInner.isStringNotEmpty(operNum)">
+                    <set name="operationId" value="StringInner.join('PRO','/',mfgOrdrNum,'/',operNum)"></set>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <column name="planLevelId" hardCode="'*'"></column>
+            <column name="prevOperationId">
+                <ref hook="OMPGdmLinkProcessHook.getPrevOperationId(mfgOrdrNum,orderRtngList,ordrRtngCtrNum)"></ref>
+
+            </column>
+            <column name="processId">
+                <if test="StringInner.isStringNotEmpty(mfgOrdrNum)">
+                    <set name="processId" value="StringInner.join('PRO','/',mfgOrdrNum)"></set>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <column name="secondOccupied" hardCode="''"></column>
+            <column name="startEff" hardCode="'1980/01/01 00:00:00'"></column>
+        </columns>
+    </viewRegion>
+</adf-curation>

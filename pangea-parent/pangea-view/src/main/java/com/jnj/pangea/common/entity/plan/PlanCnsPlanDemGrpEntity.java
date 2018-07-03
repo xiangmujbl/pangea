@@ -9,6 +9,9 @@ public class PlanCnsPlanDemGrpEntity extends CommonEntity {
     private String demandGroupId;
     private String sourceSystem;
     private String demandGroupDesc;
+    private String localCurrency;
+    private String locationId;
+
 
     public PlanCnsPlanDemGrpEntity(Map<String, Object> map) {
         super(map);
@@ -16,6 +19,8 @@ public class PlanCnsPlanDemGrpEntity extends CommonEntity {
         setDemandGroupId((String) map.get("demandGroupId"));
         setSourceSystem((String) map.get("sourceSystem"));
         setDemandGroupDesc((String) map.get("demandGroupDesc"));
+        setLocalCurrency((String) map.get("localCurrency"));
+        setLocationId((String) map.get("locationId"));
     }
 
     public String getDemandGroupId() {
@@ -42,4 +47,19 @@ public class PlanCnsPlanDemGrpEntity extends CommonEntity {
         this.demandGroupDesc = demandGroupDesc;
     }
 
+    public String getLocalCurrency() {
+        return localCurrency;
+    }
+
+    public void setLocalCurrency(String localCurrency) {
+        this.localCurrency = localCurrency;
+    }
+
+    public String getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
 }

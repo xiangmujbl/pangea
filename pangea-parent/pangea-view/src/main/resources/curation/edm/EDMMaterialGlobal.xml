@@ -57,6 +57,12 @@
                     localMaterialNumber,localTechnology,sourceSystem
                 </columns>
             </region>
+            
+            <region path="/plan/edm_mat_input">
+                <columns>
+                    localMaterialNumber,localTechnology,sourceSystem
+                </columns>
+            </region>
 
             <region path="/edm/material_global_v1">
                 <columns>
