@@ -119,7 +119,7 @@
             <!--Using (cns_oor_forecast-loadDate) populate the 1st day of the Month in format YYYY/MM/DD HH:NN:SS (where HH:NN:SS = 00:00:00)
             Example - if Load Date is 20180525 then CycleStartDate date would need to be 20180501-->
             <column name="cycleStartDate">
-                <ref hook="CustomMethod.CycleStartDate(loadDate)"></ref>
+                <ref hook="OMPGdmForecastHook.CycleStartDate(loadDate)"></ref>
             </column>
 
 
@@ -147,7 +147,7 @@
                         <ref method="getJnjCalendarFiscalPeriod" parameter="oorPeriod" resultType="List"
                              var="listJnjCalendar">
                             <if test="listJnjCalendar != null">
-                                <ref hook="CustomMethod.sortOfCalWeek(listJnjCalendar)"/>
+                                <ref hook="OMPGdmForecastHook.sortOfCalWeek(listJnjCalendar)"/>
                             </if>
                         </ref>
                     </if>
@@ -157,7 +157,7 @@
                         <ref method="getJnjCalendarCalWeek" parameter="oorPeriod" resultType="List"
                              var="listJnjCalendar">
                             <if test="listJnjCalendar != null">
-                                <ref hook="CustomMethod.getFirstRecord(listJnjCalendar)"/>
+                                <ref hook="OMPGdmForecastHook.getFirstRecord(listJnjCalendar)"/>
                             </if>
                             <else>
                                 <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T1'"
@@ -174,7 +174,7 @@
 
             <!--#Value of Date YYYY/MM/DD derived from FRC8 + HH:NN:SS (NN is for minutes) (HH:NN:SS = 00:00:01)-->
             <column name="dueDate" isPK="true">
-                <ref hook="CustomMethod.getDueDate(fromDueDate)"/>
+                <ref hook="OMPGdmForecastHook.getDueDate(fromDueDate)"/>
             </column>
 
             <!--#Concatenate cns_oor_forecast-sourceSystem, "_", cns_oor_forecast-localPlant-->
@@ -200,7 +200,7 @@
                 <if test="StringInner.isStringNotEmpty(ppc)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)">
                     <ref method="getMaterialGlobal" parameter="ppc,sourceSystem" resultType="List" var="listMaterialGlobal">
                         <if test="listMaterialGlobal.size() >= 1">
-                            <ref hook="CustomMethod.CheckAnyOne(listMaterialGlobal,localPlant,failMap)"/>
+                            <ref hook="OMPGdmForecastHook.CheckAnyOne(listMaterialGlobal,localPlant,failMap)"/>
                             <if test="productId == ''">
                                 <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T3'"
                                           errorValue="'no record is found for cns_material_plan_status'"
@@ -214,7 +214,7 @@
             <!--#Default with current data (todays date)
             Format YYYY/MM/DD HH:NN:SS (where HH:NN:SS = 00:00:00)-->
             <column name="publishDate">
-                <ref hook="CustomMethod.stampToDate(String.valueOf(System.currentTimeMillis()))"/>
+                <ref hook="OMPGdmForecastHook.stampToDate(String.valueOf(System.currentTimeMillis()))"/>
             </column>
 
             <!--Get the first record of localMaterialNumber from material_global_v1 when material_global_v1-primaryPlanningCode = cns_oor_forecast-PPC (since one PPC can have multiple localMaterialNumber). (Note - Assumption is all UOM for each of the Local SKU for PPC have the same UOM conversion.)
@@ -232,7 +232,7 @@
             Else record found, Convert to Base UOM Qty
             GDMForecast-Quantity =  cns_oor_forecast-quantity * material_auom_v1-localNumerator/ material_auom_v1-localDenominator-->
             <column name="quantity">
-                <ref hook="CustomMethod.getQuantity(listMaterialGlobal,localUom,quantity,failMap)"/>
+                <ref hook="OMPGdmForecastHook.getQuantity(listMaterialGlobal,localUom,quantity,failMap)"/>
                 <if test="quantity == ''">
                     <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
                               errorValue="'no record is found for material_auom_v1'"

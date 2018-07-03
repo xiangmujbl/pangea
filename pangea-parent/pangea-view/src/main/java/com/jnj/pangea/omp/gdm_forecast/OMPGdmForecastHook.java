@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @date:2018/6/12 15:48
  * @describe:CustomMethod
  */
-public class CustomMethod {
+public class OMPGdmForecastHook {
 
     public static void main(String[] args) {
 //        String Quantity = handleQuantity("1", "2", "0");

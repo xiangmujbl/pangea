@@ -2,29 +2,18 @@ package com.jnj.pangea.omp.gdm_forecast;
 
 import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.remote.RawDataValue;
-import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.data.raw.RawDataBuilder;
-import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.adf.client.api.query.QueryHelper;
-import org.apache.commons.lang3.StringUtils;
 import com.jnj.adf.client.api.ADFCriteria;
-import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
-import sun.rmi.runtime.Log;
 
-import java.math.*;
-import java.text.*;
 import java.util.*;
-import java.time.*;
-import java.io.*;
-import java.nio.*;
 
 @SuppressWarnings("unchecked")
 public class OMPGdmForecast implements IEventProcessor {
@@ -120,7 +109,7 @@ public class OMPGdmForecast implements IEventProcessor {
 
         String cycleStartDate = null;
 
-        cycleStartDate = CustomMethod.CycleStartDate(loadDate);
+        cycleStartDate = OMPGdmForecastHook.CycleStartDate(loadDate);
 
         builder.put("cycleStartDate", cycleStartDate);
         String fromDueDate = null;
@@ -130,7 +119,7 @@ public class OMPGdmForecast implements IEventProcessor {
             if (StringInner.isStringNotEmpty(oorPeriod)) {
                 List listJnjCalendar = getJnjCalendarFiscalPeriod(oorPeriod);
                 if (listJnjCalendar != null) {
-                    fromDueDate = CustomMethod.sortOfCalWeek(listJnjCalendar);
+                    fromDueDate = OMPGdmForecastHook.sortOfCalWeek(listJnjCalendar);
                     if (StringInner.equal(fromDueDate, "")) {
                         writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
                                 "FRC8", "Missing oor period",
@@ -152,7 +141,7 @@ public class OMPGdmForecast implements IEventProcessor {
                 if (StringInner.isStringNotEmpty(oorPeriod)) {
                     List listJnjCalendar = getJnjCalendarCalWeek(oorPeriod);
                     if (listJnjCalendar != null) {
-                        fromDueDate = CustomMethod
+                        fromDueDate = OMPGdmForecastHook
                                 .getFirstRecord(listJnjCalendar);
                         if (StringInner.equal(fromDueDate, "")) {
                             writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
@@ -181,7 +170,7 @@ public class OMPGdmForecast implements IEventProcessor {
 
         String dueDate = null;
 
-        dueDate = CustomMethod.getDueDate(fromDueDate);
+        dueDate = OMPGdmForecastHook.getDueDate(fromDueDate);
 
         builder.put("dueDate", dueDate);
 
@@ -198,7 +187,7 @@ public class OMPGdmForecast implements IEventProcessor {
             List listMaterialGlobal = getMaterialGlobal(ppc, sourceSystem);
             if (listMaterialGlobal != null) {
 
-                productId = CustomMethod.CheckAnyOne(listMaterialGlobal,
+                productId = OMPGdmForecastHook.CheckAnyOne(listMaterialGlobal,
                         localPlant, failMap);
                 if (StringInner.equal(productId, "")) {
                     return false;
@@ -212,7 +201,7 @@ public class OMPGdmForecast implements IEventProcessor {
 
         String publishDate = null;
 
-        publishDate = CustomMethod.stampToDate(String.valueOf(System
+        publishDate = OMPGdmForecastHook.stampToDate(String.valueOf(System
                 .currentTimeMillis()));
 
         builder.put("publishDate", publishDate);
@@ -222,7 +211,7 @@ public class OMPGdmForecast implements IEventProcessor {
 
             List listMaterialGlobal = getMaterialGlobal(ppc, sourceSystem);
             if (listMaterialGlobal != null) {
-                quantity = CustomMethod.getQuantity(listMaterialGlobal,
+                quantity = OMPGdmForecastHook.getQuantity(listMaterialGlobal,
                         localUom, quantity, failMap);
                 if (StringInner.equal(quantity, null)) {
                     writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
