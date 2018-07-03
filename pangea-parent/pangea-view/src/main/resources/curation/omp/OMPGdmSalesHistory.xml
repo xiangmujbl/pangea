@@ -87,7 +87,7 @@
                 <columns>demandGroup,customerId,salesOrganization</columns>
             </region>
             <region path="/project_one/knvh">
-                <columns>kunnr,vkorg,datbi,hkunnr</columns>
+                <columns>kunnr,vkorg,datbi,hkunnr,hityp</columns>
             </region>
             <region path="/project_one/tvro">
                 <columns>traztd,route</columns>

@@ -200,7 +200,7 @@ public class OMPGdmSalesHistoryServiceImpl implements ICommonService {
 
         if (null == demGrpAsgnEntity) {
             if (StringUtils.isNotEmpty(localShipToParty) && StringUtils.isNotEmpty(localSalesOrg)) {
-                KnvhEntity knvhEntity = knvhDao.getEntityWithKunnrAndVkorgAndDatbi(localShipToParty, localSalesOrg, localRequestedDate);
+                KnvhEntity knvhEntity = knvhDao.getEntityWithFourConditions(localShipToParty, localSalesOrg,IConstant.VALUE.A, localRequestedDate);
 
                 if (null != knvhEntity) {
                     String hkunnr = knvhEntity.getHkunnr();
