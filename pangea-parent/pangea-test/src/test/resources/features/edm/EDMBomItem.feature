@@ -9,7 +9,7 @@ Feature: EDMBomItem AEAZ-7487
       | 120   | M     | 00015485 | 00000001 | 00000002 | 20061027 |              |       |       |       | 20061027 |          | 000000000008201178 | N     | 0010  | KG    | 1200   |       |       |       |       |       |       |       |       |       |       |       |       |       |
       | 120   | M     | 00015485 | 00000010 | 00000032 | 20061121 | 500000000588 |       |       |       | 20061122 |          | 000000000008201178 | L     | 0010  | KG    | 1200   |       |       |       |       |       |       |       |       |       |       |       |       |       |
       | 120   | M     | 00015485 | 00000011 | 00000034 | 20061121 | 500000000588 |       |       |       | 20061122 | 20070430 | 000000000008220032 | L     | 0020  | M     | 137600 |       |       |       |       |       | text1 | text2 |       |       |       |       |       |       |
-    And I wait "/project_one/stop" Async Queue complete
+    And I wait "/project_one/stpo" Async Queue complete
 
     When I import "/project_one/stas" by keyFields "stasz,stlal,stlkn,stlnr,stlty"
       | stlty | stlnr    | stlal | stlkn    | stasz    | datuv    | techv | aennr        | lkenz | andat    | annam    | stvkn    |
