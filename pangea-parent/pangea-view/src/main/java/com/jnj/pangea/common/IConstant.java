@@ -688,6 +688,7 @@ public interface IConstant {
         String KUNNR = "kunnr";
         String VKORG = "vkorg";
         String DATBI = "datbi";
+        String HITYP = "hityp";
     }
 
     interface PROJECT_ONE_TVRO {
@@ -1041,6 +1042,7 @@ public interface IConstant {
         String FLOAT_ZERO = "0.0";
         String K = "K";
         String O = "O";
+        String A = "A";
     }
 
     interface FAILED {
