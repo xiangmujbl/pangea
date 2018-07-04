@@ -1,0 +1,126 @@
+<adf-curation failRegion="/plan/edm_failed_data"
+              executionClassName="com.jnj.pangea.omp.gdm_in_transit_stock.OMPGDMInTransitStock" chunkSize="500"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_intransitstock">
+    <regions>
+        <region path="/plan/cns_intransitstock" mainRegion="true">
+            <columns>sourceSystem,demandGroup,productId,date,quantity,uom</columns>
+            <relations>
+                <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,localMaterialNumber,localDpParentCode</columns>
+                    <expression></expression>
+                </region>
+                <region path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
+                    <columns>customerId,sourceSystem,demandGroup</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/material_auom_v1" isPrimaryKey="false">
+                    <columns>localAuom,sourceSystem,localDenominator,localNumerator,localMaterialNumber</columns>
+                    <expression></expression>
+                </region>
+                <region path="/plan/cns_intransitstock" isPrimaryKey="false" alias="/plan/cns_intransitstock_clone">
+                    <columns>sourceSystem,demandGroup,productId,date,quantity,uom</columns>
+                    <expression></expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="QueryMaterialGlobal" isPK="false" path="/edm/material_global_v1" resultType="Map">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+        <method name="QueryAuomEntity" resultType="Map" isPK="false" path="/edm/material_auom_v1">
+            <parameters>
+                <parameter name="localAuom" value="localAuom" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+        <method name="QueryGrpAsgnEntity" resultType="Map" isPK="false" path="/plan/cns_dem_grp_asgn">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+        <!-- <method name="QueryGdmInTransitStock" resultType="Map" isPK="false"  path="/omp/gdm_in_transit_stock">
+             <parameters>
+                 <parameter name="customerId" value="customerId" relationship="and"/>
+                 <parameter name="productId" value="productId" relationship="and"/>
+                 <parameter name="quantity" value="quantity" />
+             </parameters>
+         </method>-->
+    </methods>
+
+    <viewRegion name="/omp/gdm_in_transit_stock">
+        <vars>
+            <var name="sourceSystem" value="sourceSystem"/>
+            <var name="demandGroup" value="demandGroup"/>
+            <var name="productId" value="productId"/>
+            <var name="date" value="date"/>
+            <var name="quantity" value="quantity"/>
+            <var name="uom" value="uom"/>
+
+        </vars>
+        <columns>
+            <column name="customerId" var="demandGroup" isPK="true">
+                <if test="StringInner.isStringEmpty(sourceSystem)||StringInner.isStringEmpty(productId)||StringInner.isStringEmpty(uom)">
+                    <return/>
+                </if>
+                <else>
+                    <ref method="QueryGrpAsgnEntity" parameter="sourceSystem" resultType="Map"
+                         var="QueryGrpAsgnEntityMap"/>
+                    <if test="QueryGrpAsgnEntityMap==null">
+                        <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'J1'"
+                                  errorValue="'productId do not exist in edm_material'" sourceSystem="'sourceSystem'"
+                                  key1="sourceSystem" key2="demandGroup" key3="productId"/>
+                    </if>
+                </else>
+            </column>
+            <column name="productId" var="localDpParentCode" isPK="true">
+                <set name="productId" value="OMPGDMInTransitStockHook.localMaterialNumber(productId)"></set>
+                <ref method="QueryMaterialGlobal" parameter="sourceSystem,productId" value="localDpParentCode"
+                     resultType="Map" var="QueryMaterialGlobalMap">
+                </ref>
+
+                <if test="QueryMaterialGlobalMap==null||localDpParentCode==null">
+                    <set name="productId" value="OMPGDMInTransitStockHook.getproductId(productId)"></set>
+                    <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'J1'"
+                              errorValue="'localDpParentCode do not exist in edm material'"
+                              sourceSystem="'sourceSystem'" key1="sourceSystem" key2="demandGroup" key3="productId"/>
+                </if>
+                <else>
+                    <set name="localDpParentCode" value="StringInner.join('LA_',localDpParentCode)"></set>
+                </else>
+            </column>
+            <column name="dueDate">
+                <set name="productId" value="OMPGDMInTransitStockHook.localMaterialNumber(productId)"></set>
+
+                <ref method="QueryAuomEntity" parameter="uom,productId"
+                     value="localAuom,localDenominator,localNumerator" resultType="Map" var="QueryAuomEntityMap">
+                </ref>
+                <if test="QueryAuomEntityMap==null">
+                    <set name="productId" value="OMPGDMInTransitStockHook.getproductId(productId)"></set>
+                    <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'J1'"
+                              errorValue="'unit do not exist in edm_Auom'" sourceSystem="'sourceSystem'"
+                              key1="sourceSystem" key2="demandGroup" key3="productId"/>
+                </if>
+                <else>
+                    <set name="dueDate" value="StringInner.join(date,' 00:00:00')"></set>
+
+                </else>
+            </column>
+            <column name="quantity" isPK="true">
+                <set name="productId" value="OMPGDMInTransitStockHook.getproductId(productId)"></set>
+                <ref hook="OMPGDMInTransitStockHook.QueryCnsIntransitstock(productId,sourceSystem,demandGroup)">
+                </ref>
+                <!-- <if test="StringInner.isStringNotEmpty(quantity)&amp;&amp;StringInner.isStringNotEmpty(demandGroup)&amp;&amp;StringInner.isStringNotEmpty(productId)">
+                     <ref method="QueryGdmInTransitStock" parameter="demandGroup,productId,quantity" value="customerId,productId,quantity" resultType="Map" var="QueryGdmInTransitStockMap"></ref>
+                     <if test="QueryGdmInTransitStockMap!=null">
+                         <return/>
+                     </if>
+                 </if>-->
+            </column>
+        </columns>
+    </viewRegion>
+
+</adf-curation>

@@ -1,4 +1,4 @@
-<adf-curation executionClassName="com.jnj.pangea.GDMStock5PlannedOrder" writeTo="all" topic="PANGEA_V1_gdm_stock_planned_order">
+<adf-curation executionClassName="com.jnj.pangea.GDMStock5PlannedOrder" writeTo="all" topic="PANGEA_V1_gdm_stock_planned_order" failRegion="/plan/edm_failed_data">
 
     <regions>
         <region path="/edm/planned_order_v1" mainRegion="true">
@@ -30,10 +30,10 @@
                 <!--cns_plan_object_filter-->
                 <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
                     <columns>
-                        sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute2,sourceObjectAttribute2Value
+                        sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value
                     </columns>
                     <expression>
-                        sourceSystem=/edm/planned_order_v1.srcSysCd,sourceObjectAttribute2Value=/edm/planned_order_v1.planOrdrTypeCd
+                        sourceSystem=/edm/planned_order_v1.srcSysCd,sourceObjectAttribute1Value=/edm/planned_order_v1.plntCd,sourceObjectAttribute2Value=/edm/planned_order_v1.planOrdrTypeCd
                     </expression>
                 </region>
 
@@ -69,6 +69,7 @@
                 <parameter name="sourceObjectTechName" value="'planned_order'" relationship="and"/>
                 <parameter name="sourceSystem" value="srcSysCd" relationship="and"/>
                 <parameter name="sourceObjectAttribute1" value="'plntCd'" relationship="and"/>
+                <parameter name="sourceObjectAttribute1Value" value="plntCd" relationship="and"/>
                 <parameter name="sourceObjectAttribute2" value="'planOrdrTypeCd'" relationship="and"/>
                 <parameter name="sourceObjectAttribute2Value" value="planOrdrTypeCd"/>
             </parameters>
@@ -175,7 +176,7 @@
 
             <column name="quantity">
                 <if test="'000'.equals(plngScnroCd)">
-                    <ref method="joinPlanObjectFilter" parameter="srcSysCd,planOrdrTypeCd" resultType="Map"
+                    <ref method="joinPlanObjectFilter" parameter="srcSysCd,plntCd,planOrdrTypeCd" resultType="Map"
                          value="sourceObjectAttribute2Value">
                         <if test="StringUtils.isNotEmpty(sourceObjectAttribute2Value)">
                             <set name="quantity" value="planOrdrQty"/>
@@ -232,8 +233,11 @@
                             <if test="StringUtils.isNotEmpty(primaryPlanningCode)">
                                 <set name="productId" value="primaryPlanningCode"/>
                             </if>
-                            <else>
+                            <elseIf test="StringUtils.isNotEmpty(materialNumber)">
                                 <set name="productId" value="materialNumber"/>
+                            </elseIf>
+                            <else>
+                                <failData functionalArea="'SP'" interfaceID="'GDMStock_PlannedOrder'" errorCode="'PL09'" errorValue="''" sourceSystem="'project_one'" key1="mfgPlanOrdrDocId" key2="srcSysCd"/>
                             </else>
                         </ref>
                     </if>

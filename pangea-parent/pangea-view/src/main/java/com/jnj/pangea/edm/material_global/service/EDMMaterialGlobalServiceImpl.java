@@ -15,6 +15,9 @@ import com.jnj.pangea.common.dao.impl.plan.EdmMatInputDaoImpl;
 import com.jnj.pangea.common.dao.impl.ngems.NgemsGoldenMaterialDaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.material_global.bo.EDMMaterialGlobalBo;
+
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 public class EDMMaterialGlobalServiceImpl implements ICommonService {
@@ -69,50 +72,51 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
         // rules J2
         String sourceSystem = sourceSystemV1Entity.getSourceSystem();
         String localMaterialNumber = maraEntity.getMatnr();
-        String sourceSystemType = sourceSystemV1Entity.getSourceSystemType();
-
-        if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(localMaterialNumber) && StringUtils.isNotEmpty(sourceSystemType) && IConstant.VALUE.NGEMS.equalsIgnoreCase(sourceSystemType)) { 
-            MaterialLinkageEntity materialLinkageEntity = materialLinkageDao.
-                    getEntityWithLocalMaterialNumberAndSourceSystem(localMaterialNumber, sourceSystem);
-            if (null != materialLinkageEntity) {
-                String materialNumber = materialLinkageEntity.getMaterialNumber();
-                if (StringUtils.isNotEmpty(materialNumber)) {
-                    GoldenMaterialEntity goldenMaterialEntity = goldenMaterialDao.getEntityWithMaterialNumber(materialNumber);
-                    if (null != goldenMaterialEntity) {
-                        materialGlobalBo.setMaterialNumber(goldenMaterialEntity.getMaterialNumber());
-                        materialGlobalBo.setRefDescription(goldenMaterialEntity.getMaterialDescription());
-                        materialGlobalBo.setMaterialType(goldenMaterialEntity.getMaterialType());
-                        materialGlobalBo.setBaseUom(goldenMaterialEntity.getBaseUom());
-                        materialGlobalBo.setParentCode(goldenMaterialEntity.getParentCode());
-                        
-                        // rules T4
-                        if (StringUtils.isNotEmpty(goldenMaterialEntity.getGlobalDpParentCode())) {
-                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getGlobalDpParentCode());
-                        } else if (StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
-                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getParentCode());
-                        } else {
-                            materialGlobalBo.setGlobalDpParentCode("");
-                        }
-                        
-                        materialGlobalBo.setForm(goldenMaterialEntity.getForm());
-                        materialGlobalBo.setCategory(goldenMaterialEntity.getCategory());
-                        materialGlobalBo.setSubBrand(goldenMaterialEntity.getSubBrand());
-                        materialGlobalBo.setBrand(goldenMaterialEntity.getBrand());
-                        materialGlobalBo.setFranchise(goldenMaterialEntity.getFranchise());
-                        materialGlobalBo.setGlobalBusinessUnit(goldenMaterialEntity.getGlobalBusinessUnit());
-                        materialGlobalBo.setProductFamily(goldenMaterialEntity.getProductFamily());
-                        materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
-                        materialGlobalBo.setMaterialGroup(goldenMaterialEntity.getMaterialGroup());
-                        
-                        // T2
-                        String primaryPlanningCode = goldenMaterialEntity.getPrimaryPlanningCode();
-                        if (StringUtils.isNotEmpty(primaryPlanningCode)) {
-                            materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
-                        } else {
-                            materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getMaterialNumber());
-                        }
-                    }
-                }
+        
+        if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(localMaterialNumber)) {
+        	List<EDMSourceSystemV1Entity> sourceSystemV1EntityList = sourceSystemV1Dao.getEntityListWithSourceSystemAndSourceSystemType(sourceSystem,IConstant.VALUE.NGEMS);
+            if (null != sourceSystemV1EntityList && sourceSystemV1EntityList.size()>0) {
+	            MaterialLinkageEntity materialLinkageEntity = materialLinkageDao.
+	                    getEntityWithLocalMaterialNumberAndSourceSystem(localMaterialNumber, sourceSystem);
+	            if (null != materialLinkageEntity) {
+	                String materialNumber = materialLinkageEntity.getMaterialNumber();
+	                if (StringUtils.isNotEmpty(materialNumber)) {
+	                    GoldenMaterialEntity goldenMaterialEntity = goldenMaterialDao.getEntityWithMaterialNumber(materialNumber);
+	                    if (null != goldenMaterialEntity) {
+	                        materialGlobalBo.setMaterialNumber(goldenMaterialEntity.getMaterialNumber());
+	                        materialGlobalBo.setRefDescription(goldenMaterialEntity.getMaterialDescription());
+	                        materialGlobalBo.setMaterialType(goldenMaterialEntity.getMaterialType());
+	                        materialGlobalBo.setBaseUom(goldenMaterialEntity.getBaseUom());
+	                        materialGlobalBo.setParentCode(goldenMaterialEntity.getParentCode());
+	                        
+	                        // rules T4
+	                        if (StringUtils.isNotEmpty(goldenMaterialEntity.getGlobalDpParentCode())) {
+	                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getGlobalDpParentCode());
+	                        } else if (StringUtils.isNotEmpty(goldenMaterialEntity.getParentCode())) {
+	                            materialGlobalBo.setGlobalDpParentCode(goldenMaterialEntity.getParentCode());
+	                        } else {
+	                            materialGlobalBo.setGlobalDpParentCode("");
+	                        }
+	                        
+	                        materialGlobalBo.setForm(goldenMaterialEntity.getForm());
+	                        materialGlobalBo.setCategory(goldenMaterialEntity.getCategory());
+	                        materialGlobalBo.setSubBrand(goldenMaterialEntity.getSubBrand());
+	                        materialGlobalBo.setBrand(goldenMaterialEntity.getBrand());
+	                        materialGlobalBo.setFranchise(goldenMaterialEntity.getFranchise());
+	                        materialGlobalBo.setGlobalBusinessUnit(goldenMaterialEntity.getGlobalBusinessUnit());
+	                        materialGlobalBo.setProductFamily(goldenMaterialEntity.getProductFamily());
+	                        materialGlobalBo.setManufacturingTechnology(goldenMaterialEntity.getManufTechnology());
+	                        
+	                        // T2
+	                        String primaryPlanningCode = goldenMaterialEntity.getPrimaryPlanningCode();
+	                        if (StringUtils.isNotEmpty(primaryPlanningCode)) {
+	                            materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getPrimaryPlanningCode());
+	                        } else {
+	                            materialGlobalBo.setPrimaryPlanningCode(goldenMaterialEntity.getMaterialNumber());
+	                        }
+	                    }
+	                }
+	            }
             }
         }
         materialGlobalBo.setLocalMaterialNumber(maraEntity.getMatnr());
@@ -129,6 +133,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
             }
         }
         materialGlobalBo.setLocalMaterialGroup(maraEntity.getMatkl());
+        materialGlobalBo.setMaterialGroup("");
         materialGlobalBo.setFlagForDeletion(maraEntity.getLvorm());
         materialGlobalBo.setMaterialStatus(maraEntity.getMstae());
         materialGlobalBo.setDivision(maraEntity.getSpart());
