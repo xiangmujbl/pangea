@@ -20,6 +20,9 @@
                     <relation path="/edm/sales_order_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+                    <relation path="/edm/purchase_order_oa_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                     <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
@@ -52,6 +55,9 @@
             <region path="/edm/sales_order_v1">
                 <columns>localMaterialNumber,localOrderDate,localOrderReason,localOrderType,localPlant,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,
                     localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,sourceSystem</columns>
+            </region>
+            <region path="/edm/purchase_order_oa_v1">
+                <columns>custNum,delInd,delvCmpltInd,matlNum,outbDelvCmpltInd,plntCd,poCatTypeCd,poLineNbr,poLineQty,poNum,poTypeCd,slsOrdrLineNbr,slsOrdrNum,sourceSystem,stkTfrRecvQty,subcntrcInd,supNum,suplPlntCd</columns>
             </region>
             <region path="/plan/cns_plan_object_filter">
                 <columns>sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value</columns>

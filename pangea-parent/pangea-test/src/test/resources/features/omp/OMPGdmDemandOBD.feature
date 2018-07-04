@@ -23,7 +23,7 @@ Feature: OMPGdmDemand AEAZ-6828
       | 820.0          | TS                  | 4000613556 | 82793652  | 10          | 135768  | 0          | BR12           | 10             | 4000007574 | CONS_LATAM | 13680       |
       | 225.0          | KG                  |            | 81123645  | 10          | 7058161 | 27         | CO01           | 20             | 3000187317 | CONS_LATAM | 183229      |
       | 3504.0         | TS                  | 1336COA    | 82794385  | 10          | 189915  | 27         | BR12           | 10             | 3000187319 | CONS_LATAM |             |
-      | 5276.0         | TS                  | 4000616293 | 82812920  | 10          | 174461  | 0          | BR12           | 10             | 4000007779 | CONS_LATAM | 323337      |
+      | 5276.0         | TS                  | 4000616293 | 82812920  | 10          | 174461  | 0          | BR12           | 50             | 4000007779 | CONS_LATAM | 323337      |
       | 120.0          | EA                  | 110506     | 81156058  | 10          | 70391   | 10         | BR12           | 10             | 3000192787 | CONS_LATAM |             |
       | 110.0          | EA                  | 110ABC     | 81156060  | 10          | 65759   | 10         | CO01           | 10             | 3000192789 | CONS_LATAM |             |
       | 10.0           | EA                  | 110ABC     | 81156060  | 20          | 65759   | 10         | CO01           | 20             | 3000192789 | CONS_LATAM |             |
@@ -72,6 +72,14 @@ Feature: OMPGdmDemand AEAZ-6828
       | 360               | EA           | 20140625   | 87948879       | J                 | 310               | 360                |               | Q               | 32               | 3661885        | CONS_LATAM   |
       | 1                 | EA           | 20061023   | 60142343       | H                 | 8                 | 1                  | EA            | O               | 8                | 91365306       | CONS_LATAM   |
     And I wait "/edm/sales_history_v1" Async Queue complete
+
+    Given I import "/edm/purchase_order_oa_v1" by keyFields "matlNum,poNum,poLineNbr,plntCd,sourceSystem"
+      | custNum | delInd | delvCmpltInd | matlNum | outbDelvCmpltInd | plntCd | poCatTypeCd | poLineNbr | poLineQty | poNum      | poTypeCd | slsOrdrLineNbr | slsOrdrNum | sourceSystem | stkTfrRecvQty | subcntrcInd | supNum | suplPlntCd |
+      |         |        | TRUE         | 174461  | TRUE             | BR12   | F           | 50        | 5         | 4000007779 | ZLA      |                |            | CONS_LATAM   | 5             | FALSE       | 79895  | BR12       |
+      |         |        | TRUE         | 69348   | FALSE            | BR25   | F           | 10        | 66        | 3000810567 | ZNB      |                |            | CONS_LATAM   | 66            | FALSE       | 8917   | BR12       |
+      |         | L      | FALSE        | 60458   | FALSE            | BR14   | F           | 320       | 2         | 4000074790 | UB       |                |            | CONS_LATAM   | 0             | FALSE       |        | BR12       |
+      |         |        | TRUE         | 56951   | FALSE            | BR07   | F           | 110       | 68        | 3000831994 | ZNB      |                |            | CONS_LATAM   | 68            | FALSE       | 8917   | BR12       |
+    And I wait "/edm/purchase_order_oa_v1" Async Queue complete
 
     Given I import "/plan/cns_plan_object_filter" by keyFields "sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem"
       | inclusionExclusion | sourceObjectAttribute1 | sourceObjectAttribute1Value | sourceObjectAttribute2 | sourceObjectAttribute2Value | sourceObjectTechName       | sourceSystem |

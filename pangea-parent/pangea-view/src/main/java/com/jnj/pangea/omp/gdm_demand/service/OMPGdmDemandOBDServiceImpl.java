@@ -9,6 +9,7 @@ import com.jnj.pangea.common.entity.edm.EDMOutboundDeliveryLineV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSalesHistoryV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSalesOrderV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMPurchaseOrderOAV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanSoTypeInclExclEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
@@ -19,6 +20,7 @@ import com.jnj.pangea.common.dao.impl.edm.EDMOutboundDeliveryLineV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSalesHistoryV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSalesOrderV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanSoTypeInclExclDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
@@ -48,6 +50,7 @@ public class OMPGdmDemandOBDServiceImpl {
     private EDMSalesHistoryV1DaoImpl salesHistoryDao = EDMSalesHistoryV1DaoImpl.getInstance();
     private EDMSalesOrderV1DaoImpl salesOrderDao = EDMSalesOrderV1DaoImpl.getInstance();
     private EDMMaterialGlobalV1DaoImpl materialGlobalDao = EDMMaterialGlobalV1DaoImpl.getInstance();
+    private EDMPurchaseOrderOAV1DaoImpl purchaseOrderDao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
     private PlanCnsPlanSoTypeInclExclDaoImpl inclExclDao = PlanCnsPlanSoTypeInclExclDaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl materialStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanCnsPlanObjectFilterDaoImpl objectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
@@ -62,6 +65,7 @@ public class OMPGdmDemandOBDServiceImpl {
         EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity = (EDMOutboundDeliveryHeaderV1Entity) o;
 
         ArrayList<EDMOutboundDeliveryLineV1Entity> lineV1EntityList = new ArrayList(deliverLineDao.getOutboundDeliveryLinesByDeliveryDocId(obdHeaderEntity.getDelvDocId()));
+        EDMPurchaseOrderOAV1Entity purchaseEntity;
         PlanCnsPlanUnitEntity unitEntity;
         ArrayList<PlanCnsPlanObjectFilterEntity> objectFilterEntityList = new ArrayList(objectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem( "outbound_delivery_header", obdHeaderEntity.getSrcSysCd()));
         ArrayList<PlanCnsCustExclInclEntity>  custExclInclEntityList;
@@ -117,7 +121,13 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo.setCertaintyId(IConstant.VALUE.CERTAINTY_VJ);
 
             //OBD 5
-            if(obd5Rule(obdHeaderEntity,obdLineEntity)){
+            purchaseEntity = purchaseOrderDao.getEntityByPoNumAndPoLineNumberAndSourceSystem(obdLineEntity.getSlsOrdrNum(), obdLineEntity.getSlsOrdrLineNbr(), obdLineEntity.getSrcSysCd());
+            if(null != purchaseEntity){
+                //OBD is against STO
+                skip = obd5Rule(obdHeaderEntity,obdLineEntity);
+            }
+            //OBD is against SO
+            if(!skip && obdHeaderEntity.getActlGiDt().isEmpty()) {
                 gdmDemandBo.setDemandId(productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvLineNbr());
             } else {
                 skip = true;
@@ -190,10 +200,16 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo.setQuantity(obdLineEntity.getActlSkuDelvQty());
 
             //OBD 16
-            if(obd16Rule(custExclInclEntityList,obdHeaderEntity)){
+            if(null != purchaseEntity){
+                //OBD against STO
                 gdmDemandBo.setCustomerId(obdHeaderEntity.getShipToCustNum());
             } else {
-                skip = true;
+                //OBD against SO
+                if (obd16Rule(custExclInclEntityList, obdHeaderEntity)) {
+                    gdmDemandBo.setCustomerId(obdHeaderEntity.getShipToCustNum());
+                } else {
+                    skip = true;
+                }
             }
 
             //
@@ -204,7 +220,6 @@ public class OMPGdmDemandOBDServiceImpl {
                 if (!skip) {
                     resultObject.setBaseBo(gdmDemandBo);
                     resultList.add(resultObject);
-                } else {
                 }
             }
 
@@ -213,17 +228,15 @@ public class OMPGdmDemandOBDServiceImpl {
     }
 
     private boolean obd5Rule(EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity, EDMOutboundDeliveryLineV1Entity obdLineEntity){
-        if(obdHeaderEntity.getActlGiDt().isEmpty()) {
-            //use first record of result to derive the value
-            EDMSalesHistoryV1Entity salesHistoryEntity = salesHistoryDao.getFirstSalesHistoryForDeliveryDoc(obdHeaderEntity.getDelvDocId(), obdLineEntity.getDelvLineNbr(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.J);
-            if(null != salesHistoryEntity){
-                EDMSalesOrderV1Entity salesOrderEntity = salesOrderDao.getSalesOrderForHistoryDoc(salesHistoryEntity.getLocalPrecDocNo(), salesHistoryEntity.getLocalSPrecDocLnNo(), obdHeaderEntity.getSrcSysCd());
-                if(null != salesOrderEntity) {
-                    PlanCnsPlanSoTypeInclExclEntity inclExclEntity = inclExclDao.getEntityWithParam(obdHeaderEntity.getLocalSalesOrg(), salesOrderEntity.getLocalOrderType(), salesOrderEntity.getLocalPlant(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.I);
+        //use first record of result to derive the value
+        EDMSalesHistoryV1Entity salesHistoryEntity = salesHistoryDao.getFirstSalesHistoryForDeliveryDoc(obdHeaderEntity.getDelvDocId(), obdLineEntity.getDelvLineNbr(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.J);
+        if(null != salesHistoryEntity){
+            EDMSalesOrderV1Entity salesOrderEntity = salesOrderDao.getSalesOrderForHistoryDoc(salesHistoryEntity.getLocalPrecDocNo(), salesHistoryEntity.getLocalSPrecDocLnNo(), obdHeaderEntity.getSrcSysCd());
+            if(null != salesOrderEntity) {
+                PlanCnsPlanSoTypeInclExclEntity inclExclEntity = inclExclDao.getEntityWithParam(obdHeaderEntity.getLocalSalesOrg(), salesOrderEntity.getLocalOrderType(), salesOrderEntity.getLocalPlant(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.I);
 
-                    if (null != inclExclEntity) {
-                        return true;
-                    }
+                if (null != inclExclEntity) {
+                    return true;
                 }
             }
         }
