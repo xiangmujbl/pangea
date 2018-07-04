@@ -46,7 +46,8 @@ public class EDMPlantServiceImpl implements ICommonService {
         // rule T1
         String zPlantSourceSystem = enterprisePlants.getzPlantSourceSystem();
 
-        plantBo.setSourceSystem(getFieldWithT1(zPlantSourceSystem));
+        String sourceSystem = getFieldWithT1(zPlantSourceSystem);
+        plantBo.setSourceSystem(sourceSystem);
 
         String localPlant = enterprisePlants.getzPlant().split(",")[1].trim();
         plantBo.setLocalPlant(localPlant);
@@ -60,7 +61,7 @@ public class EDMPlantServiceImpl implements ICommonService {
             String localCountry = t001WEntity.getLand1();
             plantBo.setLocalCountry(localCountry);
             // rule T4
-            plantBo.setCountry(getFieldWithT4(localCountry));
+            plantBo.setCountry(getFieldWithT4(localCountry, sourceSystem));
             plantBo.setLocalPlantType(t001WEntity.getNodetype());
             // rule J1
             plantBo.setLocalCurrency(getFieldWithJ1(t001WEntity.getBwkey()));
@@ -97,12 +98,15 @@ public class EDMPlantServiceImpl implements ICommonService {
         return t001WDao.getEntityWithZPlantAndLand1(zPlant);
     }
 
-    private String getFieldWithT4(String land1) {
+    private String getFieldWithT4(String land1, String sourceSystem) {
 
         if (StringUtils.isEmpty(land1)) {
             return "";
         }
-        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountryAndCountryCode(land1);
+        if (StringUtils.isEmpty(sourceSystem)) {
+            return "";
+        }
+        EDMCountryEntity countryEntity = countryV1Dao.getEntityWithLocalCountryAndSourceSystem(land1, sourceSystem);
         if (null != countryEntity) {
             return countryEntity.getCountryCode();
         }
