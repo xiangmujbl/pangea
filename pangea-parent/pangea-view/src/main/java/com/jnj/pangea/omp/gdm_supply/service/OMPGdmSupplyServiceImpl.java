@@ -59,16 +59,16 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
         // N1
-        LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber:{} ", new Object[]{edmSourceListV1Entity.getLocalAgreementNumber()});
-        LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured:{} ", new Object[]{edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured()});
-        if (edmSourceListV1Entity.getLocalAgreementNumber() == null || edmSourceListV1Entity.getLocalAgreementNumber().equals("")) {
+        if (edmSourceListV1Entity.getLocalAgreementNumber().trim().isEmpty()) {
             LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber is null or empty");
             return skipObjects;
         }
-        if (!edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().equals("")) {
+        if (!edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim().isEmpty()) {
             LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured is not empty");
             return skipObjects;
         }
+
+        LogUtil.getCoreLog().info("rule N1 pass");
 
         String partA;
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(edmSourceListV1Entity.getLocalMaterialNumber());
