@@ -3,8 +3,8 @@ Feature:  OMPGdmStockASN-Curation
 
   Scenario: Full Load consumption
 
-    Given I import "/edm/advanced_ship_notification_v1" by keyFields "srcSysCd,delvDocID,localRefDocNum,locRefDocLineNum"
-      | srcSysCd   | delvDocID  | receivingPtID | localdeliveryType | localdeliveryCatg | localdeliveryDate | localcreatedDate | localbillOfLading | localExternalId | actGRDt | vendorID | localShippingPlant | delvLineNbr | matlNum | localbatchNo | localvendorBatchNo | localReceivingPlant | baseUnitOfMeasureCd | actlSkuDelvQty | localRefDocNum | locRefDocLineNum |
+    Given I import "/edm/advanced_ship_notification_v1" by keyFields "srcSysCd,delvDocId,localRefDocNum,locRefDocLineNum"
+      | srcSysCd   | delvDocId  | receivingPtId | localDeliveryType | localDeliveryCatg | localDeliveryDate | localCreatedDate | localBillOfLading | localExternalId | actGRDt | vendorId | localShippingPlant | delvLineNbr | matlNum | localBatchNo | localVendorBatchNo | localReceivingPlant | baseUnitOfMeasureCd | actlSkuDelvQty | localRefDocNum | locRefDocLineNum |
       | CONS_LATAM | 180005489  |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     |         | 8917     |                    | 10          | 58722   | 2436B04      |                    | BR19                | EA                  | 2592.000       | 3000753622     | 190              |
       | CONS_LATAM | 180005490  |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     |         | 9859     |                    | 900001      | 68874   | 0086B02      |                    | BR19                | EA                  | 23456.000      | 3000789748     | 190              |
       | CONS_LATAM | 180005491  |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     |         | 89123    |                    | 900002      | 55735   | 0216B03      |                    | BR19                | EA                  | 25921.000      | 3000753612     | 190              |
