@@ -45,10 +45,13 @@ public class ProjectOneResbEntity extends CommonEntity {
     private String kzkup;
     private String webaz;
     private String lifnr;
+    private String meins;
+    private String vornr;
 
     public ProjectOneResbEntity(Map<String, Object> map) {
         super(map);
-
+        setMeins((String) map.get("meins"));
+        setVornr((String) map.get("vornr"));
         setRsnum((String) map.get("rsnum"));
         setRspos((String) map.get("rspos"));
         setRsart((String) map.get("rsart"));
@@ -88,6 +91,22 @@ public class ProjectOneResbEntity extends CommonEntity {
         setKzkup((String) map.get("kzkup"));
         setWebaz((String) map.get("webaz"));
         setLifnr((String) map.get("lifnr"));
+    }
+
+    public String getMeins() {
+        return meins;
+    }
+
+    public void setMeins(String meins) {
+        this.meins = meins;
+    }
+
+    public String getVornr() {
+        return vornr;
+    }
+
+    public void setVornr(String vornr) {
+        this.vornr = vornr;
     }
 
     public String getRsnum() {

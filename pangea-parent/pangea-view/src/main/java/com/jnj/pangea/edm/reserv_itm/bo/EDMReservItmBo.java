@@ -43,6 +43,24 @@ public class EDMReservItmBo extends BaseBo {
     private String poLineNbr;
     private String bckflushInd;
     private String coProdInd;
+    private String baseUomCd;
+    private String oprNum;
+
+    public String getBaseUomCd() {
+        return baseUomCd;
+    }
+
+    public void setBaseUomCd(String baseUomCd) {
+        this.baseUomCd = baseUomCd;
+    }
+
+    public String getOprNum() {
+        return oprNum;
+    }
+
+    public void setOprNum(String oprNum) {
+        this.oprNum = oprNum;
+    }
 
     public String getPurchsOrdrNum() {
         return purchsOrdrNum;
