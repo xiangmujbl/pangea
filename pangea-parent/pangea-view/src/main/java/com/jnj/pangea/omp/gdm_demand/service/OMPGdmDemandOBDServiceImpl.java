@@ -97,6 +97,7 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo = new OMPGdmDemandBo();
             resultObject = new ResultObject();
             failData = new FailData();
+            purchaseEntity = purchaseOrderDao.getEntityByPoNumAndPoLineNumberAndSourceSystem(obdLineEntity.getSlsOrdrNum(), obdLineEntity.getSlsOrdrLineNbr(), obdLineEntity.getSrcSysCd());
             locationId = obdLineEntity.getSrcSysCd()+IConstant.VALUE.UNDERLINE+obdLineEntity.getShippingPlntCd();
             productId = obd12Rule(obdLineEntity);
 
@@ -121,13 +122,13 @@ public class OMPGdmDemandOBDServiceImpl {
             gdmDemandBo.setCertaintyId(IConstant.VALUE.CERTAINTY_VJ);
 
             //OBD 5
-            purchaseEntity = purchaseOrderDao.getEntityByPoNumAndPoLineNumberAndSourceSystem(obdLineEntity.getSlsOrdrNum(), obdLineEntity.getSlsOrdrLineNbr(), obdLineEntity.getSrcSysCd());
+            boolean obd5 = true;
             if(null != purchaseEntity){
                 //OBD is against STO
-                skip = obd5Rule(obdHeaderEntity,obdLineEntity);
+                obd5 = obd5Rule(obdHeaderEntity,obdLineEntity);
             }
             //OBD is against SO
-            if(!skip && obdHeaderEntity.getActlGiDt().isEmpty()) {
+            if(obd5 && obdHeaderEntity.getActlGiDt().isEmpty()) {
                 gdmDemandBo.setDemandId(productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvLineNbr());
             } else {
                 skip = true;
