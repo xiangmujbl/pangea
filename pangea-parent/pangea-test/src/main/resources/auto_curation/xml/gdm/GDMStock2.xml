@@ -1,0 +1,363 @@
+<adf-curation executionClassName="com.jnj.pangea.omp.gdm_stock_2.controller.OMPGdmStock2Controller001" failRegion="/pangea/edm_failed_data">
+
+    <regions>
+        <region path="/edm/inspection_lot_v1" mainRegion="true">
+            <columns>srcSysCd,lotNum,plntCd,matlId,baseUom,lotVerifTypeCd,lotOrigCd,btchNum,localObjectNumber,stsPrfl,usgDecInd,localDateOfLotCreation,localTimeOfLotCreation,crtDttm,chgDttm,inspStrtDt,inspStrtTm,inspEndDt,inspEndTm,cstmNum,vndrNum,btch_num,stgLocCd,mfgOrdrDoc,poDocNum,poDocLineNbr,matlMvmtDocYr,matlMvmtDocNum,stckPlntCd,stckSLocCd,inspLotQty,actlLotQty,toBePostedQty,qcStsCd,usgDcsnCd,qcDcsnDttm</columns>
+            <relations>
+                <region path="/edm/cns_certainity" isPrimaryKey="false">
+                    <columns>certainityKey,certainityKeyDesc,sourceSystem</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <columns>localBaseUom,localDpParentCode,localManufacturingTechnology,localMaterialGroup,localMaterialNumber,localMaterialType,localRefDescription,localbaseuom,localdpparentcode,localmanufacturingtechnology,materialNumber,materialStatus,materialType,minRemShelfLife,minremshelflife,parentCode,parentcode,primaryPlanningCode,primaryplanningcode,productFamily,productfamily	refDescription,refdescription,sourceSystem</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/plant_v1" isPrimaryKey="false">
+                    <columns>country,localCountry,localCurrency,localPlanningRelevant,localPlant,localPlantName,localPlantType,plant,plantType,region,site,sourceSystem</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/purchase_order_oa_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,crtOnDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum</columns>
+                    <expression></expression>
+                </region>
+                <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                    <columns>active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/purchasing_info_record_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,localPurchasingInfoRec,localvendor,localPurchasingOrg,infotype,localPlanPlant,localMaterialNumber,localBaseUnit,localMaterialGroup,localPurchOrgDataFlagDeletion,localGeneralDataFlagDeletion,localCreatedOnEine,localCreatedOnEina,localCreatedByEine,localCreatedByEina,localPurchasingGroup,localInfoShortText,localCurrencyKey,localMinimumQty,localStandardQty,localPlDelivTime,localVendorMatNo,localNumerator,localDenominator,localOrderUnit,localManufacturer,localTaxCode,localConfirmationControlKey,localPrDateCat,localIncoterms,localIncoterms2,localProductionVersion,localMaxQuantity,localRndingProfile,localNCMCode</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/process_order_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,mfgOrdrNum,mfgOrdrItemNum,ordrType,localOrderCat,crtdDttm,chgDttm,plntCd,delInd,localTechnicalCompletion,localProductionProcessNo,localLogicalSystem,plnEndDt,plnStrtDt,prdtnSchdEndDt,prdtnSchdStrtDt,prdntStrtDt,prdtnEndDt,prdtnRlseDt,prdtnPlanRlseDt,mfgPlnnr,mfgSprvsr,localReservation,localTotalScrap,localTargetQty,localBaseUOM,localMaterialAFKOPLNBEZ,localTaskListType,localGroup,localApplication,localGroupCounter,localUsage,localMaterialAFKOSTLBEZ,localSchedulingType,localConfirmation,localConfirmationCounter,localConfirmedQtyIGMNG,plnndOrdr,scrpQty,ordrQty,rcvdQty,prdtnUom,matlNum,fctrNmrtrMeas,fctrDnmntrMeas,goodRcptLdDaysQty,dlvCmpltInd,prdntVrsnNum,btchNum	ordrStts,localSystemStatus,localLanguage,localStatus1,localStatus2</columns>
+                    <expression></expression>
+                </region>
+
+            </relations>
+        </region>
+    </regions>
+
+    <methods>
+
+        <method name="method1" resultType="Map" isPK="false" path="/edm/material_global_v1" >
+            <parameters>
+                <parameter name="localMaterialNumber" value="localMaterialNumber" operator="is" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"  operator="is"/>
+            </parameters>
+        </method>
+
+        <method name="method7" parameter="localPlant" resultType="String" isPK="false" path="/edm/plant_v1" resultColumn="localPlanningrelevant">
+            <parameters>
+                <parameter name="localPlant" value="localPlant" operator="is"/>
+            </parameters>
+        </method>
+        <method name="method91" resultType="List"  path="/plan/cns_material_plan_status" >
+            <parameters>
+                <parameter name="localMaterialNumber" value="localMaterialNumber" relationship="and"/>
+                <parameter name="localPlant" value="localPlant"  relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem" />
+            </parameters>
+        </method>
+        <method name="method92" parameter="localMaterialNumber" resultType="Map" isPK="false" path="/edm/material_global_v1" >
+            <parameters>
+                <parameter name="localMaterialNumber" value="localMaterialNumber" operator="is"/>
+            </parameters>
+        </method>
+        <method name="method14" parameter="poNum,poLineNbr" resultType="Map" isPK="false" path="/edm/purchase_order_oa_v1" >
+            <parameters>
+                <parameter name="poNum" value="poNum" operator="is" relationship="and"/>
+                <parameter name="poLineNbr" value="poLineNbr"  operator="is"/>
+            </parameters>
+        </method>
+        <method name="method141" parameter="mfgOrdrNum,sourceSystem" resultType="String" isPK="false" path="/edm/process_order_v1" resultColumn="prdntVrsnNum">
+            <parameters>
+                <parameter name="mfgOrdrNum" value="mfgOrdrNum" operator="is" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"  operator="is"/>
+            </parameters>
+        </method>
+        <method name="method142" parameter="localMaterialNumber,localPlanPlant,localPurchasingOrg,infotype,localvendor" resultType="String" isPK="false" path="/edm/purchasing_info_record_v1" resultColumn="localProductionVersion">
+            <parameters>
+                <parameter name="localMaterialNumber" value="localMaterialNumber" operator="is" relationship="and"/>
+                <parameter name="localPlanPlant" value="localPlanPlant" operator="is" relationship="and"/>
+                <parameter name="localPurchasingOrg" value="localPurchasingOrg" operator="is" relationship="and"/>
+                <parameter name="infotype" value="infotype" operator="is" relationship="and"/>
+                <parameter name="localvendor" value="localvendor"  operator="is"/>
+            </parameters>
+        </method>
+
+        <method name="method16" parameter="poNum,sourceSystem" resultType="String" isPK="false" path="/edm/purchase_order_oa_v1"  resultColumn="lineItemTypeCd">
+            <parameters>
+                <parameter name="poNum" value="poNum" operator="is" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"  operator="is"/>
+            </parameters>
+        </method>
+
+    </methods>
+
+    <globalVariable>
+        <![CDATA[String stockId;String productId;String locationId;]]>
+    </globalVariable>
+
+    <udfs>
+        <udf name="iLot1Udf" parameter="materialMumber,primaryPlanningCode,srcSysCd,plntCd,lotNum" resultType="String">
+            StringBuffer sb = new StringBuffer();
+            if(primaryPlanningCode.equals(materialMumber)){
+                productId=primaryPlanningCode;
+            }else{
+                productId=primaryPlanningCode;
+            }
+            sb.append(productId);
+            sb.append("/");
+            locationId=srcSysCd+"_"+plntCd;
+            sb.append(locationId);
+            sb.append("/");
+            sb.append(lotNum);
+            stockId = sb.toString();
+            return stockId;
+        </udf>
+        <udf name="iLot3Udf" parameter="btchNum" resultType="String">
+            StringBuffer sb = new StringBuffer();
+            sb.append(productId);
+            sb.append("/");
+            sb.append(locationId);
+            sb.append("/");
+            sb.append(btchNum);
+            return sb.toString();
+        </udf>
+
+        <udf name="iLot18Udf" parameter="lineItemTypeCd" resultType="String">
+            if(null==lineItemTypeCd){
+                return "";
+            }
+            if(lineItemTypeCd.equals("2")||lineItemTypeCd.equals("K")){
+                return "YES";
+            }else{
+                return "";
+            }
+        </udf>
+
+        <udf name="iLot6Udf" parameter="toBePostedQty,lotNum,qcStsCd" resultType="String">
+            if(toBePostedQty.isEmpty()){
+                return "";
+            }else if(qcStsCd.contains("LTCA")||qcStsCd.contains("UD")){
+                return "";
+            }else{
+                return lotNum;
+            }
+        </udf>
+        <udf name="iLot7Udf" parameter="localPlanningrelevant,plntCd,srcSysCd" resultType="String">
+            if (localPlanningrelevant!=null&amp;&amp;localPlanningrelevant.equals("X")) {
+                return srcSysCd +"_"+ plntCd;
+            } else {
+                return "";
+            }
+        </udf>
+        <udf name="iLot15Udf" parameter="lineItemTypeCd,poTypeCd" resultType="String">
+            if(poTypeCd.equals("NB")){
+                if(lineItemTypeCd.isEmpty()){
+                    return "VendorTransport";
+                }else if(lineItemTypeCd.equals("3")){
+                    return "SubcontractingTransport";
+                }
+            }else if(poTypeCd.equals("UB")){
+                return "InternalTransport";
+            }else if(poTypeCd.equals("ZLA")||poTypeCd.equals("ZNB")){
+                return "ExternalTransport";
+            }
+                return "";
+
+        </udf>
+        <udf name="iLot16Udf" parameter="lineItemTypeCd" resultType="String">
+
+            if (lineItemTypeCd!=null&amp;&amp;lineItemTypeCd.equals("3")) {
+                return stockId;
+            } else {
+                return "";
+            }
+        </udf>
+
+        <udf name="iLot9Udf" parameter="primaryPlanningCode,materialNumber" resultType="String">
+
+            if(primaryPlanningCode.isEmpty()){
+                return materialNumber;
+            }else {
+                return primaryPlanningCode;
+            }
+        </udf>
+        <udf name="iLot10Udf" parameter="inspEndDt" resultType="String">
+            Date date = DateInInner.stringToDate(inspEndDt,DateInInner.DATE_FORMAT_1);
+            return DateInInner.dateToString(date, DateInInner.yyyy_MM_dd_HHmmss);
+        </udf>
+
+        <udf name="iLot141Udf" parameter="prdntVrsnNum" resultType="String">
+            return prdntVrsnNum+"/"+productId+"/"+locationId;
+        </udf>
+        <udf name="iLot142Udf" parameter="vndrNum" resultType="String">
+            return "SU/"+productId+"/"+locationId+"/"+vndrNum+"/Default";
+        </udf>
+        <udf name="iLot1431Udf" parameter="" resultType="String">
+            return productId+"/"+locationId;
+        </udf>
+        <udf name="iLot1432Udf" parameter="localProductionVersion" resultType="String">
+            return localProductionVersion+"/"+productId+"/"+locationId;
+        </udf>
+        <udf name="iLot144Udf" parameter="suplPlntCd,vndrNum" resultType="String">
+            return "TR/"+"/"+productId+"/"+locationId+"/"+suplPlntCd+"/"+vndrNum;
+        </udf>
+
+        <udf name="iLot91Udf" parameter="loopList" resultType="boolean">
+            return true;
+        </udf>
+    </udfs>
+
+    <viewRegion name="/omp/gdm_stock">
+        <vars>
+            <var name="srcSysCd" value="srcSysCd"/>
+            <var name="lotNum" value="lotNum"/>
+            <var name="plntCd" value="plntCd"/>
+            <var name="matlId" value="matlId"/>
+            <var name="btch_num" value="btchNum"/>
+            <var name="poDocNum" value="poDocNum"/>
+            <var name="poDoLinecNbr" value="poDoLinecNbr"/>
+            <var name="toBePostedQty" value="toBePostedQty"/>
+            <var name="qcStsCd" value="qcStsCd"/>
+            <var name="mfgOrdrDoc" value="mfgOrdrDoc"/>
+            <var name="poDocLineNbr" value="poDocLineNbr"/>
+            <var name="inspEndDt" value="inspEndDt"/>
+            <var name="vndrNum" value="vndrNum"/>
+            <var name="materialNumber" value=""/>
+        </vars>
+        <columns>
+
+            <column name="stockId" isPK="true">
+                <ref  method="method1" parameter="matlId,srcSysCd" resultType="Map" value="primaryPlanningCode,materialMumber">
+                    <if test="0==0">
+                        <ref udf="iLot1Udf" parameter="materialMumber,primaryPlanningCode,srcSysCd,plntCd,lotNum"/>
+                    </if>
+                </ref>
+
+            </column>
+            <column name="active" hardCode="YES"></column>
+            <column name="activeOPRERP" hardCode="YES"></column>
+            <column name="activeSOPERP" hardCode="NO"></column>
+            <column name="batchId" isPK="false">
+                <ref udf="iLot3Udf" parameter="btch_num"/>
+            </column>
+            <column name="blockedQuantity" hardCode="0.0"></column>
+            <column name="consignment" isPK="false">
+                <ref  method="method14" parameter="poDocNum,poDoLinecNbr" resultType="Map" value="lineItemTypeCd">
+                    <if test="0==0 ">
+                        <ref udf="iLot18Udf" parameter="lineItemTypeCd"/>
+                    </if>
+                </ref>
+            </column>
+            <column name="certaintyID" hardCode="QM"></column>
+            <column name="ERPOrderId" isPK="false">
+                <ref udf="iLot6Udf" parameter="toBePostedQty,lotNum,qcStsCd" value="result6">
+                    <if test="result6.isEmpty()">
+                        <failData functionalArea="&quot;iLot6Udf&quot;" interfaceID="'column1'" errorCode="'1234567890'" errorValue="'column1'" sourceSystem="'column1'" key1="'column1'" key2="'column1'" key3="'column1'" key4="'column1'" key5="'column1'" businessArea="'column1'"/>
+                    </if>
+                </ref>
+            </column>
+
+            <column name="inventoryLinkGroupId" isPK="false">
+                <if test="poDocNum.isEmpty()">
+                    <set name="inventoryLinkGroupId" value="''"/>
+                </if>
+                <else>
+                    <ref  method="method16" parameter="poDocNum,srcSysCd" resultType="String" value="lineItemTypeCd">
+                        <if test="0==0 ">
+                            <ref udf="iLot16Udf" parameter="lineItemTypeCd"/>
+                        </if>
+                    </ref>
+                </else>
+            </column>
+            <column name="vendorId" value="vndrNum"></column>
+
+            <column name="locationId" isPK="false">
+                <ref  method="method7" parameter="plntCd" resultType="String" value="localPlanningrelevant">
+                    <if test="0==0 ">
+                        <ref udf="iLot7Udf" parameter="localPlanningrelevant,plntCd,srcSysCd" value="result7">
+                            <if test="result7.isEmpty()">
+                                <failData functionalArea="&quot;iLot7Udf&quot;" interfaceID="'column1'" errorCode="'1234567890'" errorValue="'column1'" sourceSystem="'column1'" key1="'column1'" key2="'column1'" key3="'column1'" key4="'column1'" key5="'column1'" businessArea="'column1'"/>
+                            </if>
+
+                        </ref>
+                    </if>
+                </ref>
+            </column>
+            <column name="processId" isPK="false">
+                <if test="mfgOrdrDoc!='' ">
+                    <ref  method="method141" parameter="mfgOrdrDoc,srcSysCd" resultType="String" value="prdntVrsnNum">
+                        <if test="0 == 0 ">
+                            <ref udf="iLot141Udf" parameter="prdntVrsnNum"/>
+                        </if>
+                    </ref>
+                </if>
+                <else>
+                    <ref  method="method14" parameter="poDocNum,poDocLineNbr" resultType="Map" value="poTypeCd,matlNum,plntCd,prchsngOrgNum,lineItemTypeCd,supNum,suplPlntCd">
+                        <if test="poTypeCd.equals('NB') &amp;&amp; lineItemTypeCd.isEmpty()" >
+                            <ref udf="iLot142Udf" parameter="vndrNum"/>
+
+                        </if>
+                        <elseIf test="poTypeCd.equals('NB') &amp;&amp; lineItemTypeCd.equals('3')" >
+                            <ref  method="method142" parameter="matlNum,plntCd,prchsngOrgNum,lineItemTypeCd,supNum" resultType="String" value="localProductionVersion">
+                                <if test="localProductionVersion.isEmpty() ">
+                                    <ref udf="iLot1431Udf" parameter=""/>
+                                </if>
+                                <else>
+                                    <ref udf="iLot1432Udf" parameter="localProductionVersion"/>
+                                </else>
+                            </ref>
+                        </elseIf>
+                        <elseIf test="poTypeCd.equals('UB') || poTypeCd.equals('ZLA') ||poTypeCd.equals('ZNB') " >
+                            <ref udf="iLot144Udf" parameter="suplPlntCd,vndrNum"/>
+                        </elseIf>
+                        <else>
+                            <set name="processId" value="''"/>
+                        </else>
+                    </ref>
+
+                </else>
+
+
+            </column>
+            <column name="processTypeId" isPK="false">
+                <if test="!mfgOrdrDoc.isEmpty()">
+                    <set name="processTypeId" value="'Production'"/>
+                </if>
+
+                <else>
+                    <ref  method="method14" parameter="poDocNum,srcSysCd" resultType="Map" value="lineItemTypeCd,poTypeCd">
+                        <if test="0 == 0 ">
+                            <ref udf="iLot15Udf" parameter="lineItemTypeCd,poTypeCd"/>
+                        </if>
+                    </ref>
+                </else>
+            </column>
+
+            <column name="productId">
+                <ref method="method91" parameter="matlId,plntCd,srcSysCd" resultType="List" value="loopList">
+                    <if test="0 == 0 ">
+                         <ref udf="iLot91Udf" parameter="loopList"/>
+                    </if>
+                </ref>
+            </column>
+            <column name="qualityQuantity" hardCode="0.0"></column>
+            <column name="quantity" value="toBePostedQty"></column>
+            <column name="receiptDate"  isPK="false">
+                <ref udf="iLot10Udf" parameter="inspEndDt"/>
+            </column>
+            <column name="restrictedQuantity" hardCode="0.0"></column>
+            <column name="returnsQuantity" hardCode="0.0"></column>
+            <column name="startDate"  isPK="false">
+                <ref udf="iLot10Udf" parameter="inspEndDt"/>
+            </column>
+            <column name="stockType" hardCode="movement"></column>
+            <column name="transferQuantity" hardCode="0.0"></column>
+            <column name="transitDate" hardCode="1980/01/01 00:00:00"></column>
+            <column name="unrestrictedQuantity" hardCode="0.0"></column>
+        </columns>
+    </viewRegion>
+
+</adf-curation>
