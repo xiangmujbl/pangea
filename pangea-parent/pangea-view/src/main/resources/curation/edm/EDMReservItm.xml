@@ -5,7 +5,7 @@
 
             <region path="/project_one/resb">
                 <columns>
-                    rsnum,rspos,rsart,bdart,aufnr,posnr,xloek,kzear,matnr,werks,lgort,charg,bdter,bdmng,shkzg,fmeng,enmng,erfmg,erfme,plnum,banfn,bnfpo,kdauf,kdpos,bwart,umwrk,umlgo,postp,ausch,nlfzt,umrez,umren,aufps,ebeln,ebelp,rgekz,kzkup,webaz,lifnr
+                    rsnum,rspos,rsart,bdart,aufnr,posnr,xloek,kzear,matnr,werks,lgort,charg,bdter,bdmng,shkzg,fmeng,enmng,erfmg,erfme,plnum,banfn,bnfpo,kdauf,kdpos,bwart,umwrk,umlgo,postp,ausch,nlfzt,umrez,umren,aufps,ebeln,ebelp,rgekz,kzkup,webaz,lifnr,meins,vornr
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -18,7 +18,7 @@
             </region>
             <region path="/edm/reserv_itm">
                 <columns>
-                    sourceSysCd,rsrvtnNum,rsrvtnItmNum,rsrvtnRcrdTypCd,rsrvtnRqrmntTypCd,mfgOrdrNum,bomItmNum,delInd,finIssind,matlNum,plntCd,sLocCd,btchNum,rqmtDt,rqmtQty,debCrdInd,qtyFxInd,wthdrnQty,entryQty,entryUomCd,mfgPlanOrdrDocNum,prNum,prLineNbr,slsOrdrDocNum,slsOrdrLineNbr,mvmtTyp,rcvngIssngPlntCd,rcvngIssngSLocCd,itmCatCd,cmpntScrapPct,leadTimeOffset,fctrNmrtrMeas,fctrDnmntrMeas,lnItmNbr,purchsOrdrNum,poLineNbr,bckflushInd,coProdInd,grProcTime,vndNum
+                    baseUomCd,oprNum,sourceSysCd,rsrvtnNum,rsrvtnItmNum,rsrvtnRcrdTypCd,rsrvtnRqrmntTypCd,mfgOrdrNum,bomItmNum,delInd,finIssind,matlNum,plntCd,sLocCd,btchNum,rqmtDt,rqmtQty,debCrdInd,qtyFxInd,wthdrnQty,entryQty,entryUomCd,mfgPlanOrdrDocNum,prNum,prLineNbr,slsOrdrDocNum,slsOrdrLineNbr,mvmtTyp,rcvngIssngPlntCd,rcvngIssngSLocCd,itmCatCd,cmpntScrapPct,leadTimeOffset,fctrNmrtrMeas,fctrDnmntrMeas,lnItmNbr,purchsOrdrNum,poLineNbr,bckflushInd,coProdInd,grProcTime,vndNum
                 </columns>
             </region>
 

@@ -1,5 +1,6 @@
 package com.jnj.pangea.edm.country.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -40,9 +41,20 @@ public class EDMCountryServiceImpl implements ICommonService {
 
         // J1
         String zSourceSystem = mainData.getzSourceSystem();
-        if (StringUtils.isNotEmpty(zSourceSystem)) {
-            edmCountryBo.setSourceSystem(sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(zSourceSystem));
+        //T3
+        if(StringUtils.isEmpty(zSourceSystem)){
+            return null;
         }
+        if (StringUtils.isNotEmpty(zSourceSystem)) {
+
+            edmCountryBo.setSourceSystem(sourceSystemV1Dao.getSourceSystemWithLocalSourceSystem(zSourceSystem));
+            //T3
+            if(StringUtils.isEmpty(edmCountryBo.getSourceSystem())){
+                return null;
+            }
+        }
+
+
 
         edmCountryBo.setLocalCountry(mainData.getMdmCode());
 
