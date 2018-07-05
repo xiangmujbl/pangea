@@ -10,6 +10,7 @@ public class KnvhEntity extends CommonEntity {
     private String hkunnr;
     private String datbi;
     private String vkorg;
+    private String hityp;
 
     public KnvhEntity(Map<String, Object> map) {
         super(map);
@@ -18,6 +19,7 @@ public class KnvhEntity extends CommonEntity {
         setHkunnr((String) map.get("hkunnr"));
         setDatbi((String) map.get("datbi"));
         setVkorg((String) map.get("vkorg"));
+        setHityp((String) map.get("hityp"));
     }
 
     public String getKunnr() {
@@ -50,5 +52,13 @@ public class KnvhEntity extends CommonEntity {
 
     public void setVkorg(String vkorg) {
         this.vkorg = vkorg;
+    }
+
+    public String getHityp() {
+        return hityp;
+    }
+
+    public void setHityp(String hityp) {
+        this.hityp = hityp;
     }
 }
