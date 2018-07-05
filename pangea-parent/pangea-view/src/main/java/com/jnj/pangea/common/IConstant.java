@@ -152,14 +152,18 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_COUNTRY_INPUT="/edm/edm_country_input";
+        String EDM_COUNTRY_INPUT = "/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
         String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
-        String EDM_ADVANCED_SHIP_NOTIFICATION_V1= "/edm/advanced_ship_notification_v1";
+        String EDM_ADVANCED_SHIP_NOTIFICATION_V1 = "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
         String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
+    }
+
+    interface FBP {
+        String FAIL_MSG = "localDpParentCode does not exist in edm Material";
     }
 
     interface EDM_INVENTORY_STOCK {
@@ -789,7 +793,7 @@ public interface IConstant {
         String SALES_ORG = "salesOrg";
         String ORDER_TYPE = "orderType";
         String INCL_EXCL = "inclExcl";
-        String COUNTRY= "country";
+        String COUNTRY = "country";
     }
 
     interface CNS_TLANE_ITEM_EXCEPTION {
@@ -947,7 +951,7 @@ public interface IConstant {
 
         //regex expression of time , if it is satisfied, do format.
         String CHCEK_TIME = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-9]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$";
-        int VALUE_DECIMAL_6 =6;
+        int VALUE_DECIMAL_6 = 6;
         String PATTERN_DECIMAL_3 = "#.000";
         String PATTERN_DECIMAL_5 = "#.00000";
         String PATTERN_DECIMAL_0 = "#";
@@ -1137,7 +1141,7 @@ public interface IConstant {
         }
 
         interface INTERFACE_ID {
-            String GDM_FBP = "GDMFbp";
+            String OMP_GDM_FBP = "OMPGdmFbp";
             String OMP_GDMPRODUCT_TYPE = "OMPGdmProductType";
             String GDM_RESOURCE = "GDMResource";
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
@@ -1161,7 +1165,7 @@ public interface IConstant {
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
             String OMP_GDM_POS = "OMPGdmPos";
             String OMP_GDM_LFU = "OMPGdmLfu";
-            String OMP_GDM_COUNTRY="OMPGdmCountry";
+            String OMP_GDM_COUNTRY = "OMPGdmCountry";
             String EDM_PLANT = "EDMPlant";
         }
 
@@ -1194,7 +1198,7 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
-            String ASN9 =  "ASN9";
+            String ASN9 = "ASN9";
         }
 
         interface ERROR_VALUE {
@@ -1304,11 +1308,11 @@ public interface IConstant {
         String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
     }
 
-    interface BOMHDR{
+    interface BOMHDR {
         String BOM_VlD_ToDt = "99991231";
     }
 
-    interface MFGRTNGITM{
+    interface MFGRTNGITM {
         String BOM_VlD_ToDt = "99991231";
     }
 

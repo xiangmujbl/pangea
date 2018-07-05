@@ -133,39 +133,39 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
 
     Then I check file data for filename "GDMProductUnitConversion.tsv" by keyFields "gdmProductUnitConversionId"
 #    Then I check region data "/omp/gdm_product_unit_conversion" by keyFields "gdmProductUnitConversionId"
-      | gdmProductUnitConversionId | productId             | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | comments |
-      | 945EA                      | 945                   | EA     | YES    | YES          | YES          | NO           | 2.00   |          |
-      | LA_178962124094540035EA    | LA_178962124094540035 | EA     | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 55735LA_ZUM                | 55735                 | LA_ZUM | YES    | YES          | NO           | NO           | 0.10   |          |
-      | 58723EA                    | 58723                 | EA     | YES    | YES          | YES          | NO           | 12.00  |          |
-      | 4000EA                     | 4000                  | EA     | YES    | YES          | YES          | NO           | 2.00   |          |
-      | LA_178962124094540036EA    | LA_178962124094540036 | EA     | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 4002EA                     | 4002                  | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 58722EA                    | 58722                 | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | LA_178962124094540038EA    | LA_178962124094540038 | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2886EA                     | 2886                  | EA     | YES    | YES          | YES          | NO           | 2.00   |          |
-      | LA_178962124288680037EA    | LA_178962124288680037 | EA     | YES    | YES          | YES          | NO           | 2.00   |          |
-      | 2887LB                     | 2887                  | LB     | YES    | YES          | NO           | NO           | 0.20   |          |
-      | LA_178962124288680038LB    | LA_178962124288680038 | LB     | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 2890EA                     | 2890                  | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2891LB                     | 2891                  | LB     | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 2894EA                     | 2894                  | EA     | YES    | NO           | YES          | NO           | 0.20   |          |
-      | 3880EA                     | 3880                  | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 3881EA                     | 3881                  | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4880EA                     | 4880                  | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4880LB                     | 4880                  | LB     | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 4880CA                     | 4880                  | CA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2888CA                     | 2888                  | CA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | LA_178962124288680039CA    | LA_178962124288680039 | CA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 2889DZ                     | 2889                  | DZ     | YES    | NO           | YES          | NO           | 0.20   |          |
-      | LA_178962124288680040DZ    | LA_178962124288680040 | DZ     | YES    | NO           | YES          | NO           | 0.20   |          |
-      | 2892CA                     | 2892                  | CA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 4883LB                     | 4883                  | LB     | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 2893DZ                     | 2893                  | DZ     | YES    | NO           | YES          | NO           | 0.20   |          |
-      | 7881EA                     | 7881                  | EA     | YES    | YES          | NO           | NO           | 0.20   |          |
-      | 8881EA                     | 8881                  | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | 8882EA                     | 8882                  | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
-      | LA_178962124288680041EA    | LA_178962124288680041 | EA     | YES    | YES          | YES          | NO           | 0.20   |          |
+      | gdmProductUnitConversionId | comments | productId             | activeFCTERP | active | unitId | factor | activeOPRERP | activeSOPERP |
+      | 3881EA                     |          | 3881                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
+      | 7881EA                     |          | 7881                  | YES          | YES    | EA     | 0.20   | NO           | NO           |
+      | 2887LB                     |          | 2887                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
+      | LA_178962124288680038LB    |          | LA_178962124288680038 | YES          | YES    | LB     | 0.20   | NO           | NO           |
+      | 58722EA                    |          | 58722                 | NO           | YES    | EA     | 0.20   | YES          | NO           |
+      | LA_178962124094540038EA    |          | LA_178962124094540038 | YES          | YES    | EA     | 0.20   | NO           | NO           |
+      | 2892CA                     |          | 2892                  | YES          | YES    | CA     | 0.20   | YES          | NO           |
+      | 8881EA                     |          | 8881                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
+      | LA_178962124288680041EA    |          | LA_178962124288680041 | YES          | YES    | EA     | 0.20   | NO           | NO           |
+      | 8882EA                     |          | 8882                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
+      | LA_178962124288680041EA    |          | LA_178962124288680041 | YES          | YES    | EA     | 0.20   | NO           | NO           |
+      | 2888CA                     |          | 2888                  | YES          | YES    | CA     | 0.20   | YES          | NO           |
+      | LA_178962124288680039CA    |          | LA_178962124288680039 | YES          | YES    | CA     | 0.20   | NO           | NO           |
+      | 2891LB                     |          | 2891                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
+      | 58723EA                    |          | 58723                 | YES          | YES    | EA     | 12.00  | YES          | NO           |
+      | 2894EA                     |          | 2894                  | NO           | YES    | EA     | 0.20   | YES          | NO           |
+      | 3880EA                     |          | 3880                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
+      | 4000EA                     |          | 4000                  | YES          | YES    | EA     | 2.00   | YES          | NO           |
+      | LA_178962124094540036EA    |          | LA_178962124094540036 | YES          | YES    | EA     | 2.00   | NO           | NO           |
+      | 2889DZ                     |          | 2889                  | NO           | YES    | DZ     | 0.20   | YES          | NO           |
+      | 55735LA_ZUM                |          | 55735                 | YES          | YES    | LA_ZUM | 0.10   | NO           | NO           |
+      | 4002EA                     |          | 4002                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
+      | 2893DZ                     |          | 2893                  | NO           | YES    | DZ     | 0.20   | YES          | NO           |
+      | 2890EA                     |          | 2890                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
+      | 945EA                      |          | 945                   | YES          | YES    | EA     | 2.00   | YES          | NO           |
+      | LA_178962124094540035EA    |          | LA_178962124094540035 | YES          | YES    | EA     | 2.00   | NO           | NO           |
+      | 4883LB                     |          | 4883                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
+      | 2886EA                     |          | 2886                  | YES          | YES    | EA     | 2.00   | YES          | NO           |
+      | LA_178962124288680037EA    |          | LA_178962124288680037 | YES          | YES    | EA     | 2.00   | NO           | NO           |
+      | 4880CA                     |          | 4880                  | YES          | YES    | CA     | 0.20   | YES          | NO           |
+      | 4880EA                     |          | 4880                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
+      | 4880LB                     |          | 4880                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
 
   Scenario:delete all the test data
     And I delete the test data
