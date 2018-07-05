@@ -985,7 +985,7 @@ public interface IConstant {
         String SPRAS_EN = "EN";
         String PLSCN = "000";
         String MAX_DATE_VALIDTO = "29981231";
-        String MAX_DATE_VALIDTOSLASH = "2998/12/31";
+        String MAX_DATE_VALIDTOSLASH = "2998/12/31 23:59:59";
         String YYYYMMDD = "yyyyMMdd";
         String YYYY_MM_DD = "yyyy/MM/dd";
         String YYYYMMDD_ZERO = "00000000";
