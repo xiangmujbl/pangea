@@ -337,7 +337,7 @@ Feature:  OMPGdmDemandSalesOrder-Curation
 
     When I submit aggregation task with xml file "xml/edm/EDMSalesHistoryAggregation.xml"
 
-    When I submit task with xml file "xml/OMPGdmDemandSalesOrder.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/omp/OMPGdmDemandSalesOrder.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMDemandSalesOrder.tsv"
 
