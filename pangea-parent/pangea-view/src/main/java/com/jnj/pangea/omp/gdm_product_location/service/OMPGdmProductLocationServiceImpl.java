@@ -157,7 +157,12 @@ public class OMPGdmProductLocationServiceImpl {
             	}
             } else {
                 bo.setMinmrsl("");
-                bo.setMinRemainingShelfLife(edmMaterialGlobalV1Entity.getMinRemShelfLife());
+                if(StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getMinRemShelfLife())) {
+                	long time = Long.valueOf(edmMaterialGlobalV1Entity.getMinRemShelfLife()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
+                	bo.setMinRemainingShelfLife(String.valueOf(time));
+                } else {
+                	bo.setMinRemainingShelfLife(edmMaterialGlobalV1Entity.getMinRemShelfLife());
+                }
             }
             //rules E12
             PlanCnsProdLocAttribEntity attribEntity = getFieldWithE12(materialPlantV1Entity.getLocalMaterialNumber(), materialPlantV1Entity.getLocalPlant(), materialPlantV1Entity.getSourceSystem());
@@ -192,6 +197,8 @@ public class OMPGdmProductLocationServiceImpl {
                 if(StringUtils.isNotBlank(edmMaterialGlobalV1Entity.getTotalShelfLife())) {
                 	long time = Long.valueOf(edmMaterialGlobalV1Entity.getTotalShelfLife()) * IConstant.VALUE.VALUE_24 * IConstant.VALUE.VALUE_60 * IConstant.VALUE.VALUE_60;
                 	bo.setTotalShelfLife(String.valueOf(time));
+                } else {
+                	bo.setTotalShelfLife(edmMaterialGlobalV1Entity.getTotalShelfLife());
                 }
                 bo.setProductTypeId(edmMaterialGlobalV1Entity.getMaterialType());
             }
