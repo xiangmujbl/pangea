@@ -1,6 +1,7 @@
 package com.jnj.pangea.omp.gdm_stock.service;
 
 import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
@@ -168,7 +169,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         //PO19
         po19Rule(purchaseOrderOAV1Entity,stockBo);
 
-        resultObject.setBaseBo(stockBo);
+
+        if(stockBo.getProductId().isEmpty()){
+            resultObject.setFailData(writeFailDataToRegion(purchaseOrderOAV1Entity, "PO9", "Material Global V1 - materialNumber and primaryPlanningCode are empty"));
+        } else {
+            resultObject.setBaseBo(stockBo);
+        }
         return resultObject;
     }
 
@@ -386,5 +392,20 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
 
         return true;
+    }
+
+    private FailData writeFailDataToRegion(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, String ruleCode, String errorValue) {
+        FailData failData = new FailData();
+        failData.setFunctionalArea("SP");
+        failData.setInterfaceID("OMPGdmStock_PurchaseOrder");
+        failData.setErrorCode(ruleCode);
+        failData.setSourceSystem("CONS_LATAM");
+        failData.setKey1(purchaseOrderOAV1Entity.getSourceSystem());
+        failData.setKey2(purchaseOrderOAV1Entity.getPoNum());
+        failData.setKey3(purchaseOrderOAV1Entity.getMatlNum());
+        failData.setKey4("");
+        failData.setKey5("");
+        failData.setErrorValue(errorValue);
+        return failData;
     }
 }
