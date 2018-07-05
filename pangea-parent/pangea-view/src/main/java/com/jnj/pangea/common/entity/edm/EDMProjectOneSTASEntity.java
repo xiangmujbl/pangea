@@ -16,6 +16,7 @@ public class EDMProjectOneSTASEntity extends CommonEntity {
         setDatuv((String) map.get("datuv"));
         setAennr((String) map.get("aennr"));
         setLeknz((String) map.get("leknz"));
+        setLkenz((String) map.get("lkenz"));
     }
 
     private String stlty ;
@@ -26,6 +27,15 @@ public class EDMProjectOneSTASEntity extends CommonEntity {
     private String datuv ;
     private String aennr ;
     private String leknz ;
+    private String lkenz ;
+
+    public String getLkenz() {
+        return lkenz;
+    }
+
+    public void setLkenz(String lkenz) {
+        this.lkenz = lkenz;
+    }
 
     public String getStlty() {
         return stlty;
@@ -101,7 +111,7 @@ public class EDMProjectOneSTASEntity extends CommonEntity {
                 ", stasz='" + stasz + '\'' +
                 ", datuv='" + datuv + '\'' +
                 ", aennr='" + aennr + '\'' +
-                ", leknz='" + leknz + '\'' +
+                ", lkenz='" + lkenz + '\'' +
                 '}';
     }
 }
