@@ -155,7 +155,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
                 Date maxDate = sdfFrom.parse(IConstant.VALUE.MAX_DATE_VALIDTO);
 
                 if(dValidTo.getTime() > maxDate.getTime()){
-                    gdmTransportBo.setEndEff(IConstant.VALUE.MAX_DATE_VALIDTOSLASH + IConstant.VALUE.HH_NN_SS_ZERO);
+                    gdmTransportBo.setEndEff(IConstant.VALUE.MAX_DATE_VALIDTOSLASH );
                 }else{
                     gdmTransportBo.setEndEff(validDateToConverted );
                 }
