@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/inspection_lot_v1" viewRegion="/omp/gdm_stock" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_stock2.OMPGdmStock2Controller001" writeTo="all" topic="PANGEA_V1_gdm_stock2">
+    <regions> 
+      <region path="/edm/inspection_lot_v1"> 
+        <columns>srcSysCd,lotNum,plntCd,matlId,baseUom,lotVerifTypeCd,lotOrigCd,btchNum,localObjectNumber,stsPrfl,usgDecInd,localDateOfLotCreation,localTimeOfLotCreation,crtDttm,chgDttm,inspStrtDt,inspStrtTm,inspEndDt,inspEndTm,cstmNum,vndrNum,btch_num,stgLocCd,mfgOrdrDoc,poDocNum,poDocLineNbr,matlMvmtDocYr,matlMvmtDocNum,stckPlntCd,stckSLocCd,inspLotQty,actlLotQty,toBePostedQty,qcStsCd,usgDcsnCd,qcDcsnDttm</columns>
+        <relations> 
+          <relation path="/edm/material_global_v1" isPrimaryKey="false">
+            <expression/> 
+          </relation>  
+          <relation path="/edm/plant_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/edm/purchase_order_oa_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+            <expression/> 
+          </relation>  
+          <relation path="/edm/purchasing_info_record_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/edm/process_order_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation> 
+        </relations> 
+      </region>  
+
+      <region path="/edm/material_global_v1"> 
+        <columns>localBaseUom,localDpParentCode,localManufacturingTechnology,localMaterialGroup,localMaterialNumber,localMaterialType,localRefDescription,localbaseuom,localdpparentcode,localmanufacturingtechnology,materialNumber,materialStatus,materialType,minRemShelfLife,minremshelflife,parentCode,parentcode,primaryPlanningCode,primaryplanningcode,productFamily,productfamily refDescription,refdescription,sourceSystem</columns>
+      </region>  
+      <region path="/edm/plant_v1"> 
+        <columns>country,localCountry,localCurrency,localPlanningRelevant,localPlant,localPlantName,localPlantType,plant,plantType,region,site,sourceSystem</columns> 
+      </region>  
+      <region path="/edm/purchase_order_oa_v1"> 
+        <columns>sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,crtOnDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum</columns> 
+      </region>  
+      <region path="/plan/cns_material_plan_status">
+        <columns>active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant</columns> 
+      </region>  
+      <region path="/edm/purchasing_info_record_v1"> 
+        <columns>sourceSystem,localPurchasingInfoRec,localvendor,localPurchasingOrg,infotype,localPlanPlant,localMaterialNumber,localBaseUnit,localMaterialGroup,localPurchOrgDataFlagDeletion,localGeneralDataFlagDeletion,localCreatedOnEine,localCreatedOnEina,localCreatedByEine,localCreatedByEina,localPurchasingGroup,localInfoShortText,localCurrencyKey,localMinimumQty,localStandardQty,localPlDelivTime,localVendorMatNo,localNumerator,localDenominator,localOrderUnit,localManufacturer,localTaxCode,localConfirmationControlKey,localPrDateCat,localIncoterms,localIncoterms2,localProductionVersion,localMaxQuantity,localRndingProfile,localNCMCode</columns> 
+      </region>  
+      <region path="/edm/process_order_v1"> 
+        <columns>sourceSystem,mfgOrdrNum,mfgOrdrItemNum,ordrType,localOrderCat,crtdDttm,chgDttm,plntCd,delInd,localTechnicalCompletion,localProductionProcessNo,localLogicalSystem,plnEndDt,plnStrtDt,prdtnSchdEndDt,prdtnSchdStrtDt,prdntStrtDt,prdtnEndDt,prdtnRlseDt,prdtnPlanRlseDt,mfgPlnnr,mfgSprvsr,localReservation,localTotalScrap,localTargetQty,localBaseUOM,localMaterialAFKOPLNBEZ,localTaskListType,localGroup,localApplication,localGroupCounter,localUsage,localMaterialAFKOSTLBEZ,localSchedulingType,localConfirmation,localConfirmationCounter,localConfirmedQtyIGMNG,plnndOrdr,scrpQty,ordrQty,rcvdQty,prdtnUom,matlNum,fctrNmrtrMeas,fctrDnmntrMeas,goodRcptLdDaysQty,dlvCmpltInd,prdntVrsnNum,btchNum ordrStts,localSystemStatus,localLanguage,localStatus1,localStatus2</columns> 
+      </region>  
+      <region path="/omp/gdm_stock">
+        <columns>stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyID,erpOrderId,inventoryLinkGroupId,vendorId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity</columns>
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>
