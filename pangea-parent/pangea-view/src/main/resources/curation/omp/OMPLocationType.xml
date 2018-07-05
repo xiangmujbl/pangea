@@ -1,6 +1,7 @@
 <adf-curation>
     <curation mainRegion="/plan/cns_loc_type" viewRegion="/omp/location_type" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.location_type.controller.OMPLocationTypeController">
+              executionClassName="com.jnj.pangea.omp.location_type.controller.OMPLocationTypeController"
+              writeTo="all" topic="PANGEA_V1_gdm_location_type">
         <regions>
 
             <region path="/plan/cns_loc_type">

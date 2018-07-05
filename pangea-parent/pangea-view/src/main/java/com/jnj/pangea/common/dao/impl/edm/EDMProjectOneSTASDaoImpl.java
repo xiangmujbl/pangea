@@ -59,8 +59,6 @@ public class EDMProjectOneSTASDaoImpl extends CommonDaoImpl {
         }else{
             aDFCriteria.isNull();
         }
-
-        LogUtil.getCoreLog().info("==================================================queryString  "+aDFCriteria.toQueryString());
         return maxRec(IConstant.REGION.PROJECT_ONE_STAS,aDFCriteria.toQueryString(),IConstant.BOM_ITEM.FIELD_STAS_STASZ_VALUE,EDMProjectOneSTASEntity.class);
     }
 
