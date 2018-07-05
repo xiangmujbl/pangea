@@ -22,7 +22,7 @@
             </region>
             <region path="/project_one/stas">
                 <columns>
-                    stlty,stlnr,stlal,stlkn,stasz,datuv,aennr,leknz
+                    stlty,stlnr,stlal,stlkn,stasz,datuv,aennr,lkenz
                 </columns>
             </region>
 

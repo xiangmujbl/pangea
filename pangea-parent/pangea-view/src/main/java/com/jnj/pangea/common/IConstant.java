@@ -862,7 +862,7 @@ public interface IConstant {
 
     interface BOM_ITEM {
         String FIELD_STAS_STLTY_VALUE = "stlty";
-        String FIELD_MATLRTNGVALID_TO = "9999/12/31";
+        String FIELD_MATLRTNGVALID_TO = "99991231";
         String FIELD_STAS_STLNR_VALUE = "stlnr";
         String FIELD_STAS_STLKN_VALUE = "stlkn";
         String FIELD_STAS_STASZ_VALUE = "stasz";
@@ -1103,6 +1103,7 @@ public interface IConstant {
         String STARTEFF_NOHMS = "1980/01/01";
         String STARTEFF_HMS = "1980/01/01 00:00:00";
         String HHMMSS = " 23:59:59";
+        String HHMMSSSTART =" 00:00:00";
     }
 
     interface FAILED {
@@ -1263,7 +1264,7 @@ public interface IConstant {
         public static final int VALUE_DECIMAL_3= 3;
 
     }
-    
+
     interface PLAN_EDM_MAT_INPUT {
         String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
         String SOURCE_SYSTEM = "sourceSystem";

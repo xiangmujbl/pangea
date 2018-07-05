@@ -3,28 +3,19 @@ package com.jnj.pangea.edm.bom_item.service;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.edm.EDMProjectOneMaplDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMProjectOneSTASDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.ngems.NgemsGoldenMaterialDaoImpl;
-import com.jnj.pangea.common.dao.impl.ngems.NgemsMaterialLinkageDaoImpl;
-import com.jnj.pangea.common.dao.impl.project_one.ProjectOneMaktDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMProjectOneMAPLEntity;
 import com.jnj.pangea.common.entity.edm.EDMProjectOneSTASEntity;
 import com.jnj.pangea.common.entity.edm.EDMProjectOneSTPOEntity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.bom_item.bo.BOMITEMBo;
-import com.jnj.pangea.edm.matl_mfg_rtng.bo.MATLMFGRTNGBo;
+import com.jnj.pangea.util.DateUtils;
 
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
-/**
- * E.2.1.1 EDMRouting-MATL_MFG_RTNG - Curation
- * AEAZ-3268
- */
 public class BOMITEMServiceImpl implements ICommonService {
-
     private static BOMITEMServiceImpl instance;
 
     public static BOMITEMServiceImpl getInstance() {
@@ -47,8 +38,7 @@ public class BOMITEMServiceImpl implements ICommonService {
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
         long count= edmProjectOneSTASDao.getEDMProjectOneSTASEntityCount(edmProjectOneSTPOEntity.getStlty(),edmProjectOneSTPOEntity.getStlnr(),edmProjectOneSTPOEntity.getStlkn());
         if(count==0){
-           // bomitemBo.setBomCatCd(""); //
-            return resultObject;   //skip  the record
+            return resultObject;
         }else{
             bomitemBo.setBomCatCd(edmProjectOneSTPOEntity.getStlty());
         }
@@ -75,19 +65,26 @@ public class BOMITEMServiceImpl implements ICommonService {
         bomitemBo.setBomItmBulkInd(edmProjectOneSTPOEntity.getSchgt());
         bomitemBo.setLeadTimeOffst(edmProjectOneSTPOEntity.getNlfzt());
         bomitemBo.setDstrbtnKeyCd(edmProjectOneSTPOEntity.getVerti());
-        bomitemBo.setBomItmTxt(edmProjectOneSTPOEntity.getPotx1()+" "+edmProjectOneSTPOEntity.getPotx2());
+        if(edmProjectOneSTPOEntity.getPotx1().isEmpty()&&edmProjectOneSTPOEntity.getPotx2().isEmpty()){
+            bomitemBo.setBomItmTxt("");
+        }else{
+            bomitemBo.setBomItmTxt(edmProjectOneSTPOEntity.getPotx1()+" "+edmProjectOneSTPOEntity.getPotx2());
+        }
         bomitemBo.setCoProdInd(edmProjectOneSTPOEntity.getKzkup());
-        LogUtil.getCoreLog().info("edmProjectOneSTPOEntity  "+edmProjectOneSTPOEntity.toString());
-        LogUtil.getCoreLog().info("=============================count  "+count);
         if(count==1){
             bomitemBo.setBomItmVldToDt(IConstant.BOM_ITEM.FIELD_MATLRTNGVALID_TO);
         }else{
            // maxRec
             EDMProjectOneSTASEntity edmProjectOneSTASEntity= edmProjectOneSTASDao.getEDMProjectOneSTASEntity(edmProjectOneSTPOEntity.getStlty(),edmProjectOneSTPOEntity.getStlnr(),edmProjectOneSTPOEntity.getStlkn());
-            if(edmProjectOneSTASEntity==null||!edmProjectOneSTASEntity.getLeknz().equalsIgnoreCase(IConstant.BOM_ITEM.FIELD_LEKNZ_VALUE_X)){
+            if(edmProjectOneSTASEntity==null||!edmProjectOneSTASEntity.getLkenz().equalsIgnoreCase(IConstant.BOM_ITEM.FIELD_LEKNZ_VALUE_X)){
                 bomitemBo.setBomItmVldToDt(IConstant.BOM_ITEM.FIELD_MATLRTNGVALID_TO);
             }else{
-                bomitemBo.setBomItmVldToDt(edmProjectOneSTASEntity.getDatuv());
+                Date fromDueDate = DateUtils.stringToDate(edmProjectOneSTASEntity.getDatuv(), DateUtils.F_yyyyMMdd);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(fromDueDate);
+                calendar.add(Calendar.DATE, -1);
+                String VldToDt = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
+                bomitemBo.setBomItmVldToDt(VldToDt);
             }
         }
         bomitemBo.setAltItmGrpCd(edmProjectOneSTPOEntity.getAlpgr());
@@ -95,7 +92,6 @@ public class BOMITEMServiceImpl implements ICommonService {
         bomitemBo.setAltItmInd(edmProjectOneSTPOEntity.getAlpos());
         bomitemBo.setAltItmStratCd(edmProjectOneSTPOEntity.getAlpst());
         bomitemBo.setAltItmRankNbr(edmProjectOneSTPOEntity.getAlprf());
-        LogUtil.getCoreLog().info("bomitemBo 97 "+bomitemBo.toString());
         resultObject.setBaseBo(bomitemBo);
         return resultObject;
     }
