@@ -38,14 +38,10 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     EDMPurchaseOrderOAV1DaoImpl purchaseOrderOAV1Dao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
 
-    // String productId = "";
-    // String locationId = "";
-
     ThreadLocal<String> productId = new ThreadLocal<>();
 
     ThreadLocal<String> locationId = new ThreadLocal<>();
 
-    //OMPGdmStockBo stockBo = new OMPGdmStockBo();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -152,7 +148,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         if(!po10Rule(purchaseOrderOAV1Entity,stockBo)) {
             return resultObjectSkip;
         }
-        EDMPurchaseOrderOAV1Entity purchDateEntity = getLocalDelvDate(purchaseOrderOAV1Entity,stockBo);
+        EDMPurchaseOrderOAV1Entity purchDateEntity = getLocalDelvDate(purchaseOrderOAV1Entity);
         if(purchDateEntity == null){
             return resultObjectSkip;
         }
@@ -365,7 +361,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
-    private EDMPurchaseOrderOAV1Entity getLocalDelvDate(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
+    private EDMPurchaseOrderOAV1Entity getLocalDelvDate(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         List<EDMPurchaseOrderOAV1Entity> porders = purchaseOrderOAV1Dao.getPurchaseOrderListByPoNumPoLineNbr(purchaseOrderOAV1Entity.getPoNum(), purchaseOrderOAV1Entity.getPoLineNbr());
         if(porders != null) {
             for(EDMPurchaseOrderOAV1Entity e : porders) {
@@ -382,10 +378,13 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         if(cnsMaterialPlanStatusEntity.getSpRelevant() == null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null ){
             return true;
         }
-
         if(cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)){
             return false;
         }
-        return (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X));
+        if (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)){
+            return false;
+        }
+
+        return true;
     }
 }
