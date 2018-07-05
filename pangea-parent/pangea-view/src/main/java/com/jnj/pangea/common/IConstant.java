@@ -46,6 +46,8 @@ public interface IConstant {
         String PROJECT_ONE_VBAP = "/project_one/vbap";
         String PROJECT_ONE_VBPA = "/project_one/vbpa";
         String PROJECT_ONE_VBKD = "/project_one/vbkd";
+        String PROJECT_ONE_VBUK = "/project_one/vbuk";
+        String PROJECT_ONE_VBUP = "/project_one/vbup";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
         String PLAN_CNS_PROD_LOC_ATTRIB = "/plan/cns_prod_loc_attrib";
@@ -445,6 +447,17 @@ public interface IConstant {
         String VBELN = "vbeln";
         String POSNR = "posnr";
         String PARVW = "parvw";
+    }
+
+    interface PROJECT_ONE_VBUK {
+        String VBELN = "vbeln";
+        String MANDT = "mandt";
+    }
+
+    interface PROJECT_ONE_VBUP {
+        String VBELN = "vbeln";
+        String POSNR = "posnr";
+        String MANDT = "mandt";
     }
 
     interface NGEMS_MATERIAL_LINKAGE {
