@@ -12,6 +12,7 @@ import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,7 +41,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		CnsTlaneItemEntity tlaneItemEntity = (CnsTlaneItemEntity) o;
 		EDMSourceListV1Entity srcListV1Entity = null;
 		String rule = "setup";
-		this.curationSkip = false;
+
 		this.curationFail = false;
 		this.failedRules = new ArrayList<>();
 
@@ -59,8 +60,10 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//N1
 		if (!this.curationSkip && !this.curationFail) {
+
 			gdmTransportBo.setTransportId(this.ruleN1(tlaneItemEntity));
 		}
+
 
 		if (!this.curationSkip && !this.curationFail) {
 			//N2
@@ -104,29 +107,45 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			gdmTransportBo.setActiveSOPERP(IConstant.VALUE.NO);
 		}
 
-		//N13
-		String validTo = tlaneItemEntity.getValidTo();
-		SimpleDateFormat sdf = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-		try {
-			Date validToDate = sdf.parse(validTo);
-			Date maxDate = sdf.parse(IConstant.VALUE.MAX_DATE_VALIDTO);
-			if(validToDate.getTime() > maxDate.getTime()){
-				gdmTransportBo.setEndEff(IConstant.VALUE.MAX_DATE_VALIDTO + IConstant.VALUE.HH_NN_SS_ZERO);
-			}else{
-				gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-
 		//No Rules
 		if (!this.curationSkip && !this.curationFail) {
 			PlanCnsProcessTypeEntity processTypeEntity =
 					this.processTypeDao.getCnsProcessTypeById(tlaneItemEntity.getProcessTypeId());
+
+
+			try {
+
+				String validDateToFormat = tlaneItemEntity.getValidTo();
+				SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+				SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+				Date dValidTo = sdfFrom.parse(validDateToFormat);
+				String validDateToConverted = sdfTo.format(dValidTo) + IConstant.VALUE.HH_NN_SS_ZERO;
+				Date maxDate = sdfFrom.parse(IConstant.VALUE.MAX_DATE_VALIDTO);
+				if(dValidTo.getTime() > maxDate.getTime()){
+					gdmTransportBo.setEndEff(IConstant.VALUE.MAX_DATE_VALIDTOSLASH + IConstant.VALUE.HH_NN_SS_ZERO);
+				}else{
+					gdmTransportBo.setEndEff(validDateToConverted );
+				}
+
+
+				String validDateFromFormat = tlaneItemEntity.getValidFrom();
+				Date dValidFrom = sdfFrom.parse(validDateFromFormat);
+				String validDateFromConverted = sdfTo.format(dValidFrom) + IConstant.VALUE.HH_NN_SS_ZERO;
+
+
+				gdmTransportBo.setStartEff(validDateFromConverted);
+			}
+			catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+
+
+
+
+
 			gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
-			//gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
-			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom() + IConstant.VALUE.HH_NN_SS_ZERO);
+
 			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
 			gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
@@ -149,6 +168,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 					)
 			);
 		} else if (this.curationSkip) {
+
 			resultObject = null;
 		} else {
 			resultObject.setBaseBo(gdmTransportBo);
@@ -294,6 +314,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 					}
 				}
 			}
+
 
 		}
 		else {
