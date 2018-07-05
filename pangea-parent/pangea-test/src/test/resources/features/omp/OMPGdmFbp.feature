@@ -114,9 +114,9 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     Then I check region data "/omp/gdm_fbp" by keyFields "fbpId"
       | fbpId | countryId | currencyId | dueDate | fromDueDate | productId | value | volume |
 
-    Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
-      | J1        | DP             | GDMFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
+      | J1        | DP             | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
 
 
   @Scenario2
@@ -206,7 +206,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
 
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
-      | J1        | DP             | GDMFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
+      | J1        | DP             | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
 
 
   @Scenario3
@@ -306,7 +306,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
-      | J1        | DP             | GDMFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
+      | J1        | DP             | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
 
   @Scenario4
   Scenario:  Aggrgeate Value and Quantity
@@ -494,7 +494,7 @@ Feature:  OMPGdmfbp-Curation AEAZ-4062
       | LC_LDPC05-2019/02/01 00:00:00 | AT055     | ADGG       | 2019/02/08 00:00:00 | 2019/02/01 00:00:00 | LC_LDPC05 | 100.000 | 100    |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
-      | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
+      | errorCode | functionalArea | interfaceID | key1 | key2 | key3 | key4 | key5 | sourceSystem | errorValue |
 
     Then I delete the test data
 
