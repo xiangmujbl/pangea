@@ -274,7 +274,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                 return false;
             }
 
-            if (orderUnit == 0) {
+            if (orderUnit == 0 && !bothZero) {
                 orderUnitNotZero = false;
             }
 
