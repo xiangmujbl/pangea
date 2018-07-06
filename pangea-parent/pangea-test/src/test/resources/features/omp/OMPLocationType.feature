@@ -10,7 +10,7 @@ Feature: OMPLocationType AEAZ-1763
       | CO01          | Internal Manufacturing Plant |
     And I wait "/plan/cns_loc_type" Async Queue complete
 
-    When I submit task with xml file "xml/omp/OMPLocationType.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/omp/OMPGdmLocationType.xml" and execute file "jar/pangea-view.jar"
 
     Then A file is found on sink application with name "GDMLocationType.tsv"
 
