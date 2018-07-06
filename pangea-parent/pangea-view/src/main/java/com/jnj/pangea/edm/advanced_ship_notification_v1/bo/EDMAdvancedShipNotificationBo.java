@@ -13,26 +13,28 @@ public class EDMAdvancedShipNotificationBo extends BaseBo {
     private String srcSysCd;
     private String delvDocId;
     private String receivingPtId;
-    private String localdeliveryType;
-    private String localdeliveryCatg;
-    private String localdeliveryDate;
-    private String localcreatedDate;
-    private String localbillOfLading;
+    private String localDeliveryType;
+    private String localDeliveryCatg;
+    private String localDeliveryDate;
+    private String localCreatedDate;
+    private String localBillOfLading;
     private String localExternalId;
     private String actGRDt;
-    private String vendorID;
+    private String vendorId;
     private String localShippingPlant;
     private String delvLineNbr;
     private String matlNum;
-    private String localbatchNo;
-    private String localvendorBatchNo;
+    private String localBatchNo;
+    private String localVendorBatchNo;
     private String localReceivingPlant;
     private String baseUnitOfMeasureCd;
     private String actlSkuDelvQty;
     private String localRefDocNum;
     private String locRefDocLineNum;
 
-    public String getSrcSysCd() { return srcSysCd; }
+    public String getSrcSysCd() {
+        return srcSysCd;
+    }
 
     public void setSrcSysCd(String srcSysCd) {
         this.srcSysCd = srcSysCd;
@@ -54,44 +56,44 @@ public class EDMAdvancedShipNotificationBo extends BaseBo {
         this.receivingPtId = receivingPtId;
     }
 
-    public String getLocaldeliveryType() {
-        return localdeliveryType;
+    public String getLocalDeliveryType() {
+        return localDeliveryType;
     }
 
-    public void setLocaldeliveryType(String localdeliveryType) {
-        this.localdeliveryType = localdeliveryType;
+    public void setLocalDeliveryType(String localDeliveryType) {
+        this.localDeliveryType = localDeliveryType;
     }
 
-    public String getLocaldeliveryCatg() {
-        return localdeliveryCatg;
+    public String getLocalDeliveryCatg() {
+        return localDeliveryCatg;
     }
 
-    public void setLocaldeliveryCatg(String localdeliveryCatg) {
-        this.localdeliveryCatg = localdeliveryCatg;
+    public void setLocalDeliveryCatg(String localDeliveryCatg) {
+        this.localDeliveryCatg = localDeliveryCatg;
     }
 
-    public String getLocaldeliveryDate() {
-        return localdeliveryDate;
+    public String getLocalDeliveryDate() {
+        return localDeliveryDate;
     }
 
-    public void setLocaldeliveryDate(String localdeliveryDate) {
-        this.localdeliveryDate = localdeliveryDate;
+    public void setLocalDeliveryDate(String localDeliveryDate) {
+        this.localDeliveryDate = localDeliveryDate;
     }
 
-    public String getLocalcreatedDate() {
-        return localcreatedDate;
+    public String getLocalCreatedDate() {
+        return localCreatedDate;
     }
 
-    public void setLocalcreatedDate(String localcreatedDate) {
-        this.localcreatedDate = localcreatedDate;
+    public void setLocalCreatedDate(String localCreatedDate) {
+        this.localCreatedDate = localCreatedDate;
     }
 
-    public String getLocalbillOfLading() {
-        return localbillOfLading;
+    public String getLocalBillOfLading() {
+        return localBillOfLading;
     }
 
-    public void setLocalbillOfLading(String localbillOfLading) {
-        this.localbillOfLading = localbillOfLading;
+    public void setLocalBillOfLading(String localBillOfLading) {
+        this.localBillOfLading = localBillOfLading;
     }
 
     public String getLocalExternalId() {
@@ -110,12 +112,12 @@ public class EDMAdvancedShipNotificationBo extends BaseBo {
         this.actGRDt = actGRDt;
     }
 
-    public String getVendorID() {
-        return vendorID;
+    public String getVendorId() {
+        return vendorId;
     }
 
-    public void setVendorID(String vendorID) {
-        this.vendorID = vendorID;
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
     }
 
     public String getLocalShippingPlant() {
@@ -142,20 +144,20 @@ public class EDMAdvancedShipNotificationBo extends BaseBo {
         this.matlNum = matlNum;
     }
 
-    public String getLocalbatchNo() {
-        return localbatchNo;
+    public String getLocalBatchNo() {
+        return localBatchNo;
     }
 
-    public void setLocalbatchNo(String localbatchNo) {
-        this.localbatchNo = localbatchNo;
+    public void setLocalBatchNo(String localBatchNo) {
+        this.localBatchNo = localBatchNo;
     }
 
-    public String getLocalvendorBatchNo() {
-        return localvendorBatchNo;
+    public String getLocalVendorBatchNo() {
+        return localVendorBatchNo;
     }
 
-    public void setLocalvendorBatchNo(String localvendorBatchNo) {
-        this.localvendorBatchNo = localvendorBatchNo;
+    public void setLocalVendorBatchNo(String localVendorBatchNo) {
+        this.localVendorBatchNo = localVendorBatchNo;
     }
 
     public String getLocalReceivingPlant() {

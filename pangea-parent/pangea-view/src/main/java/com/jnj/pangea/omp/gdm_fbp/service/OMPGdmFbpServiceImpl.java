@@ -1,6 +1,7 @@
 package com.jnj.pangea.omp.gdm_fbp.service;
 
 import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import static com.jnj.pangea.util.DateUtils.*;
+
 
 public class OMPGdmFbpServiceImpl implements ICommonListService {
 
@@ -56,6 +58,9 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = (EDMMaterialGlobalV1Entity) o;
 
         if (StringUtils.isBlank(materialGlobalV1Entity.getLocalDpParentCode())) {
+            ResultObject resultObject = new ResultObject();
+            resultObject.setFailData(setFBPFailData(materialGlobalV1Entity));
+            list.add(resultObject);
             return list;
         }
 
@@ -105,24 +110,14 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
                 try {
                     valYearMap.put(yearMonth, value + Double.parseDouble(planCnsFinPlanQtyAndValEntity.getValue()));
                 } catch (Exception e) {
-                    LogUtil.getCoreLog().error("valYearMap add " + yearMonth + " error");
                 }
             } else {
                 try {
                     valYearMap.put(yearMonth, Double.parseDouble(planCnsFinPlanQtyAndValEntity.getValue()));
                 } catch (Exception e) {
-                    LogUtil.getCoreLog().error("valYearMap add " + yearMonth + " error");
                 }
             }
         }
-
-//        for(int i=0;i<globalList.size();i++){
-//            EDMMaterialGlobalV1Entity globalV1AggrEntity=globalList.get(i);
-//            String localMaterialNumber =globalV1AggrEntity.getLocalMaterialNumber();
-//            List<PlanCnsFinPlanQtyEntity>  finPlanQtyEntityList = cnsFinPlanQtyDao.getListWithConditions(localMaterialNumber, IConstant.VALUE.LFU);
-//            List<PlanCnsFinPlanValEntity>  finPlanValEntityList = cnsFinPlanValDao.getListWithConditions(localMaterialNumber, IConstant.VALUE.LFU);
-//            List<PlanCnsFinPlanQtyAndValEntity> mergeQtyVal =mergeQtyVal(finPlanQtyEntityList,finPlanValEntityList);
-//        }
 
 
         for (PlanCnsFinPlanQtyAndValEntity planCnsFinPlanQtyAndValEntity : mergeQtyVal) {
@@ -190,12 +185,6 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
         return list;
     }
 
-    public String formatNumber(String result) {
-        if (StringUtils.startsWith(result, IConstant.OMP_GDMBOMELEMENT.PATTERN_POINTER)) {
-            result = IConstant.OMP_GDMBOMELEMENT.DEFAULT_VALUE_0_BLANK + result;
-        }
-        return result;
-    }
 
     public List<PlanCnsFinPlanQtyAndValEntity> mergeQtyVal(List<PlanCnsFinPlanQtyEntity> qtyList, List<PlanCnsFinPlanValEntity> valList) {
         List<PlanCnsFinPlanQtyAndValEntity> result = new ArrayList<>();
@@ -238,4 +227,9 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
         return null;
     }
 
+    public FailData setFBPFailData(EDMMaterialGlobalV1Entity materialGlobalV1Entity) {
+        return new FailData(IConstant.FAILED.FUNCTIONAL_AREA.DP,
+                IConstant.FAILED.INTERFACE_ID.OMP_GDM_FBP, IConstant.FAILED.ERROR_CODE.J1, IConstant.FBP.FAIL_MSG, materialGlobalV1Entity.getSourceSystem(), materialGlobalV1Entity.getLocalMaterialNumber(),
+                materialGlobalV1Entity.getSourceSystem());
+    }
 }

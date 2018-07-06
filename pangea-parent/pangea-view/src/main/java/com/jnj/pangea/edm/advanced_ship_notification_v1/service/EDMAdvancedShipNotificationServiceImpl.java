@@ -63,20 +63,20 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // N3
         // ERP Date is informat yyyymmdd
         // Date needs to be converted in - yyyy-mm-dd
-        edmAdvancedShipNotificationBo.setLocalcreatedDate(dateFormatter(likpEntity.getErdat()));
+        edmAdvancedShipNotificationBo.setLocalCreatedDate(dateFormatter(likpEntity.getErdat()));
 
         edmAdvancedShipNotificationBo.setDelvDocId(lipsEntity.getVbeln());
 
         edmAdvancedShipNotificationBo.setReceivingPtId(likpEntity.getVstel());
 
-        edmAdvancedShipNotificationBo.setLocaldeliveryType(likpEntity.getLfart());
+        edmAdvancedShipNotificationBo.setLocalDeliveryType(likpEntity.getLfart());
 
         // N3
         // ERP Date is informat yyyymmdd
         // Date needs to be converted in - yyyy-mm-dd
-        edmAdvancedShipNotificationBo.setLocaldeliveryDate(dateFormatter(likpEntity.getLfdat()));
+        edmAdvancedShipNotificationBo.setLocalDeliveryDate(dateFormatter(likpEntity.getLfdat()));
 
-        edmAdvancedShipNotificationBo.setLocalbillOfLading(likpEntity.getBolnr());
+        edmAdvancedShipNotificationBo.setLocalBillOfLading(likpEntity.getBolnr());
 
         edmAdvancedShipNotificationBo.setLocalExternalId(likpEntity.getLifex());
 
@@ -85,15 +85,15 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // Date needs to be converted in - yyyy-mm-dd
         edmAdvancedShipNotificationBo.setActGRDt(dateFormatter(likpEntity.getWadatist()));
 
-        edmAdvancedShipNotificationBo.setVendorID(likpEntity.getLifnr());
+        edmAdvancedShipNotificationBo.setVendorId(likpEntity.getLifnr());
 
         edmAdvancedShipNotificationBo.setLocalShippingPlant(likpEntity.getWerks());
 
         edmAdvancedShipNotificationBo.setMatlNum(lipsEntity.getMatnr());
 
-        edmAdvancedShipNotificationBo.setLocalbatchNo(lipsEntity.getCharg());
+        edmAdvancedShipNotificationBo.setLocalBatchNo(lipsEntity.getCharg());
 
-        edmAdvancedShipNotificationBo.setLocalvendorBatchNo(lipsEntity.getLichn());
+        edmAdvancedShipNotificationBo.setLocalVendorBatchNo(lipsEntity.getLichn());
 
         edmAdvancedShipNotificationBo.setLocalReceivingPlant(lipsEntity.getWerks());
 
@@ -116,7 +116,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // N1
         // Select only when LIKP-VBTYP= 7
         if (likpEntity.getVbtyp().equals(IConstant.VALUE.SEVEN)) {
-            edmAdvancedShipNotificationBo.setLocaldeliveryCatg(likpEntity.getVbtyp());
+            edmAdvancedShipNotificationBo.setLocalDeliveryCatg(likpEntity.getVbtyp());
         } else {
             // skip
             return null;

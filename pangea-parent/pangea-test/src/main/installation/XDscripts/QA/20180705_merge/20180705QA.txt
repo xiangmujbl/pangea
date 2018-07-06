@@ -1,0 +1,12 @@
+CR: put pangea to na qa env
+	system: project_one
+
+----------------------------Plateform team------------------------------------------
+
+	1. spring xd
+
+		1-1. create springXD job by 20180705_job_steps.txt file.
+
+---------------------------Pangea team:--------------------------------------------
+
+	1. launch job to do merge and send the file to mbox.
