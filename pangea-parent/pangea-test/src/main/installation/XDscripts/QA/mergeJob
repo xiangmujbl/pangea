@@ -1,63 +1,3 @@
-## STEP 1
-
-job create --name Pangea_QA_Trigger_Omp_lot_size_key --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmLotSizeKey.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_LocationType --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmLocationType.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_EDM_PurchaseRequisition --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/edm/EDMPurchaseRequisition.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_GdmCertainty --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmCertainty.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_UnitCurrency --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmUnitCurrency.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_EDM_PurchasingInfoRecord --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/edm/EDMPurchasingInfoRecord.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_EDM_ProcessOrder --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/edm/EDMProcessOrder.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_ProcessType --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmProcessType.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_GdmUnitMeasurable --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmUnitMeasurable.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_GdmCustomer --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmCustomer.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_EDM_PlannedOrder --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/edm/EDMPlannedOrder.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_Edm_MaterialGlobal --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/edm/EDMMaterialGlobal.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=2 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_GdmLocationDetail --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmLocationDetail.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_EDM_SourceList --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/edm/EDMSourceList.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_Omp_gdm_location_xref --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmLocationXref.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_Omp_gdm_location_edm --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmLocationEdm.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_Omp_product_type --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmProductType.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-
-## STEP 2
-
-job create --name Pangea_QA_Trigger_OMP_GdmProductLocation --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmProductLocation.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_GdmProductLocationDetail --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmProductLocationDetail.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_OMP_GdmProductUnitConversion --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmProductUnitConversion.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_EDM_BatchMaster --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/edm/EDMBatchMaster.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_Gdm_SalesHistory --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmSalesHistory.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-job create --name Pangea_QA_Trigger_cns_root_desc --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/plan/PlanCnsRootDescription.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-
-## STEP 3
-
-job create --name Pangea_QA_Trigger_OMP_GdmBatch --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmBatch.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
-
-
-## STEP 4
-
-
 job create --name Pangea_QA_Merge_GDMBatch --definition 'pangea-file-merger --sPattern=GDMBatch.tsv --tFileName=GDMBatch.tsv --outputFileName=GDMBatch.tsv --keyString=batchId,productId --tHost=mboxnait.jnj.com --tLocation=/CPCUS_CONS_APS_OMP_PANGEA/ --tUsername=Pangea_EDG_User --tPassword="{cryption}41 -103 -31 -20 31 25 124 126 6 -48 57 40 11 79 -51 -82" --tSourceLocation=/fitdata/STAGING/ompdata/merged/ --mLocation=/fitdata/STAGING/ompdata/output/ --outputDirectory=/fitdata/STAGING/ompdata/merged/ --duplicationFlag=true --toCompress=false --zipFileName=""' --deploy
 
 job create --name Pangea_QA_Merge_GDMCertainty --definition 'pangea-file-merger --sPattern=GDMCertainty.tsv --tFileName=GDMCertainty.tsv --outputFileName=GDMCertainty.tsv --keyString=certaintyId --tHost=mboxnait.jnj.com --tLocation=/CPCUS_CONS_APS_OMP_PANGEA/ --tUsername=Pangea_EDG_User --tPassword="{cryption}41 -103 -31 -20 31 25 124 126 6 -48 57 40 11 79 -51 -82" --tSourceLocation=/fitdata/STAGING/ompdata/merged/ --mLocation=/fitdata/STAGING/ompdata/output/ --outputDirectory=/fitdata/STAGING/ompdata/merged/ --duplicationFlag=true --toCompress=false --zipFileName=""' --deploy
@@ -110,3 +50,4 @@ job create --name Pangea_QA_Merge_GDMProductCountry --definition 'pangea-file-me
 
 job create --name Pangea_QA_Merge_GDMProductDetail --definition 'pangea-file-merger --sPattern=GDMProductDetail.tsv --tFileName=GDMProductDetail.tsv --outputFileName=GDMProductDetail.tsv --keyString=productDetailId --tHost=mboxnait.jnj.com --tLocation=/CPCUS_CONS_APS_OMP_PANGEA/ --tUsername=Pangea_EDG_User --tPassword="{cryption}41 -103 -31 -20 31 25 124 126 6 -48 57 40 11 79 -51 -82" --tSourceLocation=/fitdata/STAGING/ompdata/merged/ --mLocation=/fitdata/STAGING/ompdata/output/ --outputDirectory=/fitdata/STAGING/ompdata/merged/ --duplicationFlag=true --toCompress=false --zipFileName=""' --deploy
 
+job create --name Pangea_QA_Merge_GDMStock --definition 'pangea-file-merger --sPattern=GDMStock_* --tFileName=GDMStock.tsv --outputFileName=GDMStock.tsv --keyString=stockId --tHost=mboxnait.jnj.com --tLocation=/CPCUS_CONS_APS_OMP_PANGEA/ --tUsername=Pangea_EDG_User --tPassword="{cryption}41 -103 -31 -20 31 25 124 126 6 -48 57 40 11 79 -51 -82" --tSourceLocation=/fitdata/STAGING/ompdata/merged/ --mLocation=/fitdata/STAGING/ompdata/output/ --outputDirectory=/fitdata/STAGING/ompdata/merged/ --duplicationFlag=true --toCompress=false --zipFileName=""' --deploy
