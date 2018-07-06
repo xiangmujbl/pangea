@@ -25,7 +25,7 @@
             </region>
 
             <region path="/edm/advanced_ship_notification_v1">
-                <columns>srcSysCd,delvDocId,receivingPtId,localdeliveryType,localdeliveryCatg,localdeliveryDate,localcreatedDate,localbillOfLading,localExternalId,actGRDt,vendorID,localShippingPlant,delvLineNbr,matlNum,localbatchNo,localvendorBatchNo,localReceivingPlant,baseUnitOfMeasureCd,actlSkuDelvQty,localRefDocNum,locRefDocLineNum</columns>
+                <columns>srcSysCd,delvDocId,receivingPtId,localDeliveryType,localDeliveryCatg,localDeliveryDate,localCreatedDate,localBillOfLading,localExternalId,actGRDt,vendorId,localShippingPlant,delvLineNbr,matlNum,localBatchNo,localVendorBatchNo,localReceivingPlant,baseUnitOfMeasureCd,actlSkuDelvQty,localRefDocNum,locRefDocLineNum</columns>
             </region>
 
         </regions>

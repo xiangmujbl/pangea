@@ -163,6 +163,10 @@ public interface IConstant {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
+    interface FBP {
+        String FAIL_MSG = "localDpParentCode does not exist in edm Material";
+    }
+
     interface BOM_HDR {
         String SRCSYSCD = "srcSysCd";
         String ALTBOMNUM = "altBomNum";
@@ -1055,7 +1059,7 @@ public interface IConstant {
         }
 
         interface INTERFACE_ID {
-            String GDM_FBP = "GDMFbp";
+            String OMP_GDM_FBP = "OMPGdmFbp";
             String OMP_GDMPRODUCT_TYPE = "OMPGdmProductType";
             String GDM_RESOURCE = "GDMResource";
             String OMP_GDM_PRODUCT_LOCATION_DETAIL = "OMPGdmProductLocationDetail";
