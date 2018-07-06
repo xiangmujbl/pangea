@@ -6,7 +6,7 @@
 
             <region path="/edm/source_list_v1">
                 <columns>
-                    sourceSystem,localPlant,localVendorAccountNumber,localMaterialNumber,localNumberofSourceListRecord,localSourceListRecordValidTo,localSourceListRecordValidFrom,localFixedvendor,localFixedOutlinePurchaseAgreementItem,localPurchasingOrganization,localAgreementNumber,localPlantfromWhichMaterialisProcured
+                    localAgreementItem,localBlockedSourceofSupply,localCategoryofSourceListRecord,localDateonWhichRecordWasCreated,localMaterialNumberCorrespondingtoManufacturerPartNumber,localNameofPersonwhoCreatedtheObject,localPurchasingDocumentCategory,sourceSystem,localPlant,localVendorAccountNumber,localMaterialNumber,localNumberofSourceListRecord,localSourceListRecordValidTo,localSourceListRecordValidFrom,localFixedvendor,localFixedOutlinePurchaseAgreementItem,localPurchasingOrganization,localAgreementNumber,localPlantfromWhichMaterialisProcured,localSourceListUsageinMaterialsPlanning
                 </columns>
 
                 <relations>
@@ -52,13 +52,13 @@
 
             <region path="/edm/material_global_v1">
                 <columns>
-                    localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode
+                    baseUom,localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode
                 </columns>
             </region>
 
             <region path="/edm/plant_v1">
                 <columns>
-                    sourceSystem,localPlant,plant,localPlanningRelevant,localMaterialNumber
+                    country,localCountry,localCurrency,sourceSystem,localPlant,localPlantName,localPlantType,plant,plantType,localPlanningRelevant,localMaterialNumber,region,site
                 </columns>
             </region>
 
