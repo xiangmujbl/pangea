@@ -149,6 +149,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         if(!po10Rule(purchaseOrderOAV1Entity,stockBo)) {
             return resultObjectSkip;
         }
+
         EDMPurchaseOrderOAV1Entity purchDateEntity = getLocalDelvDate(purchaseOrderOAV1Entity);
         if(purchDateEntity == null){
             return resultObjectSkip;
@@ -249,7 +250,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         boolean bothZero = true;
         boolean orderUnitNotZero = true;
         Float cnfrmQtySum = Float.valueOf(0);
-        Float recvEaQtySum;
+        Float recvEaQtySum = Float.valueOf(0);
         try {
             if(!purchaseOrderOAV1Entity.getCnfrmQty().isEmpty()) {
                 cnfrmQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getCnfrmQty().trim());
@@ -259,20 +260,22 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                 getRecvEaQtySum = false;
                 bothZero = false;
                 orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim()) - cnfrmQtySum;
-                if (orderUnit == 0) {
-                    orderUnitNotZero = false;
-                }
             }
 
-            if (getRecvEaQtySum && purchaseOrderOAV1Entity.getEvTypeCd().trim().equals("1") && !purchaseOrderOAV1Entity.getRecvEaQty().isEmpty()) {
-                recvEaQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getRecvEaQty().trim());
+            if (getRecvEaQtySum && purchaseOrderOAV1Entity.getEvTypeCd().trim().equals("1")) {
+                if(!purchaseOrderOAV1Entity.getRecvEaQty().isEmpty()) {
+                    recvEaQtySum = Float.parseFloat(purchaseOrderOAV1Entity.getRecvEaQty().trim());
+                }
                 if (recvEaQtySum > 0) {
                     bothZero = false;
                     orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim()) - recvEaQtySum;
-                    if (orderUnit == 0) {
-                        orderUnitNotZero = false;
-                    }
                 }
+            } else if(getRecvEaQtySum && !purchaseOrderOAV1Entity.getEvTypeCd().trim().equals("1")){
+                return false;
+            }
+
+            if (orderUnit == 0) {
+                orderUnitNotZero = false;
             }
 
             if (bothZero) {
