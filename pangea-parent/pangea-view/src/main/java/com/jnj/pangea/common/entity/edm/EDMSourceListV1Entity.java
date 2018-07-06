@@ -10,9 +10,9 @@ public class EDMSourceListV1Entity extends CommonEntity {
     private String localPlant;
     private String localNumberofSourceListRecord;
     private String materialNumber;
-    private String plant;
-    private String localCreatedOn;
-    private String localCreatedBy;
+//    private String plant;
+//    private String localCreatedOn;
+//    private String localCreatedBy;
     private String localSourceListRecordValidFrom;
     private String localSourceListRecordValidTo;
     private String localVendorAccountNumber;
@@ -35,9 +35,9 @@ public class EDMSourceListV1Entity extends CommonEntity {
         setLocalPlant((String) map.get("localPlant"));
         setLocalNumberofSourceListRecord((String) map.get("localNumberofSourceListRecord"));
         setMaterialNumber((String) map.get("materialNumber"));
-        setPlant((String) map.get("plant"));
-        setLocalCreatedOn((String) map.get("localCreatedOn"));
-        setLocalCreatedBy((String) map.get("localCreatedBy"));
+//        setPlant((String) map.get("plant"));
+//        setLocalCreatedOn((String) map.get("localCreatedOn"));
+//        setLocalCreatedBy((String) map.get("localCreatedBy"));
         setLocalSourceListRecordValidFrom((String) map.get("localSourceListRecordValidFrom"));
         setLocalSourceListRecordValidTo((String) map.get("localSourceListRecordValidTo"));
         setLocalVendorAccountNumber((String) map.get("localVendorAccountNumber"));
@@ -96,29 +96,29 @@ public class EDMSourceListV1Entity extends CommonEntity {
         this.materialNumber = materialNumber;
     }
 
-    public String getPlant() {
-        return plant;
-    }
-
-    public void setPlant(String plant) {
-        this.plant = plant;
-    }
-
-    public String getLocalCreatedOn() {
-        return localCreatedOn;
-    }
-
-    public void setLocalCreatedOn(String localCreatedOn) {
-        this.localCreatedOn = localCreatedOn;
-    }
-
-    public String getLocalCreatedBy() {
-        return localCreatedBy;
-    }
-
-    public void setLocalCreatedBy(String localCreatedBy) {
-        this.localCreatedBy = localCreatedBy;
-    }
+//    public String getPlant() {
+//        return plant;
+//    }
+//
+//    public void setPlant(String plant) {
+//        this.plant = plant;
+//    }
+//
+//    public String getLocalCreatedOn() {
+//        return localCreatedOn;
+//    }
+//
+//    public void setLocalCreatedOn(String localCreatedOn) {
+//        this.localCreatedOn = localCreatedOn;
+//    }
+//
+//    public String getLocalCreatedBy() {
+//        return localCreatedBy;
+//    }
+//
+//    public void setLocalCreatedBy(String localCreatedBy) {
+//        this.localCreatedBy = localCreatedBy;
+//    }
 
     public String getLocalSourceListRecordValidFrom() {
         return localSourceListRecordValidFrom;

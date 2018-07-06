@@ -59,20 +59,20 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
         // N1
-        if (edmSourceListV1Entity.getLocalAgreementNumber().trim().isEmpty()) {
-            LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber is null or empty");
-            return skipObjects;
-        }
-        if (!edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim().isEmpty()) {
-            LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured is not empty");
-            return skipObjects;
-        }
+//        if (edmSourceListV1Entity.getLocalAgreementNumber().trim().isEmpty()) {
+//            LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber is null or empty");
+//            return skipObjects;
+//        }
+//        if (!edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim().isEmpty()) {
+//            LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured is not empty");
+//            return skipObjects;
+//        }
 
         LogUtil.getCoreLog().info("rule N1 pass");
 
         String partA;
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalDao.getEntityWithLocalMaterialNumber(edmSourceListV1Entity.getLocalMaterialNumber());
-        if (null != materialGlobalV1Entity && (!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty() && materialGlobalV1Entity.getMaterialNumber().isEmpty()))) {
+        if (null != materialGlobalV1Entity && (!(materialGlobalV1Entity.getPrimaryPlanningCode().trim().isEmpty() && materialGlobalV1Entity.getMaterialNumber().trim().isEmpty()))) {
             if (materialGlobalV1Entity.getPrimaryPlanningCode() != null && (!(materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()))) {
                 partA = materialGlobalV1Entity.getPrimaryPlanningCode();
             } else {
@@ -80,9 +80,9 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
             }
             if (materialGlobalV1Entity.getPrimaryPlanningCode().equals(materialGlobalV1Entity.getMaterialNumber())) {
 
-                if (edmSourceListV1Entity.getLocalPlant() != null && (!(edmSourceListV1Entity.getLocalPlant().isEmpty()))) {
-                    if (edmSourceListV1Entity.getLocalVendorAccountNumber() != null && (!(edmSourceListV1Entity.getLocalVendorAccountNumber().isEmpty()))) {
-                        if (edmSourceListV1Entity.getSourceSystem() != null && (!(edmSourceListV1Entity.getSourceSystem().isEmpty()))) {
+                if (edmSourceListV1Entity.getLocalPlant() != null && (!(edmSourceListV1Entity.getLocalPlant().trim().isEmpty()))) {
+                    if (edmSourceListV1Entity.getLocalVendorAccountNumber() != null && (!(edmSourceListV1Entity.getLocalVendorAccountNumber().trim().isEmpty()))) {
+                        if (edmSourceListV1Entity.getSourceSystem() != null && (!(edmSourceListV1Entity.getSourceSystem().trim().isEmpty()))) {
                             String supplyId = partA + IConstant.VALUE.BACK_SLANT
                                     + edmSourceListV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + edmSourceListV1Entity.getLocalPlant() + IConstant.VALUE.BACK_SLANT
                                     + edmSourceListV1Entity.getLocalVendorAccountNumber();
@@ -138,12 +138,12 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
                                     // N11
                                     PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithSourceSystemAndLocalMaterialNumberAndLocalPlant(edmSourceListV1Entity.getSourceSystem(), edmSourceListV1Entity.getLocalMaterialNumber(), edmSourceListV1Entity.getLocalPlant());
                                     if (planCnsMaterialPlanStatusEntity != null) {
-                                        if (planCnsMaterialPlanStatusEntity.getSpRelevant() != null && (!(planCnsMaterialPlanStatusEntity.getSpRelevant().isEmpty())) && planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
+                                        if (planCnsMaterialPlanStatusEntity.getSpRelevant() != null && (!(planCnsMaterialPlanStatusEntity.getSpRelevant().trim().isEmpty())) && planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)) {
                                             String primaryPlanningCode = materialGlobalV1Entity.getPrimaryPlanningCode();
                                             String materialNumber = materialGlobalV1Entity.getMaterialNumber();
-                                            if (materialNumber != null && (!(materialNumber.isEmpty())) && primaryPlanningCode != null && (!(primaryPlanningCode.isEmpty()))) {
+                                            if (materialNumber != null && (!(materialNumber.trim().isEmpty())) && primaryPlanningCode != null && (!(primaryPlanningCode.trim().isEmpty()))) {
 
-                                                if ((!(primaryPlanningCode.isEmpty()))) {
+                                                if ((!(primaryPlanningCode.trim().isEmpty()))) {
                                                     gdmSupplyBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
                                                 } else if (primaryPlanningCode.equals(materialNumber)) {
                                                     gdmSupplyBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
@@ -158,7 +158,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
 
                                             // N12
                                             if (edmMaterialPlantV1Entity != null) {
-                                                if (edmMaterialPlantV1Entity.getPurchsngGrpCd() != null && (!(edmMaterialPlantV1Entity.getPurchsngGrpCd().isEmpty()))) {
+                                                if (edmMaterialPlantV1Entity.getPurchsngGrpCd() != null && (!(edmMaterialPlantV1Entity.getPurchsngGrpCd().trim().isEmpty()))) {
                                                     gdmSupplyBo.setPURCHASINGGROUP(edmMaterialPlantV1Entity.getPurchsngGrpCd());
                                                 } else {
                                                     gdmSupplyBo.setPURCHASINGGROUP("");
@@ -166,7 +166,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
                                             }
 
                                             // N13
-                                            if (edmSourceListV1Entity.getLocalPurchasingOrganization() != null && (!(edmSourceListV1Entity.getLocalPurchasingOrganization().isEmpty()))) {
+                                            if (edmSourceListV1Entity.getLocalPurchasingOrganization() != null && (!(edmSourceListV1Entity.getLocalPurchasingOrganization().trim().isEmpty()))) {
                                                 gdmSupplyBo.setPURCHASINGORGANIZATION(edmSourceListV1Entity.getLocalPurchasingOrganization());
                                             } else {
                                                 gdmSupplyBo.setPURCHASINGORGANIZATION("");
@@ -207,7 +207,7 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
 
                                             // N18
                                             if (planCnsPlnSplLocEntity != null) {
-                                                if (planCnsPlnSplLocEntity.getLocalPlant().isEmpty()) {
+                                                if (planCnsPlnSplLocEntity.getLocalPlant().trim().isEmpty()) {
                                                     // check if planCnsPlnSplLocEntity exists getLocalPlant if not then populate value as "VendorPurchase"
                                                     gdmSupplyBo.setPROCESSTYPEID(IConstant.PLAN_CNS_PLN_SPL_LOC.VENDOR_PURCHASE);
                                                 } else {
