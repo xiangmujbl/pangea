@@ -38,7 +38,7 @@
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/plan/cns_plan_so_type_incl_excl" isPrimaryKey="false">
+                    <relation path="/plan/cns_so_type_incl_excl" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/plan/cns_cust_excl_incl" isPrimaryKey="false">
@@ -74,7 +74,7 @@
             <region path="/plan/cns_plan_unit">
                 <columns>plantFlag,unit,localUom,sourceSystem,localUomName,unit</columns>
             </region>
-            <region path="/plan/cns_plan_so_type_incl_excl">
+            <region path="/plan/cns_so_type_incl_excl">
                 <columns>country,inclExcl,orderType,plant,salesOrg,sourceSystem</columns>
             </region>
             <region path="/plan/cns_cust_excl_incl">

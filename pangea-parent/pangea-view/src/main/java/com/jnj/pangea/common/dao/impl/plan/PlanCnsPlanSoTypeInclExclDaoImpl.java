@@ -27,7 +27,7 @@ public class PlanCnsPlanSoTypeInclExclDaoImpl extends CommonDaoImpl{
                     .and(IConstant.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL.PLANT).is(plant)
                     .and(IConstant.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL.SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
-            return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL, queryString, PlanCnsPlanSoTypeInclExclEntity.class);
+            return queryForObject(IConstant.REGION.PLAN_CNS_SO_TYPE_INCL_EXCL, queryString, PlanCnsPlanSoTypeInclExclEntity.class);
         }
         return null;
     }
@@ -37,7 +37,7 @@ public class PlanCnsPlanSoTypeInclExclDaoImpl extends CommonDaoImpl{
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL.SALES_ORG).is(salesOrg)
                     .and(IConstant.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL.SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
-            return queryForList(IConstant.REGION.PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL, queryString, PlanCnsPlanSoTypeInclExclEntity.class);
+            return queryForList(IConstant.REGION.PLAN_CNS_SO_TYPE_INCL_EXCL, queryString, PlanCnsPlanSoTypeInclExclEntity.class);
         }
         return null;
     }

@@ -161,6 +161,8 @@ public interface IConstant {
         String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
         String EDM_ADVANCED_SHIP_NOTIFICATION_V1= "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
+        String PLAN_CNS_SO_TYPE_INCL_EXCL ="/plan/cns_so_type_incl_excl";
+
     }
 
     interface EDM_INVENTORY_STOCK {
