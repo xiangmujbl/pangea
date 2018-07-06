@@ -59,14 +59,14 @@ public class OMPGdmSupplyServiceImpl implements ICommonListService {
         EDMSourceListV1Entity edmSourceListV1Entity = (EDMSourceListV1Entity) o;
 
         // N1
-//        if (edmSourceListV1Entity.getLocalAgreementNumber().trim().isEmpty()) {
-//            LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber is null or empty");
-//            return skipObjects;
-//        }
-//        if (!edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim().isEmpty()) {
-//            LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured is not empty");
-//            return skipObjects;
-//        }
+        if (edmSourceListV1Entity.getLocalAgreementNumber().trim().isEmpty()) {
+            LogUtil.getCoreLog().info("source_list_v1-localAgreementNumber is null or empty");
+            return skipObjects;
+        }
+        if (!edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim().isEmpty()) {
+            LogUtil.getCoreLog().info("source_list_v1-localPlantfromWhichMaterialisProcured is not empty");
+            return skipObjects;
+        }
 
         LogUtil.getCoreLog().info("rule N1 pass");
 

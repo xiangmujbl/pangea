@@ -13,6 +13,7 @@ public class EDMSourceListV1Entity extends CommonEntity {
 //    private String plant;
 //    private String localCreatedOn;
 //    private String localCreatedBy;
+    private String localDateonWhichRecordWasCreated;
     private String localSourceListRecordValidFrom;
     private String localSourceListRecordValidTo;
     private String localVendorAccountNumber;
@@ -27,6 +28,8 @@ public class EDMSourceListV1Entity extends CommonEntity {
     private String localPurchasingDocumentCategory;
     private String localCategoryofSourceListRecord;
     private String localSourceListUsageinMaterialsPlanning;
+    private String localMaterialNumberCorrespondingtoManufacturerPartNumber;
+    private String localNameofPersonwhoCreatedtheObject;
 
     public EDMSourceListV1Entity(Map<String, Object> map) {
         super(map);
@@ -38,6 +41,7 @@ public class EDMSourceListV1Entity extends CommonEntity {
 //        setPlant((String) map.get("plant"));
 //        setLocalCreatedOn((String) map.get("localCreatedOn"));
 //        setLocalCreatedBy((String) map.get("localCreatedBy"));
+        setLocalDateonWhichRecordWasCreated((String) map.get("localDateonWhichRecordWasCreated"));
         setLocalSourceListRecordValidFrom((String) map.get("localSourceListRecordValidFrom"));
         setLocalSourceListRecordValidTo((String) map.get("localSourceListRecordValidTo"));
         setLocalVendorAccountNumber((String) map.get("localVendorAccountNumber"));
@@ -52,8 +56,32 @@ public class EDMSourceListV1Entity extends CommonEntity {
         setLocalPurchasingDocumentCategory((String) map.get("localPurchasingDocumentCategory"));
         setLocalCategoryofSourceListRecord((String) map.get("localCategoryofSourceListRecord"));
         setLocalSourceListUsageinMaterialsPlanning((String) map.get("localSourceListUsageinMaterialsPlanning"));
+        setLocalMaterialNumberCorrespondingtoManufacturerPartNumber((String) map.get("localMaterialNumberCorrespondingtoManufacturerPartNumber"));
+        setLocalNameofPersonwhoCreatedtheObject((String) map.get("localNameofPersonwhoCreatedtheObject"));
+    }
 
+    public String getLocalNameofPersonwhoCreatedtheObject() {
+        return localNameofPersonwhoCreatedtheObject;
+    }
 
+    public void setLocalNameofPersonwhoCreatedtheObject(String localNameofPersonwhoCreatedtheObject) {
+        this.localNameofPersonwhoCreatedtheObject = localNameofPersonwhoCreatedtheObject;
+    }
+
+    public String getLocalMaterialNumberCorrespondingtoManufacturerPartNumber() {
+        return localMaterialNumberCorrespondingtoManufacturerPartNumber;
+    }
+
+    public void setLocalMaterialNumberCorrespondingtoManufacturerPartNumber(String localMaterialNumberCorrespondingtoManufacturerPartNumber) {
+        this.localMaterialNumberCorrespondingtoManufacturerPartNumber = localMaterialNumberCorrespondingtoManufacturerPartNumber;
+    }
+
+    public String getLocalDateonWhichRecordWasCreated() {
+        return localDateonWhichRecordWasCreated;
+    }
+
+    public void setLocalDateonWhichRecordWasCreated(String localDateonWhichRecordWasCreated) {
+        this.localDateonWhichRecordWasCreated = localDateonWhichRecordWasCreated;
     }
 
     public String getSourceSystem() {
