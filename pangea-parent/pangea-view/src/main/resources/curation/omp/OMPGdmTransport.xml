@@ -39,7 +39,7 @@
             </region>
             <region path="/edm/source_list_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,localBlockedSourceofSupply,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localPurchasingOrganization
+                    sourceSystem,localMaterialNumber,localPlantfromWhichMaterialisProcured,localPlant,localBlockedSourceofSupply,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localPurchasingOrganization
                 </columns>
             </region>
             <region path="/plan/cns_process_type">

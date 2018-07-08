@@ -382,6 +382,8 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         String rule = "N9_N10";
 
         String localPlantNum = this.getLocalPlantNum(tlaneItemExceptionEntity.getDestinationLocation());
+        String originLocationlocalPlantNum = this.getLocalPlantNum(tlaneItemExceptionEntity.getOriginLocation());
+
         String sourceSystem = this.getSourceSystem(tlaneItemExceptionEntity.getDestinationLocation());
         String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity,sourceSystem);
         String vendorId = this.getVendorId(tlaneItemExceptionEntity.getOriginLocation());
@@ -406,6 +408,17 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
                         break;
                     }
                 }
+            }
+            else{
+                for (EDMSourceListV1Entity edmSourceListV1Entity : sourceListV1EntityList) {
+                    if (edmSourceListV1Entity != null && edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() != null
+                            && originLocationlocalPlantNum.equals(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim())) {
+                        sourceListV1Entity = edmSourceListV1Entity;
+                        break;
+                    }
+                }
+
+
             }
 
             }
