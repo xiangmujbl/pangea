@@ -287,7 +287,11 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		String rule = "N9_N10";
 
 		String localPlantNum = this.getLocalPlantNum(tlaneItemEntity.getDestinationLocation());
-		String sourceSystem = this.getSourceSystem(tlaneItemEntity.getDestinationLocation());
+		String originLocationlocalPlantNum = this.getLocalPlantNum(tlaneItemEntity.getOriginLocation());
+
+
+
+        String sourceSystem = this.getSourceSystem(tlaneItemEntity.getDestinationLocation());
 		String locMatNum = this.getMaterialNumber(tlaneItemEntity,sourceSystem);
 		String vendorId = this.getVendorId(tlaneItemEntity.getOriginLocation());
 
@@ -309,6 +313,15 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 				for (EDMSourceListV1Entity edmSourceListV1Entity : sourceListV1EntityList) {
 					if (edmSourceListV1Entity != null && edmSourceListV1Entity.getLocalVendorAccountNumber() != null
 							&& vendorId.equals(edmSourceListV1Entity.getLocalVendorAccountNumber().trim())) {
+						sourceListV1Entity = edmSourceListV1Entity;
+						break;
+					}
+				}
+			}
+			else{
+				for (EDMSourceListV1Entity edmSourceListV1Entity : sourceListV1EntityList) {
+					if (edmSourceListV1Entity != null && edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() != null
+							&& originLocationlocalPlantNum.equals(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim())) {
 						sourceListV1Entity = edmSourceListV1Entity;
 						break;
 					}
