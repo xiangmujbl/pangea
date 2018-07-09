@@ -30,7 +30,8 @@ public class EDMSalesOrderServiceImpl {
     private VbepDaoImpl vbepDao = VbepDaoImpl.getInstance();
     private VbpaDaoImpl vbpaDao = VbpaDaoImpl.getInstance();
     private VbkdDaoImpl vbkdDao = VbkdDaoImpl.getInstance();
-    private EDMSalesOrderV1DaoImpl salesOrderV1Dao = EDMSalesOrderV1DaoImpl.getInstance();
+    private VbukDaoImpl vbukDao = VbukDaoImpl.getInstance();
+    private VbupDaoImpl vbupDao = VbupDaoImpl.getInstance();
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
@@ -83,7 +84,6 @@ public class EDMSalesOrderServiceImpl {
                 resultObjectList.add(resultObject);
                 return resultObjectList;
             }
-
             for (VbepEntity vbepEntity : vbepEntities) {
                 EDMSalesOrderBo salesOrderBo = new EDMSalesOrderBo();
 
@@ -154,6 +154,26 @@ public class EDMSalesOrderServiceImpl {
                     salesOrderBo.setLocalIncoTerms2(vbkdEntity.getInco2());
                     salesOrderBo.setLocalCustomerGroup(vbkdEntity.getKdgrp());
                 }
+
+                //rule J5
+                VbukEntity vbukEntity = getFieldWithJ5(vbakEntity.getVbeln(),vbakEntity.getMandt());
+                if(vbukEntity!=null){
+                    salesOrderBo.setHdrOvrStat(vbukEntity.getGbstk());
+                    salesOrderBo.setHdrRejStat(vbukEntity.getAbstk());
+                    salesOrderBo.setHdrDelvStat(vbukEntity.getLfstk());
+                    salesOrderBo.setHdrOvrDelvStat(vbukEntity.getLfgsk());
+                    salesOrderBo.setHdrBillStat(vbukEntity.getFkstk());
+                }
+
+                //rule J6
+                VbupEntity vbupEntity = getFieldWithJ6(vbapEntity.getVbeln(),vbapEntity.getPosnr(), vbapEntity.getMandt());
+                if(vbupEntity!=null){
+                    salesOrderBo.setLineOvrStat(vbupEntity.getGbsta());
+                    salesOrderBo.setLineRejStat(vbupEntity.getAbsta());
+                    salesOrderBo.setLineDelvStat(vbupEntity.getLfsta());
+                    salesOrderBo.setLineOvrDelvStat(vbupEntity.getLfgsa());
+                    salesOrderBo.setLineBillStat(vbupEntity.getFksta());
+                }
                 ResultObject resultObject = new ResultObject();
 
                 resultObject.setBaseBo(salesOrderBo);
@@ -164,6 +184,24 @@ public class EDMSalesOrderServiceImpl {
         }
 
         return resultObjectList;
+    }
+
+    //J6
+    private VbupEntity getFieldWithJ6(String vbeln, String posnr, String mandt) {
+        VbupEntity entity = null;
+        if (StringUtils.isNotBlank(vbeln) && StringUtils.isNotBlank(posnr) && StringUtils.isNotBlank(mandt)) {
+            entity = vbupDao.getEntityWithVbelnAndPosnrAndMandt(vbeln, posnr, mandt);
+        }
+        return entity;
+    }
+
+    //J5
+    private VbukEntity getFieldWithJ5(String vbeln, String mandt) {
+        VbukEntity entity = null;
+        if (StringUtils.isNotBlank(vbeln) && StringUtils.isNotBlank(mandt)) {
+            entity = vbukDao.getEntityWithVbelnAndMandt(vbeln,mandt);
+        }
+        return entity;
     }
 
     //J4

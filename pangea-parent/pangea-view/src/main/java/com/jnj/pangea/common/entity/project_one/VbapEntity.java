@@ -24,6 +24,7 @@ public class VbapEntity extends CommonEntity {
     private String lgort;
     private String vstel;
     private String route;
+    private String mandt;
 
     public VbapEntity(Map<String, Object> map) {
         super(map);
@@ -46,6 +47,7 @@ public class VbapEntity extends CommonEntity {
         setLgort((String) map.get("lgort"));
         setVstel((String) map.get("vstel"));
         setRoute((String) map.get("route"));
+        setMandt((String) map.get("mandt"));
     }
 
     public String getVbeln() {
@@ -190,5 +192,13 @@ public class VbapEntity extends CommonEntity {
 
     public void setRoute(String route) {
         this.route = route;
+    }
+
+    public String getMandt() {
+        return mandt;
+    }
+
+    public void setMandt(String mandt) {
+        this.mandt = mandt;
     }
 }

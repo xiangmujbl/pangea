@@ -21,12 +21,6 @@ Feature: OMPGdmCountry AEAZ-6097
 
     And I will remove the test file on sink application "GDMCountry.tsv"
 
-  J1	"edm_country_input-sourceSystem = country_v1-sourceSystem AND
-  edm_country_input-localCountry = country_v1-localCountry AND
-  edm_country_input-sourceSystem = currency_v1-sourceSystem AND
-  edm_country_input-localCurrency =currency_v1-localCurrency
-  if no records found, reject it and raise error ""1""  from Column D"
-
     # and test incidence relation and Output to the error table
     Given I import "/edm/country_v1" by keyFields "localCountry,sourceSystem"
       | countryName | countryCode | localCountry | sourceSystem |
