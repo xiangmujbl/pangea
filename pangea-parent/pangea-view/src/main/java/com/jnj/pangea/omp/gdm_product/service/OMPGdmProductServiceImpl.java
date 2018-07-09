@@ -163,67 +163,81 @@ public class OMPGdmProductServiceImpl {
 					productBo.setPlanningHierarchy6(franchise);
 					productBo.setPlanningHierarchy7(globalBusinessUnit);
 
-					productBo.setPlanningHierarchy1Desc(checkE2(productFamily));
+					if (dpRelevant) {
+						productBo.setPlanningHierarchy1Desc(checkE2(productFamily));
+					}
 
 					if (StringUtils.isNotEmpty(form)) {
 						productBo.setPlanningHierarchy2Desc(checkE3(form));
 					} else {
-						FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
-								IConstant.FAILED.ERROR_CODE.E3, "There is no Form assigned for product");
-						resultObject.setFailData(failData);
-						resultObjects.add(resultObject);
-						return resultObjects;
+						if (dpRelevant) {
+							FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
+									IConstant.FAILED.ERROR_CODE.E3, "There is no Form assigned for product");
+							resultObject.setFailData(failData);
+							resultObjects.add(resultObject);
+							return resultObjects;
+						}
 					}
 
 					if (StringUtils.isNotEmpty(category)) {
 						productBo.setPlanningHierarchy3Desc(checkE4(category));
 					} else {
-						FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
-								IConstant.FAILED.ERROR_CODE.E4, "There is no Category assigned for product");
-						resultObject.setFailData(failData);
-						resultObjects.add(resultObject);
-						return resultObjects;
+						if (dpRelevant) {
+							FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
+									IConstant.FAILED.ERROR_CODE.E4, "There is no Category assigned for product");
+							resultObject.setFailData(failData);
+							resultObjects.add(resultObject);
+							return resultObjects;
+						}
 					}
 
 					if (StringUtils.isNotEmpty(subBrand)) {
 						productBo.setPlanningHierarchy4Desc(checkE5(subBrand));
 					} else {
-						FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
-								IConstant.FAILED.ERROR_CODE.E5, "There is no subBrand assigned for product");
-						resultObject.setFailData(failData);
-						resultObjects.add(resultObject);
-						return resultObjects;
+						if (dpRelevant) {
+							FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
+									IConstant.FAILED.ERROR_CODE.E5, "There is no subBrand assigned for product");
+							resultObject.setFailData(failData);
+							resultObjects.add(resultObject);
+							return resultObjects;
+						}
 					}
 
 					if (StringUtils.isNotEmpty(brand)) {
 						productBo.setPlanningHierarchy5Desc(checkE6(brand));
 					} else {
-						FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
-								IConstant.FAILED.ERROR_CODE.E6, "There is no brand assigned for product");
-						resultObject.setFailData(failData);
-						resultObjects.add(resultObject);
-						return resultObjects;
+						if (dpRelevant) {
+							FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
+									IConstant.FAILED.ERROR_CODE.E6, "There is no brand assigned for product");
+							resultObject.setFailData(failData);
+							resultObjects.add(resultObject);
+							return resultObjects;
+						}
 					}
 
 					if (StringUtils.isNotEmpty(franchise)) {
 						productBo.setPlanningHierarchy6Desc(checkE7(franchise));
 					} else {
-						FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
-								IConstant.FAILED.ERROR_CODE.E7, "There is no franchise assigned for product");
-						resultObject.setFailData(failData);
-						resultObjects.add(resultObject);
-						return resultObjects;
+						if (dpRelevant) {
+							FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
+									IConstant.FAILED.ERROR_CODE.E7, "There is no franchise assigned for product");
+							resultObject.setFailData(failData);
+							resultObjects.add(resultObject);
+							return resultObjects;
+						}
 					}
 
 					if (StringUtils.isNotEmpty(globalBusinessUnit)) {
 						productBo.setPlanningHierarchy7Desc(checkE8(globalBusinessUnit));
 					} else {
-						FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
-								IConstant.FAILED.ERROR_CODE.E8,
-								"There is no globalBusinessUnit assigned for product");
-						resultObject.setFailData(failData);
-						resultObjects.add(resultObject);
-						return resultObjects;
+						if (dpRelevant) {
+							FailData failData = writeFailDataToRegion(materialGlobalV1Entity,
+									IConstant.FAILED.ERROR_CODE.E8,
+									"There is no globalBusinessUnit assigned for product");
+							resultObject.setFailData(failData);
+							resultObjects.add(resultObject);
+							return resultObjects;
+						}
 					}
 
 					productBo.setTechnology(materialGlobalV1Entity.getLocalManufacturingTechnology());
