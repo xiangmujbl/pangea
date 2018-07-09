@@ -1,9 +1,9 @@
-package com.jnj.pangea.omp.gdm_certainity.bo;
+package com.jnj.pangea.omp.gdm_certainty.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class OMPGdmCertainityBo extends BaseBo {
+public class OMPGdmCertaintyBo extends BaseBo {
 
     private String certaintyId;
     private String activeFCTERP;

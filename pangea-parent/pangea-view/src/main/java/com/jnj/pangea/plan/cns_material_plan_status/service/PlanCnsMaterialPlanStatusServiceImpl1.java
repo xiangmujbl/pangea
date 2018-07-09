@@ -40,8 +40,8 @@ public class PlanCnsMaterialPlanStatusServiceImpl1 {
         PlanCnsMaterialPlanStatusBo materialPlanStatusBo = new PlanCnsMaterialPlanStatusBo();
 
         boolean checkF1 = checkF1(materialPlantV1Entity, f1LocalMaterialTypeSet, f1LocalMaterialTypeNotSet, f1DivisionSet, f1DivisionNotSet);
-        boolean checkF2 = checkF2(materialPlantV1Entity,f2LocalPlantSet,f2LocalPlantNotSet,f2LocalMRPTypeNotSet,f2LocalPlantStatusSet,f2LocalPlantStatusNotSet,f2LocalMrpControllerSet,f2LocalMrpControllerNotSet);
-        boolean checkF3 = checkF3(materialPlantV1Entity,f3LocalPlantSet,f3LocalPlantNotSet,f3LocalMRPTypeSet,f3LocalPlantStatusSet,f3LocalPlantStatusNotSet,f3LocalMrpControllerSet,f3LocalMrpControllerNotSet);
+        boolean checkF2 = checkF2(materialPlantV1Entity, f2LocalPlantSet, f2LocalPlantNotSet, f2LocalMRPTypeNotSet, f2LocalPlantStatusSet, f2LocalPlantStatusNotSet, f2LocalMrpControllerSet, f2LocalMrpControllerNotSet);
+        boolean checkF3 = checkF3(materialPlantV1Entity, f3LocalPlantSet, f3LocalPlantNotSet, f3LocalMRPTypeSet, f3LocalPlantStatusSet, f3LocalPlantStatusNotSet, f3LocalMrpControllerSet, f3LocalMrpControllerNotSet);
 
         if (checkF1 && (checkF2 || checkF3)) {
 
@@ -69,7 +69,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl1 {
             }
 
             CnsMaterialInclEntity materialInclEntity = materialInclDao.getEntityWithLocalMaterialNumberAndPlanningType(materialPlantV1Entity.getLocalMaterialNumber(), IConstant.VALUE.NP);
-            if(null != materialInclEntity){
+            if (null != materialInclEntity) {
                 materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
             }
             getFieldWithT6(materialPlanStatusBo);
@@ -87,14 +87,13 @@ public class PlanCnsMaterialPlanStatusServiceImpl1 {
             String flagForDeletion = StringUtils.trim(materialGlobalV1Entity.getFlagForDeletion());
 
 
-         //   boolean f1LocalMaterialType = (f1LocalMaterialTypeSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()));
-         //   boolean f1LocalMaterialTypeNot = !f1LocalMaterialTypeNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()));
+            //   boolean f1LocalMaterialType = (f1LocalMaterialTypeSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()));
+            //   boolean f1LocalMaterialTypeNot = !f1LocalMaterialTypeNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()));
 
-            boolean f1LocalMaterialType = (f1LocalMaterialTypeSet.isEmpty() || ( f1LocalMaterialTypeSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()))));
-            boolean f1LocalMaterialTypeNot =(f1LocalMaterialTypeNotSet.isEmpty() ||!f1LocalMaterialTypeNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType())));
-            boolean f1Division =   (f1DivisionSet.isEmpty()    || f1DivisionSet.contains(StringUtils.trim(materialGlobalV1Entity.getDivision())));
-            boolean f1DivisionNot = (f1DivisionNotSet.isEmpty()    || !f1DivisionNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getDivision())));
-
+            boolean f1LocalMaterialType = (f1LocalMaterialTypeSet.isEmpty() || (f1LocalMaterialTypeSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType()))));
+            boolean f1LocalMaterialTypeNot = (f1LocalMaterialTypeNotSet.isEmpty() || !f1LocalMaterialTypeNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getLocalMaterialType())));
+            boolean f1Division = (f1DivisionSet.isEmpty() || f1DivisionSet.contains(StringUtils.trim(materialGlobalV1Entity.getDivision())));
+            boolean f1DivisionNot = (f1DivisionNotSet.isEmpty() || !f1DivisionNotSet.contains(StringUtils.trim(materialGlobalV1Entity.getDivision())));
 
 
             if (f1LocalMaterialType && f1LocalMaterialTypeNot && f1Division && f1DivisionNot && !IConstant.VALUE.X.equals(flagForDeletion)) {
@@ -113,15 +112,13 @@ public class PlanCnsMaterialPlanStatusServiceImpl1 {
         String localPlantStatus = StringUtils.trim(materialPlantV1Entity.getLocalPlantStatus());
         String localMrpController = StringUtils.trim(materialPlantV1Entity.getLocalMrpController());
 
-        boolean f2LocalPlant = (f2LocalPlantSet.isEmpty()    || f2LocalPlantSet.contains(localPlant));
-        boolean f2LocalPlantNot = (f2LocalPlantNotSet.isEmpty()    ||!f2LocalPlantNotSet.contains(localPlant));
-        boolean f2LocalMRPTypeNot = (f2LocalMRPTypeNotSet.isEmpty()    ||!f2LocalMRPTypeNotSet.contains(localMrpType));
-        boolean f2LocalPlantStatus = (f2LocalPlantStatusSet.isEmpty()    ||f2LocalPlantStatusSet.contains(localPlantStatus));
-        boolean f2LocalPlantStatusNot =(f2LocalPlantStatusNotSet.isEmpty()    || !f2LocalPlantStatusNotSet.contains(localPlantStatus));
-        boolean f2LocalMrpController = (f2LocalMrpControllerSet.isEmpty()    ||f2LocalMrpControllerSet.contains(localMrpController));
-        boolean f2LocalMrpControllerNot = (f2LocalMrpControllerNotSet.isEmpty()    ||!f2LocalMrpControllerNotSet.contains(localMrpController));
-
-
+        boolean f2LocalPlant = (f2LocalPlantSet.isEmpty() || f2LocalPlantSet.contains(localPlant));
+        boolean f2LocalPlantNot = (f2LocalPlantNotSet.isEmpty() || !f2LocalPlantNotSet.contains(localPlant));
+        boolean f2LocalMRPTypeNot = (f2LocalMRPTypeNotSet.isEmpty() || !f2LocalMRPTypeNotSet.contains(localMrpType));
+        boolean f2LocalPlantStatus = (f2LocalPlantStatusSet.isEmpty() || f2LocalPlantStatusSet.contains(localPlantStatus));
+        boolean f2LocalPlantStatusNot = (f2LocalPlantStatusNotSet.isEmpty() || !f2LocalPlantStatusNotSet.contains(localPlantStatus));
+        boolean f2LocalMrpController = (f2LocalMrpControllerSet.isEmpty() || f2LocalMrpControllerSet.contains(localMrpController));
+        boolean f2LocalMrpControllerNot = (f2LocalMrpControllerNotSet.isEmpty() || !f2LocalMrpControllerNotSet.contains(localMrpController));
 
 
         if (f2LocalPlant && f2LocalPlantNot && f2LocalMRPTypeNot && f2LocalPlantStatus && f2LocalPlantStatusNot && f2LocalMrpController && f2LocalMrpControllerNot) {
@@ -138,16 +135,15 @@ public class PlanCnsMaterialPlanStatusServiceImpl1 {
 
         CnsMaterialInclEntity cnsMaterialInclEntity = materialInclDao.getEntityWithConditions(materialPlantV1Entity.getLocalMaterialNumber(), localPlant, IConstant.VALUE.CRITICAL_ROH, IConstant.VALUE.SP1);
 
-        boolean f3LocalPlant = (f3LocalPlantSet.isEmpty()    ||f3LocalPlantSet.contains(localPlant));
-        boolean f3LocalPlantNot = (f3LocalPlantNotSet.isEmpty()    ||!f3LocalPlantNotSet.contains(localPlant));
-        boolean f3LocalMRPType = (f3LocalMRPTypeSet.isEmpty()    || f3LocalMRPTypeSet.contains(localMrpType));
-        boolean f3LocalPlantStatus = (f3LocalPlantStatusSet.isEmpty()    ||f3LocalPlantStatusSet.contains(localPlantStatus));
-        boolean f3LocalPlantStatusNot = (f3LocalPlantStatusNotSet.isEmpty()    ||!f3LocalPlantStatusNotSet.contains(localPlantStatus));
-        boolean f3LocalMrpController =(f3LocalMrpControllerSet.isEmpty()    || f3LocalMrpControllerSet.contains(localMrpController));
-        boolean f3LocalMrpControllerNot =(f3LocalMrpControllerNotSet.isEmpty()    || !f3LocalMrpControllerNotSet.contains(localMrpController));
-        
-      //  if (null != cnsMaterialInclEntity && 
-        		if( f3LocalPlant && f3LocalPlantNot && f3LocalMRPType && f3LocalPlantStatus && f3LocalPlantStatusNot && f3LocalMrpController && f3LocalMrpControllerNot) {
+        boolean f3LocalPlant = (f3LocalPlantSet.isEmpty() || f3LocalPlantSet.contains(localPlant));
+        boolean f3LocalPlantNot = (f3LocalPlantNotSet.isEmpty() || !f3LocalPlantNotSet.contains(localPlant));
+        boolean f3LocalMRPType = (f3LocalMRPTypeSet.isEmpty() || f3LocalMRPTypeSet.contains(localMrpType));
+        boolean f3LocalPlantStatus = (f3LocalPlantStatusSet.isEmpty() || f3LocalPlantStatusSet.contains(localPlantStatus));
+        boolean f3LocalPlantStatusNot = (f3LocalPlantStatusNotSet.isEmpty() || !f3LocalPlantStatusNotSet.contains(localPlantStatus));
+        boolean f3LocalMrpController = (f3LocalMrpControllerSet.isEmpty() || f3LocalMrpControllerSet.contains(localMrpController));
+        boolean f3LocalMrpControllerNot = (f3LocalMrpControllerNotSet.isEmpty() || !f3LocalMrpControllerNotSet.contains(localMrpController));
+
+        if (f3LocalPlant && f3LocalPlantNot && f3LocalMRPType && f3LocalPlantStatus && f3LocalPlantStatusNot && f3LocalMrpController && f3LocalMrpControllerNot) {
             return true;
         }
         return false;

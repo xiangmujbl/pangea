@@ -18,6 +18,7 @@ Feature: EDMCountry AEAZ-5739
       | [Consumer LATAM] | BS      | BS                    | z All Countries |
       | [Consumer LATAM] | BT      | BT                    | z Miscellaneous |
       | [Consumer LATAM] | BR      | BR                    | z EN Countries  |
+
     And I wait "/ems/ems_f_mdm_countries" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -25,7 +26,7 @@ Feature: EDMCountry AEAZ-5739
       | project_one       | Project One           | CONS_LATAM   | Consumer Latam Ent |
       | [EMS]             | EMS                   | EMS          | EMS Ent            |
       | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
-      | project_three     | project Three         | CONS_LATAM   | Consumer Latam Ent |
+      | project_three     | project Three         |              | Consumer Latam Ent |
       | [Consumer LATAM]  | Project One           | CONS_LATAM   | Consumer Latam Ent |
 
     And I wait "/edm/source_system_v1" Async Queue complete
@@ -52,7 +53,6 @@ Feature: EDMCountry AEAZ-5739
       | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion | consumerPlannRegDesc |
       | CONS_LATAM   | *            | AD          | All Countries | CDEF123                | CDEF190              |
       | CONS_LATAM   | 00           | AE          | Miscellaneous | AGCF189                | AGEC019              |
-      | CONS_LATAM   | 01           | AD          | All Countries |                        |                      |
       | CONS_LATAM   | BR           | BR          | Brazil        | 103                    | LATAM                |
       | CONS_LATAM   | BS           | BS          | Bahamas       | 104                    |                      |
       | CONS_LATAM   | BT           | BT          | Bhutan        |                        |                      |
