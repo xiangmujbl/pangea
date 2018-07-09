@@ -19,6 +19,8 @@ public class VbukDaoImpl extends CommonDaoImpl {
     public VbukEntity getVbukbyLikp(String vbeln, String mandt) {
         String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_VBUK.VBELN).is(vbeln)
                 .and(IConstant.PROJECT_ONE_VBUK.MANDT).is(mandt).toQueryString();
+        return queryForObject(IConstant.REGION.PROJECT_ONE_VBUK, queryString, VbukEntity.class);
+    }
 
         return queryForObject(IConstant.REGION.PROJECT_ONE_VBUK, queryString, VbukEntity.class);
     }
