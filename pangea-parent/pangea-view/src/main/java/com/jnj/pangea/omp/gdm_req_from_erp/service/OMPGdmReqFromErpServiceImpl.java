@@ -64,7 +64,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         //N2
         try {
             String dateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
-            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.MMDYYYY);
+            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
             SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
             Date dFrom = sdfFrom.parse(dateToFormat);
 
