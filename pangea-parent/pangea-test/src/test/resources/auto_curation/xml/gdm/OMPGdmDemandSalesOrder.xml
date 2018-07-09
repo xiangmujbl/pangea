@@ -1,4 +1,4 @@
-<adf-curation xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.GDMDemandSalesOrder">
+<adf-curation xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.GDMDemandSalesOrder" writeTo="all" topic="PANGEA_V1_gdm_demand_sales_order" failRegion="/plan/edm_failed_data">
 
     <regions>
         <region path="/edm/sales_order_v1" mainRegion="true">

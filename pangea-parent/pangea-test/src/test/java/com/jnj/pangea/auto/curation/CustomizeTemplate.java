@@ -9,7 +9,7 @@ public class CustomizeTemplate {
 
     public static void main(String[] args) {
         Template template = new CETemplateImpl();
-        String customizeXml = "auto_curation/xml/gdm/gdm_demand_sales_order.xml";
+        String customizeXml = "auto_curation/xml/gdm/OMPGdmDemandSalesOrder.xml";
         template.generateAll(customizeXml);
     }
 }

@@ -28,6 +28,8 @@ import java.nio.*;
 @SuppressWarnings("unchecked")
 public class GDMDemandSalesOrder implements IEventProcessor {
 
+	private final String FAILREGION = "/plan/edm_failed_data";
+
 	@Override
 	public List<ViewResultItem> process(List<RawDataEvent> list) {
 
@@ -58,6 +60,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 									ViewResultItem viewRaw = ViewResultBuilder
 											.newResultItem(viewKey, data);
 									resultList.add(viewRaw);
+								} else {
+									failMap.forEach((key, value) -> {
+										ViewResultItem viewRaw = ViewResultBuilder
+												.newResultItem(
+														FAILREGION,
+														key,
+														(Map<String, Object>) value
+																.toRawData());
+										resultList.add(viewRaw);
+									});
 								}
 							} catch (Exception exception) {
 								LogUtil.getCoreLog()
@@ -134,13 +146,14 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 
 		Map map1 = joinMaterialGlobal(sourceSystem, localMaterialNumber);
 		if (map1 != null) {
-			localBaseUom = StringInner.getString(map1, "localBaseUom");
+			localBaseUom = String.valueOf(map1.get("localBaseUom"));
 		}
 
 		Map map2 = joinCnsPlanUnit(sourceSystem, localBaseUom);
 		if (map2 != null) {
-			unit = StringInner.getString(map2, "unit");
+			unit = String.valueOf(map2.get("unit"));
 		}
+
 		if (unit != null) {
 			unitId = unit;
 		} else {
@@ -159,12 +172,13 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		Map map3 = joinCnsCustExclIncl(sourceSystem, localSalesOrg, inclFlag,
 				localShipToParty, allShipTo);
 		if (map3 != null) {
-			inclExcl = StringInner.getString(map3, "inclExcl");
+			inclExcl = String.valueOf(map3.get("inclExcl"));
 		}
+
 		if (inclExcl != null) {
 			Map map4 = joinCnsDemGrpAsgn(localShipToParty, localSalesOrg);
 			if (map4 != null) {
-				demandGroup = StringInner.getString(map4, "demandGroup");
+				demandGroup = String.valueOf(map4.get("demandGroup"));
 				if (StringInner.isStringNotEmpty(demandGroup)) {
 					customerId = demandGroup;
 				}
@@ -172,16 +186,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			if (StringInner.isStringEmpty(customerId)) {
 				Map map5 = joinKnvhOnKunnr(localShipToParty);
 				if (map5 != null) {
-					vkorg = StringInner.getString(map5, "vkorg");
-					datbi = StringInner.getString(map5, "datbi");
-					hkunnr = StringInner.getString(map5, "hkunnr");
+					vkorg = String.valueOf(map5.get("vkorg"));
+					datbi = String.valueOf(map5.get("datbi"));
+					hkunnr = String.valueOf(map5.get("hkunnr"));
 					if (vkorg.equals(localSalesOrg)
 							&& Integer.parseInt(localRequestedDate) <= Integer
 									.parseInt(datbi)) {
 						Map map6 = joinCnsDemGrpAsgnCustId(hkunnr);
 						if (map6 != null) {
-							demandGroup = StringInner.getString(map6,
-									"demandGroup");
+							demandGroup = String.valueOf(map6
+									.get("demandGroup"));
 							if (StringInner.isStringNotEmpty(demandGroup)) {
 								customerId = demandGroup;
 							}
@@ -191,16 +205,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				if (StringInner.isStringEmpty(customerId)) {
 					Map map7 = joinKnvhOnHkunnr(localShipToParty);
 					if (map7 != null) {
-						vkorg = StringInner.getString(map7, "vkorg");
-						datbi = StringInner.getString(map7, "datbi");
-						hkunnr = StringInner.getString(map7, "hkunnr");
+						vkorg = String.valueOf(map7.get("vkorg"));
+						datbi = String.valueOf(map7.get("datbi"));
+						hkunnr = String.valueOf(map7.get("hkunnr"));
 						if (vkorg.equals(localSalesOrg)
 								&& Integer.parseInt(localRequestedDate) <= Integer
 										.parseInt(datbi)) {
 							Map map8 = joinCnsDemGrpAsgnCustId(hkunnr);
 							if (map8 != null) {
-								demandGroup = StringInner.getString(map8,
-										"demandGroup");
+								demandGroup = String.valueOf(map8
+										.get("demandGroup"));
 								if (StringInner.isStringNotEmpty(demandGroup)) {
 									customerId = demandGroup;
 								}
@@ -237,15 +251,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		Map map9 = joinProdLocMinShelf(sourceSystem, localPlant,
 				localMaterialNumber);
 		if (map9 != null) {
-			minShelfLife = StringInner.getString(map9, "minShelfLife");
+			minShelfLife = String.valueOf(map9.get("minShelfLife"));
 		}
+
 		if (minShelfLife != null) {
 			minRemainingShelfLife = minShelfLife;
 		} else {
 			Map map10 = joinProdLocMinShelf(sourceSystem, localPlant,
 					allMaterialNumber);
 			if (map10 != null) {
-				minShelfLife = StringInner.getString(map10, "minShelfLife");
+				minShelfLife = String.valueOf(map10.get("minShelfLife"));
 				if (minShelfLife != null) {
 					minRemainingShelfLife = minShelfLife;
 				}
@@ -256,8 +271,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 
 			Map map11 = joinMaterialGlobal(sourceSystem, localMaterialNumber);
 			if (map11 != null) {
-				minRemShelfLife = StringInner.getString(map11,
-						"minRemShelfLife");
+				minRemShelfLife = String.valueOf(map11.get("minRemShelfLife"));
 				if (minRemShelfLife != null) {
 					minRemainingShelfLife = minRemShelfLife;
 				} else {
@@ -273,15 +287,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		Map map12 = joinCnsMaterialPlanStatus(sourceSystem, localPlant,
 				localMaterialNumber);
 		if (map12 != null) {
-			spRelevant = StringInner.getString(map12, "spRelevant");
-			noPlanRelevant = StringInner.getString(map12, "noPlanRelevant");
+			spRelevant = String.valueOf(map12.get("spRelevant"));
+			noPlanRelevant = String.valueOf(map12.get("noPlanRelevant"));
 		}
+
 		if ("X".equals(spRelevant) || "X".equals(noPlanRelevant)) {
 			Map map13 = joinMaterialGlobal(sourceSystem, localMaterialNumber);
 			if (map13 != null) {
-				primaryPlanningCode = StringInner.getString(map13,
-						"primaryPlanningCode");
-				materialNumber = StringInner.getString(map13, "materialNumber");
+				primaryPlanningCode = String.valueOf(map13
+						.get("primaryPlanningCode"));
+				materialNumber = String.valueOf(map13.get("materialNumber"));
 				if (StringInner.isStringEmpty(primaryPlanningCode)) {
 					productId = materialNumber;
 				} else {
@@ -299,8 +314,9 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		Map map14 = joinCnsSoTypeInclExcl(localOrderType, localPlant,
 				localSalesOrg, sourceSystem, inclFlag);
 		if (map14 != null) {
-			inclExcl = StringInner.getString(map14, "inclExcl");
+			inclExcl = String.valueOf(map14.get("inclExcl"));
 		}
+
 		if (inclExcl != null) {
 			if (Integer.parseInt(scheduleLineItem) != 1
 					|| Integer.parseInt(salesOrderQty) <= 0
@@ -322,9 +338,9 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		Map map15 = joinSalesHistoryAggr(salesOrderNo, salesOrderItem,
 				localSubDocCatg);
 		if (map15 != null) {
-			localBaseQuantity = StringInner.getString(map15,
-					"localBaseQuantity");
+			localBaseQuantity = String.valueOf(map15.get("localBaseQuantity"));
 		}
+
 		if ((Double.parseDouble(salesOrderQty)
 				* Integer.parseInt(localNumtoBase) / Integer
 					.parseInt(localDentoBase)) > Double
@@ -558,9 +574,9 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 	}
 
 	private void writeFailDataToRegion(Map<String, RawDataBuilder> failMap,
-									   String functionalArea, String interfaceID, String errorCode,
-									   String errorValue, String sourceSystem, String key1, String key2,
-									   String key3, String key4, String key5, String businessArea) {
+			String functionalArea, String interfaceID, String errorCode,
+			String errorValue, String sourceSystem, String key1, String key2,
+			String key3, String key4, String key5, String businessArea) {
 		String keyJson = JsonObject.create()
 				.append("functionalArea", functionalArea)
 				.append("interfaceID", interfaceID)

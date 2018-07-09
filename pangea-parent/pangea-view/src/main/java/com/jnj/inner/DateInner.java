@@ -16,7 +16,6 @@ public class DateInner {
     public final static String F_yyyyMMdd_3 = "dd.MM.yyyy";
     public final static String F_yyyyMM = "yyyyMM";
     public final static String F_hhmmss_a = "hh:mm:ss a";
-    public final static String F_HHmmss = "HHmmss";
     public final static String F_yyyyMMddHHmmss = "yyyyMMddHHmmss";
     public final static String yyyyMMdd_HHmmss = "yyyyMMdd_HH-mm-ss";
     public final static String yyyy_MM_dd_HHmmss_SSS = "yyyy/MM/dd HH:mm:ss.SSS";
@@ -55,11 +54,7 @@ public class DateInner {
 
     public static String dateToString(Date dt, String format, Locale locale) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
-        try {
-            return sdf.format(dt);
-        } catch (Exception e){
-        }
-        return "";
+        return sdf.format(dt);
     }
 
     public static Date stringToDate(String dateStr, String format) {
@@ -75,15 +70,6 @@ public class DateInner {
             s_date = correctDate(dateStr, format);
         }
         return s_date;
-    }
-
-    public static String StringToString(String dateStr, String format, String targetFormat){
-        return StringToString(dateStr, format, targetFormat, Locale.getDefault());
-    }
-
-    public static String StringToString(String dateStr, String format, String targetFormat, Locale locale){
-        Date date = stringToDate(dateStr, format, locale);
-        return dateToString(date, targetFormat, locale);
     }
 
     public static Date offsetYear(Date date, int year) {
@@ -120,14 +106,6 @@ public class DateInner {
         calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + hour);
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + minute);
         calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + second);
-        return calendar.getTime();
-    }
-
-    public static Date offsetDate(Date date, int days) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
         return calendar.getTime();
     }
 
