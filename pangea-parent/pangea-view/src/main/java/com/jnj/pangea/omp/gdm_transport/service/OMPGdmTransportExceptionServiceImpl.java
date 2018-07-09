@@ -80,7 +80,6 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
 
             //N5
             gdmTransportBo.setMinQuantity(IConstant.VALUE.ZEROZERO);
-            gdmTransportBo.setRequirementOffset(IConstant.VALUE.ZERO);
 
             //N6
             gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);

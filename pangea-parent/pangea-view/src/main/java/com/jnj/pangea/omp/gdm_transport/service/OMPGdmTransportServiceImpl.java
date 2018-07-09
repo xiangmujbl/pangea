@@ -75,7 +75,6 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 			//N5 version3 set default as 0.0
 			gdmTransportBo.setMinQuantity(IConstant.VALUE.ZEROZERO);
-			gdmTransportBo.setRequirementOffset(IConstant.VALUE.ZEROZERO);
 
 			//N6
 			gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
