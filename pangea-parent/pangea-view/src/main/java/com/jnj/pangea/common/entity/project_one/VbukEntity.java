@@ -109,4 +109,8 @@ public class VbukEntity extends CommonEntity {
     public void setAbstk(String abstk) {
         this.abstk = abstk;
     }
+
+    public String getLfgsk() {
+        return lfgsk;
+    }
 }
