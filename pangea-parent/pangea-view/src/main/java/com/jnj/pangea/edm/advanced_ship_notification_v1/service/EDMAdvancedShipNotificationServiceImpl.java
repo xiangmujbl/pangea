@@ -1,6 +1,5 @@
 package com.jnj.pangea.edm.advanced_ship_notification_v1.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -9,8 +8,8 @@ import com.jnj.pangea.common.dao.impl.project_one.LipsDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.project_one.LikpEntity;
 import com.jnj.pangea.common.entity.project_one.LipsEntity;
-import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.advanced_ship_notification_v1.bo.EDMAdvancedShipNotificationBo;
+import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +46,7 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // J1
         // Join using (LIKP-VBELN) = (LIPS-VBELN) to get value of ( LIPS-POSNR) and there can be multiple values
         List<LipsEntity> lipsEntities = lipsDao.getLipsEntitiesWithVbeln(likpEntity.getVbeln());
-        for(LipsEntity lipsEntity : lipsEntities) {
+        for (LipsEntity lipsEntity : lipsEntities) {
             resultObjects.add(setObjectByPosnr(likpEntity, lipsEntity));
         }
         return resultObjects;
@@ -64,20 +63,20 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // N3
         // ERP Date is informat yyyymmdd
         // Date needs to be converted in - yyyy-mm-dd
-        edmAdvancedShipNotificationBo.setLocalcreatedDate(dateFormatter(likpEntity.getErdat()));
+        edmAdvancedShipNotificationBo.setLocalCreatedDate(dateFormatter(likpEntity.getErdat()));
 
-        edmAdvancedShipNotificationBo.setDelvDocID(lipsEntity.getVbeln());
+        edmAdvancedShipNotificationBo.setDelvDocId(lipsEntity.getVbeln());
 
-        edmAdvancedShipNotificationBo.setReceivingPtID(likpEntity.getVstel());
+        edmAdvancedShipNotificationBo.setReceivingPtId(likpEntity.getVstel());
 
-        edmAdvancedShipNotificationBo.setLocaldeliveryType(likpEntity.getLfart());
+        edmAdvancedShipNotificationBo.setLocalDeliveryType(likpEntity.getLfart());
 
         // N3
         // ERP Date is informat yyyymmdd
         // Date needs to be converted in - yyyy-mm-dd
-        edmAdvancedShipNotificationBo.setLocaldeliveryDate(dateFormatter(likpEntity.getLfdat()));
+        edmAdvancedShipNotificationBo.setLocalDeliveryDate(dateFormatter(likpEntity.getLfdat()));
 
-        edmAdvancedShipNotificationBo.setLocalbillOfLading(likpEntity.getBolnr());
+        edmAdvancedShipNotificationBo.setLocalBillOfLading(likpEntity.getBolnr());
 
         edmAdvancedShipNotificationBo.setLocalExternalId(likpEntity.getLifex());
 
@@ -86,15 +85,15 @@ public class EDMAdvancedShipNotificationServiceImpl {
         // Date needs to be converted in - yyyy-mm-dd
         edmAdvancedShipNotificationBo.setActGRDt(dateFormatter(likpEntity.getWadatist()));
 
-        edmAdvancedShipNotificationBo.setVendorID(likpEntity.getLifnr());
+        edmAdvancedShipNotificationBo.setVendorId(likpEntity.getLifnr());
 
         edmAdvancedShipNotificationBo.setLocalShippingPlant(likpEntity.getWerks());
 
         edmAdvancedShipNotificationBo.setMatlNum(lipsEntity.getMatnr());
 
-        edmAdvancedShipNotificationBo.setLocalbatchNo(lipsEntity.getCharg());
+        edmAdvancedShipNotificationBo.setLocalBatchNo(lipsEntity.getCharg());
 
-        edmAdvancedShipNotificationBo.setLocalvendorBatchNo(lipsEntity.getLichn());
+        edmAdvancedShipNotificationBo.setLocalVendorBatchNo(lipsEntity.getLichn());
 
         edmAdvancedShipNotificationBo.setLocalReceivingPlant(lipsEntity.getWerks());
 
@@ -116,8 +115,8 @@ public class EDMAdvancedShipNotificationServiceImpl {
 
         // N1
         // Select only when LIKP-VBTYP= 7
-        if(likpEntity.getVbtyp().equals(IConstant.VALUE.SEVEN)) {
-            edmAdvancedShipNotificationBo.setLocaldeliveryCatg(likpEntity.getVbtyp());
+        if (likpEntity.getVbtyp().equals(IConstant.VALUE.SEVEN)) {
+            edmAdvancedShipNotificationBo.setLocalDeliveryCatg(likpEntity.getVbtyp());
         } else {
             // skip
             return null;
@@ -127,6 +126,10 @@ public class EDMAdvancedShipNotificationServiceImpl {
     }
 
     private String dateFormatter(String dateToFormat) {
+
+        if (StringUtils.isEmpty(dateToFormat)) {
+            return "";
+        }
 
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD_WITH_DASH);

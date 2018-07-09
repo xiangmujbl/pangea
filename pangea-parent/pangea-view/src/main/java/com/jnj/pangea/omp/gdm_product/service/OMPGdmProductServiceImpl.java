@@ -3,23 +3,17 @@ package com.jnj.pangea.omp.gdm_product.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.edm.*;
 import com.jnj.pangea.common.dao.impl.plan.*;
 import com.jnj.pangea.common.entity.edm.*;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.common.entity.edm.EDMProductFamilyV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMProductFamilyV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMFormV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMFormV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCategoryV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMCategoryV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSubBrandV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMSubBrandV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMBrandV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMBrandV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMFranchiseV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMFranchiseV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMGlobalBusinessUnitV1Entity;
-import com.jnj.pangea.common.dao.impl.edm.EDMGlobalBusinessUnitV1DaoImpl;
 import com.jnj.pangea.omp.gdm_product.bo.OMPGdmProductBo;
 import org.apache.commons.lang.StringUtils;
 
@@ -59,61 +53,61 @@ public class OMPGdmProductServiceImpl {
         String localDPParentCode = materialGlobalV1Entity.getLocalDpParentCode();
         String sourceSystem = materialGlobalV1Entity.getSourceSystem();
 
-        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity = 
-        		cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(sourceSystem, 
-        				materialGlobalV1Entity.getLocalMaterialNumber());
+        PlanCnsMaterialPlanStatusEntity materialPlanStatusEntity =
+                cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberSourceSystemAndRelevant(sourceSystem,
+                        materialGlobalV1Entity.getLocalMaterialNumber());
 
         if (null != materialPlanStatusEntity) {
             List<OMPGdmProductBo> productBos = new ArrayList<>();
-                if (StringUtils.isNotEmpty(primaryPlanningCode)) {
-                    OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-                    gdmProductBo.setProductId(primaryPlanningCode);
-                    String refDescription = materialGlobalV1Entity.getRefDescription();
-                    gdmProductBo.setDescription(refDescription);
-                    gdmProductBo.setShortDescription(refDescription);
-                    gdmProductBo.setActiveOPRERP(IConstant.VALUE.NO);
-                    gdmProductBo.setActiveFCTERP(IConstant.VALUE.NO);
+            if (StringUtils.isNotEmpty(primaryPlanningCode)) {
+                OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
+                gdmProductBo.setProductId(primaryPlanningCode);
+                String refDescription = materialGlobalV1Entity.getRefDescription();
+                gdmProductBo.setDescription(refDescription);
+                gdmProductBo.setShortDescription(refDescription);
+                gdmProductBo.setActiveOPRERP(IConstant.VALUE.NO);
+                gdmProductBo.setActiveFCTERP(IConstant.VALUE.NO);
 
-                    PlanCnsMaterialPlanStatusEntity materialPlanStatusEntityDp = 
-                    		cnsMaterialPlanStatusDao.getEntityWithDpRelevantAndLocalMaterialnumber(materialGlobalV1Entity.getLocalMaterialNumber());
-                    if (null != materialPlanStatusEntityDp)
-                        gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
-                    
-                    PlanCnsMaterialPlanStatusEntity materialPlanStatusEntitySpNoPlan = 
-                    		cnsMaterialPlanStatusDao.getEntityWithSPNoPlanRelevantAndLocalMaterialnumber(materialGlobalV1Entity.getLocalMaterialNumber());
-                    if( null != materialPlanStatusEntitySpNoPlan)
-                        gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
-
-                    productBos.add(gdmProductBo);
-                }
-
-
-               String parameterValue = getParameterValue(sourceSystem);
-
-                if (StringUtils.isNotEmpty(localDPParentCode) && StringUtils.isNotEmpty(parameterValue)) {
-                    OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
-                    gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
-
-                    PlanCnsRootDescriptionEntity cnsRootDescriptionEntity = rootDescriptionDao.getEntityWithSourceSystemAndLocalDpParentCode(materialGlobalV1Entity.getSourceSystem(), materialGlobalV1Entity.getLocalDpParentCode());
-
-                    if (null != cnsRootDescriptionEntity) {
-                        String ovrRootDesc = cnsRootDescriptionEntity.getOvrRootDesc();
-
-                        if (StringUtils.isNotEmpty(ovrRootDesc)) {
-                            gdmProductBo.setDescription(ovrRootDesc);
-                            gdmProductBo.setShortDescription(ovrRootDesc);
-                        } else {
-                            gdmProductBo.setDescription(cnsRootDescriptionEntity.getRootDesc());
-                            gdmProductBo.setShortDescription(cnsRootDescriptionEntity.getRootDesc());
-                        }
-                    }
-
+                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntityDp =
+                        cnsMaterialPlanStatusDao.getEntityWithDpRelevantAndLocalMaterialnumber(materialGlobalV1Entity.getLocalMaterialNumber());
+                if (null != materialPlanStatusEntityDp)
                     gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
-                    gdmProductBo.setActiveOPRERP(IConstant.VALUE.NO);
-                    gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
-                    productBos.add(gdmProductBo);
+
+                PlanCnsMaterialPlanStatusEntity materialPlanStatusEntitySpNoPlan =
+                        cnsMaterialPlanStatusDao.getEntityWithSPNoPlanRelevantAndLocalMaterialnumber(materialGlobalV1Entity.getLocalMaterialNumber());
+                if( null != materialPlanStatusEntitySpNoPlan)
+                    gdmProductBo.setActiveOPRERP(IConstant.VALUE.YES);
+
+                productBos.add(gdmProductBo);
+            }
+
+
+            String parameterValue = getParameterValue(sourceSystem);
+
+            if (StringUtils.isNotEmpty(localDPParentCode) && StringUtils.isNotEmpty(parameterValue)) {
+                OMPGdmProductBo gdmProductBo = new OMPGdmProductBo();
+                gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
+
+                PlanCnsRootDescriptionEntity cnsRootDescriptionEntity = rootDescriptionDao.getEntityWithSourceSystemAndLocalDpParentCode(materialGlobalV1Entity.getSourceSystem(), materialGlobalV1Entity.getLocalDpParentCode());
+
+                if (null != cnsRootDescriptionEntity) {
+                    String ovrRootDesc = cnsRootDescriptionEntity.getOvrRootDesc();
+
+                    if (StringUtils.isNotEmpty(ovrRootDesc)) {
+                        gdmProductBo.setDescription(ovrRootDesc);
+                        gdmProductBo.setShortDescription(ovrRootDesc);
+                    } else {
+                        gdmProductBo.setDescription(cnsRootDescriptionEntity.getRootDesc());
+                        gdmProductBo.setShortDescription(cnsRootDescriptionEntity.getRootDesc());
+                    }
                 }
- 
+
+                gdmProductBo.setActiveFCTERP(IConstant.VALUE.YES);
+                gdmProductBo.setActiveOPRERP(IConstant.VALUE.NO);
+                gdmProductBo.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
+                productBos.add(gdmProductBo);
+            }
+
 
             if (0 == productBos.size()) {
                 ResultObject resultObject = new ResultObject();

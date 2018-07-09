@@ -52,9 +52,9 @@ public class OMPGdmbomelementServiceImpl implements ICommonListService {
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         String actRlseDt = mfgOrderEntity.getActRlseDt();
         String beforeDate = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
-        if (StringUtils.isBlank(actRlseDt) || (!actRlseDt.equals(nowDate) && !actRlseDt.equals(beforeDate))) {
-            return null;
-        }
+//        if (StringUtils.isBlank(actRlseDt) || (!actRlseDt.equals(nowDate) && !actRlseDt.equals(beforeDate))) {
+//            return null;
+//        }
         String sourceSysCd = mfgOrderEntity.getSourceSysCd();
         String mfgOrdrNum = mfgOrderEntity.getMfgOrdrNum();
         String rsrvtnNum = mfgOrderEntity.getRsrvtnNum();

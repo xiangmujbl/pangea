@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         tags = {"@Scenario1"},
 //        tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-3288 OMPGdmConversionStorage.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-3688 OMPGdmConversionStorage.json"})
 public class OMPGdmConversionStorageTest {
 
 }
