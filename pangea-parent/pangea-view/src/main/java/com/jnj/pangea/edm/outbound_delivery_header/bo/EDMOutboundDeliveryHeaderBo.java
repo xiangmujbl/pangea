@@ -22,6 +22,13 @@ public class EDMOutboundDeliveryHeaderBo extends BaseBo {
     private String supNum;
     private String plntCd;
     private String localSalesOrg;
+    private String hdrOvrStat;
+    private String hdrGdsMvtStat;
+    private String hdrWMStat;
+    private String hdrPickStat;
+    private String hdrBillStat;
+
+
 
     @Override
     public String getKey() {
@@ -29,6 +36,46 @@ public class EDMOutboundDeliveryHeaderBo extends BaseBo {
                 .makeJsonObject("srcSysCd",this.srcSysCd)
                 .add("delvDocId",this.delvDocId)
                 .toJsonString();
+    }
+
+    public String getHdrOvrStat() {
+        return hdrOvrStat;
+    }
+
+    public void setHdrOvrStat(String hdrOvrStat) {
+        this.hdrOvrStat = hdrOvrStat;
+    }
+
+    public String getHdrGdsMvtStat() {
+        return hdrGdsMvtStat;
+    }
+
+    public void setHdrGdsMvtStat(String hdrGdsMvtStat) {
+        this.hdrGdsMvtStat = hdrGdsMvtStat;
+    }
+
+    public String getHdrWMStat() {
+        return hdrWMStat;
+    }
+
+    public void setHdrWMStat(String hdrWMStat) {
+        this.hdrWMStat = hdrWMStat;
+    }
+
+    public String getHdrPickStat() {
+        return hdrPickStat;
+    }
+
+    public void setHdrPickStat(String hdrPickStat) {
+        this.hdrPickStat = hdrPickStat;
+    }
+
+    public String getHdrBillStat() {
+        return hdrBillStat;
+    }
+
+    public void setHdrBillStat(String hdrBillStat) {
+        this.hdrBillStat = hdrBillStat;
     }
 
     public String getSrcSysCd() {

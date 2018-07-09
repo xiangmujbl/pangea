@@ -3,8 +3,8 @@ Feature:  OMPGdmStockASN-Curation
 
   Scenario: Full Load consumption
 
-    Given I import "/edm/advanced_ship_notification_v1" by keyFields "srcSysCd,delvDocID,localRefDocNum,locRefDocLineNum"
-      | srcSysCd   | delvDocID  | receivingPtID | localdeliveryType | localdeliveryCatg | localdeliveryDate | localcreatedDate | localbillOfLading | localExternalId | actGRDt | vendorID | localShippingPlant | delvLineNbr | matlNum | localbatchNo | localvendorBatchNo | localReceivingPlant | baseUnitOfMeasureCd | actlSkuDelvQty | localRefDocNum | locRefDocLineNum |
+    Given I import "/edm/advanced_ship_notification_v1" by keyFields "srcSysCd,delvDocId,localRefDocNum,locRefDocLineNum"
+      | srcSysCd   | delvDocId  | receivingPtId | localDeliveryType | localDeliveryCatg | localDeliveryDate | localCreatedDate | localBillOfLading | localExternalId | actGRDt | vendorId | localShippingPlant | delvLineNbr | matlNum | localBatchNo | localVendorBatchNo | localReceivingPlant | baseUnitOfMeasureCd | actlSkuDelvQty | localRefDocNum | locRefDocLineNum |
       | CONS_LATAM | 180005489  |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     |         | 8917     |                    | 10          | 58722   | 2436B04      |                    | BR19                | EA                  | 2592.000       | 3000753622     | 190              |
       | CONS_LATAM | 180005490  |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     |         | 9859     |                    | 900001      | 68874   | 0086B02      |                    | BR19                | EA                  | 23456.000      | 3000789748     | 190              |
       | CONS_LATAM | 180005491  |               | EL                | 7                 | 20160421          | 20160421         | 001041960-1       | 001041960-1     |         | 89123    |                    | 900002      | 55735   | 0216B03      |                    | BR19                | EA                  | 25921.000      | 3000753612     | 190              |
@@ -96,7 +96,7 @@ Feature:  OMPGdmStockASN-Curation
       | 441424/CONS_LATAM_BR20/1800054579/10   | YES    | YES          | NO           | 441424/CONS_LATAM_BR20/2436B042 | 0.0             | YES         | LA          | 1800054579 |                      | 8918     | CONS_LATAM_BR20 | TR/441424/CONS_LATAM_BR20/MX01/6109   | ExternalTransport | 441424    | 0.0             | 2593.00  | 2016/04/21 00:00:00 | 0.0                | 0.0             | 2016/04/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
       | 8641/CONS_LATAM_BR19/180005499/900001  | YES    | YES          | NO           | 8641/CONS_LATAM_BR19/0086B      | 0.0             | YES         | LA          | 180005499  |                      | 6754     | CONS_LATAM_BR19 | TR/8641/CONS_LATAM_BR19/MX02/7654     | ExternalTransport | 8641      | 0.0             | 1975.00  | 2016/04/21 00:00:00 | 0.0                | 0.0             | 2016/04/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
+    Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | errorValue                                                 | functionalArea | interfaceID    | key1  | key2       | key3 | key4 | key5 | sourceSystem |
       | ASN9      | Both Primary Planning Code and Material Number are missing | DP             | OMPGdmStockASN | 97360 | CONS_LATAM |      |      |      | CONS_LATAM   |
 
@@ -114,6 +114,6 @@ Feature:  OMPGdmStockASN-Curation
 
     And I will remove all data with region "/omp/gdm_stock_asn"
 
-    And I will remove all data with region "/dev/plan/edm_failed_data"
+    And I will remove all data with region "/plan/edm_failed_data"
 
     And I will remove the test file on sink application "GDMStock.tsv"
