@@ -12,6 +12,8 @@ import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
@@ -103,8 +105,30 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			PlanCnsProcessTypeEntity processTypeEntity =
 					this.processTypeDao.getCnsProcessTypeById(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
-			gdmTransportBo.setEndEff(tlaneItemEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
-			gdmTransportBo.setStartEff(tlaneItemEntity.getValidFrom() + IConstant.VALUE.HH_NN_SS_ZERO);
+
+
+
+
+			try {
+				String validDateToFormat = tlaneItemEntity.getValidTo();
+				SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+				SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+				Date dValidTo = sdfFrom.parse(validDateToFormat);
+				String validDateToConverted = sdfTo.format(dValidTo) + IConstant.VALUE.HH_NN_SS_ZERO;
+
+				gdmTransportBo.setEndEff(validDateToConverted);
+
+				String validDateFromFormat = tlaneItemEntity.getValidFrom();
+				Date dValidFrom = sdfFrom.parse(validDateFromFormat);
+				String validDateFromConverted = sdfTo.format(dValidFrom) + IConstant.VALUE.HH_NN_SS_ZERO;
+
+
+				gdmTransportBo.setStartEff(validDateFromConverted);
+			}
+			catch (ParseException e) {
+				e.printStackTrace();
+			}
+
 			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
 			gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
 			gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
