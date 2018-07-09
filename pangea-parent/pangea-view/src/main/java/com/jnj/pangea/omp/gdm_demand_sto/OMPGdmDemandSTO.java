@@ -2,21 +2,30 @@ package com.jnj.pangea.omp.gdm_demand_sto;
 
 import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.remote.RawDataValue;
+import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.data.raw.RawDataBuilder;
+import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.adf.client.api.query.QueryHelper;
+import org.apache.commons.lang3.StringUtils;
 import com.jnj.adf.client.api.ADFCriteria;
+import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
 
 import com.jnj.pangea.hook.OMPGdmDemandSTOHook;
 
+import java.math.*;
+import java.text.*;
 import java.util.*;
+import java.time.*;
+import java.io.*;
+import java.nio.*;
 
 @SuppressWarnings("unchecked")
 public class OMPGdmDemandSTO implements IEventProcessor {
@@ -126,28 +135,39 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 
 		String productId = null;
 
-		Map map1 = ConCnsMaterialPlanStatus(matlNum, suplPlntCd, sourceSystem);
-		if (map1 != null) {
-			spRelevant = StringInner.getString(map1, "spRelevant");
-			noPlanRelevant = StringInner.getString(map1, "noPlanRelevant");
-		}
-		if (StringInner.equal(spRelevant, "X")
-				|| StringInner.equal(noPlanRelevant, "X")) {
-			Map map2 = ConMaterialGlobalV1(matlNum, sourceSystem);
-			if (map2 != null) {
-				primaryPlanningCode = StringInner.getString(map2,
-						"primaryPlanningCode");
-				materialMumber = StringInner.getString(map2, "materialMumber");
-				if (StringInner.isStringNotEmpty(primaryPlanningCode)) {
-					productId = primaryPlanningCode;
-				} else if (StringInner.isStringNotEmpty(materialMumber)) {
-					productId = materialMumber;
+		if (StringInner.isStringNotEmpty(matlNum)
+				&& StringInner.isStringNotEmpty(suplPlntCd)
+				&& StringInner.isStringNotEmpty(sourceSystem)) {
+
+			Map retMap = ConCnsMaterialPlanStatus(matlNum, suplPlntCd,
+					sourceSystem);
+			if (retMap != null) {
+				spRelevant = StringInner.getString(retMap, "spRelevant");
+				noPlanRelevant = StringInner
+						.getString(retMap, "noPlanRelevant");
+				if (StringInner.equal(spRelevant, "X")
+						|| StringInner.equal(noPlanRelevant, "X")) {
+					Map map1 = ConMaterialGlobalV1(matlNum, sourceSystem);
+					if (map1 != null) {
+						primaryPlanningCode = StringInner.getString(map1,
+								"primaryPlanningCode");
+						materialMumber = StringInner.getString(map1,
+								"materialMumber");
+						if (StringInner.isStringNotEmpty(primaryPlanningCode)) {
+							productId = primaryPlanningCode;
+						} else if (StringInner.isStringNotEmpty(materialMumber)) {
+							productId = materialMumber;
+						} else {
+							productId = "";
+						}
+					}
 				} else {
-					productId = "";
+					return false;
 				}
 			}
-		} else {
-			return false;
+			if (retMap == null) {
+				return false;
+			}
 		}
 
 		builder.put("productId", productId);

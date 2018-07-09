@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <adf-curation> 
-  <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/omp/gdm_demand" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_demand_sto.OMPGdmDemandSTO" writeTo="all" topic="PANGEA_V1_omp_gdm_demand">
+  <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/omp/gdm_demand" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_demand.OMPGdmDemandSTO" writeTo="all" topic="PANGEA_V1_omp_gdm_demand"> 
     <regions> 
       <region path="/edm/purchase_order_oa_v1"> 
         <columns>delvSchedCntNbr,poLineNbr,poNum,localdelvDt,poTypeCd,poUomCd,prchsngOrgNum,sourceSystem, custNum,plntCd,poLineQty,suplPlntCd,matlNum,cnfrmQty,recvEaQty,localNumerator,localDenominator,localPDT,delInd</columns>  

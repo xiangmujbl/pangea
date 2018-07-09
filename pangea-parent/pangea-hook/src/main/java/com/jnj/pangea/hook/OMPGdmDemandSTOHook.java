@@ -32,16 +32,14 @@ public class OMPGdmDemandSTOHook {
 
         String queryStr1 = QueryHelper.buildCriteria("poNum").is(poNum).and("poLineNbr").is(poLineNbr).and("evTypeCd").is("8").toQueryString();
         List<Map.Entry<String, String>> list1 = AdfViewHelper.queryForList("/edm/purchase_order_oa_v1_clone", queryStr1);
-
-        Long lastResult = 0L;
+        Double lastResult = 0d;
         if (list1 != null && list1.size() > 0) {
-            Long sumRecvEaQtyLong = 0L;
+            Double sumRecvEaQtyLong = 0d;
             for (Map.Entry<String, String> result1 : list1) {
                 JsonObject jsonObjkeyMap = JsonObject.append(result1.getValue());
                 Map<String, Object> jsonObj = jsonObjkeyMap.toMap();
-                sumRecvEaQtyLong += NumberUtils.toLong(getString(jsonObj, "recvEaQty"));
+                sumRecvEaQtyLong += NumberUtils.toDouble(getString(jsonObj, "recvEaQty"));
             }
-
             // Check if  (purchase_order_oa_v1- recvEaQty) > 0
             // If Yes then add values of field (purchase_order_oa_v1- recvEaQty)
 
@@ -51,30 +49,29 @@ public class OMPGdmDemandSTOHook {
             // if above statement value = 0 then Skip the Record
             // if above statement value is greater than 0 then proceed.
             // "Open PO quantity in base Unit" =  "Open PO Quantity in order Unit" *(purchase_order_oa_v1 -localNumerator ) / (purchase_order_oa_v1 -localDenominator )
-            if (sumRecvEaQtyLong > 0L) {
+            if (sumRecvEaQtyLong > 0) {
                 String queryStr2 = QueryHelper.buildCriteria("poLineQty").is(poLineQty).and("localNumerator").is(localNumerator).and("localDenominator").is(localDenominator).toQueryString();
                 List<Map.Entry<String, String>> list2 = AdfViewHelper.queryForList("/edm/purchase_order_oa_v1_clone", queryStr2);
                 if (list2 != null && list2.size() > 0) {
                     Map resultMap2 = JsonObject.append(list2.get(0).getValue()).toMap();
-                    Long orderUnit2 = NumberUtils.toLong(getString(resultMap2, "poLineQty")) - sumRecvEaQtyLong;
-                    if (orderUnit2 > 0L) {
-                        lastResult = orderUnit2 * NumberUtils.toLong(getString(resultMap2, "localNumerator")) / NumberUtils.toLong(getString(resultMap2, "localDenominator"));
-                    } else if (orderUnit2 == 0L) {
-                        return String.valueOf(0L);
+                    Double orderUnit2 = NumberUtils.toDouble(getString(resultMap2, "poLineQty")) - sumRecvEaQtyLong;
+                    if (orderUnit2 > 0) {
+                        lastResult = orderUnit2 * NumberUtils.toDouble(getString(resultMap2, "localNumerator")) / NumberUtils.toDouble(getString(resultMap2, "localDenominator"));
+                    } else if (orderUnit2 == 0) {
+                        return String.valueOf(0);
                     }
                 }
             }
             // if Total of (purchase_order_oa_v1- recvEaQty) = 0
             // Then "Open PO Quantity in Order Unit" = (purchase_order_oa_v1- poLineQty)
             // "Open PO Quantity in base unit" = Open PO Quantity in Order Unit * (purchase_order_oa_v1 -localNumerator ) / (purchase_order_oa_v1 -localDenominator )
-            if (sumRecvEaQtyLong == 0L) {
-                Long orderUnit3 = NumberUtils.toLong(poLineQty);
+            if (sumRecvEaQtyLong == 0) {
+                Double orderUnit3 = NumberUtils.toDouble(poLineQty);
 
-                lastResult = orderUnit3 * NumberUtils.toLong(localNumerator) / NumberUtils.toLong(localDenominator);
+                lastResult = orderUnit3 * NumberUtils.toDouble(localNumerator) / NumberUtils.toDouble(localDenominator);
             }
         }
-
-        return String.valueOf(lastResult);
+        return String.valueOf(lastResult.intValue());
     }
 
     private static String getString(Map<String, Object> m, String field) {
