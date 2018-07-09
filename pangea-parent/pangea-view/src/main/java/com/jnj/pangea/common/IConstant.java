@@ -869,7 +869,7 @@ public interface IConstant {
 
     interface MATL_MFG_RTNG {
         String FIELD_LOEKZ_VALUE_X = "x";
-        String FIELD_MATLRTNGVALID_TO = "9999/12/31";
+        String FIELD_MATLRTNGVALID_TO = "99991231";
         String FIELD_NAME_PLNNR = "plnnr";
         String FIELD_NAME_PLNTY = "plnty";
         String FIELD_NAME_PLNAL = "plnal";
@@ -905,7 +905,7 @@ public interface IConstant {
 
     interface MFG_RTNG_RLTNSHP {
         String FIELD_LOEKZ_VALUE_X = "x";
-        String FIELD_MATLRTNGVALID_TO = "9999/12/31";
+        String FIELD_MATLRTNGVALID_TO = "99991231";
         String FIELD_NAME_PLNNR = "plnnr";
         String FIELD_NAME_PLNTY = "plnty";
         String FIELD_NAME_PLNAL = "plnal";
@@ -919,7 +919,7 @@ public interface IConstant {
 
     interface MFG_RTNG_HDR {
         String FIELD_LOEKZ_VALUE_X = "x";
-        String FIELD_MATLRTNGVALID_TO = "9999/12/31";
+        String FIELD_MATLRTNGVALID_TO = "99991231";
         String FIELD_NAME_PLNNR = "plnnr";
         String FIELD_NAME_PLNTY = "plnty";
         String FIELD_NAME_PLNAL = "plnal";
