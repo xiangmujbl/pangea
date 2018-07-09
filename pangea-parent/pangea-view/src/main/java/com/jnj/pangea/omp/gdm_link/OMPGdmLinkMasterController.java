@@ -32,7 +32,7 @@ public class OMPGdmLinkMasterController implements IEventProcessor {
                 .filter(e -> !(OMPGdmLinkMasterHook.check(e.getValue())))
                 .forEach(
                         e -> {
-//                            try {
+                            try {
                                 List<RawDataBuilder> rawDataBuilderList = new ArrayList<>();
                                 Map<String, RawDataBuilder> failMap = new HashMap<>();
                                 boolean isOk = buildView(e.getValue(),
@@ -60,14 +60,14 @@ public class OMPGdmLinkMasterController implements IEventProcessor {
                                     resultList.add(viewRawFail);
                                 });
 
-//                            } catch (Exception exception) {
-//                                LogUtil.getCoreLog()
-//                                        .info("OMPGdmLinkMasterController Exception occured. key = {}.",
-//                                                e.getKey());
-//                                LogUtil.getCoreLog()
-//                                        .info("OMPGdmLinkMasterController Exception:",
-//                                                exception.getMessage());
-//                            }
+                            } catch (Exception exception) {
+                                LogUtil.getCoreLog()
+                                        .info("OMPGdmLinkMasterController Exception occured. key = {}.",
+                                                e.getKey());
+                                LogUtil.getCoreLog()
+                                        .info("OMPGdmLinkMasterController Exception:",
+                                                exception.getMessage());
+                            }
 
                         });
 
