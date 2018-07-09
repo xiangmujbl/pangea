@@ -45,8 +45,8 @@ public interface IConstant {
         String PROJECT_ONE_VBEP = "/project_one/vbep";
         String PROJECT_ONE_VBAP = "/project_one/vbap";
         String PROJECT_ONE_VBPA = "/project_one/vbpa";
-        String PROJECT_ONE_VBKD = "/project_one/vbkd";
         String PROJECT_ONE_VBUK = "/project_one/vbuk";
+        String PROJECT_ONE_VBKD = "/project_one/vbkd";
         String PROJECT_ONE_VBUP = "/project_one/vbup";
         String CNS_PLAN_UNIT = "/plan/cns_plan_unit";
         String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
@@ -236,8 +236,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "vendorPurchase";
-        String EXTERNAL_PURCHASE = "externalPurchase";
+        String VENDOR_PURCHASE = "VendorPurchase";
+        String EXTERNAL_PURCHASE = "ExternalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -446,6 +446,16 @@ public interface IConstant {
         String PARVW = "parvw";
     }
 
+    interface PROJECT_ONE_VBUK {
+        String GBSTK="gbstk";
+        String WBSTK="wbstk";
+        String KOSTK="kostk";
+        String LVSTK="lvstk";
+        String FKSTK="fkstk";
+        String MANDT="mandt";
+        String VBELN="vbeln";
+    }
+
     interface PROJECT_ONE_Qave {
         String PRUEFLOS = "prueflos";
     }
@@ -454,11 +464,6 @@ public interface IConstant {
         String VBELN = "vbeln";
         String POSNR = "posnr";
         String PARVW = "parvw";
-    }
-
-    interface PROJECT_ONE_VBUK {
-        String VBELN = "vbeln";
-        String MANDT = "mandt";
     }
 
     interface PROJECT_ONE_VBUP {
@@ -868,7 +873,7 @@ public interface IConstant {
 
     interface MATL_MFG_RTNG {
         String FIELD_LOEKZ_VALUE_X = "x";
-        String FIELD_MATLRTNGVALID_TO = "9999/12/31";
+        String FIELD_MATLRTNGVALID_TO = "99991231";
         String FIELD_NAME_PLNNR = "plnnr";
         String FIELD_NAME_PLNTY = "plnty";
         String FIELD_NAME_PLNAL = "plnal";
@@ -904,7 +909,7 @@ public interface IConstant {
 
     interface MFG_RTNG_RLTNSHP {
         String FIELD_LOEKZ_VALUE_X = "x";
-        String FIELD_MATLRTNGVALID_TO = "9999/12/31";
+        String FIELD_MATLRTNGVALID_TO = "99991231";
         String FIELD_NAME_PLNNR = "plnnr";
         String FIELD_NAME_PLNTY = "plnty";
         String FIELD_NAME_PLNAL = "plnal";
@@ -918,7 +923,7 @@ public interface IConstant {
 
     interface MFG_RTNG_HDR {
         String FIELD_LOEKZ_VALUE_X = "x";
-        String FIELD_MATLRTNGVALID_TO = "9999/12/31";
+        String FIELD_MATLRTNGVALID_TO = "99991231";
         String FIELD_NAME_PLNNR = "plnnr";
         String FIELD_NAME_PLNTY = "plnty";
         String FIELD_NAME_PLNAL = "plnal";
@@ -1115,6 +1120,7 @@ public interface IConstant {
         String DETAILEDSCHEDULING = "DetailedScheduling";
         String PROPORTIONAL_BACK_SLANT = "/proportional";
         String THIRTY = "30";
+        String THIRTY_ONE = "31";
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
         String NGEMS = "NGEMS";
