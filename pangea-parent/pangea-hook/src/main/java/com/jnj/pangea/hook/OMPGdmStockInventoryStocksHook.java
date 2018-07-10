@@ -18,6 +18,8 @@ public class OMPGdmStockInventoryStocksHook {
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
+	 * @param localBatchId
+	 * @param localVendorNumber
 	 * @return
 	 */
 	public static String getBlockedQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
@@ -122,10 +124,12 @@ public class OMPGdmStockInventoryStocksHook {
 	}
 
 	/**
-	 *INV10
+	 * INV10
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
+	 * @param localBatchId
+	 * @param localVendorNumber
 	 * @return
 	 */
 	public static String getQualityQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
@@ -240,11 +244,14 @@ public class OMPGdmStockInventoryStocksHook {
 		return IConstant.VALUE.ZERO;
 	}
 
+
 	/**
-	 *INV11
+	 * INV11
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
+	 * @param localBatchId
+	 * @param localVendorNumber
 	 * @return
 	 */
 	public static String getQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
@@ -358,11 +365,14 @@ public class OMPGdmStockInventoryStocksHook {
 		return IConstant.VALUE.ZERO;
 	}
 
+
 	/**
-	 *INV13
+	 * INV13
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
+	 * @param localBatchId
+	 * @param localVendorNumber
 	 * @return
 	 */
 	public static String getRestrictedQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
@@ -477,10 +487,12 @@ public class OMPGdmStockInventoryStocksHook {
 		return IConstant.VALUE.ZERO;
 	}
 
+
 	/**
 	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
+	 * @param localBatchId
 	 * @return
 	 */
 	public static String getReturnsQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId) {
@@ -551,11 +563,14 @@ public class OMPGdmStockInventoryStocksHook {
 		return IConstant.VALUE.ZERO;
 	}
 
+
 	/**
-	 *INV16
-     *
+	 * INV16
+	 *
 	 * @param localBatchManagementRequirementIndicator
 	 * @param inventoryStockList
+	 * @param localBatchId
+	 * @param localVendorNumber
 	 * @return
 	 */
 	public static String getTransferQuantity(String localBatchManagementRequirementIndicator, List<Map.Entry<String, String>> inventoryStockList, String localBatchId, String localVendorNumber) {
