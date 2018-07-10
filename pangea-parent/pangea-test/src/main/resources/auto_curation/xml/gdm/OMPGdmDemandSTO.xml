@@ -1,280 +1,281 @@
 <adf-curation xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.omp.gdm_demand.OMPGdmDemandSTO" writeTo="all"
-                  topic="PANGEA_V1_omp_gdm_demand">
+              topic="PANGEA_V1_omp_gdm_demand">
 
-        <regions>
-            <region path="/edm/purchase_order_oa_v1" mainRegion="true" lucene="true">
-                <columns>
-                    delvSchedCntNbr,poLineNbr,poNum,localdelvDt,poTypeCd,poUomCd,prchsngOrgNum,sourceSystem,
-                    custNum,plntCd,poLineQty,suplPlntCd,matlNum,cnfrmQty,recvEaQty,localNumerator,localDenominator,localPDT,delInd
-                </columns>
-                <relations>
-                    <region path="/plan/prod_loc_min_shelf" isPrimaryKey="false">
-                        <columns>sourceSystem,localPlant,minShelfLife,localMaterialNumber</columns>
-                        <expression>
-                            sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
-                        </expression>
-                    </region>
-                    <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
-                        <columns>localMaterialNumber,localPlant,sourceSystem,spRelevant,noPlanRelevant</columns>
-                        <expression>
-                            localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,localPlant=/edm/purchase_order_oa_v1.plntCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
-                        </expression>
-                    </region>
-                    <region path="/edm/material_global_v1" isPrimaryKey="false">
-                        <columns>localMaterialNumber,sourceSystem,primaryPlanningCode,materialMumber,minRemShelfLife
-                        </columns>
-                        <expression>
-                            localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
-                        </expression>
-                    </region>
-                    <region path="/plan/cns_plan_unit" isPrimaryKey="false">
-                        <columns>localUom,sourceSystem,uom,unit</columns>
-                        <expression>
-                            localUom=/edm/purchase_order_oa_v1.poUomCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
-                        </expression>
-                    </region>
-                    <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
-                        <columns>
-                            sourceSystem,sourceObjectTechName,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute1Value,inclusionExclusion
-                        </columns>
-                        <expression>
-                            sourceObjectAttribute1Value=/edm/purchase_order_oa_v1.plntCd,sourceObjectAttribute2Value=/edm/purchase_order_oa_v1.poTypeCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
-                        </expression>
-                    </region>
-                    <region path="/edm/purchase_order_oa_v1" isPrimaryKey="false" alias="/edm/purchase_order_oa_v1_clone">
-                        <columns>
-                            poNum,poLineNbr,cnfrmQty,poLineQty,localNumerator,localDenominator,evTypeCd,recvEaQty
-                        </columns>
-                        <expression>poNum=/edm/purchase_order_oa_v1.poNum,poLineNbr=/edm/purchase_order_oa_v1.poLineNbr
-                        </expression>
-                    </region>
-                </relations>
-            </region>
-        </regions>
-
-        <methods>
-            <method name="ConCnsPlanObjectFilterOne" resultType="Map" isPK="false" path="/plan/cns_plan_object_filter">
-                <parameters>
-                    <parameter name="sourceObjectAttribute1" value="'plntCd'" relationship="and"/>
-                    <parameter name="sourceObjectAttribute1Value" value="plntCd" relationship="and"/>
-                    <parameter name="sourceObjectAttribute2Value" value="poTypeCd" relationship="and"/>
-                    <parameter name="inclusionExclusion" value="'I'" relationship="and"/>
-                    <parameter name="sourceObjectTechName" value="'purchase_order_oa'" relationship="and"/>
-                    <parameter name="sourceSystem" value="sourceSystem"/>
-                </parameters>
-            </method>
-
-            <method name="ConProdLocMinshelfTwo" resultType="Map" isPK="false" path="/plan/prod_loc_min_shelf">
-                <parameters>
-                    <parameter name="localPlant" value="plntCd" relationship="and"/>
-                    <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
-                    <parameter name="localMaterialNumber" value="'*'"/>
-                </parameters>
-            </method>
-
-            <method name="ConProdLocMinshelfThree" resultType="Map" isPK="false" path="/plan/prod_loc_min_shelf">
-                <parameters>
-                    <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
-                    <parameter name="localPlant" value="plntCd" relationship="and"/>
-                    <parameter name="localMaterialNumber" value="matlNum"/>
-                </parameters>
-            </method>
-
-            <method name="ConCnsMaterialPlanStatus" resultType="Map" isPK="false" path="/plan/cns_material_plan_status">
-                <parameters>
-                    <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
-                    <parameter name="localPlant" value="suplPlntCd" relationship="and"/>
-                    <parameter name="sourceSystem" value="sourceSystem"/>
-                </parameters>
-            </method>
-
-            <method name="ConMaterialGlobalV1" resultType="Map" isPK="false" path="/edm/material_global_v1">
-                <parameters>
-                    <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
-                    <parameter name="sourceSystem" value="sourceSystem"/>
-                </parameters>
-            </method>
-
-            <method name="ConCnsPlanUnit" resultType="Map" isPK="false" path="/plan/cns_plan_unit">
-                <parameters>
-                    <parameter name="localUom" value="poUomCd" relationship="and"/>
-                    <parameter name="sourceSystem" value="sourceSystem"/>
-                </parameters>
-            </method>
-
-        </methods>
-
-        <viewRegion name="/omp/gdm_demand">
-            <vars>
-                <var name="custNum" value="custNum"/>
-                <var name="sourceSystem" value="sourceSystem"/>
-                <var name="plntCd" value="plntCd"/>
-                <var name="localdelvDt" value="localdelvDt"/>
-                <var name="localPDT" value="localPDT"/>
-                <var name="matlNum" value="matlNum"/>
-                <var name="locationId"/>
-                <var name="poNum" value="poNum"/>
-                <var name="poLineNbr" value="poLineNbr"/>
-                <var name="delvSchedCntNbr" value="delvSchedCntNbr"/>
-                <var name="poTypeCd" value="poTypeCd"/>
-                <var name="cnfrmQty" value="cnfrmQty"/>
-                <var name="recvEaQty" value="recvEaQty"/>
-                <var name="localNumerator" value="localNumerator"/>
-                <var name="localDenominator" value="localDenominator"/>
-                <var name="poLineQty" value="poLineQty"/>
-                <var name="prchsngOrgNum" value="prchsngOrgNum"/>
-                <var name="poUomCd" value="poUomCd"/>
-                <var name="suplPlntCd" value="suplPlntCd"/>
-                <var name="delInd" value="delInd"/>
-            </vars>
-
+    <regions>
+        <region path="/edm/purchase_order_oa_v1" mainRegion="true" lucene="true">
             <columns>
-                <column name="active" hardCode="'YES'"/>
-                <column name="activeFCTERP" hardCode="'NO'"/>
-                <column name="activeOPRERP" hardCode="'YES'"/>
-                <column name="activeSOPERP" hardCode="'NO'"/>
-                <column name="batchId" hardCode="' '"/>
-                <column name="certaintyId" hardCode="'U1'"/>
-                <column name="customerId" var="custNum"/>
-                <!--ST09-->
-                <column name="locationId">
-                    <if test="StringInner.equal(sourceSystem,'CONS_LATAM')">
-                        <set name="locationId" value="StringInner.join(sourceSystem,'_',suplPlntCd)"></set>
-                    </if>
-                </column>
-                <!--ST12-->
-                <column name="productId">
-                    <if test="StringInner.isStringNotEmpty(matlNum) &amp;&amp; StringInner.isStringNotEmpty(suplPlntCd) &amp;&amp; StringInner.isStringNotEmpty(sourceSystem)">
-                        <ref method="ConCnsMaterialPlanStatus" parameter="matlNum,suplPlntCd,sourceSystem"
-                             value="spRelevant,noPlanRelevant" resultType="Map" var="retMap">
-                            <if test="StringInner.equal(spRelevant,'X') || StringInner.equal(noPlanRelevant,'X')">
-                                <ref method="ConMaterialGlobalV1" parameter="matlNum,sourceSystem"
-                                     value="primaryPlanningCode,materialMumber" resultType="Map">
-                                    <if test="StringInner.isStringNotEmpty(primaryPlanningCode)">
-                                        <set name="productId" value="primaryPlanningCode"/>
-                                    </if>
-                                    <elseIf test="StringInner.isStringNotEmpty(materialMumber)">
-                                        <set name="productId" value="materialMumber"/>
-                                    </elseIf>
-                                    <else>
-                                        <set name="productId" value="''"/>
-                                    </else>
-                                </ref>
-                            </if>
-                            <else>
-                                <return/>
-                            </else>
-                        </ref>
-                        <if test="retMap==null">
-                            <return/>
-                        </if>
-                    </if>
-                </column>
-                <!--ST05-->
-                <column name="demandId" isPK="true">
-                    <if test="StringInner.isStringNotEmpty(delInd)">
-                        <return/>
-                    </if>
-                    <ref method="ConCnsPlanObjectFilterOne" parameter="plntCd,poTypeCd,sourceSystem"
-                         resultType="Map" var="cnsPlanFilterMapOne">
-                        <if test="StringInner.isMapNullWithSize(cnsPlanFilterMapOne)">
-                            <return/>
-                        </if>
-                        <else>
-                            <if test="StringInner.isStringEmpty(delvSchedCntNbr)">
-                                <set name="demandId"
-                                     value="StringInner.join(productId,'/',locationId,'/',poNum,'/',poLineNbr)"/>
-                            </if>
-                            <else>
-                                <set name="demandId"
-                                     value="StringInner.join(productId,'/',locationId,'/',poNum,'/',poLineNbr,'/',delvSchedCntNbr)"/>
-                            </else>
-                        </else>
-                    </ref>
-                </column>
-                <!--ST07-->
-                <column name="fromDueDate">
-                    <if test="StringInner.isStringNotEmpty(localdelvDt)">
-                        <if test="StringInner.isStringEmpty(localPDT) || '0'.equals(localPDT)">
-                            <set name="fromDueDate"
-                                 value="DateInner.dateToString(DateInner.stringToDate(localdelvDt,DateInner.F_yyyyMMdd),DateInner.yyyy_MM_dd_HHmmss_2)"></set>
-                        </if>
-                        <else>
-                            <set name="fromDueDate"
-                                 value="DateInner.dateToString(DateInner.offsetDay(DateInner.stringToDate(localdelvDt,DateInner.F_yyyyMMdd),Integer.parseInt('-'+localPDT)),DateInner.yyyy_MM_dd_HHmmss_2)"></set>
-                        </else>
-                    </if>
-                    <else>
-                        <set name="fromDueDate" value="''"/>
-                    </else>
-
-                </column>
-                <!--ST06-->
-                <column name="dueDate">
-                    <if test="StringInner.isStringEmpty(fromDueDate)">
-                        <set name="dueDate" value="''"/>
-                    </if>
-                    <else>
-                        <set name="dueDate" value="fromDueDate.substring(0,fromDueDate.length()-1)+'1'"/>
-                    </else>
-                </column>
-
-                <!--ST08-->
-                <column name="inventoryLinkGroupId">
-                    <if test="StringInner.isStringEmpty(delvSchedCntNbr)">
-                        <set name="inventoryLinkGroupId"
-                             value="StringInner.join(productId, '/', sourceSystem, '_', plntCd, '/', poNum, '/', poLineNbr)"/>
-                    </if>
-                    <else>
-                        <set name="inventoryLinkGroupId"
-                             value="StringInner.join(productId,'/', sourceSystem, '_', plntCd, '/', poNum,'/', poLineNbr, '/', delvSchedCntNbr)"/>
-                    </else>
-                </column>
-
-                <!--ST10-->
-                <column name="minRemainingShelfLife" var="minShelfLife">
-                    <ref method="ConProdLocMinshelfThree" parameter="sourceSystem,plntCd,matlNum" value="minShelfLife"
-                         resultType="Map" var="mapThree">
-                        <if test="mapThree == null">
-                            <ref method="ConProdLocMinshelfTwo" parameter="plntCd,sourceSystem" value="minShelfLife"
-                                 resultType="Map" var="mapTwo"/>
-                            <if tese="mapTwo == null">
-                                <ref method="ConMaterialGlobalV1" parameter="matlNum,sourceSystem"
-                                     value="minRemShelfLife"
-                                     resultType="Map" var="mapOne">
-                                    <set name="minShelfLife" value="minRemShelfLife"></set>
-                                </ref>
-                                <if test="mapOne == null">
-                                    <set name="minShelfLife" value="''"></set>
-                                </if>
-                            </if>
-                        </if>
-                    </ref>
-                </column>
-                <!--ST11-->
-                <column name="planningStrategy" hardCode="ProductLocationBalanced"/>
-
-                <!--ST13-->
-                <column name="quantity">
-                    <ref hook="GDMDemandSTOHook.calQuantity(poNum, poLineNbr, poLineQty, localNumerator, localDenominator)"/>
-                    <if test="StringInner.equal('0',quantity)">
-                        <return/>
-                    </if>
-                </column>
-                <!--ST14-->
-                <column name="unitId">
-                    <ref method="ConCnsPlanUnit" parameter="poUomCd,sourceSystem" value="unit" resultType="Map"
-                         var="cnsPlanUnitMap">
-                        <if test="StringInner.isMapNull(cnsPlanUnitMap)">
-                            <return/>
-                        </if>
-                        <else>
-                            <set name="unitId" value="unit"></set>
-                        </else>
-                    </ref>
-                </column>
-                <column name="WRK02" value="suplPlntCd"/>
+                delvSchedCntNbr,poLineNbr,poNum,localdelvDt,poTypeCd,poUomCd,prchsngOrgNum,sourceSystem,
+                custNum,plntCd,poLineQty,suplPlntCd,matlNum,cnfrmQty,recvEaQty,localNumerator,localDenominator,localPDT,delInd,localBaseUOM
             </columns>
-        </viewRegion>
+            <relations>
+                <region path="/plan/prod_loc_min_shelf" isPrimaryKey="false">
+                    <columns>sourceSystem,localPlant,minShelfLife,localMaterialNumber</columns>
+                    <expression>
+                        sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                    <columns>localMaterialNumber,localPlant,sourceSystem,spRelevant,noPlanRelevant</columns>
+                    <expression>
+                        localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,localPlant=/edm/purchase_order_oa_v1.plntCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <columns>localMaterialNumber,sourceSystem,primaryPlanningCode,materialMumber,minRemShelfLife
+                    </columns>
+                    <expression>
+                        localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/plan/cns_plan_unit" isPrimaryKey="false">
+                    <columns>localUom,sourceSystem,uom,unit</columns>
+                    <expression>
+                        localUom=/edm/purchase_order_oa_v1.poUomCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                    <columns>
+                        sourceSystem,sourceObjectTechName,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute1Value,inclusionExclusion
+                    </columns>
+                    <expression>
+                        sourceObjectAttribute1Value=/edm/purchase_order_oa_v1.plntCd,sourceObjectAttribute2Value=/edm/purchase_order_oa_v1.poTypeCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/edm/purchase_order_oa_v1" isPrimaryKey="false" alias="/edm/purchase_order_oa_v1_clone">
+                    <columns>
+                        poNum,poLineNbr,cnfrmQty,poLineQty,localNumerator,localDenominator,evTypeCd,recvEaQty
+                    </columns>
+                    <expression>poNum=/edm/purchase_order_oa_v1.poNum,poLineNbr=/edm/purchase_order_oa_v1.poLineNbr
+                    </expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
 
-    </adf-curation>
+    <methods>
+        <method name="ConCnsPlanObjectFilterOne" resultType="Map" isPK="false" path="/plan/cns_plan_object_filter">
+            <parameters>
+                <parameter name="sourceObjectAttribute1" value="'plntCd'" relationship="and"/>
+                <parameter name="sourceObjectAttribute1Value" value="plntCd" relationship="and"/>
+                <parameter name="sourceObjectAttribute2Value" value="poTypeCd" relationship="and"/>
+                <parameter name="inclusionExclusion" value="'I'" relationship="and"/>
+                <parameter name="sourceObjectTechName" value="'purchase_order_oa'" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+
+        <method name="ConProdLocMinshelfTwo" resultType="Map" isPK="false" path="/plan/prod_loc_min_shelf">
+            <parameters>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localMaterialNumber" value="'*'"/>
+            </parameters>
+        </method>
+
+        <method name="ConProdLocMinshelfThree" resultType="Map" isPK="false" path="/plan/prod_loc_min_shelf">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
+                <parameter name="localMaterialNumber" value="matlNum"/>
+            </parameters>
+        </method>
+
+        <method name="ConCnsMaterialPlanStatus" resultType="Map" isPK="false" path="/plan/cns_material_plan_status">
+            <parameters>
+                <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
+                <parameter name="localPlant" value="suplPlntCd" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+
+        <method name="ConMaterialGlobalV1" resultType="Map" isPK="false" path="/edm/material_global_v1">
+            <parameters>
+                <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+
+        <method name="ConCnsPlanUnit" resultType="Map" isPK="false" path="/plan/cns_plan_unit">
+            <parameters>
+                <parameter name="localUom" value="localBaseUOM" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
+
+    </methods>
+
+    <viewRegion name="/omp/gdm_demand">
+        <vars>
+            <var name="custNum" value="custNum"/>
+            <var name="sourceSystem" value="sourceSystem"/>
+            <var name="plntCd" value="plntCd"/>
+            <var name="localdelvDt" value="localdelvDt"/>
+            <var name="localPDT" value="localPDT"/>
+            <var name="matlNum" value="matlNum"/>
+            <var name="locationId"/>
+            <var name="poNum" value="poNum"/>
+            <var name="poLineNbr" value="poLineNbr"/>
+            <var name="delvSchedCntNbr" value="delvSchedCntNbr"/>
+            <var name="poTypeCd" value="poTypeCd"/>
+            <var name="cnfrmQty" value="cnfrmQty"/>
+            <var name="recvEaQty" value="recvEaQty"/>
+            <var name="localNumerator" value="localNumerator"/>
+            <var name="localDenominator" value="localDenominator"/>
+            <var name="poLineQty" value="poLineQty"/>
+            <var name="prchsngOrgNum" value="prchsngOrgNum"/>
+            <var name="poUomCd" value="poUomCd"/>
+            <var name="suplPlntCd" value="suplPlntCd"/>
+            <var name="delInd" value="delInd"/>
+            <var name="localBaseUOM" value="localBaseUOM"/>
+        </vars>
+
+        <columns>
+            <column name="active" hardCode="'YES'"/>
+            <column name="activeFCTERP" hardCode="'NO'"/>
+            <column name="activeOPRERP" hardCode="'YES'"/>
+            <column name="activeSOPERP" hardCode="'NO'"/>
+            <column name="batchId" hardCode="' '"/>
+            <column name="certaintyId" hardCode="'U1'"/>
+            <column name="customerId" var="custNum"/>
+            <!--ST09-->
+            <column name="locationId">
+                <if test="StringInner.equal(sourceSystem,'CONS_LATAM')">
+                    <set name="locationId" value="StringInner.join(sourceSystem,'_',suplPlntCd)"></set>
+                </if>
+            </column>
+            <!--ST12-->
+            <column name="productId">
+                <if test="StringInner.isStringNotEmpty(matlNum) &amp;&amp; StringInner.isStringNotEmpty(suplPlntCd) &amp;&amp; StringInner.isStringNotEmpty(sourceSystem)">
+                    <ref method="ConCnsMaterialPlanStatus" parameter="matlNum,suplPlntCd,sourceSystem"
+                         value="spRelevant,noPlanRelevant" resultType="Map" var="retMap">
+                        <if test="StringInner.equal(spRelevant,'X') || StringInner.equal(noPlanRelevant,'X')">
+                            <ref method="ConMaterialGlobalV1" parameter="matlNum,sourceSystem"
+                                 value="primaryPlanningCode,materialMumber" resultType="Map">
+                                <if test="StringInner.isStringNotEmpty(primaryPlanningCode)">
+                                    <set name="productId" value="primaryPlanningCode"/>
+                                </if>
+                                <elseIf test="StringInner.isStringNotEmpty(materialMumber)">
+                                    <set name="productId" value="materialMumber"/>
+                                </elseIf>
+                                <else>
+                                    <set name="productId" value="''"/>
+                                </else>
+                            </ref>
+                        </if>
+                        <else>
+                            <return/>
+                        </else>
+                    </ref>
+                    <if test="retMap==null">
+                        <return/>
+                    </if>
+                </if>
+            </column>
+            <!--ST05-->
+            <column name="demandId" isPK="true">
+                <if test="StringInner.isStringNotEmpty(delInd)">
+                    <return/>
+                </if>
+                <ref method="ConCnsPlanObjectFilterOne" parameter="plntCd,poTypeCd,sourceSystem"
+                     resultType="Map" var="cnsPlanFilterMapOne">
+                    <if test="StringInner.isMapNullWithSize(cnsPlanFilterMapOne)">
+                        <return/>
+                    </if>
+                    <else>
+                        <if test="StringInner.isStringEmpty(delvSchedCntNbr)">
+                            <set name="demandId"
+                                 value="StringInner.join(productId,'/',locationId,'/',poNum,'/',poLineNbr)"/>
+                        </if>
+                        <else>
+                            <set name="demandId"
+                                 value="StringInner.join(productId,'/',locationId,'/',poNum,'/',poLineNbr,'/',delvSchedCntNbr)"/>
+                        </else>
+                    </else>
+                </ref>
+            </column>
+            <!--ST07-->
+            <column name="fromDueDate">
+                <if test="StringInner.isStringNotEmpty(localdelvDt)">
+                    <if test="StringInner.isStringEmpty(localPDT) || '0'.equals(localPDT)">
+                        <set name="fromDueDate"
+                             value="DateInner.dateToString(DateInner.stringToDate(localdelvDt,DateInner.F_yyyyMMdd),DateInner.yyyy_MM_dd_HHmmss_2)"></set>
+                    </if>
+                    <else>
+                        <set name="fromDueDate"
+                             value="DateInner.dateToString(DateInner.offsetDay(DateInner.stringToDate(localdelvDt,DateInner.F_yyyyMMdd),Integer.parseInt('-'+localPDT)),DateInner.yyyy_MM_dd_HHmmss_2)"></set>
+                    </else>
+                </if>
+                <else>
+                    <set name="fromDueDate" value="''"/>
+                </else>
+
+            </column>
+            <!--ST06-->
+            <column name="dueDate">
+                <if test="StringInner.isStringEmpty(fromDueDate)">
+                    <set name="dueDate" value="''"/>
+                </if>
+                <else>
+                    <set name="dueDate" value="fromDueDate.substring(0,fromDueDate.length()-1)+'1'"/>
+                </else>
+            </column>
+
+            <!--ST08-->
+            <column name="inventoryLinkGroupId">
+                <if test="StringInner.isStringEmpty(delvSchedCntNbr)">
+                    <set name="inventoryLinkGroupId"
+                         value="StringInner.join(productId, '/', sourceSystem, '_', plntCd, '/', poNum, '/', poLineNbr)"/>
+                </if>
+                <else>
+                    <set name="inventoryLinkGroupId"
+                         value="StringInner.join(productId,'/', sourceSystem, '_', plntCd, '/', poNum,'/', poLineNbr, '/', delvSchedCntNbr)"/>
+                </else>
+            </column>
+
+            <!--ST10-->
+            <column name="minRemainingShelfLife" var="minShelfLife">
+                <ref method="ConProdLocMinshelfThree" parameter="sourceSystem,plntCd,matlNum" value="minShelfLife"
+                     resultType="Map" var="mapThree">
+                    <if test="mapThree == null">
+                        <ref method="ConProdLocMinshelfTwo" parameter="plntCd,sourceSystem" value="minShelfLife"
+                             resultType="Map" var="mapTwo"/>
+                        <if tese="mapTwo == null">
+                            <ref method="ConMaterialGlobalV1" parameter="matlNum,sourceSystem"
+                                 value="minRemShelfLife"
+                                 resultType="Map" var="mapOne">
+                                <set name="minShelfLife" value="minRemShelfLife"></set>
+                            </ref>
+                            <if test="mapOne == null">
+                                <set name="minShelfLife" value="''"></set>
+                            </if>
+                        </if>
+                    </if>
+                </ref>
+            </column>
+            <!--ST11-->
+            <column name="planningStrategy" hardCode="ProductLocationBalanced"/>
+
+            <!--ST13-->
+            <column name="quantity">
+                <ref hook="GDMDemandSTOHook.calQuantity(poNum, poLineNbr, poLineQty, localNumerator, localDenominator)"/>
+                <if test="StringInner.equal('0',quantity)">
+                    <return/>
+                </if>
+            </column>
+            <!--ST14-->
+            <column name="unitId">
+                <if test="StringInner.isStringNotEmpty(localBaseUOM) &amp;&amp; StringInner.isStringNotEmpty(sourceSystem)">
+                    <ref method="ConCnsPlanUnit" parameter="localBaseUOM,sourceSystem" value="unit" resultType="Map"
+                         var="cnsPlanUnitMap">
+                        <set name="unitId" value="unit"></set>
+                    </ref>
+                    <if test="cnsPlanUnitMap==null">
+                        <return/>
+                    </if>
+                </if>
+            </column>
+            <column name="WRK02" value="suplPlntCd"/>
+        </columns>
+    </viewRegion>
+
+</adf-curation>
