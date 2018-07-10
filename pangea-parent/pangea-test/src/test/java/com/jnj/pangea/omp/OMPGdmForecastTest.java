@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"src/test/resources/features/omp/OMPGdmForecast.feature"},
-        tags = {"@Scenario1"},
+        tags = {"@pangea"},
         glue = "com.jnj.pangea.sentence",
         plugin = {"pretty", "json:target/reports/json/AEAZ-6186 OMPGdmForecast.json"})
 public class OMPGdmForecastTest {

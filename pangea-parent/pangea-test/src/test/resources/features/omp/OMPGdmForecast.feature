@@ -1,7 +1,6 @@
-@pangea @AEAZ-6186
-Feature: OMPGdmForecast AEAZ-6186
+@pangea @AEAZ-8076
+Feature: OMPGdmForecast AEAZ-8076
 
-  @Scenario1
   Scenario: test scenario 1
 
     #OOR Forceast with Period W
@@ -19,29 +18,35 @@ Feature: OMPGdmForecast AEAZ-6186
       | CONS_LATAM   | 9999001   | 68229  | BR12       | 201813    | EA       | 20180524 | 100      | W          |
       | CONS_LATAM   | 9999001   | 69349  | BR12       | 201813    | EA       | 20180524 | 200      | W          |
       | CONS_LATAM   | 9999001   | 69349  | BR12       | 201814    | EA       | 20180524 | 200      | W          |
-      | CONS_LATAM   | 9999005   | 99100  | BR12       | 201803    | EA       | 20180523 | 100      | M          |
-      | CONS_LATAM   | 9999005   | 99100  | BR12       | 201804    | EA       | 20180523 | 120      | M          |
-      | CONS_LATAM   | 9999005   | 441124 | BR12       | 201803    | KI       | 20180523 | 150      | M          |
-      | CONS_LATAM   | 9999005   | 441124 | BR12       | 201804    | KI       | 20180523 | 200      | M          |
-      | CONS_LATAM   | 9999005   | 441124 | BR12       | 201805    | KI       | 20180523 | 200      | M          |
+      | CONS_LATAM   | 9999005   | 99100  | BR12       | 201803    | EA       | 20180524 | 100      | M          |
+      | CONS_LATAM   | 9999005   | 99100  | BR12       | 201804    | EA       | 20180524 | 120      | M          |
+      | CONS_LATAM   | 9999005   | 441124 | BR12       | 201803    | KI       | 20180524 | 150      | M          |
+      | CONS_LATAM   | 9999005   | 441124 | BR12       | 201804    | KI       | 20180524 | 200      | M          |
+      | CONS_LATAM   | 9999005   | 441124 | BR12       | 201805    | KI       | 20180524 | 200      | M          |
+
+      # rule FRC6: when mthWeekInd = "M" and jnj_calendar_v1-fiscalPeriod == cns_oor_forecast-oorPeriod, reject the record.
+      | CONS_LATAM   | 9999005   | 441140 | BR12       | 201816    | ZUM      | 20180523 | 200      | M          |
+
+       # rule FRC6: when mthWeekInd = "W" and jnj_calendar_v1-fiscalPeriod == cns_oor_forecast-oorPeriod, reject the record.
+      | CONS_LATAM   | 9999005   | 441141 | BR12       | 201817    | ZUM      | 20180523 | 200      | M          |
 
       # rule FRC8: when mthWeekInd = "M" and jnj_calendar_v1-fiscalPeriod <> cns_oor_forecast-oorPeriod, reject the record.
       | CONS_LATAM   | 9999005   | 441125 | BR12       | 201806    | ZUM      | 20180523 | 200      | M          |
 
-      # rule FRC8: when mthWeekInd = "M" and jnj_calendar_v1-fiscalPeriod = cns_oor_forecast-oorPeriod, reject the record.
+      # rule FRC8: when mthWeekInd = "M" and jnj_calendar_v1-fiscalPeriod == cns_oor_forecast-oorPeriod, reject the record.
       | CONS_LATAM   | 9999005   | 441138 | BR12       | 201807    | ZUM      | 20180523 | 200      | M          |
 
       # rule FRC8: when mthWeekInd = "W" and jnj_calendar_v1-calWeek <> cns_oor_forecast-oorPeriod, reject the record.
       | CONS_LATAM   | 9999005   | 441126 | BR12       | 201806    | ZUM      | 20180524 | 200      | W          |
 
-      # rule FRC8: when mthWeekInd = "W" and jnj_calendar_v1-calWeek = cns_oor_forecast-oorPeriod, reject the record.
+      # rule FRC8: when mthWeekInd = "W" and jnj_calendar_v1-calWeek == cns_oor_forecast-oorPeriod, reject the record.
       | CONS_LATAM   | 9999005   | 441139 | BR12       | 201808    | ZUM      | 20180524 | 200      | W          |
 
       # rule FRC8: when mthWeekInd <> "W", "M", reject the record.
       | CONS_LATAM   | 9999005   | 441127 | BR12       | 201804    | KI       | 20180523 | 200      | N          |
 
 
-      # rule FRC11: when cns_oor_forecast-PPC <> global_material_v1-primaryPlanningCode, skip the record.
+      # rule FRC11: when cns_oor_forecast-PPC <> material_global_v1-primaryPlanningCode, skip the record.
       | CONS_LATAM   | 9999005   | 441128 | BR12       | 201805    | KI       | 20180524 | 200      | W          |
 
       # rule FRC11: when cns_oor_forecast-sourceSystem <> material_global_v1-sourceSystem, skip the record.
@@ -60,7 +65,6 @@ Feature: OMPGdmForecast AEAZ-6186
       | CONS_LATAM   | 9999005   | 441134 | BR12       | 201805    | KI       | 20180524 | 200      | W          |
 
 
-
       # rule FRC13: when material_auom_v1-sourceSystem <> material_global_v1-sourceSystem, reject the record.
       | CONS_LATAM   | 9999005   | 441135 | BR12       | 201805    | KI       | 20180524 | 200      | W          |
 
@@ -76,16 +80,19 @@ Feature: OMPGdmForecast AEAZ-6186
     When I import "/edm/jnj_calendar_v1" by keyFields "calWeek,fiscalPeriod"
       | weekFromDate | weekToDate | fiscalPeriod | calWeek |
       | 2018-03-05   | 2018-03-12 | 201810       | 201810  |
-      | 2018-03-12   | 2018-03-12 | 201803       | 201811  |
+      | 2018-03-12   | 2018-03-19 | 201803       | 201811  |
       | 2018-03-19   | 2018-03-26 | 201803       | 201812  |
-      | 2018-03-26   | 2018-03-26 | 201803       | 201813  |
-      | 2018-03-26   | 2018-03-26 | 201802       | 201813  |
-      | 2018-04-02   | 2018-04-02 | 201801       | 201814  |
-      | 2018-02-26   | 2018-03-05 | 201803       | 201809  |
-      | 2018-04-02   | 2018-04-02 | 201804       | 201804  |
-      | 2018-04-30   | 2018-04-30 | 201805       | 201805  |
+      | 2018-03-26   | 2018-04-02 | 201803       | 201813  |
+      | 2018-03-26   | 2018-04-02 | 201802       | 201813  |
+      | 2018-04-02   | 2018-04-09 | 201801       | 201814  |
+      | 2018-02-26   | 2018-03-05 | 201803       | 201803  |
+      | 2018-04-02   | 2018-04-09 | 201804       | 201804  |
+      | 2018-04-30   | 2018-05-07 | 201805       | 201805  |
+      | 2018-02-30   |            | 201816       | 201816  |
+      | 2018-02-30   |            | 201817       | 201817  |
       |              | 2018-01-30 | 201807       | 201807  |
       |              | 2018-02-30 | 201808       | 201808  |
+
 
     And I wait "/edm/jnj_calendar_v1" Async Queue complete
 
@@ -144,36 +151,39 @@ Feature: OMPGdmForecast AEAZ-6186
     Then A file is found on sink application with name "GDMForecast.tsv"
 
     Then I check file data for filename "GDMForecast.tsv" by keyFields "forecastId,productId,dueDate"
-      | active | activeFctErp | activeOprErp | activeSopErp | certaintyId | customerId | cycleStartDate | dueDate | forecastId | fromDueDate | locationId | planningStrategy | productId | publishDate | quantity |
-      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/01 00:00:00 | 2018/03/05 00:00:01 | 68229-CONS_LATAM_BR12-9999001-2018/03/05 00:00:00  | 2018/03/05 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/03 00:00:00 | 100      |
-      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/01 00:00:00 | 2018/03/12 00:00:01 | 68229-CONS_LATAM_BR12-9999001-2018/03/12 00:00:00  | 2018/03/12 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/03 00:00:00 | 120      |
-      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/01 00:00:00 | 2018/03/19 00:00:01 | 68229-CONS_LATAM_BR12-9999001-2018/03/19 00:00:00  | 2018/03/19 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/03 00:00:00 | 120      |
-      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/01 00:00:00 | 2018/03/26 00:00:01 | 68229-CONS_LATAM_BR12-9999001-2018/03/26 00:00:00  | 2018/03/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/03 00:00:00 | 100      |
-      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/01 00:00:00 | 2018/03/26 00:00:01 | 69349-CONS_LATAM_BR12-9999001-2018/03/26 00:00:00  | 2018/03/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 69349     | 2018/07/03 00:00:00 | 200      |
-      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/01 00:00:00 | 2018/04/02 00:00:01 | 69349-CONS_LATAM_BR12-9999001-2018/04/02 00:00:00  | 2018/04/02 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 69349     | 2018/07/03 00:00:00 | 200      |
-      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/01 00:00:00 | 2018/02/26 00:00:01 | 99100-CONS_LATAM_BR12-9999005-2018/02/26 00:00:00  | 2018/02/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 99100     | 2018/07/03 00:00:00 | 100      |
-      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/01 00:00:00 | 2018/04/02 00:00:01 | 99100-CONS_LATAM_BR12-9999005-2018/04/02 00:00:00  | 2018/04/02 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 99100     | 2018/07/03 00:00:00 | 120      |
-      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/01 00:00:00 | 2018/02/26 00:00:01 | 441124-CONS_LATAM_BR12-9999005-2018/02/26 00:00:00 | 2018/02/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 441124    | 2018/07/03 00:00:00 | 5400     |
-      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/01 00:00:00 | 2018/04/02 00:00:01 | 441124-CONS_LATAM_BR12-9999005-2018/04/02 00:00:00 | 2018/04/02 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 441124    | 2018/07/03 00:00:00 | 7200     |
-      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/01 00:00:00 | 2018/04/30 00:00:01 | 441124-CONS_LATAM_BR12-9999005-2018/04/30 00:00:00 | 2018/04/30 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 441124    | 2018/07/03 00:00:00 | 7200     |
+      | active | activeFctErp | activeOprErp | activeSopErp | certaintyId | customerId | cycleStartDate      | dueDate             | forecastId                                         | fromDueDate         | locationId      | planningStrategy        | productId | publishDate         | quantity |
+      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/24 00:00:00 | 2018/03/12 00:00:00 | 68229-CONS_LATAM_BR12-9999001-2018/03/05 00:00:00  | 2018/03/05 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/10 00:00:00 | 100      |
+      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/24 00:00:00 | 2018/03/19 00:00:00 | 68229-CONS_LATAM_BR12-9999001-2018/03/12 00:00:00  | 2018/03/12 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/10 00:00:00 | 120      |
+      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/24 00:00:00 | 2018/03/26 00:00:00 | 68229-CONS_LATAM_BR12-9999001-2018/03/19 00:00:00  | 2018/03/19 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/10 00:00:00 | 120      |
+      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/24 00:00:00 | 2018/04/02 00:00:00 | 68229-CONS_LATAM_BR12-9999001-2018/03/26 00:00:00  | 2018/03/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 68229     | 2018/07/10 00:00:00 | 100      |
+      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/24 00:00:00 | 2018/04/02 00:00:00 | 69349-CONS_LATAM_BR12-9999001-2018/03/26 00:00:00  | 2018/03/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 69349     | 2018/07/10 00:00:00 | 200      |
+      | YES    | NO           | YES          | NO           | PP          | 9999001    | 2018/05/24 00:00:00 | 2018/04/09 00:00:00 | 69349-CONS_LATAM_BR12-9999001-2018/04/02 00:00:00  | 2018/04/02 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 69349     | 2018/07/10 00:00:00 | 200      |
+      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/24 00:00:00 | 2018/03/05 00:00:00 | 99100-CONS_LATAM_BR12-9999005-2018/02/26 00:00:00  | 2018/02/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 99100     | 2018/07/10 00:00:00 | 100      |
+      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/24 00:00:00 | 2018/04/09 00:00:00 | 99100-CONS_LATAM_BR12-9999005-2018/04/02 00:00:00  | 2018/04/02 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 99100     | 2018/07/10 00:00:00 | 120      |
+      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/24 00:00:00 | 2018/03/05 00:00:00 | 441124-CONS_LATAM_BR12-9999005-2018/02/26 00:00:00 | 2018/02/26 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 441124    | 2018/07/10 00:00:00 | 5400     |
+      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/24 00:00:00 | 2018/04/09 00:00:00 | 441124-CONS_LATAM_BR12-9999005-2018/04/02 00:00:00 | 2018/04/02 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 441124    | 2018/07/10 00:00:00 | 7200     |
+      | YES    | NO           | YES          | NO           | PP          | 9999005    | 2018/05/24 00:00:00 | 2018/05/07 00:00:00 | 441124-CONS_LATAM_BR12-9999005-2018/04/30 00:00:00 | 2018/04/30 00:00:00 | CONS_LATAM_BR12 | ProductLocationBalanced | 441124    | 2018/07/10 00:00:00 | 7200     |
 
     Then I check region data "/edm/fail_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID    | errorCode | sourceSystem | businessArea | key1    | key2   | key3 | key4   | key5 | errorValue         |
-      | SP             | OMPGdmForecast | FRC8      | CONS_LATAM   |              | 9999005 | 441125 | BR12 | 201806 | M    | Missing oor period     |
-      | SP             | OMPGdmForecast | FRC8      | CONS_LATAM   |              | 9999005 | 441138 | BR12 | 201807 | M    | Missing oor period |
-      | SP             | OMPGdmForecast | FRC8      | CONS_LATAM   |              | 9999005 | 441126 | BR12 | 201806 | W    | Missing oor period     |
-      | SP             | OMPGdmForecast | FRC8      | CONS_LATAM   |              | 9999005 | 441139 | BR12 | 201808 | W    | Missing oor period |
-      | SP             | OMPGdmForecast | FRC8      | CONS_LATAM   |              | 9999005 | 441127 | BR12 | 201804 | N    | Missing oor period     |
+      | functionalArea | interfaceID    | errorCode | sourceSystem | businessArea | key1    | key2   | key3 | key4   | key5 | errorValue             |
+      | SP             | OMPGdmForecast | FRC6      | CONS_LATAM   |              | 9999005 | 441125 | BR12 | 201806 | M    | Missing oor period     |
+      | SP             | OMPGdmForecast | FRC6      | CONS_LATAM   |              | 9999005 | 441126 | BR12 | 201806 | W    | Missing oor period     |
+      | SP             | OMPGdmForecast | FRC6      | CONS_LATAM   |              | 9999005 | 441127 | BR12 | 201804 | N    | Missing oor period     |
+      | SP             | OMPGdmForecast | FRC6      | CONS_LATAM   |              | 9999005 | 441140 | BR12 | 201816 | M    | Missing oor period     |
+      | SP             | OMPGdmForecast | FRC6      | CONS_LATAM   |              | 9999005 | 441141 | BR12 | 201817 | M    | Missing oor period     |
+      | SP             | OMPGdmForecast | FRC8      | CONS_LATAM   |              | 9999005 | 441138 | BR12 | 201807 | M    | Missing oor period     |
+      | SP             | OMPGdmForecast | FRC8      | CONS_LATAM   |              | 9999005 | 441139 | BR12 | 201808 | W    | Missing oor period     |
       | SP             | OMPGdmForecast | FRC13     | CONS_LATAM   |              | 9999005 | 441135 | BR12 | 201805 | W    | Missing UOM Conversion |
       | SP             | OMPGdmForecast | FRC13     | CONS_LATAM   |              | 9999005 | 441135 | BR12 | 201805 | W    | Missing UOM Conversion |
       | SP             | OMPGdmForecast | FRC13     | CONS_LATAM   |              | 9999005 | 441137 | BR12 | 201805 | W    | Missing UOM Conversion |
 
-    And I delete the test data
+  Scenario: delete all test data
 
-    And I will remove all data with region "/omp/gdm_forecast"
+    Then I delete the test data
 
     And I will remove all data with region "/edm/fail_data"
 
+    And I will remove all data with region "/omp/gdm_forecast"
 
 
         

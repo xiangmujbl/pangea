@@ -2,18 +2,28 @@ package com.jnj.pangea.omp.gdm_forecast;
 
 import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.remote.RawDataValue;
+import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.data.raw.RawDataBuilder;
+import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.adf.client.api.query.QueryHelper;
+import org.apache.commons.lang3.StringUtils;
 import com.jnj.adf.client.api.ADFCriteria;
+import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
 
+import java.math.*;
+import java.text.*;
 import java.util.*;
+import java.time.*;
+import java.io.*;
+import java.nio.*;
 
 @SuppressWarnings("unchecked")
 public class OMPGdmForecast implements IEventProcessor {
@@ -46,8 +56,6 @@ public class OMPGdmForecast implements IEventProcessor {
                                             .toRawData();
                                     String viewKey = JsonObject
                                             .create()
-                                            .append("dueDate",
-                                                    data.get("dueDate"))
                                             .append("productId",
                                                     data.get("productId"))
                                             .append("forecastId",
@@ -85,17 +93,17 @@ public class OMPGdmForecast implements IEventProcessor {
 
         Map map = raw.toMap();
 
-        String mthWeekInd = String.valueOf(map.get("mthWeekInd"));
-        String ppc = String.valueOf(map.get("ppc"));
-        String quantity = String.valueOf(map.get("quantity"));
-        String localUom = String.valueOf(map.get("localUom"));
-        String primaryPlanningCode = String.valueOf(map
-                .get("primaryPlanningCode"));
-        String sourceSystem = String.valueOf(map.get("sourceSystem"));
-        String demandGrp = String.valueOf(map.get("demandGrp"));
-        String localPlant = String.valueOf(map.get("localPlant"));
-        String loadDate = String.valueOf(map.get("loadDate"));
-        String oorPeriod = String.valueOf(map.get("oorPeriod"));
+        String loadDate = StringInner.getString(map, "loadDate");
+        String mthWeekInd = StringInner.getString(map, "mthWeekInd");
+        String oorPeriod = StringInner.getString(map, "oorPeriod");
+        String ppc = StringInner.getString(map, "ppc");
+        String primaryPlanningCode = StringInner.getString(map,
+                "primaryPlanningCode");
+        String quantity = StringInner.getString(map, "quantity");
+        String localUom = StringInner.getString(map, "localUom");
+        String sourceSystem = StringInner.getString(map, "sourceSystem");
+        String localPlant = StringInner.getString(map, "localPlant");
+        String demandGrp = StringInner.getString(map, "demandGrp");
 
         builder.put("active", "YES");
         builder.put("activeFctErp", "NO");
@@ -103,7 +111,7 @@ public class OMPGdmForecast implements IEventProcessor {
         builder.put("activeSopErp", "NO");
         builder.put("certaintyId", "PP");
         //customerId
-        String customerId = String.valueOf(map.get("demandGrp"));
+        String customerId = StringInner.getString(map, "demandGrp");
         builder.put("customerId", customerId);
         builder.put("planningStrategy", "ProductLocationBalanced");
 
@@ -112,67 +120,138 @@ public class OMPGdmForecast implements IEventProcessor {
         cycleStartDate = OMPGdmForecastHook.CycleStartDate(loadDate);
 
         builder.put("cycleStartDate", cycleStartDate);
-        String fromDueDate = null;
 
-        if (StringInner.equal(mthWeekInd, "M")) {
+        String dueDate = null;
 
-            if (StringInner.isStringNotEmpty(oorPeriod)) {
-                List listJnjCalendar = getJnjCalendarFiscalPeriod(oorPeriod);
-                if (listJnjCalendar != null) {
-                    fromDueDate = OMPGdmForecastHook.sortOfCalWeek(listJnjCalendar);
-                    if (StringInner.equal(fromDueDate, "")) {
-                        writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                                "FRC8", "Missing oor period",
-                                sourceSystem, demandGrp, ppc, localPlant,
-                                oorPeriod, mthWeekInd, "");
-                        return false;
-                    }
-                } else {
-                    writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                            "FRC8", "Missing oor period",
-                            sourceSystem, demandGrp, ppc, localPlant,
-                            oorPeriod, mthWeekInd, "");
-                    return false;
-                }
-            }
+        if (!StringInner.equal(mthWeekInd, "M")
+                && !StringInner.equal(mthWeekInd, "W")) {
+
+            writeFailDataToRegion(failMap, "SP", "OMPGdmForecast", "FRC6",
+                    "Missing oor period", sourceSystem, demandGrp, ppc,
+                    localPlant, oorPeriod, mthWeekInd, "");
+            return false;
         } else {
 
-            if (StringInner.equal(mthWeekInd, "W")) {
+            if (StringInner.equal(mthWeekInd, "M")) {
                 if (StringInner.isStringNotEmpty(oorPeriod)) {
-                    List listJnjCalendar = getJnjCalendarCalWeek(oorPeriod);
-                    if (listJnjCalendar != null) {
-                        fromDueDate = OMPGdmForecastHook
-                                .getFirstRecord(listJnjCalendar);
-                        if (StringInner.equal(fromDueDate, "")) {
-                            writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                                    "FRC8", "Missing oor period",
-                                    sourceSystem, demandGrp, ppc, localPlant,
-                                    oorPeriod, mthWeekInd, "");
+                    List listJnjCalendar = getJnjCalendarFiscalPeriod(oorPeriod);
+                    if (listJnjCalendar.size() >= 1) {
+                        dueDate = OMPGdmForecastHook
+                                .getDuDateFromSortOfCalWeek(listJnjCalendar);
+                        if (StringInner.equal(dueDate, "")) {
+
+                            writeFailDataToRegion(failMap, "SP",
+                                    "OMPGdmForecast", "FRC6",
+                                    "Missing oor period", sourceSystem,
+                                    demandGrp, ppc, localPlant, oorPeriod,
+                                    mthWeekInd, "");
                             return false;
                         }
                     } else {
+
                         writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                                "FRC8", "Missing oor period",
-                                sourceSystem, demandGrp, ppc, localPlant,
-                                oorPeriod, mthWeekInd, "");
+                                "FRC6", "Missing oor period", sourceSystem,
+                                demandGrp, ppc, localPlant, oorPeriod,
+                                mthWeekInd, "");
                         return false;
                     }
                 }
             } else {
-                writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                        "FRC8", "Missing oor period",
-                        sourceSystem, demandGrp, ppc, localPlant,
-                        oorPeriod, mthWeekInd, "");
-                return false;
+                if (StringInner.equal(mthWeekInd, "W")) {
+                    if (StringInner.isStringNotEmpty(oorPeriod)) {
+                        List listJnjCalendar = getJnjCalendarCalWeek(oorPeriod);
+                        if (listJnjCalendar.size() >= 1) {
+                            dueDate = OMPGdmForecastHook
+                                    .getDuDateFromFirstRecord(listJnjCalendar);
+                            if (StringInner.equal(dueDate, "")) {
+
+                                writeFailDataToRegion(failMap, "SP",
+                                        "OMPGdmForecast", "FRC6",
+                                        "Missing oor period", sourceSystem,
+                                        demandGrp, ppc, localPlant, oorPeriod,
+                                        mthWeekInd, "");
+                                return false;
+                            }
+                        } else {
+
+                            writeFailDataToRegion(failMap, "SP",
+                                    "OMPGdmForecast", "FRC6",
+                                    "Missing oor period", sourceSystem,
+                                    demandGrp, ppc, localPlant, oorPeriod,
+                                    mthWeekInd, "");
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        builder.put("dueDate", dueDate);
+
+        String fromDueDate = null;
+
+        if (!StringInner.equal(mthWeekInd, "M")
+                && !StringInner.equal(mthWeekInd, "W")) {
+
+            writeFailDataToRegion(failMap, "SP", "OMPGdmForecast", "FRC8",
+                    "Missing oor period", sourceSystem, demandGrp, ppc,
+                    localPlant, oorPeriod, mthWeekInd, "");
+            return false;
+        } else {
+
+            if (StringInner.equal(mthWeekInd, "M")) {
+                if (StringInner.isStringNotEmpty(oorPeriod)) {
+                    List listJnjCalendar = getJnjCalendarFiscalPeriod(oorPeriod);
+                    if (listJnjCalendar.size() >= 1) {
+                        fromDueDate = OMPGdmForecastHook
+                                .getFromDueDateBysortOfCalWeek(listJnjCalendar);
+                        if (StringInner.equal(fromDueDate, "")) {
+
+                            writeFailDataToRegion(failMap, "SP",
+                                    "OMPGdmForecast", "FRC8",
+                                    "Missing oor period", sourceSystem,
+                                    demandGrp, ppc, localPlant, oorPeriod,
+                                    mthWeekInd, "");
+                            return false;
+                        }
+                    } else {
+
+                        writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
+                                "FRC8", "Missing oor period", sourceSystem,
+                                demandGrp, ppc, localPlant, oorPeriod,
+                                mthWeekInd, "");
+                        return false;
+                    }
+                }
+            } else {
+                if (StringInner.equal(mthWeekInd, "W")) {
+                    if (StringInner.isStringNotEmpty(oorPeriod)) {
+                        List listJnjCalendar = getJnjCalendarCalWeek(oorPeriod);
+                        if (listJnjCalendar.size() >= 1) {
+                            fromDueDate = OMPGdmForecastHook
+                                    .getFromDueDateByFirstRecord(listJnjCalendar);
+                            if (StringInner.equal(fromDueDate, "")) {
+
+                                writeFailDataToRegion(failMap, "SP",
+                                        "OMPGdmForecast", "FRC8",
+                                        "Missing oor period", sourceSystem,
+                                        demandGrp, ppc, localPlant, oorPeriod,
+                                        mthWeekInd, "");
+                                return false;
+                            }
+                        } else {
+
+                            writeFailDataToRegion(failMap, "SP",
+                                    "OMPGdmForecast", "FRC8",
+                                    "Missing oor period", sourceSystem,
+                                    demandGrp, ppc, localPlant, oorPeriod,
+                                    mthWeekInd, "");
+                            return false;
+                        }
+                    }
+                }
             }
         }
         builder.put("fromDueDate", fromDueDate);
-
-        String dueDate = null;
-
-        dueDate = OMPGdmForecastHook.getDueDate(fromDueDate);
-
-        builder.put("dueDate", dueDate);
 
         String locationId = null;
 
@@ -185,8 +264,7 @@ public class OMPGdmForecast implements IEventProcessor {
                 && StringInner.isStringNotEmpty(sourceSystem)) {
 
             List listMaterialGlobal = getMaterialGlobal(ppc, sourceSystem);
-            if (listMaterialGlobal != null) {
-
+            if (listMaterialGlobal.size() >= 1) {
                 productId = OMPGdmForecastHook.CheckAnyOne(listMaterialGlobal,
                         localPlant, failMap);
                 if (StringInner.equal(productId, "")) {
@@ -210,14 +288,15 @@ public class OMPGdmForecast implements IEventProcessor {
                 && StringInner.isStringNotEmpty(sourceSystem)) {
 
             List listMaterialGlobal = getMaterialGlobal(ppc, sourceSystem);
-            if (listMaterialGlobal != null) {
+            if (listMaterialGlobal.size() >= 1) {
                 quantity = OMPGdmForecastHook.getQuantity(listMaterialGlobal,
                         localUom, quantity, failMap);
                 if (StringInner.equal(quantity, null)) {
+
                     writeFailDataToRegion(failMap, "SP", "OMPGdmForecast",
-                            "FRC13", "Missing UOM Conversion",
-                            sourceSystem, demandGrp, ppc, localPlant,
-                            oorPeriod, mthWeekInd, "");
+                            "FRC13", "Missing UOM Conversion", sourceSystem,
+                            demandGrp, ppc, localPlant, oorPeriod, mthWeekInd,
+                            "");
                     return false;
                 }
             }
@@ -248,7 +327,7 @@ public class OMPGdmForecast implements IEventProcessor {
             return retList;
         }
 
-        return null;
+        return new ArrayList<>();
 
     }
 
@@ -266,7 +345,7 @@ public class OMPGdmForecast implements IEventProcessor {
             return retList;
         }
 
-        return null;
+        return new ArrayList<>();
 
     }
 
@@ -286,7 +365,7 @@ public class OMPGdmForecast implements IEventProcessor {
             return retList;
         }
 
-        return null;
+        return new ArrayList<>();
 
     }
 

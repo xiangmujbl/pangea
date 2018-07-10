@@ -27,7 +27,7 @@ public class OMPGdmForecastHook {
 //
 //        String data = stampToDate(String.valueOf(System.currentTimeMillis()));
 //        System.out.println(data);
-        System.out.println(CycleStartDate("20180723"));
+        System.out.println(CycleStartDate("20180525"));
 //
 //
 //        List<Map.Entry<String, String>> list = new ArrayList<>();
@@ -64,15 +64,73 @@ public class OMPGdmForecastHook {
         String data;
         String s1 = s.substring(0,4);
         String s2 = s.substring(4,8);
+        String s3 = s2.substring(0,2);
+        String s4 = s2.substring(2,4);
 
-        String s3 = s1 + "/" + s2.replaceAll("[0-9]{2}$", "/01");
-        data = s3 + " " + "00:00:00";
+        String s5 = s1 + "/" + s3 + "/" +s4;
+        data = s5 + " " + "00:00:00";
         return data;
     }
 
 
-    //sort by CalWeek from jnj
-    public static String sortOfCalWeek(List<Map.Entry<String, String>> list) {
+    //get duDate from sort by CalWeek from jnj
+    public static String getDuDateFromSortOfCalWeek(List<Map.Entry<String, String>> list) {
+        List<Map<String, Object>> list1 = new ArrayList<>();
+
+        for (Map.Entry<String, String> map : list) {
+            Map<String, Object> map1 = JsonObject.append(map.getValue()).toMap();
+
+            list1.add(map1);
+        }
+
+        if (list != null) {
+            Collections.sort(list1, (o1, o2) -> {
+                Double name1 = Double.valueOf(Double.valueOf(o1.get("calWeek").toString()));
+                Double name2 = Double.valueOf(Double.valueOf(o2.get("calWeek").toString()));
+                return name1.compareTo(name2);
+            });
+        }
+
+        Map map2 = list1.get(0);
+
+        String weekToDate = String.valueOf(map2.get("weekToDate"));
+
+        if (StringInner.equal(weekToDate,"")){
+            return "";
+        }
+
+        String weekToDate1 = weekToDate.replaceAll("-", "/") + " " + "00:00:00";
+
+        return weekToDate1;
+    }
+
+
+    //get duDate from jnj first record
+    public static String getDuDateFromFirstRecord(List<Map.Entry<String, String>> list) {
+        String weekToDate = "";
+        List<Map<String, Object>> list1 = new ArrayList<>();
+
+        for (Map.Entry<String, String> map : list) {
+            Map<String, Object> map1 = JsonObject.append(map.getValue()).toMap();
+            list1.add(map1);
+
+        }
+
+        if (list != null) {
+            Map map1 = list1.get(0);
+            String weekToDate1 = String.valueOf(map1.get("weekToDate"));
+            if (StringInner.equal(weekToDate1,"")){
+                return "";
+            }
+            weekToDate = weekToDate1.replaceAll("-", "/") + " " + "00:00:00";
+        }
+
+        return weekToDate;
+    }
+
+
+    //get fromDuDate from sort by CalWeek from jnj
+    public static String getFromDueDateBysortOfCalWeek(List<Map.Entry<String, String>> list) {
         List<Map<String, Object>> list1 = new ArrayList<>();
 
         for (Map.Entry<String, String> map : list) {
@@ -103,8 +161,8 @@ public class OMPGdmForecastHook {
     }
 
 
-    //get weekFromDate from jnj first record
-    public static String getFirstRecord(List<Map.Entry<String, String>> list) {
+    //get fromDuDate from jnj first record
+    public static String getFromDueDateByFirstRecord(List<Map.Entry<String, String>> list) {
         String weekFromDate = "";
         List<Map<String, Object>> list1 = new ArrayList<>();
 
