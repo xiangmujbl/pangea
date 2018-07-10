@@ -32,6 +32,7 @@ public interface IConstant {
         String PROJECT_ONE_T001 = "/project_one/t001";
         String PROJECT_ONE_T460T = "/project_one/t460t";
         String PROJECT_ONE_MKAL_AEND = "/project_one/mkal_aend";
+        String PROJECT_ONE_VBFA = "/project_one/vbfa";
         String PLAN_CNS_PRODUCTCUSTOMER = "/plan/cns_productcustomer";
         String PLAN_CNS_PRODUCTCUSTOMERCLONE = "/plan/cns_productcustomer_clone";
         String EDM_COUNTRY_V1 = "/edm/country_v1";
@@ -68,6 +69,7 @@ public interface IConstant {
         String PLAN_CNS_SO_TYPE_INCL = "/plan/cns_so_type_incl";
         String PLAN_CNS_PLANT_ATTR = "/plan/cns_plant_attr";
         String PLAN_EDM_COUNTRY_INPUT = "/plan/edm_country_input";
+        String PLAN_CNS_COUNTRY_INPUT = "/plan/cns_country_input";
         String PLAN_CNS_PLAN_REGION = "/plan/cns_plan_region";
         String EDM_PRODUCT_FAMILY_V1 = "/edm/product_family_v1";
         String EDM_FORM_V1 = "/edm/form_v1";
@@ -152,7 +154,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_COUNTRY_INPUT = "/edm/edm_country_input";
+        String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
@@ -160,6 +162,8 @@ public interface IConstant {
         String EDM_ADVANCED_SHIP_NOTIFICATION_V1 = "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
         String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
+        String PROJECT_ONE_PLMZ = "/project_one/plmz";
+        String PROJECT_ONE_PLMZ_CLONE = "/project_one/plmz_clone";
     }
 
     interface FBP {
@@ -170,6 +174,15 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_BATCH_ID = "localBatchId";
         String LOCAL_MATERIAL = "localMaterial";
+    }
+
+    interface PROJECT_ONE_PLMZ {
+        String PLNTY = "plnty";
+        String PLNNR = "plnnr";
+        String PLNAL = "plnal";
+        String ZUONR = "zuonr";
+        String ZAEHL = "zaehl";
+        String ALLOCVALIDTO = "99991231";
     }
 
     interface BOM_HDR {
@@ -385,7 +398,6 @@ public interface IConstant {
     interface EDM_COUNTRY_V1 {
         String LOCAL_COUNTRY = "localCountry";
         String SOURCE_SYSTEM = "sourceSystem";
-        String COUNTRY_CODE = "countryCode";
     }
 
     interface EDM_WRK_CTR {
@@ -548,8 +560,8 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
-        String FIRLD_BLANK = "";
-        String SPLIT_ = ",";
+        String FIRLD_BLANK="";
+        String SPLIT_=",";
     }
 
     interface EDM_PLANT_INPUT {
@@ -755,7 +767,6 @@ public interface IConstant {
     interface PLAN_CNS_DEM_GRP_ASGN {
         String CUSTOMER_ID = "customerId";
         String SALES_ORG = "salesOrg";
-        String SALES_ORGANIZATION = "salesOrganization";
         String CUSTOMER_SHIP_TO = "customerShipTo";
         String SOURCE_SYSTEM = "sourceSystem";
         String DEMAND_GROUP = "demandGroup";
@@ -1071,7 +1082,7 @@ public interface IConstant {
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
-        String BOM_VlD_ToDt = "9999/12/31";
+        String BOM_VlD_ToDt = "99991231";
         String EN_CAPY = "E";
         String ES_CAPY = "S";
         String PT_CAPY = "P";
@@ -1204,7 +1215,6 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
-            String ASN9 = "ASN9";
         }
 
         interface ERROR_VALUE {
