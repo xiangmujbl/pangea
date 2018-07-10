@@ -1,17 +1,14 @@
-package com.jnj.pangea.omp.gdm_forecast;
+package com.jnj.pangea.hook;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.data.raw.RawDataBuilder;
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
-import com.jnj.inner.StringInner;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Logger;
 
 /*
  * Create by IntelliJ IDEA
@@ -95,7 +92,7 @@ public class OMPGdmForecastHook {
 
         String weekToDate = String.valueOf(map2.get("weekToDate"));
 
-        if (StringInner.equal(weekToDate,"")){
+        if (weekToDate.equals("")){
             return "";
         }
 
@@ -119,7 +116,7 @@ public class OMPGdmForecastHook {
         if (list != null) {
             Map map1 = list1.get(0);
             String weekToDate1 = String.valueOf(map1.get("weekToDate"));
-            if (StringInner.equal(weekToDate1,"")){
+            if (weekToDate1.equals("")){
                 return "";
             }
             weekToDate = weekToDate1.replaceAll("-", "/") + " " + "00:00:00";
@@ -151,7 +148,7 @@ public class OMPGdmForecastHook {
 
         String weekFromDate = String.valueOf(map2.get("weekFromDate"));
 
-        if (StringInner.equal(weekFromDate,"")){
+        if (!StringUtils.isNotEmpty(weekFromDate)){
             return "";
         }
 
@@ -175,7 +172,7 @@ public class OMPGdmForecastHook {
         if (list != null) {
             Map map1 = list1.get(0);
             String weekFromDate1 = String.valueOf(map1.get("weekFromDate"));
-            if (StringInner.equal(weekFromDate1,"")){
+            if (!StringUtils.isNotEmpty(weekFromDate1)){
                 return "";
             }
             weekFromDate = weekFromDate1.replaceAll("-", "/") + " " + "00:00:00";
@@ -184,8 +181,6 @@ public class OMPGdmForecastHook {
         return weekFromDate;
     }
 
-
-    private static OMPGdmForecast oMPGdmForecast = new OMPGdmForecast();
 
 
     //check any one
@@ -197,11 +192,11 @@ public class OMPGdmForecastHook {
                 String localMaterialNumber = String.valueOf(mapMaterial.get("localMaterialNumber"));
                 String sourceSystem = String.valueOf(mapMaterial.get("sourceSystem"));
 
-                if (StringInner.isStringNotEmpty(sourceSystem) && StringInner.isStringNotEmpty(localMaterialNumber) && StringInner.isStringNotEmpty(localPlant)) {
-                    Map<String, Object> mapCnsMaterial = oMPGdmForecast.getCnsMaterial(sourceSystem, localPlant, localMaterialNumber);
+                if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(localMaterialNumber) && StringUtils.isNotEmpty(localPlant)) {
+                    Map<String, Object> mapCnsMaterial = getCnsMaterial(sourceSystem, localPlant, localMaterialNumber);
                     if (mapCnsMaterial != null) {
                         String spRelevant = String.valueOf(mapCnsMaterial.get("spRelevant"));
-                        if (StringInner.equal(spRelevant, "X")) {
+                        if (spRelevant.equals("X")) {
                             productId = String.valueOf(mapMaterial.get("primaryPlanningCode"));
                         } else {
                             return "";
@@ -228,12 +223,12 @@ public class OMPGdmForecastHook {
                 String sourceSystem = String.valueOf(mapMaterial.get("sourceSystem"));
                 String localBaseUom = String.valueOf(mapMaterial.get("localBaseUom"));
 
-                if (StringInner.equal(localBaseUom, localUom)) {
+                if (localUom.equals(localBaseUom)) {
                     Quantity = quantity;
                 } else {
-                    if (StringInner.isStringNotEmpty(sourceSystem) && StringInner.isStringNotEmpty(localMaterialNumber) && StringInner.isStringNotEmpty(localUom)) {
+                    if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(localMaterialNumber) && StringUtils.isNotEmpty(localUom)) {
 
-                        Map<String, Object> MaterialAumo = oMPGdmForecast.getMaterialAumo(sourceSystem, localMaterialNumber, localUom);
+                        Map<String, Object> MaterialAumo = getMaterialAumo(sourceSystem, localMaterialNumber, localUom);
 
                         if (MaterialAumo != null) {
                             String localNumerator = String.valueOf(MaterialAumo.get("localNumerator"));
@@ -270,7 +265,7 @@ public class OMPGdmForecastHook {
      */
     public static String handleQuantity(String quantity, String localNumerator, String localDenominator) {
 
-        if (!StringInner.equal(localDenominator, "0")) {
+        if (!localDenominator.equals("0")) {
 
             double Quantity1 = Double.valueOf(quantity) * Double.valueOf(localNumerator)
                     / Double.valueOf(localDenominator);
@@ -284,6 +279,64 @@ public class OMPGdmForecastHook {
         }
 
         return "";
+
+    }
+
+
+
+    public static Map getCnsMaterial(String sourceSystem, String localPlant,
+                              String localMaterialNumber) {
+
+        ADFCriteria adfCriteria5 = QueryHelper.buildCriteria("sourceSystem")
+                .is(sourceSystem);
+        ADFCriteria adfCriteria6 = QueryHelper.buildCriteria("localPlant").is(
+                localPlant);
+        ADFCriteria adfCriteria7 = QueryHelper.buildCriteria(
+                "localMaterialNumber").is(localMaterialNumber);
+        ADFCriteria groupCriteria14 = adfCriteria7.and(adfCriteria6).and(
+                adfCriteria5);
+
+        ADFCriteria adfCriteria = groupCriteria14;
+        String queryStr = adfCriteria.toQueryString();
+        List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
+                "/plan/cns_material_plan_status", queryStr, -1);
+        if (retList != null && retList.size() > 0) {
+            Map.Entry<String, String> entry = retList.get(0);
+            Map<String, Object> map = JsonObject.append(entry.getValue())
+                    .toMap();
+            return map;
+        }
+
+        return null;
+
+    }
+
+
+
+    public static Map getMaterialAumo(String sourceSystem, String localMaterialNumber,
+                               String localUom) {
+
+        ADFCriteria adfCriteria8 = QueryHelper.buildCriteria("sourceSystem")
+                .is(sourceSystem);
+        ADFCriteria adfCriteria9 = QueryHelper.buildCriteria(
+                "localMaterialNumber").is(localMaterialNumber);
+        ADFCriteria adfCriteria10 = QueryHelper.buildCriteria("localAuom").is(
+                localUom);
+        ADFCriteria groupCriteria15 = adfCriteria10.and(adfCriteria9).and(
+                adfCriteria8);
+
+        ADFCriteria adfCriteria = groupCriteria15;
+        String queryStr = adfCriteria.toQueryString();
+        List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
+                "/edm/material_auom_v1", queryStr, -1);
+        if (retList != null && retList.size() > 0) {
+            Map.Entry<String, String> entry = retList.get(0);
+            Map<String, Object> map = JsonObject.append(entry.getValue())
+                    .toMap();
+            return map;
+        }
+
+        return null;
 
     }
 
