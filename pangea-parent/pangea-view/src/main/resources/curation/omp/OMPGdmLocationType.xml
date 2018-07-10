@@ -1,18 +1,18 @@
 <adf-curation>
-    <curation mainRegion="/plan/cns_loc_type" viewRegion="/omp/gdm_location_type" chunkSize="1000" chunkBytes="40096"
-              executionClassName="com.jnj.pangea.omp.gdm_location_type.controller.OMPGdmLocationTypeController"
-              writeTo="kafka" topic="PANGEA_V1_gdm_location_type">
+    <curation mainRegion="/plan/cns_loc_type" viewRegion="/omp/location_type" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.omp.location_type.controller.OMPLocationTypeController"
+              writeTo="all" topic="PANGEA_V1_gdm_location_type">
         <regions>
 
             <region path="/plan/cns_loc_type">
                 <columns>
-                    planLocTypeId,planLocTypeDesc,planLocTypeComments
+                    planLocTypeId,planLocTypeDesc
                 </columns>
             </region>
 
-            <region path="/omp/gdm_location_type">
+            <region path="/omp/location_type">
                 <columns>
-                    LocationTypeId,ActiveFCTERP,ActiveOPRERP,ActiveSOPERP,LABEL
+                    locationTypeId,activeFCTERP,activeOPRERP,activeSOPERP,label
                 </columns>
             </region>
 
