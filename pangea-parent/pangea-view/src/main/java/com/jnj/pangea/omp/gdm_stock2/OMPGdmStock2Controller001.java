@@ -176,7 +176,6 @@ public class OMPGdmStock2Controller001 implements IEventProcessor {
         if (0 == 0) {
             locationId = iLot7Udf(localPlanningrelevant, plntCd, srcSysCd);
         }
-        LogUtil.getCoreLog().info("locationId:{}",locationId);
         if(null==locationId||locationId.isEmpty()){
             return false;
         }else{
@@ -509,7 +508,6 @@ public class OMPGdmStock2Controller001 implements IEventProcessor {
 
     public String method142(String localMaterialNumber, String localPlanPlant,
                             String localPurchasingOrg, String infotype, String localvendor) {
-
         ADFCriteria adfCriteria12 = QueryHelper.buildCriteria(
                 "localMaterialNumber").is(localMaterialNumber);
         ADFCriteria adfCriteria13 = QueryHelper.buildCriteria("localPlanPlant")
@@ -623,7 +621,6 @@ public class OMPGdmStock2Controller001 implements IEventProcessor {
 
     private final String iLot7Udf(String localPlanningrelevant, String plntCd,
                                   String srcSysCd) {
-        LogUtil.getCoreLog().info("localPlant:{},localPlanningrelevant:{}",plntCd,localPlanningrelevant);
 
         if(null==localPlanningrelevant){
             return "";
