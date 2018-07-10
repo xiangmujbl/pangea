@@ -94,10 +94,13 @@ public class VbukEntity extends CommonEntity {
         this.lfgsk = lfgsk;
     }
 
+    public String getLfgsk() {
+        return lfgsk;
+    }
+
     public String getLfstk() {
         return lfstk;
     }
-
     public void setLfstk(String lfstk) {
         this.lfstk = lfstk;
     }
