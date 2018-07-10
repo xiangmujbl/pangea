@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <adf-curation> 
-  <curation mainRegion="/edm/inspection_lot_v1" viewRegion="/omp/gdm_stock" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_stock2.OMPGdmStock2Controller001" writeTo="all" topic="PANGEA_V1_gdm_stock2">
+  <curation mainRegion="/edm/inspection_lot_v1" viewRegion="/omp/gdm_stock" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_stock2.OMPGdmStock2Controller" writeTo="all" topic="PANGEA_V1_gdm_stock2">
     <regions> 
       <region path="/edm/inspection_lot_v1"> 
         <columns>srcSysCd,lotNum,plntCd,matlId,baseUom,lotVerifTypeCd,lotOrigCd,btchNum,localObjectNumber,stsPrfl,usgDecInd,localDateOfLotCreation,localTimeOfLotCreation,crtDttm,chgDttm,inspStrtDt,inspStrtTm,inspEndDt,inspEndTm,cstmNum,vndrNum,btch_num,stgLocCd,mfgOrdrDoc,poDocNum,poDocLineNbr,matlMvmtDocYr,matlMvmtDocNum,stckPlntCd,stckSLocCd,inspLotQty,actlLotQty,toBePostedQty,qcStsCd,usgDcsnCd,qcDcsnDttm</columns>

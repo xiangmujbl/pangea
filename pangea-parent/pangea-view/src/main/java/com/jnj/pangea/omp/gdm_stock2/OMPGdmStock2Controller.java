@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
-public class OMPGdmStock2Controller001 implements IEventProcessor {
+public class OMPGdmStock2Controller implements IEventProcessor {
 
     private final String FAILREGION = "/pangea/edm_failed_data";
 //    String stockId;
@@ -65,10 +65,10 @@ public class OMPGdmStock2Controller001 implements IEventProcessor {
                                 }
                             } catch (Exception exception) {
                                 LogUtil.getCoreLog()
-                                        .info("OMPGdmStock2Controller001 Exception occured. key = {}.",
+                                        .info("OMPGdmStock2Controller Exception occured. key = {}.",
                                                 e.getKey());
                                 LogUtil.getCoreLog().info(
-                                        "OMPGdmStock2Controller001 Exception:",
+                                        "OMPGdmStock2Controller Exception:",
                                         exception);
                             }
                         });

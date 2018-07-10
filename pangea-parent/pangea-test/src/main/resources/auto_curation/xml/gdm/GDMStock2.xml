@@ -1,4 +1,4 @@
-<adf-curation executionClassName="com.jnj.pangea.omp.gdm_stock_2.controller.OMPGdmStock2Controller001" failRegion="/pangea/edm_failed_data">
+<adf-curation executionClassName="com.jnj.pangea.omp.gdm_stock_2.controller.OMPGdmStock2Controller" failRegion="/pangea/edm_failed_data">
 
     <regions>
         <region path="/edm/inspection_lot_v1" mainRegion="true">
