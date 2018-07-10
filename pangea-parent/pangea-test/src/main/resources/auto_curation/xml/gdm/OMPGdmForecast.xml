@@ -1,0 +1,252 @@
+<adf-curation executionClassName="com.jnj.pangea.curation.OMPGdmForecast" failRegion="/edm/fail_data">
+
+    <regions>
+        <region path="/plan/cns_oor_forecast" mainRegion="true">
+            <columns>sourceSystem,demandGrp,ppc,localPlant,mthWeekInd,oorPeriod,localUom,loadDate,quantity
+            </columns>
+
+            <relations>
+                <region path="/edm/jnj_calendar_v1" isPrimaryKey="false">
+                    <columns>
+                        weekFromDate,weekToDate,fiscalPeriod,calWeek
+                    </columns>
+                    <expression>
+                        <!--fiscalPeriod=/plan/cns_oor_forecast.oorPeriod,calWeek=/plan/cns_oor_forecast.oorPeriod-->
+                    </expression>
+                </region>
+
+                <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <columns>
+                        sourceSystem,localMaterialNumber,materialNumber,primaryPlanningCode,localBaseUom
+                    </columns>
+                    <expression>
+                        primaryPlanningCode=/plan/cns_oor_forecast.ppc,sourceSystem=/plan/cns_oor_forecast.sourceSystem
+                    </expression>
+
+
+                    <relations>
+                        <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                            <columns>
+                                sourceSystem,localMaterialNumber,spRelevant,localPlant
+                            </columns>
+                            <expression>
+                                localMaterialNumber=/edm/material_global_v1.localMaterialNumber,sourceSystem=/edm/material_global_v1.sourceSystem
+                            </expression>
+                        </region>
+
+                        <region path="/edm/material_auom_v1" isPrimaryKey="false">
+                            <columns>
+                                sourceSystem,localNumerator,localMaterialNumber,localAuom,localDenominator
+                            </columns>
+                            <expression>
+                                sourceSystem=/edm/material_global_v1.sourceSystem,localMaterialNumber=/edm/material_global_v1.localMaterialNumber
+                            </expression>
+                        </region>
+                    </relations>
+
+                </region>
+            </relations>
+
+        </region>
+    </regions>
+
+
+    <methods>
+        <method name="getJnjCalendarFiscalPeriod" resultType="List" isPK="false" path="/edm/jnj_calendar_v1">
+            <parameters>
+                <parameter name="fiscalPeriod" value="oorPeriod"/>
+            </parameters>
+        </method>
+        <method name="getJnjCalendarCalWeek" resultType="List" isPK="false" path="/edm/jnj_calendar_v1">
+            <parameters>
+                <parameter name="calWeek" value="oorPeriod"/>
+            </parameters>
+        </method>
+
+        <method name="getMaterialGlobal" resultType="List" isPK="false" path="/edm/material_global_v1">
+            <parameters>
+                <parameter name="primaryPlanningCode" value="ppc" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+                <!--<parameter name="localBaseUom" value="localUOM"/>-->
+            </parameters>
+        </method>
+
+        <method name="getCnsMaterial" resultType="Map" isPK="false" path="/plan/cns_material_plan_status">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localPlant" value="localPlant" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+
+        <method name="getMaterialAumo" resultType="Map" isPK="false" path="/edm/material_auom_v1">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber" relationship="and"/>
+                <parameter name="localAuom" value="localUom"/>
+            </parameters>
+        </method>
+    </methods>
+
+
+    <viewRegion name="/omp/gdm_forecast">
+
+        <!--<multis>
+            <multi method="getMaterialGlobal" parameter="PPC,sourceSystem,localUOM" var="listMaterialGlobal"
+                   value="sourceSystem,localMaterialNumber,materialNumber,primaryPlanningCode,localBaseUom"/>
+        </multis>-->
+
+        <vars>
+            <var name="loadDate" value="loadDate"/>
+            <var name="mthWeekInd" value="mthWeekInd"/>
+            <var name="oorPeriod" value="oorPeriod"/>
+            <var name="ppc" value="ppc"/>
+            <var name="primaryPlanningCode" value="primaryPlanningCode"/>
+            <var name="quantity" value="quantity"/>
+            <var name="localUom" value="localUom"/>
+            <var name="sourceSystem" value="sourceSystem"/>
+            <var name="localPlant" value="localPlant"/>
+        </vars>
+
+        <columns>
+            <column name="active" hardCode="YES"/>
+            <column name="activeFctErp" hardCode="NO"/>
+            <column name="activeOprErp" hardCode="YES"/>
+            <column name="activeSopErp" hardCode="NO"/>
+            <column name="certaintyId" hardCode="PP"/>
+            <column name="customerId" value="demandGrp"/>
+
+            <!--Using (cns_oor_forecast-loadDate) populate the 1st day of the Month in format YYYY/MM/DD HH:NN:SS (where HH:NN:SS = 00:00:00)
+            Example - if Load Date is 20180525 then CycleStartDate date would need to be 20180501-->
+            <column name="cycleStartDate">
+                <ref hook="OMPGdmForecastHook.CycleStartDate(loadDate)"></ref>
+            </column>
+
+
+            <!-- if cns_oor_forecast-mthWeekInd = "M"
+             Using ( jnj_calendar_v1-fiscalPeriod = cns_oor_forecast-oorPeriod ) Example 201803 = 201803
+             Sort resulting records on ( jnj_calendar_v1-calWeek)
+             Get 1st calweek of the fiscalPeriod    Example
+             Then get jnj_calendar_v1-weekFromDate   Example 2018-02-26
+             GDMForecast-FromDueDate = selected jnj_calendar_v1-weekFromDate 2018-02-26
+             Format in YYYY/MM/DD HH:NN:SS (HH:NN:SS = 00:00:00) Example  -2018/02/26 (00:00:00)
+
+             Else If
+
+             cns_oor_forecast-mthWeekInd = "W"
+             Using ( jnj_calendar_v1-calWeek)= (cns_oor_forecast-oorPeriod ) Example 201810 = 201810
+             Using 1st record
+             Get jnj_calendar_v1-weekFromDate  Example 2018-03-05
+             GDMForecast-FromDueDate = selected jnj_calendar_v1-weekFromDate    example 2018-03-05
+             Format in YYYY/MM/DD HH:NN:SS (HH:NN:SS = 00:00:00) Example  -2018/03/05 (00:00:00)
+
+             If record is not found if record is Blank then Reject the Record-->
+            <column name="fromDueDate">
+                <if test="StringInner.equal(mthWeekInd,'M')">
+                    <if test="StringInner.isStringNotEmpty(oorPeriod)">
+                        <ref method="getJnjCalendarFiscalPeriod" parameter="oorPeriod" resultType="List"
+                             var="listJnjCalendar">
+                            <if test="listJnjCalendar != null">
+                                <ref hook="OMPGdmForecastHook.sortOfCalWeek(listJnjCalendar)"/>
+                            </if>
+                        </ref>
+                    </if>
+                </if>
+                <else>
+                    <if test="StringInner.equal(mthWeekInd,'W')&amp;&amp;StringInner.isStringNotEmpty(oorPeriod)">
+                        <ref method="getJnjCalendarCalWeek" parameter="oorPeriod" resultType="List"
+                             var="listJnjCalendar">
+                            <if test="listJnjCalendar != null">
+                                <ref hook="OMPGdmForecastHook.getFirstRecord(listJnjCalendar)"/>
+                            </if>
+                            <else>
+                                <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T1'"
+                                          errorValue="'no record is found for jnj_calendar_v1'"
+                                          sourceSystem="sourceSystem" key1="fromDueDate" key2=""/>
+                            </else>
+                        </ref>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </else>
+            </column>
+
+            <!--#Value of Date YYYY/MM/DD derived from FRC8 + HH:NN:SS (NN is for minutes) (HH:NN:SS = 00:00:01)-->
+            <column name="dueDate" isPK="true">
+                <ref hook="OMPGdmForecastHook.getDueDate(fromDueDate)"/>
+            </column>
+
+            <!--#Concatenate cns_oor_forecast-sourceSystem, "_", cns_oor_forecast-localPlant-->
+            <column name="locationId" var="locationId">
+                <set name="locationId" value="sourceSystem + '_' + localPlant"/>
+            </column>
+
+            <!--#Default "FRCductLocationBalanced"-->
+            <column name="planningStrategy" hardCode="ProductLocationBalanced"/>
+
+            <!--Using (cns_oor_forecast-PPC) = (global_material_v1-primaryPlanningCode) and  (cns_oor_forecast-sourceSystem) = (material_global_v1-sourceSystem)
+            get (material_global_v1-localMaterialNumber) and (material_global_v1-materialNumber)
+            Above may result in multiple localMaterialNumber records.
+
+            Check for any one of localMaterialNumber records found above
+            Using (material_global_v1-localMaterialNumber) = (cns_material_plan_status_v1-localMaterialNumber), (cns_oor_forecast-localPlant) = (cns_material_plan_status-localPlant)
+            ((material_global_v1-sourceSystem) = (cns_material_plan_status-sourceSystem)  AND
+            If  (cns_material_plan_status-spRelevant) = X
+
+            if No record is found then skip record from adding in Output File
+            if record is found as Yes then Use (material_global_v1-primaryPlanningCode)-->
+            <column name="productId" isPK="true">
+                <if test="StringInner.isStringNotEmpty(ppc)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)">
+                    <ref method="getMaterialGlobal" parameter="ppc,sourceSystem" resultType="List" var="listMaterialGlobal">
+                        <if test="listMaterialGlobal.size() >= 1">
+                            <ref hook="OMPGdmForecastHook.CheckAnyOne(listMaterialGlobal,localPlant,failMap)"/>
+                            <if test="productId == ''">
+                                <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T3'"
+                                          errorValue="'no record is found for cns_material_plan_status'"
+                                          sourceSystem="sourceSystem" key1="productId" key2=""/>
+                            </if>
+                        </if>
+                    </ref>
+                </if>
+            </column>
+
+            <!--#Default with current data (todays date)
+            Format YYYY/MM/DD HH:NN:SS (where HH:NN:SS = 00:00:00)-->
+            <column name="publishDate">
+                <ref hook="OMPGdmForecastHook.stampToDate(String.valueOf(System.currentTimeMillis()))"/>
+            </column>
+
+            <!--Get the first record of localMaterialNumber from material_global_v1 when material_global_v1-primaryPlanningCode = cns_oor_forecast-PPC (since one PPC can have multiple localMaterialNumber). (Note - Assumption is all UOM for each of the Local SKU for PPC have the same UOM conversion.)
+
+            For the identified material_global_v1-localMaterialNumber
+            If the material_global_v1-localBaseUom = cns_oor_forecast-localUOM (then quantity is in base unit and send the quantity as is)
+            GDMForecast-Quantity = cns_oor_forecast-quantity
+            Else
+            Get material_auom_v1-localNumerator and material_auom_v1-localDenominator when
+
+            material_auom_v1-sourceSystem = material_global_v1-sourceSystem and
+            material_auom_v1-localMaterialNumber = material_global_v1-localMaterialNumber and
+            material_auom_v1-localAuom = cns_oor_forecast-localUOM
+            If no record found, Reject the record with raised error.
+            Else record found, Convert to Base UOM Qty
+            GDMForecast-Quantity =  cns_oor_forecast-quantity * material_auom_v1-localNumerator/ material_auom_v1-localDenominator-->
+            <column name="quantity">
+                <ref hook="OMPGdmForecastHook.getQuantity(listMaterialGlobal,localUom,quantity,failMap)"/>
+                <if test="quantity == ''">
+                    <failData functionalArea="'SP'" interfaceID="'OMPDemand'" errorCode="'T4'"
+                              errorValue="'no record is found for material_auom_v1'"
+                              sourceSystem="sourceSystem" key1="quantity" key2=""/>
+                </if>
+            </column>
+
+
+            <!--Concatenate GDMForecast-ProductID(FRC11), "-",  GDMForecast-Location ID(FRC9), "-",
+            GDMForecast-CustomerID, "-", GDMForecast-FromDueDate (FRC8)-->
+            <column name="forecastId" isPK="true">
+                <set name="forecastId" value="productId + '-' + locationId + '-' + customerId + '-' + fromDueDate"/>
+            </column>
+        </columns>
+    </viewRegion>
+
+</adf-curation>
