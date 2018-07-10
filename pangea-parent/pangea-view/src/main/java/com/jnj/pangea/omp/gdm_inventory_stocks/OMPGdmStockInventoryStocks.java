@@ -1,4 +1,4 @@
-package com.jnj.pangea;
+package com.jnj.pangea.omp.gdm_inventory_stocks;
 
 import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.remote.RawDataValue;
