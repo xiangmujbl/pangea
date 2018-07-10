@@ -44,7 +44,7 @@ public class OMPGdmLinkMasterHook {
     public static String getEndEff_T5(String rtgItemEndDate, String valToDt) {
         String endEff = "";
         if(StringUtils.isNotBlank(rtgItemEndDate)&&StringUtils.isNotBlank(valToDt)){
-            Date endDate = DateInner.stringToDate(rtgItemEndDate + IConstant.VALUE.HHMMSS, DateUtils.J_yyyyMMdd_HHmmss);
+            Date endDate = DateInner.stringToDate(rtgItemEndDate + IConstant.VALUE.HHMMSS, DateUtils.F_yyyyMMddHHmmss_);
             Date toDate = DateInner.stringToDate(valToDt + IConstant.VALUE.HHMMSS, DateUtils.F_yyyyMMddHHmmss_);
             Date compareDate = DateInner.stringToDate(IConstant.VALUE.ENDEFF, DateUtils.J_yyyyMMdd_HHmmss);
             if (endDate.after(toDate)) {

@@ -69,8 +69,8 @@ Feature: EDMAdvancedShippingNotification AEAZ-3174
 
     When I submit task with xml file "xml/edm/EDMAdvancedShipNotification.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/edm/advanced_ship_notification_v1" by keyFields "delvDocID,srcSysCd,delvLineNbr"
-      | localdeliveryType | localdeliveryCatg | localExternalId | delvLineNbr | actlSkuDelvQty | localcreatedDate | locRefDocLineNum | delvDocID  | localShippingPlant | vendorID | localvendorBatchNo | srcSysCd    | baseUnitOfMeasureCd | receivingPtID | localReceivingPlant | localbillOfLading | localbatchNo  | matlNum | localdeliveryDate |  actGRDt   | localRefDocNum |
+    Then I check region data "/edm/advanced_ship_notification_v1" by keyFields "delvDocId,srcSysCd,delvLineNbr"
+      | localDeliveryType | localDeliveryCatg | localExternalId | delvLineNbr | actlSkuDelvQty | localCreatedDate | locRefDocLineNum | delvDocId  | localShippingPlant | vendorId | localVendorBatchNo | srcSysCd    | baseUnitOfMeasureCd | receivingPtId | localReceivingPlant | localBillOfLading | localBatchNo  | matlNum | localDeliveryDate |  actGRDt   | localRefDocNum |
       | EL                | 7                 | 001012281-1     | 10          | 0.000          | 2016-02-16       | 190              | 180002049  |                    | 8917     |                    | CONS_LATAM  | EA                  |               | BR19                | 001012281-1       |               | 68874   | 2016-02-16        | 2016-02-16 | 3000753622     |
       | EL                | 7                 | 001012281-1     | 900001      | 2880.000       | 2016-02-16       | 350              | 180002049  |                    | 8917     |                    | CONS_LATAM  | EA                  |               | BR16                | 001012281-1       | 1026B01       | 69197   | 2016-02-16        | 2016-02-16 | 3000761658     |
       | EL                | 7                 | 001012281-1     | 900002      | 5760.000       | 2016-02-16       | 350              | 180002049  |                    | 8917     |                    | CONS_LATAM  | EA                  |               | BR16                | 001012281-1       | 1026B02       | 69197   | 2016-02-16        | 2016-02-16 | 3000761658     |
@@ -80,7 +80,7 @@ Feature: EDMAdvancedShippingNotification AEAZ-3174
       | EL                | 7                 | 001174889-1     | 900002      | 2592.000       | 2017-02-16       | 190              | 180027276  |                    | 8917     |                    | CONS_LATAM  | EA                  | BR16          | BR19                | 001174889-1       | 0216B03       | 68874   | 2017-02-16        | 2017-02-16 | 3000753622     |
       | EL                | 7                 | 1316038332-3    | 10          | 0.000          | 2017-11-21       | 350              | 180052775  |                    | 17343    |                    | CONS_LATAM  | EA                  |               | BR16                | 1316038332-3      |               | 69197   | 2017-11-21        | 2017-02-16 | 3000761658     |
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
     And I will remove all data with region "/edm/source_system_v1"

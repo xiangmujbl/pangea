@@ -3,14 +3,19 @@ Feature: OMPLocationType AEAZ-1763
 
   Scenario: Full Load curation
 
+    And I will remove the test file on sink application "GDMLocationType.tsv"
+
     Given I import "/plan/cns_loc_type" by keyFields "planLocTypeId"
       | planLocTypeId | planLocTypeDesc              |
       | CO01          | Internal Manufacturing Plant |
     And I wait "/plan/cns_loc_type" Async Queue complete
 
-    When I submit task with xml file "xml/omp/OMPLocationType.xml" and execute file "jar/pangea-view.jar"
+    When I submit task with xml file "xml/omp/OMPGdmLocationType.xml" and execute file "jar/pangea-view.jar"
 
-    Then I check region data "/omp/location_type" by keyFields "locationTypeId"
+    Then A file is found on sink application with name "GDMLocationType.tsv"
+
+    Then I check file data for filename "GDMLocationType.tsv" by keyFields "locationTypeId"
+#    Then I check region data "/omp/location_type" by keyFields "locationTypeId"
       | locationTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label                        |
       | CO01           | YES          | YES          | NO           | Internal Manufacturing Plant |
 
