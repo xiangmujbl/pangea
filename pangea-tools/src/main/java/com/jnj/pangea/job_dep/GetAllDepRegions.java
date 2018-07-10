@@ -1,5 +1,6 @@
 package com.jnj.pangea.job_dep;
 
+import com.jnj.pangea.generator.metadata.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -21,12 +22,7 @@ public class GetAllDepRegions {
         List<String> xmlPath = new ArrayList<>();
         getAllXmlPath(xmlDir, xmlPath);
 
-        List<String> allRegions = new ArrayList<>();
-        xmlPath.forEach(path -> getRegions(path, allRegions));
-
-        Collections.sort(allRegions);
-        System.out.println("TOTAL REGIONS: " + allRegions.size());
-        allRegions.forEach(System.out::println);
+        printAllTopics(xmlPath);
     }
 
     private static void getAllXmlPath(String parent, List<String> xmlPath) {
@@ -67,5 +63,39 @@ public class GetAllDepRegions {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void getTopics(String xmlPath, List<String> topicList) {
+
+        try {
+            Document doc = new SAXReader().read(new FileInputStream(new File(xmlPath)));
+            Element curation = doc.getRootElement().element("curation");
+            String topic = curation.attributeValue("topic");
+            if (!StringUtils.isEmpty(topic) && !topicList.contains(topic)) {
+                topicList.add(topic);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void printAllRegions(List<String> xmlPath) {
+
+        List<String> allRegions = new ArrayList<>();
+        xmlPath.forEach(path -> getRegions(path, allRegions));
+
+        Collections.sort(allRegions);
+        System.out.println("TOTAL REGIONS: " + allRegions.size());
+        allRegions.forEach(System.out::println);
+    }
+
+    private static void printAllTopics(List<String> xmlPath) {
+
+        List<String> allTopics = new ArrayList<>();
+        xmlPath.forEach(path -> getTopics(path, allTopics));
+
+        Collections.sort(allTopics);
+        System.out.println("TOTAL TOPICS: " + allTopics.size());
+        allTopics.forEach(System.out::println);
     }
 }
