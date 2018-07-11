@@ -103,6 +103,10 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 		String poUomCd = StringInner.getString(map, "poUomCd");
 		String suplPlntCd = StringInner.getString(map, "suplPlntCd");
 		String delInd = StringInner.getString(map, "delInd");
+		String localBaseUOM = StringInner.getString(map, "localBaseUOM");
+		String delvCmpltInd = StringInner.getString(map, "delvCmpltInd");
+		String outbDelvCmpltInd = StringInner
+				.getString(map, "outbDelvCmpltInd");
 		String spRelevant = null;
 		String noPlanRelevant = null;
 		String primaryPlanningCode = null;
@@ -115,7 +119,7 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 		builder.put("activeFCTERP", "NO");
 		builder.put("activeOPRERP", "YES");
 		builder.put("activeSOPERP", "NO");
-		builder.put("batchId", " ");
+		builder.put("batchId", "");
 		builder.put("certaintyId", "U1");
 		builder.put("planningStrategy", "ProductLocationBalanced");
 		//WRK02
@@ -190,7 +194,9 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 			}
 		}
 
-		if (StringInner.isStringNotEmpty(delInd)) {
+		if (StringInner.isStringNotEmpty(delInd)
+				&& StringInner.isStringNotEmpty(delvCmpltInd)
+				&& StringInner.isStringNotEmpty(outbDelvCmpltInd)) {
 
 			return false;
 		}
@@ -288,14 +294,17 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 
 		String unitId = null;
 
-		Map cnsPlanUnitMap = ConCnsPlanUnit(poUomCd, sourceSystem);
-		if (cnsPlanUnitMap != null) {
-			unit = StringInner.getString(cnsPlanUnitMap, "unit");
-		}
-		if (StringInner.isMapNull(cnsPlanUnitMap)) {
-			return false;
-		} else {
-			unitId = unit;
+		if (StringInner.isStringNotEmpty(localBaseUOM)
+				&& StringInner.isStringNotEmpty(sourceSystem)) {
+
+			Map cnsPlanUnitMap = ConCnsPlanUnit(localBaseUOM, sourceSystem);
+			if (cnsPlanUnitMap != null) {
+				unit = StringInner.getString(cnsPlanUnitMap, "unit");
+				unitId = unit;
+			}
+			if (cnsPlanUnitMap == null) {
+				return false;
+			}
 		}
 
 		builder.put("unitId", unitId);
@@ -440,10 +449,10 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 
 	}
 
-	public Map ConCnsPlanUnit(String poUomCd, String sourceSystem) {
+	public Map ConCnsPlanUnit(String localBaseUOM, String sourceSystem) {
 
 		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria("localUom").is(
-				poUomCd);
+				localBaseUOM);
 		ADFCriteria adfCriteria19 = QueryHelper.buildCriteria("sourceSystem")
 				.is(sourceSystem);
 		ADFCriteria groupCriteria25 = adfCriteria19.and(adfCriteria18);
