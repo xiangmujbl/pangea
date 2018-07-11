@@ -22,7 +22,7 @@ public class GDMProductUnitConversionServiceImpl {
 
     private static GDMProductUnitConversionServiceImpl instance;
 
-    private final DecimalFormat df = new DecimalFormat("0.00");
+    private final DecimalFormat df = new DecimalFormat("0.0000000000");
 
 
     public static GDMProductUnitConversionServiceImpl getInstance() {
@@ -104,7 +104,7 @@ public class GDMProductUnitConversionServiceImpl {
                                 if (pattern.matcher(edmMaterialAuomV1Entity.getLocalNumerator()).matches() && pattern.matcher(edmMaterialAuomV1Entity.getLocalDenominator()).matches()) {
                                     int localNumerator = Integer.valueOf(edmMaterialAuomV1Entity.getLocalNumerator());
                                     int localDenominator = Integer.valueOf(edmMaterialAuomV1Entity.getLocalDenominator());
-                                    factor = String.valueOf(df.format((float) localNumerator / localDenominator));
+                                    factor = String.valueOf(df.format((double) localDenominator / localNumerator));
                                 }
                             }
 

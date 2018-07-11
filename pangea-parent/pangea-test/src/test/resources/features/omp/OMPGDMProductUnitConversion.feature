@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-1815 @AEAZ-4071
-Feature: OMPGdmProductUnitConversion AEAZ-4071
+@pangea_test @AEAZ-8705
+Feature: OMPGdmProductUnitConversion AEAZ-8705
 
   @Scenario1
   Scenario: full load consumption
@@ -85,36 +85,36 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     And I import "/edm/material_auom_v1" by keyFields "localMaterialNumber,localAuom,sourceSystem"
-      | localMaterialNumber | localDenominator | localAuom | localNumerator | materialNumber | sourceSystem |
-      | 000000000000000945  | 7                | EA        | 14             | 945            | CONS_LATAM   |
-      | 000000000000055735  | 10               | ZUM       | 1              | 55735          | CONS_LATAM   |
-      | 000000000000058723  | 1                | EA        | 12             | 58723          | CONS_LATAM   |
-      | 000000000000058724  | 1                | EA        | 12             | 58724          | CONS_LATAM   |
-      | 000000000000004000  | 7                | EA        | 14             | 4000           | CONS_LATAM   |
-      | 000000000000004001  | 5                | EA        | 1              | 4001           | CONS_LATAM   |
-      | 000000000000004002  | 5                | EA        | 1              | 4002           | CONS_LATAM   |
-      | 000000000000004003  | 5                | EA        | 1              | 4003           | CONS_LATAM   |
-      | 000000000000058722  | 5                | EA        | 1              | 58722          | CONS_LATAM   |
-      | 000000000000002886  | 7                | EA        | 14             | 2886           | CONS_LATAM   |
-      | 000000000000002887  | 5                | LB        | 1              | 2887           | CONS_LATAM   |
-      | 000000000000002888  | 5                | CS        | 1              | 2888           | CONS_LATAM   |
-      | 000000000000002889  | 5                | DZ        | 1              | 2889           | CONS_LATAM   |
-      | 000000000000002890  | 5                | EA        | 1              | 2890           | CONS_LATAM   |
-      | 000000000000002891  | 5                | LB        | 1              | 2891           | CONS_LATAM   |
-      | 000000000000002892  | 5                | CS        | 1              | 2892           | CONS_LATAM   |
-      | 000000000000002893  | 5                | DZ        | 1              | 2893           | CONS_LATAM   |
-      | 000000000000002894  | 5                | EA        | 1              | 2894           | CONS_LATAM   |
-      | 000000000000003880  | 5                | EA        | 1              | 3880           | CONS_LATAM   |
-      | 000000000000003881  | 5                | EA        | 1              | 3881           | CONS_LATAM   |
-      | 000000000000004880  | 5                | EA        | 1              | 4880           | CONS_LATAM   |
-      | 000000000000004880  | 5                | LB        | 1              | 4880           | CONS_LATAM   |
-      | 000000000000004880  | 5                | CS        | 1              | 4880           | CONS_LATAM   |
-      | 000000000000004881  | 5                | EA        | 1              | 4881           | CONS_LATAM   |
-      | 000000000000004883  | 5                | LB        | 1              | 4883           | CONS_LATAM   |
-      | 000000000000006881  | 5                | KK        | 1              | 6881           | CONS_LATAM   |
-      | 000000000000007881  | 5                | EA        | 1              | 7881           | CONS_LATAM   |
-      | 000000000000008881  | 5                | EA        | 1              | 8881           | CONS_LATAM   |
-      | 000000000000008882  | 5                | EA        | 1              | 8882           | CONS_LATAM   |
+      | localMaterialNumber | localNumerator   | localAuom | localDenominator | materialNumber | sourceSystem |
+      | 000000000000000945  | 7                | EA        | 14               | 945            | CONS_LATAM   |
+      | 000000000000055735  | 10               | ZUM       | 1                | 55735          | CONS_LATAM   |
+      | 000000000000058723  | 1                | EA        | 12               | 58723          | CONS_LATAM   |
+      | 000000000000058724  | 1                | EA        | 12               | 58724          | CONS_LATAM   |
+      | 000000000000004000  | 7                | EA        | 14               | 4000           | CONS_LATAM   |
+      | 000000000000004001  | 5                | EA        | 1                | 4001           | CONS_LATAM   |
+      | 000000000000004002  | 5                | EA        | 1                | 4002           | CONS_LATAM   |
+      | 000000000000004003  | 5                | EA        | 1                | 4003           | CONS_LATAM   |
+      | 000000000000058722  | 5                | EA        | 1                | 58722          | CONS_LATAM   |
+      | 000000000000002886  | 7                | EA        | 14               | 2886           | CONS_LATAM   |
+      | 000000000000002887  | 5                | LB        | 1                | 2887           | CONS_LATAM   |
+      | 000000000000002888  | 5                | CS        | 1                | 2888           | CONS_LATAM   |
+      | 000000000000002889  | 5                | DZ        | 1                | 2889           | CONS_LATAM   |
+      | 000000000000002890  | 5                | EA        | 1                | 2890           | CONS_LATAM   |
+      | 000000000000002891  | 5                | LB        | 1                | 2891           | CONS_LATAM   |
+      | 000000000000002892  | 5                | CS        | 1                | 2892           | CONS_LATAM   |
+      | 000000000000002893  | 5                | DZ        | 1                | 2893           | CONS_LATAM   |
+      | 000000000000002894  | 5                | EA        | 1                | 2894           | CONS_LATAM   |
+      | 000000000000003880  | 5                | EA        | 1                | 3880           | CONS_LATAM   |
+      | 000000000000003881  | 5                | EA        | 1                | 3881           | CONS_LATAM   |
+      | 000000000000004880  | 5                | EA        | 1                | 4880           | CONS_LATAM   |
+      | 000000000000004880  | 5                | LB        | 1                | 4880           | CONS_LATAM   |
+      | 000000000000004880  | 5                | CS        | 1                | 4880           | CONS_LATAM   |
+      | 000000000000004881  | 5                | EA        | 1                | 4881           | CONS_LATAM   |
+      | 000000000000004883  | 5                | LB        | 1                | 4883           | CONS_LATAM   |
+      | 000000000000006881  | 5                | KK        | 1                | 6881           | CONS_LATAM   |
+      | 000000000000007881  | 5                | EA        | 1                | 7881           | CONS_LATAM   |
+      | 000000000000008881  | 5                | EA        | 1                | 8881           | CONS_LATAM   |
+      | 000000000000008882  | 5                | EA        | 1                | 8882           | CONS_LATAM   |
     And I wait "/edm/material_auom_v1" Async Queue complete
 
     And I import "/plan/cns_plan_unit" by keyFields "planFlag,unit,localUom,sourceSystem,localUomName"
@@ -132,40 +132,39 @@ Feature: OMPGdmProductUnitConversion AEAZ-4071
     Then A file is found on sink application with name "GDMProductUnitConversion.tsv"
 
     Then I check file data for filename "GDMProductUnitConversion.tsv" by keyFields "gdmProductUnitConversionId"
-#    Then I check region data "/omp/gdm_product_unit_conversion" by keyFields "gdmProductUnitConversionId"
-      | gdmProductUnitConversionId | comments | productId             | activeFCTERP | active | unitId | factor | activeOPRERP | activeSOPERP |
-      | 3881EA                     |          | 3881                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
-      | 7881EA                     |          | 7881                  | YES          | YES    | EA     | 0.20   | NO           | NO           |
-      | 2887LB                     |          | 2887                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
-      | LA_178962124288680038LB    |          | LA_178962124288680038 | YES          | YES    | LB     | 0.20   | NO           | NO           |
-      | 58722EA                    |          | 58722                 | NO           | YES    | EA     | 0.20   | YES          | NO           |
-      | LA_178962124094540038EA    |          | LA_178962124094540038 | YES          | YES    | EA     | 0.20   | NO           | NO           |
-      | 2892CA                     |          | 2892                  | YES          | YES    | CA     | 0.20   | YES          | NO           |
-      | 8881EA                     |          | 8881                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
-      | LA_178962124288680041EA    |          | LA_178962124288680041 | YES          | YES    | EA     | 0.20   | NO           | NO           |
-      | 8882EA                     |          | 8882                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
-      | LA_178962124288680041EA    |          | LA_178962124288680041 | YES          | YES    | EA     | 0.20   | NO           | NO           |
-      | 2888CA                     |          | 2888                  | YES          | YES    | CA     | 0.20   | YES          | NO           |
-      | LA_178962124288680039CA    |          | LA_178962124288680039 | YES          | YES    | CA     | 0.20   | NO           | NO           |
-      | 2891LB                     |          | 2891                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
-      | 58723EA                    |          | 58723                 | YES          | YES    | EA     | 12.00  | YES          | NO           |
-      | 2894EA                     |          | 2894                  | NO           | YES    | EA     | 0.20   | YES          | NO           |
-      | 3880EA                     |          | 3880                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
-      | 4000EA                     |          | 4000                  | YES          | YES    | EA     | 2.00   | YES          | NO           |
-      | LA_178962124094540036EA    |          | LA_178962124094540036 | YES          | YES    | EA     | 2.00   | NO           | NO           |
-      | 2889DZ                     |          | 2889                  | NO           | YES    | DZ     | 0.20   | YES          | NO           |
-      | 55735LA_ZUM                |          | 55735                 | YES          | YES    | LA_ZUM | 0.10   | NO           | NO           |
-      | 4002EA                     |          | 4002                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
-      | 2893DZ                     |          | 2893                  | NO           | YES    | DZ     | 0.20   | YES          | NO           |
-      | 2890EA                     |          | 2890                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
-      | 945EA                      |          | 945                   | YES          | YES    | EA     | 2.00   | YES          | NO           |
-      | LA_178962124094540035EA    |          | LA_178962124094540035 | YES          | YES    | EA     | 2.00   | NO           | NO           |
-      | 4883LB                     |          | 4883                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
-      | 2886EA                     |          | 2886                  | YES          | YES    | EA     | 2.00   | YES          | NO           |
-      | LA_178962124288680037EA    |          | LA_178962124288680037 | YES          | YES    | EA     | 2.00   | NO           | NO           |
-      | 4880CA                     |          | 4880                  | YES          | YES    | CA     | 0.20   | YES          | NO           |
-      | 4880EA                     |          | 4880                  | YES          | YES    | EA     | 0.20   | YES          | NO           |
-      | 4880LB                     |          | 4880                  | YES          | YES    | LB     | 0.20   | NO           | NO           |
+      | gdmProductUnitConversionId | comments | productId             | activeFCTERP | active | unitId | factor       | activeOPRERP | activeSOPERP |
+      | 3881EA                     |          | 3881                  | YES          | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | 7881EA                     |          | 7881                  | YES          | YES    | EA     | 0.2000000000 | NO           | NO           |
+      | 2887LB                     |          | 2887                  | YES          | YES    | LB     | 0.2000000000 | NO           | NO           |
+      | LA_178962124288680038LB    |          | LA_178962124288680038 | YES          | YES    | LB     | 0.2000000000 | NO           | NO           |
+      | 58722EA                    |          | 58722                 | NO           | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | LA_178962124094540038EA    |          | LA_178962124094540038 | YES          | YES    | EA     | 0.2000000000 | NO           | NO           |
+      | 2892CA                     |          | 2892                  | YES          | YES    | CA     | 0.2000000000 | YES          | NO           |
+      | 8881EA                     |          | 8881                  | YES          | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | LA_178962124288680041EA    |          | LA_178962124288680041 | YES          | YES    | EA     | 0.2000000000 | NO           | NO           |
+      | 8882EA                     |          | 8882                  | YES          | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | LA_178962124288680041EA    |          | LA_178962124288680041 | YES          | YES    | EA     | 0.2000000000 | NO           | NO           |
+      | 2888CA                     |          | 2888                  | YES          | YES    | CA     | 0.2000000000 | YES          | NO           |
+      | LA_178962124288680039CA    |          | LA_178962124288680039 | YES          | YES    | CA     | 0.2000000000 | NO           | NO           |
+      | 2891LB                     |          | 2891                  | YES          | YES    | LB     | 0.2000000000 | NO           | NO           |
+      | 58723EA                    |          | 58723                 | YES          | YES    | EA     | 12.0000000000| YES          | NO           |
+      | 2894EA                     |          | 2894                  | NO           | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | 3880EA                     |          | 3880                  | YES          | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | 4000EA                     |          | 4000                  | YES          | YES    | EA     | 2.0000000000 | YES          | NO           |
+      | LA_178962124094540036EA    |          | LA_178962124094540036 | YES          | YES    | EA     | 2.0000000000 | NO           | NO           |
+      | 2889DZ                     |          | 2889                  | NO           | YES    | DZ     | 0.2000000000 | YES          | NO           |
+      | 55735LA_ZUM                |          | 55735                 | YES          | YES    | LA_ZUM | 0.1000000000 | NO           | NO           |
+      | 4002EA                     |          | 4002                  | YES          | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | 2893DZ                     |          | 2893                  | NO           | YES    | DZ     | 0.2000000000 | YES          | NO           |
+      | 2890EA                     |          | 2890                  | YES          | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | 945EA                      |          | 945                   | YES          | YES    | EA     | 2.0000000000 | YES          | NO           |
+      | LA_178962124094540035EA    |          | LA_178962124094540035 | YES          | YES    | EA     | 2.0000000000 | NO           | NO           |
+      | 4883LB                     |          | 4883                  | YES          | YES    | LB     | 0.2000000000 | NO           | NO           |
+      | 2886EA                     |          | 2886                  | YES          | YES    | EA     | 2.0000000000 | YES          | NO           |
+      | LA_178962124288680037EA    |          | LA_178962124288680037 | YES          | YES    | EA     | 2.0000000000 | NO           | NO           |
+      | 4880CA                     |          | 4880                  | YES          | YES    | CA     | 0.2000000000 | YES          | NO           |
+      | 4880EA                     |          | 4880                  | YES          | YES    | EA     | 0.2000000000 | YES          | NO           |
+      | 4880LB                     |          | 4880                  | YES          | YES    | LB     | 0.2000000000 | NO           | NO           |
 
   Scenario:delete all the test data
     And I delete the test data
