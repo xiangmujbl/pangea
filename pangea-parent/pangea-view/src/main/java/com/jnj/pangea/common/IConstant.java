@@ -152,7 +152,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_COUNTRY_INPUT = "/edm/edm_country_input";
+        String EDM_COUNTRY_INPUT="/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
@@ -160,16 +160,28 @@ public interface IConstant {
         String EDM_ADVANCED_SHIP_NOTIFICATION_V1 = "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
         String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
+        String PROJECT_ONE_PLMZ = "/project_one/plmz";
+        String PROJECT_ONE_PLMZ_CLONE = "/project_one/plmz_clone";
     }
 
     interface FBP {
         String FAIL_MSG = "localDpParentCode does not exist in edm Material";
+        String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
     }
+
 
     interface EDM_INVENTORY_STOCK {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_BATCH_ID = "localBatchId";
         String LOCAL_MATERIAL = "localMaterial";
+    }
+    interface PROJECT_ONE_PLMZ {
+        String PLNTY = "plnty";
+        String PLNNR = "plnnr";
+        String PLNAL = "plnal";
+        String ZUONR = "zuonr";
+        String ZAEHL = "zaehl";
+        String ALLOCVALIDTO = "99991231";
     }
 
     interface BOM_HDR {
@@ -236,8 +248,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "VendorPurchase";
-        String EXTERNAL_PURCHASE = "ExternalPurchase";
+        String VENDOR_PURCHASE = "vendorPurchase";
+        String EXTERNAL_PURCHASE = "externalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
