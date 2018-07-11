@@ -20,8 +20,8 @@ public class PlanEdmCountryInputDaoImpl extends CommonDaoImpl {
     public PlanEdmCountryInputEntity getEntityWithFormNameAndLocalCountry(String sourceSystem, String localCountry) {
         if(StringUtil.isNotBlank(sourceSystem) && StringUtil.isNotBlank(localCountry)){
             String queryString = QueryHelper.buildCriteria(
-                    IConstant.PLAN_EDM_COUNTRY_INPUT.SOURCESYSTEM).is(sourceSystem)
-                    .and(IConstant.PLAN_EDM_COUNTRY_INPUT.LOCALCOUNTRY).is(localCountry)
+                    IConstant.PLAN_EDM_COUNTRY_INPUT.SOURCE_SYSTEM).is(sourceSystem)
+                    .and(IConstant.PLAN_EDM_COUNTRY_INPUT.LOCAL_COUNTRY).is(localCountry)
                     .toQueryString();
             return queryForObject(IConstant.REGION.PLAN_EDM_COUNTRY_INPUT, queryString, PlanEdmCountryInputEntity.class);
         }else{
