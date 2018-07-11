@@ -1,6 +1,5 @@
-package com.jnj.pangea.omp.gdm_matl_mfg_allc.service;
+package com.jnj.pangea.edm.matl_mfg_allc.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -8,20 +7,18 @@ import com.jnj.pangea.common.dao.impl.project_one.PlmzDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.project_one.PlmzEntity;
 import com.jnj.pangea.common.service.ICommonService;
-import com.jnj.pangea.omp.gdm_matl_mfg_allc.bo.OMPGdmMatlMfgAllcBo;
-import com.jnj.pangea.util.DateUtils;
+import com.jnj.pangea.edm.matl_mfg_allc.bo.EDMMatlMfgAllcBo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class OMPGdmMatlMfgAllcServiceImpl implements ICommonService {
+public class EDMMatlMfgAllcServiceImpl implements ICommonService {
 
-    private static OMPGdmMatlMfgAllcServiceImpl instance;
+    private static EDMMatlMfgAllcServiceImpl instance;
 
-    public static OMPGdmMatlMfgAllcServiceImpl getInstance() {
+    public static EDMMatlMfgAllcServiceImpl getInstance() {
         if (instance == null) {
-            instance = new OMPGdmMatlMfgAllcServiceImpl();
+            instance = new EDMMatlMfgAllcServiceImpl();
         }
         return instance;
     }
@@ -34,7 +31,7 @@ public class OMPGdmMatlMfgAllcServiceImpl implements ICommonService {
     public ResultObject buildView(String key, Object o, Object o2) {
         PlmzEntity plmzEntity = (PlmzEntity) o;
         ResultObject resultObject = new ResultObject();
-        OMPGdmMatlMfgAllcBo matlMfgAllcBo = new OMPGdmMatlMfgAllcBo();
+        EDMMatlMfgAllcBo matlMfgAllcBo = new EDMMatlMfgAllcBo();
         if (plmzEntity == null) {
             return resultObject;
         }
