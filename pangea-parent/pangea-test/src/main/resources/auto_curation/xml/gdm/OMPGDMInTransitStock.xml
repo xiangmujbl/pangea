@@ -1,0 +1,188 @@
+<adf-curation failRegion="/plan/edm_failed_data"
+              executionClassName="com.jnj.pangea.omp.gdm_in_transit_stock.OMPGDMInTransitStock" chunkSize="500"
+              writeTo="all" topic="PANGEA_V1_omp_gdm_intransitstock">
+    <regions>
+        <region path="/plan/cns_intransitstock" mainRegion="true">
+            <columns>sourceSystem,customerId,productId,date,quantity,uom,sourceCountry</columns>
+            <relations>
+                <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,localMaterialNumber,localDpParentCode</columns>
+                    <expression></expression>
+                </region>
+                <region path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
+                    <columns>sourceSystem,customerId,countryAffiliate,demandGroup,salesOrganization,channel</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/material_auom_v1" isPrimaryKey="false">
+                    <columns>localAuom,sourceSystem,localDenominator,localNumerator,localMaterialNumber</columns>
+                    <expression></expression>
+                </region>
+                <region path="/plan/cns_intransitstock" isPrimaryKey="false" alias="/plan/cns_intransitstock_clone">
+                    <columns>sourceSystem,customerId,productId,date,quantity,uom,sourceCountry</columns>
+                    <expression></expression>
+                </region>
+                <region path="/project_one/knvh" isPrimaryKey="false">
+                    <columns>datab,datbi,kunnr,hkunnr,hvkorg,hvtweg,hiytp,spart,vkorg,vtweg</columns>
+                    <expression></expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="QueryMaterialGlobal" isPK="false" path="/edm/material_global_v1" resultType="Map">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+        <method name="QueryAuomEntity" resultType="Map" isPK="false" path="/edm/material_auom_v1">
+            <parameters>
+                <parameter name="localAuom" value="localAuom" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+
+            </parameters>
+        </method>
+        <method name="QueryGrpAsgnEntity" resultType="Map" isPK="false" path="/plan/cns_dem_grp_asgn">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="customerId" value="customerId" relationship="and"/>
+                <parameter name="countryAffiliate" value="countryAffiliate"/>
+
+            </parameters>
+        </method>
+        <method name="QueryGrpAsgnWithKnvh" resultType="Map" isPK="false" path="/plan/cns_dem_grp_asgn">
+            <parameters>
+                <parameter name="customerId" value="customerId"/>
+
+            </parameters>
+        </method>
+        <method name="QueryKnvhEntity" resultType="Map" isPK="false" path="/project_one/knvh">
+            <parameters>
+                <parameter name="kunnr" value="kunnr" relationship="and"/>
+                <parameter name="vkorg" value="vkorg" operator="startsWith" relationship="and"/>
+                <parameter name="hiytp" value="hiytp" relationship="and"/>
+                <parameter name="datbi" value="datbi" operator="&gt;" />
+
+            </parameters>
+        </method>
+        <!-- <method name="QueryGdmInTransitStock" resultType="Map" isPK="false"  path="/omp/gdm_in_transit_stock">
+             <parameters>
+                 <parameter name="customerId" value="customerId" relationship="and"/>
+                 <parameter name="productId" value="productId" relationship="and"/>
+                 <parameter name="quantity" value="quantity" />
+             </parameters>
+         </method>-->
+    </methods>
+
+    <viewRegion name="/omp/gdm_in_transit_stock_temp">
+        <vars>
+            <var name="sourceSystem" value="sourceSystem"/>
+            <var name="demandGroup" value="customerId"/>
+            <var name="demandGroup2" value="customerId"/>
+            <var name="customerId" value="customerId"/>
+            <var name="customerId2" value="customerId"/>
+
+            <var name="productId" value="productId"/>
+            <var name="productId2" value="productId"/>
+
+            <var name="date" value="date"/>
+            <var name="quantity" value="quantity"/>
+            <var name="uom" value="uom"/>
+            <var name="sourceCountry" value="sourceCountry"/>
+            <var name="hiytp" value="'A'"/>
+
+        </vars>
+        <columns>
+            <column name="customerId" var="demandGroup" isPK="true">
+                <if test="StringInner.isStringEmpty(sourceSystem)||StringInner.isStringEmpty(productId)||StringInner.isStringEmpty(uom)||StringInner.isStringEmpty(customerId)">
+                    <return/>
+                </if>
+                <else>
+                    <ref method="QueryGrpAsgnEntity" parameter="sourceSystem,customerId,sourceCountry" resultType="Map"
+                         var="QueryGrpAsgnEntityMap" value="demandGroup">
+                        <if test="StringInner.isStringEmpty(demandGroup)">
+                            <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'T4'"
+                                      errorValue="'demandGroup is not defined for customerId'"
+                                      sourceSystem="'sourceSystem'"
+                                      key1="sourceSystem" key2="customerId2" key3="productId2"/>
+                        </if>
+                    </ref>
+                    <if test="QueryGrpAsgnEntityMap == null">
+                        <set name="demandGroup" value="OMPGDMInTransitStockHook.getDemandGroup(customerId,sourceCountry.substring(0,2),hiytp,DateUtils.currentDate(DateUtils.F_yyyyMMdd))"></set>
+                        <if test="StringInner.isStringEmpty((demandGroup))">
+                            <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'T4'"
+                                      errorValue="'demandGroup is not defined for customerId'"
+                                      sourceSystem="'sourceSystem'"
+                                      key1="sourceSystem" key2="customerId2" key3="productId2"/>
+                        </if>
+
+                    </if>
+
+                </else>
+            </column>
+            <column name="productId" var="localDpParentCode" isPK="true">
+<!--
+                <set name="productId" value="OMPGDMInTransitStockHook.localMaterialNumber(productId)"></set>
+-->
+                <ref method="QueryMaterialGlobal" parameter="sourceSystem,productId2" value="localDpParentCode"
+                     resultType="Map" var="QueryMaterialGlobalMap">
+                </ref>
+
+                <if test="QueryMaterialGlobalMap==null">
+                    <set name="productId" value="OMPGDMInTransitStockHook.getproductId(productId)"></set>
+                    <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'J1'"
+                              errorValue="'productId do not exit in edm_material'"
+                              sourceSystem="'sourceSystem'" key1="sourceSystem" key2="customerId2" key3="productId"/>
+                </if>
+                <elseIf test="StringInner.isStringEmpty(localDpParentCode)">
+                    <set name="productId" value="OMPGDMInTransitStockHook.getproductId(productId)"></set>
+                    <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'J1'"
+                              errorValue="'localDpParentCode do not exist in edm material'"
+                              sourceSystem="'sourceSystem'" key1="sourceSystem" key2="customerId2" key3="productId"/>
+            </elseIf>
+                <else>
+                    <set name="localDpParentCode" value="StringInner.join('LA_',localDpParentCode)"></set>
+                </else>
+            </column>
+            <column name="dueDate" isPK="true">
+<!--
+                <set name="productId" value="OMPGDMInTransitStockHook.localMaterialNumber(productId)"></set>
+-->
+
+                <ref method="QueryAuomEntity" parameter="uom,productId2,sourceSystem"
+                     value="localAuom,localDenominator,localNumerator" resultType="Map" var="QueryAuomEntityMap">
+                </ref>
+                <if test="QueryAuomEntityMap==null">
+                    <set name="productId" value="OMPGDMInTransitStockHook.getproductId(productId)"></set>
+                    <failData functionalArea="'DP'" interfaceID="'OMPGDMInTransitStock'" errorCode="'J2'"
+                              errorValue="'unit do not exist in edm_Auom'" sourceSystem="'sourceSystem'"
+                              key1="sourceSystem" key2="customerId2" key3="productId2"/>
+                </if>
+                <else>
+                    <set name="dueDate" value="StringInner.join(date,' 00:00:00')"></set>
+
+                </else>
+            </column>
+            <column name="uuid" isPK="true">
+                <set name="uuid" value="OMPGDMInTransitStockHook.getUUID()"></set>
+
+            </column>
+
+            <column name="quantity" isPK="true">
+<!--
+                <set name="productId" value="OMPGDMInTransitStockHook.getproductId(productId)"></set>
+-->
+                <ref hook="OMPGDMInTransitStockHook.calculateQuantity(localNumerator,quantity,localDenominator)">
+                </ref>
+                <!-- <if test="StringInner.isStringNotEmpty(quantity)&amp;&amp;StringInner.isStringNotEmpty(demandGroup)&amp;&amp;StringInner.isStringNotEmpty(productId)">
+                     <ref method="QueryGdmInTransitStock" parameter="demandGroup,productId,quantity" value="customerId,productId,quantity" resultType="Map" var="QueryGdmInTransitStockMap"></ref>
+                     <if test="QueryGdmInTransitStockMap!=null">
+                         <return/>
+                     </if>
+                 </if>-->
+            </column>
+        </columns>
+    </viewRegion>
+
+</adf-curation>

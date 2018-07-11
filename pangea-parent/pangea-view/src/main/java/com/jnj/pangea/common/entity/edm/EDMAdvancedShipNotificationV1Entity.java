@@ -1,28 +1,30 @@
 package com.jnj.pangea.common.entity.edm;
 
 
+import com.jnj.pangea.common.entity.CommonEntity;
+
 import java.util.Map;
 
 /**
  * Created by rtierne2 on 2018/5/10.
  */
-public class EDMAdvancedShipNotificationV1Entity {
+public class EDMAdvancedShipNotificationV1Entity extends CommonEntity {
 
     private String srcSysCd;
-    private String delvDocID;
-    private String receivingPtID;
-    private String localdeliveryType;
-    private String localdeliveryCatg;
-    private String localdeliveryDate;
-    private String localcreatedDate;
-    private String localbillOfLading;
+    private String delvDocId;
+    private String receivingPtId;
+    private String localDeliveryType;
+    private String localDeliveryCatg;
+    private String localDeliveryDate;
+    private String localCreatedDate;
+    private String localBillOfLading;
     private String localExternalId;
     private String actGRDt;
-    private String vendorID;
+    private String vendorId;
     private String localShippingPlant;
     private String delvLineNbr;
     private String matlNum;
-    private String localbatchNo;
+    private String localBatchNo;
     private String localVendorBatchNo;
     private String localReceivingPlant;
     private String baseUnitOfMeasureCd;
@@ -31,86 +33,92 @@ public class EDMAdvancedShipNotificationV1Entity {
     private String locRefDocLineNum;
 
     public EDMAdvancedShipNotificationV1Entity(Map<String, Object> map) {
+        super(map);
         setSrcSysCd((String) map.get("srcSysCd"));
-        setDelvDocID((String) map.get("delvDocID"));
-        setReceivingPtID((String) map.get("delvDocID"));
-        setLocaldeliveryType((String) map.get("delvDocID"));
-        setLocaldeliveryCatg((String) map.get("delvDocID"));
-        setLocaldeliveryDate((String) map.get("delvDocID"));
-        setLocalcreatedDate((String) map.get("delvDocID"));
-        setLocalbillOfLading((String) map.get("delvDocID"));
-        setLocalExternalId((String) map.get("delvDocID"));
-        setActGRDt((String) map.get("delvDocID"));
-        setVendorID((String) map.get("delvDocID"));
-        setLocalShippingPlant((String) map.get("delvDocID"));
-        setLocalbatchNo((String) map.get("delvDocID"));
-        setLocalReceivingPlant((String) map.get("delvDocID"));
-        setBaseUnitOfMeasureCd((String) map.get("delvDocID"));
-        setActlSkuDelvQty((String) map.get("delvDocID"));
-        setLocalRefDocNum((String) map.get("delvDocID"));
-        setLocRefDocLineNum((String) map.get("delvDocID"));
-        setDelvLineNbr((String) map.get("delvDocID"));
+        setDelvDocId((String) map.get("delvDocId"));
+        setReceivingPtId((String) map.get("receivingPtId"));
+        setLocalDeliveryType((String) map.get("localDeliveryType"));
+        setLocalDeliveryCatg((String) map.get("localDeliveryCatg"));
+        setLocalDeliveryDate((String) map.get("localDeliveryDate"));
+        setLocalCreatedDate((String) map.get("localCreatedDate"));
+        setLocalBillOfLading((String) map.get("localBillOfLading"));
+        setLocalExternalId((String) map.get("localExternalId"));
+        setActGRDt((String) map.get("actGRDt"));
+        setVendorId((String) map.get("vendorId"));
+        setLocalShippingPlant((String) map.get("localShippingPlant"));
+        setLocalBatchNo((String) map.get("localBatchNo"));
+        setLocalReceivingPlant((String) map.get("localReceivingPlant"));
+        setBaseUnitOfMeasureCd((String) map.get("baseUnitOfMeasureCd"));
+        setActlSkuDelvQty((String) map.get("actlSkuDelvQty"));
+        setLocalRefDocNum((String) map.get("localRefDocNum"));
+        setLocRefDocLineNum((String) map.get("locRefDocLineNum"));
+        setDelvLineNbr((String) map.get("delvLineNbr"));
+        setMatlNum((String) map.get("matlNum"));
         setLocalVendorBatchNo((String) map.get("localVendorBatchNo"));
     }
 
     public String getSrcSysCd() {
-        return this.srcSysCd;
+        return srcSysCd;
     }
 
     public void setSrcSysCd(String srcSysCd) {
         this.srcSysCd = srcSysCd;
     }
 
-    public String getDelvDocID() {
-        return this.delvDocID;
+    public String getDelvDocId() {
+        return delvDocId;
     }
 
-    public void setDelvDocID(String delvDocID) { this.delvDocID = delvDocID; }
-
-    public String getReceivingPtID() { return receivingPtID; }
-
-    public void setReceivingPtID(String receivingPtID) {
-        this.receivingPtID = receivingPtID;
+    public void setDelvDocId(String delvDocId) {
+        this.delvDocId = delvDocId;
     }
 
-    public String getLocaldeliveryType() {
-        return localdeliveryType;
+    public String getReceivingPtId() {
+        return receivingPtId;
     }
 
-    public void setLocaldeliveryType(String localdeliveryType) {
-        this.localdeliveryType = localdeliveryType;
+    public void setReceivingPtId(String receivingPtId) {
+        this.receivingPtId = receivingPtId;
     }
 
-    public String getLocaldeliveryCatg() {
-        return localdeliveryCatg;
+    public String getLocalDeliveryType() {
+        return localDeliveryType;
     }
 
-    public void setLocaldeliveryCatg(String localdeliveryCatg) {
-        this.localdeliveryCatg = localdeliveryCatg;
+    public void setLocalDeliveryType(String localDeliveryType) {
+        this.localDeliveryType = localDeliveryType;
     }
 
-    public String getLocaldeliveryDate() {
-        return localdeliveryDate;
+    public String getLocalDeliveryCatg() {
+        return localDeliveryCatg;
     }
 
-    public void setLocaldeliveryDate(String localdeliveryDate) {
-        this.localdeliveryDate = localdeliveryDate;
+    public void setLocalDeliveryCatg(String localDeliveryCatg) {
+        this.localDeliveryCatg = localDeliveryCatg;
     }
 
-    public String getLocalcreatedDate() {
-        return localcreatedDate;
+    public String getLocalDeliveryDate() {
+        return localDeliveryDate;
     }
 
-    public void setLocalcreatedDate(String localcreatedDate) {
-        this.localcreatedDate = localcreatedDate;
+    public void setLocalDeliveryDate(String localDeliveryDate) {
+        this.localDeliveryDate = localDeliveryDate;
     }
 
-    public String getLocalbillOfLading() {
-        return localbillOfLading;
+    public String getLocalCreatedDate() {
+        return localCreatedDate;
     }
 
-    public void setLocalbillOfLading(String localbillOfLading) {
-        this.localbillOfLading = localbillOfLading;
+    public void setLocalCreatedDate(String localCreatedDate) {
+        this.localCreatedDate = localCreatedDate;
+    }
+
+    public String getLocalBillOfLading() {
+        return localBillOfLading;
+    }
+
+    public void setLocalBillOfLading(String localBillOfLading) {
+        this.localBillOfLading = localBillOfLading;
     }
 
     public String getLocalExternalId() {
@@ -129,12 +137,12 @@ public class EDMAdvancedShipNotificationV1Entity {
         this.actGRDt = actGRDt;
     }
 
-    public String getVendorID() {
-        return vendorID;
+    public String getVendorId() {
+        return vendorId;
     }
 
-    public void setVendorID(String vendorID) {
-        this.vendorID = vendorID;
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
     }
 
     public String getLocalShippingPlant() {
@@ -161,12 +169,20 @@ public class EDMAdvancedShipNotificationV1Entity {
         this.matlNum = matlNum;
     }
 
-    public String getLocalbatchNo() {
-        return localbatchNo;
+    public String getLocalBatchNo() {
+        return localBatchNo;
     }
 
-    public void setLocalbatchNo(String localbatchNo) {
-        this.localbatchNo = localbatchNo;
+    public void setLocalBatchNo(String localBatchNo) {
+        this.localBatchNo = localBatchNo;
+    }
+
+    public String getLocalVendorBatchNo() {
+        return localVendorBatchNo;
+    }
+
+    public void setLocalVendorBatchNo(String localVendorBatchNo) {
+        this.localVendorBatchNo = localVendorBatchNo;
     }
 
     public String getLocalReceivingPlant() {
@@ -208,13 +224,4 @@ public class EDMAdvancedShipNotificationV1Entity {
     public void setLocRefDocLineNum(String locRefDocLineNum) {
         this.locRefDocLineNum = locRefDocLineNum;
     }
-
-    public String getLocalVendorBatchNo() {
-        return localVendorBatchNo;
-    }
-
-    public void setLocalVendorBatchNo(String localVendorBatchNo) {
-        this.localVendorBatchNo = localVendorBatchNo;
-    }
-
 }

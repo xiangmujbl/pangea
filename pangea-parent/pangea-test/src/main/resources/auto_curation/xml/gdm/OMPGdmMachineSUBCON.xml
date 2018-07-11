@@ -1,0 +1,87 @@
+<adf-curation xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.omp.gdm_machine_subcon.Controller.GdmMachineSubConController" writeTo="all" topic="PANGEA_V1_omp_gdm_machine">
+    <regions>
+        <region path="/plan/cns_spl_pln_loc" mainRegion="true" lucene="true">
+            <columns>sourceSystem,vendorOrCustomer,localNumber,localName,localPlant,specLocAtt3,specLocAttDesc3</columns>
+            <filter>specLocAtt3:SUBCON\ Machine</filter>
+            <relations>
+                <region path="/plan/cns_plan_parameter" isPrimaryKey="false" lucene="true">
+                    <columns>sourceSystem,attribute,dataObject</columns>
+                    <expression>sourceSystem=/plan/cns_spl_pln_loc.sourceSystem,attribute=/plan/cns_spl_pln_loc.sourceSystem</expression>
+                    <filter>dataObject:SEND_TO_OMP</filter>
+                </region>
+                <region path="/plan/cns_plant_attr" isPrimaryKey="true" lucene="true">
+                    <columns>sourceSystem,localPlant,localPlanningRelevant</columns>
+                    <expression>sourceSystem=/plan/cns_spl_pln_loc.sourceSystem,localPlant=/plan/cns_spl_pln_loc.localPlant</expression>
+                    <filter>localPlanningRelevant:X</filter>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="joinCnsPlanParameter" resultType="Map" isPK="false" path="/plan/cns_plan_parameter">
+            <parameters>
+                <parameter name="sourceSystem" value="srcSysCd" relationship="and"/>
+                <parameter name="attribute" value="srcSysCd"  relationship="and"/>
+                <parameter name="dataObject" value="'SEND_TO_OMP'"/>
+            </parameters>
+        </method>
+        <method name="joinCnsPlantAttr" resultType="Map" isPK="false" path="/plan/cns_plant_attr">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localPlant" value="localPlant" relationship="and"/>
+                <parameter name="localPlanningRelevant" value="'X'"/>
+            </parameters>
+        </method>
+    </methods>
+    <viewRegion name="/omp/gdm_machine">
+        <vars>
+            <var name="sourceSystem" value="sourceSystem"/>
+            <var name="localPlant" value="localPlant"/>
+            <var name="specLocAtt3" value="specLocAtt3"/>
+            <var name="specLocAttDesc3" value="specLocAttDesc3"/>
+        </vars>
+        <columns>
+            <column name="machineId" var="machineId" isPK="true">
+                <if test="StringInner.isStringNotEmpty(sourceSystem)">
+                    <ref method="joinCnsPlanParameter" parameter="sourceSystem"  var="cnsPlanParameterMap" resultType="Map">
+                        <if test="StringInner.isStringNotEmpty(localPlant)">
+                            <ref method="joinCnsPlantAttr" parameter="sourceSystem,localPlant" var="cnsPlantAttrMap" resultType="Map">
+                                <if test="StringInner.isStringNotEmpty(specLocAttDesc3)">
+                                    <set name="machineId" value="StringInner.join(sourceSystem,'_',localPlant,'/',specLocAttDesc3)"/>
+                                </if>
+                                <else>
+                                    <return/>
+                                </else>
+                            </ref>
+                            <if test="cnsPlantAttrMap == null">
+                                <return/>
+                            </if>
+                        </if>
+                        <else>
+                            <return/>
+                        </else>
+                    </ref>
+                    <if test="cnsPlanParameterMap == null">
+                        <return/>
+                    </if>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <column name="active" var="'YES'"/>
+            <column name="activeOPRERP" var="'YES'"/>
+            <column name="activeSOPERP" var="'NO'"/>
+            <column name="building" var="''"/>
+            <column name="description" >
+                <set name="description" value="StringInner.join('Dummy Subcon W/C',' ',specLocAttDesc3)"/>
+            </column>
+            <column name="locationId" >
+                <set name="locationId" value="StringInner.join(sourceSystem,'_',localPlant)"/>
+            </column>
+            <column name="machineCapacity" var="'infinite'"/>
+            <column name="machineTypeId" var="'Production'"/>
+            <column name="parentMachineId" var="''"/>
+        </columns>
+    </viewRegion>
+</adf-curation>
