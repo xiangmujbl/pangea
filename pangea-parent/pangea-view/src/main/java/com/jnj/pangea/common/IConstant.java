@@ -152,7 +152,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_COUNTRY_INPUT="/edm/edm_country_input";
+        String EDM_COUNTRY_INPUT = "/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
@@ -1138,6 +1138,8 @@ public interface IConstant {
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
         String NGEMS = "NGEMS";
+        int VALUE_24 = 24;
+        int VALUE_60 = 60;
         String FLOAT_ZERO = "0.0";
         String K = "K";
         String O = "O";
