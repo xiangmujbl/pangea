@@ -284,6 +284,11 @@ public interface IConstant {
         String DELVDOCID = "delvDocId";
     }
 
+    interface EDM_OUTBOUND_DELIVERY_HEADER_V1 {
+        String LOCAL_SALESORG = "localSalesOrg";
+        String SHIPTO_CUST_NUM = "shipToCustNum";
+    }
+
     interface EDM_SALES_HISTORY_V1 {
         String LOCAL_SUBS_DOC_NO = "localSubsDocNo";
         String LOCAL_SUBS_DOC_LINENBR = "localSubsDocLnNo";
@@ -747,6 +752,7 @@ public interface IConstant {
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
         String SOURCE_FILTER_INCLUSIONEXCLUSION = "inclusionExclusion";
         String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION = "purchase_requisition";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_OUTBOUND_DELIVERY_HEADER = "outbound_delivery_header";
     }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
@@ -1031,6 +1037,7 @@ public interface IConstant {
         String NO_PLAN_RELEVANT = "NoPlanRelevant";
         String PLANT = "Plant";
         String MRP_TYPE = "MRPType";
+        String E = "E";
         String I = "I";
         String J = "J";
         String MATERIAL_TYPE = "MaterialType";
@@ -1138,6 +1145,7 @@ public interface IConstant {
         String FROM = "from";
         String WHERE = "WHERE";
         String AND = "AND";
+        String ALL = "ALL";
         String OPERATOR_EQUAL = "=";
         String OPERATOR_LESS_THAN = "<";
         String OPERATOR_LESS_THAN_EQUAL = "<=";

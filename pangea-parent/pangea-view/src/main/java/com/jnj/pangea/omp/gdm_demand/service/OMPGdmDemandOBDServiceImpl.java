@@ -16,6 +16,8 @@ import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsCustExclInclEntity;
 import com.jnj.pangea.common.entity.plan.PlanLocMinShelfEnity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanUnitEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsDemGrpAsgnEntity;
+import com.jnj.pangea.common.entity.project_one.KnvhEntity;
 import com.jnj.pangea.common.dao.impl.edm.EDMOutboundDeliveryLineV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSalesHistoryV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSalesOrderV1DaoImpl;
@@ -27,6 +29,8 @@ import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustExclInclDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanLocMinShelfDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsDemGrpAsgnDaoImpl;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneKnvhDaoImpl;
 import com.jnj.pangea.omp.gdm_demand.bo.OMPGdmDemandBo;
 
 import java.text.DateFormat;
@@ -57,6 +61,8 @@ public class OMPGdmDemandOBDServiceImpl {
     private PlanCnsCustExclInclDaoImpl custExclInclDao = PlanCnsCustExclInclDaoImpl.getInstance();
     private PlanLocMinShelfDaoImpl minShelfDao = PlanLocMinShelfDaoImpl.getInstance();
     private PlanCnsPlanUnitDaoImpl unitDao = PlanCnsPlanUnitDaoImpl.getInstance();
+    private PlanCnsDemGrpAsgnDaoImpl demGrpAsgnDao = PlanCnsDemGrpAsgnDaoImpl.getInstance();
+    private ProjectOneKnvhDaoImpl knvhDao = ProjectOneKnvhDaoImpl.getInstance();
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
 
@@ -67,13 +73,17 @@ public class OMPGdmDemandOBDServiceImpl {
         ArrayList<EDMOutboundDeliveryLineV1Entity> lineV1EntityList = new ArrayList(deliverLineDao.getOutboundDeliveryLinesByDeliveryDocId(obdHeaderEntity.getDelvDocId()));
         EDMPurchaseOrderOAV1Entity purchaseEntity;
         PlanCnsPlanUnitEntity unitEntity;
-        ArrayList<PlanCnsPlanObjectFilterEntity> objectFilterEntityList = new ArrayList(objectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem( "outbound_delivery_header", obdHeaderEntity.getSrcSysCd()));
+        EDMSalesOrderV1Entity salesOrderEntity;
+        EDMSalesHistoryV1Entity salesHistoryEntity;
+        ArrayList<PlanCnsPlanObjectFilterEntity> objectFilterEntityList = new ArrayList(objectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem( IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_OUTBOUND_DELIVERY_HEADER, obdHeaderEntity.getSrcSysCd()));
+        /*
         ArrayList<PlanCnsCustExclInclEntity>  custExclInclEntityList;
+
         if(obdHeaderEntity.getLocalSalesOrg().isEmpty()){
             custExclInclEntityList = new ArrayList<PlanCnsCustExclInclEntity>();
         } else {
             custExclInclEntityList = new ArrayList(custExclInclDao.getEntityListWithSalesOrgAndSourceSystem(obdHeaderEntity.getLocalSalesOrg(),obdHeaderEntity.getSrcSysCd()));
-        }
+        }*/
 
 
         String locationId;
@@ -92,12 +102,19 @@ public class OMPGdmDemandOBDServiceImpl {
         FailData failData;
 
         for(EDMOutboundDeliveryLineV1Entity obdLineEntity : lineV1EntityList) {
+            LogUtil.getLogger().info("########## docId "+obdLineEntity.getDelvDocId() + " ** "+obdLineEntity.getDelvLineNbr());
             skip = false;
             fail = false;
             gdmDemandBo = new OMPGdmDemandBo();
             resultObject = new ResultObject();
             failData = new FailData();
             purchaseEntity = purchaseOrderDao.getEntityByPoNumAndPoLineNumberAndSourceSystem(obdLineEntity.getSlsOrdrNum(), obdLineEntity.getSlsOrdrLineNbr(), obdLineEntity.getSrcSysCd());
+            salesHistoryEntity = salesHistoryDao.getFirstSalesHistoryForDeliveryDoc(obdHeaderEntity.getDelvDocId(), obdLineEntity.getDelvLineNbr(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.J);
+            if(null != salesHistoryEntity) {
+                salesOrderEntity = salesOrderDao.getSalesOrderForHistoryDoc(salesHistoryEntity.getLocalPrecDocNo(), salesHistoryEntity.getLocalSPrecDocLnNo(), obdHeaderEntity.getSrcSysCd());
+            } else {
+                salesOrderEntity = null;
+            }
             locationId = obdLineEntity.getSrcSysCd()+IConstant.VALUE.UNDERLINE+obdLineEntity.getShippingPlntCd();
             productId = obd12Rule(obdLineEntity);
 
@@ -128,7 +145,7 @@ public class OMPGdmDemandOBDServiceImpl {
                 obd5 = obd5Rule(obdHeaderEntity,obdLineEntity);
             }
             //OBD is against SO
-            if(obd5 && obdHeaderEntity.getActlGiDt().isEmpty()) {
+            if(obd5) {
                 gdmDemandBo.setDemandId(productId + IConstant.VALUE.BACK_SLANT + locationId + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + obdLineEntity.getDelvLineNbr());
             } else {
                 skip = true;
@@ -206,10 +223,33 @@ public class OMPGdmDemandOBDServiceImpl {
                 gdmDemandBo.setCustomerId(obdHeaderEntity.getShipToCustNum());
             } else {
                 //OBD against SO
-                if (obd16Rule(custExclInclEntityList, obdHeaderEntity)) {
+                /*
+                if (obd16Rule(objectFilterEntityList, obdHeaderEntity, salesOrderEntity)) {
                     gdmDemandBo.setCustomerId(obdHeaderEntity.getShipToCustNum());
                 } else {
                     skip = true;
+                }
+                */
+                String grp = obd16Rule(objectFilterEntityList, obdHeaderEntity, salesOrderEntity);
+                if(grp.equals("ERROR")){
+                    LogUtil.getLogger().info("******* Rejected ");
+                    //reject record.
+                    failData = new FailData(
+                            IConstant.VALUE.SP,
+                            OMPGdmDemandOBDServiceImpl.class.getName(),
+                            "OBD16",
+                            "Missing Demand Group",
+                            IConstant.VALUE.OMP,
+                            obdLineEntity.getDelvDocId(),
+                            obdLineEntity.getDelvLineNbr(),
+                            obdLineEntity.getSrcSysCd());
+                    fail = true;
+                } else {
+                    if (grp.isEmpty()) {
+                        skip = true;
+                    } else {
+                        gdmDemandBo.setCustomerId(grp);
+                    }
                 }
             }
 
@@ -230,6 +270,7 @@ public class OMPGdmDemandOBDServiceImpl {
 
     private boolean obd5Rule(EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity, EDMOutboundDeliveryLineV1Entity obdLineEntity){
         //use first record of result to derive the value
+        LogUtil.getLogger().info("OBD 5 : "+obdHeaderEntity.getDelvDocId());
         EDMSalesHistoryV1Entity salesHistoryEntity = salesHistoryDao.getFirstSalesHistoryForDeliveryDoc(obdHeaderEntity.getDelvDocId(), obdLineEntity.getDelvLineNbr(), obdHeaderEntity.getSrcSysCd(), IConstant.VALUE.J);
         if(null != salesHistoryEntity){
             EDMSalesOrderV1Entity salesOrderEntity = salesOrderDao.getSalesOrderForHistoryDoc(salesHistoryEntity.getLocalPrecDocNo(), salesHistoryEntity.getLocalSPrecDocLnNo(), obdHeaderEntity.getSrcSysCd());
@@ -238,8 +279,14 @@ public class OMPGdmDemandOBDServiceImpl {
 
                 if (null != inclExclEntity) {
                     return true;
+                } else {
+                    LogUtil.getLogger().info("OBD5 : fail inclExclEntity ");
                 }
+            } else {
+                LogUtil.getLogger().info("OBD5 : fail salesOrderEntity ");
             }
+        } else {
+            LogUtil.getLogger().info("OBD5 : fail salesHistoryEntity ");
         }
         return false;
     }
@@ -306,7 +353,7 @@ public class OMPGdmDemandOBDServiceImpl {
 
         return "";
     }
-
+/*
     private boolean obd16Rule(ArrayList<PlanCnsCustExclInclEntity>  custExclInclEntities, EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity){
         for(PlanCnsCustExclInclEntity entity : custExclInclEntities){
             if(entity.getInclExcl().equals(IConstant.VALUE.I)){
@@ -318,5 +365,96 @@ public class OMPGdmDemandOBDServiceImpl {
 
         return false;
     }
+*/
+    private String obd16Rule(ArrayList<PlanCnsPlanObjectFilterEntity>  filterEntities, EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity, EDMSalesOrderV1Entity salesOrderV1Entity){
+        boolean customerFilter = false;
+        if(filterEntities.isEmpty()) {
+            return "";
+        }
+        for(PlanCnsPlanObjectFilterEntity filterEntity : filterEntities){
+            if(filterEntity.getSourceObjectAttribute1().equals(IConstant.EDM_OUTBOUND_DELIVERY_HEADER_V1.LOCAL_SALESORG) && filterEntity.getSourceObjectAttribute1Value().equals(obdHeaderEntity.getLocalSalesOrg())) {
+                if(filterEntity.getSourceObjectAttribute2().equals(IConstant.EDM_OUTBOUND_DELIVERY_HEADER_V1.SHIPTO_CUST_NUM)
+                        && filterEntity.getSourceObjectAttribute2Value().equals(obdHeaderEntity.getShipToCustNum())
+                        && filterEntity.getInclusionExclusion().equals(IConstant.VALUE.E)) {
+
+                    return "";
+                }
+                if(filterEntity.getSourceObjectAttribute2().equals(IConstant.EDM_OUTBOUND_DELIVERY_HEADER_V1.SHIPTO_CUST_NUM)
+                        && (filterEntity.getSourceObjectAttribute2Value().equals(obdHeaderEntity.getShipToCustNum()) || filterEntity.getSourceObjectAttribute2Value().equals(IConstant.VALUE.ALL))
+                        && filterEntity.getInclusionExclusion().equals(IConstant.VALUE.I)) {
+                    customerFilter = true;
+                    break;
+                }
+            }
+
+        }
+
+
+        if(customerFilter) {
+            //step 1
+            String dgrp = getDemandGroup(obdHeaderEntity, salesOrderV1Entity);
+            //LogUtil.getLogger().info("******* demand group "+dgrp);
+            if (dgrp.isEmpty()) {
+
+                if(null != salesOrderV1Entity) {
+                    //LogUtil.getLogger().info("******* Sales order : "+salesOrderV1Entity.getSalesOrderNo()+" // ShipTo : "+salesOrderV1Entity.getLocalShipToParty() +" // date : "+salesOrderV1Entity.getLocalOrderCreateDt());
+                    //step 2
+                    PlanCnsDemGrpAsgnEntity grpAsgnEntity;
+                    KnvhEntity knvh = knvhDao.getEntityWithFourConditions(salesOrderV1Entity.getLocalShipToParty(), salesOrderV1Entity.getLocalSalesOrg(), IConstant.VALUE.A, salesOrderV1Entity.getLocalOrderCreateDt());
+                    if (null != knvh) {
+                        grpAsgnEntity = demGrpAsgnDao.getEntityWithCustomerId(knvh.getHkunnr());
+                        if (null != grpAsgnEntity && !grpAsgnEntity.getDemandGroup().isEmpty()) {
+                            return grpAsgnEntity.getDemandGroup();
+                        }
+
+                        String tempId = knvh.getHkunnr();
+                        while(null != knvh){
+                            knvh = knvhDao.getEntityWithFourConditions(tempId, salesOrderV1Entity.getLocalSalesOrg(), IConstant.VALUE.A, salesOrderV1Entity.getLocalOrderCreateDt());
+                            tempId = knvh.getHkunnr();
+                            grpAsgnEntity = demGrpAsgnDao.getEntityWithCustomerId(tempId);
+                            if (null != grpAsgnEntity && !grpAsgnEntity.getDemandGroup().isEmpty()) {
+                                return grpAsgnEntity.getDemandGroup();
+                            }
+
+                        }
+
+
+
+                    }
+                } else {
+                    //LogUtil.getLogger().info("******* Missing SO header "+obdHeaderEntity.getDelvDocId());
+                }
+                //raise error
+                return "ERROR";
+
+            } else {
+                return dgrp;
+            }
+        }
+
+        return "";
+    }
+
+    private String getDemandGroup(EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity, EDMSalesOrderV1Entity salesOrderV1Entity) {
+        PlanCnsDemGrpAsgnEntity grpAsgnEntity1, grpAsgnEntity2;
+        if(null != salesOrderV1Entity){
+            grpAsgnEntity1 = demGrpAsgnDao.getEntityWithCustomerIdAndSalesOrganization(salesOrderV1Entity.getLocalShipToParty(), salesOrderV1Entity.getLocalSalesOrg());
+            if(null != grpAsgnEntity1) {
+                if(!grpAsgnEntity1.getDemandGroup().isEmpty()){
+                    return grpAsgnEntity1.getDemandGroup();
+                }
+            }
+        }
+
+        grpAsgnEntity2 = demGrpAsgnDao.getEntityWithCustomerIdAndSalesOrganization(obdHeaderEntity.getShipToCustNum(), obdHeaderEntity.getLocalSalesOrg());
+        if(null != grpAsgnEntity2) {
+            if(!grpAsgnEntity2.getDemandGroup().isEmpty()){
+                return grpAsgnEntity2.getDemandGroup();
+            }
+        }
+
+        return "";
+    }
+
 
 }
