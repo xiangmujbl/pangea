@@ -77,14 +77,6 @@ public class DateInner {
         return s_date;
     }
 
-    public static Date offsetDate(Date date, int days) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
-        return calendar.getTime();
-    }
-
     public static String StringToString(String dateStr, String format, String targetFormat){
         return StringToString(dateStr, format, targetFormat, Locale.getDefault());
     }
@@ -114,9 +106,9 @@ public class DateInner {
         return changeDate(date,0,0,0,0,minute,0);
     }
 
-    public static Date offsetSecond(Date date, int second) {
-        return changeDate(date,0,0,0,0,0,second);
-    }
+        public static Date offsetSecond(Date date, int second) {
+            return changeDate(date,0,0,0,0,0,second);
+        }
 
     public static Date changeDate(Date date, int year, int month, int day, int hour, int minute, int second) {
 
