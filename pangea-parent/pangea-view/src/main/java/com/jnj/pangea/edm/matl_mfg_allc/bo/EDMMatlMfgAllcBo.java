@@ -1,9 +1,9 @@
-package com.jnj.pangea.omp.gdm_matl_mfg_allc.bo;
+package com.jnj.pangea.edm.matl_mfg_allc.bo;
 
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class OMPGdmMatlMfgAllcBo extends BaseBo {
+public class EDMMatlMfgAllcBo extends BaseBo {
 
 
     private String srcSysCd;
