@@ -174,14 +174,6 @@ public interface IConstant {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
-    interface PROJECT_ONE_PLMZ {
-        String PLNTY = "plnty";
-        String PLNNR = "plnnr";
-        String PLNAL = "plnal";
-        String ZUONR = "zuonr";
-        String ZAEHL = "zaehl";
-        String ALLOCVALIDTO = "99991231";
-    }
 
     interface BOM_HDR {
         String SRCSYSCD = "srcSysCd";
@@ -1319,8 +1311,6 @@ public interface IConstant {
         public static final String ERRORCODE = "500";
         public static final String NA = "NA";
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
-
-
     }
 
     interface RKPF {
