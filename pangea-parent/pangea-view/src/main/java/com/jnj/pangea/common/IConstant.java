@@ -1069,7 +1069,7 @@ public interface IConstant {
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
-        String BOM_VlD_ToDt = "9999/12/31";
+        String BOM_VlD_ToDt = "99991231";
         String EN_CAPY = "E";
         String ES_CAPY = "S";
         String PT_CAPY = "P";
@@ -1260,6 +1260,7 @@ public interface IConstant {
         }
 
         public static final String KEY_SPLIT = "/";
+
 
         public static final String QTYFXIND_X = "X";
         public static final String QTYFXIND_X_VALUE = "fixed";
