@@ -203,7 +203,7 @@
 /edm/batch_master_v1
 /edm/advanced_ship_notification_v1
 /edm/inspection_lot_v1
-/edm/inventory_stock
+/edm/inventory_stock_v1
 /edm/mfg_rtng_rltnshp
 /edm/mfg_rtng_seq
 /project_one/ekko
@@ -221,3 +221,6 @@
 /omp/gdm_stock_purchase_order
 /edm/purchase_order_oa_v1_aggregation
 /omp/gdm_stock
+/plan/cns_oor_forecast
+/omp/gdm_forecast
+/edm/fail_data

@@ -23,7 +23,7 @@ public class OMPGdmProductLocationBo extends BaseBo {
     private String eislo;
     private String fevor;
     private String fixedHorizon;
-    private String frtme;
+    //private String frtme;
     private String insmk;
     private String itemPlanningCategory;
     private String kausf;
@@ -36,7 +36,7 @@ public class OMPGdmProductLocationBo extends BaseBo {
     private String minRemainingShelfLife;
     private String mmsta;
     private String mtvfp;
-    private String replenishmentLotSize;
+    //private String replenishmentLotSize;
     private String shflg;
     private String sobsl;
     private String strgr;
@@ -50,6 +50,7 @@ public class OMPGdmProductLocationBo extends BaseBo {
     private String BatchManaged;
     private String MinInventoryQuantity;
     private String MaxInventoryQuantity;
+    private String productValue;
 
     @Override
     public String getKey() {
@@ -202,13 +203,13 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.fixedHorizon = fixedHorizon;
     }
 
-    public String getFrtme() {
+    /*public String getFrtme() {
         return this.frtme;
     }
 
     public void setFrtme(String frtme) {
         this.frtme = frtme;
-    }
+    }*/
 
     public String getInsmk() {
         return this.insmk;
@@ -306,13 +307,13 @@ public class OMPGdmProductLocationBo extends BaseBo {
         this.mtvfp = mtvfp;
     }
 
-    public String getReplenishmentLotSize() {
+    /*public String getReplenishmentLotSize() {
         return this.replenishmentLotSize;
     }
 
     public void setReplenishmentLotSize(String replenishmentLotSize) {
         this.replenishmentLotSize = replenishmentLotSize;
-    }
+    }*/
 
     public String getShflg() {
         return this.shflg;
@@ -417,5 +418,14 @@ public class OMPGdmProductLocationBo extends BaseBo {
     public void setMaxInventoryQuantity(String maxInventoryQuantity) {
         this.MaxInventoryQuantity = maxInventoryQuantity;
     }
+
+	public String getProductValue() {
+		return productValue;
+	}
+
+	public void setProductValue(String productValue) {
+		this.productValue = productValue;
+	}
+
 
 }

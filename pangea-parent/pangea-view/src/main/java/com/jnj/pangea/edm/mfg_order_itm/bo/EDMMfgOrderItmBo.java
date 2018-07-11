@@ -23,6 +23,16 @@ public class EDMMfgOrderItmBo extends BaseBo {
     private String btchNum;
     private String delInd;
 
+    public String getBaseUomCd() {
+        return baseUomCd;
+    }
+
+    public void setBaseUomCd(String baseUomCd) {
+        this.baseUomCd = baseUomCd;
+    }
+
+    private String baseUomCd;
+
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
