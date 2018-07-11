@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/project_one/plmz" viewRegion="/edm/matl_mfg_allc" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_matl_mfg_allc.controller.OMPGdmMatlMfgAllcController"> 
+    <regions> 
+      <region path="/project_one/plmz"> 
+        <columns>plnty,plnnr,zuonr,zaehl,datuv,aennr,loekz,plnal,plnfl,plnkn,stlty,stlnr,stlal,stlkn,werk_stl</columns>  
+        <relations>
+          <relation path="/project_one/plmz" alias="/project_one/plmz_clone"  isPrimaryKey="false">
+            <expression>plnty=/project_one/plmz.plnty, plnnr=/project_one/plmz.plnnr, plnal=/project_one/plmz.plnal, zuonr=/project_one/plmz.zuonr</expression> 
+          </relation>  
+          <relation path="/edm/source_system_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/project_one/plmz" alias="/project_one/plmz_clone"> 
+        <columns>plnty,plnnr,zuonr,zaehl,datuv,aennr,loekz,plnal,plnfl,plnkn,stlty,stlnr,stlal,stlkn,werk_stl</columns> 
+      </region>  
+      <region path="/edm/source_system_v1"> 
+        <columns>localSourceSystem,sourceSystem</columns> 
+      </region>  
+      <region path="/edm/matl_mfg_allc"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,allocNum,allocCount,allocValidFrom,chgNum,delInd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,bomCatCd,bomNum,altBomNum,bomItmNdeNum,plntCd,allocValidTo</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

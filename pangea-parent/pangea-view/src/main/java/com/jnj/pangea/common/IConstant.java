@@ -166,14 +166,15 @@ public interface IConstant {
 
     interface FBP {
         String FAIL_MSG = "localDpParentCode does not exist in edm Material";
+        String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
     }
+
 
     interface EDM_INVENTORY_STOCK {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_BATCH_ID = "localBatchId";
         String LOCAL_MATERIAL = "localMaterial";
     }
-
     interface PROJECT_ONE_PLMZ {
         String PLNTY = "plnty";
         String PLNNR = "plnnr";
