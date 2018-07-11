@@ -24,6 +24,7 @@ import java.util.List;
 public class OMPGdmProductServiceImpl {
 
 	private static OMPGdmProductServiceImpl instance;
+	private static final String J1_MSG = "Unable to find DPParentCode";
 
 	public static OMPGdmProductServiceImpl getInstance() {
 		if (instance == null) {
@@ -107,39 +108,37 @@ public class OMPGdmProductServiceImpl {
 				}
 
 				String parameterValue = getParameterValue(sourceSystem);
-				if (dpRelevant) {
-					if (StringUtils.isNotEmpty(localDPParentCode) && StringUtils.isNotEmpty(parameterValue)) {
-						OMPGdmProductBo gdmProductBo1 = new OMPGdmProductBo();
-						gdmProductBo1.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
-	
-						PlanCnsRootDescriptionEntity cnsRootDescriptionEntity = rootDescriptionDao
-								.getEntityWithSourceSystemAndLocalDpParentCode(materialGlobalV1Entity.getSourceSystem(),
-										materialGlobalV1Entity.getLocalDpParentCode());
-	
-						if (null != cnsRootDescriptionEntity) {
-							String ovrRootDesc = cnsRootDescriptionEntity.getOvrRootDesc();
-	
-							if (StringUtils.isNotEmpty(ovrRootDesc)) {
-								gdmProductBo1.setDescription(ovrRootDesc);
-								gdmProductBo1.setShortDescription(ovrRootDesc);
-							} else {
-								gdmProductBo1.setDescription(cnsRootDescriptionEntity.getRootDesc());
-								gdmProductBo1.setShortDescription(cnsRootDescriptionEntity.getRootDesc());
-							}
+				if (dpRelevant && StringUtils.isNotEmpty(localDPParentCode) && StringUtils.isNotEmpty(parameterValue)) {
+					OMPGdmProductBo gdmProductBo1 = new OMPGdmProductBo();
+					gdmProductBo1.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
+
+					PlanCnsRootDescriptionEntity cnsRootDescriptionEntity = rootDescriptionDao
+							.getEntityWithSourceSystemAndLocalDpParentCode(materialGlobalV1Entity.getSourceSystem(),
+									materialGlobalV1Entity.getLocalDpParentCode());
+
+					if (null != cnsRootDescriptionEntity) {
+						String ovrRootDesc = cnsRootDescriptionEntity.getOvrRootDesc();
+
+						if (StringUtils.isNotEmpty(ovrRootDesc)) {
+							gdmProductBo1.setDescription(ovrRootDesc);
+							gdmProductBo1.setShortDescription(ovrRootDesc);
+						} else {
+							gdmProductBo1.setDescription(cnsRootDescriptionEntity.getRootDesc());
+							gdmProductBo1.setShortDescription(cnsRootDescriptionEntity.getRootDesc());
 						}
-	
-						gdmProductBo1.setActiveFCTERP(IConstant.VALUE.YES);
-						gdmProductBo1.setActiveOPRERP(IConstant.VALUE.NO);
-						
-						gdmProductBo1.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
-						productBos.add(gdmProductBo1);
 					}
+
+					gdmProductBo1.setActiveFCTERP(IConstant.VALUE.YES);
+					gdmProductBo1.setActiveOPRERP(IConstant.VALUE.NO);
+
+					gdmProductBo1.setProductId(parameterValue + IConstant.VALUE.UNDERLINE + localDPParentCode);
+					productBos.add(gdmProductBo1);
 				}
 
 				if (0 == productBos.size()) {
 					ResultObject resultObject = new ResultObject();
 					FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1,
-							"Unable to find DPParentCode");
+							J1_MSG);
 					resultObject.setFailData(failData);
 					resultObjects.add(resultObject);
 					return resultObjects;
@@ -269,7 +268,7 @@ public class OMPGdmProductServiceImpl {
 			} else {
 				ResultObject resultObject = new ResultObject();
 				FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1,
-						"Unable to find DPParentCode");
+						J1_MSG);
 				resultObject.setFailData(failData);
 				resultObjects.add(resultObject);
 				return resultObjects;
@@ -277,7 +276,7 @@ public class OMPGdmProductServiceImpl {
 		} else {
 			ResultObject resultObject = new ResultObject();
 			FailData failData = writeFailDataToRegion(materialGlobalV1Entity, IConstant.FAILED.ERROR_CODE.J1,
-					"Unable to find DPParentCode");
+					J1_MSG);
 			resultObject.setFailData(failData);
 			resultObjects.add(resultObject);
 			return resultObjects;
