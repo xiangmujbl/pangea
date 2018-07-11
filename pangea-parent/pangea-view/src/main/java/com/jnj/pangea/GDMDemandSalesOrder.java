@@ -113,8 +113,11 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		String localRejReason = StringInner.getString(map, "localRejReason");
 		String salesOrderNo = StringInner.getString(map, "salesOrderNo");
 		String salesOrderItem = StringInner.getString(map, "salesOrderItem");
-		String localRejStat = StringInner.getString(map, "localRejStat");
-		String localDelvStat = StringInner.getString(map, "localDelvStat");
+		//String localRejStat = StringInner.getString(map, "localRejStat");
+		//String localDelvStat = StringInner.getString(map, "localDelvStat");
+
+		String lineRejStat = StringInner.getString(map, "lineRejStat");
+		String lineDelvStat = StringInner.getString(map, "lineDelvStat");
 		String localNumtoBase = StringInner.getString(map, "localNumtoBase");
 		String localDentoBase = StringInner.getString(map, "localDentoBase");
 		String localSubDocCatg = "J";
@@ -184,6 +187,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		}
 
 		if (inclusionExclusion != null) {
+
 			return false;
 		}
 
@@ -195,6 +199,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		}
 
 		if (inclusionExclusion == null) {
+
 			return false;
 		}
 
@@ -337,6 +342,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				}
 			}
 		} else {
+
 			return false;
 		}
 
@@ -357,13 +363,15 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			if (Integer.parseInt(scheduleLineItem) != 1
 					|| Integer.parseInt(salesOrderQty) <= 0
 					|| StringInner.isStringNotEmpty(localRejReason)
-					|| "C".equals(localRejStat) || "C".equals(localDelvStat)) {
+					|| "C".equals(lineRejStat) || "C".equals(lineDelvStat)) {
+
 				return false;
 			} else {
 				demandId = StringInner.join(productId, "/", locationId, "/",
 						salesOrderNo, "/", salesOrderItem);
 			}
 		} else {
+
 			return false;
 		}
 
@@ -388,6 +396,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 								.parseInt(localDentoBase))
 							- Double.parseDouble(localBaseQuantity));
 		} else {
+			
 			return false;
 		}
 
@@ -546,6 +555,8 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				"sourceObjectAttribute1Value").is(sourceObjAttr1Val);
 		ADFCriteria adfCriteria23 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2").is(sourceObjAttr2);
+		if (StringUtils.isBlank(sourceObjAttr2Val)) return null;
+
 		ADFCriteria adfCriteria24 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2Value").is(sourceObjAttr2Val);
 		ADFCriteria adfCriteria25 = QueryHelper.buildCriteria(
