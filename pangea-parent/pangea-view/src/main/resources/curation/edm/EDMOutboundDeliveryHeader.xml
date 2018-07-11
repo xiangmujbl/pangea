@@ -5,12 +5,16 @@
 
             <region path="/project_one/likp">
                 <columns>
-                    vbeln,erdat,vstel,lfart,lfdat,vbtyp,vsbed,kunnr,kunag,bolnr,lifnr,wadatist,lifex,werks,wadat,vkorg
+                    vbeln,erdat,vstel,lfart,lfdat,vbtyp,vsbed,kunnr,kunag,bolnr,lifnr,wadatist,lifex,werks,wadat,vkorg,mandt
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+
+                    <relation path="/project_one/vbuk" isPrimaryKey="false">
+                         <expression>vbeln = /project_one/likp.vbeln,mandt =/project_one/likp.mandt</expression>
+                      </relation>
                 </relations>
             </region>
 
@@ -20,12 +24,19 @@
                 </columns>
             </region>
 
+
+            <region path="/project_one/vbuk" isPrimaryKey="false">
+                 <columns>
+                     gbstk,wbstk,kostk,lvstk,fkstk,mandt,vbeln
+                 </columns>
+             </region>
+
+
             <region path="/edm/outbound_delivery_header_v1">
                 <columns>
-                    srcSysCd,delvDocId,shippingPtNum,delvTypeCd,slsOrdrCarCd,delvDt,crtDttm,soldToCustNum,shipToCustNum,billOfLdngNum,delvNum,planGiDt,actlGiDt,shippingCondCd,shippingPtNum,supNum,plntCd,localSalesOrg
+                    srcSysCd,delvDocId,shippingPtNum,delvTypeCd,slsOrdrCarCd,delvDt,crtDttm,soldToCustNum,shipToCustNum,billOfLdngNum,delvNum,planGiDt,actlGiDt,shippingCondCd,shippingPtNum,supNum,plntCd,localSalesOrg,hdrOvrStat,hdrGdsMvtStat,hdrWMStat,hdrPickStat,hdrBillStat
                 </columns>
             </region>
-
         </regions>
     </curation>
 </adf-curation>

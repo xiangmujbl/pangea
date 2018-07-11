@@ -1,0 +1,27 @@
+<adf-curation>
+    <curation mainRegion="/omp/gdm_in_transit_stock_temp" viewRegion="/omp/gdm_in_transit_stock"
+              chunkSize="1000" partitionPerServer="2" chunkBytes="40096" parallelism="2" writeTo="all" topic="PANGEA_V1_omp_gdm_intransitstock">
+        <regions>
+            <region path="/omp/gdm_in_transit_stock_temp" mvel="true">
+                <columns>
+                    customerId,productId,dueDate,uuid,quantity
+                </columns>
+                <aggregator>
+                    <fields>
+                        <field name="quantity" aggr="SUM" type="NUMBER" scale="3"/>
+                        <field name="customerId" asKey="true"/>
+                        <field name="productId" asKey="true"/>
+                        <field name="dueDate" asKey="true"/>
+
+                    </fields>
+                    <groupBy>customerId,productId,dueDate</groupBy>
+                </aggregator>
+            </region>
+            <region path="/omp/gdm_in_transit_stock">
+                <columns>
+                    customerId,productId,dueDate,quantity
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

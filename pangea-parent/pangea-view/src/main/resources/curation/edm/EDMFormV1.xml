@@ -1,0 +1,16 @@
+<adf-curation>
+    <curation mainRegion="/infa_mdm/c_lkup_form" viewRegion="/edm/form_v1" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.edm.form_v1.controller.EDMFormV1Controller">
+        <regions>
+
+            <region path="/infa_mdm/c_lkup_form">
+                <columns>formCd,formNm</columns>
+            </region>
+
+            <region path="/edm/form_v1">
+                <columns>formName,formDescription</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

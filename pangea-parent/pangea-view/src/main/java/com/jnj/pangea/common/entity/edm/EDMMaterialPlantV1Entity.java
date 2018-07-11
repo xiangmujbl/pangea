@@ -97,6 +97,7 @@ public class EDMMaterialPlantV1Entity extends CommonEntity{
         setLocalPurchasingGroup((String)map.get("localPurchasingGroup"));
         setPurchsngGrpCd((String)map.get("purchsngGrpCd"));
         setXCHPF((String)map.get("XCHPF"));
+        setPlantStatus((String) map.get("plantStatus"));
     }
 
     public String getXCHPF() {
