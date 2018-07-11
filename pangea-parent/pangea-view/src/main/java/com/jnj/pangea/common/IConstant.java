@@ -160,6 +160,8 @@ public interface IConstant {
         String EDM_ADVANCED_SHIP_NOTIFICATION_V1 = "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
         String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
+        String PROJECT_ONE_PLMZ = "/project_one/plmz";
+        String PROJECT_ONE_PLMZ_CLONE = "/project_one/plmz_clone";
     }
 
     interface FBP {
@@ -170,6 +172,15 @@ public interface IConstant {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_BATCH_ID = "localBatchId";
         String LOCAL_MATERIAL = "localMaterial";
+    }
+
+    interface PROJECT_ONE_PLMZ {
+        String PLNTY = "plnty";
+        String PLNNR = "plnnr";
+        String PLNAL = "plnal";
+        String ZUONR = "zuonr";
+        String ZAEHL = "zaehl";
+        String ALLOCVALIDTO = "99991231";
     }
 
     interface BOM_HDR {
@@ -725,7 +736,7 @@ public interface IConstant {
         String SOURCE_OBJECT_PLANT_ATTRIBUTE2 = "sourceObjectAttribute2";
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
         String SOURCE_FILTER_INCLUSIONEXCLUSION = "inclusionExclusion";
-        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION = "purchase_requisition";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION= "purchase_requisition";
     }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
@@ -1204,7 +1215,7 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
-            String ASN9 = "ASN9";
+            String ASN9 =  "ASN9";
         }
 
         interface ERROR_VALUE {
