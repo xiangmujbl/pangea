@@ -5,7 +5,7 @@
 
             <region path="/project_one/afpo">
                 <columns>
-                    aufnr,posnr,plnum,matnr,psamg,psmng,wemng,amein,pwerk,umrez,umren,webaz,elikz,verid,charg,xloek
+                    aufnr,posnr,plnum,matnr,psamg,psmng,wemng,amein,pwerk,umrez,umren,webaz,elikz,verid,charg,xloek,meins
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -18,7 +18,7 @@
             </region>
             <region path="/edm/mfg_order_itm">
                 <columns>
-                    srcSysCd,mfgOrdrNum,lnItmNbr,mfgPlnndOrdrNum,matlNum,scrpQty,itmQty,rcvdQty,prdtnUomCd,plntCd,fctrNmrtrMeas,fctrDnmntrMeas,goodRcptLdDaysQty,dlvCmpltInd,prdntVrsnNum,btchNum,delInd
+                    srcSysCd,mfgOrdrNum,lnItmNbr,mfgPlnndOrdrNum,matlNum,scrpQty,itmQty,rcvdQty,prdtnUomCd,plntCd,fctrNmrtrMeas,fctrDnmntrMeas,goodRcptLdDaysQty,dlvCmpltInd,prdntVrsnNum,btchNum,delInd,baseUomCd
                 </columns>
             </region>
 
