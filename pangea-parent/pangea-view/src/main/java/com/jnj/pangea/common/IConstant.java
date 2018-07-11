@@ -737,7 +737,7 @@ public interface IConstant {
         String SOURCE_OBJECT_PLANT_ATTRIBUTE2 = "sourceObjectAttribute2";
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
         String SOURCE_FILTER_INCLUSIONEXCLUSION = "inclusionExclusion";
-        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION= "purchase_requisition";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION = "purchase_requisition";
     }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
@@ -980,12 +980,13 @@ public interface IConstant {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
-    interface  PLAN_EDM_COUNTRY_INPUT{
-        String SOURCE_SYSTEM= "sourceSystem";
-        String LOCAL_COUNTRY ="localCountry" ;
-        String LOCAL_CURRENCY="localCurrency";
+    interface EDM_COUNT_INPUT {
+        String SOURCESYSTEM = "sourceSystem";
+        String LOCALCOUNTRY = "localCountry";
+        String LOCALCURRENCY = "localCurrency";
 
     }
+
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT = "LATAM_ROOT";
