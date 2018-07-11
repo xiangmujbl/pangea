@@ -186,6 +186,8 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
 
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete
 
+    When I submit task with xml file "xml/omp/GDMStockPurchaseOrder_preAggregationCuration.xml" and execute file "jar/pangea-view.jar"
+
     When I submit aggregation task with xml file "xml/omp/GDMStockPurchaseOrder_aggregation.xml"
 
     When I submit task with xml file "xml/omp/OMPGdmStockPurchaseOrder.xml" and execute file "jar/pangea-view.jar"
@@ -223,6 +225,8 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
     And I will remove all data with region "/edm/purchase_order_oa_v1_aggregation"
 
     And I will remove all data with region "/omp/gdm_stock_purchase_order"
+
+    And I will remove all data with region "/edm/purchase_order_oa_v1_preAggregation"
 
     And I will remove all data with region "/dev/plan/edm_failed_data"
 

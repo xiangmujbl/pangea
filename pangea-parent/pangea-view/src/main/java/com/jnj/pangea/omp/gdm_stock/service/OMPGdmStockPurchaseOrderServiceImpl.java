@@ -80,7 +80,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
 
         EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(purchaseOrderOAV1Entity.getMatlNum(), purchaseOrderOAV1Entity.getSourceSystem());
         if(edmMaterialGlobalV1Entity == null) {
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip this record when materialGlobal isn't found
         }
         //PO1
         po1Rule(edmMaterialGlobalV1Entity,purchaseOrderOAV1Entity,stockBo);
@@ -95,15 +95,15 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = getFilterObject(purchaseOrderOAV1Entity);
 
         if(cnsPlanObjectFilterEntity == null) {
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip if planObjectFilter isn't found
         }
 
         if(!po6Rule(purchaseOrderOAV1Entity, cnsPlanObjectFilterEntity)){
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip if PO6 fails
         }
 
         if(!purchaseOrderOAV1Entity.getDelInd().isEmpty()) {
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip if delInd value is empty
         }
 
 
@@ -115,11 +115,11 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(purchaseOrderOAV1Entity.getSourceSystem(),
                 purchaseOrderOAV1Entity.getPlntCd());
         if(plantV1Entity == null) {
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip if plantV1 record isn't found
         }
 
         if(!plantV1Entity.getLocalPlanningRelevant().equals(IConstant.VALUE.X)) {
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip if localPlanningRelevant not X
         }
 
         stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + purchaseOrderOAV1Entity.getPlntCd());
@@ -135,11 +135,11 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         //PO9
         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity( purchaseOrderOAV1Entity.getSourceSystem(),purchaseOrderOAV1Entity.getMatlNum(),purchaseOrderOAV1Entity.getPlntCd());
         if(cnsMaterialPlanStatusEntity == null) {
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip when materialPlanStatus is not found
         }
 
         if(po9RuleChecks(cnsMaterialPlanStatusEntity)){
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip if validation of materialPlanStatus fails
         }
 
         po9Rule(edmMaterialGlobalV1Entity,stockBo);
@@ -147,12 +147,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         //PO10
 
         if(!po10Rule(purchaseOrderOAV1Entity,stockBo)) {
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip when PO10 fails
         }
 
         EDMPurchaseOrderOAV1Entity purchDateEntity = getLocalDelvDate(purchaseOrderOAV1Entity);
         if(purchDateEntity == null){
-            return resultObjectSkip;
+            return resultObjectSkip; //Skip if a valid date isn't found for localDelvDate field
         }
         String localDelvDate = purchDateEntity.getLocaldelvDt().trim();
         String leadTime = purchDateEntity.getGrLeadTimeDays().trim();
@@ -179,6 +179,13 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return resultObject;
     }
 
+    /**
+     * set stockId - implement PO1
+     *
+     * @param edmMaterialGlobalV1Entity called data region
+     * @param purchaseOrderOAV1Entity main data region
+     * @param stockBo BO object written out
+     */
     private void po1Rule(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, OMPGdmStockBo stockBo ){
 
 
@@ -201,6 +208,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * set certaintyId - implement PO5
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @param stockBo BO object written out
+     */
     private void po5Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
         if(purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.F)){
             stockBo.setCertaintyID(IConstant.VALUE.BE);
@@ -209,6 +222,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * getFilterObject based on two variants
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @return Return the planObjectFilter that was found based on the lookup
+     */
     private PlanCnsPlanObjectFilterEntity getFilterObject(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
                 IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
@@ -229,12 +248,25 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return cnsPlanObjectFilterEntity;
     }
 
+    /**
+     * validate planObjectFilterEntity based on the main object - implement PO6
+     *
+     * @param cnsPlanObjectFilterEntity called data region
+     * @param purchaseOrderOAV1Entity main data region
+     * @return boolean for validation
+     */
     private boolean po6Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity) {
         return((purchaseOrderOAV1Entity.getPoTypeCd().equals(cnsPlanObjectFilterEntity.getSourceObjectAttribute2Value())
                 || purchaseOrderOAV1Entity.getPoTypeCd().equals(cnsPlanObjectFilterEntity.getSourceObjectAttribute2()))
                 || purchaseOrderOAV1Entity.getPrchsngOrgNum().equals(cnsPlanObjectFilterEntity.getSourceObjectAttribute2Value()));
     }
 
+    /**
+     * set productId - implement PO9
+     *
+     * @param edmMaterialGlobalV1Entity called data region
+     * @param stockBo BO object written out
+     */
     private void po9Rule(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity,OMPGdmStockBo stockBo){
         if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
             stockBo.setProductId(edmMaterialGlobalV1Entity.getMaterialNumber());
@@ -243,6 +275,13 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * calculate and set quantity - implement PO10
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @param stockBo BO object written out
+     * @return return a boolean if quantity calculation was successful
+     */
     private boolean po10Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
         Float orderUnit = new Float(0.0);
         Float baseUnit = new Float(0.0);
@@ -274,7 +313,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                 return false;
             }
 
-            if (orderUnit == 0 && !bothZero) {
+            if (orderUnit <= 0 && !bothZero) {
                 orderUnitNotZero = false;
             }
 
@@ -291,6 +330,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return orderUnitNotZero;
     }
 
+    /**
+     * set receiptDate - implement PO11
+     *
+     * @param localDelvDate date String from purchaseOrder-localDelvDate
+     * @param stockBo BO object written out
+     */
     private void po11Rule(String localDelvDate,OMPGdmStockBo stockBo){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
@@ -306,6 +351,13 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * calculate and set startDate - implement PO12
+     *
+     * @param localDelvDate date string from purchaseOrder-localDelvDate
+     * @param leadTime number of days to add to the date from purchaseOrder-grLeadTimeDays
+     * @param stockBo BO object written out
+     */
     private void po12Rule(String localDelvDate, String leadTime,OMPGdmStockBo stockBo){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
@@ -334,6 +386,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * set inventoryLinkGroupId - implement PO17
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @param stockBo BO object written out
+     */
     private void po17Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
         if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
             if (purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.THREE_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.L)) {
@@ -350,6 +408,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * set processId - implement PO18
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @param stockBo BO object written out
+     */
     private void po18Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
         if (purchaseOrderOAV1Entity.getSuplPlntCd().isEmpty()) {
             stockBo.setProcessId(IConstant.VALUE.SU + IConstant.VALUE.BACK_SLANT + productId.get() + IConstant.VALUE.BACK_SLANT + locationId.get() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSupNum() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
@@ -358,6 +422,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * set processTypeId - implement PO19
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @param stockBo BO object written out
+     */
     private void po19Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
         if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
             stockBo.setProcessTypeId(IConstant.VALUE.VENDOR_TRANSPORT);
@@ -370,6 +440,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
     }
 
+    /**
+     * lookup a valid localDelvDate from purchaseOrder region
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @return Return the PurchaseOrder object where the date is valid
+     */
     private EDMPurchaseOrderOAV1Entity getLocalDelvDate(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         List<EDMPurchaseOrderOAV1Entity> porders = purchaseOrderOAV1Dao.getPurchaseOrderListByPoNumPoLineNbr(purchaseOrderOAV1Entity.getPoNum(), purchaseOrderOAV1Entity.getPoLineNbr());
         if(porders != null) {
@@ -382,6 +458,12 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return null;
     }
 
+    /**
+     * validate materialPlanStatus - implement PO9
+     *
+     * @param cnsMaterialPlanStatusEntity called data region
+     * @return boolean for validation
+     */
     private boolean po9RuleChecks(PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity){
 
         if(cnsMaterialPlanStatusEntity.getSpRelevant() == null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null ){
@@ -397,6 +479,14 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return true;
     }
 
+    /**
+     * Write to fail region method
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @param ruleCode rule number
+     * @param errorValue The error to be written to the region
+     * @return FailData object will be written to the fail region by setting the ResultsObject.setFailedData
+     */
     private FailData writeFailDataToRegion(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, String ruleCode, String errorValue) {
         FailData failData = new FailData();
         failData.setFunctionalArea("SP");
