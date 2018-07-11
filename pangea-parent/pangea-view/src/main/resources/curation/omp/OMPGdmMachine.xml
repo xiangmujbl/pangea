@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <adf-curation> 
-  <curation mainRegion="/edm/wrk_ctr" viewRegion="/omp/gdm_machine" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_machine.OMPGdmMachineController" writeTo="all" topic="PANGEA_V1_omp_gdm_machine">
+  <curation mainRegion="/edm/wrk_ctr" viewRegion="/omp/gdm_machine" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_machine.OMPGdmMachineController" writeTo="all" topic="PANGEA_V1_omp_gdm_machine"> 
     <regions> 
+      <region path="/edm/wrk_ctr_capy"> 
+        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum</columns>  
+        <relations> 
+          <relation path="/edm/capy_hdr" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/wrk_ctr_capy.srcSysCd,capyNum=/edm/wrk_ctr_capy.capyNum</expression> 
+          </relation> 
+        </relations> 
+      </region>  
       <region path="/edm/wrk_ctr_hier"> 
         <columns>srcSysCd,topWrkCtrTypeCd,topWrkCtrNum,parntWrkCtrTypeCd,parntWrkCtrNum,childWrkCtrTypeCd,childWrkCtrNum,wrkCtrTypeCd,wrkCtrNum,stopExplsInd</columns>  
         <relations> 
@@ -13,16 +21,19 @@
       </region>  
       <region path="/edm/wrk_ctr" lucene="true"> 
         <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc</columns>  
-        <filter>(wrkCtrUsgCd:001 OR wrkCtrUsgCd:009) AND (*:* -delInd:X)</filter>  
+        <filter>(wrkCtrUsgCd:001 OR wrkCtrUsgCd:009) AND (*:* -delInd:X) AND (wrkCtrTypeCd:A)</filter>  
         <relations> 
-          <relation path="/edm/capy_hdr" isPrimaryKey="false"> 
-            <expression>srcSysCd=/edm/wrk_ctr.srcSysCd,capyNum=/edm/wrk_ctr.capyNum</expression> 
+          <relation path="/edm/wrk_ctr_capy" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/wrk_ctr.srcSysCd,wrkCtrTypeCd=/edm/wrk_ctr.wrkCtrTypeCd,wrkCtrNum=/edm/wrk_ctr.wrkCtrNum</expression> 
           </relation>  
           <relation path="/plan/cns_plan_parameter" isPrimaryKey="false"> 
             <expression>sourceSystem =/edm/wrk_ctr.srcSysCd</expression> 
           </relation>  
+          <relation path="/plan/cns_plant_attr" isPrimaryKey="false">
+            <expression>sourceSystem =/edm/wrk_ctr.srcSysCd</expression> 
+          </relation>  
           <relation path="/edm/wrk_ctr_hier" isPrimaryKey="false"> 
-            <expression>wrkCtrNum=/edm/wrk_ctr.wrkCtrNum,wrkCtrTypeCd=/edm/wrk_ctr.wrkCtrTypeCd,parntWrkCtrNum=/edm/wrk_ctr.wrkCtrCd</expression> 
+            <expression>srcSysCd=/edm/wrk_ctr.srcSysCd,wrkCtrNum=/edm/wrk_ctr.wrkCtrNum,wrkCtrTypeCd=/edm/wrk_ctr.wrkCtrTypeCd</expression> 
           </relation> 
         </relations> 
       </region>  
@@ -30,7 +41,10 @@
         <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,capyBaseUomCd,capyNm,capyUtlzRtPct,plnrGrpCd,poolCapyInd,plntCd,finiteSchdlngInd,mltOpsInd,ovldPct,ltpExclnInd,capyUomCd,indivCapyInd,availCapyUomCd,btneckInd,capyDesc</columns> 
       </region>  
       <region path="/plan/cns_plan_parameter"> 
-        <columns>attribute,dataObject,parameter,parameterValue,sourceSystem</columns> 
+        <columns>attribute,dataObject,parameter,parameterValue,sourceSystem,inclExcl,comments</columns> 
+      </region>  
+      <region path="/plan/cns_plant_attr">
+        <columns>sourceSystem,localPlant,localPlantName,localPlanningRelevant,locationAttribute1Desc,locationAttribute1Value,locationAttribute2Desc,locationAttribute2Value,planLocTypeDesc,planLocTypeId,plant,plantType</columns> 
       </region>  
       <region path="/edm/wrk_ctr" alias="/edm/wrk_ctr_clone"> 
         <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc</columns> 
