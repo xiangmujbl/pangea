@@ -534,6 +534,7 @@ public interface IConstant {
     }
 
     interface PLAN_CNS_PRODUCT_CUSTOMER {
+        String CUSTOMER_ID = "customerId";
         String PRODUCT_ID = "productId";
         String SOURCE_SYSTEM = "sourceSystem";
         String DEMAND_GROUP = "demandGroup";
