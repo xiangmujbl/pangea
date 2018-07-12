@@ -26,6 +26,7 @@ Feature: EDMBomItem AEAZ-7487
       | project_one       | CONS_LATAM   |
       | EMS               | EMS          |
 
+    And I wait "/edm/source_system_v1" Async Queue complete
     When I submit task with xml file "xml/edm/EDMBomItem.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum,bomItmNdeNum,bomItmCntrNbr"
