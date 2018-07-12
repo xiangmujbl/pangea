@@ -3,7 +3,7 @@ package com.jnj.pangea.edm.inventory_stock.bo;
 import com.jnj.adf.client.api.remote.RawDataHelper;
 import com.jnj.pangea.common.BaseBo;
 
-public class EDMInventoryStockBo extends BaseBo implements Cloneable{
+public class EDMInventoryStockBo extends BaseBo {
 
     private String sourceSystem;
     private String localPlant;
@@ -38,8 +38,18 @@ public class EDMInventoryStockBo extends BaseBo implements Cloneable{
     private String localRestrictedUseConsignment;
     private String localConsignmentStockInQualityInspection;
     private String localUnrestrictedUseConsignment;
-    private String standLocalBlockedConsignmentStock;
+    private String localBlkdConstStkNonBm;
     private String localTotalStockAllRestrictedBatches;
+
+    private String objectName;
+
+    public String getObjectName() {
+        return objectName;
+    }
+
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
+    }
 
     // TODO add keys
     @Override
@@ -236,14 +246,6 @@ public class EDMInventoryStockBo extends BaseBo implements Cloneable{
         return this.localBlockedConsignmentStock;
     }
 
-    public String getStandLocalBlockedConsignmentStock() {
-        return standLocalBlockedConsignmentStock;
-    }
-
-    public void setStandLocalBlockedConsignmentStock(String standLocalBlockedConsignmentStock) {
-        this.standLocalBlockedConsignmentStock = standLocalBlockedConsignmentStock;
-    }
-
     public void setLocalBlockedConsignmentStock(String localBlockedConsignmentStock) {
         this.localBlockedConsignmentStock = localBlockedConsignmentStock;
     }
@@ -328,6 +330,14 @@ public class EDMInventoryStockBo extends BaseBo implements Cloneable{
         this.localUnrestrictedUseConsignment = localUnrestrictedUseConsignment;
     }
 
+    public String getLocalBlkdConstStkNonBm() {
+        return this.localBlkdConstStkNonBm;
+    }
+
+    public void setLocalBlkdConstStkNonBm(String localBlkdConstStkNonBm) {
+        this.localBlkdConstStkNonBm = localBlkdConstStkNonBm;
+    }
+
     public String getLocalTotalStockAllRestrictedBatches() {
         return this.localTotalStockAllRestrictedBatches;
     }
@@ -335,7 +345,5 @@ public class EDMInventoryStockBo extends BaseBo implements Cloneable{
     public void setLocalTotalStockAllRestrictedBatches(String localTotalStockAllRestrictedBatches) {
         this.localTotalStockAllRestrictedBatches = localTotalStockAllRestrictedBatches;
     }
-    public Object copy() throws CloneNotSupportedException {
-        return super.clone();
-    }
+
 }
