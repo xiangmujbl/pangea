@@ -28,4 +28,20 @@ public class ProjectOneMkolDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PROJECT_ONE_MKOL.WERKS).is(werks).toQueryString();
         return queryForList(IConstant.REGION.PROJECT_ONE_MKOL,queryString,MkolEntity.class);
     }
+
+    public List<MkolEntity> getMkolListWithMatnrAndWerksAndLgort(String matnr, String werks, String lgort){
+        List<MkolEntity> list = new ArrayList<MkolEntity>();
+        if ("".equals(matnr) || "".equals(werks) || "".equals(lgort)){
+            return list;
+        }
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_MKOL.MATNR).is(matnr)
+                .and(IConstant.PROJECT_ONE_MKOL.WERKS).is(werks)
+                .and(IConstant.PROJECT_ONE_MKOL.LGORT).is(lgort)
+                .toQueryString();
+        return queryForList(IConstant.REGION.PROJECT_ONE_MKOL,queryString,MkolEntity.class);
+    }
+
+
+
+
 }

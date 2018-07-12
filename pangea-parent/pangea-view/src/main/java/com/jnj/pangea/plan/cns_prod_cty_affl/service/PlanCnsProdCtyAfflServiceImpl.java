@@ -3,6 +3,7 @@ package com.jnj.pangea.plan.cns_prod_cty_affl.service;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsProdCtyAfflTempDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
@@ -10,6 +11,7 @@ import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.entity.plan.PlanCnsProdCtyAfflTempEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.plan.cns_prod_cty_affl.bo.PlanCnsProdCtyAfflBo;
 import org.apache.commons.lang.StringUtils;
@@ -24,7 +26,7 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
         }
         return instance;
     }
-
+    private PlanCnsProdCtyAfflTempDaoImpl planCnsProdCtyAfflTempDao = PlanCnsProdCtyAfflTempDaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
@@ -47,21 +49,15 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
             PlanCnsMaterialPlanStatusEntity materialPlanStatusEntityC1 = cnsMaterialPlanStatusDao.getEntityWithDpRelevantAndLocalMaterialnumber(localMaterialNumber);
 
             if (null != materialPlanStatusEntityC1) {
-                String localParentCode = materialPlanStatusEntityC1.getLocalParentCode();
+                String localParentCode = materialGlobalV1Entity.getLocalDpParentCode();
 
                 if (StringUtils.isNotEmpty(localParentCode)) {
                     cnsProdCtyAfflBo.setDpParentCode(localParentCode);
                 } else {
-                    FailData failData = checkFailData(materialGlobalV1Entity);
-                    failData.setErrorCode("C1");
-                    resultObject.setFailData(failData);
-                    return resultObject;
+                    return null;
                 }
             } else {
-                FailData failData = checkFailData(materialGlobalV1Entity);
-                failData.setErrorCode("C1");
-                resultObject.setFailData(failData);
-                return resultObject;
+                return null;
             }
 
             PlanCnsMaterialPlanStatusEntity materialPlanStatusEntityT2 = cnsMaterialPlanStatusDao.getEntityWithConditions(localMaterialNumber);
@@ -69,14 +65,24 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
                 String localPlant = materialPlanStatusEntityT2.getLocalPlant();
                 EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(IConstant.VALUE.PROJECT_ONE, localPlant);
                 if (null != plantV1Entity) {
+                    //G1
                     String country = plantV1Entity.getCountry();
                     cnsProdCtyAfflBo.setCountry(country);
+                    String dpParentCode = cnsProdCtyAfflBo.getDpParentCode();
+                    String sourceSystem = cnsProdCtyAfflBo.getSourceSystem();
+                    PlanCnsProdCtyAfflTempEntity planCnsProdCtyAfflTempEntity =  planCnsProdCtyAfflTempDao.queryplanCnsProdCtyAfflTemp(country,dpParentCode,sourceSystem);
+                    if(planCnsProdCtyAfflTempEntity!=null){
+                        cnsProdCtyAfflBo.setOvrProdClass(planCnsProdCtyAfflTempEntity.getOvrProdClass());
+                        cnsProdCtyAfflBo.setOvrProdStat(planCnsProdCtyAfflTempEntity.getOvrProdStat());
+                        cnsProdCtyAfflBo.setDpSegmentation(planCnsProdCtyAfflTempEntity.getDpSegmentation());
+                        cnsProdCtyAfflBo.setRootSize(planCnsProdCtyAfflTempEntity.getRootSize());
+                        cnsProdCtyAfflBo.setCountryGrp(planCnsProdCtyAfflTempEntity.getCountryGrp());
+                        cnsProdCtyAfflBo.setDpPlannerId(planCnsProdCtyAfflTempEntity.getDpPlannerId());
+
+                    }
                 }
             } else {
-                FailData failData = checkFailData(materialGlobalV1Entity);
-                failData.setErrorCode("T2");
-                resultObject.setFailData(failData);
-                return resultObject;
+                return null;
             }
 
             String localMaterialType = materialGlobalV1Entity.getLocalMaterialType();
@@ -91,10 +97,7 @@ public class PlanCnsProdCtyAfflServiceImpl implements ICommonService {
             }
 
         } else {
-            FailData failData = checkFailData(materialGlobalV1Entity);
-            failData.setErrorCode("T1");
-            resultObject.setFailData(failData);
-            return resultObject;
+            return null;
         }
 
         resultObject.setBaseBo(cnsProdCtyAfflBo);

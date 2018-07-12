@@ -11,7 +11,7 @@
                         <expression>sourceSystem=/edm/country_v1.sourceSystem</expression>
                     </relation>
 
-                    <relation path="/edm/edm_country_input" isPrimaryKey="false">
+                    <relation path="/plan/edm_country_input" isPrimaryKey="false">
                         <expression>sourceSystem=/edm/country_v1.sourceSystem,localCountry=/edm/country_v1.localCountry
                         </expression>
                     </relation>
@@ -19,13 +19,13 @@
             </region>
 
 
-            <region path="/edm/edm_country_input">
+            <region path="/plan/edm_country_input">
                 <columns>sourceSystem,localCountry,localCurrency</columns>
                 <relations>
                     <relation path="/edm/currency_v1" isPrimaryKey="false">
                         <expression>
-                            sourceSystem=/edm/edm_country_input.sourceSystem,
-                            localCurrency=/edm/edm_country_input.localCurrency
+                            sourceSystem=/plan/edm_country_input.sourceSystem,
+                            localCurrency=/plan/edm_country_input.localCurrency
                         </expression>
                     </relation>
 

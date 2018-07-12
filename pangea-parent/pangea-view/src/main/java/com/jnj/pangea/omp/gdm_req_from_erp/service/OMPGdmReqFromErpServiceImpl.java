@@ -46,22 +46,25 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
         gdmReqFromErpBo.setBLCKD(edmPurchaseRequisitionV1Entity.getBlokInd());
         gdmReqFromErpBo.setBLCKT(edmPurchaseRequisitionV1Entity.getLocalBlockingText());
-        gdmReqFromErpBo.setDELNR(edmPurchaseRequisitionV1Entity.getPrNum());
+        //gdmReqFromErpBo.setDELNR(edmPurchaseRequisitionV1Entity.getPrNum());
         gdmReqFromErpBo.setDELPS(edmPurchaseRequisitionV1Entity.getPrLineNbr());
         gdmReqFromErpBo.setFLIEF(edmPurchaseRequisitionV1Entity.getLocalFixedVendor());
         gdmReqFromErpBo.setPLIFZ(edmPurchaseRequisitionV1Entity.getLocalPDT());
         gdmReqFromErpBo.setREQType(edmPurchaseRequisitionV1Entity.getPrTypeCd());
         gdmReqFromErpBo.setTotalQuantity(edmPurchaseRequisitionV1Entity.getPrLineQty());
         gdmReqFromErpBo.setVERID(edmPurchaseRequisitionV1Entity.getLocalProdVersion());
-        gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSuplPlntCd());
+        //gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSuplPlntCd());
 
         //N1
-        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrNum());
+        //version 2: append the purchase_requisition_v1-prLineNbr
+        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()
+                + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrNum()
+                + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrLineNbr());
 
         //N2
         try {
             String dateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
-            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.MMDYYYY);
+            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
             SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
             Date dFrom = sdfFrom.parse(dateToFormat);
 
@@ -92,8 +95,9 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
             //N5
             if(IConstant.VALUE.CONS_LATAM.equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getSourceSystem())) {
-                gdmReqFromErpBo.setManualOffset("");
-                gdmReqFromErpBo.setPRIO_URG("");
+                //version 2: set 0 in this case
+                gdmReqFromErpBo.setManualOffset(IConstant.VALUE.ZERO);
+                gdmReqFromErpBo.setPRIO_URG(IConstant.VALUE.ZERO);
             }
 
             //N6
@@ -119,18 +123,31 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                                 gdmReqFromErpBo.setUnitId(cnsPlanUnitEntity.getUnit());
 
                                 //N8
-                                gdmReqFromErpBo.setDELETED(IConstant.VALUE.FALSE);
+                                //version 2: set default as 'NO'
+                                gdmReqFromErpBo.setDELETED(IConstant.VALUE.NO);
 
                                 //N9
-                                if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()) {
+                                if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty()
+                                        && edmPurchaseRequisitionV1Entity.getPrClseInd().isEmpty()) {
                                     PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
-                                            IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
-                                            edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
-                                            "plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), "prTypeCd", IConstant.VALUE.INCLUSION);
+                                        IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
+                                        edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
+                                        "plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), "prTypeCd", IConstant.VALUE.INCLUSION);
 
                                     if (planObjectFilterEntity != null) {
                                         if (edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-                                            gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum());
+                                            //version2
+                                            gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getPrNum()
+                                                    + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrLineNbr());
+
+                                            //N10 version2
+                                            gdmReqFromErpBo.setDELNR(edmPurchaseRequisitionV1Entity.getSourceSystem()
+                                                    + IConstant.VALUE.UNDERLINE + edmPurchaseRequisitionV1Entity.getPrNum());
+
+                                            //N11 version2
+                                            gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSourceSystem()
+                                                    + IConstant.VALUE.UNDERLINE + edmPurchaseRequisitionV1Entity.getSuplPlntCd());
+
                                             resultObject.setBaseBo(gdmReqFromErpBo); //Skipped if doesn't get here
                                         }
                                     }

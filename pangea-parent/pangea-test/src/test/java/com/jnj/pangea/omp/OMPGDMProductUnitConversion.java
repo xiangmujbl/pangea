@@ -9,6 +9,6 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/omp/OMPGdmProductUnitConversion.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-4071 OMPGdmProductUnitConversion.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-8292 OMPGdmProductUnitConversion.json"})
 public class OMPGDMProductUnitConversion {
 }

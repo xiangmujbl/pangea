@@ -17,6 +17,11 @@ public class EDMOutboundDeliveryLineBo extends BaseBo {
     private String actlSkuDelvQty;
     private String slsOrdrNum;
     private String slsOrdrLineNbr;
+    private String lineOvrStat;
+    private String lineGdsMvtStat;
+    private String lineDelvStat;
+    private String lineOvrDelvStat;
+    private String lineBillStat;
 
     @Override
     public String getKey() {
@@ -123,4 +128,43 @@ public class EDMOutboundDeliveryLineBo extends BaseBo {
         this.slsOrdrLineNbr = slsOrdrLineNbr;
     }
 
+    public String getLineOvrStat() {
+        return lineOvrStat;
+    }
+
+    public void setLineOvrStat(String lineOvrStat) {
+        this.lineOvrStat = lineOvrStat;
+    }
+
+    public String getLineGdsMvtStat() {
+        return lineGdsMvtStat;
+    }
+
+    public void setLineGdsMvtStat(String lineGdsMvtStat) {
+        this.lineGdsMvtStat = lineGdsMvtStat;
+    }
+
+    public String getLineDelvStat() {
+        return lineDelvStat;
+    }
+
+    public void setLineDelvStat(String lineDelvStat) {
+        this.lineDelvStat = lineDelvStat;
+    }
+
+    public String getLineOvrDelvStat() {
+        return lineOvrDelvStat;
+    }
+
+    public void setLineOvrDelvStat(String lineOvrDelvStat) {
+        this.lineOvrDelvStat = lineOvrDelvStat;
+    }
+
+    public String getLineBillStat() {
+        return lineBillStat;
+    }
+
+    public void setLineBillStat(String lineBillStat) {
+        this.lineBillStat = lineBillStat;
+    }
 }
