@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"src/test/resources/features/edm/EDMGlobalBusinessUnit_ProjectOne.feature"},
-        tags = {"@pangea_test"},
+        tags = {"@pangea_test"},        
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-3217 EDMGlobalBusinessUnit.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-8298 EDMGlobalBusinessUnit.json"})
 //        plugin = {"pretty", "html:target/Destination"})
 public class EDMGlobalBusinessUnit_ProjectOne {
 }
