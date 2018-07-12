@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <adf-curation> 
   <curation mainRegion="/project_one/plmz" viewRegion="/edm/matl_mfg_allc" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.edm.matl_mfg_allc.controller.EDMMatlMfgAllcController">
     <regions> 

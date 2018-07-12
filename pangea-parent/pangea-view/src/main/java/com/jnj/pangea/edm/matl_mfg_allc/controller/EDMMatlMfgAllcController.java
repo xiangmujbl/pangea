@@ -11,7 +11,6 @@ import com.jnj.pangea.util.BeanUtil;
 public class EDMMatlMfgAllcController extends CommonController {
 
     private ICommonService service = EDMMatlMfgAllcServiceImpl.getInstance();
-
     @Override
     public ResultObject process(RawDataEvent raw) {
         return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), PlmzEntity.class), null);

@@ -19,7 +19,6 @@ public class PlmzDaoImpl extends CommonDaoImpl {
         }
         return instance;
     }
-
     public List<PlmzEntity> getEntityByPlntyPlnnrPlnalZuonr(String plnty,String plnnr,String plnal,String zuonr){
         if(StringUtils.isNotBlank(plnty) && StringUtils.isNotBlank(plnnr)
                 && StringUtils.isNotBlank(plnal) && StringUtils.isNotBlank(zuonr)){

@@ -23,7 +23,6 @@ public class EDMMatlMfgAllcServiceImpl implements ICommonService {
         return instance;
     }
 
-
     List<String> combinationList = new ArrayList<>();
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private PlmzDaoImpl plmzDao = PlmzDaoImpl.getInstance();

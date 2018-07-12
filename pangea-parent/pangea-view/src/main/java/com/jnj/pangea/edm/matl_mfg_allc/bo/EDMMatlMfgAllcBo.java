@@ -172,4 +172,26 @@ public class EDMMatlMfgAllcBo extends BaseBo {
     }
 
 
+    @Override
+    public String toString() {
+        return "EDMMatlMfgAllcBo{" +
+                "srcSysCd='" + srcSysCd + '\'' +
+                ", rtngTypCd='" + rtngTypCd + '\'' +
+                ", rtngGrpCd='" + rtngGrpCd + '\'' +
+                ", allocNum='" + allocNum + '\'' +
+                ", allocCount='" + allocCount + '\'' +
+                ", allocValidFrom='" + allocValidFrom + '\'' +
+                ", chgNum='" + chgNum + '\'' +
+                ", delInd='" + delInd + '\'' +
+                ", rtngGrpCntrNbr='" + rtngGrpCntrNbr + '\'' +
+                ", rtngSqncNum='" + rtngSqncNum + '\'' +
+                ", rtngNdeNum='" + rtngNdeNum + '\'' +
+                ", bomCatCd='" + bomCatCd + '\'' +
+                ", bomNum='" + bomNum + '\'' +
+                ", altBomNum='" + altBomNum + '\'' +
+                ", bomItmNdeNum='" + bomItmNdeNum + '\'' +
+                ", plntCd='" + plntCd + '\'' +
+                ", allocValidTo='" + allocValidTo + '\'' +
+                '}';
+    }
 }
