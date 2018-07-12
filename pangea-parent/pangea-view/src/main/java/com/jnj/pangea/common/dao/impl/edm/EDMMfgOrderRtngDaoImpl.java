@@ -49,4 +49,15 @@ public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
         }
         return list;
     }
+
+    public List<EDMMfgOrderRtngEntity> joinMfgOrderRtngWithOrdrRtngNumAndSrcSysCd(String ordrRtngNum,String srcSysCd){
+        List<EDMMfgOrderRtngEntity> list = new ArrayList<EDMMfgOrderRtngEntity>();
+        if(StringUtils.isNotBlank(ordrRtngNum) || StringUtils.isNotBlank(srcSysCd)){
+            String queryString  = QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_ORDRRTNGNUM).is(ordrRtngNum)
+                    .and(IConstant.OMP_GDMBOMELEMENT.MFG_ORDER_RTNG.FIELD_SOURCESYSCD).is(srcSysCd)
+                    .toQueryString();
+            return queryForList(IConstant.REGION.EDM_MFG_ORDER_RTNG, queryString, EDMMfgOrderRtngEntity.class);
+        }
+        return list;
+    }
 }
