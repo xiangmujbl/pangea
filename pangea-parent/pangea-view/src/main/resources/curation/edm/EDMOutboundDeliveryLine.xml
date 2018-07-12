@@ -9,6 +9,13 @@
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+
+                    <relation path="/project_one/vbup" isPrimaryKey="false">
+                        <expression></expression>
+                        <!--<expression>mandt=/project_one/lips.mandt</expression>-->
+                        <!--<expression>vbeln=/project_one/lips.vbeln</expression>-->
+                        <!--<expression>posnr=/project_one/lips.posnr</expression>-->
+                    </relation>
                 </relations>
             </region>
 
@@ -16,8 +23,12 @@
                 <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
             </region>
 
+            <region path="/project_one/vbup">
+                <columns>mandt,posnr,vbeln,gbsta,wbsta,kosta,lvsta,fksta</columns>
+            </region>
+
             <region path="/edm/outbound_delivery_line_v1">
-                <columns>srcSysCd,delvDocId,delvLineNbr,matlNum,btchNum,vendBtchNum,shippingPlntCd,baseUnitOfMeasureCd,shippedQty,actlSkuDelvQty,slsOrdrNum,slsOrdrLineNbr</columns>
+                <columns>srcSysCd,delvDocId,delvLineNbr,matlNum,btchNum,vendBtchNum,shippingPlntCd,baseUnitOfMeasureCd,shippedQty,actlSkuDelvQty,slsOrdrNum,slsOrdrLineNbr,lineOvrStat,lineGdsMvtStat,lineDelvStat,lineOvrDelvStat,lineBillStat</columns>
             </region>
 
         </regions>
