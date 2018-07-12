@@ -4,7 +4,7 @@
         <regions>
 
             <region path="/project_one/mapl">
-                <columns>matnr,werks,plnty,plnnr,plnal,zkriz,zaehl,datuv,aennr,loekz,andat,aedat</columns>
+                <columns>mandt,matnr,werks,plnty,plnnr,plnal,zkriz,zaehl,datuv,aennr,loekz,andat,aedat</columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
