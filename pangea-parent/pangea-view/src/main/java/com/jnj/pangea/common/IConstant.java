@@ -752,6 +752,9 @@ public interface IConstant {
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
         String SOURCE_FILTER_INCLUSIONEXCLUSION = "inclusionExclusion";
         String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION = "purchase_requisition";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_SALES_ORDER = "sales_order";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_LOCAL_PLANT = "localPlant";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_LOCAL_ORDER_TYPE = "localOrderType";
         String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_OUTBOUND_DELIVERY_HEADER = "outbound_delivery_header";
     }
 
@@ -1215,6 +1218,7 @@ public interface IConstant {
             String OMP_GDM_CONVERSION_STORAGE = "OMPGdmConversionStorage";
             String OMP_GDM_LOCATION_EDM = "OMPGdmLocationEdm";
             String OMP_GDM_STOCK_ASN = "OMPGdmStockASN";
+            String OMP_GDM_DEMAND_OBD = "OMPGdmDemandOBD";
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
             String OMP_GDM_POS = "OMPGdmPos";
             String OMP_GDM_LFU = "OMPGdmLfu";
@@ -1253,6 +1257,7 @@ public interface IConstant {
             String T10 = "T10";
             String ASN9 = "ASN9";
             String OBD13 = "OBD13";
+            String OBD16 = "OBD16";
         }
 
         interface ERROR_VALUE {

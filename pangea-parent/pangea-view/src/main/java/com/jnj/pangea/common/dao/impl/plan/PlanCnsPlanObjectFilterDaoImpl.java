@@ -1,6 +1,7 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
@@ -25,6 +26,17 @@ public class PlanCnsPlanObjectFilterDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_PLANT_ATTRIBUTE1).is(plntCd)
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE2_VALUE).is(prTypeCdValue)
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_PLANT_ATTRIBUTE2).is(prTypeCd)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_INCLUSIONEXCLUSION).is(incExcl).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER,queryString,PlanCnsPlanObjectFilterEntity.class);
+    }
+
+    public PlanCnsPlanObjectFilterEntity getEntityWithSourceObjectTechNameAndSourceSystemAndParams(String sourceObjectTechName, String sourceSystem, String attribute1, String value1, String attribute2, String value2, String incExcl) {
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_TECHNAME).is(sourceObjectTechName)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_PLANT_ATTRIBUTE1).is(attribute1)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE1_VALUE).is(value1)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_PLANT_ATTRIBUTE2).is(attribute2)
+                .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_OBJECT_ATTRIBUTE2_VALUE).is(value2)
                 .and(IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_INCLUSIONEXCLUSION).is(incExcl).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_OBJECT_FILTER,queryString,PlanCnsPlanObjectFilterEntity.class);
     }

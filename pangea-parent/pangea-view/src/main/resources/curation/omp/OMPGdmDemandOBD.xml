@@ -38,12 +38,6 @@
                     <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/plan/cns_so_type_incl_excl" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                    <relation path="/plan/cns_cust_excl_incl" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
                     <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
@@ -84,12 +78,6 @@
             </region>
             <region path="/plan/cns_plan_unit">
                 <columns>plantFlag,unit,localUom,sourceSystem,localUomName,unit</columns>
-            </region>
-            <region path="/plan/cns_so_type_incl_excl">
-                <columns>country,inclExcl,orderType,plant,salesOrg,sourceSystem</columns>
-            </region>
-            <region path="/plan/cns_cust_excl_incl">
-                <columns>country,customerShipTo,inclExcl,salesOrg,sourceSystem</columns>
             </region>
             <region path="/project_one/knvh">
                 <columns>hityp,kunnr,vkorg,vtweg,spart,datab,datbi,hkunnr,hvkorg,hvtweg,hspart,grpno,bokre,prfre,hzuor</columns>
