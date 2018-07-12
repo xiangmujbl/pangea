@@ -152,7 +152,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_COUNTRY_INPUT="/plan/edm_country_input";
+        String EDM_COUNTRY_INPUT = "/edm/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
@@ -249,8 +249,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "VendorPurchase";
-        String EXTERNAL_PURCHASE = "ExternalPurchase";
+        String VENDOR_PURCHASE = "vendorPurchase";
+        String EXTERNAL_PURCHASE = "externalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -1218,7 +1218,7 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
-            String ASN9 =  "ASN9";
+            String ASN9 = "ASN9";
         }
 
         interface ERROR_VALUE {
@@ -1327,12 +1327,10 @@ public interface IConstant {
     interface RKPF {
         String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
     }
-
-    interface BOMHDR {
+    interface BOMHDR{
         String BOM_VlD_ToDt = "99991231";
     }
-
-    interface MFGRTNGITM {
+    interface MFGRTNGITM{
         String BOM_VlD_ToDt = "99991231";
     }
 
