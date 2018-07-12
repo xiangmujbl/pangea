@@ -12,8 +12,6 @@ Feature: EDMBomItem AEAZ-7487
 
     And I wait "/project_one/stpo" Async Queue complete
 
-    And I wait "/project_one/stop" Async Queue complete
-
     When I import "/project_one/stas" by keyFields "stasz,stlal,stlkn,stlnr,stlty"
       | stlty | stlnr    | stlal | stlkn    | stasz    | datuv    | techv | aennr        | lkenz | andat    | annam    | stvkn    |
       | M     | 00015485 | 01    | 00000001 | 00000003 | 20061027 |       |              |       | 20061027 | COLIVEI7 | 00000001 |
@@ -29,6 +27,7 @@ Feature: EDMBomItem AEAZ-7487
       | project_one       | CONS_LATAM   |
       | EMS               | EMS          |
 
+    And I wait "/edm/source_system_v1" Async Queue complete
     When I submit task with xml file "xml/edm/EDMBomItem.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/bom_item" by keyFields "srcSysCd,bomCatCd,bomNum,bomItmNdeNum,bomItmCntrNbr"
