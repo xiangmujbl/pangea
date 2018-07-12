@@ -947,6 +947,7 @@ public interface IConstant {
         String RTNGTYPCD = "rtngTypCd";
         String RTNGGRPCD = "rtngGrpCd";
         String RTNGGRPCNTRNBR = "rtngGrpCntrNbr";
+
     }
 
     interface PLAN_CNS_TLANE_CONTROL {
