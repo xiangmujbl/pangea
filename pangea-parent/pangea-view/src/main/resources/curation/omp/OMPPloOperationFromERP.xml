@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/planned_order_v1" viewRegion="/omp/plo_operation_from_erp" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2"
+            executionClassName="com.jnj.pangea.omp.plo_operation.controller.OMPPloOperationFromERPController" writeTo="all" topic="PANGEA_V1_omp_plo_operation_from_erp">
+    <regions>
+      <region path="/edm/planned_order_v1"> 
+        <columns>plntCd,srcSysCd,firmingInd,fxScrapQty,grDaysLeadQty,matlNum,mfgPlanOrdrDocId,mrpCtlId,planOrdrEndDt,planOrdrEndTm,planOrdrQty,planOrdrStrtDt,planOrdrTypeCd,planPlntCd,plngScnroCd,prcmtTypeCd,prdtnFnshdDt,prdtnStrtDt,prdtnStrtTm,prdtnVers,prdtnVersNum,reqQty,sLocCd,splPrcmtTypeCd,uomCd</columns>  
+        <relations> 
+          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/edm/matl_prod_versn" isPrimaryKey="false"> 
+            <expression>srcSysCd= /edm/planned_order_v1.srcSysCd, matlNum= /edm/planned_order_v1.matlNum, plntCd= /edm/planned_order_v1.plntCd, prdntVrsnNum=/edm/planned_order_v1.prdtnVersNum</expression> 
+          </relation>  
+          <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false"> 
+            <expression>srcSysCd = /edm/matl_prod_versn.srcSysCd, rtngTypCd = /edm/matl_prod_versn.rtngTypCd, rtngGrpCd = /edm/matl_prod_versn.rtngGrpCd, rtngGrpCntrNbr = /edm/matl_prod_versn.rtngGrpCntrNum</expression> 
+          </relation>  
+          <relation path="/edm/mfg_rtng_itm" isPrimaryKey="false"> 
+            <expression>srcSysCd = /edm/mfg_rtng_itm_nde.srcSysCd, rtngTypCd = /edm/mfg_rtng_itm_nde.rtngTypCd, rtngGrpCd = /edm/mfg_rtng_itm_nde.rtngGrpCd, rtngItmNum = /edm/mfg_rtng_itm_nde.rtngNdeNum</expression> 
+          </relation>  
+          <relation path="/edm/wrk_ctr" isPrimaryKey="false"> 
+            <expression>srcSysCd = /edm/mfg_rtng_itm.srcSysCd, wrkCtrNum = /edm/mfg_rtng_itm.wrkCntrCd</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/cns_plan_parameter"> 
+        <columns>sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl,comments</columns> 
+      </region>  
+      <region path="/edm/matl_prod_versn"> 
+        <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,altBomNum,bomUsgCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,prcrmntTypCd,spPrcrmntTypCd,cstLtSzQty,mfgLine Cd,prdVrsnDesc,dstrbtnKeyCd,frmLtSzQty,toLtSzQty,sLocCd,chckInd,chckDt,lckInd,orgBtchInd,crtDttm,chgDttm</columns> 
+      </region>  
+      <region path="/edm/mfg_rtng_itm_nde"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr,Valid-From Date,chgNum,delInd,Create Dttm,chgDttm</columns> 
+      </region>  
+      <region path="/edm/mfg_rtng_itm"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum,operNum,operCd,wrkCntrCd,plntCd,operDesc,operUom,bsQty,act1Cd,act1UomCd,act1Qty,act2Cd,act2UomCd,act2Qty,act3Cd,act3UomCd,act3Qty,act4Cd,act4UomCd,act4Qty,act5Cd,act5UomCd,act5Qty,act6Cd,act6UomCd,act6Qty,operDurtnQty,operDurtnUomCd,minOperDurtnQty,minOperDurtnUomCd,PhsInd,rtgItemEndDate</columns> 
+      </region>  
+      <region path="/edm/wrk_ctr"> 
+        <columns>srcSysCd,delInd,plntCd,capyNum,locGrpCd,lockInd,machTypeCd,mixingInd,oprCd,othFrmlCd,plnrGrpCd,respPrsnNum,runFrmlCd,schdlngInd,setupFrmlCd,setupTypeCd,slocCd,suplAreaCd,teardownFrmlCd,vldFromDt,vldToDt,wrkCtrActvCd,wrkCtrCatCd,wrkCntrCd,wrkCtrDesc,wrkCtrLocCd,wrkCtrNum,wrkCtrTypeCd,wrkCtrUsgCd,</columns> 
+      </region>  
+      <region path="/omp/plo_operation_from_erp"> 
+        <columns>vge04,vge05,vge06,vgw04,vgw05,vgw06,vge01,vge02,vge03,vgw01,vgw02,vgw03,ploOperationFromErpId,erpPloid,arbid,vornr</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

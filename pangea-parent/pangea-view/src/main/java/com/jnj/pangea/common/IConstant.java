@@ -167,14 +167,23 @@ public interface IConstant {
 
     interface FBP {
         String FAIL_MSG = "localDpParentCode does not exist in edm Material";
+        String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
     }
+
 
     interface EDM_INVENTORY_STOCK {
         String SOURCE_SYSTEM = "sourceSystem";
         String LOCAL_BATCH_ID = "localBatchId";
         String LOCAL_MATERIAL = "localMaterial";
     }
-
+    interface PROJECT_ONE_PLMZ {
+        String PLNTY = "plnty";
+        String PLNNR = "plnnr";
+        String PLNAL = "plnal";
+        String ZUONR = "zuonr";
+        String ZAEHL = "zaehl";
+        String ALLOCVALIDTO = "99991231";
+    }
 
     interface BOM_HDR {
         String SRCSYSCD = "srcSysCd";
@@ -240,8 +249,8 @@ public interface IConstant {
         String LOCAL_NUMBER = "localNumber";
         String VENDOR_OR_CUSTOMER = "vendorOrCustomer";
         String SOURCE_SYSTEM = "sourceSystem";
-        String VENDOR_PURCHASE = "VendorPurchase";
-        String EXTERNAL_PURCHASE = "ExternalPurchase";
+        String VENDOR_PURCHASE = "vendorPurchase";
+        String EXTERNAL_PURCHASE = "externalPurchase";
     }
 
     interface EDM_SOURCE_SYSTEM_V1 {
@@ -551,8 +560,8 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
-        String FIRLD_BLANK="";
-        String SPLIT_=",";
+        String FIRLD_BLANK = "";
+        String SPLIT_ = ",";
     }
 
     interface EDM_PLANT_INPUT {
@@ -729,7 +738,7 @@ public interface IConstant {
         String SOURCE_OBJECT_PLANT_ATTRIBUTE2 = "sourceObjectAttribute2";
         String SOURCE_FILTER_PLANT_VALUE = "sourceFilterPlantValue";
         String SOURCE_FILTER_INCLUSIONEXCLUSION = "inclusionExclusion";
-        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION= "purchase_requisition";
+        String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION = "purchase_requisition";
     }
 
     interface PLAN_CNS_PROD_CTY_AFFL {
@@ -940,7 +949,6 @@ public interface IConstant {
         String RTNGTYPCD = "rtngTypCd";
         String RTNGGRPCD = "rtngGrpCd";
         String RTNGGRPCNTRNBR = "rtngGrpCntrNbr";
-
     }
 
     interface PLAN_CNS_TLANE_CONTROL {
@@ -973,12 +981,13 @@ public interface IConstant {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
-    interface  EDM_COUNT_INPUT{
-        String SOURCESYSTEM= "sourceSystem";
-        String LOCALCOUNTRY ="localCountry" ;
-        String LOCALCURRENCY="localCurrency";
+    interface EDM_COUNT_INPUT {
+        String SOURCESYSTEM = "sourceSystem";
+        String LOCALCOUNTRY = "localCountry";
+        String LOCALCURRENCY = "localCurrency";
 
     }
+
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT = "LATAM_ROOT";
@@ -1074,7 +1083,7 @@ public interface IConstant {
         String CNS_PRODUCT_INCLUSION = "cns_product_inclusion";
         String LOCAL_MATERIAL_NUMBER = "LocalMaterialNumber";
         String LESS_DAYS = "LessDays";
-        String BOM_VlD_ToDt = "99991231";
+        String BOM_VlD_ToDt = "9999/12/31";
         String EN_CAPY = "E";
         String ES_CAPY = "S";
         String PT_CAPY = "P";
@@ -1176,7 +1185,7 @@ public interface IConstant {
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
             String OMP_GDM_POS = "OMPGdmPos";
             String OMP_GDM_LFU = "OMPGdmLfu";
-            String OMP_GDM_COUNTRY="OMPGdmCountry";
+            String OMP_GDM_COUNTRY = "OMPGdmCountry";
             String EDM_PLANT = "EDMPlant";
         }
 
@@ -1209,7 +1218,7 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
-            String ASN9 =  "ASN9";
+            String ASN9 = "ASN9";
         }
 
         interface ERROR_VALUE {
@@ -1266,7 +1275,6 @@ public interface IConstant {
 
         public static final String KEY_SPLIT = "/";
 
-
         public static final String QTYFXIND_X = "X";
         public static final String QTYFXIND_X_VALUE = "fixed";
         public static final String QTYFXIND_BLACK = "proportional";
@@ -1299,7 +1307,7 @@ public interface IConstant {
         public static final String PATTERN_DECIMAL_3 = "#.000";
         public static final String INTERFACEID = "OMPGdmbomelementProcess";
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
-        public static final int VALUE_DECIMAL_3= 3;
+        public static final int VALUE_DECIMAL_3 = 3;
 
     }
 
@@ -1312,6 +1320,8 @@ public interface IConstant {
         public static final String ERRORCODE = "500";
         public static final String NA = "NA";
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
+
+
     }
 
     interface RKPF {
