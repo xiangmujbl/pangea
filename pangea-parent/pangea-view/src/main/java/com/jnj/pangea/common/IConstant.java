@@ -152,7 +152,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_COUNTRY_INPUT = "/edm/edm_country_input";
+        String EDM_COUNTRY_INPUT="/plan/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
@@ -558,8 +558,13 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String SOURCE_SYSTEM = "sourceSystem";
         String COUNTRY = "country";
+<<<<<<< HEAD
         String FIRLD_BLANK="";
         String SPLIT_=",";
+=======
+        String FIRLD_BLANK = "";
+        String SPLIT_ = ",";
+>>>>>>> 7556118c657c1260b0f35df81346a1a788a7fe51
     }
 
     interface EDM_PLANT_INPUT {
@@ -979,10 +984,17 @@ public interface IConstant {
         String LOCAL_MATERIAL = "localMaterial";
     }
 
+<<<<<<< HEAD
     interface  EDM_COUNT_INPUT{
         String SOURCESYSTEM= "sourceSystem";
         String LOCALCOUNTRY ="localCountry" ;
         String LOCALCURRENCY="localCurrency";
+=======
+    interface  PLAN_EDM_COUNTRY_INPUT{
+        String SOURCE_SYSTEM= "sourceSystem";
+        String LOCAL_COUNTRY ="localCountry" ;
+        String LOCAL_CURRENCY="localCurrency";
+>>>>>>> 7556118c657c1260b0f35df81346a1a788a7fe51
 
     }
     // -----region attribute value
@@ -1030,8 +1042,11 @@ public interface IConstant {
         String M = "M";
         String SPRAS_EN = "EN";
         String PLSCN = "000";
+<<<<<<< HEAD
         String MAX_DATE_VALIDTO = "29981231";
         String MAX_DATE_VALIDTOSLASH = "2998/12/31 23:59:59";
+=======
+>>>>>>> 7556118c657c1260b0f35df81346a1a788a7fe51
         String YYYYMMDD = "yyyyMMdd";
         String YYYY_MM_DD = "yyyy/MM/dd";
         String YYYYMMDD_ZERO = "00000000";
@@ -1184,7 +1199,11 @@ public interface IConstant {
             String PLAN_CNS_TLANE_ITEM = "PlanCnsTlaneItem";
             String OMP_GDM_POS = "OMPGdmPos";
             String OMP_GDM_LFU = "OMPGdmLfu";
+<<<<<<< HEAD
             String OMP_GDM_COUNTRY="OMPGdmCountry";
+=======
+            String OMP_GDM_COUNTRY = "OMPGdmCountry";
+>>>>>>> 7556118c657c1260b0f35df81346a1a788a7fe51
             String EDM_PLANT = "EDMPlant";
         }
 
@@ -1306,7 +1325,11 @@ public interface IConstant {
         public static final String PATTERN_DECIMAL_3 = "#.000";
         public static final String INTERFACEID = "OMPGdmbomelementProcess";
         public static final String PRODUCTID_FAIL_MSG = "Unable to construct ProductId";
+<<<<<<< HEAD
         public static final int VALUE_DECIMAL_3= 3;
+=======
+        public static final int VALUE_DECIMAL_3 = 3;
+>>>>>>> 7556118c657c1260b0f35df81346a1a788a7fe51
 
     }
 
@@ -1326,10 +1349,19 @@ public interface IConstant {
     interface RKPF {
         String regex = "^((((1[6-9]|[2-9]\\d)\\d{2})/(0?[13578]|1[02])/(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})/(0?[13456789]|1[012])/(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})/0?2/(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))/0?2-29))$";
     }
+<<<<<<< HEAD
     interface BOMHDR{
         String BOM_VlD_ToDt = "99991231";
     }
     interface MFGRTNGITM{
+=======
+
+    interface BOMHDR {
+        String BOM_VlD_ToDt = "99991231";
+    }
+
+    interface MFGRTNGITM {
+>>>>>>> 7556118c657c1260b0f35df81346a1a788a7fe51
         String BOM_VlD_ToDt = "99991231";
     }
 
