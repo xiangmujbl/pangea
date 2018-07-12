@@ -157,7 +157,8 @@ public interface IConstant {
         String EDM_INVENTORY_STOCK_V1 = "/edm/inventory_stock_v1";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
         String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
-        String EDM_ADVANCED_SHIP_NOTIFICATION_V1 = "/edm/advanced_ship_notification_v1";
+        String PLAN_CNS_PLAN_DEM_GRP = "/plan/cns_plan_dem_grp";
+        String EDM_ADVANCED_SHIP_NOTIFICATION_V1= "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
         String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
         String PROJECT_ONE_PLMZ = "/project_one/plmz";
@@ -985,6 +986,15 @@ public interface IConstant {
         String LOCAL_CURRENCY="localCurrency";
 
     }
+
+    interface PLAN_CNS_PLAN_DEM_GRP {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String DEMAND_GROUP_ID = "demandGroupId";
+        String LOCAL_CURRENCY = "localCurrency";
+
+    }
+
+
     // -----region attribute value
     interface VALUE {
         String LATAM_ROOT = "LATAM_ROOT";
