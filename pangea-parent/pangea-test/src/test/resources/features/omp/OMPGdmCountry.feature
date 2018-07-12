@@ -9,7 +9,7 @@ Feature: OMPGdmCountry AEAZ-6097
 
     And I will remove all data with region "/plan/cns_plan_parameter"
 
-    And I will remove all data with region "/edm/edm_country_input"
+    And I will remove all data with region "/plan/edm_country_input"
 
     And I will remove all data with region "/edm/currency_v1"
 
@@ -43,7 +43,7 @@ Feature: OMPGdmCountry AEAZ-6097
       | CONS_LATAM   | cns_material_plan_status | DPRelevant | Plant     | I        | BR12           |
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
-    Given I import "/edm/edm_country_input" by keyFields "sourceSystem,localCountry,localCurrency"
+    Given I import "/plan/edm_country_input" by keyFields "sourceSystem,localCountry,localCurrency"
       | sourceSystem | localCountry             | localCurrency |
       | CONS_LATAM   | ZW                       | DDDDD         |
 
@@ -55,7 +55,7 @@ Feature: OMPGdmCountry AEAZ-6097
 
       | MDDePuy2     | WB                       | EEEEE         |
 
-    And I wait "/edm/edm_country_input" Async Queue complete
+    And I wait "/plan/edm_country_input" Async Queue complete
 
     Given I import "/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
       | sourceSystem | localCurrency | currencyCode |

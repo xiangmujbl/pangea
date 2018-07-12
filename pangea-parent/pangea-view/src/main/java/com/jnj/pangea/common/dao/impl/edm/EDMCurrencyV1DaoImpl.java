@@ -5,9 +5,6 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 
-import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
 import org.eclipse.jetty.util.StringUtil;
 
@@ -39,7 +36,7 @@ public class EDMCurrencyV1DaoImpl extends CommonDaoImpl {
     }
 
     public EDMCurrencyV1Entity getEntityWithLocalCurrencyAndSourceSystem(String localCurrency,String sourceSystem) {
-        if (StringUtil.isNotBlank(localCurrency)||StringUtil.isNotBlank(sourceSystem)) {
+        if (StringUtil.isNotBlank(localCurrency) && StringUtil.isNotBlank(sourceSystem)) {
             String localQueryString = QueryHelper.buildCriteria(
                     IConstant.EDM_CURRENCY_V1.LOCAL_CURRENCY)
                     .is(localCurrency)

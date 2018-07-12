@@ -50,7 +50,7 @@ public class EDMMfgOrderItmServiceImpl implements ICommonService {
         mfgOrderItmBo.setPrdntVrsnNum(afpoEntity.getVerid());
         mfgOrderItmBo.setBtchNum(afpoEntity.getCharg());
         mfgOrderItmBo.setDelInd(afpoEntity.getXloek());
-
+        mfgOrderItmBo.setBaseUomCd(afpoEntity.getMeins());
         resultObject.setBaseBo(mfgOrderItmBo);
         return resultObject;
     }

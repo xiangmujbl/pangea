@@ -9,6 +9,6 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/edm/EDMOutboundDeliveryHeader.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/EDMOutboundDeliveryHeader.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-7230 EDMOutboundDeliveryHeader.json"})
 public class EDMOutboundDeliveryHeaderTest {
 }
