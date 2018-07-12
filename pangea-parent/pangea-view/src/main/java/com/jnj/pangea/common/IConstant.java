@@ -1147,6 +1147,7 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
         String LOCAL_RECEIVING_PLANT = "localReceivingPlant";
+        String LOCAL_DELIVERY_TYPE = "localdeliveryType";
         String BR = "BR";
         String BATCH_START = "batchstart";
         String BATCH_END = "batchend";
@@ -1247,7 +1248,16 @@ public interface IConstant {
             String F2 = "F2";
             String F2F3 = "F2F3";
             String T10 = "T10";
+            String ASN7 =  "ASN7";
+            String ASN6 =  "ASN6";
             String ASN9 =  "ASN9";
+            String ASN9a =  "ASN9a";
+            String ASN9b =  "ASN9b";
+            String ASN9c = "ASN9c";
+            String ASN9d = "ASN9d";
+            String ASN16 =  "ASN16";
+            String ASN15 =  "ASN15";
+            String ASN19 =  "ASN19";
         }
 
         interface ERROR_VALUE {
