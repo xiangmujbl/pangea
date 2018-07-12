@@ -46,7 +46,6 @@ public class PlanCnsTlaneItemServiceImpl {
     private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
     private EDMSourceListV1DaoImpl edmSourceListV1Dao = EDMSourceListV1DaoImpl.getInstance();
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
@@ -78,13 +77,23 @@ public class PlanCnsTlaneItemServiceImpl {
         //N1
         String processTypeId = "";
         if (StringUtils.isNotBlank(sourceSystem) && StringUtils.isNotBlank(originLocationWithOutSystem)) {
-            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemAndLocalNumber(sourceSystem, originLocationWithOutSystem);
+
+            String[] temp = originLocationWithOutSystem.split(IConstant.VALUE.UNDERLINE);
+            if (temp.length > 1) {
+                String vendorOrCustomer = temp[0];
+                originLocationWithOutSystem = originLocationWithOutSystem.replaceAll(vendorOrCustomer + IConstant.VALUE.UNDERLINE, "");
+            }
+            String localNumber = fixNumber(originLocationWithOutSystem, 10);
+            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemAndLocalNumber(sourceSystem, localNumber);
             if (null != planCnsPlnSplLocEntity) {
+
                 if (StringUtils.isEmpty(planCnsPlnSplLocEntity.getLocalPlant()) || StringUtils.isBlank(planCnsPlnSplLocEntity.getLocalPlant())) {
                     processTypeId = IConstant.VALUE.VENDOR_TRANSPORT;
                 } else {
                     processTypeId = IConstant.VALUE.SUBCONTRACTING_TRANSPORT;
                 }
+
+
             } else {
                 if (StringUtils.isNotBlank(destinationLocationWithOutSystem)) {
                     EDMPlantV1Entity plantV1Entity = plantV1Dao.getEntityWithLocalPlant(destinationLocationWithOutSystem);
@@ -141,7 +150,8 @@ public class PlanCnsTlaneItemServiceImpl {
                 }
             }
         } else {
-            List<PlanCnsPlnSplLocEntity> plnSplLocEntityList = planCnsPlnSplLocDao.getEntityListWithSourceSystemLocalNumberAndVendorOrCustomer(sourceSystem, originLocationWithOutSystem, IConstant.VALUE.V);
+            String localNumber = fixNumber(originLocationWithOutSystem, 10);
+            List<PlanCnsPlnSplLocEntity> plnSplLocEntityList = planCnsPlnSplLocDao.getEntityListWithSourceSystemLocalNumberAndVendorOrCustomer(sourceSystem, localNumber, IConstant.VALUE.V);
             if (null != plnSplLocEntityList && plnSplLocEntityList.size() > 0) {
 
                 List<String> materialList = completingAllCriticalParameters(map);
@@ -188,6 +198,16 @@ public class PlanCnsTlaneItemServiceImpl {
             }
         }
         return resultObjectList;
+    }
+
+    private String fixNumber(String input, int length) {
+        if (StringUtils.isNotBlank(input) && input.length() < length) {
+            int shortNumber = length - input.length();
+            for (int i = 0; i < shortNumber; i++) {
+                input = "0" + input;
+            }
+        }
+        return input;
     }
 
     private List<String> completingAllCriticalParameters(Map map) {
