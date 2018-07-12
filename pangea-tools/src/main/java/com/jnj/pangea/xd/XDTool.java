@@ -20,8 +20,9 @@ import java.util.regex.Pattern;
  */
 public class XDTool {
 
-    private static String USER_NAME = null;
-    private static String PASSWORD = null;
+    //fitadmin/C0mnet@123
+    private static String USER_NAME = "wcao12";
+    private static String PASSWORD = "c3AOw9ei";
     private static String HOST = "awsamenva3025.jnj.com";
 
     public static void main(String[] args) {
@@ -56,7 +57,7 @@ public class XDTool {
     private static Map<String, String> readScripts() {
 
         Map<String, String> map = new HashMap<>();
-        Path path = Paths.get("pangea-tools/src/main/resources/xd_script/job2run");
+        Path path = Paths.get("/Users/wcao12/JnJ_Project/pangea/pangea-tools/src/main/resources/xd_script/job2run");
         try {
             List<String> lines = Files.readAllLines(path);
             lines.forEach(line -> {

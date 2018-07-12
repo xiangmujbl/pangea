@@ -1,63 +1,46 @@
-<adf-curation>
-    <curation mainRegion="/plan/cns_intransitstock" viewRegion="/omp/gdm_in_transit_stock" chunkSize="500"
-              chunkBytes="40096"
-              partitionPerServer="2" parallelism="2"
-              executionClassName="com.jnj.pangea.omp.gdm_in_transit_stock.OMPGDMInTransitStock"
-              writeTo="all" topic="PANGEA_V1_omp_gdm_intransitstock"
-    >
-        <regions>
+<?xml version="1.0" encoding="UTF-8"?>
 
-            <region path="/plan/cns_intransitstock"
-            >
-                <columns>sourceSystem,demandGroup,productId,date,quantity,uom</columns>
-                <relations>
-                    <relation path="/edm/material_global_v1" isPrimaryKey="false"
-                    >
-                        <expression></expression>
-                    </relation>
-                    <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false"
-                    >
-                        <expression></expression>
-                    </relation>
-                    <relation path="/edm/material_auom_v1" isPrimaryKey="false"
-                    >
-                        <expression></expression>
-                    </relation>
-                    <relation path="/plan/cns_intransitstock" alias="/plan/cns_intransitstock_clone"
-                              isPrimaryKey="false"
-                    >
-                        <expression></expression>
-                    </relation>
-                </relations>
-
-            </region>
-
-            <region path="/edm/material_global_v1">
-                <columns>
-                    sourceSystem,localMaterialNumber,localDpParentCode
-                </columns>
-            </region>
-            <region path="/plan/cns_dem_grp_asgn">
-                <columns>
-                    customerId,sourceSystem,demandGroup
-                </columns>
-            </region>
-            <region path="/edm/material_auom_v1">
-                <columns>
-                    localAuom,sourceSystem,localDenominator,localNumerator,localMaterialNumber
-                </columns>
-            </region>
-            <region path="/plan/cns_intransitstock" alias="/plan/cns_intransitstock_clone">
-                <columns>
-                    sourceSystem,demandGroup,productId,date,quantity,uom
-                </columns>
-            </region>
-            <region path="/omp/gdm_in_transit_stock">
-                <columns>
-                    customerId,productId,dueDate,quantity
-                </columns>
-            </region>
-
-        </regions>
-    </curation>
+<adf-curation> 
+  <curation mainRegion="/plan/cns_intransitstock" viewRegion="/omp/gdm_in_transit_stock_temp" chunkSize="500" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_in_transit_stock.OMPGDMInTransitStock" writeTo="all" topic="PANGEA_V1_omp_gdm_intransitstock">
+    <regions> 
+      <region path="/plan/cns_intransitstock"> 
+        <columns>sourceSystem,customerId,productId,date,quantity,uom,sourceCountry</columns>  
+        <relations> 
+          <relation path="/edm/material_global_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/edm/material_auom_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/plan/cns_intransitstock" alias="/plan/cns_intransitstock_clone" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/project_one/knvh" isPrimaryKey="false"> 
+            <expression/> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/material_global_v1"> 
+        <columns>sourceSystem,localMaterialNumber,localDpParentCode</columns> 
+      </region>  
+      <region path="/plan/cns_dem_grp_asgn"> 
+        <columns>sourceSystem,customerId,countryAffiliate,demandGroup,salesOrganization,channel</columns> 
+      </region>  
+      <region path="/edm/material_auom_v1"> 
+        <columns>localAuom,sourceSystem,localDenominator,localNumerator,localMaterialNumber</columns> 
+      </region>  
+      <region path="/plan/cns_intransitstock" alias="/plan/cns_intransitstock_clone"> 
+        <columns>sourceSystem,customerId,productId,date,quantity,uom,sourceCountry</columns> 
+      </region>  
+      <region path="/project_one/knvh"> 
+        <columns>datab,datbi,kunnr,hkunnr,hvkorg,hvtweg,hiytp,spart,vkorg,vtweg</columns> 
+      </region>  
+      <region path="/omp/gdm_in_transit_stock_temp">
+        <columns>customerId,productId,dueDate,uuid,quantity</columns> 
+      </region> 
+    </regions> 
+  </curation>
 </adf-curation>

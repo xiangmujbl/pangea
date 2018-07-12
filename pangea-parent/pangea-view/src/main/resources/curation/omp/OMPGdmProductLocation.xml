@@ -42,7 +42,8 @@
                     localConsumptionPeriodBackward,
                     localConsumptionPeriodForward,
                     localGoodsReceiptProcessingTimeInDays,
-                    localBatchManagementRequirementIndicator
+                    localBatchManagementRequirementIndicator,
+                    plantStatus
                 </columns>
                 <relations>
                     <relation path="/edm/source_list_v1" isPrimaryKey="false">
@@ -92,6 +93,10 @@
 
                     <relation path="/edm/plant_v1" isPrimaryKey="false">
                         <expression>localPlant=/edm/material_plant_v1.localPlant</expression>
+                    </relation>
+                    
+                    <relation path="/edm/mat_plant_fi_v1" isPrimaryKey="false">
+                        <expression>localMaterialNumber=/edm/material_plant_v1.localMaterialNumber,localPlant=/edm/material_plant_v1.localPlant</expression>
                     </relation>
 
                 </relations>
@@ -228,6 +233,17 @@
                     </relation>
                 </relations>
             </region>
+            
+            <region path="/edm/mat_plant_fi_v1">
+                <columns>
+                    localMaterialNumber,
+                    localPlant,
+                    priceControl,
+                    localMvp,
+                    localPriceUnit,
+                    localStandardPrice
+                </columns>
+            </region>
 
             <region path="/omp/gdm_product_location">
                 <columns>
@@ -247,7 +263,6 @@
                     dzeit,
                     fevor,
                     fixedHorizon,
-                    frtme,
                     insmk,
                     itemPlanningCategory,
                     kausf,
@@ -260,7 +275,6 @@
                     minRemainingShelfLife,
                     mmsta,
                     mtvfp,
-                    replenishmentLotSize,
                     shflg,
                     sobsl,
                     strgr,
@@ -274,7 +288,8 @@
                     BatchManaged,
                     MinInventoryQuantity,
                     MaxInventoryQuantity,
-                    ProductTypeId
+                    ProductTypeId,
+                    productValue
                 </columns>
             </region>
 
