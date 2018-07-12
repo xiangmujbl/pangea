@@ -687,13 +687,13 @@ public interface IConstant {
         String LGORT ="lgort";
     }
 
-       interface PROJECT_ONE_MKOL {
+    interface PROJECT_ONE_MKOL {
         String MATNR = "matnr";
         String WERKS = "werks";
         String LGORT ="lgort";
     }
 
-     interface PROJECT_ONE_MARC {
+    interface PROJECT_ONE_MARC {
         String MATNR = "matnr";
         String WERKS = "werks";
     }
@@ -1000,6 +1000,13 @@ public interface IConstant {
 
     interface PLAN_CNS_DP_POS {
         String LOCAL_MATERIAL = "localMaterial";
+    }
+
+    interface  PLAN_EDM_COUNTRY_INPUT{
+        String SOURCE_SYSTEM= "sourceSystem";
+        String LOCAL_COUNTRY ="localCountry" ;
+        String LOCAL_CURRENCY="localCurrency";
+
     }
 
     interface  EDM_COUNT_INPUT{
