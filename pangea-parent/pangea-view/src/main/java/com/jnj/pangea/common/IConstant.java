@@ -8,6 +8,7 @@ public interface IConstant {
     interface REGION {
 
         // -----region
+        String  PLAN_CNS_PROD_CTY_AFFL_TEMP = "/plan/cns_prod_cty_affl_input";
         String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
         String EDM_WRK_CTR = "/edm/wrk_ctr";
         String PROJECT_ONE_Qave = "/project_one/qave";
@@ -697,7 +698,11 @@ public interface IConstant {
         String WERKS = "werks";
     }
 
-
+    interface PLAN_CNS_PROD_CTY_AFFL_TEMP {
+        String SOURCE_SYSTEM = "sourceSystem";
+        String COUNTRY = "country";
+        String DP_PARENT_CODE="dpParentCode";
+    }
 
 
     interface PROJECT_ONE_MSLB {
