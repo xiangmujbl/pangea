@@ -29,7 +29,6 @@ public class EDMSubBrandV1ServiceImpl implements ICommonService {
         EDMSubBrandV1Bo brandV1Bo = new EDMSubBrandV1Bo();
         ClkupSubBrndEntity clkupSubBrndEntity=(ClkupSubBrndEntity)o;
         if(clkupSubBrndEntity!=null){
-            LogUtil.getLogger().info("====================="+clkupSubBrndEntity.getSubBrndCd()+";"+clkupSubBrndEntity.getSubBrndDescnTxt());
             brandV1Bo.setSubBrand(clkupSubBrndEntity.getSubBrndCd());
             brandV1Bo.setSubBrandDescription(clkupSubBrndEntity.getSubBrndDescnTxt());
         }

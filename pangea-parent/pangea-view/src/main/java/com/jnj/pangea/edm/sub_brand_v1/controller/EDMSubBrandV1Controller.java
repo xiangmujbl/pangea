@@ -18,7 +18,6 @@ public class EDMSubBrandV1Controller extends CommonController {
 
     @Override
     public ResultObject process(RawDataEvent raw) {
-        LogUtil.getLogger().info("=====================raw"+raw.getKey()+";"+raw.getValue());
         return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), ClkupSubBrndEntity.class), null);
     }
 }
