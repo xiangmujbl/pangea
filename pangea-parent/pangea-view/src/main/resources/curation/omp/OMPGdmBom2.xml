@@ -1,11 +1,11 @@
 <adf-curation>
     <curation mainRegion="/edm/mfg_order" viewRegion="/omp/gdm_bom" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.omp.gdm_bom.controller.OMPGdmBomController2"
-              writeTo="all" topic="PANGEA_V1_omp_gdm_bom3">
+              writeTo="all" topic="PANGEA_V1_omp_gdm_bom_element_process">
         <regions>
 
             <region path="/edm/mfg_order">
-                <columns>sourceSysCd,actRlseDt,ordrRtngNum,mfgOrdrNum,plntCd</columns>
+                <columns>sourceSysCd,actRlseDt,ordrRtngNum,mfgOrdrNum,plntCd,mfgOrdrSttsCd,rtngSqncNum</columns>
                 <relations>
                     <relation path="/edm/mfg_order_rtng" isPrimaryKey="false">
                         <expression>ordrRtngNum=/edm/mfg_order_rtng.ordrRtngNum</expression>
@@ -23,15 +23,15 @@
             </region>
 
             <region path="/edm/mfg_order_rtng">
-                <columns>ordrRtngNum,operNum</columns>
+                <columns>ordrRtngNum,operNum,srcSysCd</columns>
             </region>
 
             <region path="/edm/mfg_order_seq">
-                <columns>ordrRtngNum</columns>
+                <columns>ordrRtngNum,srcSysCd</columns>
             </region>
 
             <region path="/plan/cns_plan_parameter">
-                <columns>attribute,sourceSystem,dataObject,parameterValue</columns>
+                <columns>attribute,sourceSystem,dataObject,parameterValue,attribute</columns>
             </region>
 
             <region path="/omp/gdm_bom">

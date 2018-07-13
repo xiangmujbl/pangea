@@ -1,0 +1,173 @@
+<adf-curation type="M2" executionClassName="com.jnj.pangea.omp.ploo_operation.controller.OMPPloOperationFromERPController"
+              failRegion="/plan/fail_data" writeTo="all" topic="PANGEA_V1_omp_plo_operation_from_erp">
+    <regions>
+        <region mainRegion="true" path="/edm/planned_order_v1">
+            <columns>
+                plntCd,srcSysCd,firmingInd,fxScrapQty,grDaysLeadQty,matlNum,mfgPlanOrdrDocId,mrpCtlId,planOrdrEndDt,planOrdrEndTm,planOrdrQty,planOrdrStrtDt,planOrdrTypeCd,planPlntCd,plngScnroCd,prcmtTypeCd,prdtnFnshdDt,prdtnStrtDt,prdtnStrtTm,prdtnVers,prdtnVersNum,reqQty,sLocCd,splPrcmtTypeCd,uomCd
+            </columns>
+            <relations>
+                <region path="/plan/cns_plan_parameter">
+                    <columns>sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl,comments</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/matl_prod_versn">
+                    <columns>
+                        srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,altBomNum,bomUsgCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,prcrmntTypCd,spPrcrmntTypCd,cstLtSzQty,mfgLine
+                        Cd,prdVrsnDesc,dstrbtnKeyCd,frmLtSzQty,toLtSzQty,sLocCd,chckInd,chckDt,lckInd,orgBtchInd,crtDttm,chgDttm
+                    </columns>
+                    <expression>
+                        srcSysCd= /edm/planned_order_v1.srcSysCd,
+                        matlNum= /edm/planned_order_v1.matlNum,
+                        plntCd= /edm/planned_order_v1.plntCd,
+                        prdntVrsnNum=/edm/planned_order_v1.prdtnVersNum
+                    </expression>
+                </region>
+                <region path="/edm/mfg_rtng_itm_nde">
+                    <columns>
+                        srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr,Valid-From
+                        Date,chgNum,delInd,Create Dttm,chgDttm
+                    </columns>
+                    <expression>
+                        srcSysCd = /edm/matl_prod_versn.srcSysCd,
+                        rtngTypCd = /edm/matl_prod_versn.rtngTypCd,
+                        rtngGrpCd = /edm/matl_prod_versn.rtngGrpCd,
+                        rtngGrpCntrNbr = /edm/matl_prod_versn.rtngGrpCntrNum
+                    </expression>
+                </region>
+                <region path="/edm/mfg_rtng_itm">
+                    <columns>
+                        srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum,operNum,operCd,wrkCntrCd,plntCd,operDesc,operUom,bsQty,act1Cd,act1UomCd,act1Qty,act2Cd,act2UomCd,act2Qty,act3Cd,act3UomCd,act3Qty,act4Cd,act4UomCd,act4Qty,act5Cd,act5UomCd,act5Qty,act6Cd,act6UomCd,act6Qty,operDurtnQty,operDurtnUomCd,minOperDurtnQty,minOperDurtnUomCd,PhsInd,rtgItemEndDate
+                    </columns>
+                    <expression>
+                        srcSysCd = /edm/mfg_rtng_itm_nde.srcSysCd,
+                        rtngTypCd = /edm/mfg_rtng_itm_nde.rtngTypCd,
+                        rtngGrpCd = /edm/mfg_rtng_itm_nde.rtngGrpCd,
+                        rtngItmNum = /edm/mfg_rtng_itm_nde.rtngNdeNum
+                    </expression>
+                </region>
+                <region path="/edm/wrk_ctr" isPrimaryKey="false" lucene="true">
+                    <columns>
+                        srcSysCd,delInd,plntCd,capyNum,locGrpCd,lockInd,machTypeCd,mixingInd,oprCd,othFrmlCd,plnrGrpCd,respPrsnNum,runFrmlCd,schdlngInd,setupFrmlCd,setupTypeCd,slocCd,suplAreaCd,teardownFrmlCd,vldFromDt,vldToDt,wrkCtrActvCd,wrkCtrCatCd,wrkCntrCd,wrkCtrDesc,wrkCtrLocCd,wrkCtrNum,wrkCtrTypeCd,wrkCtrUsgCd,
+                    </columns>
+                    <expression>
+                        srcSysCd = /edm/mfg_rtng_itm.srcSysCd,
+                        wrkCtrNum = /edm/mfg_rtng_itm.wrkCntrCd
+                    </expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="X1" resultType="List" path="/edm/matl_prod_versn">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and" var="hhh"></parameter>
+                <parameter name="matlNum" value="matlNum" relationship="and"></parameter>
+                <parameter name="plntCd" value="plntCd" relationship="and"></parameter>
+                <parameter name="prdntVrsnNum" value="prdtnVersnNum"></parameter>
+            </parameters>
+        </method>
+        <method name="X2" resultType="List" path="/edm/mfg_rtng_itm_nde">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+                <parameter name="rtngGrpCd" value="rtngGrpCd" relationship="and"></parameter>
+                <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
+                <parameter name="rtngGrpCntrNbr" value="rtngGrpCntrNum"></parameter>
+            </parameters>
+        </method>
+        <method name="X3" resultType="List" path="/edm/mfg_rtng_itm">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+                <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
+                <parameter name="rtngGrpCd" value="rtngGrpCd" relationship="and"></parameter>
+                <parameter name="rtngItmNum" value="rtngItmNum"></parameter>
+            </parameters>
+        </method>
+        <method name="X4" resultType="List" path="/edm/wrk_ctr">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+                <parameter name="wrkCtrNum" value="wrkCtrCd"></parameter>
+            </parameters>
+        </method>
+    </methods>
+    <viewRegion name="/omp/plo_operation_from_erp">
+        <multis>
+            <multi method="X1" parameter="srcSysCd,matlNum,plntCd,prdtnVers"
+                   value="srcSysCd,rtngGrpCd,rtngTypCd,rtngGrpCntrNum" var="retList1" resultType="List"/>
+            <multi method="X2" parameter="srcSysCd,rtngGrpCd,rtngTypCd,rtngGrpCntrNum"
+                   value="srcSysCd,rtngTypCd,rtngGrpCd,rtngNdeNum" var="retList2" resultType="List"/>
+            <multi method="X3" parameter="srcSysCd,rtngTypCd,rtngGrpCd,rtngNdeNum" var="retList3"
+                   value="srcSysCd,wrkCntrCd,act1UomCd,act2UomCd,act3UomCd,act1Qty,act2Qty,act3Qty,operNum" resultType="List"/>
+            <multi method="X4" parameter="srcSysCd,wrkCntrCd" var="retList4" resultType="List"/>
+        </multis>
+        <filters>
+            <filter hook="PloOperationFromErpHook.filterraw(e.getValue())"></filter>
+        </filters>
+        <vars>
+            <var name="plntCd" value="plntCd"/>
+            <var name="srcSysCd" value="srcSysCd"/>
+            <var name="firmingInd" value="firmingInd"/>
+            <var name="fxScrapQty" value="fxScrapQty"/>
+            <var name="grDaysLeadQty" value="grDaysLeadQty"/>
+            <var name="matlNum" value="matlNum"/>
+            <var name="mfgPlanOrdrDocId" value="mfgPlanOrdrDocId"/>
+            <var name="mrpCtlId" value="mrpCtlId"/>
+            <var name="planOrdrEndDt" value="planOrdrEndDt"/>
+            <var name="planOrdrEndTm" value="planOrdrEndTm"/>
+            <var name="planOrdrQty" value="planOrdrQty"/>
+            <var name="planOrdrStrtDt" value="planOrdrStrtDt"/>
+            <var name="planOrdrTypeCd" value="planOrdrTypeCd"/>
+            <var name="planPlntCd" value="planPlntCd"/>
+            <var name="plngScnroCd" value="plngScnroCd"/>
+            <var name="prcmtTypeCd" value="prcmtTypeCd"/>
+            <var name="prdtnFnshdDt" value="prdtnFnshdDt"/>
+            <var name="prdtnStrtDt" value="prdtnStrtDt"/>
+            <var name="prdtnStrtTm" value="prdtnStrtTm"/>
+            <var name="prdtnVers" value="prdtnVers"/>
+            <var name="prdtnVersNum" value="prdtnVersNum"/>
+            <var name="reqQty" value="reqQty"/>
+            <var name="sLocCd" value="sLocCd"/>
+            <var name="splPrcmtTypeCd" value="splPrcmtTypeCd"/>
+            <var name="uomCd" value="uomCd"/>
+        </vars>
+        <columns>
+            <column name="vge04" hardCode=""></column>
+            <column name="vge05" hardCode=""></column>
+            <column name="vge06" hardCode=""></column>
+            <column name="vgw04" hardCode=""></column>
+            <column name="vgw05" hardCode=""></column>
+            <column name="vgw06" hardCode=""></column>
+            <column name="vge01">
+                <set name="vge01" value="act1UomCd"></set>
+            </column>
+            <column name="vge02">
+                <set name="vge02" value="act2UomCd"></set>
+            </column>
+            <column name="vge03">
+                <set name="vge03" value="act3UomCd"></set>
+            </column>
+            <column name="vgw01">
+                <set name="vgw01" value="act1Qty"></set>
+            </column>
+            <column name="vgw02">
+                <set name="vgw02" value="act2Qty"></set>
+            </column>
+            <column name="vgw03">
+                <set name="vgw03" value="act3Qty"></set>
+            </column>
+            <column name="ploOperationFromErpId" isPK="true">
+                <set name="ploOperationFromErpId"
+                     value="StringInner.join(srcSysCd,'/',String.valueOf(Long.valueOf(mfgPlanOrdrDocId)),'/',operNum)"></set>
+            </column>
+            <column name="erpPloid">
+                <set name="erpPloid"
+                     value="StringInner.join(srcSysCd,'/',String.valueOf(Long.valueOf(mfgPlanOrdrDocId)))"></set>
+            </column>
+            <column name="arbid">
+                <set name="arbid" value="StringInner.join(srcSysCd,'/',wrkCntrCd)"></set>
+            </column>
+            <column name="vornr">
+                <set name="vornr" value="operNum"></set>
+            </column>
+        </columns>
+    </viewRegion>
+</adf-curation>

@@ -4,13 +4,14 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class EDMCountryInputEntity extends CommonEntity {
+public class PlanEdmCountryInputEntity extends CommonEntity {
 
-    public EDMCountryInputEntity(Map<String, Object> map) {
+    public PlanEdmCountryInputEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("sourceSystem"));
-        setPlanningRegionID((String) map.get("planningRegionId"));
+        setPlanningRegionId((String) map.get("planningRegionId"));
         setLocalCountry((String) map.get("localCountry"));
+        setLocalCurrency((String) map.get("localCurrency"));
     }
     private String planningRegionId;
 
@@ -18,12 +19,14 @@ public class EDMCountryInputEntity extends CommonEntity {
 
     private String localCountry;
 
-    public String getPlanningRegionID() {
+    private String localCurrency;
+
+    public String getPlanningRegionId() {
         return planningRegionId;
     }
 
-    public void setPlanningRegionID(String planningRegionID) {
-        this.planningRegionId = planningRegionID;
+    public void setPlanningRegionId(String planningRegionId) {
+        this.planningRegionId = planningRegionId;
     }
 
     public String getSourceSystem() {
@@ -40,5 +43,13 @@ public class EDMCountryInputEntity extends CommonEntity {
 
     public void setLocalCountry(String localCountry) {
         this.localCountry = localCountry;
+    }
+
+    public String getLocalCurrency() {
+        return localCurrency;
+    }
+
+    public void setLocalCurrency(String localCurrency) {
+        this.localCurrency = localCurrency;
     }
 }

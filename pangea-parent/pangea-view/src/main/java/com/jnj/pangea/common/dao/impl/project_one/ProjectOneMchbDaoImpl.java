@@ -34,4 +34,17 @@ public class ProjectOneMchbDaoImpl extends CommonDaoImpl {
                 .and(IConstant.PROJECT_ONE_MCHB.WERKS).is(werks).toQueryString();
         return queryForList(IConstant.REGION.PROJECT_ONE_MCHB,queryString,MchbEntity.class);
     }
+
+    public List<MchbEntity> getMchbListWithMatnrAndWerksAndLgort(String matnr, String werks,String lgort){
+        List<MchbEntity> list = new ArrayList<MchbEntity>();
+        if ("".equals(matnr) || "".equals(werks) || "".equals(lgort)){
+            return list;
+        }
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_MCHB.MATNR).is(matnr)
+                .and(IConstant.PROJECT_ONE_MCHB.WERKS).is(werks)
+                .and(IConstant.PROJECT_ONE_MCHB.LGORT).is(lgort)
+                .toQueryString();
+        return queryForList(IConstant.REGION.PROJECT_ONE_MCHB,queryString,MchbEntity.class);
+    }
+
 }
