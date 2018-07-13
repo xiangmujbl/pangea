@@ -78,7 +78,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         stockBo.setInventoryLinkGroupId("");
 
         //ASN 5
-        stockBo.setCertaintyID(IConstant.VALUE.LA); //default
+        stockBo.setCertaintyId(IConstant.VALUE.LA); //default
 
         //ASN 6
         if(shipNotifEntity.getLocalDeliveryCatg().equals(IConstant.VALUE.SEVEN) && shipNotifEntity.getActGRDt().isEmpty()){
