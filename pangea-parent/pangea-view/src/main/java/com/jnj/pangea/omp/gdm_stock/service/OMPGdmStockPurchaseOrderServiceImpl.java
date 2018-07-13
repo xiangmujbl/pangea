@@ -216,9 +216,9 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      */
     private void po5Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
         if(purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.F)){
-            stockBo.setCertaintyID(IConstant.VALUE.BE);
+            stockBo.setCertaintyId(IConstant.VALUE.BE);
         } else if (purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.L)) {
-            stockBo.setCertaintyID(IConstant.VALUE.LE);
+            stockBo.setCertaintyId(IConstant.VALUE.LE);
         }
     }
 

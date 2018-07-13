@@ -12,7 +12,7 @@ public class OMPGdmStockBo extends BaseBo {
     private String batchId;
     private String blockedQuantity;
     private String consignment;
-    private String certaintyID;
+    private String certaintyId;
     private String erpOrderId;
     private String inventoryLinkGroupId;
     private String vendorId;
@@ -95,12 +95,12 @@ public class OMPGdmStockBo extends BaseBo {
         this.consignment = consignment;
     }
 
-    public String getCertaintyID() {
-        return certaintyID;
+    public String getCertaintyId() {
+        return certaintyId;
     }
 
-    public void setCertaintyID(String certaintyID) {
-        this.certaintyID = certaintyID;
+    public void setCertaintyId(String certaintyId) {
+        this.certaintyId = certaintyId;
     }
 
     public String getErpOrderId() {
