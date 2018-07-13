@@ -79,8 +79,12 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             checkProductIdValid(edmPurchaseRequisitionV1Entity);
             oMPGdmStockBo.setProductId(productId);
 
-            oMPGdmStockBo.setQuantity(String.valueOf(Double.parseDouble(edmPurchaseRequisitionV1Entity.getPrLineQty()) -
-                    Double.parseDouble(edmPurchaseRequisitionV1Entity.getLocalPOQuantity())));
+            try {
+                oMPGdmStockBo.setQuantity(String.valueOf(Double.parseDouble(edmPurchaseRequisitionV1Entity.getPrLineQty()) -
+                        Double.parseDouble(edmPurchaseRequisitionV1Entity.getLocalPOQuantity())));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
             // PR12 && PR13
             if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getNeedByDt()) ||
