@@ -232,6 +232,5 @@
 /omp/gdm_forecast
 /edm/fail_data
 /project_one/vbup
-/plan/cns_oor_forecast
-/omp/gdm_forecast
-/edm/fail_data
+/plan/prod_loc_min_shelf
+/omp/gdm_demand

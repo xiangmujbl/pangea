@@ -33,13 +33,14 @@ public class OMPGdmDemandSTOHook {
         String queryStr1 = QueryHelper.buildCriteria("poNum").is(poNum).and("poLineNbr").is(poLineNbr).and("evTypeCd").is("8").toQueryString();
         List<Map.Entry<String, String>> list1 = AdfViewHelper.queryForList("/edm/purchase_order_oa_v1_clone", queryStr1);
         Double lastResult = 0d;
+        Double sumRecvEaQtyLong = 0d;
         if (list1 != null && list1.size() > 0) {
-            Double sumRecvEaQtyLong = 0d;
             for (Map.Entry<String, String> result1 : list1) {
                 JsonObject jsonObjkeyMap = JsonObject.append(result1.getValue());
                 Map<String, Object> jsonObj = jsonObjkeyMap.toMap();
                 sumRecvEaQtyLong += NumberUtils.toDouble(getString(jsonObj, "recvEaQty"));
             }
+        }
             // Check if  (purchase_order_oa_v1- recvEaQty) > 0
             // If Yes then add values of field (purchase_order_oa_v1- recvEaQty)
 
@@ -49,7 +50,7 @@ public class OMPGdmDemandSTOHook {
             // if above statement value = 0 then Skip the Record
             // if above statement value is greater than 0 then proceed.
             // "Open PO quantity in base Unit" =  "Open PO Quantity in order Unit" *(purchase_order_oa_v1 -localNumerator ) / (purchase_order_oa_v1 -localDenominator )
-            if (sumRecvEaQtyLong > 0) {
+           /* if (sumRecvEaQtyLong > 0) {
                 String queryStr2 = QueryHelper.buildCriteria("poLineQty").is(poLineQty).and("localNumerator").is(localNumerator).and("localDenominator").is(localDenominator).toQueryString();
                 List<Map.Entry<String, String>> list2 = AdfViewHelper.queryForList("/edm/purchase_order_oa_v1_clone", queryStr2);
                 if (list2 != null && list2.size() > 0) {
@@ -68,9 +69,14 @@ public class OMPGdmDemandSTOHook {
             if (sumRecvEaQtyLong == 0) {
                 Double orderUnit3 = NumberUtils.toDouble(poLineQty);
 
-                lastResult = orderUnit3 * NumberUtils.toDouble(localNumerator) / NumberUtils.toDouble(localDenominator);
-            }
-        }
+                lastResult = orderUnit3 * NumberUtils.toDouble(localNumerator) / NumberUtils.toDouble(localDenominator);*/
+           // }
+
+        Double orderUnit = NumberUtils.toDouble(poLineQty) - sumRecvEaQtyLong;
+        if( orderUnit < 0 )
+            orderUnit=0.0;
+        lastResult = orderUnit * NumberUtils.toDouble(localNumerator) / NumberUtils.toDouble(localDenominator);
+
         return String.valueOf(lastResult.intValue());
     }
 

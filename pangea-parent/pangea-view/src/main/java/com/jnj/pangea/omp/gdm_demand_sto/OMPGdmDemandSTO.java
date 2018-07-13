@@ -195,8 +195,8 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 		}
 
 		if (StringInner.isStringNotEmpty(delInd)
-				&& StringInner.isStringNotEmpty(delvCmpltInd)
-				&& StringInner.isStringNotEmpty(outbDelvCmpltInd)) {
+				|| StringInner.isStringNotEmpty(delvCmpltInd)
+				|| StringInner.isStringNotEmpty(outbDelvCmpltInd)) {
 
 			return false;
 		}
