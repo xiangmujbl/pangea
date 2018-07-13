@@ -176,7 +176,7 @@
                 </column>
                 <!--ST05-->
                 <column name="demandId" isPK="true">
-                    <if test="StringInner.isStringNotEmpty(delInd) &amp;&amp; StringInner.isStringNotEmpty(delvCmpltInd) &amp;&amp; StringInner.isStringNotEmpty(outbDelvCmpltInd)">
+                    <if test="StringInner.isStringNotEmpty(delInd) || StringInner.isStringNotEmpty(delvCmpltInd) || StringInner.isStringNotEmpty(outbDelvCmpltInd)">
                         <return/>
                     </if>
                     <ref method="ConCnsPlanObjectFilterOne" parameter="plntCd,poTypeCd,sourceSystem"
