@@ -113,8 +113,8 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		String localRejReason = StringInner.getString(map, "localRejReason");
 		String salesOrderNo = StringInner.getString(map, "salesOrderNo");
 		String salesOrderItem = StringInner.getString(map, "salesOrderItem");
-		String localRejStat = StringInner.getString(map, "localRejStat");
-		String localDelvStat = StringInner.getString(map, "localDelvStat");
+		String lineRejStat = StringInner.getString(map, "lineRejStat");
+		String lineDelvStat = StringInner.getString(map, "lineDelvStat");
 		String localNumtoBase = StringInner.getString(map, "localNumtoBase");
 		String localDentoBase = StringInner.getString(map, "localDentoBase");
 		String localSubDocCatg = "J";
@@ -176,90 +176,104 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 
 		String customerId = null;
 
-		Map map3 = joinCnsPlanObjectFilter(salesOrderFlag, sourceSystem,
-				localSalesOrgFlag, localSalesOrg, localShipToPartyFlag,
-				localShipToParty, exclFlag);
-		if (map3 != null) {
-			inclusionExclusion = String.valueOf(map3.get("inclusionExclusion"));
-		}
+		if (StringInner.isStringEmpty(localSalesOrg)
+				|| StringInner.isStringEmpty(localShipToParty)) {
 
-		if (inclusionExclusion != null) {
 			return false;
 		}
 
-		Map map4 = joinCnsPlanObjectAllFilter(salesOrderFlag, sourceSystem,
-				localSalesOrgFlag, localSalesOrg, inclFlag,
-				localShipToPartyFlag, localShipToParty, allFlag);
-		if (map4 != null) {
-			inclusionExclusion = String.valueOf(map4.get("inclusionExclusion"));
-		}
+		else {
 
-		if (inclusionExclusion == null) {
-			return false;
-		}
-
-		Map map5 = joinCnsDemGrpAsgn(localShipToParty, localSalesOrg);
-		if (map5 != null) {
-			demandGroup = String.valueOf(map5.get("demandGroup"));
-		}
-
-		if (StringInner.isStringNotEmpty(demandGroup)) {
-			customerId = demandGroup;
-		}
-
-		if (StringInner.isStringEmpty(customerId)) {
-
-			Map map6 = joinKnvhOnKunnr(localShipToParty);
-			if (map6 != null) {
-				vkorg = String.valueOf(map6.get("vkorg"));
-				datbi = String.valueOf(map6.get("datbi"));
-				hkunnr = String.valueOf(map6.get("hkunnr"));
-				hityp = String.valueOf(map6.get("hityp"));
-				if (vkorg.equals(localSalesOrg)
-						&& "A".equals(hityp)
-						&& Integer.parseInt(localOrderCreateDt) <= Integer
-								.parseInt(datbi)) {
-					Map map7 = joinCnsDemGrpAsgnCustId(hkunnr);
-					if (map7 != null) {
-						demandGroup = String.valueOf(map7.get("demandGroup"));
+			Map map3 = joinCnsPlanObjectFilter(salesOrderFlag, sourceSystem,
+					localSalesOrgFlag, localSalesOrg, localShipToPartyFlag,
+					localShipToParty, exclFlag);
+			if (map3 != null) {
+				inclusionExclusion = String.valueOf(map3
+						.get("inclusionExclusion"));
+				if (inclusionExclusion != null) {
+					return false;
+				}
+			}
+			if (StringInner.isStringEmpty(customerId)) {
+				Map map4 = joinCnsPlanObjectAllFilter(salesOrderFlag,
+						sourceSystem, localSalesOrgFlag, localSalesOrg,
+						inclFlag, localShipToPartyFlag, localShipToParty,
+						allFlag);
+				if (map4 != null) {
+					inclusionExclusion = String.valueOf(map4
+							.get("inclusionExclusion"));
+					if (inclusionExclusion == null) {
+						return false;
+					}
+				}
+				if (StringInner.isStringEmpty(customerId)) {
+					Map map5 = joinCnsDemGrpAsgn(localShipToParty,
+							localSalesOrg);
+					if (map5 != null) {
+						demandGroup = String.valueOf(map5.get("demandGroup"));
 						if (StringInner.isStringNotEmpty(demandGroup)) {
 							customerId = demandGroup;
 						}
 					}
-				}
-			}
-			if (StringInner.isStringEmpty(customerId)) {
-				Map map8 = joinKnvhOnHkunnr(localShipToParty);
-				if (map8 != null) {
-					vkorg = String.valueOf(map8.get("vkorg"));
-					datbi = String.valueOf(map8.get("datbi"));
-					hkunnr = String.valueOf(map8.get("hkunnr"));
-					hityp = String.valueOf(map8.get("hityp"));
-					if (vkorg.equals(localSalesOrg)
-							&& "A".equals(hityp)
-							&& Integer.parseInt(localOrderCreateDt) <= Integer
-									.parseInt(datbi)) {
-						Map map9 = joinCnsDemGrpAsgnCustId(hkunnr);
-						if (map9 != null) {
-							demandGroup = String.valueOf(map9
-									.get("demandGroup"));
-							if (StringInner.isStringNotEmpty(demandGroup)) {
-								customerId = demandGroup;
+					if (StringInner.isStringEmpty(customerId)) {
+						Map map6 = joinKnvhOnKunnr(localShipToParty);
+						if (map6 != null) {
+							vkorg = String.valueOf(map6.get("vkorg"));
+							datbi = String.valueOf(map6.get("datbi"));
+							hkunnr = String.valueOf(map6.get("hkunnr"));
+							hityp = String.valueOf(map6.get("hityp"));
+							if (vkorg.equals(localSalesOrg)
+									&& "A".equals(hityp)
+									&& Integer.parseInt(localOrderCreateDt) <= Integer
+											.parseInt(datbi)) {
+								Map map7 = joinCnsDemGrpAsgnCustId(hkunnr);
+								if (map7 != null) {
+									demandGroup = String.valueOf(map7
+											.get("demandGroup"));
+									if (StringInner
+											.isStringNotEmpty(demandGroup)) {
+										customerId = demandGroup;
+									}
+								}
+							}
+						}
+						if (StringInner.isStringEmpty(customerId)) {
+							Map map8 = joinKnvhOnHkunnr(localShipToParty);
+							if (map8 != null) {
+								vkorg = String.valueOf(map8.get("vkorg"));
+								datbi = String.valueOf(map8.get("datbi"));
+								hkunnr = String.valueOf(map8.get("hkunnr"));
+								hityp = String.valueOf(map8.get("hityp"));
+								if (vkorg.equals(localSalesOrg)
+										&& "A".equals(hityp)
+										&& Integer.parseInt(localOrderCreateDt) <= Integer
+												.parseInt(datbi)) {
+									Map map9 = joinCnsDemGrpAsgnCustId(hkunnr);
+									if (map9 != null) {
+										demandGroup = String.valueOf(map9
+												.get("demandGroup"));
+										if (StringInner
+												.isStringNotEmpty(demandGroup)) {
+											customerId = demandGroup;
+										}
+									}
+								}
+							}
+							if (StringInner.isStringEmpty(customerId)) {
+
+								writeFailDataToRegion(failMap, "SP",
+										"GDMDemandSalesOrder", "SO5",
+										"Demand Group can not be determined",
+										sourceSystem, salesOrderNo,
+										salesOrderItem, scheduleLineItem,
+										localMaterialNumber, "", "");
+								return false;
 							}
 						}
 					}
 				}
-				if (StringInner.isStringEmpty(customerId)) {
-
-					writeFailDataToRegion(failMap, "SP", "GDMDemandSalesOrder",
-							"SO5", "Demand Group can not be determined",
-							sourceSystem, salesOrderNo, salesOrderItem,
-							scheduleLineItem, localMaterialNumber, "", "");
-					return false;
-				}
 			}
 		}
-
 		builder.put("customerId", customerId);
 
 		String fromDueDate = null;
@@ -357,7 +371,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			if (Integer.parseInt(scheduleLineItem) != 1
 					|| Integer.parseInt(salesOrderQty) <= 0
 					|| StringInner.isStringNotEmpty(localRejReason)
-					|| "C".equals(localRejStat) || "C".equals(localDelvStat)) {
+					|| "C".equals(lineRejStat)) {
 				return false;
 			} else {
 				demandId = StringInner.join(productId, "/", locationId, "/",

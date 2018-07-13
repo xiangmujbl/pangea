@@ -1,10 +1,11 @@
 <adf-curation xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.GDMDemandSalesOrder" writeTo="all" topic="PANGEA_V1_gdm_demand_sales_order" failRegion="/plan/edm_failed_data">
 
     <regions>
-        <region path="/edm/sales_order_v1" mainRegion="true">
+        <region path="/edm/sales_order_v1" mainRegion="true" lucene="true">
             <columns>
-                localBillingBlock,localBillingBlockItem,localChangeDt,localCustomerGroup,localCustomerPO,localDeliveryBlock,localDentoBase,localDistrChannel,localDivision,localDocumentCateg,localIncoTerms1,localIncoTerms2,localItemBillRlvnt,localItemCategory,localItemDlvRlvnt,localMaterialNumber,localNumtoBase,localOrderCreateDt,localOrderDate,localOrderReason,localOrderType,localPlant,localPricingProcedure,localRejReason,localRequestedDate,localRoute,localSDItemCurrency,localSDItemValue,localSalesGroup,localSalesOffice,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem,localRejStat,localDelvStat
+                localBillingBlock,localBillingBlockItem,localChangeDt,localCustomerGroup,localCustomerPO,localDeliveryBlock,localDentoBase,localDistrChannel,localDivision,localDocumentCateg,localIncoTerms1,localIncoTerms2,localItemBillRlvnt,localItemCategory,localItemDlvRlvnt,localMaterialNumber,localNumtoBase,localOrderCreateDt,localOrderDate,localOrderReason,localOrderType,localPlant,localPricingProcedure,localRejReason,localRequestedDate,localRoute,localSDItemCurrency,localSDItemValue,localSalesGroup,localSalesOffice,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem,lineRejStat,lineDelvStat
             </columns>
+            <filter>lineDelvStat:A OR lineDelvStat:B</filter>
             <relations>
                 <region path="/plan/prod_loc_min_shelf" isPrimaryKey="true">
                     <columns>
@@ -187,8 +188,8 @@
             <var name="localRejReason" value="localRejReason"/>
             <var name="salesOrderNo" value="salesOrderNo"/>
             <var name="salesOrderItem" value="salesOrderItem"/>
-            <var name="localRejStat" value="localRejStat"/>
-            <var name="localDelvStat" value="localDelvStat"/>
+            <var name="lineRejStat" value="lineRejStat"/>
+            <var name="lineDelvStat" value="lineDelvStat"/>
             <var name="localNumtoBase" value="localNumtoBase"/>
             <var name="localDentoBase" value="localDentoBase"/>
             <var name="localSubDocCatg" value="'J'"/>
@@ -226,65 +227,75 @@
 
             <!-- SO5 -->
             <column name="customerId">
-                <ref method="joinCnsPlanObjectFilter" parameter="salesOrderFlag,sourceSystem,localSalesOrgFlag,localSalesOrg,localShipToPartyFlag,localShipToParty,exclFlag"
-                     value="inclusionExclusion" resultType="Map">
-                    <if test="inclusionExclusion != null">
-                        <!-- skip -->
-                        <return/>
-                    </if>
-                </ref>
-                <ref method="joinCnsPlanObjectAllFilter" parameter="salesOrderFlag,sourceSystem,localSalesOrgFlag,localSalesOrg,inclFlag,localShipToPartyFlag,localShipToParty,allFlag"
-                     value="inclusionExclusion" resultType="Map">
-                    <if test="inclusionExclusion == null">
-                        <!-- skip -->
-                        <return/>
-                    </if>
-                </ref>
-                <!-- step 1 -->
-                <ref method="joinCnsDemGrpAsgn" parameter="localShipToParty,localSalesOrg"
-                     value="demandGroup" resultType="Map">
-                    <if test="StringInner.isStringNotEmpty(demandGroup)">
-                        <set name="customerId" value="demandGroup"/>
-                    </if>
-                </ref>
-                <!-- step 2 -->
-                <if test="StringInner.isStringEmpty(customerId)">
-                    <ref method="joinKnvhOnKunnr" parameter="localShipToParty"
-                         value="vkorg,datbi,hkunnr,hityp" resultType="Map">
-                        <!-- we can do a simple int compare on the dates are they are formatted most significant
-                             bit first; e.g. yyyymmdd-->
-                        <if test="vkorg.equals(localSalesOrg) &amp;&amp; 'A'.equals(hityp) &amp;&amp; Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)">
-                            <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
+                <if test="StringInner.isStringEmpty(localSalesOrg) || StringInner.isStringEmpty(localShipToParty)">
+                    <!-- skip - would result in exceptions in the next queries anyway -->
+                    <return/>
+                </if>
+                <else>
+                    <ref method="joinCnsPlanObjectFilter" parameter="salesOrderFlag,sourceSystem,localSalesOrgFlag,localSalesOrg,localShipToPartyFlag,localShipToParty,exclFlag"
+                         value="inclusionExclusion" resultType="Map">
+                        <if test="inclusionExclusion != null">
+                            <!-- skip -->
+                            <return/>
+                        </if>
+                    </ref>
+                    <if test="StringInner.isStringEmpty(customerId)">
+                        <ref method="joinCnsPlanObjectAllFilter" parameter="salesOrderFlag,sourceSystem,localSalesOrgFlag,localSalesOrg,inclFlag,localShipToPartyFlag,localShipToParty,allFlag"
+                             value="inclusionExclusion" resultType="Map">
+                            <if test="inclusionExclusion == null">
+                                <!-- skip -->
+                                <return/>
+                            </if>
+                        </ref>
+                        <if test="StringInner.isStringEmpty(customerId)">
+                            <!-- step 1 -->
+                            <ref method="joinCnsDemGrpAsgn" parameter="localShipToParty,localSalesOrg"
                                  value="demandGroup" resultType="Map">
                                 <if test="StringInner.isStringNotEmpty(demandGroup)">
                                     <set name="customerId" value="demandGroup"/>
                                 </if>
                             </ref>
-                        </if>
-                    </ref>
-                    <!-- step 3 -->
-                    <if test="StringInner.isStringEmpty(customerId)">
-                        <ref method="joinKnvhOnHkunnr" parameter="localShipToParty"
-                             value="vkorg,datbi,hkunnr,hityp" resultType="Map">
-                            <!-- we can do a simple int compare on the dates are they are formatted most significant
-                                 bit first; e.g. yyyymmdd-->
-                            <if test="vkorg.equals(localSalesOrg) &amp;&amp; 'A'.equals(hityp) &amp;&amp; Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)">
-                                <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
-                                     value="demandGroup" resultType="Map">
-                                    <if test="StringInner.isStringNotEmpty(demandGroup)">
-                                        <set name="customerId" value="demandGroup"/>
+                            <!-- step 2 -->
+                            <if test="StringInner.isStringEmpty(customerId)">
+                                <ref method="joinKnvhOnKunnr" parameter="localShipToParty"
+                                     value="vkorg,datbi,hkunnr,hityp" resultType="Map">
+                                    <!-- we can do a simple int compare on the dates are they are formatted most significant
+                                         bit first; e.g. yyyymmdd-->
+                                    <if test="vkorg.equals(localSalesOrg) &amp;&amp; 'A'.equals(hityp) &amp;&amp; Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)">
+                                        <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
+                                             value="demandGroup" resultType="Map">
+                                            <if test="StringInner.isStringNotEmpty(demandGroup)">
+                                                <set name="customerId" value="demandGroup"/>
+                                            </if>
+                                        </ref>
                                     </if>
                                 </ref>
+                                <!-- step 3 -->
+                                <if test="StringInner.isStringEmpty(customerId)">
+                                    <ref method="joinKnvhOnHkunnr" parameter="localShipToParty"
+                                         value="vkorg,datbi,hkunnr,hityp" resultType="Map">
+                                        <!-- we can do a simple int compare on the dates are they are formatted most significant
+                                             bit first; e.g. yyyymmdd-->
+                                        <if test="vkorg.equals(localSalesOrg) &amp;&amp; 'A'.equals(hityp) &amp;&amp; Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)">
+                                            <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
+                                                 value="demandGroup" resultType="Map">
+                                                <if test="StringInner.isStringNotEmpty(demandGroup)">
+                                                    <set name="customerId" value="demandGroup"/>
+                                                </if>
+                                            </ref>
+                                        </if>
+                                    </ref>
+                                    <!-- no demandGroup found - reject -->
+                                    <if test="StringInner.isStringEmpty(customerId)">
+                                        <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO5'"
+                                                  errorValue="'Demand Group can not be determined'" sourceSystem="sourceSystem" key1="salesOrderNo"
+                                                  key2="salesOrderItem" key3="scheduleLineItem" key4="localMaterialNumber"/>
+                                    </if>
+                                </if>
                             </if>
-                        </ref>
-                        <!-- no demandGroup found - reject -->
-                        <if test="StringInner.isStringEmpty(customerId)">
-                            <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO5'"
-                                      errorValue="'Demand Group can not be determined'" sourceSystem="sourceSystem" key1="salesOrderNo"
-                                      key2="salesOrderItem" key3="scheduleLineItem" key4="localMaterialNumber"/>
                         </if>
                     </if>
-                </if>
+                </else>
             </column>
 
             <!-- SO8 -->
@@ -366,8 +377,7 @@
                         <if test="Integer.parseInt(scheduleLineItem) != 1 ||
                             Integer.parseInt(salesOrderQty) &lt;= 0 ||
                             StringInner.isStringNotEmpty(localRejReason) ||
-                            'C'.equals(localRejStat) ||
-                            'C'.equals(localDelvStat)">
+                            'C'.equals(lineRejStat)">
                             <return/>
                         </if>
                         <else>
