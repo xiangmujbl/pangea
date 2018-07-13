@@ -35,6 +35,15 @@
                     <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_tlane_control" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_tlane_control_triangulation" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                 </relations>
             </region>
 
@@ -63,9 +72,28 @@
                 </columns>
             </region>
 
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,modifiedBy,sourceSystem,sourceSystemName,sourceSystemType,status,timeStamp,valid
+                </columns>
+            </region>
+
             <region path="/plan/cns_plan_object_filter">
                 <columns>
-                    comments,inclusionExclusion,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem
+                    inclusionExclusion,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/plan/cns_tlane_control">
+                <columns>
+                    sequenceNumber,tlaneName,validFrom,validTo,originLocation,supSys,supSysVendor,supSysCustomer,destinationLocation,mode,leadTime,triangulationDetail,processTypeId,
+                    sourceSystemCriticalParameters,trigSysTransaction,trigSysPlant,trigSysVendor,trigSysCustomer,trigSysShipTo
+                </columns>
+            </region>
+
+            <region path="/plan/cns_tlane_control_triangulation">
+                <columns>
+                    sequenceNumber,stepNumber,tlaneName,originLocation,destinationLocation
                 </columns>
             </region>
 

@@ -7,14 +7,19 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
-import com.jnj.pangea.common.entity.CommonEntity;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsTlaneControlDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsTlaneControlTriangulationDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseOrderOAV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlTriangulationEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
 import com.jnj.pangea.common.entity.edm.EDMAdvancedShipNotificationV1Entity;
@@ -39,8 +44,11 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     private EDMMaterialGlobalV1DaoImpl materialGlobalDao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private EDMPlantV1DaoImpl plantDao = EDMPlantV1DaoImpl.getInstance();
     private EDMPurchaseOrderOAV1DaoImpl purchaseDao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
+    private EDMSourceSystemV1DaoImpl sourceDao = EDMSourceSystemV1DaoImpl.getInstance();
     private PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
+    private PlanCnsTlaneControlDaoImpl cnsTlaneControlDao = PlanCnsTlaneControlDaoImpl.getInstance();
+    private PlanCnsTlaneControlTriangulationDaoImpl cnsTlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
 
 
     @Override
@@ -49,31 +57,34 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         ResultObject resultObjectSkip = new ResultObject();
         OMPGdmStockBo stockBo = new OMPGdmStockBo();
 
-
-
         EDMAdvancedShipNotificationV1Entity shipNotifEntity = (EDMAdvancedShipNotificationV1Entity) o ;
+        EDMSourceSystemV1Entity sourceEntity = sourceDao.getSourceSystemWithProjectOne();
         EDMMaterialGlobalV1Entity materialGlobalEntity = materialGlobalDao.getEntityWithLocalMaterialNumberAndSourceSystem(shipNotifEntity.getMatlNum(),shipNotifEntity.getSrcSysCd());
-        EDMPlantV1Entity plantEntity = plantDao.getPlantWithSourceSystemAndLocalPlant(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getLocalReceivingPlant());
+        //EDMPlantV1Entity plantEntity = plantDao.getPlantWithSourceSystemAndLocalPlant(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getLocalReceivingPlant());
         EDMPurchaseOrderOAV1Entity purchaseEntity = purchaseDao.getEntityByPoNumAndPoLineNumberAndSourceSystem(shipNotifEntity.getLocalRefDocNum(), shipNotifEntity.getLocRefDocLineNum(), shipNotifEntity.getSrcSysCd());
-        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getMatlNum(),shipNotifEntity.getLocalReceivingPlant());
+        //PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getMatlNum(),shipNotifEntity.getLocalReceivingPlant());
 
         //ASN rules
-
+        String localPlant = "";
 
         if(shipNotifEntity == null)
         {
-            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9c, "shipNotifEntity == null");
+            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9c, "shipNotifEntity is null");
             resultObject.setFailData(failData);
             return resultObject;
         }
+        if(null != sourceEntity && shipNotifEntity.getSrcSysCd().equals(sourceEntity.getSourceSystem())){
+            localPlant = shipNotifEntity.getLocalReceivingPlant();
+        } else {
+            return resultObjectSkip;
+        }
 
-        stockBo.setVendorId(shipNotifEntity.getVendorId());
 
         //ASN 1
         String asn1_locationId = "";
         String asn1_productId = "";
         if(materialGlobalEntity == null) {
-            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9b, "Reject the Record when both (material_global_v1-primaryPlanningCode) and (material_global_v1-MaterialNumber) are Blank ");
+            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9b, "Both (material_global_v1-primaryPlanningCode) and (material_global_v1-MaterialNumber) are Blank ");
             resultObject.setFailData(failData);
             return resultObject;
         }
@@ -83,7 +94,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         if(null == asn1_productId || asn1_productId.isEmpty()){
             asn1_productId = materialGlobalEntity.getMaterialNumber();
         }
-        asn1_locationId = shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant();
+        asn1_locationId = shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + localPlant;
         stockBo.setStockId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvLineNbr());
 
         //ASN 2
@@ -101,7 +112,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
         //ASN 6
         if( shipNotifEntity.getLocalDeliveryCatg()!= null &&  shipNotifEntity.getLocalDeliveryCatg().equals(IConstant.VALUE.SEVEN) && StringUtils.isBlank(shipNotifEntity.getActGRDt()) ) {
-            String erp = asn6Rule(shipNotifEntity);
+            String erp = asn6Rule(shipNotifEntity, localPlant);
             if(StringUtils.isBlank(erp)){
                 //reject
                 return resultObjectSkip;
@@ -112,17 +123,25 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         }
 
         //ASN 7
+        /*
         if( plantEntity!=null &&plantEntity.getLocalPlanningRelevant() !=null &&  plantEntity.getLocalPlanningRelevant().equals(IConstant.VALUE.X)){
             stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant());
         } else {
             //reject
             return resultObjectSkip;
+        }*/
+        localPlant = asn7Rule(shipNotifEntity, localPlant);
+        if(localPlant.isEmpty()){
+            return resultObjectSkip;
+        } else {
+            stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + localPlant);
         }
 
         //ASN 8
         stockBo.setTransitDate(IConstant.VALUE.TRANSIT_DATE);
 
         //ASN 9
+        /*
         if((cnsMaterialPlanStatusEntity != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)) ||
                 (cnsMaterialPlanStatusEntity != null &&  cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X))){
             if(!materialGlobalEntity.getPrimaryPlanningCode().isEmpty()){
@@ -138,7 +157,17 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         }
         else {
             return resultObjectSkip;
+        }*/
+        String asn9_productId = asn9Rule(shipNotifEntity, materialGlobalEntity, localPlant);
+        if("ERROR".equals(asn9_productId)){
+            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9, "Both Primary Planning Code and Material Number are missing");
+            resultObject.setFailData(failData);
+            return resultObject;
         }
+        if(asn9_productId.isEmpty()){
+            return resultObjectSkip;
+        }
+        stockBo.setProductId(asn9_productId);
 
         //ASN 10
         if(null != purchaseEntity){
@@ -198,13 +227,23 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
             return resultObjectSkip;
         }
 
+        //ASN 20
+        String vendorId = shipNotifEntity.getVendorId();
+        try {
+            //remove leading zeroes
+            int id = Integer.parseInt(vendorId);
+            stockBo.setVendorId(String.valueOf(id));
+        } catch(Exception e){
+            stockBo.setVendorId(shipNotifEntity.getVendorId());
+        }
+
         //ASN rules end
 
         resultObject.setBaseBo(stockBo);
         return resultObject;
     }
 
-    private String asn6Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity){
+    private String asn6Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, String localPlant){
         ArrayList<PlanCnsPlanObjectFilterEntity> cnsPlanObjectFilterEntityList = new ArrayList<>(cnsPlanObjectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem(IConstant.VALUE.ADVANCE_SHIP_NOTIFICATIONS, shipNotifEntity.getSrcSysCd()));
 
         if( cnsPlanObjectFilterEntityList != null &&  !cnsPlanObjectFilterEntityList.isEmpty())
@@ -212,7 +251,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         {
             for(PlanCnsPlanObjectFilterEntity filterEntity : cnsPlanObjectFilterEntityList) {
                 if( filterEntity.getSourceObjectAttribute1() != null &&  filterEntity.getSourceObjectAttribute1().equals(IConstant.VALUE.LOCAL_RECEIVING_PLANT)
-                        && filterEntity.getSourceObjectAttribute1Value() != null && filterEntity.getSourceObjectAttribute1Value().equals(shipNotifEntity.getLocalReceivingPlant())
+                        && filterEntity.getSourceObjectAttribute1Value() != null && filterEntity.getSourceObjectAttribute1Value().equals(localPlant)
 
                         && filterEntity.getSourceObjectAttribute2Value()!= null
                         && shipNotifEntity.getLocalDeliveryType() != null
@@ -220,13 +259,66 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
                         && filterEntity.getSourceObjectAttribute2Value().equals(shipNotifEntity.getLocalDeliveryType())
                         && filterEntity.getSourceObjectAttribute2().equals((IConstant.VALUE.LOCAL_DELIVERY_TYPE))){
 
-                    //stockBo.setErpOrderId(shipNotifEntity.getDelvDocId());
                     return shipNotifEntity.getDelvDocId();
                 }
             }
         }
         return "";
     }
+
+    private String asn7Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, String localPlant){
+
+        ArrayList<PlanCnsTlaneControlEntity> tlaneControlEntityList = new ArrayList(cnsTlaneControlDao.getEntityListWithTriangulationParams("*","*",shipNotifEntity.getSrcSysCd(),localPlant,"purchase_order","Yes"));
+
+        if(null != tlaneControlEntityList && !tlaneControlEntityList.isEmpty()){
+            //get any
+            PlanCnsTlaneControlEntity tce = tlaneControlEntityList.get(0);
+
+            ArrayList<PlanCnsTlaneControlTriangulationEntity> trigEntityList = new ArrayList(cnsTlaneControlTriangulationDao.getStepsForSequence(tce.getSequenceNumber(),tce.getTlaneName()));
+            PlanCnsTlaneControlTriangulationEntity trigEntity = trigEntityList.get(0);
+            //find highest step
+            int s = 0;
+            for(PlanCnsTlaneControlTriangulationEntity te : trigEntityList){
+                int o = Integer.parseInt(te.getStepNumber());
+                if(o > s) {
+                    trigEntity = te;
+                    s = o;
+                }
+            }
+
+            //overwrite localPlant
+            String destinationLocation = trigEntity.getDestinationLocation();
+            int size = tce.getSourceSystemCriticalParameters().length();
+            String newLocalPlant = destinationLocation.substring(0,size+1);
+            localPlant = newLocalPlant;
+        }
+
+        //Planning relevancy check
+        EDMPlantV1Entity plantEntity = plantDao.getPlantWithSourceSystemAndLocalPlant(shipNotifEntity.getSrcSysCd(), localPlant);
+        if(null != plantEntity && IConstant.VALUE.X.equals(plantEntity.getLocalPlanningRelevant()) ){
+            return localPlant;
+        }
+        return "";
+    }
+
+    private String asn9Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, EDMMaterialGlobalV1Entity materialGlobalEntity, String localPlant){
+        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getMatlNum(),localPlant);
+
+        if((cnsMaterialPlanStatusEntity != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)) ||
+                (cnsMaterialPlanStatusEntity != null &&  cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X))){
+            if(!materialGlobalEntity.getPrimaryPlanningCode().isEmpty()){
+                return materialGlobalEntity.getPrimaryPlanningCode();
+            } else if(!materialGlobalEntity.getMaterialNumber().isEmpty()){
+                return materialGlobalEntity.getMaterialNumber();
+            }else {
+
+                return "ERROR";
+            }
+        }
+
+        return "";
+    }
+
 
     private String asn10Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, EDMPurchaseOrderOAV1Entity purchaseEntity){
         try {
@@ -242,17 +334,17 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
                 cal.add(Calendar.DATE, gr);
                 //determine weekday
+                /*
                 int dow = cal.get(Calendar.DAY_OF_WEEK);
                 if (dow == 6) {
                     cal.add(Calendar.DATE, 2);
                 } else if (dow == 7) {
                     cal.add(Calendar.DATE, 1);
-                }
+                }*/
                 cal.set(Calendar.HOUR, 0);
                 cal.set(Calendar.MINUTE, 0);
                 cal.set(Calendar.SECOND, 0);
 
-                //stockBo.setStartDate(df2.format(cal.getTime()));
                 return df2.format(cal.getTime());
             }
         } catch (Exception e){
@@ -272,7 +364,6 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
                     cal.set(Calendar.HOUR, 0);
                     cal.set(Calendar.MINUTE, 0);
                     cal.set(Calendar.SECOND, 0);
-                    //stockBo.setReceiptDate(dt2.format(cal.getTime()));
                     return dt2.format(cal.getTime());
                 }
             }
