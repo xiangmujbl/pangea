@@ -20,7 +20,7 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class OMPGdmStock2Controller implements IEventProcessor {
 
-    private final String FAILREGION = "/pangea/edm_failed_data";
+    private final String FAILREGION = "/plan/edm_failed_data";
 //    String stockId;
 //    String locationId;
 
@@ -154,6 +154,10 @@ public class OMPGdmStock2Controller implements IEventProcessor {
                         materialNumber = String.valueOf(map5.get("materialNumber"));
                         productId = iLot9Udf(primaryPlanningCode, materialNumber);
                         if(null==productId||productId.isEmpty()){
+                            writeFailDataToRegion(failMap, "SP", "OMPGDMSTOCK2", "iLot9",
+                                    "primaryPlanningCode and materialNumber are both blank",
+                                    srcSysCd, lotNum, "",
+                                    "", "", "", "");
                             return false;
                         }
                         break;
