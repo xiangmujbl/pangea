@@ -8,17 +8,6 @@
                 <columns>
                     sourceSystem,vendorOrCustomer,localNumber,localCountry,localCurrency,localNumber,localName,planLocTypeId,localRegion,localPlant
                 </columns>
-                <relations>
-                    <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
-            </region>
-
-            <region path="/plan/cns_plan_parameter">
-                <columns>
-                    parameterValue,sourceSystem,dataObject,attribute,parameter
-                </columns>
             </region>
 
             <region path="/omp/gdm_location">
