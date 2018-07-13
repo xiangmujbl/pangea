@@ -369,7 +369,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 
 		if (inclusionExclusion != null) {
 			if (Integer.parseInt(scheduleLineItem) != 1
-					|| Integer.parseInt(salesOrderQty) <= 0
+					|| Double.parseDouble(salesOrderQty) <= 0
 					|| StringInner.isStringNotEmpty(localRejReason)
 					|| "C".equals(lineRejStat)) {
 				return false;

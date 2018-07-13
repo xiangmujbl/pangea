@@ -375,7 +375,7 @@
                      value="inclusionExclusion" resultType="Map">
                     <if test="inclusionExclusion != null">
                         <if test="Integer.parseInt(scheduleLineItem) != 1 ||
-                            Integer.parseInt(salesOrderQty) &lt;= 0 ||
+                            Double.parseDouble(salesOrderQty) &lt;= 0 ||
                             StringInner.isStringNotEmpty(localRejReason) ||
                             'C'.equals(lineRejStat)">
                             <return/>
