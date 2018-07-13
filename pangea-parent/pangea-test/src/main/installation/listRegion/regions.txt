@@ -226,6 +226,8 @@
 /edm/wrk_ctr_capy
 /plan/cns_tlane_item
 /plan/cns_tlane_item_exception
+/plan/cns_tlane_control
+/plan/cns_tlane_control_triangulation
 /project_one/stpo
 /omp/gdm_stock
 /plan/cns_oor_forecast
