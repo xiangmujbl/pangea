@@ -208,7 +208,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
         builder.put("activeOPRERP", "YES");
         builder.put("activeSOPERP", "NO");
         builder.put("blockedQuantity", "0.0");
-        builder.put("certaintyID", "QM");
+        builder.put("certaintyId", "QM");
         //vendorId
         String vendorId = String.valueOf(map.get("vndrNum"));
         builder.put("vendorId", vendorId);

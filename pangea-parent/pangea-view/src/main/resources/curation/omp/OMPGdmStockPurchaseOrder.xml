@@ -82,7 +82,7 @@
 
             <region path="/omp/gdm_stock_purchase_order">
                 <columns>
-                    stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyID,erpOrderId,inventoryLinkGroupId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity,vendorId
+                    stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyId,erpOrderId,inventoryLinkGroupId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity,vendorId
                 </columns>
             </region>
         </regions>
