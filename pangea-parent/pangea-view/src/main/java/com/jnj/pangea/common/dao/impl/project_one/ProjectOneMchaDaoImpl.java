@@ -25,6 +25,6 @@ public class ProjectOneMchaDaoImpl extends CommonDaoImpl {
                     .and(IConstant.PROJECT_ONE_MCHA.CHARG).is(charg).toQueryString();
             return queryForList(IConstant.REGION.PROJECT_ONE_MCHA, queryString, MchaEntity.class);
         }
-        return null;
+       return null;
     }
 }

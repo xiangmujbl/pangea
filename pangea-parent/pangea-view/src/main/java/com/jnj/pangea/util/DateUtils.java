@@ -33,8 +33,8 @@ public class DateUtils {
     public static final String ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String ISO_8602 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
-    public final static String J_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
-    public final static String J_yyyy_MM_dd_HHmmss = "yyyy-MM-dd HH:mm:ss";
+    public static final String J_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
+    public static final String J_yyyy_MM_dd_HHmmss = "yyyy-MM-dd HH:mm:ss";
 
     public static String yyyyMMddToyyyyMM(String dateStr) {
         if (dateStr == null || dateStr.length() != 8)
@@ -46,7 +46,6 @@ public class DateUtils {
         else
             return null;
     }
-
 
     public static String currentDate(String formatStr) {
         Date now = new Date();
@@ -64,7 +63,6 @@ public class DateUtils {
     }
 
     public static Date stringToDate(String dateStr, String format, Locale locale) {
-
         if (J_yyyyWW.equals(format) && dateStr.length() == 6) {
             String year = dateStr.substring(0, 4);
             String week = dateStr.substring(4, 6);
@@ -76,17 +74,17 @@ public class DateUtils {
             return calendar.getTime();
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
-        Date s_date = null;
+        Date date;
         try {
-            s_date = (Date) sdf.parse(dateStr);
+            date = sdf.parse(dateStr);
         } catch (ParseException e) {
-            s_date = correctDate(dateStr, format);
+            date = correctDate(dateStr, format);
         }
-        return s_date;
+        return date;
     }
 
     private static Date correctDate(String dateStr, String format) {
-        Map<String, Locale> set = new HashMap<String, Locale>();
+        Map<String, Locale> set = new HashMap<>();
         set.put(US_MMM_dd_yyyy_hhmmssSSSaa, Locale.US);
         set.put(yyyyMMdd_HHmmssSSS, Locale.US);
         set.put(US_EEE_MMM_dd_hhmmsszyyyy, Locale.US);
@@ -96,10 +94,8 @@ public class DateUtils {
         for (Entry<String, Locale> es : set.entrySet()) {
             SimpleDateFormat sdf = new SimpleDateFormat(es.getKey(),
                     es.getValue());
-
             try {
-                Date s_date = sdf.parse(dateStr);
-                return s_date;
+                return sdf.parse(dateStr);
             } catch (ParseException e) {
             }
         }
@@ -121,7 +117,6 @@ public class DateUtils {
     }
 
     public static Date offsetDate(Date date, int days) {
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
