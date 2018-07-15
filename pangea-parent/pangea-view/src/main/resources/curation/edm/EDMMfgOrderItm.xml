@@ -1,0 +1,27 @@
+<adf-curation>
+    <curation mainRegion="/project_one/afpo" viewRegion="/edm/mfg_order_itm" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.mfg_order_itm.controller.EDMMfgOrderItmController">
+        <regions>
+
+            <region path="/project_one/afpo">
+                <columns>
+                    aufnr,posnr,plnum,matnr,psamg,psmng,wemng,amein,pwerk,umrez,umren,webaz,elikz,verid,charg,xloek,meins
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+            <region path="/edm/mfg_order_itm">
+                <columns>
+                    srcSysCd,mfgOrdrNum,lnItmNbr,mfgPlnndOrdrNum,matlNum,scrpQty,itmQty,rcvdQty,prdtnUomCd,plntCd,fctrNmrtrMeas,fctrDnmntrMeas,goodRcptLdDaysQty,dlvCmpltInd,prdntVrsnNum,btchNum,delInd,baseUomCd
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

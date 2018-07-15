@@ -13,7 +13,21 @@
                     <relation path="/ems/ems_f_mdm_countries_clone">
                         <expression></expression>
                     </relation>
+                    <relation path="/plan/edm_country_input">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_region">
+                        <expression></expression>
+                    </relation>
                 </relations>
+            </region>
+
+            <region path="/plan/edm_country_input">
+                <columns>sourceSystem,planningRegionId,localCountry</columns>
+            </region>
+
+            <region path="/plan/cns_plan_region">
+                <columns>planningRegionDesc, planningRegionId</columns>
             </region>
 
             <region path="/edm/source_system_v1">

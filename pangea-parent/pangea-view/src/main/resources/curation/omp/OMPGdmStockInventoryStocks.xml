@@ -41,7 +41,7 @@
         <columns>localPlant,sourceSystem,localPlanningRelevant</columns> 
       </region>  
       <region path="/omp/gdm_stock"> 
-        <columns>active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyID,eRPOrderId,inventoryLinkGroupId,lifnr,locationId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity,stockId,processId</columns> 
+        <columns>active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyId,eRPOrderId,inventoryLinkGroupId,lifnr,locationId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity,stockId,processId</columns>
       </region> 
     </regions> 
   </curation>
