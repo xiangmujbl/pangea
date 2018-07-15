@@ -1,0 +1,25 @@
+CR: put pangea to na qa env
+	system: project_one
+
+----------------------------Plateform team------------------------------------------
+
+	1. spring xd
+
+		1-0. create directory /fitdata/QA/pangeaData/import/,/fitdata/QA/pangeaData/archive/,/fitdata/QA/pangeaData/module/.
+
+		1-1. copy csv folder to /fitdata/QA/pangeaData/import/.
+
+		1-2. copy /sp/pangea-view.jar to /apps/adf/spring-xd-1.3.1.RELEASE/xd/curation/pangea/sp/.
+
+		1-4. copy /sp/xml folder to /apps/adf/spring-xd-1.3.1.RELEASE/xd/curation/pangea/sp/xml/.
+
+		1-6. create springXD job by 20180716_job_steps.txt file.
+
+	2. create regions and config ad-groups. (refer to 20180716QA_regions file)
+
+---------------------------Pangea team:--------------------------------------------
+	1. download files from sharepoint to csv folder.(https://jnj.sharepoint.com/teams/ConsumerGlobalPlan/plan/Shared%20Documents/Forms/AllItems.aspx?RootFolder=%2Fteams%2FConsumerGlobalPlan%2Fplan%2FShared%20Documents%2FGlobal%20Plan%20Projects%202018%2FLATAM%20E2E%20Phase%201%2F05%20Data%20Stream%2F08%20QA%20Release%2F01%20QA%20R1%20DP%205_21%2FData%20Files%2FCSV%20Versions&FolderCTID=0x012000D5081E0C56EF6A4694B18DEDCC4168BA&View=%7B23A58EDB-B645-453A-886F-46093FFF8E33%7D)
+
+	2. launch job to import files
+
+	3. launch job to do curation.
