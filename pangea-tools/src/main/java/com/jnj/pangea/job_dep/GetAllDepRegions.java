@@ -22,7 +22,7 @@ public class GetAllDepRegions {
         List<String> xmlPath = new ArrayList<>();
         getAllXmlPath(xmlDir, xmlPath);
 
-        printAllTopics(xmlPath);
+        printAllRegions(xmlPath);
     }
 
     private static void getAllXmlPath(String parent, List<String> xmlPath) {
