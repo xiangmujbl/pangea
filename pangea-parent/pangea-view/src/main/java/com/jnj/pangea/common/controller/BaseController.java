@@ -24,14 +24,9 @@ public abstract class BaseController implements IEventProcessor {
                     properties.load(inputStream);
                     String env = properties.getProperty("env");
                     FailData.ENV = env;
-                    LogUtil.getCoreLog().info("################################ set env = " + env + " ####################################");
-                } else {
-                    LogUtil.getCoreLog().info("################################ inputStream is null ####################################");
+                    LogUtil.getCoreLog().info("set env = " + env);
                 }
-            } else {
-                LogUtil.getCoreLog().info("################################  classLoader is null  ####################################");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

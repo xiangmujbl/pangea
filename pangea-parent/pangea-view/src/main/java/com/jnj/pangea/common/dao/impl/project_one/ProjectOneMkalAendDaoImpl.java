@@ -1,4 +1,4 @@
-package com.jnj.pangea.common.dao.impl.projectOne;
+package com.jnj.pangea.common.dao.impl.project_one;
 
 
 import com.jnj.adf.client.api.ADFCriteria;

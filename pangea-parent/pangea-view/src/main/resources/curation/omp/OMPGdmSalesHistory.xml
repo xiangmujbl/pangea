@@ -8,7 +8,6 @@
                     localOrderCreateDt,localOrderType,localPlant,localMaterialNumber,localItemCategory,localSDItemCurrency,
                     localRequestedDate,localRejReason,salesOrderQty,localNumtoBase,localDentoBase,localRoute</columns>
                 <!--<filter>localOrderCreateDt:{20180401 TO *]</filter>-->
-                <!--<filter>salesOrderNo:0115867970 AND salesOrderItem:000010</filter>-->
                 <relations>
                     <relation path="/plan/cns_cust_excl" isPrimaryKey="false">
                         <expression></expression>
@@ -84,10 +83,10 @@
             </region>
 
             <region path="/plan/cns_dem_grp_asgn">
-                <columns>demandGroup,customerId,salesOrganization</columns>
+                <columns>demandGroup,customerId,salesOrg</columns>
             </region>
             <region path="/project_one/knvh">
-                <columns>kunnr,vkorg,datbi,hkunnr,hityp</columns>
+                <columns>kunnr,vkorg,datbi,hkunnr</columns>
             </region>
             <region path="/project_one/tvro">
                 <columns>traztd,route</columns>

@@ -25,8 +25,9 @@ public class OMPGdmSalesHistoryController extends BaseController {
     public List<ViewResultItem> process(List<RawDataEvent> events) {
 
         List<ViewResultItem> result = new LinkedList<>();
+        Set<String> scheduleLineItemSet = new HashSet<>();
         events.forEach(raw -> {
-                ResultObject resultObject = process(raw,null);
+                ResultObject resultObject = process(raw,scheduleLineItemSet);
                 if (null != resultObject){
                     if (resultObject.isSuccess()) {
                         BaseBo baseBo = resultObject.getBaseBo();
@@ -46,6 +47,6 @@ public class OMPGdmSalesHistoryController extends BaseController {
     }
 
     public ResultObject process(RawDataEvent raw,Set<String> scheduleLineItemSet) {
-        return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), EDMSalesOrderV1Entity.class), null);
+        return service.buildView(raw.getKey(), BeanUtil.mapToBean(raw.getValue().toMap(), EDMSalesOrderV1Entity.class), scheduleLineItemSet);
     }
 }

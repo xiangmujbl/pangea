@@ -54,7 +54,7 @@ public class PlanCnsCustExclDaoImpl extends CommonDaoImpl {
     }
 
     public PlanCnsCustExclEntity getEntityWithSalesOrgAndCustomerShipTo(String salesOrg){
-        if (StringUtils.isNotEmpty(salesOrg)){
+        if (!salesOrg.isEmpty()){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
                     .and(IConstant.PLAN_CNS_CUST_EXCL.CUSTOMER_SHIP_TO).toQueryString();
             return queryForObject(IConstant.REGION.PLAN_CNS_CUST_EXCL,queryString,PlanCnsCustExclEntity.class);

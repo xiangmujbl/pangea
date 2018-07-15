@@ -1,0 +1,50 @@
+<adf-curation>
+    <curation mainRegion="/project_one/afko" viewRegion="/edm/mfg_order" chunkSize="1000" chunkBytes="40096"
+              executionClassName="com.jnj.pangea.edm.mfg_order.controller.EDMMfgOrderController">
+        <regions>
+
+            <region path="/project_one/afko">
+                <columns>
+                    aufnr,mandt,gstrp,gsuzp,gltrp,gluzp,gstrs,gsups,gltrs,glups,ftrms,gstri,gsuzi,gltri,getri,geuzi,ftrmp,ftrmi,rsnum,plnty,plnnr,plnal,stlty,stlnr,stlal,dispo,aufpl,fevor,igmng,iasmg
+                </columns>
+                <relations>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/aufk" isPrimaryKey="false">
+                        <expression>aufnr=/project_one/afko.aufnr</expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,sourceSystem,sourceSystemName</columns>
+            </region>
+            <region path="/project_one/aufk">
+                <columns>aufnr,mandt,auart,werks,erdat,aedat,loekz,objnr</columns>
+                <relations>
+                    <relation path="/project_one/jest" isPrimaryKey="false">
+                        <expression>objnr=/project_one/aufk.objnr</expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/project_one/jest">
+                <columns>objnr,stat,inact</columns>
+                <relations>
+                    <relation path="/project_one/tj02t" isPrimaryKey="false">
+                        <expression>istat=/project_one/jest.stat</expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/project_one/tj02t">
+                <columns>istat,txt04,spras</columns>
+            </region>
+
+            <region path="/edm/mfg_order">
+                <columns>
+                    sourceSysCd,mfgOrdrNum,mfgOrdrTypCd,plntCd,crtdDttm,chgDttm,delInd,strtDt,strtTm,endDt,endTm,schdStrtDt,schdStrtTm,schdEndDt,schdEndTm,schRelDt,actStrtDt,actStrtTm,prdtnEndDt,cnfrmdEndDt,cnfrmdEndTm,planRlseDt,actRlseDt,rsrvtnNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,bomCatCd,bomNum,bomAltNum,mrpCntrllrCd,ordrRtngNum,prdSpvsrCd,cnfrmdYldQty,cnfrmdScrpQty,objectNumber,mfgOrdrSttsCd,localSystemStatus,localStatus1
+                </columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>
