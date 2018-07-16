@@ -19,7 +19,6 @@ public class OMPGdmTransportBo extends BaseBo {
     private String processTypeId;
     private String purchasingGroup;
     private String purchasingOrganization;
-    private String requirementOffset;
     private String startEff;
     private String toLocationId;
     private String toProductId;
@@ -147,13 +146,7 @@ public class OMPGdmTransportBo extends BaseBo {
         this.purchasingOrganization = purchasingOrganization;
     }
 
-    public String getRequirementOffset () {
-        return requirementOffset;
-    }
 
-    public void setRequirementOffset (String requirementOffset) {
-        this.requirementOffset = requirementOffset;
-    }
 
     public String getStartEff () {
         return startEff;

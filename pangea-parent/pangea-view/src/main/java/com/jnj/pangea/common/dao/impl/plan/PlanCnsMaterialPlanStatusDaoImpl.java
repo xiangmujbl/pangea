@@ -2,6 +2,7 @@ package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.indexer.lucene.AdfLuceneHelper;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
@@ -96,10 +97,11 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
 
 
     public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
-        if ("".equals(localMaterialNumber) || "".equals(sourceSystem)) {
+        if (localMaterialNumber.isEmpty() || sourceSystem.isEmpty()) {
             return null;
         }
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
+        String queryString = QueryHelper.buildCriteria(
+                IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
                 .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
     }
@@ -132,8 +134,9 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
 
     public List<PlanCnsMaterialPlanStatusEntity> getEntitiesWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
         if (StringUtils.isNotBlank(localMaterialNumber) && StringUtils.isNotBlank(sourceSystem)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
-                    .and(IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
+            String queryString = IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.LOCAL_MATERIAL_NUMBER + ":\"" +
+                    AdfLuceneHelper.keyword(localMaterialNumber) + "\" AND " +
+                    IConstant.PLAN_CNS_MATERIAL_PLAN_STATUS.SOURCE_SYSTEM + ":" + sourceSystem;
             return queryForList(IConstant.REGION.PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
         }
         return null;

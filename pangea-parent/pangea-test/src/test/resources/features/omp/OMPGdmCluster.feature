@@ -37,11 +37,11 @@ Feature: OMPGdmCluster AEAZ-3679
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-#  Scenario: delete all test data
-#
-#    Then I delete the test data
-#
-#    And I will remove all data with region "/omp/gdm_cluster"
-#
-#    And I will remove all data with region "/plan/edm_failed_data"
+  Scenario: delete all test data
+
+    Then I delete the test data
+
+    And I will remove all data with region "/omp/gdm_cluster"
+
+    And I will remove all data with region "/plan/edm_failed_data"
 

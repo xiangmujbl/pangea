@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <adf-curation> 
-  <curation mainRegion="/edm/matl_prod_versn" viewRegion="/omp/gdm_link" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_link.OMPGdmLinkMasterController"> 
+  <curation mainRegion="/edm/matl_prod_versn" viewRegion="/omp/gdm_link" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_link.OMPGdmLinkMasterController"
+            writeTo="all" topic="PANGEA_V1_omp_gdm_link_master">
     <regions> 
       <region path="/edm/matl_mfg_rtng" lucene="true"> 
         <columns>srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To</columns>  
@@ -9,7 +10,7 @@
         <relations> 
           <relation path="/edm/mfg_rtng_seq" isPrimaryKey="false" lucene="true"> 
             <expression>srcSysCd=/edm/matl_mfg_rtng.srcSysCd, rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd, rtngGrpCd=/edm/matl_mfg_rtng.rntgGrpCd, rtngGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr</expression>  
-            <filter>rtngSqncCtgryCd:0 OR rtngSqncCtgryCd:1</filter> 
+            <filter>seqCategory:0 OR seqCategory:1</filter> 
           </relation> 
         </relations> 
       </region>  
@@ -27,8 +28,8 @@
         </relations> 
       </region>  
       <region path="/edm/mfg_rtng_seq" lucene="true"> 
-        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngSqncVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,seqCategory,seqDesc,fromLtSzQty,toLtSzQty,seqRelKeyBranch,seqRelKeyReturn,seqStartNode,seqEndNode,seqValidToDate,rtngSqncCtgryCd</columns>  
-        <filter>rtngSqncCtgryCd:0 OR rtngSqncCtgryCd:1</filter>  
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngSqncVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,seqCategory,seqDesc,fromLtSzQty,toLtSzQty,seqRelKeyBranch,seqRelKeyReturn,seqStartNode,seqEndNode,seqValidToDate,seqCategory</columns>  
+        <filter>seqCategory:0 OR seqCategory:1</filter>  
         <relations> 
           <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false"> 
             <expression>srcSysCd=/edm/mfg_rtng_seq.srcSysCd, rtngTypCd=/edm/mfg_rtng_seq.rtngTypCd, rtngGrpCd=/edm/mfg_rtng_seq.rtngGrpCd, rtngGrpCntrNbr=/edm/mfg_rtng_seq.rtngGrpCntrNbr, rtngSqncNum=/edm/mfg_rtng_seq.rtngSqncNum</expression> 

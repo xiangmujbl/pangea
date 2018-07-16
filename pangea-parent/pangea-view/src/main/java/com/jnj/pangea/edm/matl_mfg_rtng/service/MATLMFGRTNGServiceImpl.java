@@ -16,6 +16,7 @@ import com.jnj.pangea.util.DateUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,9 @@ public class MATLMFGRTNGServiceImpl implements ICommonService {
         if(edmProjectOneMAPLEntity.getLoekz().equalsIgnoreCase(IConstant.MATL_MFG_RTNG.FIELD_LOEKZ_VALUE_X)){
             return resultObject;
         }
+        if (!"N".equals(edmProjectOneMAPLEntity.getPlnty()) && !"2".equals(edmProjectOneMAPLEntity.getPlnty())){
+            return resultObject;
+        }
         MATLMFGRTNGBo matlmfgrtngBo=new MATLMFGRTNGBo();
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
         if (null != sourceSystemV1Entity) {
@@ -65,13 +69,16 @@ public class MATLMFGRTNGServiceImpl implements ICommonService {
         List<EDMProjectOneMAPLEntity> list=edmProjectOneMaplDao.getProjectOneMaplClone(edmProjectOneMAPLEntity.getPlnnr(),edmProjectOneMAPLEntity.getPlnty(),edmProjectOneMAPLEntity.getPlnal(),edmProjectOneMAPLEntity.getZkriz());
         if(list!=null&&list.size()>1){
             EDMProjectOneMAPLEntity edmProjectOneMAPLEntity1=getLOEKZIsX(list);
-            LogUtil.getCoreLog().info(edmProjectOneMAPLEntity1.toString());
             matlmfgrtngBo.setValFromDt(edmProjectOneMAPLEntity.getDatuv());
-            matlmfgrtngBo.setChgNum(edmProjectOneMAPLEntity.getAennr());
             matlmfgrtngBo.setMatlRtngValid_To(IConstant.MATL_MFG_RTNG.FIELD_MATLRTNGVALID_TO_NULL);
             if(edmProjectOneMAPLEntity1!=null ){
+                matlmfgrtngBo.setChgNum(edmProjectOneMAPLEntity1.getAennr());
                 Date fromDueDate = DateUtils.stringToDate(edmProjectOneMAPLEntity1.getDatuv(), DateUtils.F_yyyyMMdd);
-                matlmfgrtngBo.setMatlRtngValid_To(DateUtils.dateToString(fromDueDate, DateUtils.yyyy_MM_dd));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(fromDueDate);
+                calendar.add(Calendar.DATE, -1);
+                String matlRtngValid_To = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
+                matlmfgrtngBo.setMatlRtngValid_To(matlRtngValid_To);
             }
         }else {
             matlmfgrtngBo.setValFromDt(edmProjectOneMAPLEntity.getDatuv());

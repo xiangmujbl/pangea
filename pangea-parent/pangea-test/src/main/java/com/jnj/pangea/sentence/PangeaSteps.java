@@ -14,7 +14,10 @@ import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PangeaSteps extends CommonSteps {
 
@@ -40,6 +43,11 @@ public class PangeaSteps extends CommonSteps {
         When("^I submit task with xml file \"([^\"]*)\" and execute file \"([^\"]*)\"$", (String xml, String executeFile) -> {
 
             submitComputeTask(xml, executeFile);
+        });
+
+        When("^I submit aggregation task with xml file \"([^\"]*)\"", (String xml) -> {
+
+            submitComputeTask(xml, null);
         });
 
         Given("^I compare the number of records between \"([^\"]*)\" and \"([^\"]*)\"$", (String compare1, String compare2) -> {
@@ -143,7 +151,7 @@ public class PangeaSteps extends CommonSteps {
                 List<String> targetLine = testDataList.get(0);
                 List<String> fileLine = Arrays.asList(line.split("\t", -1));
                 if (fileLine.size() != targetLine.size()) {
-                    System.err.println("Column Count Doesn't Match.\nExpected:"+targetLine.size()+"\nActual:"+fileLine.size());
+                    System.err.println("Column Count Doesn't Match.\nExpected:" + targetLine.size() + "\nActual:" + fileLine.size());
                 }
                 Assert.assertEquals(targetLine.size(), fileLine.size()); //check we have all columns
 
@@ -154,8 +162,8 @@ public class PangeaSteps extends CommonSteps {
 
                     headerMap = new int[fileLine.size()];
 
-                    for (int targetIndex=0; targetIndex<targetLine.size(); targetIndex++) {    // for each header in test data
-                        for (int fileIndex=0; fileIndex<fileLine.size(); fileIndex++) {     // for each header in file data
+                    for (int targetIndex = 0; targetIndex < targetLine.size(); targetIndex++) {    // for each header in test data
+                        for (int fileIndex = 0; fileIndex < fileLine.size(); fileIndex++) {     // for each header in file data
                             if (targetLine.get(targetIndex).equals(fileLine.get(fileIndex))) {   // find the target header in the file headers
                                 headerMap[targetIndex] = fileIndex;
                             }
@@ -164,7 +172,7 @@ public class PangeaSteps extends CommonSteps {
                 }
 
                 if (!headersFound) {
-                    System.err.println("Headers Don't Match.\nExpected:"+Arrays.toString(targetLine.toArray())+"\nActual:"+Arrays.toString(fileLine.toArray()));
+                    System.err.println("Headers Don't Match.\nExpected:" + Arrays.toString(targetLine.toArray()) + "\nActual:" + Arrays.toString(fileLine.toArray()));
                 }
 
                 Assert.assertTrue(headersFound);
@@ -174,6 +182,7 @@ public class PangeaSteps extends CommonSteps {
             if (headersFound) {
 
                 // for each line in the output file
+                int targetIndex = 1; //skip headers
                 while ((line = bufferedReader.readLine()) != null) {
 
                     List<String> fileLine = Arrays.asList(line.split("\t", -1));
@@ -182,10 +191,10 @@ public class PangeaSteps extends CommonSteps {
                     boolean recordFound = false;
 
                     // for each line of test data
-                    for (int i=0; i<testDataList.size(); i++) {
+                    for (int i = targetIndex; i < testDataList.size(); i++) {
 
                         // for each column of test data line try to match the values of the record
-                        for (int x=0; x<testDataList.get(i).size(); x++) {
+                        for (int x = 0; x < testDataList.get(i).size(); x++) {
 
                             String target = testDataList.get(i).get(x);
                             String fileValue = fileLine.get(headerMap[x]);  // get mapped column from file
@@ -203,9 +212,10 @@ public class PangeaSteps extends CommonSteps {
                     }
 
                     if (!recordFound) {
-                        System.err.println("Record Not Found:\n"+Arrays.toString(fileLine.toArray()));
+                        System.err.println("Record Not Found:\n" + Arrays.toString(fileLine.toArray()));
                     }
 
+                    targetIndex++;
                     Assert.assertTrue(recordFound);
                 }
             }
@@ -219,7 +229,7 @@ public class PangeaSteps extends CommonSteps {
         }
     }
 
-    private void submitComputeTask(String xml, String drl) {
+    private void submitComputeTask(String xml, String jar) {
 
         ComputeClient client = null;
         String name = "";
@@ -241,9 +251,12 @@ public class PangeaSteps extends CommonSteps {
             client.connect(computingNode);
 
             if (StringUtils.isNotEmpty(ENV) && StringUtils.isNotEmpty(ceRegionAlias)) {
-                //client.submitTask(taskId, xml, drl, commandString, ceRegionAlias, computingPartition);
+                client.submitTask(taskId, xml, jar, commandString, ceRegionAlias, computingPartition);
             } else {
-                client.submitTask(taskId, xml, drl, commandString, computingPartition);
+                if (StringUtils.isEmpty(jar)) {
+                    commandString = "-type Aggr";
+                }
+                client.submitTask(taskId, xml, jar, commandString, computingPartition);
             }
 
             boolean done = false;

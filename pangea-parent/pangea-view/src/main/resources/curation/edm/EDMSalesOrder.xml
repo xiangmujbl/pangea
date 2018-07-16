@@ -45,12 +45,10 @@
 
             <region path="/project_one/vbpa">
                 <columns>vbeln,posnr,parvw,kunnr</columns>
-                <filter>(*:* -posnr:[* TO *]) OR posnr:/\s*/ AND parvw:WE</filter>
             </region>
 
             <region path="/project_one/vbkd">
                 <columns>vbeln,posnr,inco1,inco2,kdgrp</columns>
-                <filter>(*:* -posnr:[* TO *]) OR posnr:/\s*/</filter>
             </region>
 
             <region path="/project_one/vbuk">

@@ -31,6 +31,7 @@ public class OMPGdmCustomerBo extends BaseBo {
     private String soldTo;
     private String sourceLocationId;
     private String subClusterId;
+    private String currencyId;
 
     @Override
     public String getKey() {
@@ -245,6 +246,14 @@ public class OMPGdmCustomerBo extends BaseBo {
 
     public void setSubClusterId(String subClusterId) {
         this.subClusterId = subClusterId;
+    }
+
+    public String getCurrencyId() {
+        return this.currencyId;
+    }
+
+    public void setCurrencyId(String currencyId) {
+        this.currencyId = currencyId;
     }
 
 }

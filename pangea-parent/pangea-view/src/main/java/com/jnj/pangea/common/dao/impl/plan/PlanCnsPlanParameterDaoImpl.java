@@ -176,4 +176,15 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         }
         return list;
     }
+
+    public PlanCnsPlanParameterEntity getPlanCnsPlanParameterEntity(String sourceSysCd){
+        if(StringUtils.isNotBlank(sourceSysCd)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSysCd)
+                    .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is("SEND_TO_OMP")
+                    .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is("PPTRANSACTIONAL")
+                    .toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+        }
+        return null;
+    }
 }

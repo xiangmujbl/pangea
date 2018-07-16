@@ -17,9 +17,10 @@ public class ProjectOneT001WDaoImpl extends CommonDaoImpl {
     }
 
 
-    public T001WEntity getEntityWithZPlant(String zPlant) {
+    public T001WEntity getEntityWithZPlantAndLand1(String zPlant) {
 
-        String name1QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001W.WERKS).is(zPlant).toQueryString();
+        String name1QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001W.WERKS).is(zPlant)
+                .and(IConstant.PROJECT_ONE_T001W.LAND1).isNotNull().toQueryString();
         return queryForObject(IConstant.REGION.PROJECT_ONE_T001W, name1QueryString, T001WEntity.class);
     }
 }

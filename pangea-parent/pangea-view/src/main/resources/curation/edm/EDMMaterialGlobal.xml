@@ -48,7 +48,7 @@
 
             <region path="/ngems/golden_material">
                 <columns>
-                    materialNumber,materialDescription,materialType,baseUom,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufTechnology,primaryPlanningCode,materialGroup
+                    materialNumber,materialDescription,materialType,baseUom,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufTechnology,primaryPlanningCode
                 </columns>
             </region>
             

@@ -14,6 +14,8 @@ import com.jnj.pangea.common.entity.edm.EDMSourceListV1Entity;
 import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.omp.gdm_transport.bo.OMPGdmTransportBo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceParent {
@@ -76,8 +78,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             gdmTransportBo.setMachineTypeId(IConstant.VALUE.TRANSPORT);
 
             //N5
-            gdmTransportBo.setMinQuantity("");
-            gdmTransportBo.setRequirementOffset("");
+            gdmTransportBo.setMinQuantity(IConstant.VALUE.ZEROZERO);
 
             //N6
             gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
@@ -135,32 +136,58 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         }
 
 
+
+
+
         //No Rules
         if (!this.curationSkip && !this.curationFail) {
             PlanCnsProcessTypeEntity processTypeEntity =
                     this.processTypeDao.getCnsProcessTypeById(tlaneItemExEntity.getProcessTypeId());
             gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
-            gdmTransportBo.setEndEff(tlaneItemExEntity.getValidTo() + IConstant.VALUE.HH_NN_SS_ZERO);
-            gdmTransportBo.setStartEff(tlaneItemExEntity.getValidFrom() + IConstant.VALUE.HH_NN_SS_ZERO);
+
+            try {
+                String validDateToFormat = tlaneItemExEntity.getValidTo();
+                SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+                SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+                Date dValidTo = sdfFrom.parse(validDateToFormat);
+                String validDateToConverted = sdfTo.format(dValidTo) + IConstant.VALUE.HH_NN_SS_ZERO;
+
+                gdmTransportBo.setEndEff(validDateToConverted);
+
+                String validDateFromFormat = tlaneItemExEntity.getValidFrom();
+                Date dValidFrom = sdfFrom.parse(validDateFromFormat);
+                String validDateFromConverted = sdfTo.format(dValidFrom) + IConstant.VALUE.HH_NN_SS_ZERO;
+
+
+                gdmTransportBo.setStartEff(validDateFromConverted);
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
             gdmTransportBo.setProcessTypeId(tlaneItemExEntity.getProcessTypeId());
             gdmTransportBo.setTransportOffset(tlaneItemExEntity.getLeadTime());
             gdmTransportBo.setTransportType(tlaneItemExEntity.getMode());
         }
+
+
+
 
         // set as a fail or as a success
         if (this.curationFail) {
             // failedRules could have multiple records in future if curationFail condition above is
             // removed (should stop skipping on 1st fail). for now get 1st fail only
             resultObject.setFailData(new FailData("SP", "OMPGdmTransport",
-                    this.failedRules.get(0).get("rule"), this.failedRules.get(0).get("error"),
-                    this.getSourceSystem(tlaneItemExEntity.getOriginLocation()),
-                    this.getSourceSystem(tlaneItemExEntity.getOriginLocation()),
-                    this.getLocalPlantNum(tlaneItemExEntity.getOriginLocation()),
-                    tlaneItemExEntity.getMaterialNumber()
+                            this.failedRules.get(0).get("rule"), this.failedRules.get(0).get("error"),
+                            this.getSourceSystem(tlaneItemExEntity.getOriginLocation()),
+                            this.getSourceSystem(tlaneItemExEntity.getOriginLocation()),
+                            this.getLocalPlantNum(tlaneItemExEntity.getOriginLocation()),
+                            tlaneItemExEntity.getMaterialNumber()
                     )
             );
         } else if (this.curationSkip) {
-             resultObject = null;
+            resultObject = null;
 
         } else {
             resultObject.setBaseBo(gdmTransportBo);
@@ -324,7 +351,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
 
         //skip rest if no mat num was found
         if (locMatNum == null) {
-           // this.curationSkip = true;
+            // this.curationSkip = true;
             return " ";
         }
 
@@ -334,9 +361,9 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             purchaseGroup = materialPlantV1EntityList.get(0).getPurchsngGrpCd();
         }
         else {
-           // this.curationSkip = true;
+            // this.curationSkip = true;
             //  return null;
-			purchaseGroup = "";
+            purchaseGroup = "";
         }
 
         return purchaseGroup;
@@ -354,6 +381,8 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         String rule = "N9_N10";
 
         String localPlantNum = this.getLocalPlantNum(tlaneItemExceptionEntity.getDestinationLocation());
+        String originLocationlocalPlantNum = this.getLocalPlantNum(tlaneItemExceptionEntity.getOriginLocation());
+
         String sourceSystem = this.getSourceSystem(tlaneItemExceptionEntity.getDestinationLocation());
         String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity,sourceSystem);
         String vendorId = this.getVendorId(tlaneItemExceptionEntity.getOriginLocation());
@@ -379,10 +408,21 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
                     }
                 }
             }
+            else{
+                for (EDMSourceListV1Entity edmSourceListV1Entity : sourceListV1EntityList) {
+                    if (edmSourceListV1Entity != null && edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() != null
+                            && originLocationlocalPlantNum.equals(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim())) {
+                        sourceListV1Entity = edmSourceListV1Entity;
+                        break;
+                    }
+                }
+
 
             }
+
+        }
         else {
-           // this.curationSkip = true;
+            // this.curationSkip = true;
             return null;
         }
 
@@ -407,7 +447,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             return tlaneItemExceptionEntity.getOriginLocation();
         }
 
-       // this.curationSkip = true;
+        // this.curationSkip = true;
         return null;
     }
 
@@ -429,7 +469,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         String locMatNum = this.getMaterialNumber(tlaneItemExceptionEntity,srcSys);
 
         if (locMatNum == null) {
-           // this.curationSkip = true;
+            this.curationSkip = true;
             return null;
         }
         if (this.checkPlantRelevant(srcSys, locPlant)) {
@@ -441,13 +481,13 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         }
 
         if( !planRevelant && !specialPlanRelevant){
-            //this.curationSkip = true;
+            this.curationSkip = true;
             return null;
         }
 
         if( planRevelant){
             if (!this.checkMaterialRelevant(locMatNum, locPlant, srcSys)) {
-               // this.curationSkip = true;
+                this.curationSkip = true;
                 return null;
             }
         }
@@ -455,7 +495,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = this.getGlobV1Entity(locMatNum,srcSys);
 
         if (materialGlobalV1Entity == null) {
-           // this.curationSkip = true;
+            this.curationSkip = true;
             return null;
         }
 
@@ -466,7 +506,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
 
 
         if (fromProdId == null || fromProdId.isEmpty()) {
-          //  this.curationSkip = true;
+            this.curationSkip = true;
         }
 
         return fromProdId;
@@ -521,7 +561,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
             return tlaneItemExceptionEntity.getDestinationLocation();
         }
 
-       // this.curationSkip = true;
+        // this.curationSkip = true;
         return null;
     }
 }

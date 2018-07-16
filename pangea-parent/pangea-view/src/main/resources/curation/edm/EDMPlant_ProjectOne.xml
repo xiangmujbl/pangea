@@ -55,7 +55,7 @@
             </region>
 
             <region path="/edm/country_v1">
-                <columns>countryCode,countryName,localCountry</columns>
+                <columns>countryCode,sourceSystem,countryName,localCountry</columns>
             </region>
 
             <region path="/edm/edm_plant_input">

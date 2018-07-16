@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/plan/cns_spl_pln_loc" viewRegion="/omp/gdm_machine" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_machine_subcon.Controller.GdmMachineSubConController" writeTo="all" topic="PANGEA_V1_omp_gdm_machine">
+    <regions> 
+      <region path="/plan/cns_spl_pln_loc" lucene="true"> 
+        <columns>sourceSystem,vendorOrCustomer,localNumber,localName,localPlant,specLocAtt3,specLocAttDesc3</columns>  
+        <filter>specLocAtt3:SUBCON\ Machine</filter>  
+        <relations> 
+          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false" lucene="true"> 
+            <expression>sourceSystem=/plan/cns_spl_pln_loc.sourceSystem,attribute=/plan/cns_spl_pln_loc.sourceSystem</expression>  
+            <filter>dataObject:SEND_TO_OMP</filter> 
+          </relation>  
+          <relation path="/plan/cns_plant_attr" isPrimaryKey="true" lucene="true"> 
+            <expression>sourceSystem=/plan/cns_spl_pln_loc.sourceSystem,localPlant=/plan/cns_spl_pln_loc.localPlant</expression>  
+            <filter>localPlanningRelevant:X</filter> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/cns_plan_parameter"> 
+        <columns>sourceSystem,attribute,dataObject</columns> 
+      </region>  
+      <region path="/plan/cns_plant_attr"> 
+        <columns>sourceSystem,localPlant,localPlanningRelevant</columns> 
+      </region>  
+      <region path="/omp/gdm_machine">
+        <columns>machineId,active,activeOPRERP,activeSOPERP,building,description,locationId,machineCapacity,machineTypeId,parentMachineId</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

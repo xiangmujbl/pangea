@@ -23,6 +23,16 @@ public class AfpoEntity extends CommonEntity {
     private String pwerk;
     private String xloek;
 
+    public String getMeins() {
+        return meins;
+    }
+
+    public void setMeins(String meins) {
+        this.meins = meins;
+    }
+
+    private String meins;
+
     public String getPwerk() {
         return pwerk;
     }
@@ -58,6 +68,7 @@ public class AfpoEntity extends CommonEntity {
         setWebaz((String) map.get("webaz"));
         setPwerk((String) map.get("pwerk"));
         setXloek((String) map.get("xloek"));
+        setMeins((String) map.get("meins"));
 
     }
 

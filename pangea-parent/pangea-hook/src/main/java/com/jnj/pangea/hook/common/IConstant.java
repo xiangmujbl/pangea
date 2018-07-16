@@ -146,7 +146,7 @@ public interface IConstant {
         String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
         String EDM_MFG_ORDER_SEQ = "/edm/mfg_order_seq";
         String EDM_BOM_ITEM = "/edm/bom_item";
-        String EDM_COUNTRY_INPUT="/edm/edm_country_input";
+        String EDM_COUNTRY_INPUT="/plan/edm_country_input";
         String EDM_INVENTORY_STOCK = "/edm/inventory_stock";
         String PLAN_CNS_DP_POS = "/plan/cns_dp_pos";
         String PLAN_EDM_MAT_INPUT = "/plan/edm_mat_input";
