@@ -46,7 +46,7 @@
         <columns>sourceSystem,mfgOrdrNum,mfgOrdrItemNum,ordrType,localOrderCat,crtdDttm,chgDttm,plntCd,delInd,localTechnicalCompletion,localProductionProcessNo,localLogicalSystem,plnEndDt,plnStrtDt,prdtnSchdEndDt,prdtnSchdStrtDt,prdntStrtDt,prdtnEndDt,prdtnRlseDt,prdtnPlanRlseDt,mfgPlnnr,mfgSprvsr,localReservation,localTotalScrap,localTargetQty,localBaseUOM,localMaterialAFKOPLNBEZ,localTaskListType,localGroup,localApplication,localGroupCounter,localUsage,localMaterialAFKOSTLBEZ,localSchedulingType,localConfirmation,localConfirmationCounter,localConfirmedQtyIGMNG,plnndOrdr,scrpQty,ordrQty,rcvdQty,prdtnUom,matlNum,fctrNmrtrMeas,fctrDnmntrMeas,goodRcptLdDaysQty,dlvCmpltInd,prdntVrsnNum,btchNum ordrStts,localSystemStatus,localLanguage,localStatus1,localStatus2</columns> 
       </region>  
       <region path="/omp/gdm_stock">
-        <columns>stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyID,erpOrderId,inventoryLinkGroupId,vendorId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity</columns>
+        <columns>stockId,active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyId,erpOrderId,inventoryLinkGroupId,vendorId,locationId,processId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity</columns>
       </region> 
     </regions> 
   </curation>

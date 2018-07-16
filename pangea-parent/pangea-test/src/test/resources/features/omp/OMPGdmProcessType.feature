@@ -4,7 +4,7 @@ Feature: OMPProcessType AEAZ-4484
   Scenario: Full Load consumption
     # 1. get record from cns_process_type
 
-    And I will remove the test file on sink application "ProcessType.tsv"
+    And I will remove the test file on sink application "GDMProcessType.tsv"
 
     Given I import "/plan/cns_process_type" by keyFields "processTypeId"
       | processTypeId | processTypeDesc |
@@ -15,9 +15,9 @@ Feature: OMPProcessType AEAZ-4484
 
     When I submit task with xml file "xml/omp/OMPGdmProcessType.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "ProcessType.tsv"
+    Then A file is found on sink application with name "GDMProcessType.tsv"
 
-    Then I check file data for filename "ProcessType.tsv" by keyFields "processTypeId"
+    Then I check file data for filename "GDMProcessType.tsv" by keyFields "processTypeId"
       | processTypeId | activeOPRERP | activeSOPERP | label         |
       | 1             | YES          | NO           | Inter Plant   |
       | 2             | YES          | NO           | subcontracting|

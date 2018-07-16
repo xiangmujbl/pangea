@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/omp/gdm_demand" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_demand_sto.OMPGdmDemandSTO" writeTo="all" topic="PANGEA_V1_omp_gdm_demand"> 
+    <regions> 
+      <region path="/edm/purchase_order_oa_v1"> 
+        <columns>delvSchedCntNbr,poLineNbr,poNum,localdelvDt,poTypeCd,poUomCd,prchsngOrgNum,sourceSystem, custNum,plntCd,poLineQty,suplPlntCd,matlNum,cnfrmQty,recvEaQty,localNumerator,localDenominator,localPDT,delInd,localBaseUOM, delvCmpltInd,outbDelvCmpltInd</columns>  
+        <relations> 
+          <relation path="/plan/prod_loc_min_shelf" isPrimaryKey="false"> 
+            <expression>sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/plan/cns_material_plan_status" isPrimaryKey="false"> 
+            <expression>localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,localPlant=/edm/purchase_order_oa_v1.plntCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/edm/material_global_v1" isPrimaryKey="false"> 
+            <expression>localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/plan/cns_plan_unit" isPrimaryKey="false"> 
+            <expression>localUom=/edm/purchase_order_oa_v1.poUomCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false"> 
+            <expression>sourceObjectAttribute1Value=/edm/purchase_order_oa_v1.plntCd,sourceObjectAttribute2Value=/edm/purchase_order_oa_v1.poTypeCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/edm/purchase_order_oa_v1" alias="/edm/purchase_order_oa_v1_clone" isPrimaryKey="false"> 
+            <expression>poNum=/edm/purchase_order_oa_v1.poNum,poLineNbr=/edm/purchase_order_oa_v1.poLineNbr</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/prod_loc_min_shelf"> 
+        <columns>sourceSystem,localPlant,minShelfLife,localMaterialNumber</columns> 
+      </region>  
+      <region path="/plan/cns_material_plan_status"> 
+        <columns>localMaterialNumber,localPlant,sourceSystem,spRelevant,noPlanRelevant</columns> 
+      </region>  
+      <region path="/edm/material_global_v1"> 
+        <columns>localMaterialNumber,sourceSystem,primaryPlanningCode,materialMumber,minRemShelfLife</columns> 
+      </region>  
+      <region path="/plan/cns_plan_unit"> 
+        <columns>localUom,sourceSystem,uom,unit</columns> 
+      </region>  
+      <region path="/plan/cns_plan_object_filter"> 
+        <columns>sourceSystem,sourceObjectTechName,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute1Value,inclusionExclusion</columns> 
+      </region>  
+      <region path="/edm/purchase_order_oa_v1" alias="/edm/purchase_order_oa_v1_clone"> 
+        <columns>poNum,poLineNbr,cnfrmQty,poLineQty,localNumerator,localDenominator,evTypeCd,recvEaQty</columns> 
+      </region>  
+      <region path="/omp/gdm_demand"> 
+        <columns>active,activeFCTERP,activeOPRERP,activeSOPERP,batchId,certaintyId,customerId,locationId,productId,demandId,fromDueDate,dueDate,inventoryLinkGroupId,minRemainingShelfLife,planningStrategy,quantity,unitId,WRK02</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

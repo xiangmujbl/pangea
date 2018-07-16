@@ -1,0 +1,176 @@
+<adf-curation xmlPathPrefix="omp"
+              executionClassName="com.jnj.pangea.omp.gdm_process_process.controller.OMPGdmProcessProcess"
+              writeTo="all" topic="PANGEA_omp_gdm_process_process">
+  <regions>
+    <region path="/edm/mfg_order" mainRegion="true">
+      <columns>sourceSysCd,mfgOrdrSttsCd,mfgOrdrNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum</columns>
+      <relations>
+        <region path="/plan/cns_plan_parameter" isPrimaryKey="false">
+          <columns>attribute,sourceSystem,dataObject</columns>
+          <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+        </region>
+        <region path="/edm/mfg_order_itm" isPrimaryKey="false">
+          <columns>srcSysCd,mfgOrdrNum,matlNum,plntCd,prdntVrsnNum</columns>
+          <expression>
+            srcSysCd=/edm/mfg_order.sourceSysCd,mfgOrdrNum=/edm/mfg_order.mfgOrdrNum
+          </expression>
+          <relations>
+            <region path="/edm/material_global_v1" isPrimaryKey="false">
+              <columns>sourceSystem,localMaterialNumber,primaryPlanningCode</columns>
+              <expression>
+                sourceSystem=/edm/mfg_order_itm.srcSysCd,localMaterialNumber=/edm/mfg_order_itm.matlNum
+              </expression>
+            </region>
+            <region path="/edm/matl_prod_versn" isPrimaryKey="false">
+              <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,prdVrsnDesc</columns>
+              <expression>
+                srcSysCd=/edm/mfg_order_itm.srcSysCd,matlNum=/edm/mfg_order_itm.matlNum,plntCd=/edm/mfg_order_itm.plntCd,prdntVrsnNum=/edm/mfg_order_itm.prdntVrsnNum
+              </expression>
+            </region>
+            <region path="/plan/cns_material_plan_status" isPrimaryKey="false">
+              <columns>sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant</columns>
+              <expression>
+                sourceSystem=/edm/mfg_order_itm.srcSysCd,localMaterialNumber=/edm/mfg_order_itm.matlNum,localPlant=/edm/mfg_order_itm.plntCd
+              </expression>
+            </region>
+          </relations>
+        </region>
+        <region path="/edm/mfg_rtng_hdr" isPrimaryKey="false">
+          <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtgVld_ToDt,valFromDt</columns>
+          <expression>
+            srcSysCd=/edm/mfg_order.sourceSysCd,rtngTypCd=/edm/mfg_order.rtngTypCd,rtngGrpCd=/edm/mfg_order.rtngGrpCd,rtngGrpCntrNbr=/edm/mfg_order.rtngGrpCntrNum
+          </expression>
+        </region>
+      </relations>
+    </region>
+  </regions>
+
+  <methods>
+    <method name="ruleJ1_1" resultType="Map" isPK="false" path="/edm/mfg_order_itm">
+      <parameters>
+        <parameter name="srcSysCd" value="sourceSysCd" relationship="and"/>
+        <parameter name="mfgOrdrNum" value="mfgOrdrNum"/>
+      </parameters>
+    </method>
+    <method name="ruleC2" path="/edm/matl_prod_versn" resultType="Map">
+      <parameters>
+        <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+        <parameter name="matlNum" value="matlNum" relationship="and"></parameter>
+        <parameter name="plntCd" value="plntCd" relationship="and"></parameter>
+        <parameter name="prdntVrsnNum" value="prdntVrsnNum"></parameter>
+      </parameters>
+    </method>
+    <method name="ruleT4_1" path="/edm/mfg_rtng_hdr" resultType="Map">
+      <parameters>
+        <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+        <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
+        <parameter name="rtngGrpCd" value="rtngGrpCd" relationship="and"></parameter>
+        <parameter name="rtngGrpCntrNbr" value="rtngGrpCntrNum"></parameter>
+      </parameters>
+    </method>
+    <method name="rule_productId" resultType="Map" isPK="false" path="/edm/material_global_v1">
+      <parameters>
+        <parameter name="sourceSystem" value="srcSysCd" relationship="and"/>
+        <parameter name="localMaterialNumber" value="matlNum"/>
+      </parameters>
+    </method>
+    <method name="rule_productId_1" resultType="Map" isPK="false" path="/plan/cns_material_plan_status">
+      <parameters>
+        <parameter name="sourceSystem" value="srcSysCd" relationship="and"/>
+        <parameter name="localMaterialNumber" value="matlNum" relationship="and"/>
+        <parameter name="localPlant" value="plntCd"/>
+      </parameters>
+    </method>
+  </methods>
+  <viewRegion name="/omp/gdm_process">
+    <filters>
+      <filter hook="OMPGdmProcessProcessHook.check(e.getValue())"/>
+    </filters>
+    <vars>
+      <var name="sourceSysCd" value="sourceSysCd"/>
+      <var name="mfgOrdrNum" value="mfgOrdrNum"/>
+      <var name="rtngTypCd" value="rtngTypCd"/>
+      <var name="rtngGrpCd" value="rtngGrpCd"/>
+      <var name="rtngGrpCntrNum" value="rtngGrpCntrNum"/>
+      <var name="matlNum"/>
+      <var name="prdntVrsnNum"/>
+      <var name="valFromDt_VERSN"/>
+      <var name="valFromDt_HDR"/>
+    </vars>
+    <columns>
+      <column name="processId" isPK="true">
+        <ref method="ruleJ1_1" resultType="Map" parameter="sourceSysCd,mfgOrdrNum"
+             value="srcSysCd,matlNum,plntCd,prdntVrsnNum" var="retMap">
+          <if test="StringInner.isStringNotEmpty(srcSysCd)&amp;&amp;StringInner.isStringNotEmpty(mfgOrdrNum)">
+            <ref hook="OMPGdmProcessProcessHook.getProcessId(srcSysCd,mfgOrdrNum)"></ref>
+          </if>
+        </ref>
+        <if test="retMap == null">
+          <return/>
+        </if>
+      </column>
+      <column name="active" hardCode="'YES'"/>
+      <column name="activeOPRERP" hardCode="'YES'"/>
+      <column name="activeSOPERP" hardCode="'NO'"/>
+      <column name="endEff">
+        <ref method="ruleT4_1"
+             parameter="sourceSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum"
+             value="valFromDt,rtgVld_ToDt" resultType="Map">
+          <if test="StringInner.isStringNotEmpty(valFromDt)">
+            <set name="valFromDt_HDR" value="valFromDt"/>
+          </if>
+        </ref>
+        <ref method="ruleC2" parameter="srcSysCd,matlNum,plntCd,prdntVrsnNum"
+             value="valFromDt,valToDt,prdVrsnDesc" resultType="Map">
+            <if test="StringInner.isStringNotEmpty(valFromDt)">
+              <set name="valFromDt_VERSN" value="valFromDt"/>
+            </if>
+        </ref>
+        <if test="StringInner.isStringNotEmpty(rtgVld_ToDt)&amp;&amp;StringInner.isStringNotEmpty(valToDt)">
+          <ref hook="OMPGdmProcessProcessHook.getEndEff_T4_1(rtgVld_ToDt,valToDt)"></ref>
+        </if>
+      </column>
+      <column name="description">
+        <set name="description" value="prdVrsnDesc"/>
+      </column>
+      <column name="ERPOrderId">
+        <if test="StringInner.isStringNotEmpty(srcSysCd)&amp;&amp;StringInner.isStringNotEmpty(mfgOrdrNum)">
+          <ref hook="OMPGdmProcessProcessHook.getProcessId(srcSysCd,mfgOrdrNum)"></ref>
+        </if>
+      </column>
+      <column name="label" hardCode=""/>
+      <column name="locationId">
+        <if test="StringInner.isStringNotEmpty(srcSysCd)&amp;&amp;StringInner.isStringNotEmpty(plntCd)">
+          <set name="locationId" value="StringInner.join(srcSysCd,'_',plntCd)"/>
+        </if>
+      </column>
+      <column name="processTypeId">
+        <set name="processTypeId" value="'Production'"/>
+      </column>
+
+      <column name="productId">
+        <ref method="rule_productId" resultType="Map" parameter="srcSysCd,matlNum"
+             value="primaryPlanningCode">
+        </ref>
+        <ref method="rule_productId_1" resultType="Map" parameter="srcSysCd,matlNum,plntCd"
+             value="spRelevant,noPlanRelevant">
+          <if test="spRelevant.equals('X')||noPlanRelevant.equals('X')">
+            <set name="productId" value="primaryPlanningCode"/>
+          </if>
+          <else>
+            <return/>
+          </else>
+        </ref>
+      </column>
+      <column name="startEff">
+        <if test="StringInner.isStringNotEmpty(valFromDt_HDR)&amp;&amp;StringInner.isStringNotEmpty(valFromDt_VERSN)">
+          <ref hook="OMPGdmProcessProcessHook.getEndEff_T4_2(valFromDt_HDR,valFromDt_VERSN)"></ref>
+        </if>
+      </column>
+      <column name="vendorId">
+        <set name="vendorId" value="''"/>
+      </column>
+    </columns>
+  </viewRegion>
+
+</adf-curation>
