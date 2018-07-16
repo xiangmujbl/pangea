@@ -1,4 +1,4 @@
-<adf-curation xmlPathPrefix="omp" executionClassName="com.jnj.pangea.jde.omp.stock.OMPGdmStockInventoryStocks" chunkSize="500" type="M2" writeTo="all" topic="PANGEA_omp_gdm_stock_inventory_stocks">
+<adf-curation xmlPathPrefix="omp" executionClassName="com.jnj.pangea.omp.gdm_inventory_stocks.OMPGdmStockInventoryStocks" chunkSize="500" type="M2" writeTo="all" topic="PANGEA_omp_gdm_stock_inventory_stocks">
 
     <regions>
         <region path="/edm/material_plant_v1" mainRegion="true">
@@ -149,21 +149,17 @@
             <column name="certaintyId" hardCode=""/>
             <column name="eRPOrderId" hardCode=""/>
             <column name="inventoryLinkGroupId" hardCode=""/>
-            <column name="lifnr">
+            <!--INV7-->
+            <column name="vendorId">
                 <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
                     <set name="lifnr" value="''"/>
                 </if>
                 <else>
-                    <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <set name="lifnr" value="localVendorNumber"/>
-                    </if>
-                    <else>
-                        <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <set name="lifnr" value="localVendorNumber"/>
-                        </if>
-                    </else>
+                    <ref hook="OMPGdmStockInventoryStocksHook.getRemovePrefixZero(localVendorNumber)" var="vendorIdTmp"/>
+                    <set name="vendorId" value="vendorIdTmp"/>
                 </else>
             </column>
+            <!--INV8-->
             <column name="locationId">
                 <if test="StringInner.isStringEmpty(localSpecialStockIndicator)">
                     <if test="StringUtils.isNotEmpty(localPlant)">

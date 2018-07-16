@@ -1,6 +1,7 @@
 package com.jnj.pangea.hook;
 
 import com.jnj.adf.client.api.JsonObject;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.hook.common.DateUtils;
 import com.jnj.pangea.hook.common.IConstant;
 import org.apache.commons.lang.StringUtils;
@@ -97,7 +98,7 @@ public class OMPGdmStockInventoryStocksHook {
 
 					if (localBatchIdTmp.equals(localBatchId) && localVendorNumberTmp.equals(localVendorNumber) &&
 							StringUtils.isNotEmpty(String.valueOf(inventoryStockListMap.get("localBlockedConsignmentStock")))) {
-							localBlockedConsignmentStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlockedConsignmentStock"))) + localBlockedConsignmentStock;
+						localBlockedConsignmentStock = Float.parseFloat(String.valueOf(inventoryStockListMap.get("localBlockedConsignmentStock"))) + localBlockedConsignmentStock;
 					}
 
 					if (countTmp2 == count2) {
@@ -613,7 +614,7 @@ public class OMPGdmStockInventoryStocksHook {
 			String localConsignmentSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localConsignmentSpecialStockIndicator"));
 			String localSpecialStockIndicator = String.valueOf(inventoryStockListMap.get("localSpecialStockIndicator"));
 			String localBatchIdTmp = String.valueOf(inventoryStockListMap.get("localBatchId"));
-            String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
+			String localVendorNumberTmp = String.valueOf(inventoryStockListMap.get("localVendorNumber"));
 
 			if (IConstant.VALUE.BLANK.equals(localConsignmentSpecialStockIndicator) && IConstant.VALUE.BLANK.equals(localSpecialStockIndicator)) {
 
@@ -688,7 +689,7 @@ public class OMPGdmStockInventoryStocksHook {
 	 * @return
 	 */
 	public static boolean checkStockId(List<Map.Entry<String, String>> inventoryStockList,
-		String localMaterial, String localBatchId, String localVendorNumber, String localStorageLocation) {
+									   String localMaterial, String localBatchId, String localVendorNumber, String localStorageLocation) {
 		String localStorageLocationCheck = "";
 		int count = 0;
 		for (Map.Entry<String, String> inventoryStockListEntry : inventoryStockList) {
@@ -744,5 +745,33 @@ public class OMPGdmStockInventoryStocksHook {
 
 		return true;
 
+	}
+
+
+	/**
+	 *
+	 * @param cnsTlaneControlTriangulationList
+	 * @return
+	 */
+	public static String getLocalPlantByTriangulation (List<Map.Entry<String, String>> cnsTlaneControlTriangulationList) {
+
+		String localPlant = null;
+		int stepNumberCount = 0;
+
+		for (Map.Entry<String, String> cnsTlaneControlTriangulationListEntry : cnsTlaneControlTriangulationList) {
+
+			Map<String, Object> cnsTlaneControlTriangulationListMap = JsonObject.append(cnsTlaneControlTriangulationListEntry.getValue()).toMap();
+
+			String destinationLocation = String.valueOf(cnsTlaneControlTriangulationListMap.get("destinationLocation"));
+			String stepNumber = String.valueOf(cnsTlaneControlTriangulationListMap.get("stepNumber"));
+			int stepNumberInt = Integer.parseInt(stepNumber);
+
+			if (stepNumberCount < stepNumberInt) {
+
+				stepNumberCount = Integer.parseInt(stepNumber);
+				localPlant = destinationLocation.substring(destinationLocation.length()-4, destinationLocation.length());
+			}
+		}
+		return localPlant;
 	}
 }
