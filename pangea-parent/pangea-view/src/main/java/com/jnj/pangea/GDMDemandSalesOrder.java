@@ -18,6 +18,8 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
 
+import java.util.Map.Entry;
+
 import java.math.*;
 import java.text.*;
 import java.util.*;
@@ -190,6 +192,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				inclusionExclusion = String.valueOf(map3
 						.get("inclusionExclusion"));
 				if (inclusionExclusion != null) {
+
 					return false;
 				}
 			}
@@ -208,14 +211,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				if (StringInner.isStringEmpty(customerId)) {
 					Map map5 = joinCnsDemGrpAsgn(localShipToParty,
 							localSalesOrg);
+
 					if (map5 != null) {
 						demandGroup = String.valueOf(map5.get("demandGroup"));
 						if (StringInner.isStringNotEmpty(demandGroup)) {
 							customerId = demandGroup;
 						}
 					}
-					if (StringInner.isStringEmpty(customerId)) {
+					/*if (StringInner.isStringEmpty(customerId)) {
 						Map map6 = joinKnvhOnKunnr(localShipToParty);
+
 						if (map6 != null) {
 							vkorg = String.valueOf(map6.get("vkorg"));
 							datbi = String.valueOf(map6.get("datbi"));
@@ -235,10 +240,11 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 									}
 								}
 							}
-						}
-						if (StringInner.isStringEmpty(customerId)) {
+						}*/
+						/*if (StringInner.isStringEmpty(customerId)) {
 							Map map8 = joinKnvhOnHkunnr(localShipToParty);
-							if (map8 != null) {
+*/
+							/*if (map8 != null) {
 								vkorg = String.valueOf(map8.get("vkorg"));
 								datbi = String.valueOf(map8.get("datbi"));
 								hkunnr = String.valueOf(map8.get("hkunnr"));
@@ -257,18 +263,65 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 										}
 									}
 								}
-							}
-							if (StringInner.isStringEmpty(customerId)) {
+							}*/
 
-								writeFailDataToRegion(failMap, "SP",
-										"GDMDemandSalesOrder", "SO5",
-										"Demand Group can not be determined",
-										sourceSystem, salesOrderNo,
-										salesOrderItem, scheduleLineItem,
-										localMaterialNumber, "", "");
-								return false;
+
+
+					String kunnr=localShipToParty;
+					boolean isContinue=true;
+					while (StringInner.isStringEmpty(customerId) && isContinue) {
+
+						List<Map.Entry<String, String>> map51 = joinKnvhOnKunnr(kunnr);
+
+						if (map51 != null && map51.size() > 0) {
+							for (Map.Entry<String, String> entry : map51) {
+								Map<String, Object> map6 = JsonObject.append(entry.getValue())
+										.toMap();
+
+								if (map6 != null) {
+									vkorg = String.valueOf(map6.get("vkorg"));
+									datbi = String.valueOf(map6.get("datbi"));
+									hkunnr = String.valueOf(map6.get("hkunnr"));
+									hityp = String.valueOf(map6.get("hityp"));
+									if (vkorg.equals(localSalesOrg)
+											&& "A".equals(hityp)
+											&& Integer.parseInt(localOrderCreateDt) <= Integer
+											.parseInt(datbi)) {
+										Map map7 = joinCnsDemGrpAsgnCustId(hkunnr);
+										if (map7 != null) {
+											demandGroup = String.valueOf(map7
+													.get("demandGroup"));
+											if (StringInner
+													.isStringNotEmpty(demandGroup)) {
+												customerId = demandGroup;
+												isContinue=false;
+												break;
+											}
+											else{
+												kunnr=hkunnr;
+												if(StringInner.isStringEmpty(kunnr)){
+													isContinue=false;
+													break;
+												}
+											}
+										}
+									}
+								}
 							}
+							isContinue=false;
 						}
+						isContinue=false;
+					}
+
+					if (StringInner.isStringEmpty(customerId)) {
+
+						writeFailDataToRegion(failMap, "SP",
+								"GDMDemandSalesOrder", "SO5",
+								"Demand Group can not be determined",
+								sourceSystem, salesOrderNo,
+								salesOrderItem, scheduleLineItem,
+								localMaterialNumber, "", "");
+						return false;
 					}
 				}
 			}
@@ -531,25 +584,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		return null;
 	}
 
-	public Map joinKnvhOnKunnr(String localShipToParty) {
+	public List<Entry<String, String>> joinKnvhOnKunnr(String localShipToParty) {
 
-		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("kunnr").is(
-				localShipToParty);
-		ADFCriteria groupCriteria37 = adfCriteria17;
+		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria(
+				"kunnr").is(localShipToParty);
 
-		ADFCriteria adfCriteria = groupCriteria37;
+		ADFCriteria adfCriteria = adfCriteria1;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/project_one/knvh", queryStr, -1);
-		if (retList != null && retList.size() > 0) {
-			Map.Entry<String, String> entry = retList.get(0);
-			Map<String, Object> map = JsonObject.append(entry.getValue())
-					.toMap();
-			return map;
-		}
-
-		return null;
-
+		return retList;
 	}
 
 	public Map joinKnvhOnHkunnr(String localShipToParty) {
