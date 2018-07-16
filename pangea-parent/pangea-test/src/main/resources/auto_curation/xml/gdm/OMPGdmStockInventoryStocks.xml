@@ -146,7 +146,7 @@
                     </else>
                 </else>
             </column>
-            <column name="certaintyID" hardCode=""/>
+            <column name="certaintyId" hardCode=""/>
             <column name="eRPOrderId" hardCode=""/>
             <column name="inventoryLinkGroupId" hardCode=""/>
             <column name="lifnr">
