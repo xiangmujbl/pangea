@@ -182,6 +182,7 @@ public class PangeaSteps extends CommonSteps {
             if (headersFound) {
 
                 // for each line in the output file
+                int targetIndex = 1; //skip headers
                 while ((line = bufferedReader.readLine()) != null) {
 
                     List<String> fileLine = Arrays.asList(line.split("\t", -1));
@@ -190,7 +191,7 @@ public class PangeaSteps extends CommonSteps {
                     boolean recordFound = false;
 
                     // for each line of test data
-                    for (int i = 0; i < testDataList.size(); i++) {
+                    for (int i = targetIndex; i < testDataList.size(); i++) {
 
                         // for each column of test data line try to match the values of the record
                         for (int x = 0; x < testDataList.get(i).size(); x++) {
@@ -214,6 +215,7 @@ public class PangeaSteps extends CommonSteps {
                         System.err.println("Record Not Found:\n" + Arrays.toString(fileLine.toArray()));
                     }
 
+                    targetIndex++;
                     Assert.assertTrue(recordFound);
                 }
             }
@@ -249,7 +251,7 @@ public class PangeaSteps extends CommonSteps {
             client.connect(computingNode);
 
             if (StringUtils.isNotEmpty(ENV) && StringUtils.isNotEmpty(ceRegionAlias)) {
-                //client.submitTask(taskId, xml, drl, commandString, ceRegionAlias, computingPartition);
+                client.submitTask(taskId, xml, jar, commandString, ceRegionAlias, computingPartition);
             } else {
                 if (StringUtils.isEmpty(jar)) {
                     commandString = "-type Aggr";

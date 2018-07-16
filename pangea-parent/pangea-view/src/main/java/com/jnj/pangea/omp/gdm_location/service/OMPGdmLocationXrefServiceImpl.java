@@ -31,9 +31,11 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         }
         // rules C1
         if (StringUtils.isBlank(cnsPlnSplLocEntity.getLocalPlant())) {
-            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorOrCustomer() + "_" + cnsPlnSplLocEntity.getLocalNumber());
+            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getVendorOrCustomer() + "_" +
+                    cnsPlnSplLocEntity.getLocalNumber().replaceFirst("^0*", ""));
         } else {
-            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getLocalPlant() + "$" + cnsPlnSplLocEntity.getLocalNumber());
+            gdmLocationXrefBo.setLocationId(cnsPlnSplLocEntity.getSourceSystem() + "_" + cnsPlnSplLocEntity.getLocalPlant() + "$" +
+                    cnsPlnSplLocEntity.getLocalNumber().replaceFirst("^0*", ""));
         }
 
         //rules C3

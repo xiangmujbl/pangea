@@ -62,4 +62,5 @@ public class PlanCnsPlanDemGrpEntity extends CommonEntity {
     public void setLocationId(String locationId) {
         this.locationId = locationId;
     }
+
 }

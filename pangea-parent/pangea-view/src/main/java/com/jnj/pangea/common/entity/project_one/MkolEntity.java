@@ -9,7 +9,6 @@ public class MkolEntity extends CommonEntity {
     private String mandt;
     private String matnr;
     private String werks;
-    private String logrt;
     private String charg;
     private String sobkz;
     private String lifnr;
@@ -17,6 +16,7 @@ public class MkolEntity extends CommonEntity {
     private String sinsm;
     private String seinm;
     private String sspem;
+    private String Lgort;
 
     public MkolEntity(Map<String, Object> map) {
         super(map);
@@ -24,7 +24,6 @@ public class MkolEntity extends CommonEntity {
         setMandt((String) map.get("mandt"));
         setMatnr((String) map.get("matnr"));
         setWerks((String) map.get("werks"));
-        setLogrt((String) map.get("logrt"));
         setCharg((String) map.get("charg"));
         setSobkz((String) map.get("sobkz"));
         setLifnr((String) map.get("lifnr"));
@@ -32,6 +31,8 @@ public class MkolEntity extends CommonEntity {
         setSinsm((String) map.get("sinsm"));
         setSeinm((String) map.get("seinm"));
         setSspem((String) map.get("sspem"));
+        setLgort((String) map.get("lgort"));
+
     }
 
     public String getMandt() {
@@ -58,13 +59,7 @@ public class MkolEntity extends CommonEntity {
         this.werks = werks;
     }
 
-    public String getLogrt() {
-        return this.logrt;
-    }
 
-    public void setLogrt(String logrt) {
-        this.logrt = logrt;
-    }
 
     public String getCharg() {
         return this.charg;
@@ -120,6 +115,14 @@ public class MkolEntity extends CommonEntity {
 
     public void setSspem(String sspem) {
         this.sspem = sspem;
+    }
+
+    public String getLgort() {
+        return Lgort;
+    }
+
+    public void setLgort(String lgort) {
+        Lgort = lgort;
     }
 
 }

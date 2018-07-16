@@ -50,7 +50,7 @@
             </region>
             <region path="/edm/source_list_v1">
                 <columns>
-                    sourceSystem,localMaterialNumber,localPlant,localBlockedSourceofSupply,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localPurchasingOrganization
+                    sourceSystem,localMaterialNumber,localPlantfromWhichMaterialisProcured,localPlant,localBlockedSourceofSupply,localSourceListRecordValidFrom,localSourceListRecordValidTo,localVendorAccountNumber,localPurchasingOrganization
                 </columns>
             </region>
             <region path="/plan/cns_spl_pln_loc">
@@ -71,7 +71,7 @@
 
             <region path="/omp/gdm_transport">
                 <columns>
-                    transportId,active,activeOPRERP,activeSOPERP,endEff,fromLocationId,fromProductId,label,machineTypeId,minQuantity,planLevelId,processTypeId,purchasingGroup,purchasingOrganization,requirementOffset,startEff,toLocationId,toProductId,transportOffset,transportType,vendorId
+                    transportId,active,activeOPRERP,activeSOPERP,endEff,fromLocationId,fromProductId,label,machineTypeId,minQuantity,planLevelId,processTypeId,purchasingGroup,purchasingOrganization,startEff,toLocationId,toProductId,transportOffset,transportType,vendorId
                 </columns>
             </region>
         </regions>

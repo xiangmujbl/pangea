@@ -18,30 +18,30 @@ import java.util.*;
 
 public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
-    private static OMPGdmTransportServiceImpl instance;
+	private static OMPGdmTransportServiceImpl instance;
 
-    public static OMPGdmTransportServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new OMPGdmTransportServiceImpl();
-        }
-        return instance;
-    }
+	public static OMPGdmTransportServiceImpl getInstance() {
+		if (instance == null) {
+			instance = new OMPGdmTransportServiceImpl();
+		}
+		return instance;
+	}
 
-    private CnsTlaneItemExceptionDaoImpl tlaneExceptionDao = CnsTlaneItemExceptionDaoImpl.getInstance();
+	private CnsTlaneItemExceptionDaoImpl tlaneExceptionDao = CnsTlaneItemExceptionDaoImpl.getInstance();
 	private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
 	private EDMMaterialPlantV1DaoImpl materialPlantV1Dao = EDMMaterialPlantV1DaoImpl.getInstance();
 	private EDMSourceListV1DaoImpl sourceListV1Dao = EDMSourceListV1DaoImpl.getInstance();
 	private PlanCnsProcessTypeDaoImpl processTypeDao = PlanCnsProcessTypeDaoImpl.getInstance();
 
 
-    public ResultObject buildView(String key, Object o, Object o2) {
+	public ResultObject buildView(String key, Object o, Object o2) {
 
 		ResultObject resultObject = new ResultObject();
 		OMPGdmTransportBo gdmTransportBo = new OMPGdmTransportBo();
 		CnsTlaneItemEntity tlaneItemEntity = (CnsTlaneItemEntity) o;
 		EDMSourceListV1Entity srcListV1Entity = null;
 		String rule = "setup";
-		this.curationSkip = false;
+
 		this.curationFail = false;
 		this.failedRules = new ArrayList<>();
 
@@ -71,9 +71,8 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 			//N4
 			gdmTransportBo.setMachineTypeId(IConstant.VALUE.TRANSPORT);
 
-			//N5
-			gdmTransportBo.setMinQuantity("");
-			gdmTransportBo.setRequirementOffset("");
+			//N5 version3 set default as 0.0
+			gdmTransportBo.setMinQuantity(IConstant.VALUE.ZEROZERO);
 
 			//N6
 			gdmTransportBo.setPlanLevelId(IConstant.VALUE.STAR);
@@ -92,6 +91,12 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		//N9 & N10
 		if (!this.curationSkip && !this.curationFail && srcListV1Entity != null) {
 			gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
+			if(srcListV1Entity.getLocalPurchasingOrganization() == null || "".equals(srcListV1Entity.getLocalPurchasingOrganization())){
+				gdmTransportBo.setPurchasingOrganization(IConstant.VALUE.BLANK);
+			}else{
+				gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
+
+			}
 			gdmTransportBo.setVendorId(srcListV1Entity.getLocalVendorAccountNumber());
 		}
 
@@ -157,7 +162,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		}
 
 		return resultObject;
-    }
+	}
 
 	/**
 	 * 1) get mat_glob_v1.local_material_number where mat_glob_v1.ppcode = tlane.matnum
@@ -269,8 +274,14 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		String rule = "N9_N10";
 
 		String localPlantNum = this.getLocalPlantNum(tlaneItemEntity.getDestinationLocation());
+		String originLocationlocalPlantNum = this.getLocalPlantNum(tlaneItemEntity.getOriginLocation());
+
+
+
 		String sourceSystem = this.getSourceSystem(tlaneItemEntity.getDestinationLocation());
 		String locMatNum = this.getMaterialNumber(tlaneItemEntity,sourceSystem);
+		String vendorId = this.getVendorId(tlaneItemEntity.getOriginLocation());
+
 
 		//skip rest if no mat num was found
 		if (locMatNum == null) {
@@ -283,6 +294,28 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		if (!sourceListV1EntityList.isEmpty()) {
 			sourceListV1Entity = sourceListV1EntityList.get(0);
+
+			//Look for exact matching record for vendorId
+			if( !"".equals(vendorId)) {
+				for (EDMSourceListV1Entity edmSourceListV1Entity : sourceListV1EntityList) {
+					if (edmSourceListV1Entity != null && edmSourceListV1Entity.getLocalVendorAccountNumber() != null
+							&& vendorId.equals(edmSourceListV1Entity.getLocalVendorAccountNumber().trim())) {
+						sourceListV1Entity = edmSourceListV1Entity;
+						break;
+					}
+				}
+			}
+			else{
+				for (EDMSourceListV1Entity edmSourceListV1Entity : sourceListV1EntityList) {
+					if (edmSourceListV1Entity != null && edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured() != null
+							&& originLocationlocalPlantNum.equals(edmSourceListV1Entity.getLocalPlantfromWhichMaterialisProcured().trim())) {
+						sourceListV1Entity = edmSourceListV1Entity;
+						break;
+					}
+				}
+			}
+
+
 		}
 		else {
 			//this.curationSkip = true;
