@@ -5,9 +5,9 @@ Feature:  OMPGdmStockASN-Curation
 
     Given I import "/edm/advanced_ship_notification_v1" by keyFields "srcSysCd,delvDocId,localRefDocNum,locRefDocLineNum"
       | srcSysCd   | delvDocId  | receivingPtId | localDeliveryType | localDeliveryCatg | localDeliveryDate | localCreatedDate | localBillOfLading | localExternalId | actGRDt | vendorId   | localShippingPlant | delvLineNbr | matlNum | localBatchNo | localVendorBatchNo | localReceivingPlant | baseUnitOfMeasureCd | actlSkuDelvQty | localRefDocNum | locRefDocLineNum |
-      | CONS_LATAM | 180005489  |               |  EL               |  7                | 2016-05-10        | 20160421         | 001041960-1       | 001041960-1     |         | 0000008917 |                    | 10          | 58722   | 2436B04      |                    | CR01                | EA                  | 2592.000       | 3000753622     | 190              |
-      | CONS_LATAM | 180005490  |               |  EL               |  7                | 2016-04-21        | 20160421         | 001041960-1       | 001041960-1     |         | 0000009859 |                    | 900001      | 68874   | 0086B02      |                    | MX02                | EA                  | 23456.000      | 3000789748     | 190              |
-      | CONS_LATAM | 180005491  |               |  EL               |  7                | 2016-04-21        | 20160421         | 001041960-1       | 001041960-1     |         | 0000089123 |                    | 900002      | 55735   | 0216B03      |                    | GT01                | EA                  | 25921.000      | 3000753612     | 190              |
+      | CONS_LATAM | 180005489  |               |  EL               |  7                | 2016-05-10        | 20160421         | 001041960-1       | 001041960-1     |         | 0000008917 |                    | 10          | 58722   | 2436B04      |                    | CR02                | EA                  | 2592.000       | 3000753622     | 190              |
+      | CONS_LATAM | 180005490  |               |  EL               |  7                | 2016-04-21        | 20160421         | 001041960-1       | 001041960-1     |         | 0000009859 |                    | 900001      | 68874   | 0086B02      |                    | MX01                | EA                  | 23456.000      | 3000789748     | 190              |
+      | CONS_LATAM | 180005491  |               |  EL               |  7                | 2016-04-21        | 20160421         | 001041960-1       | 001041960-1     |         | 0000089123 |                    | 900002      | 55735   | 0216B03      |                    | GT02                | EA                  | 25921.000      | 3000753612     | 190              |
       | CONS_LATAM | 180021108  |               |  EL               |  7                | 2016-11-28        | 20161128         | 001137503-1       | 001137503-1     |         | 0000008899 |                    | 10          | 57039   | 0345A12      |                    | CO01                | EA                  | 2340.000       | 3000789748     | 220              |
       | CONS_LATAM | 180021109  |               |  XY               |  7                | 2016-11-28        | 20161128         | 001137503-1       | 001137503-1     |         | 0000009816 |                    | 10          | 97360   | 0345A121     |                    | BR01                | EA                  | 1253.000       | 3000789749     | 120              |
       | CONS_LATAM | 18000599   |               |  EL               |  7                | 2016-04-21        | 20160421         | 001041960-1       | 001041960-1     |         | 0000098765 |                    | 10          | 96161   | 2436B078     |                    | BR19                | EA                  | 18746.000      | 3000753873     | 20               |
@@ -184,9 +184,9 @@ Feature:  OMPGdmStockASN-Curation
 
     And I will remove all data with region "/plan/cns_plan_object_filter"
 
-    And I will remove all data with region "/plan/cns_tlane_control"
+    #And I will remove all data with region "/plan/cns_tlane_control"
 
-    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
+    #And I will remove all data with region "/plan/cns_tlane_control_triangulation"
 
     And I will remove all data with region "/omp/gdm_stock_asn"
 

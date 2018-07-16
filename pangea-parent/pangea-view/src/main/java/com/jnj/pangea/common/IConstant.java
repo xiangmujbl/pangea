@@ -976,7 +976,7 @@ public interface IConstant {
     interface PLAN_CNS_TLANE_CONTROL {
         String SEQUENCE_NUM = "sequenceNumber";
         String TLANE_NAME = "tlaneName";
-        String SOURCE_SYSTEM_CRITICAL = "sourceSystemCriticalParameter";
+        String SOURCE_SYSTEM_CRITICAL = "sourceSystemCriticalParameters";
         String TRIG_SYS_PLANT = "trigSysPlant";
         String TRIG_SYS_TRANSACTION = "trigSysTransaction";
         String TRIANGULATION_DETAIL = "triangulationDetail";

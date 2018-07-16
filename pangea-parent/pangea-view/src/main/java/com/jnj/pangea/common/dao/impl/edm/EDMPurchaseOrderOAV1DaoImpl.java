@@ -25,7 +25,7 @@ public class EDMPurchaseOrderOAV1DaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_NUM).is(poNum)
                 .and(IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_LINE_NBR).is(poLineNumber)
                 .and(IConstant.EDM_PURCHASE_ORDER_OA_V1.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
-        LogUtil.getCoreLog().info("----------------------getEntityByPoNumAndPoLineNumberAndSourceSystem--------------------"+queryString);
+        //LogUtil.getCoreLog().info("----------------------getEntityByPoNumAndPoLineNumberAndSourceSystem--------------------"+queryString);
         return queryForObject(IConstant.REGION.EDM_PURCHASE_ORDER_OA_V1, queryString, EDMPurchaseOrderOAV1Entity.class);
     }
 
