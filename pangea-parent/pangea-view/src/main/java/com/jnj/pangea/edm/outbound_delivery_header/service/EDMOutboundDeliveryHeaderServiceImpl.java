@@ -1,6 +1,5 @@
 package com.jnj.pangea.edm.outbound_delivery_header.service;
 
-import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
@@ -35,22 +34,15 @@ public class EDMOutboundDeliveryHeaderServiceImpl implements ICommonService{
         EDMOutboundDeliveryHeaderBo outboundDeliveryHeaderBo = new EDMOutboundDeliveryHeaderBo();
 
         EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
-        LogUtil.getCoreLog().info("33333333333 "+likpEntity.getVbeln());
         if(sourceSystemV1Entity != null){
-            if(likpEntity.getVbeln().equals("196599668")){
-                LogUtil.getCoreLog().info("111111111111111111111");
-            }
+
             if(likpEntity.getVbtyp().equals("J")){
-                if(likpEntity.getVbeln().equals("196599668")){
-                    LogUtil.getCoreLog().info("111111111111111111111");
-                }
 
                 outboundDeliveryHeaderBo.setSlsOrdrCarCd(likpEntity.getVbtyp());
                 outboundDeliveryHeaderBo.setSrcSysCd(sourceSystemV1Entity.getSourceSystem());
                 outboundDeliveryHeaderBo.setDelvDocId(likpEntity.getVbeln());
                 outboundDeliveryHeaderBo.setShippingPtNum(likpEntity.getVstel());
                 outboundDeliveryHeaderBo.setDelvTypeCd(likpEntity.getLfart());
-                LogUtil.getCoreLog().info("");
                 SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
                 SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD_WITH_DASH);
 
@@ -76,7 +68,6 @@ public class EDMOutboundDeliveryHeaderServiceImpl implements ICommonService{
                 outboundDeliveryHeaderBo.setBillOfLdngNum(likpEntity.getBolnr());
                 outboundDeliveryHeaderBo.setDelvNum(likpEntity.getLifex());
                 outboundDeliveryHeaderBo.setPlanGiDt(likpEntity.getWadat());
-                LogUtil.getCoreLog().info("+++"+likpEntity.getWadatist());
                 outboundDeliveryHeaderBo.setActlGiDt(likpEntity.getWadatist());
                 outboundDeliveryHeaderBo.setShippingCondCd(likpEntity.getVsbed());
                 outboundDeliveryHeaderBo.setSupNum(likpEntity.getLifnr());
@@ -127,9 +118,6 @@ public class EDMOutboundDeliveryHeaderServiceImpl implements ICommonService{
             }
         }
 
-        if(likpEntity.getVbeln().equals("196599668")){
-            LogUtil.getCoreLog().info("2222222222");
-        }
         return resultObject;
     }
 }

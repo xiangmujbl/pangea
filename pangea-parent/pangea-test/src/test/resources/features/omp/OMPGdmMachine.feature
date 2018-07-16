@@ -1,94 +1,120 @@
-@pangea_test @AEAZ-6662
-Feature: OMPGdmMachine AEAZ-6662
+@pangea_test @AEAZ-8799
+Feature: GDMMachine AEAZ-8799
 
   @Scenario1
-  Scenario: Check Full Rule
-
-    Given I import "/edm/wrk_ctr" by keyFields "srcSysCd,wrkCtrNum,wrkCtrTypeCd"
-      | srcSysCd   | wrkCtrTypeCd | wrkCtrNum     | vldFromDt | vldToDt    | wrkCtrCd   | plntCd | wrkCtrCatCd | delInd | wrkCtrUsgCd | wrkCtrLocCd | respPrsnNum | wrkCtrActvCd | lockInd | schdlngInd | setupTypeCd | oprCd | setupFrmlCd | runFrmlCd | teardownFrmlCd | capyNum    | locGrpCd | machTypeCd | plnrGrpCd | othFrmlCd | suplAreaCd | slocCd | mixingInd | wrkCtrDesc                     |
-      | CONS_LATAM | A            | 10000237      | 20000823  | 23.08.2000 | TOU-PESA   | BR02   | 0001        | X      | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000253   |          |            |           |           |            |        |           | Sala de Pesagem Toucador       |
-      | CONS_LATAM | A            | 10000238      | 20000823  | 23.08.2000 | TOU-R01    | BR02   | 0001        | X      | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000254   |          |            |           |           |            |        |           | Reator R01 Toucador            |
-      | CONS_LATAM | A            | 10000239      | 20000823  | 23.08.2000 | TOU-R02    | BR02   | 0001        | X      | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000255   |          |            |           |           |            |        |           | Reator R02 Toucador            |
-      | CONS_LATAM | A            | 10000240      | 20000823  | 23.08.2000 | TOU-R03    | BR02   | 0001        | X      | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000256   |          |            |           |           |            |        |           | Reator R03 Toucador            |
-      | CONS_LATAM | A            | 10000241      | 20000823  | 23.08.2000 | TOU-R04    | BR02   | 0001        | X      | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000257   |          |            |           |           |            |        |           | Reator R04 Toucador            |
-      | CONS_LATAM | A            | 10000242      | 20000823  | 23.08.2000 | TOU-R05    | BR02   | 0001        | X      | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000258   |          |            |           |           |            |        |           | Reator R05 Toucador            |
-      | CONS_LATAM | A            | 10000243      | 20000823  | 23.08.2000 | TOU-R06    | BR02   | 0001        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000259   |          |            |           |           |            |        |           | Reator R06 Toucador            |
-      | CONS_LATAM | A            | 10000244      | 20000823  | 23.08.2000 | TOU-R07    | BR02   | 0001        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000260   |          |            |           |           |            |        |           | Reator R07 Toucador            |
-      | CONS_LATAM | A            | 10000245      | 20000823  | 23.08.2000 | TOU-R08    | BR02   | 0001        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000261   |          |            |           |           |            |        |           | Reator R08 Toucador            |
-      | CONS_LATAM | A            | 10000246      | 20000823  | 23.08.2000 | TOU-R11    | BR02   | 0001        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000262   |          |            |           |           |            |        |           | Reator R11 Toucador            |
-      | CONS_LATAM | A            | 10000247      | 20000823  | 23.08.2000 | TOU-R10    | BR02   | 0001        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10000263   |          |            |           |           |            |        |           | Reator R10 Toucador            |
-      | CONS_LATAM | A            | 10003230      | 20030319  | 19.03.2003 | CTTOU      | BR12   | 0005        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003151   |          |            |           |           |            |        |           | Centro trabalho toucador       |
-      | CONS_LATAM | A            | 10003232      | 20030319  | 19.03.2003 | TOU-PREP   | BR12   | 0005        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003153   |          |            |           |           |            |        |           | Liquidos e Cremes - PREPARAÇÃO |
-      | CONS_LATAM | A            | 10003233_T4_0 | 20030319  | 19.03.2003 | CTTOUMCA_0 | BR12   | 0005        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003154_0 |          |            |           |           |            |        |           | Centro/trabalho/toucador       |
-      | CONS_LATAM | A            | 10003233_T4_1 | 20030319  | 19.03.2003 | CTTOUMCA_1 | BR12   | 0005        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003154_1 |          |            |           |           |            |        |           | /trabalho/toucador             |
-      | CONS_LATAM | A            | 10003233_T4_2 | 20030319  | 19.03.2003 | CTTOUMCA_2 | BR12   | 0005        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003154_2 |          |            |           |           |            |        |           | //toucador                     |
-      | CONS_LATAM | A            | 10003233_T4_3 | 20030319  | 19.03.2003 | CTTOUMCA_3 | BR12   | 0005        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003154_3 |          |            |           |           |            |        |           | //                             |
-      | CONS_LATAM | A            | 10003234      | 20030319  | 19.03.2003 | CTTOUMCB   | BR12   | 0005        |        | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003155   |          |            |           |           |            |        |           | Centro trabalho toucador       |
-      | CONS_LATAM | A            | 10003235      | 20030319  | 19.03.2003 | CTTOUMCC   | BR12   | 0005        |        | 001         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003156   |          |            |           |           |            |        |           | Centro trabalho toucador       |
-      | CONS_LATAM | A            | 10003238      | 20030320  | 20.03.2003 | CTMICA     | BR12   | 0005        |        | 001         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003159   |          |            |           |           |            |        |           | Centro trabalho toucador       |
-      | CONS_LATAM | A            | 10003239      | 20030320  | 20.03.2003 | CT325172   | BR12   | 0005        | X      | 009         | CONS_LATAM  |             |              |         |            |             |       |             |           |                | 10003160   |          |            |           |           |            |        |           | Centro trabalho toucador       |
-    And I wait "/edm/wrk_ctr" Async Queue complete
-
-    Given I import "/edm/wrk_ctr_hier" by keyFields "srcSysCd,parntWrkCtrNum"
-      | srcSysCd   | topWrkCtrTypeCd | topWrkCtrNum | parntWrkCtrTypeCd | parntWrkCtrNum | childWrkCtrTypeCd | childWrkCtrNum | wrkCtrTypeCd | wrkCtrNum | stopExplsInd |
-      | CONS_LATAM | H               | 10000021     | A                 | 10003234       | A                 | 10003232       | A            | 10003233  |              |
-      | CONS_LATAM | H               | 10000021     | A                 | 10003235       | A                 | 10003232       | A            | 10003234  |              |
-      | CONS_LATAM | H               | 10000021     | A                 | 10003236       | A                 | 10003232       | A            | 10003235  |              |
-      | CONS_LATAM | H               | 10000021     | A                 | 10003241       | A                 | 10003237       | A            | 10003239  |              |
-    And I wait "/edm/wrk_ctr_hier" Async Queue complete
-
-    Given I import "/edm/capy_hdr" by keyFields "srcSysCd,capyNum"
-      | srcSysCd   | capyNum    | capyNbr | strtTm | endTm | fctryCalCd | capyCatCd | wrkCtrTypeCd | wrkCtrNum | plntCd | finiteSchdlngInd |
-      | CONS_LATAM | 10000253   | 1       |        |       | 0          | 001       | A            | 10003233  | BR12   | X                |
-      | CONS_LATAM | 10000254   | 2       |        |       | 0          | 001       | A            | 10003234  | BR12   | X                |
-      | CONS_LATAM | 10000255   | 2       |        |       | 0          | 001       | A            | 10003235  | BR12   | X                |
-      | CONS_LATAM | 10000256   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10000257   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10000258   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10000259   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10000260   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10000261   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10000262   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10000263   | 2       |        |       | 0          | 001       | A            | 10003239  | BR12   | X                |
-      | CONS_LATAM | 10003151   | 1       |        |       | 0          | 002       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003153   | 1       |        |       | 0          | 002       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003154_0 | 1       |        |       | 0          | 001       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003154_1 | 1       |        |       | 0          | 001       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003154_2 | 1       |        |       | 0          | 001       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003154_3 | 1       |        |       | 0          | 001       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003155   | 1       |        |       | 0          | 001       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003156   | 1       |        |       | 0          | 002       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003159   | 1       |        |       | 0          | 002       | A            | 10003239  | BR12   |                  |
-      | CONS_LATAM | 10003160   | 1       |        |       | 0          | 002       | A            | 10003239  | BR12   |                  |
-    And I wait "/edm/capy_hdr" Async Queue complete
-
-    Given I import "/plan/cns_plan_parameter" by keyFields "attribute,dataObject,sourceSystem,parameter"
-      | attribute  | dataObject  | sourceSystem | parameter | parameterValue |
-      | CONS_LATAM | SEND_TO_OMP | CONS_LATAM   | Division  | LA             |
-      | CONS_LATAM | SEND_TO_GDM | CONS_LATAM   | Division  | LA             |
-    And I wait "/plan/cns_plan_parameter" Async Queue complete
+  Scenario: test scenario 1
+#    Given I import "/edm/wrk_ctr" by keyFields "srcSysCd,wrkCtrNum,wrkCtrTypeCd"
+#      | srcSysCd   | wrkCtrTypeCd | wrkCtrNum | vldFromDt | vldToDt  | wrkCtrCd | plntCd | wrkCtrCatCd | delInd | wrkCtrUsgCd | wrkCtrLocCd | capyNum  | wrkCtrDesc                                             |
+#      | CONS_LATAM | A            | 10000200  | 20000823  | 99991231 | TOU-R00  | BR12   | 0001        | X      | 009         | 400         | 90000200 | Reator R00 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000201  | 20000823  | 20100801 | TOU-R01  | BR12   | 0001        |        | 009         | 400         | 90000202 | Reator R01 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000202  | 20000823  | 99991231 | TOU-R02  | BR12   | 0001        |        | 009         | 400         | 90000204 | Reator R02 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000203  | 20000823  | 99991231 | TOU-R03  | BR12   | 0001        |        | 008         | 400         | 90000206 | Reator R03 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000204  | 20000823  | 99991231 | TOU-R04  | BR11   | 0001        |        | 009         | 400         | 90000208 | Reator R04 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000205  | 20000823  | 99991231 | TOU-R05  | BR12   | 0001        |        | 009         | 400         | 90000210 | Reator R05 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000206  | 20000823  | 99991231 | TOU-R06  | BR12   | 0001        |        | 009         | 400         | 90000212 | EN R06 Toucador/ES R06 Toucador/PT Reator R06 Toucador |
+#      | CONS_LATAM | A            | 10000207  | 20000823  | 99991231 | TOU-R07  | CO01   | 0001        |        | 009         | 400         | 90000214 | /ES R07 Toucador/                                      |
+#      | CONS_LATAM | A            | 10000208  | 20000823  | 99991231 | TOU-R08  | BR12   | 0001        |        | 009         | 400         | 90000216 | //PT Reator R08 Toucador                               |
+#      | CONS_LATAM | A            | 10000209  | 20000823  | 99991231 | TOU-R09  | BR12   | 0001        |        | 009         | 400         | 90000218 | //                                                     |
+#      | CONS_LATAM | A            | 10000210  | 20000823  | 99991231 | TOU-R10  | BR12   | 0001        |        | 009         | 400         | 90000220 | Reator R10 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000405  | 20000823  | 99991231 | TOU-P05  | BR12   | 0001        |        | 009         | 400         | 90000210 | Reator P05 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000406  | 20000823  | 99991231 | TOU-P06  | BR12   | 0001        |        | 009         | 400         | 90000212 | Reator P06 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000407  | 20000823  | 99991231 | TOU-P07  | BR12   | 0001        |        | 009         | 400         | 90000214 | Reator P07 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000408  | 20000823  | 99991231 | TOU-P08  | BR12   | 0001        |        | 009         | 400         | 90000216 | Reator P08 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000409  | 20000823  | 99991231 | TOU-P09  | BR12   | 0001        |        | 009         | 400         | 90000218 | Reator P09 Toucador//                                  |
+#      | CONS_LATAM | A            | 10000410  | 20000823  | 99991231 | TOU-P10  | BR12   | 0001        |        | 009         | 400         | 90000220 | Reator P10 Toucador//                                  |
+#    And I wait "/edm/wrk_ctr" Async Queue complete
+#
+#    Given I import "/edm/wrk_ctr_capy" by keyFields "capyAllcNbr,srcSysCd,wrkCtrNum,wrkCtrTypeCd"
+#      | srcSysCd   | wrkCtrTypeCd | wrkCtrNum | capyAllcNbr | capyNum  |
+#      | CONS_LATAM | A            | 10000200  | 1000        | 90000200 |
+#      | CONS_LATAM | A            | 10000200  | 2000        | 90000201 |
+#      | CONS_LATAM | A            | 10000201  | 1001        | 90000202 |
+#      | CONS_LATAM | A            | 10000201  | 2001        | 90000203 |
+#      | CONS_LATAM | A            | 10000202  | 1002        | 90000204 |
+#      | CONS_LATAM | A            | 10000202  | 2002        | 90000205 |
+#      | CONS_LATAM | A            | 10000203  | 1003        | 90000206 |
+#      | CONS_LATAM | A            | 10000203  | 2003        | 90000207 |
+#      | CONS_LATAM | A            | 10000204  | 1004        | 90000208 |
+#      | CONS_LATAM | A            | 10000204  | 2004        | 90000209 |
+#      | CONS_LATAM | A            | 10000205  | 1005        | 90000210 |
+#      | CONS_LATAM | A            | 10000205  | 2005        | 90000211 |
+#      | CONS_LATAM | A            | 10000206  | 1006        | 90000212 |
+#      | CONS_LATAM | A            | 10000206  | 2006        | 90000213 |
+#      | CONS_LATAM | A            | 10000207  | 1007        | 90000214 |
+#      | CONS_LATAM | A            | 10000207  | 2007        | 90000215 |
+#      | CONS_LATAM | A            | 10000208  | 1008        | 90000216 |
+#      | CONS_LATAM | A            | 10000208  | 2008        | 90000217 |
+#      | CONS_LATAM | A            | 10000209  | 1009        | 90000218 |
+#      | CONS_LATAM | A            | 10000209  | 2009        | 90000219 |
+#      | CONS_LATAM | A            | 10000210  | 1010        | 90000220 |
+#      | CONS_LATAM | A            | 10000210  | 2010        | 90000221 |
+#    And I wait "/edm/wrk_ctr_capy" Async Queue complete
+#
+#    Given I import "/edm/wrk_ctr_hier" by keyFields "srcSysCd,parntWrkCtrNum"
+#      | srcSysCd   | topWrkCtrTypeCd | topWrkCtrNum | parntWrkCtrTypeCd | parntWrkCtrNum | wrkCtrTypeCd | wrkCtrNum |
+#      | CONS_LATAM | H               | 10000605     | A                 | 10000405       | A            | 10000205  |
+#      | CONS_LATAM | H               | 10000606     | A                 | 10000406       | A            | 10000206  |
+#      | CONS_LATAM | H               | 10000607     | A                 | 10000407       | A            | 10000207  |
+#      | CONS_LATAM | H               | 10000608     | A                 | 10000408       | A            | 10000208  |
+#      | CONS_LATAM | H               | 10000609     | A                 | 10000409       | A            | 10000209  |
+#      | CONS_LATAM | H               | 10000610     | A                 | 10000410       | A            | 10000210  |
+#    And I wait "/edm/wrk_ctr_hier" Async Queue complete
+#
+#    Given I import "/edm/capy_hdr" by keyFields "srcSysCd,capyNum"
+#      | srcSysCd   | capyNum  | capyCatCd | plntCd | finiteSchdlngInd |
+#      | CONS_LATAM | 90000200 | 001       | BR12   |                  |
+#      | CONS_LATAM | 90000201 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000202 | 001       | BR12   |                  |
+#      | CONS_LATAM | 90000203 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000204 | 008       | BR12   |                  |
+#      | CONS_LATAM | 90000205 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000206 | 001       | BR12   |                  |
+#      | CONS_LATAM | 90000207 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000208 | 001       | BR11   |                  |
+#      | CONS_LATAM | 90000209 | 002       | BR11   |                  |
+#      | CONS_LATAM | 90000210 | 001       | BR12   |                  |
+#      | CONS_LATAM | 90000211 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000212 | 001       | BR12   |                  |
+#      | CONS_LATAM | 90000213 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000214 | 001       | CO01   |                  |
+#      | CONS_LATAM | 90000215 | 002       | CO01   |                  |
+#      | CONS_LATAM | 90000216 | 001       | BR12   |                  |
+#      | CONS_LATAM | 90000217 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000218 | 001       | BR12   |                  |
+#      | CONS_LATAM | 90000219 | 002       | BR12   |                  |
+#      | CONS_LATAM | 90000220 | 001       | BR12   | X                |
+#      | CONS_LATAM | 90000221 | 002       | BR12   |                  |
+#    And I wait "/edm/capy_hdr" Async Queue complete
+#
+#    Given I import "/plan/cns_plan_parameter" by keyFields "attribute,dataObject,sourceSystem,parameter"
+#      | sourceSystem | dataObject  | attribute  | parameter  | parameterValue | inclExcl | comments |
+#      | CONS_LATAM   | SEND_TO_OMP | CONS_LATAM | SYSTEMNAME | CONS_LATAM     | I        |          |
+#    And I wait "/plan/cns_plan_parameter" Async Queue complete
+#
+#    Given I import "/plan/cns_plant_attr" by keyFields "sourceSystem,localPlant"
+#      | sourceSystem | localPlant | localPlantName                     | localPlanningRelevant | locationAttribute1Desc | locationAttribute1Value | locationAttribute2Desc | locationAttribute2Value | planLocTypeDesc              | planLocTypeId | plant | plantType                   |
+#      | CONS_LATAM   | BR11       | J&J BR Sï¿½o Josï¿½ Campos - Indus |                       | Country                | Brazil                  | Volume                 | High                    | Internal Manufacturing Plant | IM            | BR59  | MP,ï¿½Manufacturingï¿½Plant |
+#      | CONS_LATAM   | BR12       | J&J BR Sï¿½o Josï¿½ Campos - Indus | X                     | Country                | Brazil                  | Volume                 | High                    | Internal Manufacturing Plant | IM            | BR59  | MP,ï¿½Manufacturingï¿½Plant |
+#      | CONS_LATAM   | CO01       | J&J BR Sï¿½o Josï¿½ Campos - Indus |  X                     | Country                | Brazil                  | Volume                 | High                    | Internal Manufacturing Plant | IM            | BR59  | MP,ï¿½Manufacturingï¿½Plant |
+#    And I wait "/plan/cns_plant_attr" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmMachine.xml" and execute file "jar/pangea-view.jar"
 
 #    Then A file is found on sink application with name "GDMMachine.tsv"
-
+#
 #    Then I check file data for filename "GDMMachine.tsv" by keyFields "machineId"
-    Then I check region data "/omp/gdm_machine" by keyFields "machineId"
-      | machineId                  | active | activeOPRERP | activeSOPERP | building   | description              | locationId      | machineCapacity | machineTypeId | parentMachineId          |
-      | CONS_LATAM/BR02/TOU-R06    | YES    | YES          | NO           | CONS_LATAM | Reator R06 Toucador      | CONS_LATAM_BR02 | finite          | Production    |                          |
-      | CONS_LATAM/BR02/TOU-R07    | YES    | YES          | NO           | CONS_LATAM | Reator R07 Toucador      | CONS_LATAM_BR02 | finite          | Production    |                          |
-      | CONS_LATAM/BR02/TOU-R08    | YES    | YES          | NO           | CONS_LATAM | Reator R08 Toucador      | CONS_LATAM_BR02 | finite          | Production    |                          |
-      | CONS_LATAM/BR02/TOU-R11    | YES    | YES          | NO           | CONS_LATAM | Reator R11 Toucador      | CONS_LATAM_BR02 | finite          | Production    |                          |
-      | CONS_LATAM/BR02/TOU-R10    | YES    | YES          | NO           | CONS_LATAM | Reator R10 Toucador      | CONS_LATAM_BR02 | finite          | Production    |                          |
-      | CONS_LATAM/BR12/CTTOUMCA_0 | YES    | YES          | NO           | CONS_LATAM | Centro                   | CONS_LATAM_BR12 | infinite        | Production    |                          |
-      | CONS_LATAM/BR12/CTTOUMCA_1 | YES    | YES          | NO           | CONS_LATAM | trabalho                 | CONS_LATAM_BR12 | infinite        | Production    |                          |
-      | CONS_LATAM/BR12/CTTOUMCA_2 | YES    | YES          | NO           | CONS_LATAM | toucador                 | CONS_LATAM_BR12 | infinite        | Production    |                          |
-      | CONS_LATAM/BR12/CTTOUMCA_3 | YES    | YES          | NO           | CONS_LATAM |                          | CONS_LATAM_BR12 | infinite        | Production    |                          |
-      | CONS_LATAM/BR12/CTTOUMCB   | YES    | YES          | NO           | CONS_LATAM | Centro trabalho toucador | CONS_LATAM_BR12 | infinite        | Production    | CONS_LATAM/BR12/CTTOUMCC |
-
-
+##    Then I check region data "/omp/gdm_machine" by keyFields "machineId"
+#      | machineId               | active | activeOPRERP | activeSOPERP | building | description            | locationId      | machineCapacity | machineTypeId | parentMachineId         |
+#      | CONS_LATAM_BR12/TOU-R05 | YES    | YES          | NO           | 400      | Reator R05 Toucador    | CONS_LATAM_BR12 | infinite        | Production    | CONS_LATAM_BR12/TOU-P05 |
+#      | CONS_LATAM_BR12/TOU-R06 | YES    | YES          | NO           | 400      | EN R06 Toucador        | CONS_LATAM_BR12 | infinite        | Production    | CONS_LATAM_BR12/TOU-P06 |
+#      | CONS_LATAM_CO01/TOU-R07 | YES    | YES          | NO           | 400      | ES R07 Toucador        | CONS_LATAM_CO01 | infinite        | Production    | CONS_LATAM_CO01/TOU-P07 |
+#      | CONS_LATAM_BR12/TOU-R08 | YES    | YES          | NO           | 400      | PT Reator R08 Toucador | CONS_LATAM_BR12 | infinite        | Production    | CONS_LATAM_BR12/TOU-P08 |
+#      | CONS_LATAM_BR12/TOU-R09 | YES    | YES          | NO           | 400      |                        | CONS_LATAM_BR12 | infinite        | Production    | CONS_LATAM_BR12/TOU-P09 |
+#      | CONS_LATAM_BR12/TOU-R10 | YES    | YES          | NO           | 400      | Reator R10 Toucador    | CONS_LATAM_BR12 | finite          | Production    | CONS_LATAM_BR12/TOU-P10 |
+#
+#
 #    And I delete the test data
-
+#
 #    And I will remove all data with region "/omp/gdm_machine"
-    
-        
+#
+#

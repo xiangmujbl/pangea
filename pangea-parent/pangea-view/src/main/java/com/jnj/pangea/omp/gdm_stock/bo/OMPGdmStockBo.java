@@ -207,7 +207,6 @@ public class OMPGdmStockBo extends BaseBo {
         this.startDate = startDate;
     }
 
-
     public String getStockType() {
         return stockType;
     }

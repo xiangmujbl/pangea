@@ -2,15 +2,15 @@ package com.jnj.pangea.omp.gdm_customer.service;
 
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
+import com.jnj.pangea.common.dao.impl.edm.EDMCurrencyV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustChannelDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsDemGrpAsgnDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsProductCustomerDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsClustersEntity;
+import com.jnj.pangea.common.entity.edm.EDMCurrencyV1Entity;
+import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsClustersDaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMCountryV1DaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsCustChannelEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsDemGrpAsgnEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanDemGrpEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_customer.bo.OMPGdmCustomerBo;
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +32,8 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
     private EDMCountryV1DaoImpl countryV1Dao = EDMCountryV1DaoImpl.getInstance();
     private PlanCnsDemGrpAsgnDaoImpl cnsDemGrpAsgnDao = PlanCnsDemGrpAsgnDaoImpl.getInstance();
     private PlanCnsCustChannelDaoImpl cnsCustChannelDao = PlanCnsCustChannelDaoImpl.getInstance();
+    private PlanCnsProductCustomerDaoImpl cnsProductcustomerDao = PlanCnsProductCustomerDaoImpl.getInstance();
+    private EDMCurrencyV1DaoImpl currencyV1Dao = EDMCurrencyV1DaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -81,6 +83,33 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
                                     }
                                 }
 
+                                // T1
+                                String demandGroup = cnsPlanDemGrpEntity.getDemandGroupId();
+                                if (StringUtils.isNotEmpty(demandGroup)) {
+
+                                    PlanCnsProductCustomerEntity cnsProductcustomerEntity = cnsProductcustomerDao.getEntityWithDemandGroup(demandGroup);
+                                    if (null != cnsProductcustomerEntity) {
+
+                                        gdmCustomerBo.setDistributor(IConstant.VALUE.YES);
+                                    } else {
+
+                                        gdmCustomerBo.setDistributor(IConstant.VALUE.NO);
+                                    }
+                                }
+
+                                // J7
+                                if (StringUtils.isNotEmpty(cnsPlanDemGrpEntity.getSourceSystem()) && StringUtils.isNotEmpty(cnsPlanDemGrpEntity.getLocalCurrency())) {
+
+                                    EDMCurrencyV1Entity currencyV1Entity = currencyV1Dao.getEntityWithLocalCurrencyAndSourceSystem(cnsPlanDemGrpEntity.getLocalCurrency(), cnsPlanDemGrpEntity.getSourceSystem());
+                                    if (null != currencyV1Entity) {
+
+                                        gdmCustomerBo.setCurrencyId(currencyV1Entity.getCurrencyCode());
+                                    } else {
+
+                                        gdmCustomerBo.setCurrencyId(IConstant.VALUE.BLANK);
+                                    }
+                                }
+
                                 gdmCustomerBo.setCustomerId(cnsPlanDemGrpEntity.getDemandGroupId());
                                 gdmCustomerBo.setActive(IConstant.VALUE.YES);
                                 gdmCustomerBo.setActiveFCTERP(IConstant.VALUE.YES);
@@ -89,7 +118,6 @@ public class OMPGdmCustomerServiceImpl implements ICommonService {
                                 gdmCustomerBo.setChannel(cnsDemGrpAsgnEntity.getChannel());
                                 gdmCustomerBo.setCountryId(cnsDemGrpAsgnEntity.getCountryAffiliate());
                                 gdmCustomerBo.setDistributionChannel(IConstant.VALUE.BLANK);
-                                gdmCustomerBo.setDistributor(IConstant.VALUE.NO);
                                 gdmCustomerBo.setECommerce(IConstant.VALUE.NO);
                                 gdmCustomerBo.setForecastSource(IConstant.VALUE.BLANK);
                                 gdmCustomerBo.setGlobalCustomerId(IConstant.VALUE.BLANK);

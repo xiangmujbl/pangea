@@ -1,4 +1,4 @@
-<adf-curation xmlPathPrefix="omp" executionClassName="com.jnj.pangea.omp.gdm_inventory_stocks.OMPGdmStockInventoryStocks" chunkSize="500" type="M2" writeTo="all" topic="PANGEA_omp_gdm_stock_inventory_stocks">
+<adf-curation xmlPathPrefix="omp" executionClassName="com.jnj.pangea.jde.omp.stock.OMPGdmStockInventoryStocks" chunkSize="500" type="M2" writeTo="all" topic="PANGEA_omp_gdm_stock_inventory_stocks">
 
     <regions>
         <region path="/edm/material_plant_v1" mainRegion="true">
@@ -95,7 +95,7 @@
         <!-- INV4 -->
         <multis>
             <multi method="getInventoryStock" parameter="sourceSystem,localPlant,localMaterialNumber" var="inventoryStockList"
-                   value="localConsignmentSpecialStockIndicator,localSpecialStockIndicator,sourceSystem,localPlant,localMaterial,localBatchId,localVendorNumber">
+                   value="localConsignmentSpecialStockIndicator,localSpecialStockIndicator,sourceSystem,localPlant,localMaterial,localBatchId,localVendorNumber,localStorageLocation">
             </multi>
         </multis>
         <vars>
@@ -118,15 +118,15 @@
             </column>
             <column name="blockedQuantity">
                 <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <ref hook="OMPGdmStockInventoryStocksHook.getBlockedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                    <ref hook="OMPGdmStockInventoryStocksHook.getBlockedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                 </if>
                 <else>
                     <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <ref hook="OMPGdmStockInventoryStocksHook.getBlockedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                        <ref hook="OMPGdmStockInventoryStocksHook.getBlockedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                     </if>
                     <else>
                         <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <ref hook="OMPGdmStockInventoryStocksHook.getBlockedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                            <ref hook="OMPGdmStockInventoryStocksHook.getBlockedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                         </if>
                     </else>
                 </else>
@@ -146,7 +146,7 @@
                     </else>
                 </else>
             </column>
-            <column name="certaintyID" hardCode=""/>
+            <column name="certaintyId" hardCode=""/>
             <column name="eRPOrderId" hardCode=""/>
             <column name="inventoryLinkGroupId" hardCode=""/>
             <column name="lifnr">
@@ -155,24 +155,30 @@
                 </if>
                 <else>
                     <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <set name="lifnr" value="'K'"/>
+                        <set name="lifnr" value="localVendorNumber"/>
                     </if>
                     <else>
                         <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <set name="lifnr" value="'O'"/>
+                            <set name="lifnr" value="localVendorNumber"/>
                         </if>
                     </else>
                 </else>
             </column>
             <column name="locationId">
                 <if test="StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <if test="StringInner.isStringNotEmpty(localPlant)">
+                    <if test="StringUtils.isNotEmpty(localPlant)">
                         <ref method="getPlantV1" parameter="localPlant" resultType="Map" value="localPlanningRelevant">
                             <if test="localPlanningRelevant.equals('X')">
                                 <set name="locationId" value="StringInner.join(sourceSystem,'_',localPlant)"/>
                             </if>
+                            <else>
+                                <return/>
+                            </else>
                         </ref>
                     </if>
+                    <else>
+                        <return/>
+                    </else>
                 </if>
                 <else>
                     <if test="localSpecialStockIndicator.equals('O')">
@@ -180,15 +186,21 @@
                             StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringNotEmpty(vendorOrCustomer)">
                             <ref method="getCnsSplPlnLocWithLocalPlant" parameter="sourceSystem,localVendorNumber,localPlant,vendorOrCustomer" resultType="Map"
                                  value="localNumber">
-                                <if test="StringInner.isStringNotEmpty(localNumber)">
+                                <if test="StringUtils.isNotEmpty(localNumber)">
                                     <set name="locationId" value="StringInner.join(sourceSystem,'_',localPlant,'$',localNumber)"/>
                                 </if>
+                                <else>
+                                    <return/>
+                                </else>
                             </ref>
                         </if>
+                        <else>
+                            <return/>
+                        </else>
                     </if>
                 </else>
             </column>
-            <column name="processId" hardCode=""/>
+
             <column name="processTypeId" hardCode=""/>
             <column name="productId">
                 <if test="StringInner.isStringNotEmpty(localMaterial)&amp;&amp;StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)">
@@ -200,39 +212,50 @@
                                     <set name="productId" value="primaryPlanningCode"/>
                                 </if>
                                 <else>
-                                    <set name="productId" value="materialNumber"/>
+                                    <if test="StringInner.isStringNotEmpty(materialNumber)">
+                                        <set name="productId" value="materialNumber"/>
+                                    </if>
+                                    <else>
+                                        <return/>
+                                    </else>
                                 </else>
                             </ref>
                         </if>
+                        <else>
+                            <return/>
+                        </else>
                     </ref>
                 </if>
+                <else>
+                    <return/>
+                </else>
             </column>
             <column name="qualityQuantity">
                 <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <ref hook="OMPGdmStockInventoryStocksHook.getQualityQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                    <ref hook="OMPGdmStockInventoryStocksHook.getQualityQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                 </if>
                 <else>
                     <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <ref hook="OMPGdmStockInventoryStocksHook.getQualityQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                        <ref hook="OMPGdmStockInventoryStocksHook.getQualityQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                     </if>
                     <else>
                         <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <ref hook="OMPGdmStockInventoryStocksHook.getQualityQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                            <ref hook="OMPGdmStockInventoryStocksHook.getQualityQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                         </if>
                     </else>
                 </else>
             </column>
             <column name="quantity">
                 <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                    <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                 </if>
                 <else>
                     <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                        <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                     </if>
                     <else>
                         <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                            <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                         </if>
                     </else>
                 </else>
@@ -242,15 +265,15 @@
             </column>
             <column name="restrictedQuantity">
                 <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <ref hook="OMPGdmStockInventoryStocksHook.getRestrictedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                    <ref hook="OMPGdmStockInventoryStocksHook.getRestrictedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                 </if>
                 <else>
                     <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <ref hook="OMPGdmStockInventoryStocksHook.getRestrictedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                        <ref hook="OMPGdmStockInventoryStocksHook.getRestrictedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                     </if>
                     <else>
                         <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <ref hook="OMPGdmStockInventoryStocksHook.getRestrictedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                            <ref hook="OMPGdmStockInventoryStocksHook.getRestrictedQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                         </if>
                     </else>
                 </else>
@@ -271,20 +294,25 @@
                 </else>
             </column>
             <column name="startDate">
-                <ref hook="OMPGdmStockInventoryStocksHook.stampToDate(String.valueOf(System.currentTimeMillis()))"/>
+                <if test="StringInner.isStringNotEmpty(productId)&amp;&amp;StringInner.isStringNotEmpty(locationId)">
+                    <ref hook="OMPGdmStockInventoryStocksHook.stampToDate(String.valueOf(System.currentTimeMillis()))"/>
+                </if>
+                <else>
+                    <return/>
+                </else>
             </column>
             <column name="stockType" hardCode="'level'"/>
             <column name="transferQuantity">
                 <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <ref hook="OMPGdmStockInventoryStocksHook.getTransferQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                    <ref hook="OMPGdmStockInventoryStocksHook.getTransferQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                 </if>
                 <else>
                     <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <ref hook="OMPGdmStockInventoryStocksHook.getTransferQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                        <ref hook="OMPGdmStockInventoryStocksHook.getTransferQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                     </if>
                     <else>
                         <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <ref hook="OMPGdmStockInventoryStocksHook.getTransferQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
+                            <ref hook="OMPGdmStockInventoryStocksHook.getTransferQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId, localVendorNumber)"/>
                         </if>
                     </else>
                 </else>
@@ -293,23 +321,11 @@
                 <ref hook="OMPGdmStockInventoryStocksHook.stampToDate(String.valueOf(System.currentTimeMillis()))"/>
             </column>
             <column name="unrestrictedQuantity">
-                <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
-                </if>
-                <else>
-                    <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                        <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
-                    </if>
-                    <else>
-                        <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
-                            <ref hook="OMPGdmStockInventoryStocksHook.getQuantity(localBatchManagementRequirementIndicator, inventoryStockList, localBatchId)"/>
-                        </if>
-                    </else>
-                </else>
+                <set name="unrestrictedQuantity" value="quantity"/>
             </column>
             <column name="stockId" isPK="true">
-                <if test="qualityQuantity.equals('0.0')&amp;&amp;quantity.equals('0.0')&amp;&amp;restrictedQuantity.equals('0.0')&amp;&amp;
-                returnsQuantity.equals('0.0')&amp;&amp;transferQuantity.equals('0.0')&amp;&amp;unrestrictedQuantity.equals('0.0')&amp;&amp;blockedQuantity.equals('0.0')">
+                <if test="qualityQuantity.equals('0')&amp;&amp;quantity.equals('0')&amp;&amp;restrictedQuantity.equals('0')&amp;&amp;
+                returnsQuantity.equals('0')&amp;&amp;transferQuantity.equals('0')&amp;&amp;unrestrictedQuantity.equals('0')&amp;&amp;blockedQuantity.equals('0')">
                     <return/>
                 </if>
                 <else>
@@ -319,32 +335,68 @@
                                 <set name="productId" value="primaryPlanningCode"/>
                             </if>
                             <else>
-                                <set name="productId" value="materialNumber"/>
+                                <if test="StringInner.isStringNotEmpty(materialNumber)">
+                                    <set name="productId" value="materialNumber"/>
+                                </if>
+                                <else>
+                                    <return/>
+                                </else>
                             </else>
                         </ref>
-                        <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)
-                            &amp;&amp;StringInner.isStringNotEmpty(productId)">
-                            <set name="stockId" value="StringInner.join(productId,'/',sourceSystem,'_',localPlant,'/',localBatchId)"/>
-                        </if>
-                        <else>
-                            <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)
-                                &amp;&amp;StringInner.isStringNotEmpty(productId)">
-                                <set name="stockId" value="StringInner.join(productId,'/',sourceSystem,'_',localPlant,'/',localBatchId,'/','K')"/>
+                        <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
+                            <if test="StringInner.isStringNotEmpty(productId)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)&amp;&amp;StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringNotEmpty(localBatchId)">
+                                <set name="stockId" value="StringInner.join(productId,'/',sourceSystem,'_',localPlant,'/',localBatchId)"/>
                             </if>
                             <else>
-                                <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')
-                                    &amp;&amp;StringInner.isStringNotEmpty(productId)">
+                                <if test="StringInner.isStringNotEmpty(productId)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)&amp;&amp;StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringEmpty(localBatchId)">
+                                    <set name="stockId" value="StringInner.join(productId,'/',sourceSystem,'_',localPlant)"/>
+                                </if>
+                            </else>
+                        </if>
+                        <else>
+                            <if test="localConsignmentSpecialStockIndicator.equals('K')&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
+                                <if test="StringInner.isStringNotEmpty(productId)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)&amp;&amp;StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringNotEmpty(localBatchId)">
+                                    <set name="stockId" value="StringInner.join(productId,'/',sourceSystem,'_',localPlant,'/',localBatchId,'/','K')"/>
+                                </if>
+                                <else>
+                                    <return/>
+                                </else>
+                            </if>
+                            <else>
+                                <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;localSpecialStockIndicator.equals('O')">
                                     <if test="StringInner.isStringNotEmpty(sourceSystem)&amp;&amp;StringInner.isStringNotEmpty(localVendorNumber)&amp;&amp;StringInner.isStringNotEmpty(vendorOrCustomer)">
                                         <ref method="getCnsSplPlnLoc" parameter="sourceSystem,localVendorNumber,vendorOrCustomer" resultType="Map" value="localNumber">
                                             <if test="StringInner.isStringNotEmpty(localNumber)">
-                                                <set name="stockId" value="StringInner.join(productId,'/',sourceSystem,'_',localPlant,'$',localNumber,'/',localBatchId)"/>
+                                                <if test="StringInner.isStringNotEmpty(productId)&amp;&amp;StringInner.isStringNotEmpty(sourceSystem)&amp;&amp;StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringNotEmpty(localBatchId)">
+                                                    <set name="stockId" value="StringInner.join(productId,'/',sourceSystem,'_',localPlant,'$',localNumber,'/',localBatchId)"/>
+                                                </if>
+                                                <else>
+                                                    <return/>
+                                                </else>
                                             </if>
+                                            <else>
+                                                <return/>
+                                            </else>
                                         </ref>
                                     </if>
+                                    <else>
+                                        <return/>
+                                    </else>
                                 </if>
                             </else>
                         </else>
                     </if>
+                    <else>
+                        <return/>
+                    </else>
+                </else>
+            </column>
+            <column name="processId">
+                <if test="OMPGdmStockInventoryStocksHook.checkStockId(inventoryStockList, localMaterial, localBatchId, localVendorNumber, localStorageLocation)">
+                    <set name="processId" value="''"/>
+                </if>
+                <else>
+                    <return/>
                 </else>
             </column>
         </columns>
