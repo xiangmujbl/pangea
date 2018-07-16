@@ -292,7 +292,6 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 				localNumerator, localDenominator);
 
 		if (StringInner.equal("0", quantity)) {
-LogUtil.getCoreLog().info("-----------77--------------");
 			return false;
 		}
 
