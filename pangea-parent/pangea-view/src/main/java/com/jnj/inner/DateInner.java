@@ -106,9 +106,9 @@ public class DateInner {
         return changeDate(date,0,0,0,0,minute,0);
     }
 
-        public static Date offsetSecond(Date date, int second) {
-            return changeDate(date,0,0,0,0,0,second);
-        }
+    public static Date offsetSecond(Date date, int second) {
+        return changeDate(date,0,0,0,0,0,second);
+    }
 
     public static Date changeDate(Date date, int year, int month, int day, int hour, int minute, int second) {
 
@@ -120,14 +120,6 @@ public class DateInner {
         calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + hour);
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + minute);
         calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + second);
-        return calendar.getTime();
-    }
-
-    public static Date offsetDate(Date date, int days) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
         return calendar.getTime();
     }
 
