@@ -162,7 +162,7 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 						} else if (StringInner.isStringNotEmpty(materialMumber)) {
 							productId = materialMumber;
 						} else {
-							productId = "";
+							return false;
 						}
 					}
 				} else {
@@ -278,6 +278,12 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 			}
 		}
 
+		if (StringInner.isStringEmpty(productId)) {
+
+			return false;
+		}
+
+		minRemainingShelfLife = minShelfLife;
 		builder.put("minRemainingShelfLife", minShelfLife);
 
 		String quantity = null;
@@ -286,7 +292,7 @@ public class OMPGdmDemandSTO implements IEventProcessor {
 				localNumerator, localDenominator);
 
 		if (StringInner.equal("0", quantity)) {
-
+LogUtil.getCoreLog().info("-----------77--------------");
 			return false;
 		}
 
