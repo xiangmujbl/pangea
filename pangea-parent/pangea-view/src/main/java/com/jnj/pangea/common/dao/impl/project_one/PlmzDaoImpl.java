@@ -22,7 +22,6 @@ public class PlmzDaoImpl extends CommonDaoImpl {
     public List<PlmzEntity> getEntityByPlntyPlnnrPlnalZuonr(String plnty,String plnnr,String plnal,String zuonr){
         if(StringUtils.isNotBlank(plnty) && StringUtils.isNotBlank(plnnr)
                 && StringUtils.isNotBlank(plnal) && StringUtils.isNotBlank(zuonr)){
-            LogUtil.getCoreLog().info("--------------tiaojian------------"+plnty+"-"+plnnr+"-"+plnal+"-"+zuonr);
             String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_PLMZ.PLNTY).is(plnty).
                     and(IConstant.PROJECT_ONE_PLMZ.PLNNR).is(plnnr)
                     .and(IConstant.PROJECT_ONE_PLMZ.PLNAL).is(plnal).
