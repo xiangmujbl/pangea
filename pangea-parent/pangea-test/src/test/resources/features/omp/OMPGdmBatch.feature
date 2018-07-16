@@ -117,7 +117,7 @@ Feature: OMPGdmBatch AEAZ-5865
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
-    Given I import "/edm/inventory_stock" by keyFields "sourceSystem,localBatchId,localMaterial"
+    Given I import "/edm/inventory_stock_v1" by keyFields "sourceSystem,localBatchId,localMaterial"
       | sourceSystem | localBatchId | localMaterial      | localUnrestrictedStock | localUnrestrictedSpecialStock | localUnrestrictedBatchStock | localUnrestrictedConsignmentStock | localQualityInspectionStock | localQualityInspectionSpecialStock | localQualityInspectionBatchStock | localQualityInspectionConsignmentStock | localRestrictedStock | localRestrictedSpecialStock | localRestrictedBatchStock | localRestrictedConsignmentStock | localBlockedStock | localBlockedBatchStock | localBlockedConsignmentStock | localReturnsStock | localReturnsBatchStock | localStockInTransitStorageLocation | localStockInTransitPlantToPlant | localStockInTransitPlant | localStockInTransitSpecial | localStockInTransitBatch | localRestrictedUseConsignment | localConsignmentStockInQualityInspection | localUnrestrictedUseConsignment | localBlkdConstStkNonBm | localTotalStockAllRestrictedBatches |
       | CONS_LATAM   | 920B5        | 000000000007047647 | 4285.672               | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
       | CONS_LATAM   | 90307        | 000000000000001063 | 457887                 | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
@@ -134,7 +134,7 @@ Feature: OMPGdmBatch AEAZ-5865
       # If value of all fields with Data Type as "Float"  <= 0, skip the record
       | CONS_LATAM   | 90904        | 000000000000070365 | 0.000                  | 0.000                         | 0.000                       | 0.000                             | 0.000                       | 0.000                              | 0.000                            | 0.000                                  | 0.000                | 0.000                       | 0.000                     | 0.000                           | 0.000             | 0.000                  | 0.000                        | 0.000             | 0.000                  | 0.000                              | 0.000                           | 0.000                    | 0.000                      | 0.000                    | 0.000                         | 0.000                                    | 0.000                           | 0.000                  | 0.000                               |
 
-    And I wait "/edm/inventory_stock" Async Queue complete
+    And I wait "/edm/inventory_stock_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmBatch.xml" and execute file "jar/pangea-view.jar"
 
@@ -153,7 +153,7 @@ Feature: OMPGdmBatch AEAZ-5865
       | 7040606/CONS_LATAM_EC01/791E7   | YES    | YES          | NO           | 2008/04/28 00:00:00 | 1980/01/01 00:00:00 | 7040606   |
       | 7043872/CONS_LATAM_PE01/791L6 B | YES    | YES          | NO           | 2998/12/31 00:00:00 | 1980/01/01 00:00:00 | 7043872   |
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
       | SP             | OMPGdmBatch | N2        |              |              | S/L  |      |      |      |      |            |
 
@@ -165,4 +165,4 @@ Feature: OMPGdmBatch AEAZ-5865
 
     And I will remove all data with region "/omp/gdm_batch"
 
-    And I will remove all data with region "/dev/plan/edm_failed_data"
+    And I will remove all data with region "/plan/edm_failed_data"
