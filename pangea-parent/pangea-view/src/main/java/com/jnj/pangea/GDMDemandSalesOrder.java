@@ -114,7 +114,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		String salesOrderNo = StringInner.getString(map, "salesOrderNo");
 		String salesOrderItem = StringInner.getString(map, "salesOrderItem");
 		String lineRejStat = StringInner.getString(map, "lineRejStat");
-		String lineDelvStat = StringInner.getString(map, "lineDelvStat");
 		String localNumtoBase = StringInner.getString(map, "localNumtoBase");
 		String localDentoBase = StringInner.getString(map, "localDentoBase");
 		String localSubDocCatg = "J";
@@ -156,7 +155,7 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			localBaseUom = String.valueOf(map1.get("localBaseUom"));
 		}
 
-		Map map2 = joinCnsPlanUnit(sourceSystem, localBaseUom.trim());
+		Map map2 = joinCnsPlanUnit(sourceSystem, StringInner.trim(localBaseUom));
 		if (map2 != null) {
 			unit = String.valueOf(map2.get("unit"));
 		}
@@ -165,10 +164,9 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			unitId = unit;
 		} else {
 
-
 			writeFailDataToRegion(failMap, "SP", "GDMDemandSalesOrder", "SO14",
 					"Plan unit is null", sourceSystem, salesOrderNo,
-					salesOrderItem, scheduleLineItem, localMaterialNumber,"" ,
+					salesOrderItem, scheduleLineItem, localMaterialNumber, "",
 					"");
 			return false;
 		}
@@ -192,7 +190,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				inclusionExclusion = String.valueOf(map3
 						.get("inclusionExclusion"));
 				if (inclusionExclusion != null) {
-
 					return false;
 				}
 			}
@@ -211,7 +208,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				if (StringInner.isStringEmpty(customerId)) {
 					Map map5 = joinCnsDemGrpAsgn(localShipToParty,
 							localSalesOrg);
-
 					if (map5 != null) {
 						demandGroup = String.valueOf(map5.get("demandGroup"));
 						if (StringInner.isStringNotEmpty(demandGroup)) {
@@ -220,7 +216,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 					}
 					if (StringInner.isStringEmpty(customerId)) {
 						Map map6 = joinKnvhOnKunnr(localShipToParty);
-
 						if (map6 != null) {
 							vkorg = String.valueOf(map6.get("vkorg"));
 							datbi = String.valueOf(map6.get("datbi"));
@@ -243,7 +238,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 						}
 						if (StringInner.isStringEmpty(customerId)) {
 							Map map8 = joinKnvhOnHkunnr(localShipToParty);
-
 							if (map8 != null) {
 								vkorg = String.valueOf(map8.get("vkorg"));
 								datbi = String.valueOf(map8.get("datbi"));
@@ -356,7 +350,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				}
 			}
 		} else {
-
 			return false;
 		}
 
@@ -378,14 +371,12 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 					|| Double.parseDouble(salesOrderQty) <= 0
 					|| StringInner.isStringNotEmpty(localRejReason)
 					|| "C".equals(lineRejStat)) {
-
 				return false;
 			} else {
 				demandId = StringInner.join(productId, "/", locationId, "/",
 						salesOrderNo, "/", salesOrderItem);
 			}
 		} else {
-
 			return false;
 		}
 
@@ -410,7 +401,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 								.parseInt(localDentoBase))
 							- Double.parseDouble(localBaseQuantity));
 		} else {
-
 			return false;
 		}
 
@@ -501,29 +491,18 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			return map;
 		}
 
-
-
-
 		return null;
 	}
 
 	public Map joinCnsPlanUnit(String sourceSystem, String localBaseUom) {
 
-	/*	String key = JsonObject.create().append("sourceSystem", sourceSystem)
-				.append("localUom", localBaseUom).toJson();
+		ADFCriteria adfCriteria12 = QueryHelper.buildCriteria("sourceSystem")
+				.is(sourceSystem);
+		ADFCriteria adfCriteria13 = QueryHelper.buildCriteria("localUom").is(
+				localBaseUom);
+		ADFCriteria groupCriteria36 = adfCriteria13.and(adfCriteria12);
 
-		Map map = AdfViewHelper.get("/plan/cns_plan_unit", key);
-		if (map != null) {
-			return map;
-		}
-
-*/
-		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria(
-				"sourceSystem").is(sourceSystem);
-		ADFCriteria adfCriteria2 = QueryHelper.buildCriteria(
-				"localUom").is(localBaseUom);
-		ADFCriteria groupCriteria3 = adfCriteria1.and(adfCriteria2);
-		ADFCriteria adfCriteria = groupCriteria3;
+		ADFCriteria adfCriteria = groupCriteria36;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_plan_unit", queryStr, -1);
@@ -533,7 +512,9 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 					.toMap();
 			return map;
 		}
+
 		return null;
+
 	}
 
 	public Map joinSalesHistoryAggr(String salesOrderNo, String salesOrderItem,
@@ -552,20 +533,11 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 
 	public Map joinKnvhOnKunnr(String localShipToParty) {
 
-		/*String key = JsonObject.create().append("kunnr", localShipToParty)
-				.toJson();
-		Map map = AdfViewHelper.get("/project_one/knvh", key);
-		if (map != null) {
-			return map;
-		}
+		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("kunnr").is(
+				localShipToParty);
+		ADFCriteria groupCriteria37 = adfCriteria17;
 
-*/
-
-
-		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria(
-				"kunnr").is(localShipToParty);
-
-		ADFCriteria adfCriteria = adfCriteria1;
+		ADFCriteria adfCriteria = groupCriteria37;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/project_one/knvh", queryStr, -1);
@@ -577,26 +549,16 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		}
 
 		return null;
+
 	}
 
 	public Map joinKnvhOnHkunnr(String localShipToParty) {
-/*
 
-		String key = JsonObject.create().append("hkunnr", localShipToParty)
-				.toJson();
-		Map map = AdfViewHelper.get("/project_one/knvh", key);
-		if (map != null) {
-			return map;
-		}
+		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria("hkunnr").is(
+				localShipToParty);
+		ADFCriteria groupCriteria38 = adfCriteria18;
 
-
-*/
-
-
-		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria(
-				"hkunnr").is(localShipToParty);
-
-		ADFCriteria adfCriteria = adfCriteria1;
+		ADFCriteria adfCriteria = groupCriteria38;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/project_one/knvh", queryStr, -1);
@@ -607,9 +569,8 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			return map;
 		}
 
-
-
 		return null;
+
 	}
 
 	public Map joinCnsPlanObjectFilter(String sourceObjName,
@@ -631,11 +592,11 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				"sourceObjectAttribute2Value").is(sourceObjAttr2Val);
 		ADFCriteria adfCriteria25 = QueryHelper.buildCriteria(
 				"inclusionExclusion").is(inclFlag);
-		ADFCriteria groupCriteria36 = adfCriteria25.and(adfCriteria24)
+		ADFCriteria groupCriteria39 = adfCriteria25.and(adfCriteria24)
 				.and(adfCriteria23).and(adfCriteria22).and(adfCriteria21)
 				.and(adfCriteria20).and(adfCriteria19);
 
-		ADFCriteria adfCriteria = groupCriteria36;
+		ADFCriteria adfCriteria = groupCriteria39;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_plan_object_filter", queryStr, -1);
@@ -671,11 +632,11 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				"sourceObjectAttribute2Value").is(sourceObjAttr2Val);
 		ADFCriteria adfCriteria33 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2Value").is(allFlag);
-		ADFCriteria groupCriteria37 = adfCriteria33.or(adfCriteria32)
+		ADFCriteria groupCriteria40 = adfCriteria33.or(adfCriteria32)
 				.and(adfCriteria31).and(adfCriteria30).and(adfCriteria29)
 				.and(adfCriteria28).and(adfCriteria27).and(adfCriteria26);
 
-		ADFCriteria adfCriteria = groupCriteria37;
+		ADFCriteria adfCriteria = groupCriteria40;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_plan_object_filter", queryStr, -1);

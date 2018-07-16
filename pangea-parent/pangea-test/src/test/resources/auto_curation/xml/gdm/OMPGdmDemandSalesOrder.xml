@@ -104,7 +104,7 @@
                 <parameter name="localMaterialNumber" value="localMaterialNumber"/>
             </parameters>
         </method>
-        <method name="joinCnsPlanUnit" isPK="true" resultType="Map" path="/plan/cns_plan_unit">
+        <method name="joinCnsPlanUnit" isPK="false" resultType="Map" path="/plan/cns_plan_unit">
             <parameters>
                 <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
                 <parameter name="localUom" value="localBaseUom"/>
@@ -117,12 +117,12 @@
                 <parameter name="localSubDocCatg" value="localSubDocCatg"/>
             </parameters>
         </method>
-        <method name="joinKnvhOnKunnr" isPK="true" resultType="Map" path="/project_one/knvh">
+        <method name="joinKnvhOnKunnr" isPK="false" resultType="Map" path="/project_one/knvh">
             <parameters>
                 <parameter name="kunnr" value="localShipToParty"/>
             </parameters>
         </method>
-        <method name="joinKnvhOnHkunnr" isPK="true" resultType="Map" path="/project_one/knvh">
+        <method name="joinKnvhOnHkunnr" isPK="false" resultType="Map" path="/project_one/knvh">
             <parameters>
                 <parameter name="hkunnr" value="localShipToParty"/>
             </parameters>
@@ -189,7 +189,6 @@
             <var name="salesOrderNo" value="salesOrderNo"/>
             <var name="salesOrderItem" value="salesOrderItem"/>
             <var name="lineRejStat" value="lineRejStat"/>
-            <var name="lineDelvStat" value="lineDelvStat"/>
             <var name="localNumtoBase" value="localNumtoBase"/>
             <var name="localDentoBase" value="localDentoBase"/>
             <var name="localSubDocCatg" value="'J'"/>
@@ -213,7 +212,7 @@
             <column name="unitId" var="unitId">
                 <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
                      value="localBaseUom" resultType="Map"/>
-                <ref method="joinCnsPlanUnit" parameter="sourceSystem,localBaseUom" value="unit" resultType="Map">
+                <ref method="joinCnsPlanUnit" parameter="sourceSystem,StringInner.trim(localBaseUom)" value="unit" resultType="Map">
                     <if test="unit != null">
                         <set name="unitId" value="unit"/>
                     </if>
