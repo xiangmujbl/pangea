@@ -74,7 +74,9 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setDELKZ(IConstant.VALUE.BA);
 
         //N4
-        plantN4(edmPurchaseRequisitionV1Entity);
+        if(!plantN4(edmPurchaseRequisitionV1Entity)){
+            return resultObjectSkip;
+        }
 
         //N5
         ruleN5(edmPurchaseRequisitionV1Entity);
@@ -139,13 +141,11 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             Date dFrom = sdfFrom.parse(dateToFormat);
 
             String timeToMove = edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays();
-            String deliveryDate = sdfTo.format(dFrom);
-            Date date = sdfTo.parse(deliveryDate);
             Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
+            cal.setTime(dFrom);
             cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
             Date d2 = cal.getTime();
-            deliveryDate = sdfTo.format(d2) + IConstant.VALUE.HH_NN_SS_ZERO;
+            String deliveryDate = sdfTo.format(d2) + IConstant.VALUE.HH_NN_SS_ZERO;
             gdmReqFromErpBo.setDeliveryDate(deliveryDate);
         } catch (ParseException e) {
             LogUtil.getCoreLog().error(e.getMessage());
@@ -166,7 +166,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                 List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
                 if(triangulationEntities != null) {
                     PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
-                    localPlant = stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters(),IConstant.VALUE.EMPTY);
+                    localPlant = stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+IConstant.VALUE.UNDERLINE,IConstant.VALUE.EMPTY);
                 }
             }
         }

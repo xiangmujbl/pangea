@@ -987,7 +987,7 @@ public interface IConstant {
         String CRITICAL_PARAMETER_LOW = "criticalParameter{0}Low";
         String CRITICAL_PARAMETER_OPERATOR = "criticalParameter{0}Operator";
         String CRITICAL_PARAMETER_IE = "criticalParameter{0}IE";
-        String SOURCE_SYSTEM_CRITICAL_PARAMETERS = "sourceSystemCriticalParameters)";
+        String SOURCE_SYSTEM_CRITICAL_PARAMETERS = "sourceSystemCriticalParameters";
     }
 
     interface PLAN_CNS_TLANE_CONTROL_TRIANGULATION {
