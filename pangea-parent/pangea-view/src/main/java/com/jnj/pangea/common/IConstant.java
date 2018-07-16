@@ -1089,7 +1089,7 @@ public interface IConstant {
         String BLANK = "";
         String OR = "OR";
         String SPACE = " ";
-        String CURRENCY = "CURRENCY";
+        String CURRENCY = "Currency";
         String ZERO = "0";
         String ZEROZERO = "0.0";
         String BA = "BA";
