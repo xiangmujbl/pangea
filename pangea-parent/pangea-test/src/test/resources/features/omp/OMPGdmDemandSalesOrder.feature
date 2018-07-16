@@ -172,9 +172,9 @@ Feature:  OMPGdmDemandSalesOrder-Curation
 
     And I check file data for filename "GDMDemandSalesOrder.tsv" by keyFields "demandId"
       | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | certaintyId | customerId | demandId                            | dueDate             | fromDueDate         | inventoryLinkGroupId | locationId      | minRemainingShelfLife | planningStrategy        | productId | quantity | unitId | wRK02 |
-      | YES    | NO           | YES          | NO           |         | VC          | 76100007   | 58752/CONS_LATAM_BR16/116708516/490 | 2016/06/03 00:00:01 | 2016/06/03 00:00:00 |                      | CONS_LATAM_BR16 | 150                   | ProductLocationBalanced | 58752     | 330.00   | EA     |       |
       | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 57039/CONS_LATAM_BR14/8306862/20    | 2017/10/19 00:00:01 | 2017/10/19 00:00:00 |                      | CONS_LATAM_BR14 | 120                   | ProductLocationBalanced | 57039     | 28.00    | EA     |       |
       | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 60520/CONS_LATAM_BR13/8306865/160   | 2016/11/22 00:00:01 | 2016/11/22 00:00:00 |                      | CONS_LATAM_BR13 | 9                     | ProductLocationBalanced | 60520     | 2017.00  | EA     |       |
+      | YES    | NO           | YES          | NO           |         | VC          | 76100007   | 58752/CONS_LATAM_BR16/116708516/490 | 2016/06/03 00:00:01 | 2016/06/03 00:00:00 |                      | CONS_LATAM_BR16 | 150                   | ProductLocationBalanced | 58752     | 330.00   | EA     |       |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID         | errorCode | sourceSystem | key1      | key2 | key3 | key4  | key5 | errorValue                         |
