@@ -170,6 +170,7 @@ Feature:  OMPGdmDemandSalesOrder-Curation
 
     Then A file is found on sink application with name "GDMDemandSalesOrder.tsv"
 
+
     And I check file data for filename "GDMDemandSalesOrder.tsv" by keyFields "demandId"
       | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | certaintyId | customerId | demandId                            | dueDate             | fromDueDate         | inventoryLinkGroupId | locationId      | minRemainingShelfLife | planningStrategy        | productId | quantity | unitId | wRK02 |
       | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 57039/CONS_LATAM_BR14/8306862/20    | 2017/10/19 00:00:01 | 2017/10/19 00:00:00 |                      | CONS_LATAM_BR14 | 120                   | ProductLocationBalanced | 57039     | 28.00    | EA     |       |
