@@ -176,7 +176,6 @@ Feature:  OMPGdmDemandSalesOrder-Curation
       | YES    | NO           | YES          | NO           |         | VC          | 76100014   | 60520/CONS_LATAM_BR13/8306865/160   | 2016/11/22 00:00:01 | 2016/11/22 00:00:00 |                      | CONS_LATAM_BR13 | 9                     | ProductLocationBalanced | 60520     | 2017.00  | EA     |       |
       | YES    | NO           | YES          | NO           |         | VC          | 76100007   | 58752/CONS_LATAM_BR16/116708516/490 | 2016/06/03 00:00:01 | 2016/06/03 00:00:00 |                      | CONS_LATAM_BR16 | 150                   | ProductLocationBalanced | 58752     | 330.00   | EA     |       |
 
-
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID         | errorCode | sourceSystem | key1      | key2 | key3 | key4  | key5 | errorValue                         |
       | SP             | GDMDemandSalesOrder | SO5       | CONS_LATAM   | 115689885 | 60   | 1    | 91732 |      | Demand Group can not be determined |
