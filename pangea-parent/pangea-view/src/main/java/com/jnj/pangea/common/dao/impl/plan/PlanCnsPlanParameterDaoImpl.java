@@ -101,6 +101,17 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
                 .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject).toQueryString();
         return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
+    public PlanCnsPlanParameterEntity getEntitiesWithConditions2(String sourceSystem, String dataObject,String attribute) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject).and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
+    public PlanCnsPlanParameterEntity getEntitiesWithConditions3(String sourceSystem, String dataObject,String attribute) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject)
+                .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute).toQueryString();
+        return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
 
     public List<PlanCnsPlanParameterEntity> getEntitiesWithConditions(String sourceSystem, String dataObject, String attribute) {
         String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
@@ -130,13 +141,13 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
 
     }
     public PlanCnsPlanParameterEntity getEntityWithSourceSystem(String sourceSystem) {
-if (StringUtils.isNotBlank(sourceSystem)){
-    String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
-            .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(IConstant.VALUE.SEND_TO_OMP)
-            .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(sourceSystem)
-            .toQueryString();
-    return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
-}
+        if (StringUtils.isNotBlank(sourceSystem)){
+            String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                    .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(IConstant.VALUE.SEND_TO_OMP)
+                    .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(sourceSystem)
+                    .toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+        }
         return null;
     }
     public PlanCnsPlanParameterEntity getEntityWithAttributeListForLFUOne(String sourceSystem) {
