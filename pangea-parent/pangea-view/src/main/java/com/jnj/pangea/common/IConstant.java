@@ -652,6 +652,13 @@ public interface IConstant {
         String PO_NUM = "poNum";
         String PO_LINE_NBR = "poLineNbr";
         String SOURCE_SYSTEM = "sourceSystem";
+        String CNFRM_QTY = "cnfrmQty";
+        String EV_TYPE_CD = "evTypeCd";
+        String PLNTCD = "plntCd";
+        String PRCHSNG_ORG_NUM = "prchsngOrgNum";
+        String PO_TYPE_CD = "poTypeCd";
+        String PURCHASE_ORDER_OA = "purchase_order_oa";
+        String RECVEAQTY = "recvEaQty";
     }
 
     interface EDM_ADVANCE_SHIP_NOTIFICATION_V1 {
@@ -1119,9 +1126,9 @@ public interface IConstant {
         String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
         String SEVEN = "7";
         String VENDOR_TRANSPORT = "VendorTransport";
-        String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
         String INTERNAL_TRANSPORT = "InternalTransport";
         String EXTERNAL_TRANSPORT = "ExternalTransport";
+        String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
         String SUPPLY = "SUPPLY";
         String INFINITE = "INFINITE";
         String ASTERIX = "*";
@@ -1163,13 +1170,27 @@ public interface IConstant {
         String PROPORTIONAL_BACK_SLANT = "/proportional";
         String THIRTY = "30";
         String THIRTY_ONE = "31";
+        String F = "F";
+        String L = "L";
+        String BE = "BE";
+        String LE = "LE";
+        String TWO_NUM = "2";
+        String THREE_NUM = "3";
+        String K = "K";
+        String EMPTY = "";
+        String NB = "NB";
+        String UB = "UB";
+        String ZLA = "ZLA";
+        String ZNB = "ZNB";
+        String SU = "SU";
+        String TR = "TR";
+        String DEFAULTSM = "Default";
         String END_EFF_CHECK = "2998/12/31";
         String START_EFF_CHECK = "1980/01/01";
         String NGEMS = "NGEMS";
         int VALUE_24 = 24;
         int VALUE_60 = 60;
         String FLOAT_ZERO = "0.0";
-        String K = "K";
         String O = "O";
         String A = "A";
         String ENDEFF_NOHMS = "2998/12/31";

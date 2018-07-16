@@ -251,7 +251,7 @@
                     </if>
                 </ref>
             </column>
-            <column name="certaintyID" hardCode="QM"></column>
+            <column name="certaintyId" hardCode="QM"></column>
             <column name="ERPOrderId" isPK="false">
                 <ref udf="iLot6Udf" parameter="toBePostedQty,lotNum,qcStsCd" value="result6">
                     <if test="result6.isEmpty()">

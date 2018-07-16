@@ -53,7 +53,7 @@
             </region>
 
             <region path="/plan/cns_productcustomer">
-                <columns>sourceSystem,demandGroup,productId</columns>
+                <columns>sourceSystem,customerId,productId</columns>
             </region>
 
             <region path="/edm/currency_v1">

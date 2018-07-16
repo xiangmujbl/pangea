@@ -16,6 +16,7 @@ public class DateInner {
     public final static String F_yyyyMMdd_3 = "dd.MM.yyyy";
     public final static String F_yyyyMM = "yyyyMM";
     public final static String F_hhmmss_a = "hh:mm:ss a";
+    public final static String F_HHmmss = "HHmmss";
     public final static String F_yyyyMMddHHmmss = "yyyyMMddHHmmss";
     public final static String yyyyMMdd_HHmmss = "yyyyMMdd_HH-mm-ss";
     public final static String yyyy_MM_dd_HHmmss_SSS = "yyyy/MM/dd HH:mm:ss.SSS";
@@ -54,7 +55,11 @@ public class DateInner {
 
     public static String dateToString(Date dt, String format, Locale locale) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
-        return sdf.format(dt);
+        try {
+            return sdf.format(dt);
+        } catch (Exception e){
+        }
+        return "";
     }
 
     public static Date stringToDate(String dateStr, String format) {
@@ -70,6 +75,15 @@ public class DateInner {
             s_date = correctDate(dateStr, format);
         }
         return s_date;
+    }
+
+    public static String StringToString(String dateStr, String format, String targetFormat){
+        return StringToString(dateStr, format, targetFormat, Locale.getDefault());
+    }
+
+    public static String StringToString(String dateStr, String format, String targetFormat, Locale locale){
+        Date date = stringToDate(dateStr, format, locale);
+        return dateToString(date, targetFormat, locale);
     }
 
     public static Date offsetYear(Date date, int year) {
