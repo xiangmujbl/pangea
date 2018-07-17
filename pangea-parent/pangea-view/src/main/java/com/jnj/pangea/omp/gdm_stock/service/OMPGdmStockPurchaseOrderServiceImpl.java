@@ -7,11 +7,16 @@ import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsTlaneControlDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsTlaneControlTriangulationDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlTriangulationEntity;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
 
@@ -33,26 +38,30 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return instance;
     }
 
-    EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
-    PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
-    EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
-    PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
-    EDMPurchaseOrderOAV1DaoImpl purchaseOrderOAV1Dao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
+    private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
+    private PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
+    private EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
+    private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
+    private EDMPurchaseOrderOAV1DaoImpl purchaseOrderOAV1Dao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private PlanCnsTlaneControlDaoImpl tlaneControlDao = PlanCnsTlaneControlDaoImpl.getInstance();
+    private PlanCnsTlaneControlTriangulationDaoImpl tlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
 
-    ThreadLocal<String> productId = new ThreadLocal<>();
+    private ThreadLocal<String> productId = new ThreadLocal<>();
 
-    ThreadLocal<String> locationId = new ThreadLocal<>();
+    private ThreadLocal<String> locationId = new ThreadLocal<>();
 
+    private ThreadLocal<String> localPlant = new ThreadLocal<>();
+
+    private OMPGdmStockBo stockBo = new OMPGdmStockBo();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
-
-
-        OMPGdmStockBo stockBo = new OMPGdmStockBo();
         ResultObject resultObject = new ResultObject();
         ResultObject resultObjectSkip = new ResultObject();
         productId.set("");
         locationId.set("");
+        localPlant.set("");
 
         EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity = (EDMPurchaseOrderOAV1Entity) o;
 
@@ -82,13 +91,19 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         if(edmMaterialGlobalV1Entity == null) {
             return resultObjectSkip; //Skip this record when materialGlobal isn't found
         }
+
+        //PO7
+        if(!po7Rule(purchaseOrderOAV1Entity)){
+            return resultObjectSkip;
+        }
+
         //PO1
-        po1Rule(edmMaterialGlobalV1Entity,purchaseOrderOAV1Entity,stockBo);
+        po1Rule(edmMaterialGlobalV1Entity,purchaseOrderOAV1Entity);
 
 
 
         //PO5
-        po5Rule(purchaseOrderOAV1Entity,stockBo);
+        po5Rule(purchaseOrderOAV1Entity);
 
 
         //PO6
@@ -102,28 +117,11 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             return resultObjectSkip; //Skip if PO6 fails
         }
 
-        if(!purchaseOrderOAV1Entity.getDelInd().isEmpty()) {
+        if(!purchaseOrderOAV1Entity.getDelInd().isEmpty() && !purchaseOrderOAV1Entity.getDelvCmpltInd().isEmpty()) {
             return resultObjectSkip; //Skip if delInd value is empty
         }
 
-
         stockBo.setErpOrderId(purchaseOrderOAV1Entity.getPoNum());
-
-
-
-        //PO7
-        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(purchaseOrderOAV1Entity.getSourceSystem(),
-                purchaseOrderOAV1Entity.getPlntCd());
-        if(plantV1Entity == null) {
-            return resultObjectSkip; //Skip if plantV1 record isn't found
-        }
-
-        if(!plantV1Entity.getLocalPlanningRelevant().equals(IConstant.VALUE.X)) {
-            return resultObjectSkip; //Skip if localPlanningRelevant not X
-        }
-
-        stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + purchaseOrderOAV1Entity.getPlntCd());
-
 
         //PO8
         if(purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.TWO_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.K)) {
@@ -133,20 +131,20 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
 
         //PO9
-        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity( purchaseOrderOAV1Entity.getSourceSystem(),purchaseOrderOAV1Entity.getMatlNum(),purchaseOrderOAV1Entity.getPlntCd());
+        PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity( purchaseOrderOAV1Entity.getSourceSystem(),purchaseOrderOAV1Entity.getMatlNum(),localPlant.get());
         if(cnsMaterialPlanStatusEntity == null) {
             return resultObjectSkip; //Skip when materialPlanStatus is not found
         }
 
-        if(po9RuleChecks(cnsMaterialPlanStatusEntity)){
+        if(!po9RuleChecks(cnsMaterialPlanStatusEntity)){
             return resultObjectSkip; //Skip if validation of materialPlanStatus fails
         }
 
-        po9Rule(edmMaterialGlobalV1Entity,stockBo);
+        po9Rule(edmMaterialGlobalV1Entity);
 
         //PO10
 
-        if(!po10Rule(purchaseOrderOAV1Entity,stockBo)) {
+        if(!po10Rule(purchaseOrderOAV1Entity)) {
             return resultObjectSkip; //Skip when PO10 fails
         }
 
@@ -157,18 +155,18 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         String localDelvDate = purchDateEntity.getLocaldelvDt().trim();
         String leadTime = purchDateEntity.getGrLeadTimeDays().trim();
         //PO11
-        po11Rule(localDelvDate,stockBo);
+        po11Rule(localDelvDate);
 
         //PO12
-        po12Rule(localDelvDate, leadTime,stockBo);
+        po12Rule(localDelvDate, leadTime);
         //PO17
-        po17Rule(purchaseOrderOAV1Entity,stockBo);
+        po17Rule(purchaseOrderOAV1Entity);
 
         //PO18
-        po18Rule(purchaseOrderOAV1Entity,stockBo);
+        po18Rule(purchaseOrderOAV1Entity);
 
         //PO19
-        po19Rule(purchaseOrderOAV1Entity,stockBo);
+        po19Rule(purchaseOrderOAV1Entity);
 
 
         if(stockBo.getProductId().isEmpty()){
@@ -184,11 +182,8 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      *
      * @param edmMaterialGlobalV1Entity called data region
      * @param purchaseOrderOAV1Entity main data region
-     * @param stockBo BO object written out
      */
-    private void po1Rule(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity, OMPGdmStockBo stockBo ){
-
-
+    private void po1Rule(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity, EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         //A
         if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode() != null && edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
             productId.set(edmMaterialGlobalV1Entity.getMaterialNumber());
@@ -197,7 +192,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
 
         //B
-        locationId.set(purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + purchaseOrderOAV1Entity.getPlntCd());
+        locationId.set(purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + localPlant.get());
 
 
         //C,D
@@ -212,14 +207,62 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * set certaintyId - implement PO5
      *
      * @param purchaseOrderOAV1Entity main data region
-     * @param stockBo BO object written out
      */
-    private void po5Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
+    private void po5Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         if(purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.F)){
             stockBo.setCertaintyId(IConstant.VALUE.BE);
         } else if (purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.L)) {
             stockBo.setCertaintyId(IConstant.VALUE.LE);
         }
+    }
+
+    /**
+     * set certaintyId - implement PO5
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @return boolean for skip validation
+     */
+    private boolean po7Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
+        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(IConstant.VALUE.PROJECT_ONE_DEV, purchaseOrderOAV1Entity.getSourceSystem());
+        if(sourceSystemEntity == null){
+            return false;
+        }
+        localPlant.set(purchaseOrderOAV1Entity.getPlntCd());
+
+        List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(purchaseOrderOAV1Entity.getSourceSystem());
+
+        for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
+            if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(IConstant.VALUE.YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("purchase_order")) {
+                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
+                if(triangulationEntities != null) {
+                    PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
+                    localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+IConstant.VALUE.UNDERLINE,IConstant.VALUE.EMPTY));
+                }
+            }
+        }
+        //Planning relevancy check
+        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(purchaseOrderOAV1Entity.getSourceSystem(), localPlant.get());
+        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(IConstant.VALUE.X)){
+            stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem()+IConstant.VALUE.UNDERLINE+localPlant.get());
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * set certaintyId - implement PO5
+     *
+     * @param triangulationEntities List of tlane_control_triangulation objects to find the highest step number
+     * @return boolean for skip validation
+     */
+    private PlanCnsTlaneControlTriangulationEntity findHighestStepNumber(List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities) {
+        PlanCnsTlaneControlTriangulationEntity tempEntity = triangulationEntities.get(0);
+        for (PlanCnsTlaneControlTriangulationEntity triangulationEntity : triangulationEntities) {
+            if(Integer.parseInt(triangulationEntity.getStepNumber()) > Integer.parseInt(tempEntity.getStepNumber())){
+                tempEntity = triangulationEntity;
+            }
+        }
+        return tempEntity;
     }
 
     /**
@@ -233,7 +276,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                 IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
                 purchaseOrderOAV1Entity.getSourceSystem(),
                 IConstant.EDM_PURCHASE_ORDER_OA_V1.PLNTCD,
-                purchaseOrderOAV1Entity.getPlntCd(),
+                localPlant.get(),
                 IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
                 purchaseOrderOAV1Entity.getPoTypeCd());
         if(cnsPlanObjectFilterEntity == null) {
@@ -265,9 +308,8 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * set productId - implement PO9
      *
      * @param edmMaterialGlobalV1Entity called data region
-     * @param stockBo BO object written out
      */
-    private void po9Rule(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity,OMPGdmStockBo stockBo){
+    private void po9Rule(EDMMaterialGlobalV1Entity edmMaterialGlobalV1Entity){
         if(edmMaterialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
             stockBo.setProductId(edmMaterialGlobalV1Entity.getMaterialNumber());
         } else {
@@ -279,10 +321,9 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * calculate and set quantity - implement PO10
      *
      * @param purchaseOrderOAV1Entity main data region
-     * @param stockBo BO object written out
      * @return return a boolean if quantity calculation was successful
      */
-    private boolean po10Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
+    private boolean po10Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         Float orderUnit = new Float(0.0);
         Float baseUnit = new Float(0.0);
         boolean getRecvEaQtySum = true;
@@ -309,8 +350,6 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                     bothZero = false;
                     orderUnit = Float.parseFloat(purchaseOrderOAV1Entity.getPoLineQty().trim()) - recvEaQtySum;
                 }
-            } else if(getRecvEaQtySum && !purchaseOrderOAV1Entity.getEvTypeCd().trim().equals("1")){
-                return false;
             }
 
             if (orderUnit <= 0 && !bothZero) {
@@ -334,9 +373,8 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * set receiptDate - implement PO11
      *
      * @param localDelvDate date String from purchaseOrder-localDelvDate
-     * @param stockBo BO object written out
      */
-    private void po11Rule(String localDelvDate,OMPGdmStockBo stockBo){
+    private void po11Rule(String localDelvDate){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
@@ -356,9 +394,8 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      *
      * @param localDelvDate date string from purchaseOrder-localDelvDate
      * @param leadTime number of days to add to the date from purchaseOrder-grLeadTimeDays
-     * @param stockBo BO object written out
      */
-    private void po12Rule(String localDelvDate, String leadTime,OMPGdmStockBo stockBo){
+    private void po12Rule(String localDelvDate, String leadTime){
         SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
         String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
@@ -390,9 +427,8 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * set inventoryLinkGroupId - implement PO17
      *
      * @param purchaseOrderOAV1Entity main data region
-     * @param stockBo BO object written out
      */
-    private void po17Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
+    private void po17Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
             if (purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.THREE_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.L)) {
                 stockBo.setInventoryLinkGroupId(stockBo.getStockId());
@@ -412,9 +448,8 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * set processId - implement PO18
      *
      * @param purchaseOrderOAV1Entity main data region
-     * @param stockBo BO object written out
      */
-    private void po18Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
+    private void po18Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         if (purchaseOrderOAV1Entity.getSuplPlntCd().isEmpty()) {
             stockBo.setProcessId(IConstant.VALUE.SU + IConstant.VALUE.BACK_SLANT + productId.get() + IConstant.VALUE.BACK_SLANT + locationId.get() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSupNum() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
         } else {
@@ -426,9 +461,8 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * set processTypeId - implement PO19
      *
      * @param purchaseOrderOAV1Entity main data region
-     * @param stockBo BO object written out
      */
-    private void po19Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity,OMPGdmStockBo stockBo){
+    private void po19Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
             stockBo.setProcessTypeId(IConstant.VALUE.VENDOR_TRANSPORT);
         } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.UB)) {
@@ -467,16 +501,10 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     private boolean po9RuleChecks(PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity){
 
         if(cnsMaterialPlanStatusEntity.getSpRelevant() == null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null ){
-            return true;
-        }
-        if(cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X)){
             return false;
+        } else{
+            return (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)) || (cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X));
         }
-        if (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)){
-            return false;
-        }
-
-        return true;
     }
 
     /**

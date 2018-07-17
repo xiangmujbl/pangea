@@ -205,8 +205,61 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
     |     PA       |     USD       | J CAIN & CO                         |     36124   |     PA03   |    103      |                 |               | Affiliate/Market Copacker |     SUBCON    | CONS_LATAM   |             |             |             |                 |                 |                 |        V         |                  |
     |     PE       |     USD       | YOBEL SUPPLY CHAIN MANAGEMENT S.A.  |     20667   |     PE01   |    103      |                 |               | Affiliate/Market Copacker |     SUBCON    | CONS_LATAM   |             |             |             |                 |                 |                 |        V         |                  |
 
-
     And I wait "/plan/cns_spl_pln_loc" Async Queue complete
+
+    Given I import "/plan/cns_tlane_control" by keyFields "sequenceNumber,tlaneName"
+      | sequenceNumber | tlaneName | validFrom | validTo | originLocation | supSys | supSysVendor | supSysCustomer | destinationLocation | recSys | recSysVendor | recSysCustomer |  | mode | leadTime | triangulationDetail | processTypeId | sourceSystemCriticalParameters | trigSysTransaction | trigSysPlant | trigSysVendor | trigSysCustomer | trigSysShipTo | criticalParameter1Table | criticalParameter1Field | criticalParameter1Low | criticalParameter1High | criticalParameter1Operator | criticalParameter1IE | criticalParameter2Table | criticalParameter2Field | criticalParameter2Low | criticalParameter2High | criticalParameter2Operator | criticalParameter2IE | criticalParameter3Table | criticalParameter3Field | criticalParameter3Low | criticalParameter3High | criticalParameter3Operator | criticalParameter3IE | criticalParameter4Table | criticalParameter4Field | criticalParameter4Low | criticalParameter4High | criticalParameter4Operator | criticalParameter4IE | criticalParameter5Table | criticalParameter5Field | criticalParameter5Low | criticalParameter5High | criticalParameter5Operator | criticalParameter5IE | criticalParameter6Table | criticalParameter6Field | criticalParameter6Low | criticalParameter6High | criticalParameter6Operator | criticalParameter6IE | criticalParameter7Table | criticalParameter7Field | criticalParameter7Low | criticalParameter7High | criticalParameter7Operator | criticalParameter7IE | criticalParameter8Table | criticalParameter8Field | criticalParameter8Low | criticalParameter8High | criticalParameter8Operator | criticalParameter8IE | criticalParameter9Table | criticalParameter9Field | criticalParameter9Low | criticalParameter9High | criticalParameter9Operator | criticalParameter9IE | criticalParameter10Table | criticalParameter10Field | criticalParameter10Low | criticalParameter10High | criticalParameter10Operator | criticalParameter10IE |
+      | 1 | CO01toMX02 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_MX02 |  |  |  |  | Ship | 35 | Yes | 1 | CONS_LATAM | Purchase Order | MX01 |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | MX02 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 2 | CO01toEC01 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_EC01 |  |  |  |  | Ship | 28 | No | 1 | CONS_LATAM |  |  |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | EC01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 3 | CO01toPE01 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_PE01 |  |  |  |  | Ship | 28 | No | 1 | CONS_LATAM |  |  |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | PE01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 4 | CO01toCO02 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_CO02 |  |  |  |  | Ship | 1 | No | 1 | CONS_LATAM |  |  |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | CO02 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 5 | CO01toCL01 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_CL01 |  |  |  |  | Ship | 21 | No | 1 | CONS_LATAM |  |  |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | CL01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 6 | CO01toUY01 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_UY01 |  |  |  |  | Ship | 51 | No | 1 | CONS_LATAM |  |  |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | UY01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 10 | CO01toCR01 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_CR01 |  |  |  |  | Ship | 40 | Yes | 1 | CONS_LATAM | Purchase Order | CR02 |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | CR01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 11 | CO01toGT01 | 1012018 | 31/12/2998 | CONS_LATAM_CO01 |  |  |  | CONS_LATAM_GT01 |  |  |  |  | Ship | 40 | Yes | 1 | CONS_LATAM | Purchase Order | GT02 |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | CO01 |  | = | I | material_plant | localPlant | GT01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 44 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 20 | BR12toMX02 | 1012018 | 31/12/2998 | CONS_LATAM_BR12 |  |  |  | CONS_LATAM_MX02 |  |  |  |  | Ship | 37 | Yes | 1 | CONS_LATAM | Purchase Order | MX01 |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | BR12 |  | = | I | material_plant | localPlant | MX02 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 40 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 28 | PA03toGT01 | 1012018 | 31/12/2998 | CONS_LATAM_PA03 |  |  |  | CONS_LATAM_GT01 |  |  |  |  | Ship | 27 | Yes | 1 | CONS_LATAM | Purchase Order | GT02 |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | PA03 |  | = | I | material_plant | localPlant | GT01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 39 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+      | 29 | PA03toCR01 | 1012018 | 31/12/2998 | CONS_LATAM_PA03 |  |  |  | CONS_LATAM_CR01 |  |  |  |  | Ship | 20 | Yes | 1 | CONS_LATAM | Purchase Order | CR02 |  |  |  | cns_prod_loc_attrib | primarySupplierPlantCode | PA03 |  | = | I | material_plant | localPlant | CR01 |  | = | I | material_plant | localProcurementType | F |  | = | I | material_plant | localMrpType | X0 |  | = | I | material_plant | localMrpController | 999 |  | = | E | material_plant | localSpecialProcurementType | 39 |  | = | I | material_plant | localPlantStatus | 08,11,13 |  | = | I |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | |
+
+    And I wait "/plan/cns_tlane_control" Async Queue complete
+
+    Given I import "/plan/cns_tlane_control_triangulation" by keyFields "sequenceNumber,stepNumber,tlaneName"
+      | sequenceNumber | stepNumber | tlaneName | originLocation | destinatonLocation  |
+      | 1 | 1 | CO01toMX02 | CONS_LATAM_CO01 | CONS_LATAM_MX01   |
+      | 1 | 2 | CO01toMX02 | CONS_LATAM_MX01 | CONS_LATAM_MX02   |
+      | 10 | 1 | CO01toCR01 | CONS_LATAM_CO01 | CONS_LATAM_CR02  |
+      | 10 | 2 | CO01toCR01 | CONS_LATAM_CR02 | CONS_LATAM_CR01  |
+      | 11 | 1 | CO01toGT01 | CONS_LATAM_CO01 | CONS_LATAM_GT02  |
+      | 11 | 2 | CO01toGT01 | CONS_LATAM_GT02 | CONS_LATAM_GT01  |
+      | 20 | 1 | BR12toMX03 | CONS_LATAM_BR12 | CONS_LATAM_MX01  |
+      | 20 | 2 | BR12toMX03 | CONS_LATAM_MX01 | CONS_LATAM_MX02  |
+      | 28 | 1 | PA03toGT01 | CONS_LATAM_PA03 | CONS_LATAM_GT02  |
+      | 28 | 2 | PA03toGT01 | CONS_LATAM_GT02 | CONS_LATAM_GT01  |
+      | 29 | 1 | PA03toCR01 | CONS_LATAM_PA03 | CONS_LATAM_CR02  |
+      | 29 | 2 | PA03toCR01 | CONS_LATAM_CR02 | CONS_LATAM_CR01  |
+
+    And I wait "/plan/cns_tlane_control_triangulation" Async Queue complete
+
+    Given I import "/edm/source_system_v1" by keyFields "localSourceSystem"
+      | localSourceSystem | localSourceSystemName | modifiedBy | sourceSystem | sourceSystemName | sourceSystemType | status | timeStamp | valid | LOCAL_SOURCE_SYSTEM | LOCAL_SOURCE_SYSTEM_NAME | SOURCE_SYSTEM |  | SOURCE_SYSTEM_NAME | comments | flatFile |
+      | [MDD FASE] | JDE EDO - FASE - JDE ENTERPRISEONE -PROD (JDE 8.12) |  | MDD_FASE |  |  |  |  |  |  |  |  |  |  |  |  |
+      | hcs | USROTC |  | MDD_USROTC |  |  |  |  |  |  |  |  |  |  |  |  |
+      | btbjapan | BTB JAPAN |  | MDD_BTBJAPAN |  |  |  |  |  |  |  |  |  |  |  |  |
+      | [MDD USROTC] | HCS SAP-ECC-PROD-MP2 (USROTC) |  | MDD_USROTC |  |  |  |  |  |  |  |  |  |  |  |  |
+      | fase | JDE GMED 8.12 |  | MDD_FASE |  |  |  |  |  |  |  |  |  |  |  |  |
+      | [EMS] | EMS |  | EMS | Enterprise Master Data Management System | NGEMS |  |  |  |  |  |  |  |  |  |  |
+      | [MDD ENDO] | JDE ETHICON ENDO - JDE ENTERPRISEONE-PROD |  | MDD_ENDO |  |  |  |  |  |  |  |  |  |  |  |  |
+      | [MD DePuy Spine JDE XE] | Spine |  | MDDePuy | MD DePuy Ent | JDE |  |  |  |  |  |  |  |  |  |  |
+      | btb | BTB NA |  | MDD_BtB |  |  |  |  |  |  |  |  |  |  |  |  |
+      | ems | EMS |  | EMS | Enterprise Master Data Management System | EMS |  |  |  |  |  |  |  |  |  |  |
+      | mars | MARS |  | MDD_MARS |  |  |  |  |  |  |  |  |  |  |  |  |
+      | Project_One | Project One |  | CONS_LATAM | Consumer Latam Ent | SAP |  |  |  |  |  |  |  |  |  |  |
+      | endo | JDE ENDO E1 |  | MDD_ENDO |  |  |  |  |  |  |  |  |  |  |  |  |
+      | [Consumer LATAM] | Consumer Latam |  | CONS_LATAM | Consumer Latam Ent | NGEMS |  |  |  |  |  |  |  |  |  |  |
+      | [BtB] | Back to Basics - MDG |  | MDD_BtB |  |  |  |  |  |  |  |  |  |  |  |  |
+      | [MDD MARS] | MARS-SAP |  | MDD_MARS |  |  |  |  |  |  |  |  |  |  |  |  |
+
+    And I wait "/edm/source_system_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/GDMStockPurchaseOrder_preAggregationCuration.xml" and execute file "jar/pangea-view.jar"
 
@@ -251,6 +304,12 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
     And I will remove all data with region "/edm/purchase_order_oa_v1_preAggregation"
 
     And I will remove all data with region "/dev/plan/edm_failed_data"
+
+    And I will remove all data with region "/plan/cns_tlane_control"
+
+    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
+
+    And I will remove all data with region "/edm/source_system_v1"
 
     And I will remove the test file on sink application "GDMStock.tsv"
 
