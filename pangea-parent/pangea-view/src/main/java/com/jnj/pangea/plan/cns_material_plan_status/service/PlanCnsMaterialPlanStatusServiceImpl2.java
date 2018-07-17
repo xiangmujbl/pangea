@@ -33,9 +33,9 @@ public class PlanCnsMaterialPlanStatusServiceImpl2 {
 
         //J1
         String sourseSystem = getFieldWithJ1(materialInclEntity.getSourceSystem());
-        if(sourseSystem != null){
+        if (sourseSystem != null) {
             materialPlanStatusBo.setSourceSystem(sourseSystem);
-        }else{
+        } else {
             return null;
         }
 
@@ -55,24 +55,21 @@ public class PlanCnsMaterialPlanStatusServiceImpl2 {
             //T2
             materialPlanStatusBo.setLocalParentCode(localParentCode);
             //T4
-            if(!localParentCode.isEmpty()){
+            if (!localParentCode.isEmpty()) {
                 materialPlanStatusBo.setParentActive(IConstant.VALUE.X);
             }
 
             //T3
             materialPlanStatusBo.setPpc(StringUtils.trim(materialGlobalV1Entity.getPrimaryPlanningCode()));
-        }else {
+        } else {
             return null;
         }
 
         //T5
-        if (null != materialPlanStatusBo) {
-            if(materialPlanStatusBo.getLocalMaterialNumber().equals(materialInclEntity.getLocalMaterialNumber())
-                    && IConstant.VALUE.NP.equals(materialInclEntity.getPlanningType())){
-                materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
-            }else {
-                materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.BLANK);
-            }
+        if (IConstant.VALUE.NP.equals(StringUtils.trim(materialInclEntity.getPlanningType()))) {
+            materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.X);
+        } else {
+            materialPlanStatusBo.setNoPlanRelevant(IConstant.VALUE.BLANK);
         }
 
         //D1
@@ -92,19 +89,13 @@ public class PlanCnsMaterialPlanStatusServiceImpl2 {
             return sourceSystemV1Entity.getSourceSystem();
         }
         return null;
-
-//        CnsMaterialInclEntity cnsMaterialInclEntity = cnsMaterialInclDao.getEntityWithLocalSourceSystem(sourceSystem);
-//        if (null != cnsMaterialInclEntity) {
-//            return sourceSystem;
-//        }
-//        return null;
     }
 
     private void getFieldWithT6(PlanCnsMaterialPlanStatusBo materialPlanStatusBo) {
         if (null != materialPlanStatusBo) {
-            if(IConstant.VALUE.X.equals(materialPlanStatusBo.getNoPlanRelevant())
+            if (IConstant.VALUE.X.equals(materialPlanStatusBo.getNoPlanRelevant())
                     || IConstant.VALUE.X.equals(materialPlanStatusBo.getDpRelevant())
-                    || IConstant.VALUE.X.equals(materialPlanStatusBo.getSpRelevant()) ){
+                    || IConstant.VALUE.X.equals(materialPlanStatusBo.getSpRelevant())) {
                 materialPlanStatusBo.setActive(IConstant.VALUE.X);
             }
         }
