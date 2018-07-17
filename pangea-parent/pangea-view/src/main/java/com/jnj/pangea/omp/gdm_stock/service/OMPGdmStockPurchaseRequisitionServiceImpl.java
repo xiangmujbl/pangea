@@ -4,15 +4,13 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanObjectFilterDaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanSplPlnLocDaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.*;
 import com.jnj.pangea.common.entity.edm.EDMMaterialGlobalV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMPurchaseRequisitionV1Entity;
-import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlanObjectFilterEntity;
-import com.jnj.pangea.common.entity.plan.PlanSplPlnLocEntity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entity.plan.*;
 import com.jnj.pangea.common.exception.SkipRecordException;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
@@ -28,6 +26,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
 
     private static final String ZERO_POINT_ZERO = "0.0";
     private static final String MOVEMENT = "movement";
+    private static final String PURCHASE_ORDER = "purchase_order";
 
     private static OMPGdmStockPurchaseRequisitionServiceImpl instance;
 
@@ -43,6 +42,9 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
     private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private PlanSplPlnLocDaoImpl planSplPlnLocDao = PlanSplPlnLocDaoImpl.getInstance();
     private PlanCnsPlanObjectFilterDaoImpl planCnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private PlanCnsTlaneControlDaoImpl planCnsTlaneControlDao = PlanCnsTlaneControlDaoImpl.getInstance();
+    private PlanCnsTlaneControlTriangulationDaoImpl planCnsTlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -57,15 +59,15 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
 
             // determine the productId, locationId and stockId
             String productId = getProductId(edmPurchaseRequisitionV1Entity);
-            String locationId = edmPurchaseRequisitionV1Entity.getSourceSystem() + "_" +
-                    edmPurchaseRequisitionV1Entity.getPlntCd();
+            String localPlant = getLocalPlant(edmPurchaseRequisitionV1Entity);
+            String locationId = edmPurchaseRequisitionV1Entity.getSourceSystem() + "_" + localPlant;
             String stockId = productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getPrNum() + "/" +
                     edmPurchaseRequisitionV1Entity.getPrLineNbr();
 
             oMPGdmStockBo.setStockId(stockId);
             oMPGdmStockBo.setConsignment(getConsignment(edmPurchaseRequisitionV1Entity));
 
-            checkPlanObjectFilterValid(edmPurchaseRequisitionV1Entity);
+            checkPlanObjectFilterValid(localPlant, edmPurchaseRequisitionV1Entity);
             oMPGdmStockBo.setErpOrderId(edmPurchaseRequisitionV1Entity.getPrNum());
 
             if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getSuplPlntCd())) {
@@ -74,9 +76,9 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             oMPGdmStockBo.setVendorId(edmPurchaseRequisitionV1Entity.getLocalFixedVendor());
             oMPGdmStockBo.setProcessId(getProcessId(productId, locationId, edmPurchaseRequisitionV1Entity));
             oMPGdmStockBo.setProcessTypeId(getProcessTypeId(edmPurchaseRequisitionV1Entity));
-            oMPGdmStockBo.setLocationId(getLocationId(edmPurchaseRequisitionV1Entity));
+            oMPGdmStockBo.setLocationId(getLocationId(localPlant, edmPurchaseRequisitionV1Entity));
 
-            checkProductIdValid(edmPurchaseRequisitionV1Entity);
+            checkProductIdValid(localPlant, edmPurchaseRequisitionV1Entity);
             oMPGdmStockBo.setProductId(productId);
 
             try {
@@ -99,7 +101,6 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
 
                     Date adjustedNeedByDate = DateUtils.offsetDate(dReceivedDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
                     if (null != adjustedNeedByDate) {
-                        adjustedNeedByDate = DateUtils.moveToNextWorkingDay(adjustedNeedByDate);
                         oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
                     }
                 } catch (ParseException e) {
@@ -156,19 +157,65 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
     }
 
     /**
+     * getLocalPlant - implement PR8
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     * @return String localPlant
+     * @throws SkipRecordException skip the record if no/bad match
+     */
+    private String getLocalPlant(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
+        // default localPlant to plntCd
+        String localPlant = edmPurchaseRequisitionV1Entity.getPlntCd();
+
+        EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
+        if (sourceSystemV1Entity == null ||
+                !edmPurchaseRequisitionV1Entity.getSourceSystem().equals(sourceSystemV1Entity.getSourceSystem())) {
+            // skip the record if we don't find a good match in source_system_v1
+            throw new SkipRecordException("PR8.1");
+        }
+
+        List<PlanCnsTlaneControlEntity> matchingEntities = planCnsTlaneControlDao.getMatchingEntities(
+                edmPurchaseRequisitionV1Entity.getSourceSystem(), localPlant);
+        if (matchingEntities == null || matchingEntities.size() < 1) {
+            // skip the record if we don't find any matching records in cns_tlane_control
+            throw new SkipRecordException("PR8.2");
+        }
+
+        matchingEntities = planCnsTlaneControlDao.getMatchingEntities(edmPurchaseRequisitionV1Entity.getSourceSystem(),
+                localPlant, PURCHASE_ORDER, IConstant.VALUE.YES);
+        if (matchingEntities != null && matchingEntities.size() > 0) {
+            List<PlanCnsTlaneControlTriangulationEntity> triangEntries = planCnsTlaneControlTriangulationDao.getMatchingEntities(
+                    matchingEntities.get(0).getSequenceNumber(),
+                    matchingEntities.get(0).getTlaneName());
+            int maxSequence = 0;
+            for (PlanCnsTlaneControlTriangulationEntity entity : triangEntries) {
+                int thisSequence = Integer.parseInt(entity.getSequenceNumber());
+                if (thisSequence > maxSequence) {
+                    maxSequence = thisSequence;
+                    localPlant = StringUtils.remove(entity.getDestinatonLocation(),
+                            edmPurchaseRequisitionV1Entity.getSourceSystem() + "_");
+                }
+            }
+        }
+        return localPlant;
+    }
+
+    /**
      * getLocationId - implement PR8
      *
      * @param edmPurchaseRequisitionV1Entity main data region
      * @return String locationId
      * @throws SkipRecordException skip the record if no/bad match
      */
-    private String getLocationId(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
-        EDMPlantV1Entity entityWithLocalPlant = edmPlantV1Dao.getEntityWithLocalPlant(edmPurchaseRequisitionV1Entity.getPlntCd());
+    private String getLocationId(String localPlant, EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
+        // Planning Relevancy Check
+        EDMPlantV1Entity entityWithLocalPlant = edmPlantV1Dao.getPlantWithSourceSystemAndLocalPlant(
+                edmPurchaseRequisitionV1Entity.getSourceSystem(), localPlant);
         if (entityWithLocalPlant != null && "X".equals(entityWithLocalPlant.getLocalPlanningRelevant())) {
-            return edmPurchaseRequisitionV1Entity.getSourceSystem() + "_" + edmPurchaseRequisitionV1Entity.getPlntCd();
+            return edmPurchaseRequisitionV1Entity.getSourceSystem() + "_" + localPlant;
         } else {
             // skip the record if we don't find a good match in plan_v1
-            throw new SkipRecordException("PR8");
+            throw new SkipRecordException("PR8.3");
         }
     }
 
@@ -245,10 +292,10 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
      * @param edmPurchaseRequisitionV1Entity main data region
      * @throws SkipRecordException skip the record if no/bad match
      */
-    private void checkProductIdValid(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
+    private void checkProductIdValid(String localPlant, EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
         PlanCnsMaterialPlanStatusEntity entityWithLocalMaterialNumber = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(
                 edmPurchaseRequisitionV1Entity.getMatlNum(),
-                edmPurchaseRequisitionV1Entity.getPlntCd(),
+                localPlant,
                 edmPurchaseRequisitionV1Entity.getSourceSystem()
         );
         if (entityWithLocalMaterialNumber == null || !"X".equals(entityWithLocalMaterialNumber.getNoPlanRelevant())) {
@@ -263,11 +310,11 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
      * @param edmPurchaseRequisitionV1Entity main data region
      * @throws SkipRecordException skip the record if no/bad match
      */
-    private void checkPlanObjectFilterValid(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
+    private void checkPlanObjectFilterValid(String localPlant, EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
         PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
                 IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
                 edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
-                "plntCd", edmPurchaseRequisitionV1Entity.getPlntCd(), "prTypeCd", IConstant.VALUE.INCLUSION);
+                "plntCd", localPlant, "prTypeCd", IConstant.VALUE.INCLUSION);
         if (planObjectFilterEntity == null) {
             throw new SkipRecordException("PR6");
         }

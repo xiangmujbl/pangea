@@ -153,6 +153,7 @@ public interface IConstant {
         String MFG_RTNG_ITM_NDE = "/edm/mfg_rtng_itm_nde";
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
         String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
+        String PLAN_CNS_TLANE_TRIANGULATION_CONTROL = "/plan/cns_tlane_control_triangulation";
         String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
         String EDM_MFG_ORDER_ITM = "/edm/mfg_order_itm";
         String EDM_MATL_PROD_VERSN = "/edm/matl_prod_versn";
@@ -987,6 +988,15 @@ public interface IConstant {
         String CRITICAL_PARAMETER_LOW = "criticalParameter{0}Low";
         String CRITICAL_PARAMETER_OPERATOR = "criticalParameter{0}Operator";
         String CRITICAL_PARAMETER_IE = "criticalParameter{0}IE";
+        String SOURCE_SYSTEM_CRITICAL_PARAMETERS = "sourceSystemCriticalParameters";
+        String TRIG_SYS_PLANT = "trigSysPlant";
+        String TRIG_SYS_TRANSACTION = "trigSysTransaction";
+        String TRIANGULATION_DETAIL = "triangulationDetail";
+    }
+
+    interface PLAN_CNS_TLANE_TRIANGULATION_CONTROL {
+        String SEQUENCE_NUMBER = "sequenceNumber";
+        String TLANE_NAME = "tlaneName";
     }
 
     interface LFU {
