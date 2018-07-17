@@ -117,14 +117,9 @@
                 <parameter name="localSubDocCatg" value="localSubDocCatg"/>
             </parameters>
         </method>
-        <method name="joinKnvhOnKunnr" isPK="false" resultType="Map" path="/project_one/knvh">
+        <method name="joinKnvhOnKunnr" isPK="false" resultType="List" path="/project_one/knvh">
             <parameters>
                 <parameter name="kunnr" value="localShipToParty"/>
-            </parameters>
-        </method>
-        <method name="joinKnvhOnHkunnr" isPK="false" resultType="Map" path="/project_one/knvh">
-            <parameters>
-                <parameter name="hkunnr" value="localShipToParty"/>
             </parameters>
         </method>
         <method name="joinCnsPlanObjectFilter" isPK="false" resultType="Map" path="/plan/cns_plan_object_filter">
@@ -163,6 +158,54 @@
             Calendar startDate = Calendar.getInstance();
             startDate.setTime(DateInner.stringToDate(localScheduleLineDate, "yyyyMMdd"));
             return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd HH:mm:ss");
+        </udf>
+
+        <udf name="determineCustomerId" resultType="String" parameter="kunnr,localSalesOrg,localOrderCreateDt">
+            String customerId = null;
+            boolean isContinue = true;
+
+            while (StringInner.isStringEmpty(customerId) &amp;&amp; isContinue) {
+
+                // find all matching knvh records based on the kunnr passed in
+                // or using the hkunnr found
+                List&lt;Map.Entry&lt;String, String>> knvhList = joinKnvhOnKunnr(kunnr);
+                if (knvhList != null &amp;&amp; knvhList.size() > 0) {
+
+                    // loop over matching knvh records
+                    for (Map.Entry&lt;String, String> entry : knvhList) {
+                        Map&lt;String, Object> knvhRec = JsonObject.append(entry.getValue()).toMap();
+                        if (knvhRec != null) {
+                            String vkorg = String.valueOf(knvhRec.get("vkorg"));
+                            String datbi = String.valueOf(knvhRec.get("datbi"));
+                            String hkunnr = String.valueOf(knvhRec.get("hkunnr"));
+                            String hityp = String.valueOf(knvhRec.get("hityp"));
+                            if (vkorg.equals(localSalesOrg) &amp;&amp; "A".equals(hityp) &amp;&amp;
+                                Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)) {
+
+                                // if we have a match on the above criteria check the demGrpAsgn region
+                                Map demGrpAsgnRec = joinCnsDemGrpAsgnCustId(hkunnr);
+                                if (demGrpAsgnRec != null) {
+                                    String demandGroup = String.valueOf(demGrpAsgnRec.get("demandGroup"));
+                                    if (StringInner.isStringNotEmpty(demandGroup)) {
+                                        customerId = demandGroup;
+                                        isContinue = false;
+                                        break;
+                                    } else {
+                                        kunnr = hkunnr;
+                                        if (StringInner.isStringEmpty(kunnr)) {
+                                            isContinue = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    isContinue = false;
+                }
+                isContinue = false;
+            }
+            return customerId;
         </udf>
     </udfs>
 
@@ -247,49 +290,18 @@
                             </if>
                         </ref>
                         <if test="StringInner.isStringEmpty(customerId)">
-                            <!-- step 1 -->
                             <ref method="joinCnsDemGrpAsgn" parameter="localShipToParty,localSalesOrg"
                                  value="demandGroup" resultType="Map">
                                 <if test="StringInner.isStringNotEmpty(demandGroup)">
                                     <set name="customerId" value="demandGroup"/>
                                 </if>
                             </ref>
-                            <!-- step 2 -->
                             <if test="StringInner.isStringEmpty(customerId)">
-                                <ref method="joinKnvhOnKunnr" parameter="localShipToParty"
-                                     value="vkorg,datbi,hkunnr,hityp" resultType="Map">
-                                    <!-- we can do a simple int compare on the dates are they are formatted most significant
-                                         bit first; e.g. yyyymmdd-->
-                                    <if test="vkorg.equals(localSalesOrg) &amp;&amp; 'A'.equals(hityp) &amp;&amp; Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)">
-                                        <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
-                                             value="demandGroup" resultType="Map">
-                                            <if test="StringInner.isStringNotEmpty(demandGroup)">
-                                                <set name="customerId" value="demandGroup"/>
-                                            </if>
-                                        </ref>
-                                    </if>
-                                </ref>
-                                <!-- step 3 -->
+                                <set name="customerId" value="determineCustomerId(localShipToParty,localSalesOrg,localOrderCreateDt)"/>
                                 <if test="StringInner.isStringEmpty(customerId)">
-                                    <ref method="joinKnvhOnHkunnr" parameter="localShipToParty"
-                                         value="vkorg,datbi,hkunnr,hityp" resultType="Map">
-                                        <!-- we can do a simple int compare on the dates are they are formatted most significant
-                                             bit first; e.g. yyyymmdd-->
-                                        <if test="vkorg.equals(localSalesOrg) &amp;&amp; 'A'.equals(hityp) &amp;&amp; Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)">
-                                            <ref method="joinCnsDemGrpAsgnCustId" parameter="hkunnr"
-                                                 value="demandGroup" resultType="Map">
-                                                <if test="StringInner.isStringNotEmpty(demandGroup)">
-                                                    <set name="customerId" value="demandGroup"/>
-                                                </if>
-                                            </ref>
-                                        </if>
-                                    </ref>
-                                    <!-- no demandGroup found - reject -->
-                                    <if test="StringInner.isStringEmpty(customerId)">
-                                        <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO5'"
-                                                  errorValue="'Demand Group can not be determined'" sourceSystem="sourceSystem" key1="salesOrderNo"
-                                                  key2="salesOrderItem" key3="scheduleLineItem" key4="localMaterialNumber"/>
-                                    </if>
+                                    <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO5'"
+                                              errorValue="'Demand Group can not be determined'" sourceSystem="sourceSystem" key1="salesOrderNo"
+                                              key2="salesOrderItem" key3="scheduleLineItem" key4="localMaterialNumber"/>
                                 </if>
                             </if>
                         </if>
