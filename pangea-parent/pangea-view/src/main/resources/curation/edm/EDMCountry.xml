@@ -23,11 +23,11 @@
             </region>
 
             <region path="/plan/edm_country_input">
-                <columns>sourceSystem,planningRegionId,localCountry</columns>
+                <columns>sourceSystem,planningRegionID,localCountry</columns>
             </region>
 
             <region path="/plan/cns_plan_region">
-                <columns>planningRegionDesc, planningRegionId</columns>
+                <columns>planningRegionDesc, planningRegionID</columns>
             </region>
 
             <region path="/edm/source_system_v1">

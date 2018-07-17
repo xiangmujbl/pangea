@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-5739
-Feature: EDMCountry AEAZ-5739
+@pangea_test @AEAZ-10570
+Feature: EDMCountry AEAZ-10570
 
   Scenario: Full Load curation
     #  1. test get sourceSystem from source_system_v1 and overwrite the value in this field (rule T1)
@@ -33,7 +33,7 @@ Feature: EDMCountry AEAZ-5739
 
 
     And I import "/plan/edm_country_input" by keyFields "localCountry,sourceSystem"
-      |sourceSystem  |planningRegionId  |localCountry|
+      |sourceSystem  |planningRegionID  |localCountry  |
       | CONS_LATAM   | CDEF123          | *            |
       | AECF_JDAMS   | CGUF123          | *            |
       | CONS_LATAM   | AGCF189          | 00           |
@@ -42,12 +42,14 @@ Feature: EDMCountry AEAZ-5739
       | CONS_LATAM   | 104              | BS           |
     And I wait "/plan/edm_country_input" Async Queue complete
 
-    And I import "/plan/cns_plan_region" by keyFields "planningRegionId"
-      |planningRegionDesc  |planningRegionId  |
+    And I import "/plan/cns_plan_region" by keyFields "planningRegionID"
+      |planningRegionDesc  |planningRegionID  |
       | CDEF190            | CDEF123          |
       | AGEC019            | AGCF189          |
       | LATAM              | 103              |
     When I submit task with xml file "xml/edm/EDMCountry.xml" and execute file "jar/pangea-view.jar"
+    
+    And wait 5000 millisecond
 
     Then I check region data "/edm/country_v1" by keyFields "sourceSystem,localCountry"
       | sourceSystem | localCountry | countryCode | countryName   | consumerPlanningRegion | consumerPlannRegDesc |
@@ -56,9 +58,9 @@ Feature: EDMCountry AEAZ-5739
       | CONS_LATAM   | BR           | BR          | Brazil        | 103                    | LATAM                |
       | CONS_LATAM   | BS           | BS          | Bahamas       | 104                    |                      |
       | CONS_LATAM   | BT           | BT          | Bhutan        |                        |                      |
+
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
-
 
   Scenario: delete all test data
 
