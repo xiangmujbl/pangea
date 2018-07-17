@@ -77,6 +77,13 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         } else {
             return resultObjectSkip;
         }
+        //ASN 7 preparation
+        localPlant = asn7Rule(shipNotifEntity, localPlant);
+        if(localPlant.isEmpty()){
+            return resultObjectSkip;
+        } else {
+            stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + localPlant);
+        }
 
 
         //ASN 1
@@ -122,12 +129,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         }
 
         //ASN 7
-        localPlant = asn7Rule(shipNotifEntity, localPlant);
-        if(localPlant.isEmpty()){
-            return resultObjectSkip;
-        } else {
-            stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + localPlant);
-        }
+        //moved to top
 
         //ASN 8
         stockBo.setTransitDate(IConstant.VALUE.TRANSIT_DATE);
@@ -214,7 +216,6 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         }
 
         //ASN rules end
-
         resultObject.setBaseBo(stockBo);
         return resultObject;
     }
@@ -243,11 +244,10 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     }
 
     private String asn7Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, String localPlant){
-
-        ArrayList<PlanCnsTlaneControlEntity> tlaneControlEntityList = new ArrayList(cnsTlaneControlDao.getEntityListWithTriangulationParams("*","*",
-                shipNotifEntity.getSrcSysCd(),localPlant,"purchase_order",IConstant.VALUE.YES));
+        ArrayList<PlanCnsTlaneControlEntity> tlaneControlEntityList = new ArrayList(cnsTlaneControlDao.getEntityListWithTriangulationParamsAnySequence(shipNotifEntity.getSrcSysCd(),localPlant,"purchase_order",IConstant.VALUE.YES));
 
         if(null != tlaneControlEntityList && !tlaneControlEntityList.isEmpty()){
+
             //get any
             PlanCnsTlaneControlEntity tce = tlaneControlEntityList.get(0);
 
@@ -266,7 +266,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
             //overwrite localPlant
             String destinationLocation = trigEntity.getDestinationLocation();
             int size = tce.getSourceSystemCriticalParameters().length();
-            String newLocalPlant = destinationLocation.substring(0,size+1);
+            String newLocalPlant = destinationLocation.substring(size+1);
             localPlant = newLocalPlant;
         }
 

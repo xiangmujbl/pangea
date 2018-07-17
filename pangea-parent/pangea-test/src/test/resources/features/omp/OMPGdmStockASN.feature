@@ -184,9 +184,9 @@ Feature:  OMPGdmStockASN-Curation
 
     And I will remove all data with region "/plan/cns_plan_object_filter"
 
-    #And I will remove all data with region "/plan/cns_tlane_control"
+    And I will remove all data with region "/plan/cns_tlane_control"
 
-    #And I will remove all data with region "/plan/cns_tlane_control_triangulation"
+    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
 
     And I will remove all data with region "/omp/gdm_stock_asn"
 
