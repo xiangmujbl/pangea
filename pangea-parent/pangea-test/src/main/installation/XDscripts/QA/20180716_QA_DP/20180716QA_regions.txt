@@ -1,0 +1,3 @@
+## CUR1101
+/qa/plan/cns_prod_cty_affl_input
+/dqqa/plan/cns_prod_cty_affl
