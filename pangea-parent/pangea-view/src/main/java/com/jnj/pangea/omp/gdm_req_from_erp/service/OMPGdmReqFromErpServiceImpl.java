@@ -162,8 +162,8 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(edmPurchaseRequisitionV1Entity.getSourceSystem());
 
         for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
-            if(tlaneControl.getTrigSysPlant().equals(localPlant) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(IConstant.VALUE.YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("purchase_order")) {
-                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
+            if(tlaneControl.getTrigSysPlant().equals(localPlant) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(IConstant.VALUE.YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("Purchase Order")) {
+                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSeqNumberTlaneName(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
                 if(triangulationEntities != null) {
                     PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
                     localPlant = stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+IConstant.VALUE.UNDERLINE,IConstant.VALUE.EMPTY);

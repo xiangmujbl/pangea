@@ -19,7 +19,7 @@ public class PlanCnsTlaneControlTriangulationDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public List<PlanCnsTlaneControlTriangulationEntity> getEntityWithSourceSystemCriticalParameters(String sequenceNumber, String tlaneName) {
+    public List<PlanCnsTlaneControlTriangulationEntity> getEntityWithSeqNumberTlaneName(String sequenceNumber, String tlaneName) {
         if (sequenceNumber.isEmpty() || tlaneName.isEmpty()){
             return null;
         }

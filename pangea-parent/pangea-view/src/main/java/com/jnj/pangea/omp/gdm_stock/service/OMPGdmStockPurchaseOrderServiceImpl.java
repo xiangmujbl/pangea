@@ -178,6 +178,54 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     }
 
     /**
+     * set localPlant - implement PO7
+     *
+     * @param purchaseOrderOAV1Entity main data region
+     * @return boolean for skip validation
+     */
+    private boolean po7Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
+        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(IConstant.VALUE.PROJECT_ONE_DEV, purchaseOrderOAV1Entity.getSourceSystem());
+        if(sourceSystemEntity == null){
+            return false;
+        }
+        localPlant.set(purchaseOrderOAV1Entity.getPlntCd());
+
+        List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(purchaseOrderOAV1Entity.getSourceSystem());
+        for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
+            if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(IConstant.VALUE.YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("Purchase Order")) {
+                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSeqNumberTlaneName(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
+                if(triangulationEntities != null) {
+                    PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
+                    localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+IConstant.VALUE.UNDERLINE,IConstant.VALUE.EMPTY));
+                }
+            }
+        }
+        //Planning relevancy check
+        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(purchaseOrderOAV1Entity.getSourceSystem(), localPlant.get());
+        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(IConstant.VALUE.X)){
+            stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem()+IConstant.VALUE.UNDERLINE+localPlant.get());
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Highest step number
+     *
+     * @param triangulationEntities List of tlane_control_triangulation objects to find the highest step number
+     * @return boolean for skip validation
+     */
+    private PlanCnsTlaneControlTriangulationEntity findHighestStepNumber(List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities) {
+        PlanCnsTlaneControlTriangulationEntity tempEntity = triangulationEntities.get(0);
+        for (PlanCnsTlaneControlTriangulationEntity triangulationEntity : triangulationEntities) {
+            if(Integer.parseInt(triangulationEntity.getStepNumber()) > Integer.parseInt(tempEntity.getStepNumber())){
+                tempEntity = triangulationEntity;
+            }
+        }
+        return tempEntity;
+    }
+
+    /**
      * set stockId - implement PO1
      *
      * @param edmMaterialGlobalV1Entity called data region
@@ -214,55 +262,6 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         } else if (purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.L)) {
             stockBo.setCertaintyId(IConstant.VALUE.LE);
         }
-    }
-
-    /**
-     * set certaintyId - implement PO5
-     *
-     * @param purchaseOrderOAV1Entity main data region
-     * @return boolean for skip validation
-     */
-    private boolean po7Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
-        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(IConstant.VALUE.PROJECT_ONE_DEV, purchaseOrderOAV1Entity.getSourceSystem());
-        if(sourceSystemEntity == null){
-            return false;
-        }
-        localPlant.set(purchaseOrderOAV1Entity.getPlntCd());
-
-        List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(purchaseOrderOAV1Entity.getSourceSystem());
-
-        for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
-            if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(IConstant.VALUE.YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("purchase_order")) {
-                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
-                if(triangulationEntities != null) {
-                    PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
-                    localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+IConstant.VALUE.UNDERLINE,IConstant.VALUE.EMPTY));
-                }
-            }
-        }
-        //Planning relevancy check
-        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(purchaseOrderOAV1Entity.getSourceSystem(), localPlant.get());
-        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(IConstant.VALUE.X)){
-            stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem()+IConstant.VALUE.UNDERLINE+localPlant.get());
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * set certaintyId - implement PO5
-     *
-     * @param triangulationEntities List of tlane_control_triangulation objects to find the highest step number
-     * @return boolean for skip validation
-     */
-    private PlanCnsTlaneControlTriangulationEntity findHighestStepNumber(List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities) {
-        PlanCnsTlaneControlTriangulationEntity tempEntity = triangulationEntities.get(0);
-        for (PlanCnsTlaneControlTriangulationEntity triangulationEntity : triangulationEntities) {
-            if(Integer.parseInt(triangulationEntity.getStepNumber()) > Integer.parseInt(tempEntity.getStepNumber())){
-                tempEntity = triangulationEntity;
-            }
-        }
-        return tempEntity;
     }
 
     /**
