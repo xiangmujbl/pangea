@@ -62,10 +62,10 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-4070
 
     And I check file data for filename "GDMProductLocationDetail.tsv" by keyFields "productLocationDetailId"
       | unit | comments | productLocationDetailId           | productLocationId      | name   | description | CLASS | value  | activeOPRERP | activeSOPERP |
-      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | EM9999-CONS_LATAM_BR19 | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
-      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 | EM9999-CONS_LATAM_BR19 | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
-      |      |          | 9862-CONS_LATAM_EC01/PGA/ATTRB1   | 9862-CONS_LATAM_EC01   | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
-      |      |          | 9862-CONS_LATAM_EC01/PGA/ATTRB2   | 9862-CONS_LATAM_EC01   | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
+      |      |          | EM9999/CONS_LATAM_BR19/PGA/ATTRB1 | EM9999/CONS_LATAM_BR19 | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
+      |      |          | EM9999/CONS_LATAM_BR19/PGA/ATTRB2 | EM9999/CONS_LATAM_BR19 | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
+      |      |          | 9862/CONS_LATAM_EC01/PGA/ATTRB1   | 9862/CONS_LATAM_EC01   | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
+      |      |          | 9862/CONS_LATAM_EC01/PGA/ATTRB2   | 9862/CONS_LATAM_EC01   | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID                 | errorCode | sourceSystem | businessArea | key1       | key2               | key3 | key4 | key5 | errorValue                                                  |
