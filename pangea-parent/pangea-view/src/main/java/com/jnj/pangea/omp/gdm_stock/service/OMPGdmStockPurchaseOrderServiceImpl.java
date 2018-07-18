@@ -278,15 +278,28 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                 localPlant.get(),
                 IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
                 purchaseOrderOAV1Entity.getPoTypeCd());
-        if(cnsPlanObjectFilterEntity == null) {
-            cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
-                    IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
-                    purchaseOrderOAV1Entity.getSourceSystem(),
-                    IConstant.EDM_PURCHASE_ORDER_OA_V1.PRCHSNG_ORG_NUM,
-                    purchaseOrderOAV1Entity.getPrchsngOrgNum(),
-                    IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
-                    purchaseOrderOAV1Entity.getPoTypeCd());
+        if(cnsPlanObjectFilterEntity != null) {
+            return cnsPlanObjectFilterEntity;
         }
+        cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
+                IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
+                purchaseOrderOAV1Entity.getSourceSystem(),
+                IConstant.EDM_PURCHASE_ORDER_OA_V1.PRCHSNG_ORG_NUM,
+                purchaseOrderOAV1Entity.getPrchsngOrgNum(),
+                IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
+                purchaseOrderOAV1Entity.getPrchsngOrgNum());
+        if(cnsPlanObjectFilterEntity != null) {
+            return cnsPlanObjectFilterEntity;
+        }
+
+        cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
+                IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
+                purchaseOrderOAV1Entity.getSourceSystem(),
+                IConstant.EDM_PURCHASE_ORDER_OA_V1.PLNTCD,
+                localPlant.get(),
+                IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
+                purchaseOrderOAV1Entity.getPrchsngOrgNum());
+
         return cnsPlanObjectFilterEntity;
     }
 
