@@ -34,6 +34,13 @@ job create --name Pangea_QA_Trigger_GDM_Stock6_InventoryStock --definition 'pang
 
 job create --name Pangea_QA_Trigger_GDM_ReqFromErp --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmReqFromErp.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
+job create --name Pangea_QA_Trigger_GDM_Demand1_STO --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmDemandSTO.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_QA_Trigger_GDM_Demand2_OBD --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmDemandOBD.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_QA_Trigger_GDM_Demand3_SO --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmDemandSalesOrder.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/qa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+
 
 job create --name Pangea_DQQA_Trigger_Plan_cns_lot_size_key_trans --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsLotSizeKeyTrans.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
@@ -57,8 +64,13 @@ job create --name Pangea_DQQA_Trigger_GDM_Stock6_InventoryStock --definition 'pa
 
 job create --name Pangea_DQQA_Trigger_GDM_ReqFromErp --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmReqFromErp.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
-## waiting for GDMDemand1 GDMDemand5 GDMDemand4
-TO BE CONTINUE
+job create --name Pangea_DQQA_Trigger_GDM_Demand1_STO --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmDemandSTO.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_GDM_Demand2_OBD --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmDemandOBD.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+job create --name Pangea_DQQA_Trigger_GDM_Demand3_SO --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/sp/xml/omp/OMPGdmDemandSalesOrder.xml --executeFile=pangea/sp/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+
 
 job create --name Pangea_QA_Merge_GDMTransport --definition 'pangea-file-merger --sPattern=GDMTransport.tsv --tFileName=GDMTransport.tsv --outputFileName=GDMTransport.tsv --keyString=machineTypeId,processTypeId,transportId,purchasingOrganization,active,vendorId,purchasingGroup,label,toLocationId,fromLocationId,planLevelId,activeOPRERP,activeSOPERP,minQuantity,transportOffset,toProductId,transportType,endEff,fromProductId,startEff --tHost=mboxnait.jnj.com --tLocation=/CPCUS_CONS_APS_OMP_PANGEA/ --tUsername=Pangea_EDG_User --tPassword="{cryption}41 -103 -31 -20 31 25 124 126 6 -48 57 40 11 79 -51 -82" --tSourceLocation=/fitdata/STAGING/ompdata/merged/ --mLocation=/fitdata/STAGING/ompdata/output/ --outputDirectory=/fitdata/STAGING/ompdata/merged/ --duplicationFlag=true --toCompress=false --zipFileName=""' --deploy
 

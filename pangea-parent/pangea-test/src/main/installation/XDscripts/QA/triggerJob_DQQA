@@ -127,3 +127,5 @@ job create --name Pangea_DQQA_Trigger_GDM_Stock2_Insp_Lot --definition 'pangea-t
 job create --name Pangea_DQQA_Trigger_GDM_Stock3_Preq --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/omp/OMPGdmStockPurchaseRequisition.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
 
 job create --name Pangea_DQQA_Trigger_cns_root_desc --definition 'pangea-triggerCeModule --dateFormat=yyyy-MM-dd --makeUnique=true --xml=pangea/xml/plan/PlanCnsRootDescription.xml --executeFile=pangea/pangea-view.jar --alias=pangea/alias/dqqa_region_alias.properties --computingNode=ITSUSABLSP01233:2551,ITSUSABLSP01234:2551 --launcherCommand="" --partition=1 --waitJobDone=true --projectName=pangea' --deploy
+
+## updated at 20180710
