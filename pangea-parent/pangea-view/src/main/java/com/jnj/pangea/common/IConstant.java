@@ -177,7 +177,9 @@ public interface IConstant {
 
     interface FBP {
         String FAIL_MSG = "localDpParentCode does not exist in edm Material";
+        String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
     }
+
 
     interface EDM_INVENTORY_STOCK {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -330,6 +332,7 @@ public interface IConstant {
     interface PLAN_CNS_PLAN_REGION {
         String PLANNING_REGION_ID = "planningRegionId";
     }
+
 
     interface EDM_SOURCE_LIST_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
