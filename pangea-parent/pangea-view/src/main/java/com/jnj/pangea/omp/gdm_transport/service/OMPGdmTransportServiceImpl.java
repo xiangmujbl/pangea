@@ -120,9 +120,13 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 				SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
 				Date dValidTo = sdfFrom.parse(validDateToFormat);
 				String validDateToConverted = sdfTo.format(dValidTo) + IConstant.VALUE.HH_NN_SS_ZERO;
-
-				gdmTransportBo.setEndEff(validDateToConverted);
-
+				Date maxDate = sdfTo.parse(IConstant.VALUE.END_EFF_CHECK);
+//				gdmTransportBo.setEndEff(validDateToConverted);
+				if(dValidTo.getTime() > maxDate.getTime()){
+					gdmTransportBo.setEndEff(IConstant.VALUE.ENDEFF );
+				}else{
+					gdmTransportBo.setEndEff(validDateToConverted );
+				}
 				String validDateFromFormat = tlaneItemEntity.getValidFrom();
 				Date dValidFrom = sdfFrom.parse(validDateFromFormat);
 				String validDateFromConverted = sdfTo.format(dValidFrom) + IConstant.VALUE.HH_NN_SS_ZERO;
