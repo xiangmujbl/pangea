@@ -3,6 +3,7 @@ package com.jnj.pangea.common;
 /**
  * Created by XZhan290 on 2018/3/6.
  */
+@Deprecated
 public interface IConstant {
 
     interface REGION {
