@@ -5,8 +5,6 @@ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlEntity;
 import org.apache.commons.lang.StringUtils;
-import com.jnj.pangea.common.entity.plan.PlanCnsPlantAttrEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlEntity;
 
 import java.util.List;
 

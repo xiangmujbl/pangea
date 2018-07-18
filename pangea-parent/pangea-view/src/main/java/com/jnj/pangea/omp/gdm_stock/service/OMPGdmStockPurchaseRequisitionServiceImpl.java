@@ -184,7 +184,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
         matchingEntities = planCnsTlaneControlDao.getMatchingEntities(edmPurchaseRequisitionV1Entity.getSourceSystem(),
                 localPlant, PURCHASE_ORDER, IConstant.VALUE.YES);
         if (matchingEntities != null && matchingEntities.size() > 0) {
-            List<PlanCnsTlaneControlTriangulationEntity> triangEntries = planCnsTlaneControlTriangulationDao.getMatchingEntities(
+            List<PlanCnsTlaneControlTriangulationEntity> triangEntries = planCnsTlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(
                     matchingEntities.get(0).getSequenceNumber(),
                     matchingEntities.get(0).getTlaneName());
             int maxSequence = 0;
