@@ -67,7 +67,9 @@ public interface IConstant {
         String PROJECT_ONE_TVRO = "/project_one/tvro";
         String PLAN_CNS_ORD_REJ = "/plan/cns_ord_rej";
         String PLAN_CNS_CUST_EXCL = "/plan/cns_cust_excl";
+        String PLAN_CNS_CUST_EXCL_INCL = "/plan/cns_cust_excl_incl";
         String PLAN_CNS_SO_TYPE_INCL = "/plan/cns_so_type_incl";
+        String PLAN_CNS_SO_TYPE_INCL_EXCL = "/plan/cns_so_type_incl_excl";
         String PLAN_CNS_PLANT_ATTR = "/plan/cns_plant_attr";
         String PLAN_EDM_COUNTRY_INPUT = "/plan/edm_country_input";
         String PLAN_CNS_PLAN_REGION = "/plan/cns_plan_region";
