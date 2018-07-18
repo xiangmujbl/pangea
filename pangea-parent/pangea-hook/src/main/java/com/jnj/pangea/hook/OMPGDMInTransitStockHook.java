@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.query.QueryHelper;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class OMPGDMInTransitStockHook {
 
@@ -18,12 +21,19 @@ public class OMPGDMInTransitStockHook {
         if(StringUtils.isEmpty(localNumerator)||StringUtils.isEmpty(quantity)||StringUtils.isEmpty(localDenominator)){
             return null;
         }
-        Integer v = Integer.parseInt(localNumerator);
-        Integer v1 = Integer.parseInt(quantity);
-        Integer v2 = Integer.parseInt(localDenominator);
-        Integer value = v*v1/v2;
-        return Integer.toString(value);
+        double v = Double.parseDouble(localNumerator);
+        double v1 = Double.parseDouble(quantity);
+        double v2 = Double.parseDouble(localDenominator);
+        double value = v*v1/v2;
+        DecimalFormat decimalFormat = new DecimalFormat("0.0000000");
+        String format = decimalFormat.format(value);
+        return format;
     }
+
+   /* public static void main(String[] args) {
+        String s = OMPGDMInTransitStockHook.calculateQuantity("3", "225", "10");
+        System.out.println(s);
+    }*/
 
     public static String QueryCnsIntransitstock(String productId,String sourceSystem,String demandGroup){
         if(!StringUtils.isEmpty(productId)||!StringUtils.isEmpty(sourceSystem)||!StringUtils.isEmpty(demandGroup)){
@@ -110,18 +120,105 @@ public class OMPGDMInTransitStockHook {
     }
 
 
-//    public static void main(String[] args){
-//        setStartDateValue("20180531","10");
-//        Date date = DateUtil.stringToDate("20180531","yyyyMMdd");
-//        String st = DateUtil.dateToString(date,"yyyy/MM/dd HH:mm:ss");
-//        System.out.println(st);
-//        Date date = DateUtil.stringToDate("2018-06-10 15:11:00","yyyy-MM-dd HH:mm:ss");
-//        t(date);
-//    }
+    public static String getDemandGroup(String customerId,String sourceCountry,String hiytp,String date){
+        Map queryKnvhentitymap   = OMPGDMInTransitStockHook.QueryKnvhEntity(customerId,sourceCountry,hiytp,date);
 
-    //public static void main(String[] args) {
-//        String s = OMPGDMInTransitStockHook.localMaterialNumber("000000000000000021");
-//        System.out.println(s);
-//        System.out.println("000000000000095299".length());
-//    }
+        if(queryKnvhentitymap==null){
+            return null;
+        }
+        Map hkunnr = OMPGDMInTransitStockHook.QueryGrpAsgnWithKnvh((String) queryKnvhentitymap.get("hkunnr"));
+        if(hkunnr!=null){
+            if(StringUtils.isNotEmpty((String)hkunnr.get("demandGroup"))){
+                return (String)hkunnr.get("demandGroup");
+            }
+
+        }
+        Map queryKnvhentitymap2   = OMPGDMInTransitStockHook.QueryKnvhEntity((String)queryKnvhentitymap.get("hkunnr"),sourceCountry,hiytp,date);
+        if(queryKnvhentitymap2==null){
+            return null;
+        }
+        Map hkunnr2 = OMPGDMInTransitStockHook.QueryGrpAsgnWithKnvh((String) queryKnvhentitymap.get("hkunnr"));
+        if(hkunnr2!=null){
+            if(StringUtils.isNotEmpty((String)hkunnr2.get("demandGroup"))){
+                return (String)hkunnr.get("demandGroup");
+            }else {
+                return null;
+            }
+
+        }else {
+            return null;
+        }
+
+
+    }
+    public static String getUUID(){
+        return  UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+   /* public static void main(String[] args) {
+        System.out.println(OMPGDMInTransitStockHook.getUUID());
+    }*/
+
+    public static Map QueryKnvhEntity(String kunnr, String vkorg, String hiytp,
+                               String datbi) {
+        if(StringUtils.isEmpty(kunnr)||StringUtils.isEmpty(vkorg)||StringUtils.isEmpty(hiytp)||StringUtils.isEmpty(kunnr)||StringUtils.isEmpty(datbi)){
+            return null;
+        }
+        ADFCriteria adfCriteria10 = QueryHelper.buildCriteria("kunnr")
+                .is(kunnr);
+        ADFCriteria adfCriteria11 = QueryHelper.buildCriteria("vkorg")
+                .startsWith(vkorg);
+        ADFCriteria adfCriteria12 = QueryHelper.buildCriteria("hiytp")
+                .is(hiytp);
+        ADFCriteria adfCriteria13 = QueryHelper.buildCriteria("datbi")
+                .greaterThanEqual(datbi);
+
+        ADFCriteria groupCriteria18 = adfCriteria13.and(adfCriteria12)
+                .and(adfCriteria11).and(adfCriteria10);
+
+        ADFCriteria adfCriteria = groupCriteria18;
+        String queryStr = adfCriteria.toQueryString();
+        LogUtil.getCoreLog().info("QueryKnvhEntity    StringQuery"+queryStr);
+        List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
+                "/project_one/knvh", queryStr, -1);
+        if (retList != null && retList.size() > 0) {
+            Map.Entry<String, String> entry = retList.get(0);
+            Map<String, Object> map = JsonObject.append(entry.getValue())
+                    .toMap();
+            return map;
+        }
+
+        return null;
+
+    }
+    public static Map QueryGrpAsgnWithKnvh(String customerId) {
+        if(StringUtils.isEmpty(customerId)){
+            return null;
+        }
+
+        ADFCriteria adfCriteria9 = QueryHelper.buildCriteria("customerId").is(
+                customerId);
+        ADFCriteria groupCriteria17 = adfCriteria9;
+
+        ADFCriteria adfCriteria = groupCriteria17;
+        String queryStr = adfCriteria.toQueryString();
+        LogUtil.getCoreLog().info("QueryGrpAsgnWithKnvh    StringQuery"+queryStr);
+
+        List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
+                "/plan/cns_dem_grp_asgn", queryStr, -1);
+        if (retList != null && retList.size() > 0) {
+            Map.Entry<String, String> entry = retList.get(0);
+            Map<String, Object> map = JsonObject.append(entry.getValue())
+                    .toMap();
+            return map;
+        }
+
+        return null;
+
+    }
+
+ /*   public static void main(String[] args) {
+        String s = OMPGDMInTransitStockHook.calculateQuantity("0.34", "1.00", "9.00");
+        System.out.println(s);
+    }*/
 }

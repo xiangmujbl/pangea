@@ -46,7 +46,6 @@ public class PlanCnsTlaneItemServiceImpl {
     private PlanCnsMaterialPlanStatusDaoImpl planCnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
     private EDMMaterialGlobalDaoImpl edmMaterialGlobalDao = EDMMaterialGlobalDaoImpl.getInstance();
     private EDMSourceListV1DaoImpl edmSourceListV1Dao = EDMSourceListV1DaoImpl.getInstance();
-    private ICommonDao commonDao = CommonDaoImpl.getInstance();
 
 
     public List<ResultObject> buildView(String key, Object o, Object o2) {
@@ -55,8 +54,6 @@ public class PlanCnsTlaneItemServiceImpl {
 
         PlanCnsTlaneControlEntity planCnsTlaneControlEntity = (PlanCnsTlaneControlEntity) o;
         Map map = (Map) o2;
-
-        LogUtil.getCoreLog().info("================= o2 =" + o2);
 
         String destinationLocationWithOutSystem = "";
         String originLocationWithOutSystem = "";
@@ -76,20 +73,27 @@ public class PlanCnsTlaneItemServiceImpl {
             LogUtil.getCoreLog().info("================= sourceSystem is null ");
         }
 
-        LogUtil.getCoreLog().info("================= originLocationWithOutSystem  =  " + originLocationWithOutSystem);
-        LogUtil.getCoreLog().info("================= destinationLocationWithOutSystem = " + destinationLocationWithOutSystem);
-
 
         //N1
         String processTypeId = "";
         if (StringUtils.isNotBlank(sourceSystem) && StringUtils.isNotBlank(originLocationWithOutSystem)) {
-            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemAndLocalNumber(sourceSystem, originLocationWithOutSystem);
+
+            String[] temp = originLocationWithOutSystem.split(IConstant.VALUE.UNDERLINE);
+            if (temp.length > 1) {
+                String vendorOrCustomer = temp[0];
+                originLocationWithOutSystem = originLocationWithOutSystem.replaceAll(vendorOrCustomer + IConstant.VALUE.UNDERLINE, "");
+            }
+            String localNumber = fixNumber(originLocationWithOutSystem, 10);
+            PlanCnsPlnSplLocEntity planCnsPlnSplLocEntity = planCnsPlnSplLocDao.getEntityWithSourceSystemAndLocalNumber(sourceSystem, localNumber);
             if (null != planCnsPlnSplLocEntity) {
+
                 if (StringUtils.isEmpty(planCnsPlnSplLocEntity.getLocalPlant()) || StringUtils.isBlank(planCnsPlnSplLocEntity.getLocalPlant())) {
                     processTypeId = IConstant.VALUE.VENDOR_TRANSPORT;
                 } else {
                     processTypeId = IConstant.VALUE.SUBCONTRACTING_TRANSPORT;
                 }
+
+
             } else {
                 if (StringUtils.isNotBlank(destinationLocationWithOutSystem)) {
                     EDMPlantV1Entity plantV1Entity = plantV1Dao.getEntityWithLocalPlant(destinationLocationWithOutSystem);
@@ -146,7 +150,8 @@ public class PlanCnsTlaneItemServiceImpl {
                 }
             }
         } else {
-            List<PlanCnsPlnSplLocEntity> plnSplLocEntityList = planCnsPlnSplLocDao.getEntityListWithSourceSystemLocalNumberAndVendorOrCustomer(sourceSystem, originLocationWithOutSystem, IConstant.VALUE.V);
+            String localNumber = fixNumber(originLocationWithOutSystem, 10);
+            List<PlanCnsPlnSplLocEntity> plnSplLocEntityList = planCnsPlnSplLocDao.getEntityListWithSourceSystemLocalNumberAndVendorOrCustomer(sourceSystem, localNumber, IConstant.VALUE.V);
             if (null != plnSplLocEntityList && plnSplLocEntityList.size() > 0) {
 
                 List<String> materialList = completingAllCriticalParameters(map);
@@ -193,6 +198,16 @@ public class PlanCnsTlaneItemServiceImpl {
             }
         }
         return resultObjectList;
+    }
+
+    private String fixNumber(String input, int length) {
+        if (StringUtils.isNotBlank(input) && input.length() < length) {
+            int shortNumber = length - input.length();
+            for (int i = 0; i < shortNumber; i++) {
+                input = "0" + input;
+            }
+        }
+        return input;
     }
 
     private List<String> completingAllCriticalParameters(Map map) {
@@ -250,30 +265,37 @@ public class PlanCnsTlaneItemServiceImpl {
             }
         }
 
-        List<String> materialNumberList = new ArrayList<>();
 
         Set<String> keySet = queryStringMap.keySet();
+
+        List<List<String>> materialNumberList = new ArrayList<>();
         for (String tableName : keySet) {
             QueryObject object = queryStringMap.get(tableName);
             String queryString = object.getAdfCriteria().and(IConstant.VALUE.SOURCE_SYSTEM).is(sourceSystem).toQueryString();
 
             if (StringUtils.isNotBlank(queryString)) {
-                LogUtil.getCoreLog().info("===================== queryString=" + queryString);
-                List<Map.Entry<String, String>> entryList = AdfViewHelper.queryForList(object.getRegionPath(), queryString);
+                List<Map.Entry<String, String>> entryList = AdfViewHelper.queryForList(object.getRegionPath(), queryString, -1);
                 List<String> list = new ArrayList();
                 for (Map.Entry<String, String> entry : entryList) {
                     Map<String, Object> pMap = JsonUtils.jsonToObject(entry.getValue(), Map.class);
                     if (pMap.containsKey(IConstant.VALUE.LOCAL_MATERIAL_NUMBER_FIREST_LOWER)) {
-                        list.add((String) pMap.get(IConstant.VALUE.LOCAL_MATERIAL_NUMBER_FIREST_LOWER));
+                        String number = (String) pMap.get(IConstant.VALUE.LOCAL_MATERIAL_NUMBER_FIREST_LOWER);
+                        if (!list.contains(number)) {
+                            list.add(number);
+                        }
                     }
                 }
-
-                //merge list
-                materialNumberList = mergeList(materialNumberList, list);
+                materialNumberList.add(list);
             }
         }
 
-        return materialNumberList;
+        //union merge list
+        List<String> resultList = materialNumberList.get(0);
+        for (List<String> list : materialNumberList) {
+            resultList.retainAll(list);
+        }
+
+        return resultList;
     }
 
     class QueryObject {
@@ -297,24 +319,6 @@ public class PlanCnsTlaneItemServiceImpl {
         }
     }
 
-    private List mergeList(List<String> list1, List<String> list2) {
-
-        List<String> resultList = new ArrayList<>();
-        if (null != list1 && list1.size() > 0 && null != list2 && list2.size() > 0) {
-            for (String s : list1) {
-                if (list2.contains(s)) {
-                    resultList.add(s);
-                }
-            }
-            return resultList;
-        } else if (null == list1 || list1.size() == 0) {
-            return list2;
-        } else if (null == list2 || list2.size() == 0) {
-            return list1;
-        } else {
-            return resultList;
-        }
-    }
 
     private ADFCriteria combineQueryStringAccordingOperator(String field, String operator, String value, String criticalParameterIE) {
         ADFCriteria adfCriteria = QueryHelper.buildCriteria(field);

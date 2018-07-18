@@ -5,6 +5,7 @@ import com.jnj.adf.grid.common.DateUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.project_one.KnvhEntity;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -55,6 +56,27 @@ public class ProjectOneKnvhDaoImpl extends CommonDaoImpl {
             String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.HKUNNR).is(hkunnr)
                     .and(IConstant.PROJECT_ONE_KNVH.DATBI).greaterThan(currentDate).toQueryString();
             return queryForList(IConstant.REGION.PROJECT_ONE_KNVH, queryString, KnvhEntity.class);
+        }
+        return null;
+    }
+
+    public KnvhEntity getEntityWithKunnrAndVkorgAndDatbi(String kunnr, String vkorg, String datbi) {
+        if (StringUtils.isNotEmpty(kunnr) && StringUtils.isNotEmpty(vkorg) && StringUtils.isNotEmpty(datbi)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.KUNNR).is(kunnr)
+                    .and(IConstant.PROJECT_ONE_KNVH.VKORG).is(vkorg)
+                    .and(IConstant.PROJECT_ONE_KNVH.DATBI).greaterThan(datbi).toQueryString();
+            return queryForObject(IConstant.REGION.PROJECT_ONE_KNVH, queryString, KnvhEntity.class);
+        }
+        return null;
+    }
+
+    public KnvhEntity getEntityWithFourConditions(String kunnr, String vkorg, String hityp, String datbi) {
+        if (StringUtils.isNotEmpty(kunnr) && StringUtils.isNotEmpty(vkorg) && StringUtils.isNotEmpty(vkorg) && StringUtils.isNotEmpty(datbi)) {
+            String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_KNVH.KUNNR).is(kunnr)
+                    .and(IConstant.PROJECT_ONE_KNVH.VKORG).is(vkorg)
+                    .and(IConstant.PROJECT_ONE_KNVH.HITYP).is(hityp)
+                    .and(IConstant.PROJECT_ONE_KNVH.DATBI).greaterThan(datbi).toQueryString();
+            return queryForObject(IConstant.REGION.PROJECT_ONE_KNVH, queryString, KnvhEntity.class);
         }
         return null;
     }

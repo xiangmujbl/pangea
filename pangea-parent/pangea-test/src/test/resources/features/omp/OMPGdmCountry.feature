@@ -9,7 +9,7 @@ Feature: OMPGdmCountry AEAZ-6097
 
     And I will remove all data with region "/plan/cns_plan_parameter"
 
-    And I will remove all data with region "/edm/edm_country_input"
+    And I will remove all data with region "/plan/edm_country_input"
 
     And I will remove all data with region "/edm/currency_v1"
 
@@ -30,6 +30,7 @@ Feature: OMPGdmCountry AEAZ-6097
       |             | ZR          | ZB           | MDDePuy      |
 
       |             | ZR          | ZB           | MDDePuy2     |
+
       |             | ZR          | WB           | MDDePuy2     |
       | Zimbabwe2   | ZR          | DR           | CONS_LATAM   |
       | Zimbabwe2   | ZR          | CR           | CONS_LATAM   |
@@ -42,7 +43,7 @@ Feature: OMPGdmCountry AEAZ-6097
       | CONS_LATAM   | cns_material_plan_status | DPRelevant | Plant     | I        | BR12           |
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
-    Given I import "/edm/edm_country_input" by keyFields "sourceSystem,localCountry,localCurrency"
+    Given I import "/plan/edm_country_input" by keyFields "sourceSystem,localCountry,localCurrency"
       | sourceSystem | localCountry             | localCurrency |
       | CONS_LATAM   | ZW                       | DDDDD         |
 
@@ -54,13 +55,13 @@ Feature: OMPGdmCountry AEAZ-6097
 
       | MDDePuy2     | WB                       | EEEEE         |
 
-    And I wait "/edm/edm_country_input" Async Queue complete
+    And I wait "/plan/edm_country_input" Async Queue complete
 
     Given I import "/edm/currency_v1" by keyFields "sourceSystem,localCurrency"
-      | sourceSystem | localCurrency |
-      | CONS_LATAM   | DDDDD         |
-      | CONS_LATAM   | AAAAA         |
-      | CONS_LATAM   | BBBBB         |
+      | sourceSystem | localCurrency | currencyCode |
+      | CONS_LATAM   | DDDDD         | FFFF         |
+      | CONS_LATAM   | AAAAA         | GGGG         |
+      | CONS_LATAM   | BBBBB         | HHHH         |
 
     And I wait "/edm/currency_v1" Async Queue complete
 
@@ -71,8 +72,8 @@ Feature: OMPGdmCountry AEAZ-6097
     Then I check file data for filename "GDMCountry.tsv" by keyFields "countryId"
 #    Then I check region data "/omp/gdm_country" by keyFields "countryId"
       | countryId | activeFCTERP | activeOPRERP | activeSOPERP | countryDescription | mrc | currencyId |
-      | ZW        | YES          | YES          | NO           | Zimbabwe1          |     | DDDDD      |
-      | ZR        | YES          | YES          | NO           | Zimbabwe2          |     | AAAAA      |
+      | ZW        | YES          | YES          | NO           | Zimbabwe1          |     | FFFF         |
+      | ZR        | YES          | YES          | NO           | Zimbabwe2          |     | GGGG         |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID   | errorCode | sourceSystem | businessArea | key1       | key2 | key3 | key4 | key5 | errorValue                                 |
@@ -85,6 +86,7 @@ Feature: OMPGdmCountry AEAZ-6097
       | DP             | OMPGdmCountry | J1        |              |              | MDDePuy    | ZB   |      |      |      | localcountry do not exist in edm country   |
       | DP             | OMPGdmCountry | J1        |              |              | MDDePuy    | ZR   |      |      |      | localcountry do not exist in edm country   |
 
+
   Scenario: delete all test data
 
     Then I delete the test data
@@ -92,4 +94,3 @@ Feature: OMPGdmCountry AEAZ-6097
     And I will remove all data with region "/omp/gdm_country"
 
     And I will remove all data with region "/plan/edm_failed_data"
-

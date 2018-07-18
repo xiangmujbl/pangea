@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/material_plant_v1" viewRegion="/omp/gdm_stock" chunkSize="500" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_inventory_stocks.OMPGdmStockInventoryStocks" writeTo="all" topic="PANGEA_omp_gdm_stock_inventory_stocks">
+    <regions> 
+      <region path="/edm/material_plant_v1"> 
+        <columns>sourceSystem,localPlant,localMaterialNumber,localBatchManagementRequirementIndicator</columns>  
+        <relations> 
+          <relation path="/edm/inventory_stock_v1" isPrimaryKey="true"> 
+            <expression>sourceSystem=/edm/material_plant_v1.sourceSystem, localPlant=/edm/material_plant_v1.localPlant, localMaterial=/edm/material_plant_v1.localMaterialNumber</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/inventory_stock_v1"> 
+        <columns>sourceSystem,localPlant,localMaterial,localStorageLocation,localBatchId,localVendorNumber,localSpecialStockIndicator,localConsignmentSpecialStockIndicator,localUnrestrictedStock,localUnrestrictedSpecialStock,localUnrestrictedBatchStock,localUnrestrictedConsignmentStock,localQualityInspectionStock,localQualityInspectionSpecialStock,localQualityInspectionBatchStock,localQualityInspectionConsignmentStock,localRestrictedStock,localRestrictedSpecialStock,localRestrictedBatchStock,localRestrictedConsignmentStock,localBlockedStock,localBlockedBatchStock,localBlockedConsignmentStock,localReturnsStock,localReturnsBatchStock,localStockInTransitStorageLocation,localStockInTransitPlantToPlant,localStockInTransitPlant,localStockInTransitSpecial,localStockInTransitBatch,localRestrictedUseConsignment,localConsignmentStockInQualityInspection,localUnrestrictedUseConsignment,localBlkdConstStkNonBm,localTotalStockAllRestrictedBatches</columns>  
+        <relations> 
+          <relation path="/edm/material_global_v1" isPrimaryKey="true"> 
+            <expression>localMaterialNumber=/edm/inventory_stock_v1.localMaterial, sourceSystem=/edm/inventory_stock_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="true"> 
+            <expression>localNumber=/edm/inventory_stock_v1.localMaterial, sourceSystem=/edm/inventory_stock_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/plan/cns_material_plan_status" isPrimaryKey="true"> 
+            <expression>localMaterialNumber=/edm/inventory_stock_v1.localMaterial, localPlant=/edm/inventory_stock_v1.localPlant, sourceSystem=/edm/inventory_stock_v1.sourceSystem</expression> 
+          </relation>  
+          <relation path="/edm/plant_v1" isPrimaryKey="true"> 
+            <expression>localPlant=/edm/inventory_stock_v1.localPlant</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/material_global_v1"> 
+        <columns>localMaterialNumber,sourceSystem,materialNumber,primaryPlanningCode</columns> 
+      </region>  
+      <region path="/plan/cns_spl_pln_loc"> 
+        <columns>localNumber,sourceSystem,localPlant,vendorOrCustomer,localPlant</columns> 
+      </region>  
+      <region path="/plan/cns_material_plan_status"> 
+        <columns>localMaterialNumber,localPlant,sourceSystem,spRelevant,noPlanRelevant</columns> 
+      </region>  
+      <region path="/edm/plant_v1"> 
+        <columns>localPlant,sourceSystem,localPlanningRelevant</columns> 
+      </region>  
+      <region path="/omp/gdm_stock"> 
+        <columns>active,activeOPRERP,activeSOPERP,batchId,blockedQuantity,consignment,certaintyId,eRPOrderId,inventoryLinkGroupId,lifnr,locationId,processTypeId,productId,qualityQuantity,quantity,receiptDate,restrictedQuantity,returnsQuantity,startDate,stockType,transferQuantity,transitDate,unrestrictedQuantity,stockId,processId</columns>
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

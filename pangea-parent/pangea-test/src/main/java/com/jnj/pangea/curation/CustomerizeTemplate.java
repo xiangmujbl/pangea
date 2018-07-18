@@ -12,7 +12,7 @@ public class CustomerizeTemplate {
     public static void main(String[] args) {
 
         Template template = new CETemplateImpl();
-        String customizeXml = "auto_curation/xml/gdm/gdm_stock_5_planned_order.xml";
+        String customizeXml = "auto_curation/xml/gdm/OMPGdmStockInventoryStocks.xml";
         String customizeHook = "auto_curation/lib/pangea-hook.jar";
         template.generateAll(customizeHook, customizeXml);
     }

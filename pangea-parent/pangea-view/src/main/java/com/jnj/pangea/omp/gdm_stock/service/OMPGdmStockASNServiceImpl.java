@@ -55,7 +55,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndSourceSystem(shipNotifEntity.getMatlNum(), shipNotifEntity.getSrcSysCd());
         //ASN rules
 
-        stockBo.setVendorId(shipNotifEntity.getVendorID());
+        stockBo.setVendorId(shipNotifEntity.getVendorId());
 
         //ASN 1
         String asn1_locationId = "";
@@ -65,14 +65,14 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
             asn1_productId = materialGlobalEntity.getMaterialNumber();
         }
         asn1_locationId = shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + shipNotifEntity.getLocalReceivingPlant();
-        stockBo.setStockId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvDocID() + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvLineNbr());
+        stockBo.setStockId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvLineNbr());
 
         //ASN 2
         stockBo.setActive(IConstant.VALUE.YES);
         stockBo.setActiveOPRERP(IConstant.VALUE.YES);
 
         //ASN 3
-        stockBo.setBatchId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getLocalbatchNo());
+        stockBo.setBatchId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getLocalBatchNo());
 
         //ASN 4
         stockBo.setInventoryLinkGroupId("");
@@ -81,7 +81,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         stockBo.setCertaintyId(IConstant.VALUE.LA); //default
 
         //ASN 6
-        if(shipNotifEntity.getLocaldeliveryCatg().equals(IConstant.VALUE.SEVEN) && shipNotifEntity.getActGRDt().isEmpty()){
+        if(shipNotifEntity.getLocalDeliveryCatg().equals(IConstant.VALUE.SEVEN) && shipNotifEntity.getActGRDt().isEmpty()){
             String erp = asn6Rule(shipNotifEntity);
             if(erp.isEmpty()){
                 return resultObjectSkip;
@@ -182,7 +182,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
             for(PlanCnsPlanObjectFilterEntity filterEntity : cnsPlanObjectFilterEntityList) {
                 if(filterEntity.getSourceObjectAttribute1().equals(IConstant.VALUE.LOCAL_RECEIVING_PLANT) && filterEntity.getSourceObjectAttribute1Value().equals(shipNotifEntity.getLocalReceivingPlant())){
                     //stockBo.setErpOrderId(shipNotifEntity.getDelvDocID());
-                    return shipNotifEntity.getDelvDocID();
+                    return shipNotifEntity.getDelvDocId();
                 }
             }
         }
@@ -191,7 +191,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
     private String asn10Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, EDMPurchaseOrderOAV1Entity purchaseEntity){
         try {
-            if(!shipNotifEntity.getLocaldeliveryDate().isEmpty()) {
+            if(!shipNotifEntity.getLocalDeliveryDate().isEmpty()) {
                 int gr = 0;
                 if (!purchaseEntity.getGrLeadTimeDays().isEmpty()) {
                     gr = Integer.parseInt(purchaseEntity.getGrLeadTimeDays());
@@ -199,7 +199,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
                 DateFormat df1 = new SimpleDateFormat("yyyyMMdd");
                 SimpleDateFormat df2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Calendar cal = Calendar.getInstance();
-                cal.setTime(df1.parse(shipNotifEntity.getLocaldeliveryDate()));
+                cal.setTime(df1.parse(shipNotifEntity.getLocalDeliveryDate()));
 
                 cal.add(Calendar.DATE, gr);
                 //determine weekday
@@ -224,11 +224,11 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
     private String asn13Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity){
         try{
-            if(!shipNotifEntity.getLocaldeliveryDate().isEmpty()) {
+            if(!shipNotifEntity.getLocalDeliveryDate().isEmpty()) {
                 Calendar cal = Calendar.getInstance();
                 DateFormat dt1 = new SimpleDateFormat("yyyyMMdd");
                 SimpleDateFormat dt2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                cal.setTime(dt1.parse(shipNotifEntity.getLocaldeliveryDate()));
+                cal.setTime(dt1.parse(shipNotifEntity.getLocalDeliveryDate()));
                 cal.set(Calendar.HOUR, 0);
                 cal.set(Calendar.MINUTE, 0);
                 cal.set(Calendar.SECOND, 0);

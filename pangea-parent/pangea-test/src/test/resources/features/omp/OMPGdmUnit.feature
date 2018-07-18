@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-3683
-Feature: OMPGdmUnit AEAZ-3683
+@pangea_test @AEAZ-10294
+Feature: OMPGdmUnit AEAZ-10294
 
   Scenario: Full Load consumption for currency
     #  1. If no records found from currency_v1, skip insertion (rule E1)
@@ -21,7 +21,7 @@ Feature: OMPGdmUnit AEAZ-3683
 
     Then I check file data for filename "GDMUnit_currency.tsv" by keyFields "unitId"
       | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure  | precision | shortDescription |
-      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar       | CURRENCY | 0         | US Dollar        |
+      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar       | Currency | 0         | US Dollar        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1 | key2 | key3 | key4 | key5 | errorValue | sourceSystem |
@@ -95,12 +95,13 @@ Feature: OMPGdmUnit AEAZ-3683
       | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each                | AAAADL  | 0         | Each                |
       | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram            | AAAADL  | 3         | KiloGram            |
       | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         | Market Control Unit | AAAADL  | 6         | Market Control Unit |
-      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL  | 3         | Dozen               |
+      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL  |           | Dozen               |
       | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL  | 3         | Kilometer           |
       | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL  | 3         | Liter               |
       | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL  | 3         | Square meter        |
       | TS     | YES    | NO           | YES          | NO           | 2      |         | Thousand            | AAAADL  | 6         | Thousand            |
       | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet              | AAAADL  | 0         | Pallet              |
+      | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case                | 0       | 0         | Case                |      
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1 | key2 | key3 | key4 | key5 | errorValue | sourceSystem |
@@ -121,12 +122,12 @@ Feature: OMPGdmUnit AEAZ-3683
 
     Then I check file data for filename "GDMUnit.tsv" by keyFields "unitId"
       | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription     | measure  | precision | shortDescription    |
-      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar           | CURRENCY | 0         | US Dollar           |
+      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar           | Currency | 0         | US Dollar           |
       | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case                | 0        | 0         | Case                |
       | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each                | AAAADL   | 0         | Each                |
       | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram            | AAAADL   | 3         | KiloGram            |
       | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         | Market Control Unit | AAAADL   | 6         | Market Control Unit |
-      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL   | 3         | Dozen               |
+      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL   |           | Dozen               |
       | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL   | 3         | Kilometer           |
       | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL   | 3         | Liter               |
       | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL   | 3         | Square meter        |

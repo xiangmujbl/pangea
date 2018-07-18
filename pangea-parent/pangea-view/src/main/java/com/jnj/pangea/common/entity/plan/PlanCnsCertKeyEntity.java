@@ -6,29 +6,28 @@ import java.util.Map;
 
 public class PlanCnsCertKeyEntity extends CommonEntity {
 
-    private String certainityKey;
-    private String certainityKeyDesc;
+    private String certaintyKey;
+    private String certaintyKeyDesc;
 
     public PlanCnsCertKeyEntity(Map<String, Object> map) {
         super(map);
-        setCertainityKey((String) map.get("certainityKey"));
-        setCertainityKeyDesc((String) map.get("certainityKeyDesc"));
+        setCertaintyKey((String) map.get("certaintyKey"));
+        setCertaintyKeyDesc((String) map.get("certaintyKeyDesc"));
     }
 
-    public String getCertainityKey() {
-        return this.certainityKey;
+    public String getCertaintyKey() {
+        return certaintyKey;
     }
 
-    public void setCertainityKey(String certainityKey) {
-        this.certainityKey = certainityKey;
+    public void setCertaintyKey(String certaintyKey) {
+        this.certaintyKey = certaintyKey;
     }
 
-    public String getCertainityKeyDesc() {
-        return this.certainityKeyDesc;
+    public String getCertaintyKeyDesc() {
+        return certaintyKeyDesc;
     }
 
-    public void setCertainityKeyDesc(String certainityKeyDesc) {
-        this.certainityKeyDesc = certainityKeyDesc;
+    public void setCertaintyKeyDesc(String certaintyKeyDesc) {
+        this.certaintyKeyDesc = certaintyKeyDesc;
     }
-
 }

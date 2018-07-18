@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/matl_prod_versn" viewRegion="/omp/gdm_link" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_link.OMPGdmLinkMasterController"
+            writeTo="all" topic="PANGEA_V1_omp_gdm_link_master">
+    <regions> 
+      <region path="/edm/matl_mfg_rtng" lucene="true"> 
+        <columns>srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To</columns>  
+        <filter>rtngTypCd:2 OR rtngTypCd:N</filter>  
+        <relations> 
+          <relation path="/edm/mfg_rtng_seq" isPrimaryKey="false" lucene="true"> 
+            <expression>srcSysCd=/edm/matl_mfg_rtng.srcSysCd, rtngTypCd=/edm/matl_mfg_rtng.rtngTypCd, rtngGrpCd=/edm/matl_mfg_rtng.rntgGrpCd, rtngGrpCntrNbr=/edm/matl_mfg_rtng.rntgGrpCntrNbr</expression>  
+            <filter>seqCategory:0 OR seqCategory:1</filter> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/matl_prod_versn"> 
+        <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,altBomNum,bomUsgCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,prcrmntTypCd,spPrcrmntTypCd,cstLtSzQty,mfgLineCd,prdVrsnDesc,dstrbtnKeyCd,frmLtSzQty,toLtSzQty,sLocCd,chckInd,chckDt,lckInd,orgBtchInd,crtDttm,chgDttm</columns>  
+        <relations> 
+          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false" lucene="true"> 
+            <expression>sourceSystem=/edm/matl_prod_versn.srcSysCd</expression>  
+            <filter>dataObject:SEND_TO_OMP</filter> 
+          </relation>  
+          <relation path="/edm/matl_mfg_rtng" isPrimaryKey="false" lucene="true"> 
+            <expression>srcSysCd=/edm/matl_prod_versn.srcSysCd, rtngTypCd=/edm/matl_prod_versn.rtngTypCd, rntgGrpCd=/edm/matl_prod_versn.rtngGrpCd, rntgGrpCntrNbr=/edm/matl_prod_versn.rtngGrpCntrNum</expression>  
+            <filter>rtngTypCd:2 OR rtngTypCd:N</filter> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/mfg_rtng_seq" lucene="true"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngSqncVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,seqCategory,seqDesc,fromLtSzQty,toLtSzQty,seqRelKeyBranch,seqRelKeyReturn,seqStartNode,seqEndNode,seqValidToDate,seqCategory</columns>  
+        <filter>seqCategory:0 OR seqCategory:1</filter>  
+        <relations> 
+          <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/mfg_rtng_seq.srcSysCd, rtngTypCd=/edm/mfg_rtng_seq.rtngTypCd, rtngGrpCd=/edm/mfg_rtng_seq.rtngGrpCd, rtngGrpCntrNbr=/edm/mfg_rtng_seq.rtngGrpCntrNbr, rtngSqncNum=/edm/mfg_rtng_seq.rtngSqncNum</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/mfg_rtng_itm_nde"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr,Valid-From Date,chgNum,delInd,Create Dttm,chgDttm</columns>  
+        <relations> 
+          <relation path="/edm/mfg_rtng_itm" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/mfg_rtng_itm_nde.srcSysCd, rtngGrpCd=/edm/mfg_rtng_itm_nde.rtngGrpCd, rtngTypCd=/edm/mfg_rtng_itm_nde.rtngTypCd, rtngItmNum=/edm/mfg_rtng_itm_nde.rtngNdeNum</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/cns_plan_parameter"> 
+        <columns>attribute,sourceSystem,dataObject</columns> 
+      </region>  
+      <region path="/edm/mfg_rtng_itm"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum,operNum,operCd,wrkCntrCd,plntCd,operDesc,operUom,bsQty,act1Cd,act1UomCd,act1Qty,act2Cd,act2UomCd,act2Qty,act3Cd,act3UomCd,act3Qty,act4Cd,act4UomCd,act4Qty,act5Cd,act5UomCd,act5Qty,act6Cd,act6UomCd,act6Qty,operDurtnQty,operDurtnUomCd,minOperDurtnQty,minOperDurtnUomCd,PhsInd,rtgItemEndDate,rtngSqncNum</columns> 
+      </region>  
+      <region path="/omp/gdm_link"> 
+        <columns>linkId,active,activeOPRERP,activeOPROMP,activeSOPERP,activeSOPOMP,comments,endEff,firstOccupied,operationId,planLevelId,prevOperationId,processId,secondOccupied,startEff</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

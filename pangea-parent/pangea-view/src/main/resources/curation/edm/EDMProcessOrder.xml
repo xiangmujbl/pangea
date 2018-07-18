@@ -5,17 +5,17 @@
 
             <region path="/project_one/afko">
                 <columns>
-                    vbeln,vstel,charg,lfart,vbtyp,lfdat,erdat,bolnr,lifex,wadatist,lifnr,werks,gasmg,gamng,gmein,plnbez,plnty,plnnr,plnaw,plnal,pverw,stlbez,terkz,rueck,rmzhl,igmng
+                    aufnr,gltrp,gstrp,gltrs,gstrs,gstri,gltri,ftrmi,ftrmp,dispo,fevor,rsnum,gasmg,gamng,gmein,plnbez,plnty,plnnr,plnaw,plnal,pverw,stlbez,terkz,rueck,rmzhl,igmng
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
                     <relation path="/project_one/aufk" isPrimaryKey="true">
-                        <expression>vbeln=/project_one/afko.vbeln</expression>
+                        <expression>aufnr=/project_one/afko.aufnr</expression>
                     </relation>
                     <relation path="/project_one/afpo" isPrimaryKey="true">
-                        <expression>vbeln=/project_one/afko.vbeln</expression>
+                        <expression>aufnr=/project_one/afko.aufnr</expression>
                     </relation>
                 </relations>
             </region>
@@ -28,7 +28,7 @@
 
             <region path="/project_one/aufk">
                 <columns>
-                    vbeln,auart,autyp,erdat,aedat,werks,loekz,idat2,procnr,logsystem
+                    aufnr,auart,autyp,erdat,aedat,werks,loekz,idat2,procnr,logsystem
                 </columns>
                 <relations>
                     <relation path="/project_one/jest" isPrimaryKey="false">
@@ -39,7 +39,7 @@
 
             <region path="/project_one/jest">
                 <columns>
-                    vbeln,objnr,stat,inact
+                    aufnr,objnr,stat,inact
                 </columns>
                 <relations>
                     <relation path="/project_one/tj02t" isPrimaryKey="false">
@@ -56,7 +56,7 @@
 
             <region path="/project_one/afpo">
                 <columns>
-                    vbeln,posnr,plnum,psamg,psmng,wemng,amein,matnr,umrez,umren,webaz,elikz,verid,charg
+                    aufnr,posnr,plnum,psamg,psmng,wemng,amein,matnr,umrez,umren,webaz,elikz,verid,charg
                 </columns>
             </region>
 

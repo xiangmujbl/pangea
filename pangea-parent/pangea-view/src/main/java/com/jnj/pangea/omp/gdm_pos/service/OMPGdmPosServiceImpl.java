@@ -24,10 +24,7 @@ import com.jnj.pangea.omp.gdm_pos.bo.OMPGdmPosBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OMPGdmPosServiceImpl {
 
@@ -131,9 +128,23 @@ public class OMPGdmPosServiceImpl {
 
                                                 OMPGdmPosBo gdmPosBo = new OMPGdmPosBo();
                                                 gdmPosBo.setAggregationId(aggregationId);
-                                                gdmPosBo.setDueDate(DateUtils.dateToString(DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekToDate(), DateUtils.DATE_FORMAT_1), DateUtils.J_yyyyMMdd_HHmmss));
-                                                gdmPosBo.setFromDueDate(DateUtils.dateToString(DateUtils.stringToDate(edmjnjCalendarV1Entity.getWeekFromDate(), DateUtils.DATE_FORMAT_1), DateUtils.J_yyyyMMdd_HHmmss));
 
+                                                String weekToDate = edmjnjCalendarV1Entity.getWeekToDate();
+                                                if (StringUtils.isNotBlank(weekToDate)) {
+                                                    Date toDate = DateUtils.stringToDate(weekToDate, DateUtils.DATE_FORMAT_1);
+                                                    if (null != toDate) {
+                                                        gdmPosBo.setDueDate(DateUtils.dateToString(toDate, DateUtils.J_yyyyMMdd_HHmmss));
+                                                    }
+                                                }
+
+                                                String weekFromDate = edmjnjCalendarV1Entity.getWeekFromDate();
+                                                if (StringUtils.isNotBlank(weekFromDate)) {
+                                                    Date fromDate = DateUtils.stringToDate(weekFromDate, DateUtils.DATE_FORMAT_1);
+                                                    if(null!=fromDate){
+                                                        gdmPosBo.setFromDueDate(DateUtils.dateToString(fromDate, DateUtils.J_yyyyMMdd_HHmmss));
+                                                    }
+
+                                                }
                                                 //T3 CONCATENATE GDMPOS-AggregationId( Column1 ),  "-", GDMPOS-DUEDATE ( Column 3 )
                                                 String forecastUploadId = aggregationId + IConstant.VALUE.HORIZONTAL_Line + gdmPosBo.getDueDate();
                                                 if (!forecastUploadIdList.contains(forecastUploadId)) {

@@ -3,7 +3,7 @@ Feature: OMPProductType AEAZ-4485
 
   Scenario: Full Load consumption
   # Gets the data that the primary key is not empty.
-    And I will remove the test file on sink application "ProductType.tsv"
+    And I will remove the test file on sink application "GDMProductType.tsv"
 
     Given I import "/edm/material_type_v1" by keyFields "materialType"
       | materialType | materialTypeName |
@@ -14,9 +14,9 @@ Feature: OMPProductType AEAZ-4485
 
     When I submit task with xml file "xml/omp/OMPGdmProductType.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "ProductType.tsv"
+    Then A file is found on sink application with name "GDMProductType.tsv"
 
-    Then I check file data for filename "ProductType.tsv" by keyFields "productTypeId"
+    Then I check file data for filename "GDMProductType.tsv" by keyFields "productTypeId"
       | productTypeId | activeFCTERP | activeOPRERP | activeSOPERP | label            |
       | DIEN          | YES          | YES          | NO           | Service          |
       | FERT          | YES          | YES          | NO           | Finished Product |
