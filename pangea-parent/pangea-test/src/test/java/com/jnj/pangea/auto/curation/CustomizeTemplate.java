@@ -7,7 +7,7 @@ import com.jnj.adf.curation.customize.Template;
 /**
  * Created by XZhan290 on 2018/4/20.
  */
-public class CustomerizeTemplate {
+public class CustomizeTemplate {
 
     public static void main(String[] args) {
 
