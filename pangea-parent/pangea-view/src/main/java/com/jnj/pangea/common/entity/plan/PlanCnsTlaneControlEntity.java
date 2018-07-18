@@ -17,8 +17,9 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
     private String processTypeId;
     private String sourceSystemCriticalParameters;
     private String trigSysPlant;
-    private String trigSysTransaction;
     private String triangulationDetail;
+    private String trigSysTransaction;
+
 
     public PlanCnsTlaneControlEntity(Map<String, Object> map) {
         super(map);
@@ -34,8 +35,8 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
         setProcessTypeId((String) map.get("processTypeId"));
         setSourceSystemCriticalParameters((String) map.get("sourceSystemCriticalParameters"));
         setTrigSysPlant((String) map.get("trigSysPlant"));
-        setTrigSysTransaction((String) map.get("trigSysTransaction"));
         setTriangulationDetail((String) map.get("triangulationDetail"));
+        setTrigSysTransaction((String) map.get("trigSysTransaction"));
     }
 
     public String getSequenceNumber() {
@@ -126,19 +127,19 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
         this.trigSysPlant = trigSysPlant;
     }
 
-    public String getTrigSysTransaction() {
-        return trigSysTransaction;
-    }
-
-    public void setTrigSysTransaction(String trigSysTransaction) {
-        this.trigSysTransaction = trigSysTransaction;
-    }
-
     public String getTriangulationDetail() {
         return triangulationDetail;
     }
 
     public void setTriangulationDetail(String triangulationDetail) {
         this.triangulationDetail = triangulationDetail;
+    }
+
+    public String getTrigSysTransaction() {
+        return trigSysTransaction;
+    }
+
+    public void setTrigSysTransaction(String trigSysTransaction) {
+        this.trigSysTransaction = trigSysTransaction;
     }
 }

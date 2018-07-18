@@ -154,7 +154,7 @@ public interface IConstant {
         String MFG_RTNG_ITM_NDE = "/edm/mfg_rtng_itm_nde";
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
         String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
-        String PLAN_CNS_TLANE_TRIANGULATION_CONTROL = "/plan/cns_tlane_control_triangulation";
+        String PLAN_CNS_TLANE_CONTROL_TRIANGULATION = "/plan/cns_tlane_control_triangulation";
         String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
         String EDM_MFG_ORDER_ITM = "/edm/mfg_order_itm";
         String EDM_MATL_PROD_VERSN = "/edm/matl_prod_versn";
@@ -329,7 +329,6 @@ public interface IConstant {
     interface PLAN_CNS_PLAN_REGION {
         String PLANNING_REGION_ID = "planningRegionId";
     }
-
 
     interface EDM_SOURCE_LIST_V1 {
         String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
@@ -995,7 +994,7 @@ public interface IConstant {
         String TRIANGULATION_DETAIL = "triangulationDetail";
     }
 
-    interface PLAN_CNS_TLANE_TRIANGULATION_CONTROL {
+    interface PLAN_CNS_TLANE_CONTROL_TRIANGULATION {
         String SEQUENCE_NUMBER = "sequenceNumber";
         String TLANE_NAME = "tlaneName";
     }
@@ -1094,7 +1093,7 @@ public interface IConstant {
         String BLANK = "";
         String OR = "OR";
         String SPACE = " ";
-        String CURRENCY = "CURRENCY";
+        String CURRENCY = "Currency";
         String ZERO = "0";
         String ZEROZERO = "0.0";
         String BA = "BA";

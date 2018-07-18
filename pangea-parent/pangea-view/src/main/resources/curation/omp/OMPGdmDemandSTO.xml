@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <adf-curation> 
-  <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/omp/gdm_demand" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_demand_sto.OMPGdmDemandSTO" writeTo="all" topic="PANGEA_V1_omp_gdm_demand"> 
+  <curation mainRegion="/edm/purchase_order_oa_v1" viewRegion="/omp/gdm_demand" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_demand_sto.OMPGdmDemandSTO" writeTo="all" topic="PANGEA_V1_omp_gdm_demand_sto">
     <regions> 
-      <region path="/edm/purchase_order_oa_v1"> 
+      <region path="/edm/purchase_order_oa_v1" lucene="true"> 
         <columns>delvSchedCntNbr,poLineNbr,poNum,localdelvDt,poTypeCd,poUomCd,prchsngOrgNum,sourceSystem, custNum,plntCd,poLineQty,suplPlntCd,matlNum,cnfrmQty,recvEaQty,localNumerator,localDenominator,localPDT,delInd,localBaseUOM, delvCmpltInd,outbDelvCmpltInd</columns>  
+        <filter>evTypeCd:8</filter>  
         <relations> 
           <relation path="/plan/prod_loc_min_shelf" isPrimaryKey="false"> 
             <expression>sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
@@ -16,7 +17,7 @@
             <expression>localMaterialNumber=/edm/purchase_order_oa_v1.matlNum,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
           </relation>  
           <relation path="/plan/cns_plan_unit" isPrimaryKey="false"> 
-            <expression>localUom=/edm/purchase_order_oa_v1.poUomCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
+            <expression>localUom=/edm/purchase_order_oa_v1.localBaseUOM,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 
           </relation>  
           <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false"> 
             <expression>sourceObjectAttribute1Value=/edm/purchase_order_oa_v1.plntCd,sourceObjectAttribute2Value=/edm/purchase_order_oa_v1.poTypeCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem</expression> 

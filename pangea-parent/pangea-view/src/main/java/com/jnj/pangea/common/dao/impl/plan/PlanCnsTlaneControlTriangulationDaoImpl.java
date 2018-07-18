@@ -20,6 +20,13 @@ public class PlanCnsTlaneControlTriangulationDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
+    public List<PlanCnsTlaneControlTriangulationEntity> getEntityWithSourceSystemCriticalParameters(String sequenceNumber, String tlaneName) {
+        if (sequenceNumber.isEmpty() || tlaneName.isEmpty()){
+            return null;
+        }
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_TLANE_CONTROL_TRIANGULATION.SEQUENCE_NUMBER).is(sequenceNumber).and(IConstant.PLAN_CNS_TLANE_CONTROL_TRIANGULATION.TLANE_NAME).is(tlaneName).toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_TLANE_CONTROL_TRIANGULATION,queryString,PlanCnsTlaneControlTriangulationEntity.class);
+    }
 
     public List<PlanCnsTlaneControlTriangulationEntity> getMatchingEntities(String sequenceNumber, String tlaneName) {
         if (StringUtils.isNotBlank(sequenceNumber) && StringUtils.isNotBlank(tlaneName)) {
