@@ -79,11 +79,6 @@
                 <parameter name="salesOrganization" value="localSalesOrg"/>
             </parameters>
         </method>
-        <method name="joinCnsDemGrpAsgnCustId" isPK="false" resultType="Map" path="/plan/cns_dem_grp_asgn">
-            <parameters>
-                <parameter name="customerId" value="customerId"/>
-            </parameters>
-        </method>
         <method name="joinProdLocMinShelf" isPK="true" resultType="Map" path="/plan/prod_loc_min_shelf">
             <parameters>
                 <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
@@ -115,11 +110,6 @@
                 <parameter name="localPrecDocNo" value="salesOrderNo" relationship="and"/>
                 <parameter name="localSPrecDocLnNo" value="salesOrderItem" relationship="and"/>
                 <parameter name="localSubDocCatg" value="localSubDocCatg"/>
-            </parameters>
-        </method>
-        <method name="joinKnvhOnKunnr" isPK="false" resultType="List" path="/project_one/knvh">
-            <parameters>
-                <parameter name="kunnr" value="localShipToParty"/>
             </parameters>
         </method>
         <method name="joinCnsPlanObjectFilter" isPK="false" resultType="Map" path="/plan/cns_plan_object_filter">
@@ -158,54 +148,6 @@
             Calendar startDate = Calendar.getInstance();
             startDate.setTime(DateInner.stringToDate(localScheduleLineDate, "yyyyMMdd"));
             return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd HH:mm:ss");
-        </udf>
-
-        <udf name="determineCustomerId" resultType="String" parameter="kunnr,localSalesOrg,localOrderCreateDt">
-            String customerId = null;
-            boolean isContinue = true;
-
-            while (StringInner.isStringEmpty(customerId) &amp;&amp; isContinue) {
-
-                // find all matching knvh records based on the kunnr passed in
-                // or using the hkunnr found
-                List&lt;Map.Entry&lt;String, String>> knvhList = joinKnvhOnKunnr(kunnr);
-                if (knvhList != null &amp;&amp; knvhList.size() > 0) {
-
-                    // loop over matching knvh records
-                    for (Map.Entry&lt;String, String> entry : knvhList) {
-                        Map&lt;String, Object> knvhRec = JsonObject.append(entry.getValue()).toMap();
-                        if (knvhRec != null) {
-                            String vkorg = String.valueOf(knvhRec.get("vkorg"));
-                            String datbi = String.valueOf(knvhRec.get("datbi"));
-                            String hkunnr = String.valueOf(knvhRec.get("hkunnr"));
-                            String hityp = String.valueOf(knvhRec.get("hityp"));
-                            if (vkorg.equals(localSalesOrg) &amp;&amp; "A".equals(hityp) &amp;&amp;
-                                Integer.parseInt(localOrderCreateDt) &lt;= Integer.parseInt(datbi)) {
-
-                                // if we have a match on the above criteria check the demGrpAsgn region
-                                Map demGrpAsgnRec = joinCnsDemGrpAsgnCustId(hkunnr);
-                                if (demGrpAsgnRec != null) {
-                                    String demandGroup = String.valueOf(demGrpAsgnRec.get("demandGroup"));
-                                    if (StringInner.isStringNotEmpty(demandGroup)) {
-                                        customerId = demandGroup;
-                                        isContinue = false;
-                                        break;
-                                    } else {
-                                        kunnr = hkunnr;
-                                        if (StringInner.isStringEmpty(kunnr)) {
-                                            isContinue = false;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    isContinue = false;
-                }
-                isContinue = false;
-            }
-            return customerId;
         </udf>
     </udfs>
 
@@ -297,7 +239,7 @@
                                 </if>
                             </ref>
                             <if test="StringInner.isStringEmpty(customerId)">
-                                <set name="customerId" value="determineCustomerId(localShipToParty,localSalesOrg,localOrderCreateDt)"/>
+                                <ref hook="OMPGdmDemandSalesOrderHook.determineCustomerId(localShipToParty,localSalesOrg,localOrderCreateDt)"/>
                                 <if test="StringInner.isStringEmpty(customerId)">
                                     <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO5'"
                                               errorValue="'Demand Group can not be determined'" sourceSystem="sourceSystem" key1="salesOrderNo"

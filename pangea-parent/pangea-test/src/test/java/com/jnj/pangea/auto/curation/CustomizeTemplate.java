@@ -10,6 +10,7 @@ public class CustomizeTemplate {
     public static void main(String[] args) {
         Template template = new CETemplateImpl();
         String customizeXml = "auto_curation/xml/gdm/OMPGdmDemandSalesOrder.xml";
-        template.generateAll(customizeXml);
+        String customizeHook = "auto_curation/lib/pangea-hook.jar";
+        template.generateAll(customizeHook, customizeXml);
     }
 }

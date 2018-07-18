@@ -18,6 +18,8 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
 
+import com.jnj.pangea.hook.OMPGdmDemandSalesOrderHook;
+
 import java.math.*;
 import java.text.*;
 import java.util.*;
@@ -211,8 +213,9 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 						}
 					}
 					if (StringInner.isStringEmpty(customerId)) {
-						customerId = determineCustomerId(localShipToParty,
-								localSalesOrg, localOrderCreateDt);
+						customerId = OMPGdmDemandSalesOrderHook
+								.determineCustomerId(localShipToParty,
+										localSalesOrg, localOrderCreateDt);
 						if (StringInner.isStringEmpty(customerId)) {
 
 							writeFailDataToRegion(failMap, "SP",
@@ -369,30 +372,9 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				localShipToParty);
 		ADFCriteria adfCriteria2 = QueryHelper.buildCriteria(
 				"salesOrganization").is(localSalesOrg);
-		ADFCriteria groupCriteria33 = adfCriteria2.and(adfCriteria1);
+		ADFCriteria groupCriteria31 = adfCriteria2.and(adfCriteria1);
 
-		ADFCriteria adfCriteria = groupCriteria33;
-		String queryStr = adfCriteria.toQueryString();
-		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
-				"/plan/cns_dem_grp_asgn", queryStr, -1);
-		if (retList != null && retList.size() > 0) {
-			Map.Entry<String, String> entry = retList.get(0);
-			Map<String, Object> map = JsonObject.append(entry.getValue())
-					.toMap();
-			return map;
-		}
-
-		return null;
-
-	}
-
-	public Map joinCnsDemGrpAsgnCustId(String customerId) {
-
-		ADFCriteria adfCriteria3 = QueryHelper.buildCriteria("customerId").is(
-				customerId);
-		ADFCriteria groupCriteria34 = adfCriteria3;
-
-		ADFCriteria adfCriteria = groupCriteria34;
+		ADFCriteria adfCriteria = groupCriteria31;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_dem_grp_asgn", queryStr, -1);
@@ -450,13 +432,13 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 
 	public Map joinCnsPlanUnit(String sourceSystem, String localBaseUom) {
 
-		ADFCriteria adfCriteria12 = QueryHelper.buildCriteria("sourceSystem")
+		ADFCriteria adfCriteria11 = QueryHelper.buildCriteria("sourceSystem")
 				.is(sourceSystem);
-		ADFCriteria adfCriteria13 = QueryHelper.buildCriteria("localUom").is(
+		ADFCriteria adfCriteria12 = QueryHelper.buildCriteria("localUom").is(
 				localBaseUom);
-		ADFCriteria groupCriteria35 = adfCriteria13.and(adfCriteria12);
+		ADFCriteria groupCriteria32 = adfCriteria12.and(adfCriteria11);
 
-		ADFCriteria adfCriteria = groupCriteria35;
+		ADFCriteria adfCriteria = groupCriteria32;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_plan_unit", queryStr, -1);
@@ -485,48 +467,30 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 		return null;
 	}
 
-	public List joinKnvhOnKunnr(String localShipToParty) {
-
-		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("kunnr").is(
-				localShipToParty);
-		ADFCriteria groupCriteria36 = adfCriteria17;
-
-		ADFCriteria adfCriteria = groupCriteria36;
-		String queryStr = adfCriteria.toQueryString();
-		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
-				"/project_one/knvh", queryStr, -1);
-		if (retList != null && retList.size() > 0) {
-			return retList;
-		}
-
-		return new ArrayList<>();
-
-	}
-
 	public Map joinCnsPlanObjectFilter(String sourceObjName,
 			String sourceSystem, String sourceObjAttr1,
 			String sourceObjAttr1Val, String sourceObjAttr2,
 			String sourceObjAttr2Val, String inclFlag) {
 
-		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria16 = QueryHelper.buildCriteria(
 				"sourceObjectTechName").is(sourceObjName);
-		ADFCriteria adfCriteria19 = QueryHelper.buildCriteria("sourceSystem")
+		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("sourceSystem")
 				.is(sourceSystem);
-		ADFCriteria adfCriteria20 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute1").is(sourceObjAttr1);
-		ADFCriteria adfCriteria21 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria19 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute1Value").is(sourceObjAttr1Val);
-		ADFCriteria adfCriteria22 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria20 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2").is(sourceObjAttr2);
-		ADFCriteria adfCriteria23 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria21 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2Value").is(sourceObjAttr2Val);
-		ADFCriteria adfCriteria24 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria22 = QueryHelper.buildCriteria(
 				"inclusionExclusion").is(inclFlag);
-		ADFCriteria groupCriteria37 = adfCriteria24.and(adfCriteria23)
-				.and(adfCriteria22).and(adfCriteria21).and(adfCriteria20)
-				.and(adfCriteria19).and(adfCriteria18);
+		ADFCriteria groupCriteria33 = adfCriteria22.and(adfCriteria21)
+				.and(adfCriteria20).and(adfCriteria19).and(adfCriteria18)
+				.and(adfCriteria17).and(adfCriteria16);
 
-		ADFCriteria adfCriteria = groupCriteria37;
+		ADFCriteria adfCriteria = groupCriteria33;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_plan_object_filter", queryStr, -1);
@@ -546,27 +510,27 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 			String sourceObjAttr1Val, String inclFlag, String sourceObjAttr2,
 			String sourceObjAttr2Val, String allFlag) {
 
-		ADFCriteria adfCriteria25 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria23 = QueryHelper.buildCriteria(
 				"sourceObjectTechName").is(sourceObjName);
-		ADFCriteria adfCriteria26 = QueryHelper.buildCriteria("sourceSystem")
+		ADFCriteria adfCriteria24 = QueryHelper.buildCriteria("sourceSystem")
 				.is(sourceSystem);
-		ADFCriteria adfCriteria27 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria25 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute1").is(sourceObjAttr1);
-		ADFCriteria adfCriteria28 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria26 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute1Value").is(sourceObjAttr1Val);
-		ADFCriteria adfCriteria29 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria27 = QueryHelper.buildCriteria(
 				"inclusionExclusion").is(inclFlag);
-		ADFCriteria adfCriteria30 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria28 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2").is(sourceObjAttr2);
-		ADFCriteria adfCriteria31 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria29 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2Value").is(sourceObjAttr2Val);
-		ADFCriteria adfCriteria32 = QueryHelper.buildCriteria(
+		ADFCriteria adfCriteria30 = QueryHelper.buildCriteria(
 				"sourceObjectAttribute2Value").is(allFlag);
-		ADFCriteria groupCriteria38 = adfCriteria32.or(adfCriteria31)
-				.and(adfCriteria30).and(adfCriteria29).and(adfCriteria28)
-				.and(adfCriteria27).and(adfCriteria26).and(adfCriteria25);
+		ADFCriteria groupCriteria34 = adfCriteria30.or(adfCriteria29)
+				.and(adfCriteria28).and(adfCriteria27).and(adfCriteria26)
+				.and(adfCriteria25).and(adfCriteria24).and(adfCriteria23);
 
-		ADFCriteria adfCriteria = groupCriteria38;
+		ADFCriteria adfCriteria = groupCriteria34;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_plan_object_filter", queryStr, -1);
@@ -595,74 +559,6 @@ public class GDMDemandSalesOrder implements IEventProcessor {
 				"yyyyMMdd"));
 		return DateInner.dateToString(startDate.getTime(),
 				"yyyy/MM/dd HH:mm:ss");
-	}
-
-	private class KnvhResHolder {
-		private String customerId;
-		private String hkunnr;
-	}
-
-	private final String determineCustomerId(String kunnr, String localSalesOrg, String localOrderCreateDt) {
-		LogUtil.getCoreLog().info("determineCustomerId - START: kunnr:{}, localSalesOrg:{}, localOrderCreateDt:{}", kunnr, localSalesOrg, localOrderCreateDt);
-		// attempt to find a match at the lowest level record in KNVH
-		KnvhResHolder results = findKnvhMatch(kunnr, localSalesOrg, localOrderCreateDt);
-
-		// if no customer is set and there is a hkunnr set - try again at the parent level
-		// we stop checking when a customer is found OR when none found and no parent found
-		while (StringInner.isStringEmpty(results.customerId) && !StringInner.isStringEmpty(results.hkunnr)) {
-			LogUtil.getCoreLog().info("determineCustomerId - In While, trying parent: results.hkunnr:{}", results.hkunnr);
-			results = findKnvhMatch(results.hkunnr, localSalesOrg, localOrderCreateDt);
-		}
-		LogUtil.getCoreLog().info("determineCustomerId - END: customerId:{}", results.customerId);
-		return results.customerId;
-	}
-
-	private final KnvhResHolder findKnvhMatch(String kunnr, String localSalesOrg, String localOrderCreateDt) {
-		KnvhResHolder results = new KnvhResHolder();
-		results.customerId = null;
-		results.hkunnr = null;
-		LogUtil.getCoreLog().info("findKnvhMatch - START: kunnr:{}, localSalesOrg:{}, localOrderCreateDt:{}", kunnr, localSalesOrg, localOrderCreateDt);
-
-		// find all matching knvh records based on the kunnr passed in
-		List<Map.Entry<String, String>> knvhList = joinKnvhOnKunnr(kunnr);
-		if (knvhList != null && knvhList.size() > 0) {
-			LogUtil.getCoreLog().info("findKnvhMatch: knvhList.size():{}", knvhList.size());
-
-			// loop over all matching knvh records
-			for (Map.Entry<String, String> entry : knvhList) {
-				Map<String, Object> knvhRec = JsonObject.append(
-						entry.getValue()).toMap();
-				if (knvhRec != null) {
-					results.hkunnr = String.valueOf(knvhRec.get("hkunnr"));
-					String vkorg = String.valueOf(knvhRec.get("vkorg"));
-					String datbi = String.valueOf(knvhRec.get("datbi"));
-					String hityp = String.valueOf(knvhRec.get("hityp"));
-					LogUtil.getCoreLog().info("findKnvhMatch: vkorg:{}, datbi:{}, hkunnr:{}, hityp:{}", vkorg, datbi, results.hkunnr, hityp);
-
-					if (vkorg.equals(localSalesOrg)
-							&& "A".equals(hityp)
-							&& Integer.parseInt(localOrderCreateDt) <= Integer
-							.parseInt(datbi)) {
-
-						// if we have a match on the above criteria check the demGrpAsgn region
-						Map demGrpAsgnRec = joinCnsDemGrpAsgnCustId(results.hkunnr);
-						if (demGrpAsgnRec != null) {
-							String demandGroup = String
-									.valueOf(demGrpAsgnRec
-											.get("demandGroup"));
-							LogUtil.getCoreLog().info("findKnvhMatch: demandGroup:{}", demandGroup);
-							if (StringInner.isStringNotEmpty(demandGroup)) {
-								results.customerId = demandGroup;
-							}
-						}
-						// we found a match on the above criteria so ignore any other matching records
-						break;
-					}
-				}
-			}
-		}
-		LogUtil.getCoreLog().info("findKnvhMatch - END: customerId:{}, hkunnr{}", results.customerId, results.hkunnr);
-		return results;
 	}
 
 	private void writeFailDataToRegion(Map<String, RawDataBuilder> failMap,
