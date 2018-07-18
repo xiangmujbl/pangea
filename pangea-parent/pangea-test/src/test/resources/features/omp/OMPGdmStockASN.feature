@@ -83,9 +83,9 @@ Feature:  OMPGdmStockASN-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmStockASN.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMStock.tsv"
+    Then A file is found on sink application with name "GDMStock_1_ASN.tsv"
 
-    And I check file data for filename "GDMStock.tsv" by keyFields "stockId"
+    And I check file data for filename "GDMStock_1_ASN.tsv" by keyFields "stockId"
       | stockId                                | active | activeOPRERP | activeSOPERP | batchId                         | blockedQuantity | consignment | certaintyId | erpOrderId | inventoryLinkGroupId | vendorId | locationId      | processId                             | processTypeId     | productId | qualityQuantity | quantity | receiptDate         | restrictedQuantity | returnsQuantity | startDate           | stockType | transferQuantity | transitDate         | unrestrictedQuantity |
       | 58722/CONS_LATAM_BR19/180005489/10     | YES    | YES          | NO           | 58722/CONS_LATAM_BR19/2436B04   | 0.0             | YES         | LA          | 180005489  |                      | 8917     | CONS_LATAM_BR19 | TR/58722/CONS_LATAM_BR19/MX01/6109    | ExternalTransport | 58722     | 0.0             | 2592.00  | 2016/04/21 00:00:00 | 0.0                | 0.0             | 2016/04/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
       | 68874/CONS_LATAM_BR19/180005490/900001 | YES    | YES          | NO           | 68874/CONS_LATAM_BR19/0086B02   | 0.0             |             | LA          | 180005490  |                      | 9859     | CONS_LATAM_BR19 | SU/68874/CONS_LATAM_BR19/9106/Default | VendorTransport   | 68874     | 0.0             | 23456.00 | 2016/04/21 00:00:00 | 0.0                | 0.0             | 2016/04/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
@@ -116,4 +116,4 @@ Feature:  OMPGdmStockASN-Curation
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-    And I will remove the test file on sink application "GDMStock.tsv"
+    And I will remove the test file on sink application "GDMStock_1_ASN.tsv"

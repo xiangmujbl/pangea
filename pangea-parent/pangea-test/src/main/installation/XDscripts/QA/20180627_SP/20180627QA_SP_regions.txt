@@ -1,0 +1,6 @@
+/qa/edm/advanced_ship_notification_v1
+/qa/edm/outbound_delivery_header_v1
+/qa/edm/outbound_delivery_line_v1
+/qa/edm/inventory_stock
+/qa/plan/cns_root_description_user_override
+/qa/plan/cns_error_def
