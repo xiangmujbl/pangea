@@ -27,8 +27,8 @@ public class CnsProdCtyAffEntity extends CommonEntity {
         setProdStatus((String) map.get("prodStatus"));
         setOvrPrdClass((String) map.get("ovrPrdClass"));
         setOvrPrdStat((String) map.get("ovrPrdStat"));
-        setDpSegmentation((String) map.get("dpSegmentation"));
-        setDpPlannerId((String) map.get("dpPlannerId"));
+        setDpSegmentation((String) map.get("DPSegmentation"));
+        setDpPlannerId((String) map.get("DPPlannerID"));
         setRootSize((String) map.get("rootSize"));
         setCountryGrp((String) map.get("countryGrp"));
     }

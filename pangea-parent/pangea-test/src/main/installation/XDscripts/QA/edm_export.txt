@@ -1,0 +1,37 @@
+job name: Pangea_QA_export_EDM_MaterialGlobal_Related
+/edm/brand_v1
+/edm/category_v1
+/edm/form_v1
+/edm/franchise_v1
+/edm/product_family_v1
+/edm/sub_brand_v1
+/edm/source_system_v1
+/edm/material_type_v1
+/edm/plant_v1
+/edm/country_v1
+/edm/currency_v1
+/edm/unit_of_measure_v1
+/edm/mat_plant_stat_v1
+/edm/global_business_unit_v1
+/edm/material_global_v1
+/edm/mat_plant_fi_v1
+/edm/material_plant_v1
+/edm/batch_master_v1
+/edm/material_auom_v1
+/qa/plan/cns_material_plan_status
+
+job name: Pangea_QA_export_EDM
+/edm/advanced_ship_notification_v1
+/edm/purchase_requisition_v1
+/edm/process_order_v1
+/edm/purchasing_info_record_v1
+/edm/source_list_v1
+/edm/outbound_delivery_header_v1
+/edm/inventory_stock
+
+job name: Pangea_QA_export_SalesOrder
+/edm/sales_order_v1
+
+job name: Pangea_QA_export_EDM_OutboundDeliveryLine
+/edm/outbound_delivery_line_v1
+

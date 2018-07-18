@@ -6,7 +6,7 @@ Feature: OMPProductCountry AEAZ-3218
     And I will remove the test file on sink application "GDMProductCountry.tsv"
 
     Given I import "/plan/cns_prod_cty_affl" by keyFields "sourceSystem,dpParentCode,country"
-      | sourceSystem | dpParentCode           | country | prodClassification | prodStatus | ovrPrdClass | ovrPrdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
+      | sourceSystem | dpParentCode           | country | prodClassification | prodStatus | ovrPrdClass | ovrPrdStat | DPSegmentation | DPPlannerID | rootSize | countryGrp |
       | CONS_LATAM   |                        | BR      | SAMPLE             |            |             | INACTIVE   |                | DP004       |          | SUNFRESH   |
       | CONS_LATAM   | 0000000000000517180240 |         | SAMPLE             |            |             | INACTIVE   |                | DP004       |          | SUNFRESH   |
       | CONS_LATAM   | 0000000000000517180241 | BR      | SAMPLE             |            | INACTIVE    | INACTIVE   |                | DP004       |          | SUNFRESH   |
@@ -33,7 +33,7 @@ Feature: OMPProductCountry AEAZ-3218
     Then A file is found on sink application with name "GDMProductCountry.tsv"
 
     Then I check file data for filename "GDMProductCountry.tsv" by keyFields "uniqueId"
-      | uniqueId                    | activeFCTERP | countryGroup | countryId | dpPlannerId | dpSegmentation | productClassification | productId                 | productStatus | rootSize | segmentation |
+      | uniqueId                    | activeFCTERP | countryGroup | countryId | DPPlannerID | DPSegmentation | productClassification | productId                 | productStatus | rootSize | segmentation |
       | LA_0000000000000517180241BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | LA_0000000000000517180241 | INACTIVE      |          |              |
       | LA_0000000000000517180242BR | YES          | SUNFRESH     | BR        | DP004       |                | SAMPLE                | LA_0000000000000517180242 | INACTIVE      |          |              |
       | LA_0000000000000517180244BR | YES          | SUNFRESH     | BR        | DP004       |                | INACTIVE              | LA_0000000000000517180244 | INACTIVE      |          |              |
