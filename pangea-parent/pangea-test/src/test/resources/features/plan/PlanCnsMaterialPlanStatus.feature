@@ -1,6 +1,7 @@
-@pangea_test @AEAZ-3216
-Feature: CnsMaterialPlanStatus AEAZ-3216
+@pangea_test @AEAZ-3216  @AEAZ-7320
+Feature: CnsMaterialPlanStatus AEAZ-3216 AEAZ-7320
 
+  @Scenario1
   Scenario: Full Load curation
 
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
@@ -120,6 +121,7 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     And I will remove all data with region "/edm/material_global_v1"
     And I will remove all data with region "/plan/edm_failed_data"
 
+  @Scenario2
   Scenario: Full Load curation
 
     Given I import "/plan/cns_material_incl" by keyFields "sourceSystem,localMaterialNumber,localPlant"
@@ -181,107 +183,132 @@ Feature: CnsMaterialPlanStatus AEAZ-3216
     And I will remove all data with region "/plan/cns_material_plan_status"
     And I will remove all data with region "/plan/edm_failed_data"
 
+  @Scenario3
   Scenario: Full Load curation
 
     Given I import "/edm/sales_order_v1" by keyFields "salesOrderItem,salesOrderNo,scheduleLineItem,sourceSystem"
-      | salesOrderItem | salesOrderNo | scheduleLineItem | sourceSystem | localPlant | localMaterialNumber       | localSalesOrg | localOrderType | localShipToParty | localOrderCreateDt |
-      | 000001         | 000001       | 0001             | CONS_LATAM   | VE06       | 000000000000056504        | VE03          | ZLSR           | 123451223        | 20150408           |
-      | 000002         | 000002       | 0002             | CONS_LATAM   | VE07       | 111111111111122222        | BR01          | ZBEF           | 78623213111      | 20150408           |
-      | 000003         | 000003       | 0003             | CONS_LATAM   | VE05_F1    | 000000000000213998        | VE03          | ZLSR           | 0000174002       | 20150408           |
-      | 000004         | 000004       | 0004             | CONS_LATAM   | VE08       | 0000000000002139_F1       | VE03          | ZLSR           | 0000174002       | 20150408           |
-      | 000005         | 000005       | 0005             | CONS_LATAM   | VE06       | 000000000000056504        | BR01_F2       | ZLSR           | 0000174002       | 20150408           |
-      | 000006         | 000006       | 0006             | CONS_LATAM   | VE08       | 000000000000213998        | VE03_J1       | ZLSR           | 123451223        | 20150408           |
-      | 000007         | 000007       | 0007             | CONS_LATAM   | VE08       | 162312313231112312        | ED01          | EDCD           | 123451223        | 20150408           |
-      | 000008         | 000008       | 0008             | CONS_LATAM   | VE09       | 162312313231112312_J2     | ED01          | EDCD           | 123451223        | 20150408           |
-      | 000009         | 000009       | 0009             | CONS_LATAM   | VE10       | 162312313231112312_T2&&T3 | ED01          | EDCD           | 123451223        | 20150408           |
+      | salesOrderItem | salesOrderNo | scheduleLineItem | sourceSystem | localPlant | localMaterialNumber | localSalesOrg | localOrderType | localShipToParty | localOrderCreateDt |
+      | 000001         | 000001       | 0001             | CONS_LATAM   | BR19       | 93                  | BR01          | ZORB           | 116538           | 20171223           |
+      | 000002         | 000002       | 0002             | CONS_LATAM   | BR19       | 94                  | BR01          | ZSRT           | 124092           | 20161221           |
+      | 000003         | 000003       | 0003             | CONS_LATAM   | BR19       | 136                 | BR01          | ZGRA           | 116538           | 20151222           |
+      | 000004         | 000004       | 0004             | CONS_LATAM   | BR19       | 240                 | BR01          | ZZZZ           | 124092           | 20180519           |
+      | 000005         | 000005       | 0005             | CONS_LATAM   | BR19       | 502                 | BR01          | ZDIV           | 116538           | 20150718           |
+      | 000006         | 000006       | 0006             | CONS_LATAM   | BR16       | 504                 | BR01          | ZRLO           | 124092           | 20150721           |
+      | 000007         | 000007       | 0007             | CONS_LATAM   | BR19       | 578                 | BR01          | ZRLO           | 124090           | 20150805           |
+      | 000008         | 000008       | 0008             | CONS_LATAM   | BR16       | 604                 | BR01          | ZRLO           | 124092           | 20150805           |
+      | 000009         | 000009       | 0009             | CONS_LATAM   | BR16       | 738                 | BR01          | ZRLO           | 116538           | 20150805           |
+      | 000010         | 000010       | 0010             | CONS_LATAM   | BR16       | 746                 | BR01          | ZRLO           | 124092           | 20150805           |
+      | 000011         | 000011       | 0011             | CONS_LATAM   | CL19       | 93                  | CL01          | ZGRA           | 116538           | 20171223           |
+      | 000012         | 000012       | 0012             | CONS_LATAM   | CL19       | 92                  | CL01          | ZORB           | 124092           | 20161221           |
+      | 000013         | 000013       | 0013             | CONS_LATAM   | CL19       | 136                 | CL01          | ZORB           | 116538           | 20150510           |
+      | 000014         | 000014       | 0014             | CONS_LATAM   | CL19       | 240                 | CL01          | ZZZZ           | 124092           | 20180519           |
+      | 000015         | 000015       | 0015             | CONS_LATAM   | CL19       | 502                 | CL01          | ZDIV           | 116538           | 20150718           |
+      | 000016         | 000016       | 0016             | CONS_LATAM   | CL16       | 504                 | CL01          | ZRLO           | 124092           | 20150721           |
+      | 000017         | 000017       | 0017             | CONS_LATAM   | CL19       | 578                 | CL01          | ZRLO           | 124090           | 20150805           |
+      | 000018         | 000018       | 0018             | CONS_LATAM   | CL19       | 578                 | CL01          | ZRLO           | 179311           | 20150805           |
+      | 000019         | 000019       | 0019             | CONS_LATAM   | CL16       | 604                 | CL01          | ZRLO           | 124092           | 20150805           |
+      | 000020         | 000020       | 0020             | CONS_LATAM   | CL16       | 738                 | CL01          | ZRLO           | 116538           | 20150805           |
+      | 000021         | 000021       | 0021             | CONS_LATAM   | CL16       | 746                 | CL01          | ZRLO           | 124092           | 20150805           |
+
     And I wait "/edm/sales_order_v1" Async Queue complete
 
     And I import "/plan/cns_plan_parameter" by keyFields "attribute,dataObject,parameter,parameterValue,sourceSystem"
-      | attribute           | dataObject               | inclExcl | parameter | parameterValue | sourceSystem |
-      | DPRelevant          | cns_material_plan_status | I        | Plant     | VE10           | CONS_LATAM   |
-      | DPRelevant          | cns_material_plan_status | I        | Plant     | VE07           | CONS_LATAM   |
-      | DPRelevant          | cns_material_plan_status | I        | Plant     | VE08           | CONS_LATAM   |
-      | DPRelevant          | cns_material_plan_status | I        | Plant     | VE09           | CONS_LATAM   |
-      | DPRelevant          | cns_material_plan_status | I        | Plant     | VE06           | CONS_LATAM   |
-      | DPRelevant_F1       | cns_material_plan_status | I        | Plant     | VE06           | CONS_LATAM   |
-      | DPRelevant          | cns_material_plan_F1     | I        | Plant     | VE06           | CONS_LATAM   |
-      | DPRelevant          | cns_material_plan_F1     | E        | Plant     | VE05_F1        | CONS_LATAM   |
-      | DPRelevant          | cns_material_plan_status | E_F1     | Plant     | VE05           | CONS_LATAM   |
-      | LocalMaterialNumber | cns_product_inclusion    | I        | MRPType   | PD             | CONS_LATAM   |
-      | LocalMaterialNumber | cns_product_inclusion    | E_F2     | MRPType   | PRD            | CONS_LATAM   |
-      | LocalMaterialNumber | cns_product_inclusion    | I        | MRPType   | PR             | CONS_LATAM   |
-      | LessDays            | cns_product_inclusion    | I        | LessDays  | 1200           | CONS_LATAM   |
-      | LessDays            | cns_product_inclusion    | E_J1     | LessDays  | 1300           | CONS_LATAM   |
+      | attribute           | comments                       | dataObject               | inclExcl | inclusionExclusion | parameter | parameterValue | sourceSystem |
+      | DPRelevant          | MARC-WERKS                     | cns_material_plan_status | E        |                    | Plant     | BR16           | CONS_LATAM   |
+      | DPRelevant          | MARC-WERKS                     | cns_material_plan_status | I        |                    | Plant     | BR19           | CONS_LATAM   |
+      | DPRelevant          | MARC-WERKS                     | cns_material_plan_status | E        |                    | Plant     | CL16           | CONS_LATAM   |
+      | DPRelevant          | MARC-WERKS                     | cns_material_plan_status | I        |                    | Plant     | CL19           | CONS_LATAM   |
+      | LocalMaterialNumber | MARC-DISMM                     | cns_product_inclusion    | I        |                    | MRPType   | ND             | CONS_LATAM   |
+      | LessDays            | Less than 3 year Sales History | cns_product_inclusion    | I        |                    | LessDays  | 1095           | CONS_LATAM   |
+
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     And I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant"
-      | localMaterialNumber | localPlant | materialNumber | localMrpType |
-      | 000000000000056504  | ND         | -              | PD           |
-      | 111111111111122222  | BR12       | -              | PR           |
-      | 0000000000002139_F1 | PD23       | -              | PD23         |
-      | 000000000000213998  | PD23       | -              | PD           |
-      | 162312313231112312  | PD23       | -              | PD           |
+      | sourceSystem | localMaterialNumber | localPlant | materialNumber | localMrpType |
+      | CONS_LATAM   | 93                  | BR16       | -              | ND           |
+      | CONS_LATAM   | 94                  | BR16       | -              | ND           |
+      | CONS_LATAM   | 136                 | BR19       | -              | ND           |
+      | CONS_LATAM   | 240                 | BR19       | -              | ND           |
+      | CONS_LATAM   | 502                 | BR19       | -              | PD           |
+      | CONS_LATAM   | 504                 | BR19       | -              | ND           |
+      | CONS_LATAM   | 578                 | BR19       | -              | M0           |
+      | CONS_LATAM   | 604                 | BR19       | -              | ND           |
+      | CONS_LATAM   | 738                 | BR19       | -              | ND           |
+      | CONS_LATAM   | 746                 | BR19       | -              | ND           |
+      | CONS_LATAM   | 93                  | CL16       | -              | ND           |
+      | CONS_LATAM   | 92                  | CL16       | -              | ND           |
+      | CONS_LATAM   | 136                 | CL19       | -              | ND           |
+      | CONS_LATAM   | 240                 | CL19       | -              | ND           |
+      | CONS_LATAM   | 502                 | CL19       | -              | PD           |
+      | CONS_LATAM   | 504                 | CL19       | -              | ND           |
+      | CONS_LATAM   | 578                 | CL19       | -              | M0           |
+      | CONS_LATAM   | 604                 | CL19       | -              | ND           |
+      | CONS_LATAM   | 738                 | CL19       | -              | ND           |
+      | CONS_LATAM   | 746                 | CL19       | -              | ND           |
+
+
     And I wait "/edm/material_plant_v1" Async Queue complete
 
-    And I import "/plan/cns_cust_excl" by keyFields "country,customerShipTo,salesOrg,sourceSystem"
-      | country | customerShipTo | salesOrg | sourceSystem |
-      | BR      | 116538         | VE03     | CON_LATAM    |
-      | BR      | 0000174002     | BR01_F2  | CON_LATAM    |
-      | BR      | 178991         | BR01     | CON_LATAM    |
-    And I wait "/plan/cns_cust_excl" Async Queue complete
+    And I import "/plan/cns_cust_excl_incl" by keyFields "country,customerShipTo,salesOrg,sourceSystem"
+      | country | customerShipTo | salesOrg | sourceSystem | inclExcl |
+      | BR      | 116538         | BR01     | CON_LATAM    | I        |
+      | BR      | 124092         | BR01     | CON_LATAM    | I        |
+      | CL      | 179311         | CL01     | CON_LATAM    | E        |
+
+
+    And I wait "/plan/cns_cust_excl_incl" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
       | localSourceSystem | localSourceSystemName | sourceSystem | sourceSystemName   |
       | Project_One       | Project One           | CONS_LATAM   | Consumer Latam Ent |
-      | project_two       | Project Two           | CONS_LATAM   | Consumer Latam Ent |
+
     And I wait "/edm/source_system_v1" Async Queue complete
 
 
     And I import "/edm/material_global_v1" by keyFields "localMaterialNumber"
-      | localMaterialType | localMaterialNumber       | materialNumber | localDpParentCode  | primaryPlanningCode |
-      | ROH               | 000000000000056504        | 11111          | 178962124094540036 | 945                 |
-      | HALB              | 111111111111122222        | 22222          | 27896212           | 978                 |
-      | HALB              | 000000000000213998        | 66666          | 37896212           | 988                 |
-      | FBLB              | 162312313231112312        | 44444          | 37896212           | 990                 |
-      | CBBBB             | 162312313231112312_T2&&T3 | 5555           | 37896212           | 1090                |
+      | localMaterialNumber | materialNumber | localDpParentCode | primaryPlanningCode |
+      | 93                  | 9300           | 17896212409454    | 51746               |
+      | 94                  | 9400           |                   | 6011409             |
+      | 136                 | 13600          |                   | 69177               |
+      | 240                 | 24000          |                   | 61740               |
+      | 502                 | 50200          |                   | 88320               |
+      | 504                 | 50400          |                   | 7622195             |
+      | 578                 | 57800          |                   | 441484              |
+      | 604                 | 60400          |                   | 70327               |
+      | 738                 | 73800          |                   | 441133              |
+      | 746                 | 74600          |                   | 441133              |
+
     And I wait "/edm/material_global_v1" Async Queue complete
 
-    And I import "/plan/cns_so_type_incl" by keyFields "country,orderType,salesOrg,sourceSystem"
-      | country | orderType | salesOrg | sourceSystem |
-      | BR      | ZLSR      | VE03     | CONS_LATAM   |
-      | CN      | ZBEF      | BR01     | CONS_LATAM   |
-      | BC      | ZBEF      | BR01_J1  | CONS_LATAM   |
-      | JN      | EDCD      | ED01     | CONS_LATAM   |
+    And I import "/plan/cns_so_type_incl_excl" by keyFields "country,orderType,salesOrg,sourceSystem"
+      | country | orderType | salesOrg | sourceSystem | inclExcl | plant |
+#      | BR      | ZGRA      | BR01     | CONS_LATAM   | E        | BR19  |
+      | BR      | ZORB      | BR01     | CONS_LATAM   | I        | BR19  |
+      | BR      | ZSRT      | BR01     | CONS_LATAM   | I        | BR19  |
+      | CL      | ZGRA      | CL01     | CONS_LATAM   | I        | CL19  |
+      | CL      | ZORB      | CL01     | CONS_LATAM   | I        | CL19  |
+      | CL      | ZZZZ      | CL01     | CONS_LATAM   | E        | CL19  |
 
-    And I wait "/plan/cns_so_type_incl" Async Queue complete
+    And I wait "/plan/cns_so_type_incl_excl" Async Queue complete
 
     And I import "/edm/plant_v1" by keyFields "localPlant,sourceSystem"
-      | localPlant | sourceSystem | country |
-      | VE06       | ZLSR         | BR      |
-      | VE07       | ZBEF         | CN      |
-      | VE08       | ZBEF         | JN      |
-      | VE09       | ZBEF         | JN      |
-      | VE10       | ZBEF         | JN      |
-    And I wait "/edm/plant_v1" Async Queue complete
+      | localPlant | sourceSystem | country | localCountry | localCurrency | localPlanningRelevant | plant |
+      | BR19       | ZLSR         | BR      | BR           | BRL           | X                     | BR63  |
+      | CL19       | ZLSR         | CL      | CL           | CLP           | X                     | CL03  |
 
-    And I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-      | sourceSystem | localMaterialNumber       | localPlant | dpRelevant | parentActive |
-      | PLAN_DD      | 000000000000056504        | VE06       | X          | X            |
-      | TTTT_DA      | 111111111111122222        | VE07       | X          | X            |
-      | BBBB_GD      | 162312313231112312        | VE08       | X          | X            |
-      | CCCC_AD      | 162312313231112312_J2     | VE09       | X          | X            |
-      | CCCC_AD      | 162312313231112312_T2&&T3 | VE10       | X          | X            |
-    And I wait "/plan/cns_material_plan_status" Async Queue complete
+    And I wait "/edm/plant_v1" Async Queue complete
 
     When I submit task with xml file "xml/plan/PlanCnsMaterialPlanStatus_3.xml" and execute file "jar/pangea-view.jar"
 
+    And wait 3000 millisecond
+
     Then I check region data "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
-      | sourceSystem | localMaterialNumber       | localPlant | materialNumber | localParentCode    | ppc | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
-      | CONS_LATAM   | 000000000000056504        | VE06       | 11111          | 178962124094540036 | 945 | X      | X          |            | X            |                |
-      | CONS_LATAM   | 111111111111122222        | VE07       | 22222          | 27896212           | 978 | X      | X          |            | X            |                |
-      | CONS_LATAM   | 162312313231112312        | VE08       | 44444          | 37896212           | 990 | X      | X          |            | X            |                |
-      | CONS_LATAM   | 162312313231112312_J2     | VE09       |                |                    |     | X      | X          |            |              |                |
-      | CONS_LATAM   | 162312313231112312_T2&&T3 | VE10       | 5555           |                    |     | X      | X          |            |              |                |
+      | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode | ppc     | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
+      | CONS_LATAM   | 93                  | BR19       | 9300           | 17896212409454  | 51746   | X      | X          |            | X            |                |
+      | CONS_LATAM   | 94                  | BR19       | 9400           |                 | 6011409 | X      | X          |            |              |                |
+      | CONS_LATAM   | 93                  | CL19       | 9300           | 17896212409454  | 51746   | X      | X          |            | X            |                |
+#      | CONS_LATAM   | 240                       | BR19       | 24000           |                    | 61740    | X      | X          |            |              |                |
+#      | CONS_LATAM   | 240                       | CL19       | 24000           |                    | 61740    | X      | X          |            |              |                |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
