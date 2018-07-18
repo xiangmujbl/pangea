@@ -19,9 +19,9 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-6272
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | dpRelevant | localParentCode  |
-      | project_one  | BR01                | BR12       | X          | 7320133000740000 |
-      | project_one  | BR02                | BR12       | X          | 975760150        |
-      | project_one  | NP                  | BR12       |            | 7891010611521000 |
+      | CONS_LATAM   | BR01                | BR12       | X          | 7320133000740000 |
+      | CONS_LATAM   | BR02                | BR12       | X          | 975760150        |
+      | CONS_LATAM   | NP                  | BR12       |            | 7891010611521000 |
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     And I import "/edm/source_system_v1" by keyFields "localSourceSystem"
@@ -32,8 +32,8 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-6272
 
     Given I import "/edm/plant_v1" by keyFields "sourceSystem,localPlant"
       | sourceSystem | localPlant | country |
-      | project_one  | BR12       | BR      |
-      | project_two  | BR12       | BR      |
+      | CONS_LATAM   | BR12       | BR      |
+      | CONS_LATAM   | BR12       | BR      |
     And I wait "/edm/plant_v1" Async Queue complete
 
     Given I import "/plan/cns_prod_cty_affl_input" by keyFields "sourceSystem,dpParentCode,country"
@@ -50,6 +50,8 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-6272
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
+
+    And I compare the number of records between "/edm/material_global_v1" and "/plan/cns_prod_cty_affl,/plan/edm_failed_data"
 
   Scenario: delete all test data
 
