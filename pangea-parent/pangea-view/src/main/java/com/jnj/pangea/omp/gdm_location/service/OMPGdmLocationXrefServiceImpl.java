@@ -40,16 +40,16 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
 
         //rules C3
         if (IConstant.VALUE.C.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
-            gdmLocationXrefBo.setCustomerId(cnsPlnSplLocEntity.getLocalNumber());
+            gdmLocationXrefBo.setCustomerId(cnsPlnSplLocEntity.getLocalNumber().replaceFirst("^0*", ""));
         }
 
         //rules C4
         if (IConstant.VALUE.V.equals(cnsPlnSplLocEntity.getVendorOrCustomer())) {
-            gdmLocationXrefBo.setVendorId(cnsPlnSplLocEntity.getLocalNumber());
+            gdmLocationXrefBo.setVendorId(cnsPlnSplLocEntity.getLocalNumber().replaceFirst("^0*", ""));
         }
 
         //rules D1
-        gdmLocationXrefBo.setCurrencyId(IConstant.VALUE.USD);
+        gdmLocationXrefBo.setCurrencyId(cnsPlnSplLocEntity.getLocalCurrency());
 
         //rules D2
         gdmLocationXrefBo.setActive(IConstant.VALUE.YES);
