@@ -1,5 +1,6 @@
 package com.jnj.pangea.omp.gdm_transport.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -151,9 +152,15 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
                 SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
                 Date dValidTo = sdfFrom.parse(validDateToFormat);
                 String validDateToConverted = sdfTo.format(dValidTo) + IConstant.VALUE.HH_NN_SS_ZERO;
-
-                gdmTransportBo.setEndEff(validDateToConverted);
-
+                Date maxDate = sdfTo.parse(IConstant.VALUE.END_EFF_CHECK);
+                if(dValidTo.getTime() > maxDate.getTime()){
+                    LogUtil.getCoreLog().info("dValidTo.getTime() > maxDate.getTime()");
+                    gdmTransportBo.setEndEff(IConstant.VALUE.ENDEFF );
+                }else{
+                    LogUtil.getCoreLog().info("dValidTo.getTime()<maxDate.getTime()");
+                    gdmTransportBo.setEndEff(validDateToConverted );
+                }
+//                gdmTransportBo.setEndEff(validDateToConverted );
                 String validDateFromFormat = tlaneItemExEntity.getValidFrom();
                 Date dValidFrom = sdfFrom.parse(validDateFromFormat);
                 String validDateFromConverted = sdfTo.format(dValidFrom) + IConstant.VALUE.HH_NN_SS_ZERO;
@@ -162,7 +169,7 @@ public class OMPGdmTransportExceptionServiceImpl extends OMPGdmTransportServiceP
                 gdmTransportBo.setStartEff(validDateFromConverted);
             }
             catch (ParseException e) {
-                e.printStackTrace();
+                LogUtil.getCoreLog().error(e);
             }
 
 

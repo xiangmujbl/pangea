@@ -3,7 +3,7 @@ Feature: OMPGdmStockInventoryStocks AEAZ-6187
 
   Scenario: Full Load consumption
 
-    And I will remove the test file on sink application "GDMStock_InventoryStocks.tsv"
+    And I will remove the test file on sink application "GDMStock_6_Inventory_stocks.tsv"
 
     Given I import "/edm/material_plant_v1" by keyFields "localMaterialNumber,localPlant,sourceSystem"
       | localBatchManagementRequirementIndicator | localMaterialNumber | localPlant | sourceSystem |
@@ -140,9 +140,9 @@ Feature: OMPGdmStockInventoryStocks AEAZ-6187
 
     When I submit task with xml file "xml/omp/OMPGdmStockInventoryStocks.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMStock_InventoryStocks.tsv"
+    Then A file is found on sink application with name "GDMStock_6_Inventory_stocks.tsv"
 
-    Then I check file data for filename "GDMStock_InventoryStocks.tsv" by keyFields "stockId,consignment"
+    Then I check file data for filename "GDMStock_6_Inventory_stocks.tsv" by keyFields "stockId,consignment"
       | transitDate         | processTypeId | returnsQuantity | inventoryLinkGroupId | batchId    | activeOPRERP | activeSOPERP | transferQuantity | qualityQuantity | processId | locationId            | consignment | certaintyId | quantity | productId | stockType | receiptDate         | active | eRPOrderId | lifnr | blockedQuantity | unrestrictedQuantity | stockId                                 | restrictedQuantity | startDate           |
       | 2017/07/10 00:00:00 |               | 4               |                      | 020405C    | YES          | NO           | 7                | 60              |           | CONS_LATAM_BR12       |             |             | 60       | 189915    | level     | 2017/07/10 00:00:00 | YES    |            |       | 60              | 60                   | 189915/CONS_LATAM_BR12/020405C          | 60                 | 2017/07/10 00:00:00 |
       | 2017/07/10 00:00:00 |               | 0               |                      | 4000176631 | YES          | NO           | 0                | 1               |           | CONS_LATAM_MX01       | K           |             | 1        | 132277    | level     | 2017/07/10 00:00:00 | YES    |            | 16061 | 1               | 1                    | 132277/CONS_LATAM_MX01/4000176631/K     | 1                  | 2017/07/10 00:00:00 |

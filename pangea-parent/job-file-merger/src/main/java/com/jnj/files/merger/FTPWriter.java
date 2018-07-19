@@ -1,4 +1,4 @@
-package com.jnj.files.merger.writer;
+package com.jnj.files.merger;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -24,6 +24,7 @@ public class FTPWriter implements Tasklet {
 
     private static final Logger logger = LoggerFactory.getLogger(FTPWriter.class);
 
+    private boolean sendToMBox;
     private String tSourceLocation = null;
     private String tLocation = null;
     private String tHost;
@@ -32,6 +33,10 @@ public class FTPWriter implements Tasklet {
     private String tFileName;
 
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+
+        if (!sendToMBox) {
+            return RepeatStatus.FINISHED;
+        }
 
         System.out.println("Start sending the files..");
 
@@ -136,4 +141,11 @@ public class FTPWriter implements Tasklet {
         this.tFileName = tFileName;
     }
 
+    public boolean isSendToMBox() {
+        return sendToMBox;
+    }
+
+    public void setSendToMBox(boolean sendToMBox) {
+        this.sendToMBox = sendToMBox;
+    }
 }

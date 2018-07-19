@@ -140,9 +140,9 @@ Feature:  OMPGdmStock2
       | functionalArea | interfaceID  | errorCode | sourceSystem | businessArea | key1        | key2 | key3 | key4 | key5 | errorValue                                            |
       | SP             | OMPGDMSTOCK2 | iLot9     | CONS_LATAM   |              | 40000409296 |      |      |      |      | primaryPlanningCode and materialNumber are both blank |
 
-    Then A file is found on sink application with name "GDMStock2.tsv"
+    Then A file is found on sink application with name "GDMStock_2_Inspection_lot.tsv"
 
-    And I check file data for filename "GDMStock2.tsv" by keyFields "stockId"
+    And I check file data for filename "GDMStock_2_Inspection_lot.tsv" by keyFields "stockId"
 #    Then I check region data "/omp/gdm_stock" by keyFields "stockId"
       | stockId                            | active | activeOPRERP | activeSOPERP | batchId                        | blockedQuantity | consignment | certaintyId | erpOrderId  | inventoryLinkGroupId              | vendorId | locationId      | processId                              | processTypeId           | productId | qualityQuantity | quantity | receiptDate         | restrictedQuantity | returnsQuantity | startDate           | stockType | transferQuantity | transitDate         | unrestrictedQuantity |
       | 61141/CONS_LATAM_BR12/10001711431  | YES    | YES          | NO           | 61141/CONS_LATAM_BR12/1985RFI7 | 0.0             | NO          | QM          | 10001711431 |                                   | 28       | CONS_LATAM_BR12 | TR/61141/CONS_LATAM_BR12/BR02/28       | ExternalTransport       | 61141     | 0.0             | 22.000   | 2015/07/21 00:00:00 | 0.0                | 0.0             | 2015/07/21 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |

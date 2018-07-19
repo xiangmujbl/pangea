@@ -4,7 +4,7 @@ Feature: OMPGdmStock AEAZ-5951
 
   Scenario: full load
 
-    And I will remove the test file on sink application "GDMStock_plannedOrder.tsv"
+    And I will remove the test file on sink application "GDMStock_5_Planned_order.tsv"
 
     Given I import "/edm/planned_order_v1" by keyFields "mfgPlanOrdrDocId,srcSysCd"
       | firmingInd | fxScrapQty | grDaysLeadQty | matlNum | mfgPlanOrdrDocId | mrpCtlId | planOrdrEndDt | planOrdrEndTm | planOrdrQty | planOrdrStrtDt | planOrdrTypeCd | planPlntCd | plngScnroCd | plntCd | prcmtTypeCd | prdtnFnshdDt | prdtnStrtDt | prdtnStrtTm | prdtnVers | prdtnVersNum | reqQty | sLocCd | splPrcmtTypeCd | srcSysCd   | uomCd |
@@ -92,8 +92,8 @@ Feature: OMPGdmStock AEAZ-5951
 
     When I submit task with xml file "xml/gdm_stock_5_planned_order.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMStock_plannedOrder.tsv"
-    Then I check file data for filename "GDMStock_plannedOrder.tsv" by keyFields "stockId"
+    Then A file is found on sink application with name "GDMStock_5_Planned_order.tsv"
+    Then I check file data for filename "GDMStock_5_Planned_order.tsv" by keyFields "stockId"
       | stockId                          | active | activeOPRERP | activeSOPERP | batchId | blockedQuantity | consignment | certaintyId | erpOrderId | inventoryLinkGroupId | vendorId | locationId      | processId                | processTypeId | productId | qualityQuantity | quantity | receiptDate         | restrictedQuantity | returnsQuantity | startDate           | stockType | transferQuantity | transitDate         | unrestrictedQuantity |
       | 138821/CONS_LATAM_BR12/49748397  | YES    | YES          | NO           |         | 0.0             | NO          | PA          | 49748397   |                      |          | CONS_LATAM_BR12 | 0/138821/CONS_LATAM_BR12 | Production    | 138821    | 0.0             | 36300    | 2018/09/04 00:00:00 | 0.0                | 0.0             | 2018/09/04 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
       | 189915/CONS_LATAM_BR12/95941803  | YES    | YES          | NO           |         | 0.0             | NO          | PA          | 95941803   |                      |          | CONS_LATAM_BR12 | 0/189915/CONS_LATAM_BR12 | Production    | 189915    | 0.0             | 86544    | 2018/12/03 00:00:00 | 0.0                | 0.0             | 2018/12/03 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |

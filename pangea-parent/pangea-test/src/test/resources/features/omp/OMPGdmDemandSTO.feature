@@ -1,5 +1,5 @@
 @pangea @AEAZ-6823
-Feature: GDMDemand_STO AEAZ-6823
+Feature: GDMDemand_1_STO AEAZ-6823
 
   @Scenario1
   Scenario: full load curation
@@ -171,9 +171,9 @@ Feature: GDMDemand_STO AEAZ-6823
 
     When I submit task with xml file "xml/omp/OMPGdmDemandSTO.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMDemand_STO.tsv"
+    Then A file is found on sink application with name "GDMDemand_1_STO.tsv"
 
-    Then I check file data for filename "GDMDemand_STO.tsv" by keyFields "demandId"
+    Then I check file data for filename "GDMDemand_1_STO.tsv" by keyFields "demandId"
 #    Then I check region data "/omp/gdm_demand" by keyFields "demandId"
       | active | activeFCTERP | activeOPRERP | activeSOPERP | batchId | certaintyId | customerId | demandId                               | dueDate             | fromDueDate         | inventoryLinkGroupId                   | locationId      | minRemainingShelfLife | planningStrategy        | productId | quantity | unitId | WRK02 |
       | YES    | NO           | YES          | NO           |         | U1          | 4789       | 528395/CONS_LATAM_BR19/3000793995/20/1 | 2018/01/15 00:00:01 | 2018/01/15 00:00:00 | 528395/CONS_LATAM_BR19/3000793995/20/1 | CONS_LATAM_BR19 | 200                   | ProductLocationBalanced | 528395    | 900      | EA     | BR19  |
@@ -198,7 +198,7 @@ Feature: GDMDemand_STO AEAZ-6823
 
     And I will remove all data with region "/omp/gdm_demand"
 
-    When I execute xd job to merge file "GDMDemand*.tsv" to "GDMDemand_STO.tsv" by keyFields "demandId"
+    When I execute xd job to merge file "GDMDemand*.tsv" to "GDMDemand_1_STO.tsv" by keyFields "demandId"
 
     
         
