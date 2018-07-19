@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation>
+    <curation mainRegion="/edm/outbound_delivery_header_v1" viewRegion="/omp/gdm_demand_obd" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2"
+              executionClassName="com.jnj.pangea.omp.gdm_demand.controller.OMPGdmDemandOBDController"
+              writeTo="all" topic="PANGEA_V1_gdm_demand_obd">
+        <regions>
+            <region path="/edm/outbound_delivery_header_v1">
+                <columns>srcSysCd,delvDocId,shippingPtNum,delvTypeCd,slsOrdrCarCd,delvDt,crtDttm,soldToCustNum,shipToCustNum,billOfLdngNum,delvNum,planGiDt,actlGiDt,shippingCondCd,shippingPtNum,supNum,plntCd,localSalesOrg</columns>
+                <relations>
+                    <relation path="/edm/outbound_delivery_line_v1">
+                        <expression>
+                            delvDocId=outbound_delivery_header_v1.delvDocId,
+                            srcSysCd=outbound_delivery_header_v1.srcSysCd
+                        </expression>
+                    </relation>
+                    <relation path="/edm/sales_history_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/sales_order_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/purchase_order_oa_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/prod_loc_min_shelf" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/project_one/knvh" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                </relations>
+            </region>
+            <region path="/edm/outbound_delivery_line_v1">
+                <columns>actlSkuDelvQty,baseUnitOfMeasureCd,btchNum,shippingPtNum,delvDocId,delvLineNbr,delvTypeCd,matlNum,shippedQty,shippingPlntCd,slsOrdrLineNbr,slsOrdrNum,srcSysCd,vendBtchNum</columns>
+            </region>
+            <region path="/edm/sales_history_v1">
+                <columns>localBaseQuantity,localBaseUom,localCrtDt,localPrecDocNo,localPrecItemCatg,localSPrecDocLnNo,localSalesQuantity,localSalesUom,localSubDocCatg,localSubsDocLnNo,localSubsDocNo,sourceSystem</columns>
+            </region>
+            <region path="/edm/sales_order_v1">
+                <columns>localMaterialNumber,lineDelvStat,localOrderDate,localOrderCreateDt,localOrderReason,localOrderType,localPlant,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,
+                    localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,sourceSystem</columns>
+                <filter>lineDelvStat:A OR lineDelvStat:B</filter>
+            </region>
+            <region path="/edm/purchase_order_oa_v1">
+                <columns>custNum,delInd,delvCmpltInd,matlNum,outbDelvCmpltInd,plntCd,poCatTypeCd,poLineNbr,poLineQty,poNum,poTypeCd,slsOrdrLineNbr,slsOrdrNum,sourceSystem,stkTfrRecvQty,subcntrcInd,supNum,suplPlntCd</columns>
+            </region>
+            <region path="/plan/cns_plan_object_filter">
+                <columns>inclusionExclusion,sourceObjectTechName,sourceSystem,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value</columns>
+            </region>
+            <region path="/plan/prod_loc_min_shelf">
+                <columns>minMinShelfLife,sourceSystem,localPlant,localMaterialNumber,minShelfLife</columns>
+            </region>
+            <region path="/plan/cns_material_plan_status">
+                <columns>active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant</columns>
+            </region>
+            <region path="/edm/material_global_v1">
+                <columns>localMaterialNumber,sourceSystem,primaryPlanningCode,materialNumber,minRemShelfLife</columns>
+            </region>
+            <region path="/plan/cns_dem_grp_asgn">
+                <columns>channel,channelDescription,comments,companyCode,countryAffiliate,customerId,customerName,customerShipTo,
+                    demandGroup,demandGroupDescription,flatFile,fromDate,group,modifiedBy,region,salesOrg,salesOrganization,sourceSystem,status,subFranchise,timeStamp,toDate,valid</columns>
+            </region>
+            <region path="/plan/cns_plan_unit">
+                <columns>plantFlag,unit,localUom,sourceSystem,localUomName,unit</columns>
+            </region>
+            <region path="/project_one/knvh">
+                <columns>hityp,kunnr,vkorg,vtweg,spart,datab,datbi,hkunnr,hvkorg,hvtweg,hspart,grpno,bokre,prfre,hzuor</columns>
+            </region>
+            <region path="/omp/gdm_demand_obd">
+                <columns>active,activeOPRERP,activeOBDPERP,activeFCTERP,batchId,certaintyId,customerId,planningStrategy,fromDueDate,dueDate,locationId,minRemainingShelfLife,productId,demandId,inventoryLinkGroupId,quantity,unitId,WRK02</columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>
