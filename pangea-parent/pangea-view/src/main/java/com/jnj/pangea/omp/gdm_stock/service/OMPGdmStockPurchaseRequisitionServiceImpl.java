@@ -71,7 +71,6 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
                 return resultObject;
             }
 
-
             String localPlant = getLocalPlant(edmPurchaseRequisitionV1Entity);
             String locationId = edmPurchaseRequisitionV1Entity.getSourceSystem() + "_" + localPlant;
             String stockId = productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getPrNum() + "/" +
