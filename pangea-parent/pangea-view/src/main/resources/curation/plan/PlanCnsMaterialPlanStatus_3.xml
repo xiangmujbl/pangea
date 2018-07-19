@@ -13,7 +13,7 @@
                     <relation path="/edm/material_plant_v1">
                         <expression></expression>
                     </relation>
-                    <relation path="/plan/cns_cust_excl">
+                    <relation path="/plan/cns_cust_excl_incl">
                         <expression></expression>
                     </relation>
 
@@ -25,7 +25,7 @@
                         <expression>localMaterialNumber=/edm/sales_order_v1.localMaterialNumber</expression>
                     </relation>
 
-                    <relation path="/plan/cns_so_type_incl">
+                    <relation path="/plan/cns_so_type_incl_excl">
                         <expression></expression>
                     </relation>
                     <relation path="/edm/plant_v1">
@@ -38,15 +38,15 @@
             </region>
 
             <region path="/plan/cns_plan_parameter">
-                <columns>sourceSystem,dataObject,attribute,parameter,inclExcl,parameterValue</columns>
+                <columns>sourceSystem,comments,dataObject,attribute,inclusionExclusion,parameter,inclExcl,parameterValue</columns>
             </region>
 
             <region path="/edm/material_plant_v1">
-                <columns>localMaterialNumber,localPlant,materialNumber,localMrpType</columns>
+                <columns>sourceSystem,localMaterialNumber,localPlant,materialNumber,localMrpType</columns>
             </region>
 
-            <region path="/plan/cns_cust_excl">
-                <columns>country,customerShipTo,salesOrg,sourceSystem</columns>
+            <region path="/plan/cns_cust_excl_incl">
+                <columns>country,customerShipTo,salesOrg,sourceSystem,inclExcl</columns>
             </region>
 
 
@@ -55,15 +55,14 @@
             </region>
 
             <region path="/edm/material_global_v1">
-                <columns>localMaterialType,localMaterialNumber,localDpParentCode,primaryPlanningCode,materialNumber</columns>
+                <columns>localMaterialNumber,localDpParentCode,primaryPlanningCode,materialNumber</columns>
             </region>
 
-            <region path="/plan/cns_so_type_incl">
-                <columns>country,orderType,salesOrg,sourceSystem</columns>
+            <region path="/plan/cns_so_type_incl_excl">
+                <columns>country,orderType,salesOrg,sourceSystem,plant,inclExcl</columns>
             </region>
-
             <region path="/edm/plant_v1">
-                <columns>localPlant,sourceSystem,country</columns>
+                <columns>localPlant,sourceSystem,country,localCountry,localCurrency,localPlanningRelevant,plant</columns>
             </region>
 
             <region path="/plan/cns_material_plan_status">

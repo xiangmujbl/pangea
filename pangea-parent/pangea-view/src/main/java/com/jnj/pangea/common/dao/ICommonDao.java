@@ -29,9 +29,9 @@ public interface ICommonDao {
 
     public <T> T queryForObject(String region, String queryString, Class<? extends CommonEntity> resultType);
 
-    public <T> List<T> queryForList(String region, String queryString, Class<? extends CommonEntity> clazz,String orderBys);
+    public <T> List<T> queryForList(String region, String queryString, Class<? extends CommonEntity> clazz, String orderBys);
 	
-	public <T> List<T> queryForList(String region, String queryString, String orderBys,  Class<? extends CommonEntity> clazz);
+	public <T> List<T> queryForList(String region, String queryString, String orderBys, Class<? extends CommonEntity> clazz);
 
     public long queryForCount(String region, String queryString);
 

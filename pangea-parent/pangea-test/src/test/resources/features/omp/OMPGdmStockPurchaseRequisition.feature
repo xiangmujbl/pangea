@@ -175,7 +175,7 @@ Feature: OMPGdmStockPurchaseRequisition AEAZ-5952
 
     When I submit task with xml file "xml/omp/OMPGdmStockPurchaseRequisition.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMStock_PurchaseRequisition.tsv"
+    Then A file is found on sink application with name "GDMStock_3_Purchase_requisition.tsv"
 
     And I check file data for filename "GDMStock_PurchaseRequisition.tsv" by keyFields "stockId"
       | stockId                              | active | activeOPRERP | activeSOPERP | batchId | blockedQuantity | consignment | certaintyId | erpOrderId | inventoryLinkGroupId                 | vendorId | locationId      | processId                               | processTypeId     | productId | qualityQuantity | quantity | receiptDate         | restrictedQuantity | returnsQuantity | startDate           | stockType | transferQuantity | transitDate         | unrestrictedQuantity |
@@ -192,6 +192,6 @@ Feature: OMPGdmStockPurchaseRequisition AEAZ-5952
 
     And I will remove all data with region "/omp/gdm_stock_purchase_requisition_v1"
 
-    And I will remove the test file on sink application "GDMStock_PurchaseRequisition.tsv"
+    And I will remove the test file on sink application "GDMStock_3_Purchase_requisition.tsv"
 
 

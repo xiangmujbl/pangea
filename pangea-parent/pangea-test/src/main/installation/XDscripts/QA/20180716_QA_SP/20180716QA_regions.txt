@@ -1,0 +1,8 @@
+## CUR1101
+/dqqa/plan/cns_tlane_item
+/qa/omp/gdm_transport
+/dqqa/omp/gdm_transport
+/qa/omp/gdm_supply
+/dqqa/omp/gdm_supply
+/qa/omp/gdm_req_from_erp
+/dqqa/omp/gdm_req_from_erp

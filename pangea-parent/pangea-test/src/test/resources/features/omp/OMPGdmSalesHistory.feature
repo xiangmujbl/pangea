@@ -1,5 +1,24 @@
-@pangea_test @AEAZ-3684
-Feature: OMPGdmSalesHistory AEAZ-3684
+@pangea_test @AEAZ-6924
+Feature: OMPGdmSalesHistory AEAZ-6924
+
+  Background: delete all test data
+
+    And I will remove all data with region "/edm/sales_order_v1"
+    And I will remove all data with region "/plan/cns_cust_excl"
+    And I will remove all data with region "/plan/cns_plan_parameter"
+    And I will remove all data with region "/plan/cns_so_type_incl"
+    And I will remove all data with region "/edm/plant_v1"
+    And I will remove all data with region "/plan/cns_material_plan_status"
+    And I will remove all data with region "/plan/cns_cert_deter"
+    And I will remove all data with region "/edm/currency_v1"
+    And I will remove all data with region "/plan/cns_dem_grp_asgn"
+    And I will remove all data with region "/project_one/knvh"
+    And I will remove all data with region "/project_one/tvro"
+    And I will remove all data with region "/edm/material_global_v1"
+    And I will remove all data with region "/plan/cns_ord_rej"
+    And I will remove all data with region "/plan/cns_plan_unit"
+    And I will remove all data with region "/omp/gdm_sales_history"
+    And I will remove all data with region "/plan/edm_failed_data"
 
   Scenario: Full Load curation
 
@@ -21,21 +40,33 @@ Feature: OMPGdmSalesHistory AEAZ-3684
       | CONS_LATAM   | 0008288866   | 000006_T2      | 0008             | BR01          | 0000185314       | 20190402           | LOT6           | BR08       | 000000000000081222  | LIC6              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
 
       | CONS_LATAM   | 0008288867   | 000007_T5      | 0009             | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR01          | 2.000         | 1              | 1              | B08010     |
-      | CONS_LATAM   | 0008288868   | 000008_T5      | 0010             | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288868   | 000008_T5      | 0010             | BR01          | 0000185315       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288953   | 000053_T5      | 0010             | BR01          | 0000185316       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288872   | 000012_T5      | 0014             | BR01          | 0000185312       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
 
       | CONS_LATAM   | 0008288869   | 000009_J1      | 0011             | BR01          | 0000185314       | 20190402           | LOT9           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
       | CONS_LATAM   | 0008288870   | 000010_J1      | 0012             | BR01          | 0000185314       | 20190402           | ZSRT           | BR10       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
 
+      | CONS_LATAM   | 0008288103   | 000103_J1      | 0003             | BR01          | 0000185314       | 20190402           | LOTJ           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288104   | 000104_J1      | 0003             | BR01          | 0000185314       | 20190402           | LOTJ           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288105   | 000105_J1      | 0003             | BR01          | 0000185314       | 20190402           | LOTJ           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+
       | CONS_LATAM   | 0008288871   | 000011_T4      | 0013             | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR11                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
-      | CONS_LATAM   | 0008288872   | 000012_T5      | 0014             | BR01          | 0000185312       | 20190402           | ZSRT           | BR08       | 000000000000081222  | ZSRT              | BR08                | 20190402           | LRR02          | 2.000         | 1              | 1              | B08010     |
       | CONS_LATAM   | 0008288873   | 000013_T8      | 0015             | BR01          | 0000185314       | 20190402           | ZSRT           | BR08       | 000000000000081223  | ZSRT              | BR08                | 20190402           |                | 2.000         | 1              | 1              | B08010     |
+      | CONS_LATAM   | 0008288876   | 000014_T6      | 0001             | BR01          | 0000177376       | 20190402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20190402           |                | 1.000         | 1              | 1              |            |
+      | CONS_LATAM   | 0008288877   | 000015_T6      | 0001             | BR01          | 0000177376       | 20190402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20190402           |                | 1.000         | 1              | 1              | B08011     |
+      | CONS_LATAM   | 0008288878   | 000016_T10     | 0001             | BR01          | 0000177376       | 20190402           | ZSRT           | BR08       | 000000000000085892  | ZSRT              | BR08                | 20190402           |                | 1.000         | 1              | 1              | B08002     |
+#      | CONS_LATAM   | 0008288879   | 000003_F1      | 0001             | BR01          | 124092           | 20190402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20190402           |                | 1.000         | 1              | 1              | B08002     |
+      | CONS_LATAM   | 0008288880   | 000004_F1      | 0001             | BR02          | 0000177376       | 20190402           | ZSRT           | BR08       | 000000000000085891  | ZSRT              | BR08                | 20190402           |                | 1.000         | 1              | 1              | B08002     |
+
     And I wait "/edm/sales_order_v1" Async Queue complete
 
     Given I import "/plan/cns_cust_excl" by keyFields "salesOrg,customerShipTo"
-      | salesOrg | customerShipTo |
-      | BR01     | 116538         |
-      | BR01     | 124092         |
-      | BR01     | 124094         |
+      | salesOrg | customerShipTo | inclExcl |
+      | BR01     | 0000185314     | I        |
+      | BR01     | 116538         | E        |
+      | BR01     | 124092         | I        |
+      | BR01     | 124094         | I        |
     And I wait "/plan/cns_cust_excl" Async Queue complete
 
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter"
@@ -45,11 +76,13 @@ Feature: OMPGdmSalesHistory AEAZ-3684
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     Given I import "/plan/cns_so_type_incl" by keyFields "salesOrg,orderType,country"
-      | salesOrg | orderType | country |
-      | BR01     | ZSRT      | BR      |
-      | BR01     | LOT4      | BR      |
-      | BR01     | LOT5      | BR      |
-      | BR01     | LOT6      | BR      |
+      | salesOrg | orderType | country | inclExcl |
+      | BR01     | ZSRT      | BR      | I        |
+      | BR01     | LOTJ      | ZM      | I        |
+      | BR01     | ZSRT      | ZM      | E        |
+      | BR01     | LOT4      | BR      | I        |
+      | BR01     | LOT5      | BR      | I        |
+      | BR01     | LOT6      | BR      | I        |
     And I wait "/plan/cns_so_type_incl" Async Queue complete
 
     Given I import "/edm/plant_v1" by keyFields "localPlant"
@@ -63,6 +96,8 @@ Feature: OMPGdmSalesHistory AEAZ-3684
       | BR08       | 000000000000081097  | X          |
       | BR08       | 000000000000081222  | X          |
       | BR08       | 000000000000081223  | X          |
+      | BR08       | 000000000000085892  | X          |
+
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/plan/cns_cert_deter" by keyFields "salesOrg"
@@ -108,6 +143,8 @@ Feature: OMPGdmSalesHistory AEAZ-3684
       | 000000000000085891  | PPC01               | KI           |
       | 000000000000081097  | PPC02               | KI           |
       | 000000000000081222  | PPC03               | KI           |
+      | 000000000000085892  | PPC01               | ZUM          |
+
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/plan/cns_ord_rej" by keyFields "salesOrg"
@@ -124,32 +161,39 @@ Feature: OMPGdmSalesHistory AEAZ-3684
 
     When I submit task with xml file "xml/omp/OMPGdmSalesHistory.xml" and execute file "jar/pangea-view.jar"
 
+    And wait 3000 millisecond
+
     Then A file is found on sink application with name "GDMSalesHistory.tsv"
 
     Then I check file data for filename "GDMSalesHistory.tsv" by keyFields "salesHistoryId,activeFCTERP"
-      | salesHistoryId       | activeFCTERP | certaintyId | conversionFactorXx | currencyId | customerId | demandStreamId | dueDate             | fromDueDate         | locationId      | productId | quantity | salesUnit | validValueXx |
-      | 0008288860000001_T4  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288859000003_T3  | YES          | FOC         |                    | ADP        | 76100008   |                | 2019/03/31 00:00:00 | 2019/03/31 00:00:00 | CONS_LATAM_BR08 | PPC02     | 2.0      | CA        |              |
-      | 0008288858000003_D1  | YES          | FOC         |                    | ADP        | 76100007   |                | 2019/04/01 00:00:00 | 2019/04/01 00:00:00 | CONS_LATAM_BR08 | PPC01     | 1.0      | CA        |              |
-      | 0008288862000002_T7  | YES          | FOC         |                    | ADP        | 76100010   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288863000003_T8  | YES          | FOC         |                    | ADP        | 76100011   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288864000004_J2  | YES          | BASE        |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | salesHistoryId       | activeFCTERP | certaintyId | currencyId | customerId | dueDate             | fromDueDate         | locationId      | productId | quantity | salesUnit |
+      | 0008288860000001_T4  | YES          | FOC         | ADP        | 76100009   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
+      | 0008288859000003_T3  | YES          | FOC         | ADP        | 76100008   | 2019/03/31 00:00:00 | 2019/03/31 00:00:00 | CONS_LATAM_BR08 | PPC02     | 2.0      | CA        |
+      | 0008288858000003_D1  | YES          | FOC         | ADP        | 76100007   | 2019/04/01 00:00:00 | 2019/04/01 00:00:00 | CONS_LATAM_BR08 | PPC01     | 1.0      | CA        |
+      | 0008288862000002_T7  | YES          | FOC         | ADP        | 76100010   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
+      | 0008288863000003_T8  | YES          | FOC         | ADP        | 76100011   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
+      | 0008288864000004_J2  | YES          | BASE        | ADP        | 76100009   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
 
-      | 0008288865000005_T2  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288866000006_T2  | YES          | BASE        |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288865000005_T2  | YES          | FOC         | ADP        | 76100009   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
+      | 0008288866000006_T2  | YES          | BASE        | ADP        | 76100009   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
 
-      | 0008288867000007_T5  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |              |
-      | 0008288868000008_T5  | YES          | FOC         |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |              |
-      | 0008288874000014_T9  | YES          | FOC         |                    | ADP        | 76100011   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
-      | 0008288875000015_T10 | YES          | BASE        |                    | ADP        | 76100009   |                | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |              |
+      | 0008288867000007_T5  | YES          | FOC         | ADP        | 76100009   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |
+      | 0008288868000008_T5  | YES          | FOC         | ADP        | 76100010   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |
+      | 0008288953000053_T5  | YES          | FOC         | ADP        | 76100011   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 0        | CA        |
+
+      | 0008288874000014_T9  | YES          | FOC         | ADP        | 76100011   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
+      | 0008288875000015_T10 | YES          | BASE        | ADP        | 76100009   | 2019/03/30 00:00:00 | 2019/03/30 00:00:00 | CONS_LATAM_BR08 | PPC03     | 2.0      | CA        |
+      | 0008288876000014_T6  | YES          | FOC         | ADP        | 76100007   | 2019/04/02 00:00:00 | 2019/04/02 00:00:00 | CONS_LATAM_BR08 | PPC01     | 1.0      | CA        |
+      | 0008288877000015_T6  | YES          | FOC         | ADP        | 76100007   | 2019/04/02 00:00:00 | 2019/04/02 00:00:00 | CONS_LATAM_BR08 | PPC01     | 1.0      | CA        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-      | functionalArea | interfaceID        | errorCode | sourceSystem | businessArea | key1       | key2      | key3 | key4       | key5 | errorValue                                  |
-      | DP             | OMPGdmSalesHistory | T4        | CONS_LATAM   |              | 0008288871 | 000011_T4 | 0013 | 0000185314 | BR01 | Unable to find the Enterprise currency code |
-      | DP             | OMPGdmSalesHistory | T5        | CONS_LATAM   |              | 0008288872 | 000012_T5 | 0014 | 0000185312 | BR01 | Demand group can not be determined          |
-      | DP             | OMPGdmSalesHistory | T8        | CONS_LATAM   |              | 0008288873 | 000013_T8 | 0015 | 0000185314 | BR01 | Material not found in material global       |
+      | functionalArea | interfaceID        | errorCode | sourceSystem | businessArea | key1       | key2       | key3 | key4       | key5 | errorValue                                      |
+      | DP             | OMPGdmSalesHistory | T4        | CONS_LATAM   |              | 0008288871 | 000011_T4  | 0013 | 0000185314 | BR01 | Unable to find the Enterprise currency code     |
+      | DP             | OMPGdmSalesHistory | T5        | CONS_LATAM   |              | 0008288872 | 000012_T5  | 0014 | 0000185312 | BR01 | Demand group can not be determined              |
+      | DP             | OMPGdmSalesHistory | T8        | CONS_LATAM   |              | 0008288873 | 000013_T8  | 0015 | 0000185314 | BR01 | Material not found in material global           |
+      | DP             | OMPGdmSalesHistory | T10       | CONS_LATAM   |              | 0008288878 | 000016_T10 | 0001 | 0000177376 | BR01 | cns_plan_unit-unit do not exist in edm material |
 
-    #And I compare the number of records between "/edm/sales_order_v1" and "/omp/gdm_sales_history,/plan/edm_failed_data"
+#    And I compare the number of records between "/edm/sales_order_v1" and "/omp/gdm_sales_history,/plan/edm_failed_data"
 
   Scenario: delete all test data
 
@@ -158,5 +202,3 @@ Feature: OMPGdmSalesHistory AEAZ-3684
     And I will remove all data with region "/omp/gdm_sales_history"
 
     And I will remove all data with region "/plan/edm_failed_data"
-
-
