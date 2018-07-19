@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-6272
-Feature: PlanCnsProdCtyAffl-Curation AEAZ-6272
+@pangea_test @AEAZ-10551
+Feature: PlanCnsProdCtyAffl-Curation AEAZ-10551
 
   Scenario: Full Load curation
     #1.get sourceSystem from source_system_v1 (rule T1)
@@ -36,13 +36,24 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-6272
       | CONS_LATAM   | BR12       | BR      |
     And I wait "/edm/plant_v1" Async Queue complete
 
-    Given I import "/plan/cns_prod_cty_affl_input" by keyFields "sourceSystem,dpParentCode,country"
-      | sourceSystem | dpParentCode     | country | prodClassification | ovrProdClass | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
-      | CONS_LATAM   | 7320133000740000 | BR      | REGULAR            | DSP          | CE          | DL,CP          | DR19        | 18       | PAL        |
-    And I wait "/plan/cns_prod_cty_affl_input" Async Queue complete
+    Given I import "/plan/cns_prod_cty_affl" by keyFields "sourceSystem,dpParentCode,country"
+      | sourceSystem | dpParentCode     | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
+      | CONS_LATAM   | 7320133000740000 | BR      | REGULAR            | DSP          | ACTIVE     | CE          | DL,CP          | DR19        | 18       | PAL        |
+    And I wait "/plan/cns_prod_cty_affl" Async Queue complete
 
     When I submit task with xml file "xml/plan/PlanCnsProdCtyAffl.xml" and execute file "jar/pangea-view.jar"
 
+    And wait 5000 millisecond
+
+    Then I check region data "/plan/cns_prod_cty_affl_temp" by keyFields "sourceSystem,dpParentCode,country"
+      | sourceSystem | dpParentCode     | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
+      | CONS_LATAM   | 7320133000740000 | BR      | REGULAR            | DSP          | ACTIVE     | CE          | DL,CP          | DR19        | 18       | PAL        |
+      | CONS_LATAM   | 975760150        | BR      | SAMPLE             |              | ACTIVE     |             |                |             |          |            |
+      
+	When I submit task with xml file "xml/plan/PlanCnsProdCtyAffl_CopyData.xml" and execute file "jar/pangea-view.jar"
+	
+	And wait 5000 millisecond
+	
     Then I check region data "/plan/cns_prod_cty_affl" by keyFields "sourceSystem,dpParentCode,country"
       | sourceSystem | dpParentCode     | country | prodClassification | ovrProdClass | prodStatus | ovrProdStat | dpSegmentation | dpPlannerId | rootSize | countryGrp |
       | CONS_LATAM   | 7320133000740000 | BR      | REGULAR            | DSP          | ACTIVE     | CE          | DL,CP          | DR19        | 18       | PAL        |
@@ -51,13 +62,12 @@ Feature: PlanCnsProdCtyAffl-Curation AEAZ-6272
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
 
-    And I compare the number of records between "/edm/material_global_v1" and "/plan/cns_prod_cty_affl,/plan/edm_failed_data"
-
   Scenario: delete all test data
 
     Then I delete the test data
 
+    And I will remove all data with region "/plan/cns_prod_cty_affl_temp"
+    
     And I will remove all data with region "/plan/cns_prod_cty_affl"
 
     And I will remove all data with region "/plan/edm_failed_data"
-

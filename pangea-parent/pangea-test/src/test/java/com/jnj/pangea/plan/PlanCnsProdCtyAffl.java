@@ -9,6 +9,6 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/plan/PlanCnsProdCtyAffl.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-6272 PlanCnsProdCtyAffl.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-10551 PlanCnsProdCtyAffl.json"})
 public class PlanCnsProdCtyAffl {
 }
