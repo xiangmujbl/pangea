@@ -774,4 +774,17 @@ public class OMPGdmStockInventoryStocksHook {
 		}
 		return localPlant;
 	}
+
+	/**
+	 *
+	 * @param sourceSystem
+	 * @param localPlant
+	 * @param localNumber
+	 * @return
+	 */
+	public static String getConcatenateLocationId(String sourceSystem, String localPlant, String localNumber) {
+
+		String locationId = sourceSystem + localPlant + localNumber.replaceFirst("^0*", "");
+		return locationId;
+	}
 }

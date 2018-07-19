@@ -42,6 +42,12 @@
                                 localPlant=/edm/inventory_stock_v1.localPlant
                             </expression>
                         </region>
+                        <region path="/edm/source_system_v1" isPrimaryKey="false">
+                            <columns>sourceSystem,localSourceSystem</columns>
+                            <expression>
+                                sourceSystem=/edm/inventory_stock_v1.sourceSystem
+                            </expression>
+                        </region>
                     </relations>
                 </region>
             </relations>
@@ -89,6 +95,11 @@
                 <parameter name="sourceSystem" value="sourceSystem"/>
             </parameters>
         </method>
+        <method name="getSourceSystemV1" path="/edm/source_system_v1" resultType="Map" isPK="false">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem"/>
+            </parameters>
+        </method>
     </methods>
 
     <viewRegion name="/omp/gdm_stock">
@@ -109,7 +120,51 @@
             <var name="localPlanningRelevant"/>
         </vars>
         <columns>
+            <!--INV8-->
+            <column name="locationId">
+                <ref method="getSourceSystemV1" parameter="sourceSystem" resultType="Map" value="localSourceSystem">
+                    <if test="localSourceSystem.equals('Project_One')">
 
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </ref>
+                <if test="StringInner.isStringEmpty(localSpecialStockIndicator)">
+                    <if test="StringUtils.isNotEmpty(localPlant)">
+                        <ref method="getPlantV1" parameter="localPlant" resultType="Map" value="localPlanningRelevant">
+                            <if test="localPlanningRelevant.equals('X')">
+                                <set name="locationId" value="StringInner.join(sourceSystem,'_',localPlant)"/>
+                            </if>
+                            <else>
+                                <return/>
+                            </else>
+                        </ref>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </if>
+                <else>
+                    <if test="localSpecialStockIndicator.equals('O')">
+                        <if test="StringInner.isStringNotEmpty(sourceSystem)&amp;&amp;StringInner.isStringNotEmpty(localVendorNumber)&amp;&amp;
+                            StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringNotEmpty(vendorOrCustomer)">
+                            <ref method="getCnsSplPlnLocWithLocalPlant" parameter="sourceSystem,localVendorNumber,localPlant,vendorOrCustomer" resultType="Map"
+                                 value="localNumber">
+                                <if test="StringUtils.isNotEmpty(localNumber)">
+                                    <ref hook="OMPGdmStockInventoryStocksHook.getConcatenateLocationId(sourceSystem, localPlant, localNumber)" />
+                                </if>
+                                <else>
+                                    <return/>
+                                </else>
+                            </ref>
+                        </if>
+                        <else>
+                            <return/>
+                        </else>
+                    </if>
+                </else>
+            </column>
             <column name="active" hardCode="YES"/>
             <column name="activeOPRERP" hardCode="YES"/>
             <column name="activeSOPERP" hardCode="NO"/>
@@ -152,50 +207,14 @@
             <!--INV7-->
             <column name="vendorId">
                 <if test="StringInner.isStringEmpty(localConsignmentSpecialStockIndicator)&amp;&amp;StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <set name="lifnr" value="''"/>
+                    <set name="vendorId" value="''"/>
                 </if>
                 <else>
                     <ref hook="OMPGdmStockInventoryStocksHook.getRemovePrefixZero(localVendorNumber)" var="vendorIdTmp"/>
                     <set name="vendorId" value="vendorIdTmp"/>
                 </else>
             </column>
-            <!--INV8-->
-            <column name="locationId">
-                <if test="StringInner.isStringEmpty(localSpecialStockIndicator)">
-                    <if test="StringUtils.isNotEmpty(localPlant)">
-                        <ref method="getPlantV1" parameter="localPlant" resultType="Map" value="localPlanningRelevant">
-                            <if test="localPlanningRelevant.equals('X')">
-                                <set name="locationId" value="StringInner.join(sourceSystem,'_',localPlant)"/>
-                            </if>
-                            <else>
-                                <return/>
-                            </else>
-                        </ref>
-                    </if>
-                    <else>
-                        <return/>
-                    </else>
-                </if>
-                <else>
-                    <if test="localSpecialStockIndicator.equals('O')">
-                        <if test="StringInner.isStringNotEmpty(sourceSystem)&amp;&amp;StringInner.isStringNotEmpty(localVendorNumber)&amp;&amp;
-                            StringInner.isStringNotEmpty(localPlant)&amp;&amp;StringInner.isStringNotEmpty(vendorOrCustomer)">
-                            <ref method="getCnsSplPlnLocWithLocalPlant" parameter="sourceSystem,localVendorNumber,localPlant,vendorOrCustomer" resultType="Map"
-                                 value="localNumber">
-                                <if test="StringUtils.isNotEmpty(localNumber)">
-                                    <set name="locationId" value="StringInner.join(sourceSystem,'_',localPlant,'$',localNumber)"/>
-                                </if>
-                                <else>
-                                    <return/>
-                                </else>
-                            </ref>
-                        </if>
-                        <else>
-                            <return/>
-                        </else>
-                    </if>
-                </else>
-            </column>
+
 
             <column name="processTypeId" hardCode=""/>
             <column name="productId">

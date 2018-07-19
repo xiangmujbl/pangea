@@ -2,21 +2,30 @@ package com.jnj.pangea.omp.gdm_inventory_stocks;
 
 import com.jnj.adf.client.api.JsonObject;
 import com.jnj.adf.client.api.remote.RawDataValue;
+import com.jnj.adf.curation.actors.remote.CurationRawDataHelper;
 import com.jnj.adf.curation.logic.IEventProcessor;
 import com.jnj.adf.curation.logic.RawDataEvent;
 import com.jnj.adf.curation.logic.ViewResultBuilder;
 import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.data.raw.RawDataBuilder;
-import com.jnj.adf.grid.indexer.lucene.AdfLuceneHelper;
+import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.hook.OMPGdmStockInventoryStocksHook;
 import org.apache.commons.lang3.StringUtils;
 import com.jnj.adf.client.api.ADFCriteria;
+import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
 
+import com.jnj.pangea.hook.OMPGdmStockInventoryStocksHook;
+
+import java.math.*;
+import java.text.*;
 import java.util.*;
+import java.time.*;
+import java.io.*;
+import java.nio.*;
 
 @SuppressWarnings("unchecked")
 public class OMPGdmStockInventoryStocks implements IEventProcessor {
@@ -76,8 +85,8 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 	}
 
 	public boolean buildView(RawDataValue raw,
-							 List<RawDataBuilder> rawDataBuilderList,
-							 Map<String, RawDataBuilder> failMap) {
+			List<RawDataBuilder> rawDataBuilderList,
+			Map<String, RawDataBuilder> failMap) {
 
 		Map map = raw.toMap();
 
@@ -99,12 +108,6 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 		String localPlanningRelevant = "";
 
-		String triangulationDetail = "Yes";
-
-		String trigSysTransaction = "Purchase Order";
-
-		String localSourceSystem = null;
-
 		String spRelevant = null;
 
 		String noPlanRelevant = null;
@@ -124,10 +127,6 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 		String localVendorNumber = "";
 
 		String localStorageLocation = "";
-
-		String sequenceNumber = "";
-
-		String tlaneName = "";
 
 		List<Map.Entry<String, String>> inventoryStockList = null;
 		if (StringInner.isStringNotEmpty(sourceSystem)
@@ -169,100 +168,17 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					builder.put("processTypeId", "");
 					builder.put("stockType", "level");
 
-					String locationId = null;
+					String batchId = null;
 
-					Map map1 = getSourceSystemV1(sourceSystem);
-					if (map1 != null) {
-						localSourceSystem = StringInner.getString(map1,
-								"localSourceSystem");
-					}
-					if (localSourceSystem.equals("Project_One")) {
-
-						if (StringUtils.isNotEmpty(localPlant)) {
-							List<Map.Entry<String, String>> cnsTlaneControlList  = getCnsTlaneControl(sourceSystem,
-									localPlant, triangulationDetail,
-									trigSysTransaction);
-							if (cnsTlaneControlList != null && cnsTlaneControlList.size() > 0) {
-								for (Map.Entry<String, String> cnsTlaneControlListEntry : cnsTlaneControlList) {
-									Map<String, Object> cnsTlaneControlListMap = JsonObject
-											.append(cnsTlaneControlListEntry.getValue()).toMap();
-									sequenceNumber = StringInner
-											.getString(cnsTlaneControlListMap,
-													"sequenceNumber");
-									tlaneName = StringInner
-											.getString(cnsTlaneControlListMap,
-													"tlaneName");
-									if (StringInner.isStringNotEmpty(sequenceNumber)
-											&& StringInner.isStringNotEmpty(tlaneName)) {
-										List<Map.Entry<String, String>> cnsTlaneControlTriangulationList = getCnsTlaneControlTriangulation(
-												sequenceNumber, tlaneName);
-										if (StringInner
-												.isListNotNullWithSize(cnsTlaneControlTriangulationList)) {
-											localPlant = OMPGdmStockInventoryStocksHook
-													.getLocalPlantByTriangulation(cnsTlaneControlTriangulationList);
-										}
-									}
-								}
-							}
-						}
-					} else {
-						return false;
-
-					}
-
-					if (StringInner.isStringEmpty(localSpecialStockIndicator)) {
-						if (StringUtils.isNotEmpty(localPlant)) {
-							Map map3 = getPlantV1(localPlant);
-							if (map3 != null) {
-								localPlanningRelevant = StringInner.getString(
-										map3, "localPlanningRelevant");
-								if (localPlanningRelevant.equals("X")) {
-									locationId = StringInner.join(sourceSystem,
-											"_", localPlant);
-								} else {
-									return false;
-								}
-							}
-						} else {
-							return false;
-						}
-					}
-
-					else {
-
-						if (localSpecialStockIndicator.equals("O")) {
-							if (StringInner.isStringNotEmpty(sourceSystem)
-									&& StringInner
-									.isStringNotEmpty(localVendorNumber)
-									&& StringInner.isStringNotEmpty(localPlant)
-									&& StringInner
-									.isStringNotEmpty(vendorOrCustomer)) {
-								Map map4 = getCnsSplPlnLocWithLocalPlant(
-										sourceSystem, localVendorNumber,
-										localPlant, vendorOrCustomer);
-								if (map4 != null) {
-									localNumber = StringInner.getString(map4,
-											"localNumber");
-									if (StringUtils.isNotEmpty(localNumber)) {
-										locationId = sourceSystem + localPlant + localNumber.replaceFirst("^0*", "");
-									} else {
-										return false;
-									}
-								}
-							} else {
-								return false;
-							}
-						}
-					}
-					builder.put("locationId", locationId);
-
+					batchId = localBatchId;
+					builder.put("batchId", batchId);
 
 					String blockedQuantity = null;
 
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
 						blockedQuantity = OMPGdmStockInventoryStocksHook
 								.getBlockedQuantity(
@@ -275,7 +191,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 						if (localConsignmentSpecialStockIndicator.equals("K")
 								&& StringInner
-								.isStringEmpty(localSpecialStockIndicator)) {
+										.isStringEmpty(localSpecialStockIndicator)) {
 							blockedQuantity = OMPGdmStockInventoryStocksHook
 									.getBlockedQuantity(
 											localBatchManagementRequirementIndicator,
@@ -300,22 +216,22 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
-						consignment = "NO";
+						consignment = "";
 					}
 
 					else {
 
 						if (localConsignmentSpecialStockIndicator.equals("K")
 								&& StringInner
-								.isStringEmpty(localSpecialStockIndicator)) {
-							consignment = "YES";
+										.isStringEmpty(localSpecialStockIndicator)) {
+							consignment = "K";
 						} else {
 							if (StringInner
 									.isStringEmpty(localConsignmentSpecialStockIndicator)
 									&& localSpecialStockIndicator.equals("O")) {
-								consignment = "NO";
+								consignment = "";
 							}
 						}
 					}
@@ -326,18 +242,69 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
 						vendorId = "";
 					}
 
 					else {
 
-						vendorId = localVendorNumber.replaceFirst("^0*", "");
+						vendorId = OMPGdmStockInventoryStocksHook
+								.getRemovePrefixZero(localVendorNumber);
 					}
 					builder.put("vendorId", vendorId);
 
+					String locationId = null;
 
+					if (StringInner.isStringEmpty(localSpecialStockIndicator)) {
+
+						if (StringUtils.isNotEmpty(localPlant)) {
+							Map map1 = getPlantV1(localPlant);
+							if (map1 != null) {
+								localPlanningRelevant = StringInner.getString(
+										map1, "localPlanningRelevant");
+								if (localPlanningRelevant.equals("X")) {
+									locationId = StringInner.join(sourceSystem,
+											"_", localPlant);
+								} else {
+									return false;
+								}
+							}
+						} else {
+							return false;
+						}
+					}
+
+					else {
+
+						if (localSpecialStockIndicator.equals("O")) {
+							if (StringInner.isStringNotEmpty(sourceSystem)
+									&& StringInner
+											.isStringNotEmpty(localVendorNumber)
+									&& StringInner.isStringNotEmpty(localPlant)
+									&& StringInner
+											.isStringNotEmpty(vendorOrCustomer)) {
+								Map map2 = getCnsSplPlnLocWithLocalPlant(
+										sourceSystem, localVendorNumber,
+										localPlant, vendorOrCustomer);
+								if (map2 != null) {
+									localNumber = StringInner.getString(map2,
+											"localNumber");
+									if (StringUtils.isNotEmpty(localNumber)) {
+										locationId = OMPGdmStockInventoryStocksHook
+												.getConcatenateLocationId(
+														sourceSystem,
+														localPlant, localNumber);
+									} else {
+										return false;
+									}
+								}
+							} else {
+								return false;
+							}
+						}
+					}
+					builder.put("locationId", locationId);
 
 					if (StringInner.isStringNotEmpty(localMaterial)
 							&& StringInner.isStringNotEmpty(localPlant)
@@ -379,6 +346,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					}
 
 					else {
+
 						return false;
 					}
 					builder.put("productId", productId);
@@ -388,7 +356,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
 						qualityQuantity = OMPGdmStockInventoryStocksHook
 								.getQualityQuantity(
@@ -401,7 +369,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 						if (localConsignmentSpecialStockIndicator.equals("K")
 								&& StringInner
-								.isStringEmpty(localSpecialStockIndicator)) {
+										.isStringEmpty(localSpecialStockIndicator)) {
 							qualityQuantity = OMPGdmStockInventoryStocksHook
 									.getQualityQuantity(
 											localBatchManagementRequirementIndicator,
@@ -426,7 +394,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
 						quantity = OMPGdmStockInventoryStocksHook.getQuantity(
 								localBatchManagementRequirementIndicator,
@@ -438,7 +406,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 						if (localConsignmentSpecialStockIndicator.equals("K")
 								&& StringInner
-								.isStringEmpty(localSpecialStockIndicator)) {
+										.isStringEmpty(localSpecialStockIndicator)) {
 							quantity = OMPGdmStockInventoryStocksHook
 									.getQuantity(
 											localBatchManagementRequirementIndicator,
@@ -471,7 +439,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
 						restrictedQuantity = OMPGdmStockInventoryStocksHook
 								.getRestrictedQuantity(
@@ -484,7 +452,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 						if (localConsignmentSpecialStockIndicator.equals("K")
 								&& StringInner
-								.isStringEmpty(localSpecialStockIndicator)) {
+										.isStringEmpty(localSpecialStockIndicator)) {
 							restrictedQuantity = OMPGdmStockInventoryStocksHook
 									.getRestrictedQuantity(
 											localBatchManagementRequirementIndicator,
@@ -509,7 +477,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
 						returnsQuantity = OMPGdmStockInventoryStocksHook
 								.getReturnsQuantity(
@@ -521,7 +489,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 						if (localConsignmentSpecialStockIndicator.equals("K")
 								&& StringInner
-								.isStringEmpty(localSpecialStockIndicator)) {
+										.isStringEmpty(localSpecialStockIndicator)) {
 							returnsQuantity = OMPGdmStockInventoryStocksHook
 									.getReturnsQuantity(
 											localBatchManagementRequirementIndicator,
@@ -551,6 +519,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					}
 
 					else {
+
 						return false;
 					}
 					builder.put("startDate", startDate);
@@ -560,7 +529,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					if (StringInner
 							.isStringEmpty(localConsignmentSpecialStockIndicator)
 							&& StringInner
-							.isStringEmpty(localSpecialStockIndicator)) {
+									.isStringEmpty(localSpecialStockIndicator)) {
 
 						transferQuantity = OMPGdmStockInventoryStocksHook
 								.getTransferQuantity(
@@ -573,7 +542,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 						if (localConsignmentSpecialStockIndicator.equals("K")
 								&& StringInner
-								.isStringEmpty(localSpecialStockIndicator)) {
+										.isStringEmpty(localSpecialStockIndicator)) {
 							transferQuantity = OMPGdmStockInventoryStocksHook
 									.getTransferQuantity(
 											localBatchManagementRequirementIndicator,
@@ -644,25 +613,25 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 							if (StringInner
 									.isStringEmpty(localConsignmentSpecialStockIndicator)
 									&& StringInner
-									.isStringEmpty(localSpecialStockIndicator)) {
+											.isStringEmpty(localSpecialStockIndicator)) {
 								if (StringInner.isStringNotEmpty(productId)
 										&& StringInner
-										.isStringNotEmpty(sourceSystem)
+												.isStringNotEmpty(sourceSystem)
 										&& StringInner
-										.isStringNotEmpty(localPlant)
+												.isStringNotEmpty(localPlant)
 										&& StringInner
-										.isStringNotEmpty(localBatchId)) {
+												.isStringNotEmpty(localBatchId)) {
 									stockId = StringInner.join(productId, "/",
 											sourceSystem, "_", localPlant, "/",
 											localBatchId);
 								} else {
 									if (StringInner.isStringNotEmpty(productId)
 											&& StringInner
-											.isStringNotEmpty(sourceSystem)
+													.isStringNotEmpty(sourceSystem)
 											&& StringInner
-											.isStringNotEmpty(localPlant)
+													.isStringNotEmpty(localPlant)
 											&& StringInner
-											.isStringEmpty(localBatchId)) {
+													.isStringEmpty(localBatchId)) {
 										stockId = StringInner.join(productId,
 												"/", sourceSystem, "_",
 												localPlant);
@@ -672,14 +641,14 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 								if (localConsignmentSpecialStockIndicator
 										.equals("K")
 										&& StringInner
-										.isStringEmpty(localSpecialStockIndicator)) {
+												.isStringEmpty(localSpecialStockIndicator)) {
 									if (StringInner.isStringNotEmpty(productId)
 											&& StringInner
-											.isStringNotEmpty(sourceSystem)
+													.isStringNotEmpty(sourceSystem)
 											&& StringInner
-											.isStringNotEmpty(localPlant)
+													.isStringNotEmpty(localPlant)
 											&& StringInner
-											.isStringNotEmpty(localBatchId)) {
+													.isStringNotEmpty(localBatchId)) {
 										stockId = StringInner.join(productId,
 												"/", sourceSystem, "_",
 												localPlant, "/", localBatchId,
@@ -691,13 +660,13 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 									if (StringInner
 											.isStringEmpty(localConsignmentSpecialStockIndicator)
 											&& localSpecialStockIndicator
-											.equals("O")) {
+													.equals("O")) {
 										if (StringInner
 												.isStringNotEmpty(sourceSystem)
 												&& StringInner
-												.isStringNotEmpty(localVendorNumber)
+														.isStringNotEmpty(localVendorNumber)
 												&& StringInner
-												.isStringNotEmpty(vendorOrCustomer)) {
+														.isStringNotEmpty(vendorOrCustomer)) {
 											Map map6 = getCnsSplPlnLoc(
 													sourceSystem,
 													localVendorNumber,
@@ -711,11 +680,11 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 													if (StringInner
 															.isStringNotEmpty(productId)
 															&& StringInner
-															.isStringNotEmpty(sourceSystem)
+																	.isStringNotEmpty(sourceSystem)
 															&& StringInner
-															.isStringNotEmpty(localPlant)
+																	.isStringNotEmpty(localPlant)
 															&& StringInner
-															.isStringNotEmpty(localBatchId)) {
+																	.isStringNotEmpty(localBatchId)) {
 														stockId = StringInner
 																.join(productId,
 																		"/",
@@ -745,20 +714,22 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					}
 					builder.put("stockId", stockId);
 
-
-					String batchId = null;
-					builder.put("batchId", stockId);
-
-
 					String processId = null;
 
 					if (OMPGdmStockInventoryStocksHook.checkStockId(
 							inventoryStockList, localMaterial, localBatchId,
 							localVendorNumber, localStorageLocation)) {
-						processId =  "";
-						builder.put("processId", processId);
-						rawDataBuilderList.add(builder);
+
+						processId = "";
 					}
+
+					else {
+
+						return false;
+					}
+					builder.put("processId", processId);
+
+					rawDataBuilderList.add(builder);
 				}
 			}
 		}
@@ -767,16 +738,19 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 	}
 
 	public List getInventoryStock(String sourceSystem, String localPlant,
-								  String localMaterialNumber) {
+			String localMaterialNumber) {
 
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("sourceSystem").append(":").append(sourceSystem);
-		stringBuilder.append(" AND ");
-		stringBuilder.append("localPlant").append(":").append(localPlant);
-		stringBuilder.append(" AND ");
-		stringBuilder.append("localMaterial").append(":\"").append(AdfLuceneHelper.keyword(localMaterialNumber)).append("\"");
+		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria("sourceSystem")
+				.is(sourceSystem);
+		ADFCriteria adfCriteria2 = QueryHelper.buildCriteria("localPlant").is(
+				localPlant);
+		ADFCriteria adfCriteria3 = QueryHelper.buildCriteria("localMaterial")
+				.is(localMaterialNumber);
+		ADFCriteria groupCriteria17 = adfCriteria3.and(adfCriteria2).and(
+				adfCriteria1);
 
-		String queryStr = stringBuilder.toString();
+		ADFCriteria adfCriteria = groupCriteria17;
+		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/inventory_stock_v1", queryStr, -1);
 		if (retList != null && retList.size() > 0) {
@@ -832,7 +806,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 	}
 
 	public Map getCnsSplPlnLoc(String sourceSystem, String localVendorNumber,
-							   String vendorOrCustomer) {
+			String vendorOrCustomer) {
 
 		ADFCriteria adfCriteria7 = QueryHelper.buildCriteria("sourceSystem")
 				.is(sourceSystem);
@@ -859,7 +833,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 	}
 
 	public Map getCnsSplPlnLocWithLocalPlant(String sourceSystem,
-											 String localVendorNumber, String localPlant, String vendorOrCustomer) {
+			String localVendorNumber, String localPlant, String vendorOrCustomer) {
 
 		ADFCriteria adfCriteria10 = QueryHelper.buildCriteria("sourceSystem")
 				.is(sourceSystem);
@@ -888,7 +862,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 	}
 
 	public Map getCnsMaterialPlanStatus(String localMaterial,
-										String localPlant, String sourceSystem) {
+			String localPlant, String sourceSystem) {
 
 		ADFCriteria adfCriteria14 = QueryHelper.buildCriteria(
 				"localMaterialNumber").is(localMaterial);
@@ -913,71 +887,5 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 		return null;
 
 	}
-
-	public Map getSourceSystemV1(String sourceSystem) {
-
-		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("sourceSystem")
-				.is(sourceSystem);
-		ADFCriteria groupCriteria28 = adfCriteria17;
-
-		ADFCriteria adfCriteria = groupCriteria28;
-		String queryStr = adfCriteria.toQueryString();
-		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
-				"/edm/source_system_v1", queryStr, -1);
-		if (retList != null && retList.size() > 0) {
-			Map.Entry<String, String> entry = retList.get(0);
-			Map<String, Object> map = JsonObject.append(entry.getValue())
-					.toMap();
-			return map;
-		}
-
-		return null;
-
-	}
-
-	public List getCnsTlaneControl(String sourceSystem, String localPlant,
-								   String triangulationDetail, String trigSysTransaction) {
-
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("sourceSystemCriticalParameters").append(":").append(sourceSystem);
-		stringBuilder.append(" AND ");
-		stringBuilder.append("trigSysPlant").append(":").append(localPlant);
-		stringBuilder.append(" AND ");
-		stringBuilder.append("triangulationDetail").append(":").append(triangulationDetail);
-		stringBuilder.append(" AND ");
-		stringBuilder.append("trigSysTransaction").append(":\"").append(AdfLuceneHelper.keyword(trigSysTransaction)).append("\"");
-
-		String queryStr = stringBuilder.toString();
-		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
-				"/plan/cns_tlane_control", queryStr, -1);
-		if (retList != null && retList.size() > 0) {
-			return retList;
-		}
-
-		return new ArrayList<>();
-
-	}
-
-
-	public List getCnsTlaneControlTriangulation(String sequenceNumber, String tlaneName) {
-
-		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria("sequenceNumber")
-				.is(sequenceNumber);
-		ADFCriteria adfCriteria19 = QueryHelper.buildCriteria("tlaneName")
-				.is(tlaneName);
-		ADFCriteria groupCriteria29 = adfCriteria18.and(adfCriteria19);
-
-		ADFCriteria adfCriteria = groupCriteria29;
-		String queryStr = adfCriteria.toQueryString();
-		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
-				"/plan/cns_tlane_control_triangulation", queryStr, -1);
-		if (retList != null && retList.size() > 0) {
-			return retList;
-		}
-
-		return new ArrayList<>();
-
-	}
-
 
 }
