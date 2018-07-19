@@ -25,8 +25,7 @@ public class EDMSourceListV1DaoImpl extends CommonDaoImpl {
     }
 
     public List<EDMSourceListV1Entity> getEntitiesWithLocalMaterialNumberPlantNumberSourceSystemLocalDateAndBlankLocalBlockedSourceOfSupply(String localMaterialNumber, String localPlantNumber, String sourceSystem) {
-
-        DateFormat dateFormat = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
+              DateFormat dateFormat = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
         Date date = new Date();
         String localSystemDate = dateFormat.format(date);
 
