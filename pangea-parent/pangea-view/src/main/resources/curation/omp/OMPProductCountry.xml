@@ -5,7 +5,7 @@
         <regions>
 
             <region path="/plan/cns_prod_cty_affl">
-                <columns>sourceSystem,dpParentCode,country,prodClassification,prodStatus,ovrPrdClass,ovrPrdStat,DPSegmentation,DPPlannerID,rootSize,countryGrp</columns>
+                <columns>sourceSystem,dpParentCode,country,prodClassification,prodStatus,ovrPrdClass,ovrPrdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp</columns>
                 <relations>
                     <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
                         <expression>localParentCode = /plan/cns_prod_cty_affl.dpParentCode</expression>
@@ -13,7 +13,7 @@
                 </relations>
             </region>
             <region path="/omp/product_country">
-                <columns>uniqueId,activeFCTERP,countryGroup,countryId,DPPlannerID,DPSegmentation,productClassification,productId,productStatus,rootSize,segmentation</columns>
+                <columns>uniqueId,activeFCTERP,countryGroup,countryId,dpPlannerId,dpSegmentation,productClassification,productId,productStatus,rootSize,segmentation</columns>
             </region>
 
             <region path="/plan/cns_material_plan_status">
