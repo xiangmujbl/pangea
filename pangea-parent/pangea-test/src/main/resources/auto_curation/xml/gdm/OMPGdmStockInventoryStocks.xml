@@ -100,6 +100,14 @@
                 <parameter name="sourceSystem" value="sourceSystem"/>
             </parameters>
         </method>
+        <method name="getCnsTlaneControl" resultType="List" isPK="false" path="/plan/cns_tlane_control">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="trigSysPlant" value="localPlantInventoryStock" relationship="and"/>
+                <parameter name="triangulationDetail" value="Yes" relationship="and"/>
+                <parameter name="trigSysTransaction" value="purchase_order"/>
+            </parameters>
+        </method>
     </methods>
 
     <viewRegion name="/omp/gdm_stock">
@@ -111,7 +119,8 @@
         </multis>
         <vars>
             <var name="sourceSystem" value="sourceSystem"/>
-            <var name="localPlant" value="localPlant"/>
+            <var name="localPlantInventoryStock" value="localPlant"/>
+            <var name="localPlant"/>
             <var name="localBatchManagementRequirementIndicator" value="localBatchManagementRequirementIndicator"/>
             <var name="localMaterialNumber" value="localMaterialNumber"/>
             <var name="vendorOrCustomer" value="'V'"/>
@@ -124,7 +133,12 @@
             <column name="locationId">
                 <ref method="getSourceSystemV1" parameter="sourceSystem" resultType="Map" value="localSourceSystem">
                     <if test="localSourceSystem.equals('Project_One')">
+                        <set name="localPlant" value="localPlantInventoryStock"/>
+                        <if test="StringUtils.isNotEmpty(localPlant)">
+                            <ref method="getCnsTlaneControl" parameter="sourceSystem,trigSysPlant,triangulationDetail,trigSysTransaction" resultType="List">
 
+                            </ref>
+                        </if>
                     </if>
                     <else>
                         <return/>
