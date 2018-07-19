@@ -1,6 +1,6 @@
-@pangea_test @AEAZ-4070
+@pangea_test @AEAZ-10638
 
-Feature:  OMPGdmProductLocationDetail-Curation AEAZ-4070
+Feature:  OMPGdmProductLocationDetail-Curation AEAZ-10638
 
   # 1. Reject record when cns_material_plan_status where spRelevant <> X and npPlanRelevant <> X (N2)
   # 2. Reject record when cns_prod_loc_attrib-sourceSystem <> cns_material_plan_status-sourceSystem (N2)
@@ -62,12 +62,12 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-4070
 
     And I check file data for filename "GDMProductLocationDetail.tsv" by keyFields "productLocationDetailId"
       | unit | comments | productLocationDetailId           | productLocationId      | name   | description | CLASS | value  | activeOPRERP | activeSOPERP |
-      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | EM9999-CONS_LATAM_BR19 | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
-      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 | EM9999-CONS_LATAM_BR19 | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
-      |      |          | 9862-CONS_LATAM_EC01/PGA/ATTRB1   | 9862-CONS_LATAM_EC01   | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
-      |      |          | 9862-CONS_LATAM_EC01/PGA/ATTRB2   | 9862-CONS_LATAM_EC01   | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
+      |      |          | EM9999/CONS_LATAM_BR19/PGA/ATTRB1 | EM9999/CONS_LATAM_BR19 | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
+      |      |          | EM9999/CONS_LATAM_BR19/PGA/ATTRB2 | EM9999/CONS_LATAM_BR19 | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
+      |      |          | 9862/CONS_LATAM_EC01/PGA/ATTRB1   | 9862/CONS_LATAM_EC01   | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
+      |      |          | 9862/CONS_LATAM_EC01/PGA/ATTRB2   | 9862/CONS_LATAM_EC01   | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
 
-    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID                 | errorCode | sourceSystem | businessArea | key1       | key2               | key3 | key4 | key5 | errorValue                                                  |
       | SP             | OMPGdmProductLocationDetail | N2        | omp          |              | CONS_LATAM | 000000000000000999 | BR19 |      |      | Not Planning Relevant                                       |
       | SP             | OMPGdmProductLocationDetail | N2        | omp          |              | TOSC_ADCGA | 000000000000000945 | BR19 |      |      | Not Planning Relevant                                       |
@@ -79,4 +79,4 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-4070
 
     And I will remove all data with region "/omp/gdm_product_location_detail"
 
-    And I will remove all data with region "/plan/edm_failed_data"
+    And I will remove all data with region "/dev/plan/edm_failed_data"
