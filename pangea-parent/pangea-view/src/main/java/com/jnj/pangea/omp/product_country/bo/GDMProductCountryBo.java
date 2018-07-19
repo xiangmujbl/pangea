@@ -8,8 +8,8 @@ public class GDMProductCountryBo extends BaseBo {
     private String activeFCTERP;
     private String countryGroup;
     private String countryId;
-    private String DPPlannerID;
-    private String DPSegmentation;
+    private String dpPlannerId;
+    private String dpSegmentation;
     private String productClassification;
     private String productId;
     private String productStatus;
@@ -55,20 +55,20 @@ public class GDMProductCountryBo extends BaseBo {
         this.countryId = countryId;
     }
 
-    public String getDPPlannerID() {
-        return DPPlannerID;
+    public String getDpPlannerId() {
+        return dpPlannerId;
     }
 
-    public void setDPPlannerID(String DPPlannerID) {
-        this.DPPlannerID = DPPlannerID;
+    public void setDpPlannerId(String dpPlannerId) {
+        this.dpPlannerId = dpPlannerId;
     }
 
-    public String getDPSegmentation() {
-        return DPSegmentation;
+    public String getDpSegmentation() {
+        return dpSegmentation;
     }
 
-    public void setDPSegmentation(String DPSegmentation) {
-        this.DPSegmentation = DPSegmentation;
+    public void setDpSegmentation(String dpSegmentation) {
+        this.dpSegmentation = dpSegmentation;
     }
 
     public String getProductClassification() {

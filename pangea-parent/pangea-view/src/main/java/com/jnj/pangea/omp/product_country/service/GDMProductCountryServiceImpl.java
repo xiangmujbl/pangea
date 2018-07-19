@@ -42,8 +42,8 @@ public class GDMProductCountryServiceImpl implements ICommonService {
             productCountryBo.setActiveFCTERP(IConstant.VALUE.YES);
             productCountryBo.setCountryGroup(prodCtyAfflEntity.getCountryGrp());
             productCountryBo.setCountryId(prodCtyAfflEntity.getCountry());
-            productCountryBo.setDPPlannerID(prodCtyAfflEntity.getDpPlannerId());
-            productCountryBo.setDPSegmentation(prodCtyAfflEntity.getDpSegmentation());
+            productCountryBo.setDpPlannerId(prodCtyAfflEntity.getDpPlannerId());
+            productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
             // T1
             if (StringUtils.isNotEmpty(prodCtyAfflEntity.getOvrPrdClass())) {
                 productCountryBo.setProductClassification(prodCtyAfflEntity.getOvrPrdClass());
@@ -76,7 +76,7 @@ public class GDMProductCountryServiceImpl implements ICommonService {
              }
             
             productCountryBo.setRootSize(prodCtyAfflEntity.getRootSize());
-            productCountryBo.setDPSegmentation(prodCtyAfflEntity.getDpSegmentation());
+            productCountryBo.setDpSegmentation(prodCtyAfflEntity.getDpSegmentation());
             resultObject.setBaseBo(productCountryBo);
         } else {
             FailData failData = writeFailDataToRegion(prodCtyAfflEntity, IConstant.FAILED.ERROR_CODE.C1, "All Key fields not Exist");
