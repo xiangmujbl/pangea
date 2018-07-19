@@ -49,7 +49,7 @@ public class OMPGdmLocationXrefServiceImpl implements ICommonService {
         }
 
         //rules D1
-        gdmLocationXrefBo.setCurrencyId(cnsPlnSplLocEntity.getLocalCurrency());
+        gdmLocationXrefBo.setCurrencyId(IConstant.VALUE.USD);
 
         //rules D2
         gdmLocationXrefBo.setActive(IConstant.VALUE.YES);

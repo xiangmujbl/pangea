@@ -92,7 +92,7 @@ Feature: OMPGdmLocation AEAZ-8894
 
     Given I import "/plan/cns_spl_pln_loc" by keyFields "sourceSystem,localNumber,localName"
       | sourceSystem | vendorOrCustomer | localNumber | localCountry | localCurrency | localName                           | planLocTypeId | localRegion | localPlant |
-      | CONS_LATAM   | V                | 0000079232  | CL           |               | Apl Logistics Chile S.A.            | SUBCON        | 103         | CL01       |
+      | CONS_LATAM   | C                | 0000079232  | CL           |               | Apl Logistics Chile S.A.            | SUBCON        | 103         | CL01       |
       | CONS_LATAM   | V                | 0000065659  | UY           |               | MODYLER SA                          | SUBCON        | 103         | UY01       |
       | CONS_LATAM   | V                | 0000049139  | EC           |               | CORPORACION DE PROYECTOS EQUINOCCIA | SUBCON        | 103         | EC01       |
       | CONS_LATAM   | V                | 0000050161  | MX           | MXN           | AVP MAQUILA DE MEXICO S DE RL DE CV |               | 103         | CO01       |
@@ -125,30 +125,30 @@ Feature: OMPGdmLocation AEAZ-8894
 
     Then I check file data for filename "GDMLocation_xref.tsv" by keyFields "locationId"
       | locationTypeId | regionId | activeFCTERP | locationId            | customerId | active | vendorId | label                               | currencyId | activeOPRERP | countryId | activeSOPERP |
-      | VENDOR         | 104      | NO           | CONS_LATAM_V_93808    |            | YES    | 93808    | CILAG GMBH INTERNATIONAL - LF BEAUT |            | YES          | CH        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$49139 |            | YES    | 49139    | CORPORACION DE PROYECTOS EQUINOCCIA |            | YES          | EC        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_MX02$86017 |            | YES    | 86017    | AVP MAQUILA DE MEXICO S DE RL DE CV |            | YES          | MX        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79232 |            | YES    | 79232    | Apl Logistics Chile S.A.            |            | YES          | CL        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$1189  |            | YES    | 1189     | SUPPORT PACK IND E COM LTDA         |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CO01$44776 |            | YES    | 44776    | SUPPLA SA                           |            | YES          | CO        | NO           |
-      |                | 103      | NO           | CONS_LATAM_CO01$50161 |            | YES    | 50161    | AVP MAQUILA DE MEXICO S DE RL DE CV | MXN        | YES          | MX        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79300 |            | YES    | 79300    | Envases Visopack Ltda.              |            | YES          | CL        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20667 |            | YES    | 20667    | YOBEL SUPPLY CHAIN MANAGEMENT S.A.  |            | YES          | PE        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$19574 |            | YES    | 19574    | LODISAL S.A.                        |            | YES          | EC        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_PA03$36124 |            | YES    | 36124    | J CAIN & CO                         |            | YES          | PA        | NO           |
-      | VENDOR         | 103      | NO           | CONS_LATAM_V_70409    |            | YES    | 70409    | JBS S A                             |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$50448 |            | YES    | 50448    | UBA SOLUCIONES INDUSTRIALES S.A.    |            | YES          | EC        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_DO01$34427 |            | YES    | 34427    | YOBEL SRL                           |            | YES          | DO        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$87047 |            | YES    | 87047    | ARCO IRIS MONT DE KITS E SHRINK PAC |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CR01$36328 |            | YES    | 36328    | D.H.L. COSTA RICA (CORMAR), S.A.    |            | YES          | CR        | NO           |
-      | VENDOR         | 103      | NO           | CONS_LATAM_V_12398    |            | YES    | 12398    | DAVISO IND COM PROD HIGIENICOS SA   |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_UY01$65659 |            | YES    | 65659    | MODYLER SA                          |            | YES          | UY        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_GT01$36191 |            | YES    | 36191    | DHL GLOBAL FORWARDING (GUATEMALA)   |            | YES          | GT        | NO           |
-      |                | 103      | NO           | CONS_LATAM_CO01$55735 |            | YES    | 55735    | AVP MAQUILA DE MEXICO S DE RL DE CV | MXN        | YES          | MX        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20754 |            | YES    | 20754    | GMPACK SERVICE SA                   |            | YES          | PE        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$28    |            | YES    | 28       | FARMAQUI IND E COM LTDA EPP         |            | YES          | BR        | NO           |
-      | VENDOR         | 103      | NO           | CONS_LATAM_V_53032    |            | YES    | 53032    | JBS S/A                             |            | YES          | BR        | NO           |
-      |                | 103      | NO           | CONS_LATAM_CO01$15574 |            | YES    | 15574    | ASPRILLA ORTIZ FABIO                | COP        | YES          | CO        | NO           |
+      | VENDOR         | 104      | NO           | CONS_LATAM_V_93808    |            | YES    | 93808    | CILAG GMBH INTERNATIONAL - LF BEAUT | USD        | YES          | CH        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$49139 |            | YES    | 49139    | CORPORACION DE PROYECTOS EQUINOCCIA | USD        | YES          | EC        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_MX02$86017 |            | YES    | 86017    | AVP MAQUILA DE MEXICO S DE RL DE CV | USD        | YES          | MX        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79232 | 79232      | YES    |          | Apl Logistics Chile S.A.            | USD        | YES          | CL        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$1189  |            | YES    | 1189     | SUPPORT PACK IND E COM LTDA         | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CO01$44776 |            | YES    | 44776    | SUPPLA SA                           | USD        | YES          | CO        | NO           |
+      |                | 103      | NO           | CONS_LATAM_CO01$50161 |            | YES    | 50161    | AVP MAQUILA DE MEXICO S DE RL DE CV | USD        | YES          | MX        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79300 |            | YES    | 79300    | Envases Visopack Ltda.              | USD        | YES          | CL        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20667 |            | YES    | 20667    | YOBEL SUPPLY CHAIN MANAGEMENT S.A.  | USD        | YES          | PE        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$19574 |            | YES    | 19574    | LODISAL S.A.                        | USD        | YES          | EC        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_PA03$36124 |            | YES    | 36124    | J CAIN & CO                         | USD        | YES          | PA        | NO           |
+      | VENDOR         | 103      | NO           | CONS_LATAM_V_70409    |            | YES    | 70409    | JBS S A                             | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$50448 |            | YES    | 50448    | UBA SOLUCIONES INDUSTRIALES S.A.    | USD        | YES          | EC        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_DO01$34427 |            | YES    | 34427    | YOBEL SRL                           | USD        | YES          | DO        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$87047 |            | YES    | 87047    | ARCO IRIS MONT DE KITS E SHRINK PAC | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CR01$36328 |            | YES    | 36328    | D.H.L. COSTA RICA (CORMAR), S.A.    | USD        | YES          | CR        | NO           |
+      | VENDOR         | 103      | NO           | CONS_LATAM_V_12398    |            | YES    | 12398    | DAVISO IND COM PROD HIGIENICOS SA   | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_UY01$65659 |            | YES    | 65659    | MODYLER SA                          | USD        | YES          | UY        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_GT01$36191 |            | YES    | 36191    | DHL GLOBAL FORWARDING (GUATEMALA)   | USD        | YES          | GT        | NO           |
+      |                | 103      | NO           | CONS_LATAM_CO01$55735 |            | YES    | 55735    | AVP MAQUILA DE MEXICO S DE RL DE CV | USD        | YES          | MX        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20754 |            | YES    | 20754    | GMPACK SERVICE SA                   | USD        | YES          | PE        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$28    |            | YES    | 28       | FARMAQUI IND E COM LTDA EPP         | USD        | YES          | BR        | NO           |
+      | VENDOR         | 103      | NO           | CONS_LATAM_V_53032    |            | YES    | 53032    | JBS S/A                             | USD        | YES          | BR        | NO           |
+      |                | 103      | NO           | CONS_LATAM_CO01$15574 |            | YES    | 15574    | ASPRILLA ORTIZ FABIO                | USD        | YES          | CO        | NO           |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID | errorCode | sourceSystem | businessArea | key1 | key2 | key3 | key4 | key5 | errorValue |
@@ -176,27 +176,27 @@ Feature: OMPGdmLocation AEAZ-8894
       | typeid001      | regin001 | YES          | CONS_LATAM_AR1_T9     |            | YES    |          | Pilar Plant                         | AFA        | YES          | 00        | NO           |
       | typeid001      | regin001 | YES          | CONS_LATAM_AR1_T7     |            | YES    |          | Pilar Plant                         | AFA        | YES          | 00        | NO           |
       | typeid001      | regin001 | YES          | CONS_LATAM_AR_T2      |            | YES    |          | Pilar Plant                         | AFA        | YES          | 00        | NO           |
-      | VENDOR         | 104      | NO           | CONS_LATAM_V_93808    |            | YES    | 93808    | CILAG GMBH INTERNATIONAL - LF BEAUT |            | YES          | CH        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$49139 |            | YES    | 49139    | CORPORACION DE PROYECTOS EQUINOCCIA |            | YES          | EC        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_MX02$86017 |            | YES    | 86017    | AVP MAQUILA DE MEXICO S DE RL DE CV |            | YES          | MX        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79232 |            | YES    | 79232    | Apl Logistics Chile S.A.            |            | YES          | CL        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$1189  |            | YES    | 1189     | SUPPORT PACK IND E COM LTDA         |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CO01$44776 |            | YES    | 44776    | SUPPLA SA                           |            | YES          | CO        | NO           |
-      |                | 103      | NO           | CONS_LATAM_CO01$50161 |            | YES    | 50161    | AVP MAQUILA DE MEXICO S DE RL DE CV | MXN        | YES          | MX        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79300 |            | YES    | 79300    | Envases Visopack Ltda.              |            | YES          | CL        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20667 |            | YES    | 20667    | YOBEL SUPPLY CHAIN MANAGEMENT S.A.  |            | YES          | PE        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$19574 |            | YES    | 19574    | LODISAL S.A.                        |            | YES          | EC        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_PA03$36124 |            | YES    | 36124    | J CAIN & CO                         |            | YES          | PA        | NO           |
-      | VENDOR         | 103      | NO           | CONS_LATAM_V_70409    |            | YES    | 70409    | JBS S A                             |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$50448 |            | YES    | 50448    | UBA SOLUCIONES INDUSTRIALES S.A.    |            | YES          | EC        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_DO01$34427 |            | YES    | 34427    | YOBEL SRL                           |            | YES          | DO        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$87047 |            | YES    | 87047    | ARCO IRIS MONT DE KITS E SHRINK PAC |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_CR01$36328 |            | YES    | 36328    | D.H.L. COSTA RICA (CORMAR), S.A.    |            | YES          | CR        | NO           |
-      | VENDOR         | 103      | NO           | CONS_LATAM_V_12398    |            | YES    | 12398    | DAVISO IND COM PROD HIGIENICOS SA   |            | YES          | BR        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_UY01$65659 |            | YES    | 65659    | MODYLER SA                          |            | YES          | UY        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_GT01$36191 |            | YES    | 36191    | DHL GLOBAL FORWARDING (GUATEMALA)   |            | YES          | GT        | NO           |
-      |                | 103      | NO           | CONS_LATAM_CO01$55735 |            | YES    | 55735    | AVP MAQUILA DE MEXICO S DE RL DE CV | MXN        | YES          | MX        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20754 |            | YES    | 20754    | GMPACK SERVICE SA                   |            | YES          | PE        | NO           |
-      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$28    |            | YES    | 28       | FARMAQUI IND E COM LTDA EPP         |            | YES          | BR        | NO           |
-      | VENDOR         | 103      | NO           | CONS_LATAM_V_53032    |            | YES    | 53032    | JBS S/A                             |            | YES          | BR        | NO           |
-      |                | 103      | NO           | CONS_LATAM_CO01$15574 |            | YES    | 15574    | ASPRILLA ORTIZ FABIO                | COP        | YES          | CO        | NO           |
+      | VENDOR         | 104      | NO           | CONS_LATAM_V_93808    |            | YES    | 93808    | CILAG GMBH INTERNATIONAL - LF BEAUT | USD        | YES          | CH        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$49139 |            | YES    | 49139    | CORPORACION DE PROYECTOS EQUINOCCIA | USD        | YES          | EC        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_MX02$86017 |            | YES    | 86017    | AVP MAQUILA DE MEXICO S DE RL DE CV | USD        | YES          | MX        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79232 | 79232      | YES    |          | Apl Logistics Chile S.A.            | USD        | YES          | CL        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$1189  |            | YES    | 1189     | SUPPORT PACK IND E COM LTDA         | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CO01$44776 |            | YES    | 44776    | SUPPLA SA                           | USD        | YES          | CO        | NO           |
+      |                | 103      | NO           | CONS_LATAM_CO01$50161 |            | YES    | 50161    | AVP MAQUILA DE MEXICO S DE RL DE CV | USD        | YES          | MX        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CL01$79300 |            | YES    | 79300    | Envases Visopack Ltda.              | USD        | YES          | CL        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20667 |            | YES    | 20667    | YOBEL SUPPLY CHAIN MANAGEMENT S.A.  | USD        | YES          | PE        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$19574 |            | YES    | 19574    | LODISAL S.A.                        | USD        | YES          | EC        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_PA03$36124 |            | YES    | 36124    | J CAIN & CO                         | USD        | YES          | PA        | NO           |
+      | VENDOR         | 103      | NO           | CONS_LATAM_V_70409    |            | YES    | 70409    | JBS S A                             | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_EC01$50448 |            | YES    | 50448    | UBA SOLUCIONES INDUSTRIALES S.A.    | USD        | YES          | EC        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_DO01$34427 |            | YES    | 34427    | YOBEL SRL                           | USD        | YES          | DO        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$87047 |            | YES    | 87047    | ARCO IRIS MONT DE KITS E SHRINK PAC | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_CR01$36328 |            | YES    | 36328    | D.H.L. COSTA RICA (CORMAR), S.A.    | USD        | YES          | CR        | NO           |
+      | VENDOR         | 103      | NO           | CONS_LATAM_V_12398    |            | YES    | 12398    | DAVISO IND COM PROD HIGIENICOS SA   | USD        | YES          | BR        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_UY01$65659 |            | YES    | 65659    | MODYLER SA                          | USD        | YES          | UY        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_GT01$36191 |            | YES    | 36191    | DHL GLOBAL FORWARDING (GUATEMALA)   | USD        | YES          | GT        | NO           |
+      |                | 103      | NO           | CONS_LATAM_CO01$55735 |            | YES    | 55735    | AVP MAQUILA DE MEXICO S DE RL DE CV | USD        | YES          | MX        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_PE01$20754 |            | YES    | 20754    | GMPACK SERVICE SA                   | USD        | YES          | PE        | NO           |
+      | SUBCON         | 103      | NO           | CONS_LATAM_BR12$28    |            | YES    | 28       | FARMAQUI IND E COM LTDA EPP         | USD        | YES          | BR        | NO           |
+      | VENDOR         | 103      | NO           | CONS_LATAM_V_53032    |            | YES    | 53032    | JBS S/A                             | USD        | YES          | BR        | NO           |
+      |                | 103      | NO           | CONS_LATAM_CO01$15574 |            | YES    | 15574    | ASPRILLA ORTIZ FABIO                | USD        | YES          | CO        | NO           |
