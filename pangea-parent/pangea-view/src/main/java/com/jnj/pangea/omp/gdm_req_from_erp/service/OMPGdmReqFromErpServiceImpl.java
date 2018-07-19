@@ -116,7 +116,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
         //N10
         gdmReqFromErpBo.setDELNR(edmPurchaseRequisitionV1Entity.getSourceSystem()
-                + IConstant.VALUE.UNDERLINE + edmPurchaseRequisitionV1Entity.getPrNum());
+                + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrNum());
 
         //N11
         if(!edmPurchaseRequisitionV1Entity.getSuplPlntCd().isEmpty()) {
