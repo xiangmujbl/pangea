@@ -105,4 +105,3 @@ Feature: OMPGdmReqFromErp-Consumption
     And I will remove all data with region "/plan/cns_plan_object_filter"
 
     And I will remove the test file on sink application "REQFROMERP.tsv"
-

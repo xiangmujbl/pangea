@@ -3,6 +3,7 @@ package com.jnj.pangea.common;
 /**
  * Created by XZhan290 on 2018/3/6.
  */
+@Deprecated
 public interface IConstant {
 
     interface REGION {
@@ -72,7 +73,7 @@ public interface IConstant {
         String PLAN_CNS_CUST_EXCL = "/plan/cns_cust_excl";
         String PLAN_CNS_CUST_EXCL_INCL = "/plan/cns_cust_excl_incl";
         String PLAN_CNS_SO_TYPE_INCL = "/plan/cns_so_type_incl";
-        String PLAN_CNS_PLAN_SO_TYPE_INCL_EXCL = "/plan/cns_plan_so_type_incl_excl";
+        String PLAN_CNS_SO_TYPE_INCL_EXCL = "/plan/cns_so_type_incl_excl";
         String PLAN_CNS_PLANT_ATTR = "/plan/cns_plant_attr";
         String PLAN_EDM_COUNTRY_INPUT = "/plan/edm_country_input";
         String PLAN_CNS_PLAN_REGION = "/plan/cns_plan_region";
@@ -158,6 +159,7 @@ public interface IConstant {
         String MFG_RTNG_ITM_NDE = "/edm/mfg_rtng_itm_nde";
         String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
         String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
+        String PLAN_CNS_TLANE_CONTROL_TRIANGULATION = "/plan/cns_tlane_control_triangulation";
         String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
         String EDM_MFG_ORDER_ITM = "/edm/mfg_order_itm";
         String EDM_MATL_PROD_VERSN = "/edm/matl_prod_versn";
@@ -180,7 +182,9 @@ public interface IConstant {
 
     interface FBP {
         String FAIL_MSG = "localDpParentCode does not exist in edm Material";
+        String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
     }
+
 
     interface EDM_INVENTORY_STOCK {
         String SOURCE_SYSTEM = "sourceSystem";
@@ -1036,6 +1040,12 @@ public interface IConstant {
         String CRITICAL_PARAMETER_LOW = "criticalParameter{0}Low";
         String CRITICAL_PARAMETER_OPERATOR = "criticalParameter{0}Operator";
         String CRITICAL_PARAMETER_IE = "criticalParameter{0}IE";
+        String SOURCE_SYSTEM_CRITICAL_PARAMETERS = "sourceSystemCriticalParameters";
+    }
+
+    interface PLAN_CNS_TLANE_CONTROL_TRIANGULATION {
+        String SEQUENCE_NUMBER = "sequenceNumber";
+        String TLANE_NAME = "tlaneName";
     }
 
     interface LFU {
@@ -1135,7 +1145,7 @@ public interface IConstant {
         String BLANK = "";
         String OR = "OR";
         String SPACE = " ";
-        String CURRENCY = "CURRENCY";
+        String CURRENCY = "Currency";
         String ZERO = "0";
         String ZEROZERO = "0.0";
         String BA = "BA";

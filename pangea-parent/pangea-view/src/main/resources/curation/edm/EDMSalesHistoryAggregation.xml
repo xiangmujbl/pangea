@@ -1,0 +1,24 @@
+<adf-curation>
+    <curation mainRegion="/edm/sales_history_v1" viewRegion="/edm/sales_history_v1_aggregation"
+              chunkSize="1000" partitionPerServer="2" chunkBytes="40096" parallelism="2">
+        <regions>
+            <region path="/edm/sales_history_v1" mvel="true">
+                <columns>localBaseQuantity,localPrecDocNo,localSPrecDocLnNo,localSubDocCatg</columns>
+                <aggregator>
+                    <fields>
+                        <field name="localBaseQuantity" aggr="SUM" type="NUMBER" scale="3"/>
+                        <field name="localPrecDocNo" asKey="true"/>
+                        <field name="localSPrecDocLnNo" asKey="true"/>
+                        <field name="localSubDocCatg" asKey="true"/>
+                    </fields>
+                    <groupBy>localPrecDocNo,localSPrecDocLnNo,localSubDocCatg</groupBy>
+                </aggregator>
+            </region>
+            <region path="/edm/sales_history_v1_aggregation">
+                <columns>
+                    localBaseQuantity,localPrecDocNo,localSPrecDocLnNo,localSubDocCatg
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>
