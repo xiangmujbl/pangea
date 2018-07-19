@@ -27,19 +27,8 @@ public class PlanCnsTlaneControlDaoImpl extends CommonDaoImpl {
         return queryForList(IConstant.REGION.PLAN_CNS_TLANE_CONTROL,queryString,PlanCnsTlaneControlEntity.class);
     }
 
-    public List<PlanCnsTlaneControlEntity> getMatchingEntities(String sourceSystem, String localPlant) {
-        if (StringUtils.isNotBlank(sourceSystem) && StringUtils.isNotBlank(localPlant)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_TLANE_CONTROL.SOURCE_SYSTEM_CRITICAL_PARAMETERS).is(sourceSystem)
-                    .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIG_SYS_PLANT).is(localPlant)
-                    .toQueryString();
-
-            return queryForObject(IConstant.REGION.PLAN_CNS_TLANE_CONTROL, queryString, PlanCnsTlaneControlEntity.class);
-        }
-        return null;
-    }
-
-    public List<PlanCnsTlaneControlEntity> getMatchingEntities(String sourceSystem, String localPlant,
-                                                               String sysTransaction, String triangulationDetail) {
+    public List<PlanCnsTlaneControlEntity> getEntityWithSourcePlantTranTriangulation(String sourceSystem, String localPlant,
+                                                                                     String sysTransaction, String triangulationDetail) {
         if (StringUtils.isNotBlank(sourceSystem) && StringUtils.isNotBlank(localPlant) &&
                 StringUtils.isNotBlank(sysTransaction) && StringUtils.isNotBlank(triangulationDetail)) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_TLANE_CONTROL.SOURCE_SYSTEM_CRITICAL_PARAMETERS).is(sourceSystem)
@@ -48,7 +37,7 @@ public class PlanCnsTlaneControlDaoImpl extends CommonDaoImpl {
                     .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIANGULATION_DETAIL).is(triangulationDetail)
                     .toQueryString();
 
-            return queryForObject(IConstant.REGION.PLAN_CNS_TLANE_CONTROL, queryString, PlanCnsTlaneControlEntity.class);
+            return queryForList(IConstant.REGION.PLAN_CNS_TLANE_CONTROL, queryString, PlanCnsTlaneControlEntity.class);
         }
         return null;
     }

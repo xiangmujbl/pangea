@@ -1,5 +1,7 @@
 package com.jnj.pangea.omp.gdm_stock.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
@@ -57,8 +59,19 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
                 throw new SkipRecordException("PR5");
             }
 
-            // determine the productId, locationId and stockId
+            // determine the productId - reject if one can't be determined
             String productId = getProductId(edmPurchaseRequisitionV1Entity);
+            if (StringUtils.isBlank(productId)) {
+                // reject this record
+                ResultObject resultObject = new ResultObject();
+                resultObject.setFailData(new FailData(IConstant.FAILED.FUNCTIONAL_AREA.SP,
+                        "OMPGdmStockPurchaseRequisition", "PR10",
+                        "Product ID could not be determined", edmPurchaseRequisitionV1Entity.getSourceSystem(),
+                        edmPurchaseRequisitionV1Entity.getPrLineNbr(), edmPurchaseRequisitionV1Entity.getPrNum()));
+                return resultObject;
+            }
+
+
             String localPlant = getLocalPlant(edmPurchaseRequisitionV1Entity);
             String locationId = edmPurchaseRequisitionV1Entity.getSourceSystem() + "_" + localPlant;
             String stockId = productId + "/" + locationId + "/" + edmPurchaseRequisitionV1Entity.getPrNum() + "/" +
@@ -73,7 +86,9 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getSuplPlntCd())) {
                 oMPGdmStockBo.setInventoryLinkGroupId(stockId);
             }
-            oMPGdmStockBo.setVendorId(edmPurchaseRequisitionV1Entity.getLocalFixedVendor());
+            // PR20
+            oMPGdmStockBo.setVendorId(StringUtils.stripStart(edmPurchaseRequisitionV1Entity.getLocalFixedVendor(),
+                    "0"));
             oMPGdmStockBo.setProcessId(getProcessId(productId, locationId, edmPurchaseRequisitionV1Entity));
             oMPGdmStockBo.setProcessTypeId(getProcessTypeId(edmPurchaseRequisitionV1Entity));
             oMPGdmStockBo.setLocationId(getLocationId(localPlant, edmPurchaseRequisitionV1Entity));
@@ -81,30 +96,36 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             checkProductIdValid(localPlant, edmPurchaseRequisitionV1Entity);
             oMPGdmStockBo.setProductId(productId);
 
+            // PR11
             try {
                 oMPGdmStockBo.setQuantity(String.valueOf(Double.parseDouble(edmPurchaseRequisitionV1Entity.getPrLineQty()) -
                         Double.parseDouble(edmPurchaseRequisitionV1Entity.getLocalPOQuantity())));
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                // quantity will not be set but we continue processing the record
+                LogUtil.getCoreLog().error("PR11: Problems calculating quantity for  prLineQty: () and localPOQuantity: {}",
+                        edmPurchaseRequisitionV1Entity.getPrLineQty(), edmPurchaseRequisitionV1Entity.getLocalPOQuantity());
             }
 
-            // PR12 && PR13
-            if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getNeedByDt()) ||
-                    (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()))) {
+            // PR12
+            Date needByDate = null;
+            if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getNeedByDt())) {
                 try {
-                    String validDateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
-                    SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-                    SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
-                    Date dReceivedDate = sdfFrom.parse(validDateToFormat);
-                    String receivedDateConverted = sdfTo.format(dReceivedDate) + IConstant.VALUE.HH_NN_SS_ZERO;
-                    oMPGdmStockBo.setReceiptDate(receivedDateConverted);
+                    needByDate = DateUtils.stringToDate(edmPurchaseRequisitionV1Entity.getNeedByDt(), DateUtils.F_yyyyMMdd);
+                    String needByDateString = DateUtils.dateToString(needByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE);
+                    oMPGdmStockBo.setReceiptDate(needByDateString);
+                } catch (Exception e) {
+                    LogUtil.getCoreLog().error("PR12: Problems formatting receipt date for input: {}", edmPurchaseRequisitionV1Entity.getNeedByDt());
+                }
+            }
 
-                    Date adjustedNeedByDate = DateUtils.offsetDate(dReceivedDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
-                    if (null != adjustedNeedByDate) {
-                        oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+            // PR13
+            if (needByDate != null && StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays())) {
+                try {
+                    Date adjustedNeedByDate = DateUtils.offsetDate(needByDate, Integer.parseInt(edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays()));
+                    oMPGdmStockBo.setStartDate(DateUtils.dateToString(adjustedNeedByDate, DateUtils.yyyy_MM_dd_HHmmss_TRUE));
+                } catch (Exception e) {
+                    LogUtil.getCoreLog().error("PR13: Problems calculating start date for needByDate: () and lead time: {}",
+                            needByDate, edmPurchaseRequisitionV1Entity.getNeedByDt());
                 }
             }
 
@@ -147,8 +168,10 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             // if we don't find 1 match skip this record
             throw new SkipRecordException("PR1");
         }
-
-        if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
+        if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode()) &&
+                StringUtils.isBlank(edmMaterialGlobalV1Entity.getMaterialNumber())) {
+            productId = null;
+        } else if (StringUtils.isBlank(edmMaterialGlobalV1Entity.getPrimaryPlanningCode())) {
             productId = edmMaterialGlobalV1Entity.getMaterialNumber();
         } else {
             productId = edmMaterialGlobalV1Entity.getPrimaryPlanningCode();
@@ -174,26 +197,22 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             throw new SkipRecordException("PR8.1");
         }
 
-        List<PlanCnsTlaneControlEntity> matchingEntities = planCnsTlaneControlDao.getMatchingEntities(
-                edmPurchaseRequisitionV1Entity.getSourceSystem(), localPlant);
-        if (matchingEntities == null || matchingEntities.size() < 1) {
-            // skip the record if we don't find any matching records in cns_tlane_control
-            throw new SkipRecordException("PR8.2");
-        }
-
-        matchingEntities = planCnsTlaneControlDao.getMatchingEntities(edmPurchaseRequisitionV1Entity.getSourceSystem(),
-                localPlant, PURCHASE_ORDER, IConstant.VALUE.YES);
-        if (matchingEntities != null && matchingEntities.size() > 0) {
-            List<PlanCnsTlaneControlTriangulationEntity> triangEntries = planCnsTlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(
-                    matchingEntities.get(0).getSequenceNumber(),
-                    matchingEntities.get(0).getTlaneName());
-            int maxSequence = 0;
-            for (PlanCnsTlaneControlTriangulationEntity entity : triangEntries) {
-                int thisSequence = Integer.parseInt(entity.getSequenceNumber());
-                if (thisSequence > maxSequence) {
-                    maxSequence = thisSequence;
-                    localPlant = StringUtils.remove(entity.getDestinatonLocation(),
-                            edmPurchaseRequisitionV1Entity.getSourceSystem() + "_");
+        int maxSequence = 0;
+        List<PlanCnsTlaneControlEntity> matchingEntities = planCnsTlaneControlDao.getEntityWithSourcePlantTranTriangulation(
+                edmPurchaseRequisitionV1Entity.getSourceSystem(), localPlant, PURCHASE_ORDER, IConstant.VALUE.YES);
+        if (matchingEntities != null && !matchingEntities.isEmpty()) {
+            for (PlanCnsTlaneControlEntity controlEntity : matchingEntities) {
+                List<PlanCnsTlaneControlTriangulationEntity> triangEntries =
+                        planCnsTlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(
+                                controlEntity.getSequenceNumber(),
+                                controlEntity.getTlaneName());
+                for (PlanCnsTlaneControlTriangulationEntity triangulationEntity : triangEntries) {
+                    int thisSequence = Integer.parseInt(triangulationEntity.getStepNumber());
+                    if (thisSequence > maxSequence) {
+                        maxSequence = thisSequence;
+                        localPlant = StringUtils.remove(triangulationEntity.getDestinatonLocation(),
+                                edmPurchaseRequisitionV1Entity.getSourceSystem() + "_");
+                    }
                 }
             }
         }
@@ -215,7 +234,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             return edmPurchaseRequisitionV1Entity.getSourceSystem() + "_" + localPlant;
         } else {
             // skip the record if we don't find a good match in plan_v1
-            throw new SkipRecordException("PR8.3");
+            throw new SkipRecordException("PR8.2");
         }
     }
 
@@ -240,7 +259,8 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
             processId += IConstant.VALUE.DEFAULT;
         } else {
             processId = "SU/" + productId + "/" + locationId + "/" +
-                    edmPurchaseRequisitionV1Entity.getLocalFixedVendor() + "/" + IConstant.VALUE.DEFAULT;
+                    StringUtils.stripStart(edmPurchaseRequisitionV1Entity.getLocalFixedVendor(), "0") + "/" +
+                    IConstant.VALUE.DEFAULT;
         }
         return processId;
     }
@@ -311,12 +331,20 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
      * @throws SkipRecordException skip the record if no/bad match
      */
     private void checkPlanObjectFilterValid(String localPlant, EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity) throws SkipRecordException {
+        if (StringUtils.isNotBlank(edmPurchaseRequisitionV1Entity.getPrClseInd())) {
+            // we skip if this is set to anything
+            throw new SkipRecordException("PR6.1");
+        }
+        if (StringUtils.isBlank(edmPurchaseRequisitionV1Entity.getPrTypeCd())) {
+            // the following query will fail if this blank/not set, so we skip anyway
+            throw new SkipRecordException("PR6.2");
+        }
         PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
                 IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
                 edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
                 "plntCd", localPlant, "prTypeCd", IConstant.VALUE.INCLUSION);
         if (planObjectFilterEntity == null) {
-            throw new SkipRecordException("PR6");
+            throw new SkipRecordException("PR6.3");
         }
     }
 }
