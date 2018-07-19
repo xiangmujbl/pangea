@@ -2,7 +2,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.RegionsConstant;
+ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMatlProdVersnEntity;
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
+
+    public static final String SRCSYSCD = "srcSysCd";
+    public static final String PLNTCD = "plntCd";
+    public static final String MATLNUM = "matlNum";
+    public static final String ALTBOMNUM = "altBomNum";
+
+    public static final String MATL_PROD_VERSN_SRCSYSCD = "srcSysCd";
+    public static final String MATL_PROD_VERSN_MATLNUM = "matlNum";
+    public static final String MATL_PROD_VERSN_PLNTCD = "plntCd";
+    public static final String MATL_PROD_VERSN_PRDNTVRSNNUM = "prdntVrsnNum";
 
     private static EDMMatlProdVersnDaoImpl instance;
 
@@ -23,12 +34,12 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
 
     public List<EDMMatlProdVersnEntity> getEntityWithFourConditions(String srcSysCd, String plantCd, String matlNum, String altBomNum) {
         if (StringUtils.isNotBlank(srcSysCd) && StringUtils.isNotBlank(plantCd) && StringUtils.isNotBlank(matlNum) && StringUtils.isNotBlank(altBomNum)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.MATL_PROD_VERSN.SRCSYSCD).is(srcSysCd)
-                    .and(IConstant.MATL_PROD_VERSN.PLNTCD).is(plantCd)
-                    .and(IConstant.MATL_PROD_VERSN.MATLNUM).is(matlNum)
-                    .and(IConstant.MATL_PROD_VERSN.ALTBOMNUM).is(altBomNum)
+            String queryString = QueryHelper.buildCriteria(SRCSYSCD).is(srcSysCd)
+                    .and(PLNTCD).is(plantCd)
+                    .and(MATLNUM).is(matlNum)
+                    .and(ALTBOMNUM).is(altBomNum)
                     .toQueryString();
-            return queryForList(IConstant.REGION.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
+            return queryForList(RegionsConstant.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
 
         }
         return null;
@@ -37,12 +48,12 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
     public List<EDMMatlProdVersnEntity> getEntityListWithFourConditions(String srcSysCd, String plantCd, String matlNum, String altBomNum) {
         List<EDMMatlProdVersnEntity> matlProdVersnEntityList = new ArrayList<>();
         if (StringUtils.isNotBlank(srcSysCd) && StringUtils.isNotBlank(plantCd) && StringUtils.isNotBlank(matlNum) && StringUtils.isNotBlank(altBomNum)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.MATL_PROD_VERSN.SRCSYSCD).is(srcSysCd)
-                    .and(IConstant.MATL_PROD_VERSN.PLNTCD).is(plantCd)
-                    .and(IConstant.MATL_PROD_VERSN.MATLNUM).is(matlNum)
-                    .and(IConstant.MATL_PROD_VERSN.ALTBOMNUM).is(altBomNum)
+            String queryString = QueryHelper.buildCriteria(SRCSYSCD).is(srcSysCd)
+                    .and(PLNTCD).is(plantCd)
+                    .and(MATLNUM).is(matlNum)
+                    .and(ALTBOMNUM).is(altBomNum)
                     .toQueryString();
-            matlProdVersnEntityList = queryForList(IConstant.REGION.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
+            matlProdVersnEntityList = queryForList(RegionsConstant.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
         }
         return matlProdVersnEntityList;
     }
@@ -51,32 +62,32 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
 
         ADFCriteria adfCriteria = QueryHelper.buildCriteria();
         if (StringUtils.isBlank(srcSysCd)) {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_SRCSYSCD).isNull());
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_SRCSYSCD).isNull());
         } else {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_SRCSYSCD).is(srcSysCd.trim()));
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_SRCSYSCD).is(srcSysCd.trim()));
         }
 
         if (StringUtils.isBlank(matlNum)) {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_MATLNUM).isNull());
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_MATLNUM).isNull());
         } else {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_MATLNUM).is(matlNum.trim()));
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_MATLNUM).is(matlNum.trim()));
         }
 
         if (StringUtils.isBlank(plntCd)) {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PLNTCD).isNull());
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_PLNTCD).isNull());
         } else {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PLNTCD).is(plntCd.trim()));
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_PLNTCD).is(plntCd.trim()));
         }
 
         if (StringUtils.isBlank(prdntVrsnNum)) {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PRDNTVRSNNUM).isNull());
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_PRDNTVRSNNUM).isNull());
         } else {
-            adfCriteria.and(QueryHelper.buildCriteria(IConstant.OMP_GDMBOMELEMENT.MATL_PROD_VERSN.FIELD_PRDNTVRSNNUM).is(prdntVrsnNum.trim()));
+            adfCriteria.and(QueryHelper.buildCriteria(MATL_PROD_VERSN_PRDNTVRSNNUM).is(prdntVrsnNum.trim()));
         }
 
         // LogUtil.getCoreLog().info("EDMMatlProdVersnDaoImpl q "+adfCriteria.toQueryString());
 
 
-        return queryForList(IConstant.REGION.EDM_MATL_PROD_VERSN, adfCriteria.toQueryString(), EDMMatlProdVersnEntity.class);
+        return queryForList(RegionsConstant.EDM_MATL_PROD_VERSN, adfCriteria.toQueryString(), EDMMatlProdVersnEntity.class);
     }
 }

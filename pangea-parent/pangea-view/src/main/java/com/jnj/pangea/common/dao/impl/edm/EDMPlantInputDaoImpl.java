@@ -1,7 +1,8 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.RegionsConstant;
+ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMPlantInputEntity;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,7 @@ public class EDMPlantInputDaoImpl extends CommonDaoImpl {
 //            return null;
 //        }
 //        String queryString = QueryHelper.buildCriteria(IConstant.EDM_PLANT_INPUT.SOURCE_SYSTEM).is(sourceSystem).and(IConstant.EDM_PLANT_INPUT.LOCAL_PLANT).is(localPlant).toQueryString();
-//        return queryForObject(IConstant.REGION.EDM_PLANT_INPUT,queryString,EDMPlantInputEntity.class);
+//        return queryForObject(RegionsConstant.EDM_PLANT_INPUT,queryString,EDMPlantInputEntity.class);
         return null;
     }
 }
