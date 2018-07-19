@@ -19,8 +19,6 @@ import com.jnj.pangea.omp.gdm_stock.bo.OMPGdmStockBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
