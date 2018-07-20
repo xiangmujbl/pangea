@@ -10,6 +10,7 @@ public class OMPGdmPLOFromErpV1Hook {
 
     public static String addDateByWorksday(String dtStr, String offset) {
         String ret = "";
+
         try{
             Date outpDt = DateUtils.stringToDate(dtStr,DateUtils.F_yyyyMMdd);
             Integer offsetDay = Integer.parseInt(offset);
