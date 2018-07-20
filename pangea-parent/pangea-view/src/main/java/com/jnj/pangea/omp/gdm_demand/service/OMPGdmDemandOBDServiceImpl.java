@@ -342,25 +342,13 @@ public class OMPGdmDemandOBDServiceImpl {
 
                 if(null != salesOrderV1Entity) {
                     //step 2
-                    PlanCnsDemGrpAsgnEntity grpAsgnEntity;
-                    KnvhEntity knvh = knvhDao.getEntityWithFourConditions(salesOrderV1Entity.getLocalShipToParty(), salesOrderV1Entity.getLocalSalesOrg(), IConstant.VALUE.A, salesOrderV1Entity.getLocalOrderCreateDt());
-                    if (null != knvh) {
-                        grpAsgnEntity = demGrpAsgnDao.getEntityWithCustomerId(knvh.getHkunnr());
-                        if (null != grpAsgnEntity && !grpAsgnEntity.getDemandGroup().isEmpty()) {
-                            return grpAsgnEntity.getDemandGroup();
-                        }
-
-                        String tempId = knvh.getHkunnr();
-                        while(null != knvh){
-                            knvh = knvhDao.getEntityWithFourConditions(tempId, salesOrderV1Entity.getLocalSalesOrg(), IConstant.VALUE.A, salesOrderV1Entity.getLocalOrderCreateDt());
-                            tempId = knvh.getHkunnr();
-                            grpAsgnEntity = demGrpAsgnDao.getEntityWithCustomerId(tempId);
-                            if (null != grpAsgnEntity && !grpAsgnEntity.getDemandGroup().isEmpty()) {
-                                return grpAsgnEntity.getDemandGroup();
-                            }
-
-                        }
-
+                    dgrp = queryKNVH(salesOrderV1Entity.getLocalShipToParty(), salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderCreateDt());
+                    if(!dgrp.isEmpty()){
+                        return dgrp;
+                    }
+                    dgrp = queryKNVH(obdHeaderEntity.getShipToCustNum(), salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderCreateDt());
+                    if(!dgrp.isEmpty()){
+                        return dgrp;
                     }
                 }
                 //raise error
@@ -392,6 +380,30 @@ public class OMPGdmDemandOBDServiceImpl {
             }
         }
 
+        return "";
+    }
+
+    private String queryKNVH(String custNum, String localSalesOrg, String localOrderCreateDt){
+        PlanCnsDemGrpAsgnEntity grpAsgnEntity;
+        KnvhEntity knvh = knvhDao.getEntityWithFourConditions(custNum, localSalesOrg, IConstant.VALUE.A, localOrderCreateDt);
+        if (null != knvh) {
+            grpAsgnEntity = demGrpAsgnDao.getEntityWithCustomerId(knvh.getHkunnr());
+            if (null != grpAsgnEntity && !grpAsgnEntity.getDemandGroup().isEmpty()) {
+                return grpAsgnEntity.getDemandGroup();
+            }
+
+            String tempId = knvh.getHkunnr();
+            while(null != knvh){
+                knvh = knvhDao.getEntityWithFourConditions(tempId, localSalesOrg, IConstant.VALUE.A, localOrderCreateDt);
+                tempId = knvh.getHkunnr();
+                grpAsgnEntity = demGrpAsgnDao.getEntityWithCustomerId(tempId);
+                if (null != grpAsgnEntity && !grpAsgnEntity.getDemandGroup().isEmpty()) {
+                    return grpAsgnEntity.getDemandGroup();
+                }
+
+            }
+
+        }
         return "";
     }
 

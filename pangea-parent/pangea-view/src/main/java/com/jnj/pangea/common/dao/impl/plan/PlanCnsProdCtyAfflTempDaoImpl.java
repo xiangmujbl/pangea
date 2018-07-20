@@ -23,7 +23,7 @@ public class PlanCnsProdCtyAfflTempDaoImpl extends CommonDaoImpl {
         if(StringUtils.isNotEmpty(country)&&StringUtils.isNotEmpty(dpParentCode)&&StringUtils.isNotEmpty(sourceSystem)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_PROD_CTY_AFFL_TEMP.SOURCE_SYSTEM).is(sourceSystem)
                     .and(IConstant.PLAN_CNS_PROD_CTY_AFFL_TEMP.COUNTRY).is(country).and(IConstant.PLAN_CNS_PROD_CTY_AFFL_TEMP.DP_PARENT_CODE).is(dpParentCode).toQueryString();
-            return queryForObject(IConstant.REGION.PLAN_CNS_PROD_CTY_AFFL_TEMP, queryString, PlanCnsProdCtyAfflTempEntity.class);
+            return queryForObject(IConstant.REGION.PLAN_CNS_PROD_CTY_AFFL, queryString, PlanCnsProdCtyAfflTempEntity.class);
 
         }
         return null;

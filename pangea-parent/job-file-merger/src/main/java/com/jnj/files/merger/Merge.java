@@ -78,11 +78,10 @@ public class Merge implements Tasklet {
                     strLine = strLine + CRLF;
                     numFlag++;
                     if (numFlag == 1) {
-                        String origHeaderRow = strLine;
                         // List<Integer> keyNum = new ArrayList<Integer>();
                         if (duplicationFlag) {
-                            if (StringUtils.isNotBlank(origHeaderRow)) {
-                                String[] origColumns = origHeaderRow.split("\t");
+                            if (StringUtils.isNotBlank(strLine)) {
+                                String[] origColumns = strLine.split("\t");
                                 for (String keyString : keyStringArray) {
                                     for (int i = 0; i < origColumns.length; i++) {
                                         if (origColumns[i].trim().equals(keyString.trim())) {
@@ -98,14 +97,14 @@ public class Merge implements Tasklet {
                         }
                     } else {
                         if (duplicationFlag) {
-                            StringBuffer keystr = new StringBuffer();
+                            StringBuilder keyStr = new StringBuilder();
                             String[] values = strLine.split("\t");
                             for (Integer num : keyNum) {
-                                keystr.append(values[num].trim());
+                                keyStr.append(values[num].trim());
                             }
-                            if (mergeKey.contains(keystr.toString()))
+                            if (mergeKey.contains(keyStr.toString()))
                                 continue;
-                            mergeKey.add(keystr.toString());
+                            mergeKey.add(keyStr.toString());
                         }
                         out.write(ByteBuffer.wrap(strLine.getBytes()));
                     }
@@ -114,7 +113,7 @@ public class Merge implements Tasklet {
             }
         }
 
-        if (this.toCompress == true) {
+        if (this.toCompress) {
             zipper(this.getOutputDirectory() + this.getOutputFileName(),
                     this.getOutputDirectory() + this.getZipFileName());
         }
@@ -123,7 +122,7 @@ public class Merge implements Tasklet {
         return RepeatStatus.FINISHED;
     }
 
-    public void zipper(String source, String zipFileName) {
+    private void zipper(String source, String zipFileName) {
 
         try {
             FileInputStream in = new FileInputStream(source);

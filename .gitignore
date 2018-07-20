@@ -29,6 +29,6 @@ pangea-parent/pangea-parent\.iws
 
 pangea-parent/pangea-view/target/
 
-*.ipr
-
 *.iws
+
+*.jar

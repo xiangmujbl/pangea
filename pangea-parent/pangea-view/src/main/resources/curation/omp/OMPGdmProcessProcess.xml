@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/mfg_order" viewRegion="/omp/gdm_process" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_process_process.controller.OMPGdmProcessProcess" writeTo="all" topic="PANGEA_omp_gdm_process_process"> 
+    <regions> 
+      <region path="/edm/mfg_order"> 
+        <columns>sourceSysCd,mfgOrdrSttsCd,mfgOrdrNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum</columns>  
+        <relations> 
+          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false"> 
+            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression> 
+          </relation>  
+          <relation path="/edm/mfg_order_itm" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/mfg_order.sourceSysCd,mfgOrdrNum=/edm/mfg_order.mfgOrdrNum</expression> 
+          </relation>  
+          <relation path="/edm/mfg_rtng_hdr" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/mfg_order.sourceSysCd,rtngTypCd=/edm/mfg_order.rtngTypCd,rtngGrpCd=/edm/mfg_order.rtngGrpCd,rtngGrpCntrNbr=/edm/mfg_order.rtngGrpCntrNum</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/mfg_order_itm"> 
+        <columns>srcSysCd,mfgOrdrNum,matlNum,plntCd,prdntVrsnNum</columns>  
+        <relations> 
+          <relation path="/edm/material_global_v1" isPrimaryKey="false"> 
+            <expression>sourceSystem=/edm/mfg_order_itm.srcSysCd,localMaterialNumber=/edm/mfg_order_itm.matlNum</expression> 
+          </relation>  
+          <relation path="/edm/matl_prod_versn" isPrimaryKey="false"> 
+            <expression>srcSysCd=/edm/mfg_order_itm.srcSysCd,matlNum=/edm/mfg_order_itm.matlNum,plntCd=/edm/mfg_order_itm.plntCd,prdntVrsnNum=/edm/mfg_order_itm.prdntVrsnNum</expression> 
+          </relation>  
+          <relation path="/plan/cns_material_plan_status" isPrimaryKey="false"> 
+            <expression>sourceSystem=/edm/mfg_order_itm.srcSysCd,localMaterialNumber=/edm/mfg_order_itm.matlNum,localPlant=/edm/mfg_order_itm.plntCd</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/cns_plan_parameter"> 
+        <columns>attribute,sourceSystem,dataObject</columns> 
+      </region>  
+      <region path="/edm/material_global_v1"> 
+        <columns>sourceSystem,localMaterialNumber,primaryPlanningCode</columns> 
+      </region>  
+      <region path="/edm/matl_prod_versn"> 
+        <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,prdVrsnDesc</columns> 
+      </region>  
+      <region path="/plan/cns_material_plan_status"> 
+        <columns>sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant</columns> 
+      </region>  
+      <region path="/edm/mfg_rtng_hdr"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtgVld_ToDt,valFromDt</columns> 
+      </region>  
+      <region path="/omp/gdm_process"> 
+        <columns>processId,active,activeOPRERP,activeSOPERP,endEff,description,ERPOrderId,label,locationId,processTypeId,productId,startEff,vendorId</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

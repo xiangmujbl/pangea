@@ -153,7 +153,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					builder.put("active", "YES");
 					builder.put("activeOPRERP", "YES");
 					builder.put("activeSOPERP", "NO");
-					builder.put("certaintyID", "");
+					builder.put("certaintyId", "");
 					builder.put("eRPOrderId", "");
 					builder.put("inventoryLinkGroupId", "");
 					builder.put("processTypeId", "");

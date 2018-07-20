@@ -1,6 +1,6 @@
-@pangea_test @AEAZ-4070
+@pangea_test @AEAZ-10638
 
-Feature:  OMPGdmProductLocationDetail-Curation AEAZ-4070
+Feature:  OMPGdmProductLocationDetail-Curation AEAZ-10638
 
   # 1. Reject record when cns_material_plan_status where spRelevant <> X and npPlanRelevant <> X (N2)
   # 2. Reject record when cns_prod_loc_attrib-sourceSystem <> cns_material_plan_status-sourceSystem (N2)
@@ -16,7 +16,7 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-4070
 
   Scenario:  Full Load consumption
 
-    And I will remove the test file on sink application "ProductLocationDetail.tsv"
+    And I will remove the test file on sink application "GDMProductLocationDetail.tsv"
 
     Given I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
       | sourceSystem | localMaterialNumber | localPlant | materialNumber | localParentCode    | ppc  | active | dpRelevant | spRelevant | parentActive | noPlanRelevant |
@@ -58,14 +58,14 @@ Feature:  OMPGdmProductLocationDetail-Curation AEAZ-4070
 
     When I submit task with xml file "xml/omp/OMPGdmProductLocationDetail.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "ProductLocationDetail.tsv"
+    Then A file is found on sink application with name "GDMProductLocationDetail.tsv"
 
-    And I check file data for filename "ProductLocationDetail.tsv" by keyFields "productLocationDetailId"
+    And I check file data for filename "GDMProductLocationDetail.tsv" by keyFields "productLocationDetailId"
       | unit | comments | productLocationDetailId           | productLocationId      | name   | description | CLASS | value  | activeOPRERP | activeSOPERP |
-      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB1 | EM9999-CONS_LATAM_BR19 | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
-      |      |          | EM9999-CONS_LATAM_BR19/PGA/ATTRB2 | EM9999-CONS_LATAM_BR19 | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
-      |      |          | 9862-CONS_LATAM_EC01/PGA/ATTRB1   | 9862-CONS_LATAM_EC01   | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
-      |      |          | 9862-CONS_LATAM_EC01/PGA/ATTRB2   | 9862-CONS_LATAM_EC01   | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
+      |      |          | EM9999/CONS_LATAM_BR19/PGA/ATTRB1 | EM9999/CONS_LATAM_BR19 | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
+      |      |          | EM9999/CONS_LATAM_BR19/PGA/ATTRB2 | EM9999/CONS_LATAM_BR19 | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
+      |      |          | 9862/CONS_LATAM_EC01/PGA/ATTRB1   | 9862/CONS_LATAM_EC01   | ATTRB1 | Pangea      | PGA   | VALUE1 | YES          | NO           |
+      |      |          | 9862/CONS_LATAM_EC01/PGA/ATTRB2   | 9862/CONS_LATAM_EC01   | ATTRB2 | Pangea      | PGA   | VALUE2 | YES          | NO           |
 
     Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID                 | errorCode | sourceSystem | businessArea | key1       | key2               | key3 | key4 | key5 | errorValue                                                  |
