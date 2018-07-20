@@ -1,5 +1,5 @@
 @pangea_test @AEAZ-8307
-Feature:  GDMLFU-AEAZ-8307
+Feature:  E.2.1.6 GDMLFU - Consumptionn
 
   As a Data user,
   I want EDG to create GDM file for GDMLFU and send to OMP
@@ -27,7 +27,7 @@ Feature:  GDMLFU-AEAZ-8307
 
     And I will remove all data with region "/edm/jnj_calendar_v1"
 
-
+    And I will remove the test file on sink application "GDMLFU.tsv"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
@@ -112,8 +112,8 @@ Feature:  GDMLFU-AEAZ-8307
 #    Then A file is found on sink application with name "GDMLFU.tsv"
 
 #    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId"
-    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId"
-      | lfuId | countryId | currencyId | dueDate | fromDueDate | productId | value | volume |
+    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId,aggregationId"
+      | lfuId | aggregationId | currencyId | dueDate | fromDueDate  | value | volume |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
@@ -201,8 +201,8 @@ Feature:  GDMLFU-AEAZ-8307
 #    Then A file is found on sink application with name "GDMLFU.tsv"
 
 #    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId"
-    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId"
-      | lfuId | countryId | currencyId | dueDate | fromDueDate | productId | value | volume |
+    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId,aggregationId"
+      | lfuId  | currencyId | dueDate | fromDueDate  | value | volume |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
 
@@ -212,8 +212,6 @@ Feature:  GDMLFU-AEAZ-8307
 
   @Scenario3
   Scenario:  both  found record in cns_fin_plan_qty and  cns_fin_plan_val  ,same localMaterialNumber output once
-
-    And I will remove the test file on sink application "GDMLFU.tsv"
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | localBaseUom |
@@ -295,7 +293,7 @@ Feature:  GDMLFU-AEAZ-8307
 
     Then A file is found on sink application with name "GDMLFU.tsv"
 
-    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId"
+    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId,aggregationId"
 #    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId"
       | lfuId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value   | volume |
       | LA_LDPC03-2018/01/01 00:00:00 | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA_LDPC03-AT033 | 50.000  | 1500   |
@@ -313,8 +311,6 @@ Feature:  GDMLFU-AEAZ-8307
 
   @Scenario4
   Scenario:  Aggrgeate Value and Quantity
-
-    And I will remove the test file on sink application "GDMLFU.tsv"
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | localBaseUom |
@@ -400,7 +396,7 @@ Feature:  GDMLFU-AEAZ-8307
 
     Then A file is found on sink application with name "GDMLFU.tsv"
 
-    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId"
+    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId,aggregationId"
 #    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId"
       | lfuId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value    | volume |
       | LA_LDPC03-2018/01/01 00:00:00 | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA_LDPC03-AT033 | 450.000  | 1450   |
@@ -409,8 +405,6 @@ Feature:  GDMLFU-AEAZ-8307
 
   @Scenario5
   Scenario: COUNTRYID  If mapping with country_v1 and no record found, reject the the record and raise error "country does not exist in edm country"  --T6
-
-    And I will remove the test file on sink application "GDMLFU.tsv"
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | localBaseUom |
@@ -486,7 +480,7 @@ Feature:  GDMLFU-AEAZ-8307
 
     Then A file is found on sink application with name "GDMLFU.tsv"
 
-    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId"
+    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId,aggregationId"
 #    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId"
       | lfuId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value  | volume |
       | LA_LDPC03-2018/01/01 00:00:00 | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA_LDPC03-AT033 | 50.000 | 1500   |
@@ -502,8 +496,6 @@ Feature:  GDMLFU-AEAZ-8307
 
   @Scenario6
   Scenario:  full load curation
-
-    And I will remove the test file on sink application "GDMLFU.tsv"
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
       | sourceSystem | localMaterialNumber | localDpParentCode | localBaseUom |
@@ -580,7 +572,7 @@ Feature:  GDMLFU-AEAZ-8307
 
     Then A file is found on sink application with name "GDMLFU.tsv"
 
-    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId"
+    Then I check file data for filename "GDMLFU.tsv" by keyFields "lfuId,aggregationId"
 #    Then I check region data "/omp/gdm_lfu" by keyFields "lfuId"
       | lfuId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value   | volume |
       | LA_LDPC03-2018/01/01 00:00:00 | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA_LDPC03-AT033 | 50.000  | 1500   |
@@ -607,3 +599,20 @@ Feature:  GDMLFU-AEAZ-8307
 
     And I will remove all data with region "/omp/gdm_lfu"
 
+    And I will remove all data with region "/edm/material_global_v1"
+
+    And I will remove all data with region "/omp/plan/cns_fin_plan_qty"
+
+    And I will remove all data with region "/omp/cns_fin_plan_val"
+
+    And I will remove all data with region "/edm/material_auom_v1"
+
+    And I will remove all data with region "/edm/country_v1"
+
+    And I will remove all data with region "/edm/currency_v1"
+
+    And I will remove all data with region "/plan/cns_plan_parameter"
+
+    And I will remove all data with region "/edm/jnj_calendar_v1"
+
+    And I will remove the test file on sink application "GDMLFU.tsv"
