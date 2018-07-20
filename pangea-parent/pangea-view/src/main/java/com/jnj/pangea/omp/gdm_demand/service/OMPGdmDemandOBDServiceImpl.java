@@ -182,7 +182,7 @@ public class OMPGdmDemandOBDServiceImpl {
             //OBD 13
             unitEntity = unitDao.getCnsPlanUnitEntityWithSourceSystemAndLocalUom(obdLineEntity.getSrcSysCd(),obdLineEntity.getBaseUnitOfMeasureCd());
             if(null != unitEntity){
-                gdmDemandBo.setUnitId(unitEntity.getLocalUom());
+                gdmDemandBo.setUnitId(unitEntity.getUnit());
             } else {
                 //reject record.
                 failData = writeFailData(IConstant.FAILED.ERROR_CODE.OBD13, "Missing Enterprise Unit", obdHeaderEntity, obdLineEntity);
