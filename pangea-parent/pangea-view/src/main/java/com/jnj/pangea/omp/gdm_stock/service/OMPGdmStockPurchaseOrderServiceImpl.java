@@ -2,7 +2,6 @@ package com.jnj.pangea.omp.gdm_stock.service;
 
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
@@ -38,6 +37,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         return instance;
     }
 
+    //DAO Impl classes for loading entities
     private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private PlanCnsPlanObjectFilterDaoImpl cnsPlanObjectFilterDao = PlanCnsPlanObjectFilterDaoImpl.getInstance();
     private EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
@@ -47,13 +47,48 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
     private PlanCnsTlaneControlDaoImpl tlaneControlDao = PlanCnsTlaneControlDaoImpl.getInstance();
     private PlanCnsTlaneControlTriangulationDaoImpl tlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
 
+    //Variables to be used across multiple rules
     private ThreadLocal<String> productId = new ThreadLocal<>();
-
     private ThreadLocal<String> locationId = new ThreadLocal<>();
-
     private ThreadLocal<String> localPlant = new ThreadLocal<>();
 
+    //BO objects to be written out
     private OMPGdmStockBo stockBo = new OMPGdmStockBo();
+
+    //String Constants for this service class
+    private static final String ZERO_ZERO = "0.0";
+    private static final String YES = "YES";
+    private static final String NO = "NO";
+    private static final String MOVEMENT = "movement";
+    private static final String TWO_NUM = "2";
+    private static final String K = "K";
+    private static final String PROJECT_ONE_DEV = "Project_One";
+    private static final String UNDERLINE = "_";
+    private static final String BACKSLASH = "/";
+    private static final String EMPTY = "";
+    private static final String X = "X";
+    private static final String DEFAULTSM = "Default";
+    private static final String F = "F";
+    private static final String BE = "BE";
+    private static final String LE = "LE";
+    private static final String L = "L";
+    private static final String PURCHASE_ORDER_OA = "purchase_order_oa";
+    private static final String PLNTCD = "plntCd";
+    private static final String PO_TYPE_CD = "poTypeCd";
+    private static final String PRCHSNG_ORG_NUM = "prchsngOrgNum";
+    private static final String YYYYMMDD = "yyyyMMdd";
+    private static final String YYYYMMDDBS = "yyyy/MM/dd";
+    private static final String HH_NN_SS_ZERO = " 00:00:00";
+    private static final String NB = "NB";
+    private static final String THREE_NUM = "3";
+    private static final String ZLA = "ZLA";
+    private static final String ZNB = "ZNB";
+    private static final String SU = "SU";
+    private static final String TR = "TR";
+    private static final String UB = "UB";
+    private static final String VENDOR_TRANSPORT = "VendorTransport";
+    private static final String INTERNAL_TRANSPORT = "InternalTransport";
+    private static final String EXTERNAL_TRANSPORT = "ExternalTransport";
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
@@ -68,21 +103,21 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         stockBo.setVendorId(purchaseOrderOAV1Entity.getSupNum());
 
         //PO2
-        stockBo.setActive(IConstant.VALUE.YES);
-        stockBo.setActiveOPRERP(IConstant.VALUE.YES);
+        stockBo.setActive(YES);
+        stockBo.setActiveOPRERP(YES);
         //PO14
-        stockBo.setActiveSOPERP(IConstant.VALUE.NO);
+        stockBo.setActiveSOPERP(NO);
         //PO4
         stockBo.setBatchId("");
         //PO16
-        stockBo.setBlockedQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setQualityQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setRestrictedQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setReturnsQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setTransferQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setUnrestrictedQuantity(IConstant.VALUE.ZEROZERO);
+        stockBo.setBlockedQuantity(ZERO_ZERO);
+        stockBo.setQualityQuantity(ZERO_ZERO);
+        stockBo.setRestrictedQuantity(ZERO_ZERO);
+        stockBo.setReturnsQuantity(ZERO_ZERO);
+        stockBo.setTransferQuantity(ZERO_ZERO);
+        stockBo.setUnrestrictedQuantity(ZERO_ZERO);
         //PO13
-        stockBo.setStockType(IConstant.VALUE.MOVEMENT);
+        stockBo.setStockType(MOVEMENT);
         //PO20
         stockBo.setTransitDate("1980/01/01 00:00:00");
 
@@ -124,10 +159,10 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         stockBo.setErpOrderId(purchaseOrderOAV1Entity.getPoNum());
 
         //PO8
-        if(purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.TWO_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.K)) {
-            stockBo.setConsignment(IConstant.VALUE.YES);
+        if(purchaseOrderOAV1Entity.getLineItemTypeCd().equals(TWO_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(K)) {
+            stockBo.setConsignment(YES);
         } else{
-            stockBo.setConsignment(IConstant.VALUE.NO);
+            stockBo.setConsignment(NO);
         }
 
         //PO9
@@ -184,7 +219,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * @return boolean for skip validation
      */
     private boolean po7Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
-        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(IConstant.VALUE.PROJECT_ONE_DEV, purchaseOrderOAV1Entity.getSourceSystem());
+        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(PROJECT_ONE_DEV, purchaseOrderOAV1Entity.getSourceSystem());
         if(sourceSystemEntity == null){
             return false;
         }
@@ -192,18 +227,18 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
 
         List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(purchaseOrderOAV1Entity.getSourceSystem());
         for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
-            if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(IConstant.VALUE.YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("Purchase Order")) {
+            if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("Purchase Order")) {
                 List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSeqNumberTlaneName(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
                 if(triangulationEntities != null) {
                     PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
-                    localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+IConstant.VALUE.UNDERLINE,IConstant.VALUE.EMPTY));
+                    localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+UNDERLINE,EMPTY));
                 }
             }
         }
         //Planning relevancy check
         EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(purchaseOrderOAV1Entity.getSourceSystem(), localPlant.get());
-        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(IConstant.VALUE.X)){
-            stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem()+IConstant.VALUE.UNDERLINE+localPlant.get());
+        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(X)){
+            stockBo.setLocationId(purchaseOrderOAV1Entity.getSourceSystem()+UNDERLINE+localPlant.get());
             return true;
         }
         return false;
@@ -240,14 +275,14 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         }
 
         //B
-        locationId.set(purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + localPlant.get());
+        locationId.set(purchaseOrderOAV1Entity.getSourceSystem() + UNDERLINE + localPlant.get());
 
 
         //C,D
         if(purchaseOrderOAV1Entity.getDelvSchedCntNbr().isEmpty()) {
-            stockBo.setStockId(productId.get() + IConstant.VALUE.BACK_SLANT + locationId.get() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getPoNum() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getPoLineNbr());
+            stockBo.setStockId(productId.get() + BACKSLASH + locationId.get() + BACKSLASH + purchaseOrderOAV1Entity.getPoNum() + BACKSLASH + purchaseOrderOAV1Entity.getPoLineNbr());
         } else{
-            stockBo.setStockId(productId.get() + IConstant.VALUE.BACK_SLANT + locationId.get() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getPoNum() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getPoLineNbr() + IConstant.VALUE.BACK_SLANT +purchaseOrderOAV1Entity.getDelvSchedCntNbr());
+            stockBo.setStockId(productId.get() + BACKSLASH + locationId.get() + BACKSLASH + purchaseOrderOAV1Entity.getPoNum() + BACKSLASH + purchaseOrderOAV1Entity.getPoLineNbr() + BACKSLASH +purchaseOrderOAV1Entity.getDelvSchedCntNbr());
         }
     }
 
@@ -257,10 +292,10 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * @param purchaseOrderOAV1Entity main data region
      */
     private void po5Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
-        if(purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.F)){
-            stockBo.setCertaintyId(IConstant.VALUE.BE);
-        } else if (purchaseOrderOAV1Entity.getPoCatTypeCd().equals(IConstant.VALUE.L)) {
-            stockBo.setCertaintyId(IConstant.VALUE.LE);
+        if(purchaseOrderOAV1Entity.getPoCatTypeCd().equals(F)){
+            stockBo.setCertaintyId(BE);
+        } else if (purchaseOrderOAV1Entity.getPoCatTypeCd().equals(L)) {
+            stockBo.setCertaintyId(LE);
         }
     }
 
@@ -272,32 +307,32 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      */
     private PlanCnsPlanObjectFilterEntity getFilterObject(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         PlanCnsPlanObjectFilterEntity cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
+                PURCHASE_ORDER_OA,
                 purchaseOrderOAV1Entity.getSourceSystem(),
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PLNTCD,
+                PLNTCD,
                 localPlant.get(),
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
+                PO_TYPE_CD,
                 purchaseOrderOAV1Entity.getPoTypeCd());
         if(cnsPlanObjectFilterEntity != null) {
             return cnsPlanObjectFilterEntity;
         }
         cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
+                PURCHASE_ORDER_OA,
                 purchaseOrderOAV1Entity.getSourceSystem(),
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PRCHSNG_ORG_NUM,
+                PRCHSNG_ORG_NUM,
                 purchaseOrderOAV1Entity.getPrchsngOrgNum(),
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
+                PO_TYPE_CD,
                 purchaseOrderOAV1Entity.getPrchsngOrgNum());
         if(cnsPlanObjectFilterEntity != null) {
             return cnsPlanObjectFilterEntity;
         }
 
         cnsPlanObjectFilterEntity = cnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemAndSourceObjectAttribute1AndValue1Attribute2Value2(
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PURCHASE_ORDER_OA,
+                PURCHASE_ORDER_OA,
                 purchaseOrderOAV1Entity.getSourceSystem(),
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PLNTCD,
+                PLNTCD,
                 localPlant.get(),
-                IConstant.EDM_PURCHASE_ORDER_OA_V1.PO_TYPE_CD,
+                PRCHSNG_ORG_NUM,
                 purchaseOrderOAV1Entity.getPrchsngOrgNum());
 
         return cnsPlanObjectFilterEntity;
@@ -387,16 +422,16 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * @param localDelvDate date String from purchaseOrder-localDelvDate
      */
     private void po11Rule(String localDelvDate){
-        SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-        SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
-        String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
+        SimpleDateFormat sdfFrom = new SimpleDateFormat(YYYYMMDD);
+        SimpleDateFormat sdfTo = new SimpleDateFormat(YYYYMMDDBS);
+        String defaultTime = HH_NN_SS_ZERO;
         try {
             Date from = sdfFrom.parse(localDelvDate);
             String to = sdfTo.format(from);
             String newDate = to + defaultTime;
             stockBo.setReceiptDate(newDate);
         } catch (ParseException e) {
-            stockBo.setReceiptDate(IConstant.VALUE.EMPTY);
+            stockBo.setReceiptDate(EMPTY);
             LogUtil.getCoreLog().error("PO11 date parse error OMPGdmStockPurchaseOrderServiceImpl" + e.toString());
         }
     }
@@ -408,9 +443,9 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * @param leadTime number of days to add to the date from purchaseOrder-grLeadTimeDays
      */
     private void po12Rule(String localDelvDate, String leadTime){
-        SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-        SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
-        String defaultTime = IConstant.VALUE.HH_NN_SS_ZERO;
+        SimpleDateFormat sdfFrom = new SimpleDateFormat(YYYYMMDD);
+        SimpleDateFormat sdfTo = new SimpleDateFormat(YYYYMMDDBS);
+        String defaultTime = HH_NN_SS_ZERO;
 
         try {
             String dateToFormat = localDelvDate;
@@ -430,7 +465,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             String deliveryDate = sdfTo.format(d2) + defaultTime;
             stockBo.setStartDate(deliveryDate);
         } catch (ParseException e) {
-            stockBo.setStartDate(IConstant.VALUE.EMPTY);
+            stockBo.setStartDate(EMPTY);
             LogUtil.getCoreLog().error("PO12 date parse error OMPGdmStockPurchaseOrderServiceImpl" + e.toString());
         }
     }
@@ -441,17 +476,17 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * @param purchaseOrderOAV1Entity main data region
      */
     private void po17Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
-        if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
-            if (purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.THREE_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(IConstant.VALUE.L)) {
+        if (purchaseOrderOAV1Entity.getPoTypeCd().equals(NB)) {
+            if (purchaseOrderOAV1Entity.getLineItemTypeCd().equals(THREE_NUM) || purchaseOrderOAV1Entity.getLineItemTypeCd().equals(L)) {
                 stockBo.setInventoryLinkGroupId(stockBo.getStockId());
             } else {
-                stockBo.setInventoryLinkGroupId(IConstant.VALUE.EMPTY);
+                stockBo.setInventoryLinkGroupId(EMPTY);
             }
         } else {
-            if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.UB) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZNB)) {
+            if (purchaseOrderOAV1Entity.getPoTypeCd().equals(UB) || purchaseOrderOAV1Entity.getPoTypeCd().equals(ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(ZNB)) {
                 stockBo.setInventoryLinkGroupId(stockBo.getStockId());
             } else {
-                stockBo.setInventoryLinkGroupId(IConstant.VALUE.EMPTY);
+                stockBo.setInventoryLinkGroupId(EMPTY);
             }
         }
     }
@@ -463,9 +498,9 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      */
     private void po18Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
         if (purchaseOrderOAV1Entity.getSuplPlntCd().isEmpty()) {
-            stockBo.setProcessId(IConstant.VALUE.SU + IConstant.VALUE.BACK_SLANT + productId.get() + IConstant.VALUE.BACK_SLANT + locationId.get() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSupNum() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
+            stockBo.setProcessId(SU + BACKSLASH + productId.get() + BACKSLASH + locationId.get() + BACKSLASH + purchaseOrderOAV1Entity.getSupNum() + BACKSLASH + DEFAULTSM);
         } else {
-            stockBo.setProcessId(IConstant.VALUE.TR + IConstant.VALUE.BACK_SLANT + productId.get() + IConstant.VALUE.BACK_SLANT + locationId.get() + IConstant.VALUE.BACK_SLANT + purchaseOrderOAV1Entity.getSourceSystem() + IConstant.VALUE.UNDERLINE + purchaseOrderOAV1Entity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + IConstant.VALUE.DEFAULTSM);
+            stockBo.setProcessId(TR + BACKSLASH + productId.get() + BACKSLASH + locationId.get() + BACKSLASH + purchaseOrderOAV1Entity.getSourceSystem() + UNDERLINE + purchaseOrderOAV1Entity.getSuplPlntCd() + BACKSLASH + DEFAULTSM);
         }
     }
 
@@ -475,14 +510,14 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
      * @param purchaseOrderOAV1Entity main data region
      */
     private void po19Rule(EDMPurchaseOrderOAV1Entity purchaseOrderOAV1Entity){
-        if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.NB)) {
-            stockBo.setProcessTypeId(IConstant.VALUE.VENDOR_TRANSPORT);
-        } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.UB)) {
-            stockBo.setProcessTypeId(IConstant.VALUE.INTERNAL_TRANSPORT);
-        } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(IConstant.VALUE.ZNB)) {
-            stockBo.setProcessTypeId(IConstant.VALUE.EXTERNAL_TRANSPORT);
+        if (purchaseOrderOAV1Entity.getPoTypeCd().equals(NB)) {
+            stockBo.setProcessTypeId(VENDOR_TRANSPORT);
+        } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(UB)) {
+            stockBo.setProcessTypeId(INTERNAL_TRANSPORT);
+        } else if (purchaseOrderOAV1Entity.getPoTypeCd().equals(ZLA) || purchaseOrderOAV1Entity.getPoTypeCd().equals(ZNB)) {
+            stockBo.setProcessTypeId(EXTERNAL_TRANSPORT);
         } else {
-            stockBo.setProcessTypeId(IConstant.VALUE.EMPTY);
+            stockBo.setProcessTypeId(EMPTY);
         }
     }
 
@@ -515,7 +550,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         if(cnsMaterialPlanStatusEntity.getSpRelevant() == null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() == null ){
             return false;
         } else{
-            return (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)) || (cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X));
+            return (cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(X)) || (cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(X));
         }
     }
 
