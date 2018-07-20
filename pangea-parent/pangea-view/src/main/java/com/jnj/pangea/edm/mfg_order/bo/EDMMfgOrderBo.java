@@ -5,6 +5,7 @@ import com.jnj.pangea.common.BaseBo;
 
 public class EDMMfgOrderBo extends BaseBo {
 
+
     private String sourceSysCd;
     private String mfgOrdrNum;
     private String mfgOrdrTypCd;

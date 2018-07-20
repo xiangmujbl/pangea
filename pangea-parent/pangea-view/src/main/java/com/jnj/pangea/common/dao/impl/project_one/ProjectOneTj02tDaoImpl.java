@@ -20,7 +20,8 @@ public class ProjectOneTj02tDaoImpl extends CommonDaoImpl {
 
     public List<Tj02tEntity> getEntityWithStat(String stat) {
 
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_TJ02T.SPRAS).is(IConstant.VALUE.SPRAS_EN)
+
+        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_TJ02T.SPRAS).is(IConstant.VALUE.EN)
                 .and(IConstant.PROJECT_ONE_TJ02T.ISTAT).is(stat).toQueryString();
         return queryForList(IConstant.REGION.PROJECT_ONE_TJ02T, queryString  , Tj02tEntity.class);
     }

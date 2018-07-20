@@ -3,6 +3,7 @@
               executionClassName="com.jnj.pangea.edm.mfg_order.controller.EDMMfgOrderController">
         <regions>
 
+
             <region path="/project_one/afko">
                 <columns>
                     aufnr,mandt,gstrp,gsuzp,gltrp,gluzp,gstrs,gsups,gltrs,glups,ftrms,gstri,gsuzi,gltri,getri,geuzi,ftrmp,ftrmi,rsnum,plnty,plnnr,plnal,stlty,stlnr,stlal,dispo,aufpl,fevor,igmng,iasmg

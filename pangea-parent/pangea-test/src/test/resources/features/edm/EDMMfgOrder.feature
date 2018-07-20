@@ -41,6 +41,7 @@ Feature: EDMMfgOrder AEAZ-4249
     And I wait "/project_one/tj02t" Async Queue complete
 
 
+
     When I submit task with xml file "xml/edm/EDMMfgOrder.xml" and execute file "jar/pangea-view.jar"
 
     Then I check region data "/edm/mfg_order" by keyFields "sourceSysCd,mfgOrdrNum"

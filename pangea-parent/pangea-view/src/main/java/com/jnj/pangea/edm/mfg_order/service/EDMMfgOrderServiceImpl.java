@@ -36,6 +36,7 @@ public class EDMMfgOrderServiceImpl implements ICommonService {
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
 
+
         ResultObject resultObject = new ResultObject();
         AfkoEntity afkoEntity = (AfkoEntity) o;
 
