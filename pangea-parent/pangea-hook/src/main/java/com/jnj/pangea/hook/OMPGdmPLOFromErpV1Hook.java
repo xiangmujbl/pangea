@@ -9,7 +9,6 @@ import java.util.Date;
 public class OMPGdmPLOFromErpV1Hook {
 
     public static String addDateByWorksday(String dtStr, String offset) {
-        LogUtil.getCoreLog().info("addDateByWorksday>>");
         String ret = "";
         try{
             Date outpDt = DateUtils.stringToDate(dtStr,DateUtils.F_yyyyMMdd);
