@@ -45,8 +45,18 @@ public class EDMMfgOrderBo extends BaseBo {
     private String mfgOrdrSttsCd;
     private String localSystemStatus;
     private String localStatus1;
+    private String internalTimeStamp;
+    public String getInternalTimeStamp() {
+        return internalTimeStamp;
+    }
 
-    // TODO add keys
+    public void setInternalTimeStamp(String internalTimeStamp) {
+        this.internalTimeStamp = internalTimeStamp;
+    }
+
+
+
+
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
