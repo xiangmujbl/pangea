@@ -27,7 +27,9 @@ import com.jnj.pangea.common.dao.impl.plan.PlanLocMinShelfDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanUnitDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsDemGrpAsgnDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneKnvhDaoImpl;
+import com.jnj.pangea.hook.OMPGdmDemandSalesOrderHook;
 import com.jnj.pangea.omp.gdm_demand.bo.OMPGdmDemandBo;
+import org.apache.commons.lang.StringUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -313,7 +315,7 @@ public class OMPGdmDemandOBDServiceImpl {
 
     private String obd16Rule(ArrayList<PlanCnsPlanObjectFilterEntity>  filterEntities, EDMOutboundDeliveryHeaderV1Entity obdHeaderEntity, EDMSalesOrderV1Entity salesOrderV1Entity){
         boolean customerFilter = false;
-        if(filterEntities.isEmpty()) {
+        if (filterEntities.isEmpty()) {
             return "";
         }
         for(PlanCnsPlanObjectFilterEntity filterEntity : filterEntities){
@@ -331,34 +333,21 @@ public class OMPGdmDemandOBDServiceImpl {
                     break;
                 }
             }
-
         }
 
-
-        if(customerFilter) {
-            //step 1
+        if (customerFilter) {
             String dgrp = getDemandGroup(obdHeaderEntity, salesOrderV1Entity);
-            if (dgrp.isEmpty()) {
-
-                if(null != salesOrderV1Entity) {
-                    //step 2
-                    dgrp = queryKNVH(salesOrderV1Entity.getLocalShipToParty(), salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderCreateDt());
-                    if(!dgrp.isEmpty()){
-                        return dgrp;
-                    }
-                    dgrp = queryKNVH(obdHeaderEntity.getShipToCustNum(), salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderCreateDt());
-                    if(!dgrp.isEmpty()){
-                        return dgrp;
-                    }
-                }
-                //raise error
+            if (StringUtils.isEmpty(dgrp) && salesOrderV1Entity != null) {
+                // if not found there, recursive find on the KNVH region
+                dgrp = OMPGdmDemandSalesOrderHook.determineCustomerId(salesOrderV1Entity.getLocalShipToParty(),
+                        salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalOrderCreateDt());
+            }
+            if (StringUtils.isEmpty(dgrp)) {
                 return ERROR_REJECT;
-
             } else {
                 return dgrp;
             }
         }
-
         return "";
     }
 

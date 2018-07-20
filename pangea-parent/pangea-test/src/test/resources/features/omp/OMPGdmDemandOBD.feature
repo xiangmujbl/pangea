@@ -305,6 +305,6 @@ Feature: OMPGdmDemand AEAZ-6828
 
     And I will remove all data with region "/project_one/knvh"
 
-#    And I will remove all data with region "/dev/plan/edm_failed_data"
+    And I will remove all data with region "/plan/edm_failed_data"
 
     And I will remove the test file on sink application "GDMDemand.tsv"
