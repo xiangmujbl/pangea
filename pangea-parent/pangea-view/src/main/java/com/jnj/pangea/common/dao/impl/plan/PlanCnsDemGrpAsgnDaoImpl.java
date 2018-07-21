@@ -28,6 +28,15 @@ public class PlanCnsDemGrpAsgnDaoImpl extends CommonDaoImpl {
         return null;
     }
 
+    public PlanCnsDemGrpAsgnEntity getEntityWithCustomerIdAndSalesOrganization(String customerId, String salesOrg) {
+        if (null != customerId && !"".equals(customerId) &&  null!=salesOrg && !"".equals(salesOrg)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.CUSTOMER_ID).is(customerId)
+                    .and(IConstant.PLAN_CNS_DEM_GRP_ASGN.SALES_ORGANIZATION).is(salesOrg).toQueryString();
+            return queryForObject(IConstant.REGION.PLAN_CNS_DEM_GRP_ASGN, queryString, PlanCnsDemGrpAsgnEntity.class);
+        }
+        return null;
+    }
+
     public PlanCnsDemGrpAsgnEntity getEntitiesWithCustomerIdAndSalesOrganization(String customerId, String salesOrg) {
         if (StringUtils.isNotEmpty(customerId) &&  StringUtils.isNotEmpty(salesOrg)){
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_DEM_GRP_ASGN.CUSTOMER_ID).is(customerId)

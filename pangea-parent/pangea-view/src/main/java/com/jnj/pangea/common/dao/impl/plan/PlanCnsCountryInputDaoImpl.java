@@ -20,10 +20,10 @@ public class PlanCnsCountryInputDaoImpl extends CommonDaoImpl {
         if(StringUtils.isEmpty(sourceSystem)||StringUtils.isEmpty(localCountry)){
             return null;
         }
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_COUNTRY_INPUT.SOURCE_SYSTEM).is(sourceSystem).and(IConstant.PLAN_CNS_COUNTRY_INPUT.LOCAL_COUNTRY).is(localCountry).toQueryString();
-        PlanEdmCountryInputEntity cnsCountryInputEntity = queryForObject(IConstant.REGION.PLAN_EDM_COUNTRY_INPUT, queryString, PlanEdmCountryInputEntity.class);
-        if(cnsCountryInputEntity!=null && StringUtils.isNotBlank(cnsCountryInputEntity.getPlanningRegionId())){
-            return cnsCountryInputEntity.getPlanningRegionId();
+        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_EDM_COUNTRY_INPUT.SOURCE_SYSTEM).is(sourceSystem).and(IConstant.PLAN_EDM_COUNTRY_INPUT.LOCAL_COUNTRY).is(localCountry).toQueryString();
+        PlanEdmCountryInputEntity edmCountryInputEntity = queryForObject(IConstant.REGION.PLAN_EDM_COUNTRY_INPUT, queryString, PlanEdmCountryInputEntity.class);
+        if(edmCountryInputEntity!=null && StringUtils.isNotBlank(edmCountryInputEntity.getPlanningRegionID())){
+            return edmCountryInputEntity.getPlanningRegionID();
         }
 
         return null;

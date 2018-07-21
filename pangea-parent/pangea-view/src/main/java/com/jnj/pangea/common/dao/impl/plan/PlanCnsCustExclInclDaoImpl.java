@@ -6,6 +6,8 @@ import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsCustExclInclEntity;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 public class PlanCnsCustExclInclDaoImpl extends CommonDaoImpl {
 
     private static PlanCnsCustExclInclDaoImpl instance;
@@ -17,6 +19,15 @@ public class PlanCnsCustExclInclDaoImpl extends CommonDaoImpl {
         return instance;
     }
 
+    public List<PlanCnsCustExclInclEntity> getEntityListWithSalesOrgAndSourceSystem(String salesOrg, String sourceSystem){
+        if (StringUtils.isNotEmpty(salesOrg)){
+            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL_INCL.SALES_ORG).is(salesOrg)
+                    .and(IConstant.PLAN_CNS_CUST_EXCL_INCL.SOURCE_SYSTEM).is(sourceSystem)
+                    .toQueryString();
+            return queryForList(IConstant.REGION.PLAN_CNS_CUST_EXCL_INCL,queryString,PlanCnsCustExclInclEntity.class);
+        }
+        return null;
+    }
     public PlanCnsCustExclInclEntity getEntityWithSalesOrgIsCustomerShipTo(String salesOrg, String customerShipTo) {
         if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(customerShipTo)) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
@@ -26,7 +37,6 @@ public class PlanCnsCustExclInclDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
-
     public PlanCnsCustExclInclEntity getEntityWithSalesOrgNotCustomerShipTo(String salesOrg, String customerShipTo) {
         if (StringUtils.isNotEmpty(salesOrg) && StringUtils.isNotEmpty(customerShipTo)) {
             String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_CUST_EXCL.SALES_ORG).is(salesOrg)
