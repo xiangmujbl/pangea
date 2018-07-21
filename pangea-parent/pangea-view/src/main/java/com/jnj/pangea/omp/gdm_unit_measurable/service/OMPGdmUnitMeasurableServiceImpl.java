@@ -104,11 +104,10 @@ public class OMPGdmUnitMeasurableServiceImpl implements ICommonService {
                 // rules T4
                 if (StringUtils.isNotEmpty(unitOfMeasureV1Entity1.getRoundingDecimal())) {
                     gdmUnitMeasurableBo.setPrecision(unitOfMeasureV1Entity1.getRoundingDecimal());
-                } else {}
+                } else {
+                	gdmUnitMeasurableBo.setPrecision(cnsPlanUnitEntity.getRoundingDecimal());
+                }
             } else {
-                    gdmUnitMeasurableBo.setPrecision(cnsPlanUnitEntity.getRoundingDecimal());
-                
-
                 // rules F2
                 gdmUnitMeasurableBo.setIsoCode(IConstant.VALUE.BLANK);
                 // rules T4
