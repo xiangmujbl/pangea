@@ -281,9 +281,12 @@ Feature: OMPGdmDemand AEAZ-6828
       | YES    | NO           | YES          | NO            | 65759/CONS_LATAM_CO01/110ABC      | VJ          | 77550013   | 65759/CONS_LATAM_CO01/81156060/20   | 2006/06/28 00:00:01 | 2006/06/28 00:00:00 | 65759/CONS_LATAM_CO01/81156060/20   | CONS_LATAM_CO01 | 180                   | ProductLocationBalanced | 65759     | 10.0     | EA     |       |
       | YES    | NO           | YES          | NO            | 64790/CONS_LATAM_PE01/110ABC      | VJ          | 109001     | 64790/CONS_LATAM_PE01/81170000/10   | 2006/06/28 00:00:01 | 2006/06/28 00:00:00 | 64790/CONS_LATAM_PE01/81170000/10   | CONS_LATAM_PE01 |                       | ProductLocationBalanced | 64790     | 1000.0   | EA     |       |
 
-#    Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
-#      | errorCode | errorValue           | functionalArea | interfaceID     | key1     | key2 | key3 | key4 | key5 | sourceSystem |
-#      | OBD16     | Missing Demand Group | SP             | OMPGdmDemandOBD | 80808080 | 10   |      |      |      | CONS_LATAM   |
+    Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
+      | errorCode | errorValue           | functionalArea | interfaceID     | key1     | key2 | key3 | key4 | key5 | sourceSystem |
+      | OBD16     | Missing Demand Group | SP             | OMPGdmDemandOBD | 80808080 | 10   |      |      |      | CONS_LATAM   |
+      | OBD16     | Missing Demand Group | SP             | OMPGdmDemandOBD | 81176001 | 10   |      |      |      | CONS_LATAM   |
+      | OBD16     | Missing Demand Group | SP             | OMPGdmDemandOBD | 81179003 | 10   |      |      |      | CONS_LATAM   |
+      | OBD13     | Missing Enterprise Unit | SP             | OMPGdmDemandOBD | 81170001 | 10   |      |      |      | CONS_LATAM   |
 
     And I will remove all data with region "/edm/outbound_delivery_header_v1"
 
@@ -307,6 +310,6 @@ Feature: OMPGdmDemand AEAZ-6828
 
     And I will remove all data with region "/project_one/knvh"
 
-    And I will remove all data with region "/plan/edm_failed_data"
+    And I will remove all data with region "/dev/plan/edm_failed_data"
 
     And I will remove the test file on sink application "GDMDemand.tsv"
