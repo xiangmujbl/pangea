@@ -177,6 +177,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 								"localSourceSystem");
 					}
 					if (localSourceSystem.equals("Project_One")) {
+
 						if (StringUtils.isNotEmpty(localPlant)) {
 							List<Map.Entry<String, String>> cnsTlaneControlList  = getCnsTlaneControl(sourceSystem,
 									localPlant, triangulationDetail,
@@ -191,11 +192,10 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 									tlaneName = StringInner
 											.getString(cnsTlaneControlListMap,
 													"tlaneName");
-									if (StringUtils.isNotEmpty(sequenceNumber)
+									if (StringInner.isStringNotEmpty(sequenceNumber)
 											&& StringInner.isStringNotEmpty(tlaneName)) {
 										List<Map.Entry<String, String>> cnsTlaneControlTriangulationList = getCnsTlaneControlTriangulation(
 												sequenceNumber, tlaneName);
-										LogUtil.getCoreLog().info("---------localPlant:{}---------", localPlant);
 										if (StringInner
 												.isListNotNullWithSize(cnsTlaneControlTriangulationList)) {
 											localPlant = OMPGdmStockInventoryStocksHook
@@ -207,10 +207,10 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 						}
 					} else {
 						return false;
+
 					}
 
 					if (StringInner.isStringEmpty(localSpecialStockIndicator)) {
-
 						if (StringUtils.isNotEmpty(localPlant)) {
 							Map map3 = getPlantV1(localPlant);
 							if (map3 != null) {
@@ -379,7 +379,6 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					}
 
 					else {
-
 						return false;
 					}
 					builder.put("productId", productId);
@@ -552,7 +551,6 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 					}
 
 					else {
-
 						return false;
 					}
 					builder.put("startDate", startDate);
@@ -940,19 +938,16 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 	public List getCnsTlaneControl(String sourceSystem, String localPlant,
 								   String triangulationDetail, String trigSysTransaction) {
 
-		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria("sourceSystem")
-				.is(sourceSystem);
-		ADFCriteria adfCriteria19 = QueryHelper.buildCriteria("trigSysPlant")
-				.is(localPlant);
-		ADFCriteria adfCriteria20 = QueryHelper.buildCriteria(
-				"triangulationDetail").is(triangulationDetail);
-		ADFCriteria adfCriteria21 = QueryHelper.buildCriteria(
-				"trigSysTransaction").is(trigSysTransaction);
-		ADFCriteria groupCriteria29 = adfCriteria21.and(adfCriteria20)
-				.and(adfCriteria19).and(adfCriteria18);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("sourceSystemCriticalParameters").append(":").append(sourceSystem);
+		stringBuilder.append(" AND ");
+		stringBuilder.append("trigSysPlant").append(":").append(localPlant);
+		stringBuilder.append(" AND ");
+		stringBuilder.append("triangulationDetail").append(":").append(triangulationDetail);
+		stringBuilder.append(" AND ");
+		stringBuilder.append("trigSysTransaction").append(":\"").append(AdfLuceneHelper.keyword(trigSysTransaction)).append("\"");
 
-		ADFCriteria adfCriteria = groupCriteria29;
-		String queryStr = adfCriteria.toQueryString();
+		String queryStr = stringBuilder.toString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_tlane_control", queryStr, -1);
 		if (retList != null && retList.size() > 0) {

@@ -1,6 +1,7 @@
 package com.jnj.pangea.hook;
 
 import com.jnj.adf.client.api.JsonObject;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.hook.common.DateUtils;
 import com.jnj.pangea.hook.common.IConstant;
 import org.apache.commons.lang.StringUtils;
@@ -771,7 +772,6 @@ public class OMPGdmStockInventoryStocksHook {
 				localPlant = destinationLocation.substring(destinationLocation.length()-4, destinationLocation.length());
 			}
 		}
-
 		return localPlant;
 	}
 }
