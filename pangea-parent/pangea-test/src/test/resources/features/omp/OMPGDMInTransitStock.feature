@@ -1,5 +1,5 @@
 @pangea_test
-Feature:  AEAZ-8303
+Feature:  GDMInTransitStock AEAZ-8303
 
     @Scenario1
     Scenario: Full Load consumption
