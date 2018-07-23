@@ -11,6 +11,15 @@ import com.jnj.adf.curation.logic.ViewResultItem;
 import com.jnj.adf.grid.data.raw.RawDataBuilder;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
+import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsTlaneControlDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsTlaneControlTriangulationDaoImpl;
+import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMPurchaseRequisitionV1Entity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlTriangulationEntity;
 import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
@@ -23,6 +32,59 @@ public class OMPGdmStock2Controller implements IEventProcessor {
     private final String FAILREGION = "/plan/edm_failed_data";
 //    String stockId;
 //    String locationId;
+
+    private static final String PROJECT_ONE_DEV = "Project_One";
+    private static final String YES = "YES";
+    private static final String UNDERLINE = "_";
+    private static final String EMPTY = "";
+    private static final String X = "X";
+
+    private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
+    private PlanCnsTlaneControlDaoImpl tlaneControlDao = PlanCnsTlaneControlDaoImpl.getInstance();
+    private PlanCnsTlaneControlTriangulationDaoImpl tlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
+    private EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
+
+    private LocationBo locationBo;
+
+    ThreadLocal<String> localPlant = new ThreadLocal<>();
+
+    private PlanCnsTlaneControlTriangulationEntity findHighestStepNumber(List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities) {
+        PlanCnsTlaneControlTriangulationEntity tempEntity = triangulationEntities.get(0);
+        for (PlanCnsTlaneControlTriangulationEntity triangulationEntity : triangulationEntities) {
+            if(Integer.parseInt(triangulationEntity.getStepNumber()) > Integer.parseInt(tempEntity.getStepNumber())){
+                tempEntity = triangulationEntity;
+            }
+        }
+        return tempEntity;
+    }
+
+    private boolean plantN7(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
+        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(PROJECT_ONE_DEV, edmPurchaseRequisitionV1Entity.getSourceSystem());
+        if(sourceSystemEntity == null){
+            return false;
+        }
+        localPlant.set(edmPurchaseRequisitionV1Entity.getPlntCd());
+
+        List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(edmPurchaseRequisitionV1Entity.getSourceSystem());
+
+        for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
+            if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("purchase_order")) {
+                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
+                if(triangulationEntities != null) {
+                    PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
+                    localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+UNDERLINE,EMPTY));
+                }
+            }
+        }
+        //Planning relevancy check
+        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(edmPurchaseRequisitionV1Entity.getSourceSystem(), localPlant.get());
+        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(X)){
+            //gdmReqFromErpBo.setLocationId(edmPurchaseRequisitionV1Entity.getSourceSystem()+UNDERLINE+localPlant.get());
+            locationBo.setLocationId(edmPurchaseRequisitionV1Entity.getSourceSystem() + UNDERLINE + localPlant.get());
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public List<ViewResultItem> process(List<RawDataEvent> list) {
@@ -83,6 +145,8 @@ public class OMPGdmStock2Controller implements IEventProcessor {
 
         String primaryPlanningCode = null;
 
+        /* AEAZ-8898 change */
+        //String plntCd = String.valueOf(map.get("plntCd"));
         String plntCd = String.valueOf(map.get("plntCd"));
 
         String matlId = String.valueOf(map.get("matlId"));
