@@ -152,7 +152,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
             return resultObjectSkip; //Skip if PO6 fails
         }
 
-        if(!purchaseOrderOAV1Entity.getDelInd().isEmpty() && !purchaseOrderOAV1Entity.getDelvCmpltInd().isEmpty()) {
+        if(!purchaseOrderOAV1Entity.getDelInd().isEmpty() || !purchaseOrderOAV1Entity.getDelvCmpltInd().isEmpty()) {
             return resultObjectSkip; //Skip if delInd value is empty
         }
 
