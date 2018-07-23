@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-10294
-Feature: OMPGdmUnit AEAZ-10294
+@pangea_test @AEAZ-10877
+Feature: OMPGdmUnit AEAZ-10877
 
   Scenario: Full Load consumption for currency
     #  1. If no records found from currency_v1, skip insertion (rule E1)
@@ -11,11 +11,13 @@ Feature: OMPGdmUnit AEAZ-10294
     Given I import "/edm/currency_v1" by keyFields "localCurrency,sourceSystem"
       | localCurrency | sourceSystem | isoNumeric | currencyName | currencyCode |
       | USD           | MDDePuy      | -          | US Dollar    | USD          |
-      | AFA           | CONS_LATAM   | -          | -            |              |
+      | AFA           | CONS_LATAM   | -          | -            |          	    |
 
     And I wait "/edm/currency_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmUnitCurrency.xml" and execute file "jar/pangea-view.jar"
+    
+    And wait 5000 millisecond
 
     Then A file is found on sink application with name "GDMUnit_currency.tsv"
 
@@ -86,6 +88,8 @@ Feature: OMPGdmUnit AEAZ-10294
     And I wait "/edm/unit_of_measure_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmUnitMeasurable.xml" and execute file "jar/pangea-view.jar"
+    
+    And wait 5000 millisecond
 
     Then A file is found on sink application with name "GDMUnit_measure.tsv"
 
@@ -95,7 +99,7 @@ Feature: OMPGdmUnit AEAZ-10294
       | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each                | AAAADL  | 0         | Each                |
       | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram            | AAAADL  | 3         | KiloGram            |
       | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         | Market Control Unit | AAAADL  | 6         | Market Control Unit |
-      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL  |           | Dozen               |
+      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL  | 3         | Dozen               |
       | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL  | 3         | Kilometer           |
       | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL  | 3         | Liter               |
       | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL  | 3         | Square meter        |
@@ -127,7 +131,7 @@ Feature: OMPGdmUnit AEAZ-10294
       | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each                | AAAADL   | 0         | Each                |
       | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram            | AAAADL   | 3         | KiloGram            |
       | LA_ZUM | YES    | YES          | NO           | NO           | 1      |         | Market Control Unit | AAAADL   | 6         | Market Control Unit |
-      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL   |           | Dozen               |
+      | DZ     | YES    | NO           | YES          | NO           | 2      | DZ      | Dozen               | AAAADL   | 3         | Dozen               |
       | KM     | YES    | NO           | YES          | NO           | 2      | KMT     | Kilometer           | AAAADL   | 3         | Kilometer           |
       | L      | YES    | NO           | YES          | NO           | 2      | LTR     | Liter               | AAAADL   | 3         | Liter               |
       | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL   | 3         | Square meter        |
