@@ -705,7 +705,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 											if (map6 != null) {
 												localNumber = StringInner
 														.getString(map6,
-																"localNumber");
+																"localNumber").replaceFirst("^0*", "");
 												if (StringInner
 														.isStringNotEmpty(localNumber)) {
 													if (StringInner
