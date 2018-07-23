@@ -5,34 +5,33 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
   I want EDG to create GDM file for GDMFBP and send to OMP
   so that data can be consumed by OMP for planning
 
-  Background:delete all test data
+#  Background:delete all test data
+#
+#    Then I delete the test data
+#
+#    And I will remove all data with region "/omp/gdm_fbp"
+#
+#    And I will remove all data with region "/edm/material_global_v1"
+#
+#    And I will remove all data with region "/plan/cns_fin_plan_qty"
+#
+#    And I will remove all data with region "/plan/cns_fin_plan_val"
+#
+#    And I will remove all data with region "/edm/material_auom_v1"
+#
+#    And I will remove all data with region "/edm/country_v1"
+#
+#    And I will remove all data with region "/edm/currency_v1"
+#
+#    And I will remove all data with region "/plan/cns_plan_parameter"
+#
+#    And I will remove all data with region "/edm/jnj_calendar_v1"
+#
+#    And I will remove the test file on sink application "GDMFbp.tsv"
+#
+#    And I will remove all data with region "/plan/edm_failed_data"
 
-    Then I delete the test data
 
-    And I will remove all data with region "/omp/gdm_fbp"
-
-    And I will remove all data with region "/edm/material_global_v1"
-
-    And I will remove all data with region "/plan/cns_fin_plan_qty"
-
-    And I will remove all data with region "/plan/cns_fin_plan_val"
-
-    And I will remove all data with region "/edm/material_auom_v1"
-
-    And I will remove all data with region "/edm/country_v1"
-
-    And I will remove all data with region "/edm/currency_v1"
-
-    And I will remove all data with region "/plan/cns_plan_parameter"
-
-    And I will remove all data with region "/edm/jnj_calendar_v1"
-
-    And I will remove the test file on sink application "GDMFbp.tsv"
-
-    And I will remove all data with region "/plan/edm_failed_data"
-
-
-  @Scenario1
   Scenario: only found record in cns_fin_plan_qty skip this record
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -119,8 +118,13 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
       | J1        | DP             | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
 
+    Then I delete the test data
 
-  @Scenario2
+    And I will remove all data with region "/omp/gdm_fbp"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+
+    #And I will remove the test file on sink application "GDMFbp.tsv"
   Scenario: only found record in cns_fin_plan_val skip this record
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -210,7 +214,13 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
       | J1        | DP             | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
 
 
-  @Scenario3
+    Then I delete the test data
+
+    And I will remove all data with region "/omp/gdm_fbp"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+
+    #And I will remove the test file on sink application "GDMFbp.tsv"
   Scenario:  both  found record in cns_fin_plan_qty and  cns_fin_plan_val  ,same localMaterialNumber output once
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -309,7 +319,13 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
       | J1         | DP              | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
 
-  @Scenario4
+    Then I delete the test data
+
+    And I will remove all data with region "/omp/gdm_fbp"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "GDMFbp.tsv"
   Scenario:  Aggrgeate Value and Quantity
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -403,7 +419,13 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
       | LA_LDPC03-2018/01/09 00:00:00 | ADEE       | 2018/01/15 00:00:00 | 2018/01/09 00:00:00 | LA_LDPC03-AT033 | 450.000  | 1450   |
       | LA_LDPC03-2018/02/01 00:00:00 | ADEE       | 2018/02/08 00:00:00 | 2018/02/01 00:00:00 | LA_LDPC03-AT033 | 2100.000 | 14900  |
 
-  @Scenario5
+    Then I delete the test data
+
+    And I will remove all data with region "/omp/gdm_fbp"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "GDMFbp.tsv"
   Scenario: COUNTRYID  If mapping with country_v1 and no record found, reject the the record and raise error "country does not exist in edm country"  --T2
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -493,8 +515,13 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
       | T2        | DP             | OMPGdmFbp   | 000000000000000005 | FBP  | 201901 | AT05 |      | CONS_LATAM   | country does not exist in edm country |
       | T2        | DP             | OMPGdmFbp   | 000000000000000005 | FBP  | 201902 | AT05 |      | CONS_LATAM   | country does not exist in edm country |
 
+    Then I delete the test data
 
-  @Scenario6
+    And I will remove all data with region "/omp/gdm_fbp"
+
+    And I will remove all data with region "/plan/edm_failed_data"
+
+    And I will remove the test file on sink application "GDMFbp.tsv"
   Scenario:  full load curation
 
     Given I import "/edm/material_global_v1" by keyFields "sourceSystem,localMaterialNumber"
@@ -593,26 +620,27 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     And I will remove all data with region "/plan/edm_failed_data"
 
-  Scenario: delete all test data
-
-    Then I delete the test data
-
-    And I will remove all data with region "/omp/gdm_fbp"
-
-    And I will remove all data with region "/edm/material_global_v1"
-
-    And I will remove all data with region "/omp/plan/cns_fin_plan_qty"
-
-    And I will remove all data with region "/omp/cns_fin_plan_val"
-
-    And I will remove all data with region "/edm/material_auom_v1"
-
-    And I will remove all data with region "/edm/country_v1"
-
-    And I will remove all data with region "/edm/currency_v1"
-
-    And I will remove all data with region "/plan/cns_plan_parameter"
-
-    And I will remove all data with region "/edm/jnj_calendar_v1"
-
-    #And I will remove the test file on sink application "GDMFbp.tsv"
+    And I will remove the test file on sink application "GDMFbp.tsv"
+#  Scenario: delete all test data
+#
+#    Then I delete the test data
+#
+#    And I will remove all data with region "/omp/gdm_fbp"
+#
+#    And I will remove all data with region "/edm/material_global_v1"
+#
+#    And I will remove all data with region "/omp/plan/cns_fin_plan_qty"
+#
+#    And I will remove all data with region "/omp/cns_fin_plan_val"
+#
+#    And I will remove all data with region "/edm/material_auom_v1"
+#
+#    And I will remove all data with region "/edm/country_v1"
+#
+#    And I will remove all data with region "/edm/currency_v1"
+#
+#    And I will remove all data with region "/plan/cns_plan_parameter"
+#
+#    And I will remove all data with region "/edm/jnj_calendar_v1"
+#
+#    #And I will remove the test file on sink application "GDMFbp.tsv"
