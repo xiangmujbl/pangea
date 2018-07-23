@@ -27,7 +27,7 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     And I will remove all data with region "/edm/jnj_calendar_v1"
 
-    #And I will remove the test file on sink application "GDMFbp.tsv"
+    And I will remove the test file on sink application "GDMFbp.tsv"
 
     And I will remove all data with region "/plan/edm_failed_data"
 
@@ -109,11 +109,11 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     When I submit task with xml file "xml/omp/OMPGdmFbp.xml" and execute file "jar/pangea-view.jar"
 
- #    Then A file is found on sink application with name "GDMFbp.tsv"
+#    Then A file is found on sink application with name "GDMFbp.tsv"
 
- #    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
-    Then I check region data "/omp/gdm_fbp" by keyFields "fbpId"
-      | fbpId | countryId | currencyId | dueDate | fromDueDate | productId | value | volume |
+#    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
+    Then I check region data "/omp/gdm_fbp" by keyFields "fbpId,aggregationId"
+      | fbpId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value   | volume |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
@@ -201,8 +201,8 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 #    Then A file is found on sink application with name "GDMFbp.tsv"
 
 #    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
-    Then I check region data "/omp/gdm_fbp" by keyFields "fbpId"
-      | fbpId | countryId | currencyId | dueDate | fromDueDate | productId | value | volume |
+    Then I check region data "/omp/gdm_fbp" by keyFields "fbpId,aggregationId"
+      | fbpId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value   | volume |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
 
@@ -293,7 +293,7 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     Then A file is found on sink application with name "GDMFbp.tsv"
 
-    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
+    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId,aggregationId"
 #    Then I check region data "/omp/gdm_fbp" by keyFields "fbpId"
       | fbpId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value   | volume |
       | LA_LDPC03-2018/01/01 00:00:00 | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA_LDPC03-AT033 | 50.000  | 1500   |
@@ -307,7 +307,7 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode | functionalArea | interfaceID | key1               | key2       | key3 | key4 | key5 | sourceSystem | errorValue                                       |
-      | J1        | DP             | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
+      | J1         | DP              | OMPGdmFbp   | 000000000000000004 | CONS_LATAM |      |      |      | CONS_LATAM   | localDpParentCode does not exist in edm Material |
 
   @Scenario4
   Scenario:  Aggrgeate Value and Quantity
@@ -480,7 +480,7 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     Then A file is found on sink application with name "GDMFbp.tsv"
 
-    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
+    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId,aggregationId"
 #    Then I check region data "/omp/gdm_fbp" by keyFields "fbpId"
       | fbpId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value  | volume |
       | LA_LDPC03-2018/01/01 00:00:00 | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA_LDPC03-AT033 | 50.000 | 1500   |
@@ -572,7 +572,7 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     Then A file is found on sink application with name "GDMFbp.tsv"
 
-    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId"
+    Then I check file data for filename "GDMFbp.tsv" by keyFields "fbpId,aggregationId"
 #    Then I check region data "/omp/gdm_fbp" by keyFields "fbpId"
       | fbpId                         | currencyId | dueDate             | fromDueDate         | aggregationId   | value   | volume |
       | LA_LDPC03-2018/01/01 00:00:00 | ADEE       | 2018/01/08 00:00:00 | 2018/01/01 00:00:00 | LA_LDPC03-AT033 | 50.000  | 1500   |
@@ -597,7 +597,7 @@ Feature:  E.2.1.6 GDMFBP - Consumptionn
 
     Then I delete the test data
 
-    #And I will remove all data with region "/omp/gdm_fbp"
+    And I will remove all data with region "/omp/gdm_fbp"
 
     And I will remove all data with region "/edm/material_global_v1"
 

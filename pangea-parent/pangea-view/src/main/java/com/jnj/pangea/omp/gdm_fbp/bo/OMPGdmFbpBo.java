@@ -16,13 +16,7 @@ public class OMPGdmFbpBo extends BaseBo {
     private String aggregationId;
 
 
-    public String getAggregationId() {
-        return aggregationId;
-    }
 
-    public void setAggregationId(String aggregationId) {
-        this.aggregationId = aggregationId;
-    }
 
     @Override
     public String getKey() {
@@ -35,7 +29,13 @@ public class OMPGdmFbpBo extends BaseBo {
     public String getFbpId() {
         return fbpId;
     }
+    public String getAggregationId() {
+        return aggregationId;
+    }
 
+    public void setAggregationId(String aggregationId) {
+        this.aggregationId = aggregationId;
+    }
     public void setFbpId(String fbpId) {
         this.fbpId = fbpId;
     }
@@ -107,6 +107,7 @@ public class OMPGdmFbpBo extends BaseBo {
                 ", productId='" + productId + '\'' +
                 ", value='" + value + '\'' +
                 ", volume='" + volume + '\'' +
+                ", aggregationId='" + aggregationId + '\'' +
                 '}';
     }
 }

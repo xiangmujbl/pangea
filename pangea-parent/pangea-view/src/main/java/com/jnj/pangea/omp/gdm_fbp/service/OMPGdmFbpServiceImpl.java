@@ -45,6 +45,7 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
     private EDMMaterialAuomV1DaoImpl edmMaterialAuomV1Dao = EDMMaterialAuomV1DaoImpl.getInstance ();
     private EDMMaterialGlobalV1DaoImpl edmMaterialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance ();
 
+    final java.text.DecimalFormat df = new java.text.DecimalFormat ( IConstant.LFU.PATTERN_DECIMAL_3 );
 
     @Override
     public List<ResultObject> buildView(String key, Object o, Object o2) {
@@ -73,8 +74,8 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
 
         NumberFormat nf = NumberFormat.getInstance ();
         nf.setRoundingMode ( RoundingMode.HALF_UP );
-        nf.setMinimumFractionDigits (3);
-        nf.setMaximumFractionDigits (3);
+        nf.setMinimumFractionDigits ( IConstant.LFU.VALUE_DECIMAL_3 );
+        nf.setMaximumFractionDigits ( IConstant.LFU.VALUE_DECIMAL_3 );
         nf.setGroupingUsed ( false );
         List<String> listMaterialNumber = new ArrayList<> ();
         for (int i = 0; i < globalList.size (); i++) {
@@ -128,7 +129,7 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
             if (EDMJNJCalendarV1EntityList == null || EDMJNJCalendarV1EntityList.size () == 0) {
                 continue;
             }
-            Pattern pattern = Pattern.compile ("^((((1[6-9]|[2-9]\\\\d)\\\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\\\d|3[01]))|(((1[6-9]|[2-9]\\\\d)\\\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\\\d|30))|(((1[6-9]|[2-9]\\\\d)\\\\d{2})-0?2-(0?[1-9]|1\\\\d|2[0-9]))|(((1[6-9]|[2-9]\\\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$");
+            Pattern pattern = Pattern.compile ( IConstant.LFU.CHCEK_TIME );
             EDMCountryEntity edmCountryEntity = countryV1Dao.getEntityWithLocalCountry ( planCnsFinPlanQtyAndValEntity.getCountry () );
             EDMCurrencyV1Entity edmCurrencyV1Entity = currencyV1Dao.getEntityWithLocalCurrency ( planCnsFinPlanQtyAndValEntity.getCurrency () );
             if (edmCountryEntity != null) {
@@ -157,9 +158,9 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
                         }
                         ResultObject resultObject = new ResultObject ();
                         OMPGdmFbpBo gdmFbpBoV1 = new OMPGdmFbpBo ();
-                        gdmFbpBoV1.setProductId ( parameterEntity.getParameterValue () + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode () );
+                        //gdmFbpBoV1.setProductId ( parameterEntity.getParameterValue () + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode () );
                         gdmFbpBoV1.setCurrencyId ( currency );
-                        gdmFbpBoV1.setCountryId ( country );
+                        //gdmFbpBoV1.setCountryId ( country );
                         gdmFbpBoV1.setValue ( IConstant.VALUE.BLANK );
                         gdmFbpBoV1.setVolume ( IConstant.VALUE.BLANK );
                         try {
@@ -179,8 +180,8 @@ public class OMPGdmFbpServiceImpl implements ICommonListService {
                         }
                         gdmFbpBoV1.setFromDueDate ( dateFrom );
                         gdmFbpBoV1.setDueDate ( dateTo );
-                        gdmFbpBoV1.setFbpId ( gdmFbpBoV1.getProductId () + IConstant.VALUE.LINE + gdmFbpBoV1.getFromDueDate () );
-                        gdmFbpBoV1.setAggregationId ( gdmFbpBoV1.getProductId () + IConstant.VALUE.LINE + gdmFbpBoV1.getCountryId () );
+                        gdmFbpBoV1.setFbpId ( parameterEntity.getParameterValue () + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode () + IConstant.VALUE.LINE + gdmFbpBoV1.getFromDueDate () );
+                        gdmFbpBoV1.setAggregationId ( parameterEntity.getParameterValue () + IConstant.VALUE.UNDERLINE + materialGlobalV1Entity.getLocalDpParentCode () + IConstant.VALUE.LINE + country );
                         resultObject.setBaseBo ( gdmFbpBoV1 );
                         list.add ( resultObject );
                     }
