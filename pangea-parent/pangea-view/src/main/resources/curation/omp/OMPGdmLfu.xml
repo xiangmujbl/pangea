@@ -93,7 +93,7 @@
             </region>
             <region path="/omp/gdm_lfu">
                 <columns>
-                    lfuId,countryId,currencyId,dueDate,fromDueDate,productId,value,volume
+                    aggregationId,lfuId,currencyId,dueDate,fromDueDate,value,volume
                 </columns>
             </region>
 
