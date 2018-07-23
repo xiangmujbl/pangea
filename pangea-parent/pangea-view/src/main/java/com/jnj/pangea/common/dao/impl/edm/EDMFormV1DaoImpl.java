@@ -2,11 +2,13 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMFormV1Entity;
 
 public class EDMFormV1DaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_FORM_V1 = "/edm/form_v1";
 
     public static final String FORM = "formName";
 
@@ -19,15 +21,9 @@ public class EDMFormV1DaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMFormV1Entity getEntityWithConditions(String param) {
-
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(RegionsConstant.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
-        return null;
-    }
 
     public EDMFormV1Entity getEntityWithFormName(String form) {
         String queryString = QueryHelper.buildCriteria(FORM).is(form).toQueryString();
-        return queryForObject(RegionsConstant.EDM_FORM_V1, queryString, EDMFormV1Entity.class);
+        return queryForObject(EDM_FORM_V1, queryString, EDMFormV1Entity.class);
     }
 }

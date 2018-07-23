@@ -4,8 +4,8 @@ import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMMfgOrderRtngEntity;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_MFG_ORDER_RTNG = "/edm/mfg_order_rtng";
 
     public static final String MFG_ORDER_RTNG_SOURCESYSCD = "srcSysCd";
     public static final String MFG_ORDER_RTNG_ORDRRTNGNUM = "ordrRtngNum";
@@ -41,7 +43,7 @@ public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
             adfCriteria.and(QueryHelper.buildCriteria(MFG_ORDER_RTNG_ORDRRTNGNUM).is(ordrRtngNum.trim()));
         }
         String queryString=adfCriteria.toQueryString();
-        return queryForList(RegionsConstant.EDM_MFG_ORDER_RTNG,queryString, EDMMfgOrderRtngEntity.class);
+        return queryForList(EDM_MFG_ORDER_RTNG,queryString, EDMMfgOrderRtngEntity.class);
     }
 
     public List<EDMMfgOrderRtngEntity> joinMfgOrderRtngWithOrdrRtngNum(String ordrRtngNum){
@@ -49,7 +51,7 @@ public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
         if(StringUtils.isNotBlank(ordrRtngNum)){
             String queryString  = QueryHelper.buildCriteria(MFG_ORDER_RTNG_ORDRRTNGNUM).is(ordrRtngNum)
                     .toQueryString();
-            return queryForList(RegionsConstant.EDM_MFG_ORDER_RTNG, queryString, EDMMfgOrderRtngEntity.class);
+            return queryForList(EDM_MFG_ORDER_RTNG, queryString, EDMMfgOrderRtngEntity.class);
         }
         return list;
     }
@@ -60,7 +62,7 @@ public class EDMMfgOrderRtngDaoImpl extends CommonDaoImpl {
             String queryString  = QueryHelper.buildCriteria(MFG_ORDER_RTNG_ORDRRTNGNUM).is(ordrRtngNum)
                     .and(MFG_ORDER_RTNG_SOURCESYSCD).is(srcSysCd)
                     .toQueryString();
-            return queryForList(RegionsConstant.EDM_MFG_ORDER_RTNG, queryString, EDMMfgOrderRtngEntity.class);
+            return queryForList(EDM_MFG_ORDER_RTNG, queryString, EDMMfgOrderRtngEntity.class);
         }
         return list;
     }

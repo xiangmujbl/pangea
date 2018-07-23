@@ -1,14 +1,16 @@
 package com.jnj.pangea.common.dao.impl.ngems;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.ngems.GoldenMaterialEntity;
 
 import static com.jnj.pangea.common.service.ICommonService.commonDao;
 
 public class NgemsGoldenMaterialDaoImpl extends CommonDaoImpl {
+
+    public static final String NGEMS_GOLDEN_MATERIAL = "/ngems/golden_material";
 
     public static final String MATERIAL_NUMBER = "materialNumber";
 
@@ -22,6 +24,6 @@ public class NgemsGoldenMaterialDaoImpl extends CommonDaoImpl {
     }
     public GoldenMaterialEntity getEntityWithMaterialNumber(String materialNumber){
        String queryString = QueryHelper.buildCriteria(MATERIAL_NUMBER).is(materialNumber).toQueryString();
-        return commonDao.queryForObject(RegionsConstant.NGEMS_GOLDEN_MATERIAL, queryString, GoldenMaterialEntity.class);
+        return commonDao.queryForObject(NGEMS_GOLDEN_MATERIAL, queryString, GoldenMaterialEntity.class);
     }
 }

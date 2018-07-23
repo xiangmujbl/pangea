@@ -1,8 +1,8 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialPlantV1Entity;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 
 public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_MATERIAL_PLANT_V1 = "/edm/material_plant_v1";
 
     public static final String LOCAL_PLANT = "localPlant";
     public static final String SOURCE_SYSTEM = "sourceSystem";
@@ -29,14 +31,14 @@ public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(SOURCE_SYSTEM).is(sourceSystem)
                 .and(LOCAL_PLANT).is(localPlant)
                 .and(LOCAL_MATERIAL_NUMBER).is(materialNumber).toQueryString();
-        return queryForObject(RegionsConstant.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+        return queryForObject(EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
     }
 
     public EDMMaterialPlantV1Entity getEntityWithLocalMaterialNumberLocalPlantNumberSourceSystem(String localMaterialNumber, String localPlantNumber, String sourceSystem) {
         String queryString = QueryHelper.buildCriteria(SOURCE_SYSTEM).is(sourceSystem)
                 .and(LOCAL_PLANT).is(localPlantNumber)
                 .and(LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
-        return queryForObject(RegionsConstant.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+        return queryForObject(EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
     }
 
     public EDMMaterialPlantV1Entity getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber(String sourceSystem, String localPlant, String localMaterialNumber) {
@@ -44,27 +46,27 @@ public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
             String queryString = QueryHelper.buildCriteria(SOURCE_SYSTEM).is(sourceSystem)
                     .and(LOCAL_PLANT).is(localPlant)
                     .and(LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
-            return queryForObject(RegionsConstant.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+            return queryForObject(EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
         }
         return null;
     }
 
     public EDMMaterialPlantV1Entity getPlantWithSourceSystemAndLocalPlantAndLocalMaterialNumber( String localMaterialNumber) {
         String queryString = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
-        return queryForObject(RegionsConstant.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+        return queryForObject(EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
     }
 
     public List<EDMMaterialPlantV1Entity> getEntitiesWithLocalMaterialNumberLocalPlantNumberSourceSystem(String localMaterialNumber, String localPlantNumber, String sourceSystem) {
         String queryString = QueryHelper.buildCriteria(SOURCE_SYSTEM).is(sourceSystem)
                 .and(LOCAL_PLANT).is(localPlantNumber)
                 .and(LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
-        return queryForList(RegionsConstant.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+        return queryForList(EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
     }
 
     public List<EDMMaterialPlantV1Entity> getEntityWithLocalMaterialNumber(String localMaterialNumber) {
         if (StringUtils.isNotEmpty(localMaterialNumber)){
             String queryString = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER).is(localMaterialNumber).toQueryString();
-            return queryForList(RegionsConstant.EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
+            return queryForList(EDM_MATERIAL_PLANT_V1,queryString,EDMMaterialPlantV1Entity.class);
         }
         return null;
     }

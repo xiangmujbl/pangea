@@ -2,24 +2,16 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMMfgRtngHdrEntity;
 
 import java.util.List;
 
 public class EDMMfgRtngHdrDaoImpl extends CommonDaoImpl {
 
-    public static final String FIELD_LOEKZ_VALUE_X = "x";
-    public static final String FIELD_MATLRTNGVALID_TO = "99991231";
-    public static final String FIELD_NAME_PLNNR = "plnnr";
-    public static final String FIELD_NAME_PLNTY = "plnty";
-    public static final String FIELD_NAME_PLNAL = "plnal";
-    public static final String FIELD_NAME_PLNKN = "plnkn";
-    public static final String FIELD_NAME_KNNRN = "knnrn";
-    public static final String FIELD_PLNTY_VALUE_2 = "2";
-    public static final String FIELD_PLNTY_VALUE_N = "N";
-    public static final String SOFT_ZAEHL_VALUE = "zaehl";
+    public static final String MFG_RTNG_HDR = "/edm/mfg_rtng_hdr";
+
     public static final String SRCSYSCD = "srcSysCd";
     public static final String RTNGTYPCD = "rtngTypCd";
     public static final String RTNGGRPCD = "rtngGrpCd";
@@ -40,6 +32,6 @@ public class EDMMfgRtngHdrDaoImpl extends CommonDaoImpl {
                 .and(RTNGGRPCD).is(rtngGrpCd)
                 .and(RTNGGRPCNTRNBR).is(rtngGrpCntrNbr)
                 .toQueryString();
-        return queryForList(RegionsConstant.MFG_RTNG_HDR, queryString, EDMMfgRtngHdrEntity.class);
+        return queryForList(MFG_RTNG_HDR, queryString, EDMMfgRtngHdrEntity.class);
     }
 }

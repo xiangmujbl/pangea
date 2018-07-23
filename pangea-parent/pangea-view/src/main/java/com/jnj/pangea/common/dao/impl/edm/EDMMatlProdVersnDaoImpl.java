@@ -2,8 +2,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMatlProdVersnEntity;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_MATL_PROD_VERSN = "/edm/matl_prod_versn";
 
     public static final String SRCSYSCD = "srcSysCd";
     public static final String PLNTCD = "plntCd";
@@ -39,7 +41,7 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
                     .and(MATLNUM).is(matlNum)
                     .and(ALTBOMNUM).is(altBomNum)
                     .toQueryString();
-            return queryForList(RegionsConstant.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
+            return queryForList(EDM_MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
 
         }
         return null;
@@ -53,7 +55,7 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
                     .and(MATLNUM).is(matlNum)
                     .and(ALTBOMNUM).is(altBomNum)
                     .toQueryString();
-            matlProdVersnEntityList = queryForList(RegionsConstant.MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
+            matlProdVersnEntityList = queryForList(EDM_MATL_PROD_VERSN, queryString, EDMMatlProdVersnEntity.class);
         }
         return matlProdVersnEntityList;
     }
@@ -88,6 +90,6 @@ public class EDMMatlProdVersnDaoImpl extends CommonDaoImpl {
         // LogUtil.getCoreLog().info("EDMMatlProdVersnDaoImpl q "+adfCriteria.toQueryString());
 
 
-        return queryForList(RegionsConstant.EDM_MATL_PROD_VERSN, adfCriteria.toQueryString(), EDMMatlProdVersnEntity.class);
+        return queryForList(EDM_MATL_PROD_VERSN, adfCriteria.toQueryString(), EDMMatlProdVersnEntity.class);
     }
 }

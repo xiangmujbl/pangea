@@ -2,8 +2,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMMfgRtngItmEntity;
 import org.apache.commons.lang3.StringUtils;
 
@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
+
+    public static final String MFG_RTNG_ITM = "/edm/mfg_rtng_itm";
 
     public static final String RTNGTYPCD = "rtngTypCd";
     public static final String RTNGITMNUM = "rtngItmNum";
@@ -34,7 +36,7 @@ public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
                     .and(RTNGITMNUM).is(rtngItmNum)
                     .and(RTNGGRPCD).is(rtngGrpCd)
                     .toQueryString();
-            return queryForObject(RegionsConstant.MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
+            return queryForObject(MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
         }
 
         return null;
@@ -49,7 +51,7 @@ public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
                     .and(RTNGITMNUM).is(rtngItmNum)
                     .and(RTNGGRPCD).is(rtngGrpCd)
                     .toQueryString();
-            mfgRtngItmEntityList = queryForList(RegionsConstant.MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
+            mfgRtngItmEntityList = queryForList(MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
         }
         return mfgRtngItmEntityList;
     }

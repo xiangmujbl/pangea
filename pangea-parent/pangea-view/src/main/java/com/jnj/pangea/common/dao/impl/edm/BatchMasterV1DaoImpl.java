@@ -17,7 +17,7 @@ public class BatchMasterV1DaoImpl extends CommonDaoImpl {
     public EDMBatchMasterV1Entity getEntityWithConditions(String param) {
 
         //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(RegionsConstant.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+        //return queryForObject(EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         return null;
     }
 

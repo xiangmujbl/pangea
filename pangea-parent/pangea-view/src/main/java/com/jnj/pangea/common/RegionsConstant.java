@@ -10,7 +10,7 @@ public class RegionsConstant {
     public static final String PLAN_CNS_PROD_CTY_AFFL_TEMP = "/plan/cns_prod_cty_affl_input";
     public static final String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
     public static final String EDM_WRK_CTR = "/edm/wrk_ctr";
-    public static final String PROJECT_ONE_Qave = "/project_one/qave";
+    public static final String PROJECT_ONE_QAVE = "/project_one/qave";
     public static final String EDM_SOURCE_SYSTEM_V1 = "/edm/source_system_v1";
     public static final String EDM_SOURCE_LIST_V1 = "/edm/source_list_v1";
     public static final String EDM_MATERIAL_GLOBAL_V1 = "/edm/material_global_v1";

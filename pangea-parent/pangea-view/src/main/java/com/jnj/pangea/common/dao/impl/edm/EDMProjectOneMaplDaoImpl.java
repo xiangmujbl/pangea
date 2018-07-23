@@ -3,8 +3,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMPlantV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMProjectOneMAPLEntity;
@@ -14,21 +14,14 @@ import java.util.List;
 
 public class EDMProjectOneMaplDaoImpl extends CommonDaoImpl {
 
+    public static final String PROJECT_ONE_MAPL_CLONE = "/project_one/mapl_clone";
+
     public static final String FIELD_LOEKZ_VALUE_X = "x";
     public static final String FIELD_MATLRTNGVALID_TO = "99991231";
     public static final String FIELD_NAME_PLNNR = "plnnr";
     public static final String FIELD_NAME_PLNTY = "plnty";
     public static final String FIELD_NAME_PLNAL = "plnal";
     public static final String FIELD_NAME_ZKRIZ = "zkriz";
-    public static final String SRCSYSCD = "srcSysCd";
-    public static final String RTNGTYPCD = "rtngTypCd";
-    public static final String RTNGGRPCNTRNUM = "rtngGrpcntrNum";
-    public static final String PLNTCD = "plntCd";
-    public static final String RNTGGRPCNTRNBR = "rntgGrpCntrNbr";
-    public static final String MATLNUM = "matlNum";
-    public static final String RNTGGRPCD = "rntgGrpCd";
-    public static final String RTNGGRPCD = "rtngGrpCd";
-    public static final String FIELD_MATLRTNGVALID_TO_NULL = "";
     
     private static EDMProjectOneMaplDaoImpl instance;
 
@@ -62,6 +55,6 @@ public class EDMProjectOneMaplDaoImpl extends CommonDaoImpl {
           aDFCriteria.isNull();
       }
       //LogUtil.getCoreLog().info("queryString  "+aDFCriteria.toQueryString());
-      return queryForList(RegionsConstant.PROJECT_ONE_MAPL_CLONE,aDFCriteria.toQueryString(),EDMProjectOneMAPLEntity.class);
+      return queryForList(PROJECT_ONE_MAPL_CLONE,aDFCriteria.toQueryString(),EDMProjectOneMAPLEntity.class);
   }
 }

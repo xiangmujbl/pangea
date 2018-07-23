@@ -3,8 +3,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMProjectOneMAPLEntity;
 import com.jnj.pangea.common.entity.edm.EDMProjectOneSTASEntity;
@@ -13,6 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 
 public class EDMProjectOneSTASDaoImpl extends CommonDaoImpl {
+
+    public static final String PROJECT_ONE_STAS = "/project_one/stas";
 
     public static final String FIELD_STAS_STLTY_VALUE = "stlty";
     public static final String FIELD_MATLRTNGVALID_TO = "99991231";
@@ -50,7 +52,7 @@ public class EDMProjectOneSTASDaoImpl extends CommonDaoImpl {
       }else{
           aDFCriteria.isNull();
       }
-      return queryForCount(RegionsConstant.PROJECT_ONE_STAS,aDFCriteria.toQueryString());
+      return queryForCount(PROJECT_ONE_STAS,aDFCriteria.toQueryString());
   }
 
 
@@ -71,7 +73,7 @@ public class EDMProjectOneSTASDaoImpl extends CommonDaoImpl {
         }else{
             aDFCriteria.isNull();
         }
-        return maxRec(RegionsConstant.PROJECT_ONE_STAS,aDFCriteria.toQueryString(),FIELD_STAS_STASZ_VALUE,EDMProjectOneSTASEntity.class);
+        return maxRec(PROJECT_ONE_STAS,aDFCriteria.toQueryString(),FIELD_STAS_STASZ_VALUE,EDMProjectOneSTASEntity.class);
     }
 
 }

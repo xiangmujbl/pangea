@@ -2,8 +2,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMBomHdrEntity;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 public class EDMBomHdrDaoImpl extends CommonDaoImpl {
+
+    public static final String BOM_HDR = "/edm/bom_hdr";
 
     private static EDMBomHdrDaoImpl instance;
 
@@ -37,7 +39,7 @@ public class EDMBomHdrDaoImpl extends CommonDaoImpl {
                     .and(ALTBOMNUM).is(altBomNum)
                     .and(BOMCATCD).is(bomCatCd)
                     .toQueryString();
-            return queryForObject(RegionsConstant.BOM_HDR, queryString, EDMBomHdrEntity.class);
+            return queryForObject(BOM_HDR, queryString, EDMBomHdrEntity.class);
         }
         return null;
     }
@@ -49,7 +51,7 @@ public class EDMBomHdrDaoImpl extends CommonDaoImpl {
                     .and(ALTBOMNUM).is(altBomNum)
                     .and(BOMCATCD).is(bomCatCd)
                     .toQueryString();
-            List<EDMBomHdrEntity> bomHdrEntityList = queryForList(RegionsConstant.BOM_HDR, queryString, EDMBomHdrEntity.class);
+            List<EDMBomHdrEntity> bomHdrEntityList = queryForList(BOM_HDR, queryString, EDMBomHdrEntity.class);
             for (EDMBomHdrEntity bomHdrEntity:bomHdrEntityList) {
                 String bomVld_ToDt = bomHdrEntity.getBomVld_ToDt();
                 if(StringUtils.isNotEmpty(bomVld_ToDt)){

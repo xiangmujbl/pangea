@@ -3,7 +3,7 @@ package com.jnj.pangea.edm.inspection_lot.service;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.project_one.ProjcetOneQaveDaoImpl;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneQaveDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneJestDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneTj02tDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
@@ -32,7 +32,7 @@ public class EDMInspectionLotServiceImpl implements ICommonService {
 
     private EDMSourceSystemV1DaoImpl edmSourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
-    private ProjcetOneQaveDaoImpl projcetOneQaveDao = ProjcetOneQaveDaoImpl.getInstance();
+    private ProjectOneQaveDaoImpl projcetOneQaveDao = ProjectOneQaveDaoImpl.getInstance();
 
     private  ProjectOneJestDaoImpl projectOneJestDao = ProjectOneJestDaoImpl.getInstance();
 

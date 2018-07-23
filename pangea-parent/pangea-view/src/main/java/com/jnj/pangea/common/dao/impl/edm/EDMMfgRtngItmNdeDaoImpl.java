@@ -2,8 +2,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMMfgRtngItmNdeEntity;
 import org.apache.commons.lang3.StringUtils;
 
@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EDMMfgRtngItmNdeDaoImpl extends CommonDaoImpl {
+
+    public static final String MFG_RTNG_ITM_NDE = "/edm/mfg_rtng_itm_nde";
 
     public static final String SRCSYSCD = "srcSysCd";
     public static final String RTNGTYPCD = "rtngTypCd";
@@ -33,7 +35,7 @@ public class EDMMfgRtngItmNdeDaoImpl extends CommonDaoImpl {
                     .and(RTNGTYPCD).is(rtngTypCd)
                     .and(RTNGGRPCNTRNBR).is(rntgGrpCntrNbr)
                     .toQueryString();
-            return queryForList(RegionsConstant.MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
+            return queryForList(MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
     }
 
     public List<EDMMfgRtngItmNdeEntity> getEntityListWithConditions(String srcSysCd, String rtngTypCd, String rtngGrpCd,String rtngGrpCntrNbr) {
@@ -44,7 +46,7 @@ public class EDMMfgRtngItmNdeDaoImpl extends CommonDaoImpl {
                     .and(RTNGTYPCD).is(rtngTypCd)
                     .and(RTNGGRPCNTRNBR).is(rtngGrpCntrNbr)
                     .toQueryString();
-            mfgRtngItmNdeEntityList = queryForList(RegionsConstant.MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
+            mfgRtngItmNdeEntityList = queryForList(MFG_RTNG_ITM_NDE, queryString, EDMMfgRtngItmNdeEntity.class);
         }
 
         return mfgRtngItmNdeEntityList;

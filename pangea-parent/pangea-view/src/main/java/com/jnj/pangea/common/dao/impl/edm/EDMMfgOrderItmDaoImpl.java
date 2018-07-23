@@ -4,14 +4,16 @@ import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMMfgOrderItmEntity;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
 public class EDMMfgOrderItmDaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_MFG_ORDER_ITM = "/edm/mfg_order_itm";
 
     public static final String EDM_MFG_ORDER_ITM_SRCSYSCD = "srcSysCd";
     public static final String EDM_MFG_ORDER_ITM_MFGORDRNUM = "mfgOrdrNum";
@@ -42,6 +44,6 @@ public class EDMMfgOrderItmDaoImpl extends CommonDaoImpl {
             adfCriteria.and(QueryHelper.buildCriteria(EDM_MFG_ORDER_ITM_MFGORDRNUM).is(mfgOrdrNum.trim()));
         }
 
-        return queryForList(RegionsConstant.EDM_MFG_ORDER_ITM, adfCriteria.toQueryString(), EDMMfgOrderItmEntity.class);
+        return queryForList(EDM_MFG_ORDER_ITM, adfCriteria.toQueryString(), EDMMfgOrderItmEntity.class);
     }
 }

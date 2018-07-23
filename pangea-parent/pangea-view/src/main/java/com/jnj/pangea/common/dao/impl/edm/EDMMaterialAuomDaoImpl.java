@@ -2,8 +2,8 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMMaterialAuomV1Entity;
 import org.apache.commons.lang.StringUtils;
@@ -11,6 +11,8 @@ import org.apache.commons.lang.StringUtils;
 import java.util.List;
 
 public class EDMMaterialAuomDaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_MATERIAL_AUOM_V1 = "/edm/material_auom_v1";
 
     public static final String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     public static final String MATERIAL_NUMBER = "materialNumber";
@@ -30,14 +32,14 @@ public class EDMMaterialAuomDaoImpl extends CommonDaoImpl {
     public EDMMaterialAuomV1Entity getEntityWithLocalMaterialNumAndLocalAuom(String localMaterialNum, String localAuom) {
         String queryString = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER).is(localMaterialNum)
                 .and(LOCAL_AUOM).is(localAuom).toQueryString();
-        return queryForObject(RegionsConstant.EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
+        return queryForObject(EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
 
     }
 
     public List<EDMMaterialAuomV1Entity> getEntityWithLocalMaterialNum(String localMaterialNum) {
         if (StringUtils.isNotBlank(localMaterialNum)) {
             String queryString = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER).is(localMaterialNum).toQueryString();
-            return queryForList(RegionsConstant.EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
+            return queryForList(EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
 
         }
         return null;
@@ -47,7 +49,7 @@ public class EDMMaterialAuomDaoImpl extends CommonDaoImpl {
         if (StringUtils.isNotBlank(materialNum)) {
             String queryString = QueryHelper.buildCriteria(MATERIAL_NUMBER).is(materialNum)
                     .toQueryString();
-            return queryForList(RegionsConstant.EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
+            return queryForList(EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
         }
         return null;
     }
@@ -56,7 +58,7 @@ public class EDMMaterialAuomDaoImpl extends CommonDaoImpl {
         if (StringUtils.isNotBlank(materialNum)) {
             String queryString = QueryHelper.buildCriteria(MATERIAL_NUMBER).is(materialNum)
                     .toQueryString();
-            return queryForObject(RegionsConstant.EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
+            return queryForObject(EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
         }
         return null;
     }
@@ -66,7 +68,7 @@ public class EDMMaterialAuomDaoImpl extends CommonDaoImpl {
             String queryString = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER).is(localMaterialNum)
                     .and(SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
-            return queryForList(RegionsConstant.EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
+            return queryForList(EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
         }
         return null;
     }
@@ -77,14 +79,14 @@ public class EDMMaterialAuomDaoImpl extends CommonDaoImpl {
                     .and(SOURCE_SYSTEM).is(sourceSystem)
                     .and(LOCAL_AUOM).is(localAuom)
                     .toQueryString();
-            return queryForObject(RegionsConstant.EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
+            return queryForObject(EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
         }
         return null;
     }
 
     public List<EDMMaterialAuomV1Entity> getEntityList() {
         String queryString = "*:*";
-        return queryForList(RegionsConstant.EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
+        return queryForList(EDM_MATERIAL_AUOM_V1, queryString, EDMMaterialAuomV1Entity.class);
     }
 
 

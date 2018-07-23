@@ -2,14 +2,16 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMCountryEntity;
 
 import java.util.List;
 
 public class EDMCountryV1DaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_COUNTRY_V1 = "/edm/country_v1";
 
     public static final String LOCAL_COUNTRY = "localCountry";
     public static final String SOURCE_SYSTEM = "sourceSystem";
@@ -28,7 +30,7 @@ public class EDMCountryV1DaoImpl extends CommonDaoImpl {
     public EDMCountryEntity getEntityWithLocalCountry(String localCountry) {
         if (null != localCountry && !"".equals(localCountry)) {
             String localQueryString = QueryHelper.buildCriteria(LOCAL_COUNTRY).is(localCountry).toQueryString();
-            return queryForObject(RegionsConstant.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+            return queryForObject(EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         }
         return null;
     }
@@ -36,7 +38,7 @@ public class EDMCountryV1DaoImpl extends CommonDaoImpl {
     public List<EDMCountryEntity> getEntityWithLocalCountryList(String localCountry) {
         if (null != localCountry && !"".equals(localCountry)) {
             String localQueryString = QueryHelper.buildCriteria(LOCAL_COUNTRY).is(localCountry).toQueryString();
-            return queryForList(RegionsConstant.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+            return queryForList(EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
         }
         return null;
     }
@@ -46,6 +48,6 @@ public class EDMCountryV1DaoImpl extends CommonDaoImpl {
             return null;
         }
         String localQueryString = QueryHelper.buildCriteria(LOCAL_COUNTRY).is(localCountry).and(SOURCE_SYSTEM).is(sourceSystem).toQueryString();
-        return queryForObject(RegionsConstant.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
+        return queryForObject(EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
     }
 }
