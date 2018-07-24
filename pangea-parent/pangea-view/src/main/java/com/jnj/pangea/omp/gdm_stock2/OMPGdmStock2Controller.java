@@ -85,6 +85,8 @@ public class OMPGdmStock2Controller implements IEventProcessor {
             locationBo.setLocationId(srcSysCd + UNDERLINE + localPlant.get());
             return true;
         }
+
+        LogUtil.getCoreLog().info("plantN7: Default false");
         return false;
     }
 
