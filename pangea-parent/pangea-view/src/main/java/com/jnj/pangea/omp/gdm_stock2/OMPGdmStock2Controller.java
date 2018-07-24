@@ -33,6 +33,9 @@ public class OMPGdmStock2Controller implements IEventProcessor {
 //    String stockId;
 //    String locationId;
 
+    /**
+     *  AEAZ-8898 contants
+     **/
     private static final String PROJECT_ONE_DEV = "Project_One";
     private static final String YES = "YES";
     private static final String UNDERLINE = "_";
@@ -40,6 +43,9 @@ public class OMPGdmStock2Controller implements IEventProcessor {
     private static final String X = "X";
     private static final String PURCHASE_ORDER = "Purchase Order";
 
+    /**
+     *  AEAZ-8898 intennal daos
+     **/
     private EDMSourceSystemV1DaoImpl sourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
     private PlanCnsTlaneControlDaoImpl tlaneControlDao = PlanCnsTlaneControlDaoImpl.getInstance();
     private PlanCnsTlaneControlTriangulationDaoImpl tlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
@@ -49,6 +55,9 @@ public class OMPGdmStock2Controller implements IEventProcessor {
 
     ThreadLocal<String> localPlant = new ThreadLocal<>();
 
+    /**
+     *  AEAZ-8898 Variable sub function
+     **/
     private PlanCnsTlaneControlTriangulationEntity findHighestStepNumber(List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities) {
         PlanCnsTlaneControlTriangulationEntity tempEntity = triangulationEntities.get(0);
         for (PlanCnsTlaneControlTriangulationEntity triangulationEntity : triangulationEntities) {
@@ -59,6 +68,9 @@ public class OMPGdmStock2Controller implements IEventProcessor {
         return tempEntity;
     }
 
+    /**
+     *  AEAZ-8898 Variable LocalPlant
+     **/
     private boolean plantN7(String srcSysCd, String plntCd){
         EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(PROJECT_ONE_DEV, srcSysCd);
         if(sourceSystemEntity == null){
