@@ -213,7 +213,10 @@ public class OMPGdmStock2Controller implements IEventProcessor {
             return false;
         }
 
-        List<Map.Entry<String, String>> map91 = method91(matlId,plntCd,srcSysCd);
+        /* AEAZ-8898 - ILot9 */
+        LogUtil.getCoreLog().info("ILot9 - LocalPlant: " + localPlant.get());
+        List<Map.Entry<String, String>> map91 = method91(matlId, localPlant.get(), srcSysCd);
+        // List<Map.Entry<String, String>> map91 = method91(matlId,plntCd,srcSysCd);
         if(null!=map91){
             for(Map.Entry<String, String> map911:map91){
                 Map<String, Object> map922 = JsonObject.append(map911.getValue())
@@ -278,6 +281,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
 
         /* AEAZ-8898 ILot1 */
         //String plntCd = String.valueOf(map.get("plntCd"));
+        LogUtil.getCoreLog().info("ILot1 - LocalPlant: " + localPlant.get());
         stockId = iLot1Udf(locationId,stockId,productId,materialMumber, primaryPlanningCode, srcSysCd,
                 localPlant.get(), lotNum);
 
