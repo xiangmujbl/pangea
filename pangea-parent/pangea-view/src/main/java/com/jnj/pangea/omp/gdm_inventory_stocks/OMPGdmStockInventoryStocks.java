@@ -103,7 +103,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 		String trigSysTransaction = "Purchase Order";
 
-		String localSourceSystem = null;
+		String localSourceSystem = "Project_One";
 
 		String spRelevant = null;
 
@@ -171,12 +171,8 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 					String locationId = null;
 
-					Map map1 = getSourceSystemV1(sourceSystem);
+					Map map1 = getSourceSystemV1(sourceSystem, localSourceSystem);
 					if (map1 != null) {
-						localSourceSystem = StringInner.getString(map1,
-								"localSourceSystem");
-					}
-					if (localSourceSystem.equals("Project_One")) {
 
 						if (StringUtils.isNotEmpty(localPlant)) {
 							List<Map.Entry<String, String>> cnsTlaneControlList  = getCnsTlaneControl(sourceSystem,
@@ -1037,11 +1033,13 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 	}
 
-	public Map getSourceSystemV1(String sourceSystem) {
+	public Map getSourceSystemV1(String sourceSystem, String localSourceSystem) {
 
 		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("sourceSystem")
 				.is(sourceSystem);
-		ADFCriteria groupCriteria28 = adfCriteria17;
+		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria("localSourceSystem").is(
+				localSourceSystem);
+		ADFCriteria groupCriteria28 = adfCriteria17.and(adfCriteria18);
 
 		ADFCriteria adfCriteria = groupCriteria28;
 		String queryStr = adfCriteria.toQueryString();
