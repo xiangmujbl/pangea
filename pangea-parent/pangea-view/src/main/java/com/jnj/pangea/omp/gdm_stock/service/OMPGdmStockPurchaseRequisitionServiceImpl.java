@@ -26,7 +26,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
 
     private static final String ZERO_POINT_ZERO = "0.0";
     private static final String MOVEMENT = "movement";
-    private static final String PURCHASE_ORDER = "purchase_order";
+    private static final String PURCHASE_ORDER = "Purchase Order";
 
     private static OMPGdmStockPurchaseRequisitionServiceImpl instance;
 
