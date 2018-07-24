@@ -42,6 +42,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
     private static final String EMPTY = "";
     private static final String X = "X";
     private static final String PURCHASE_ORDER = "Purchase Order";
+    private static final String ZERO = "0";
 
     /**
      *  AEAZ-8898 intennal daos
@@ -54,6 +55,22 @@ public class OMPGdmStock2Controller implements IEventProcessor {
     private LocationBo locationBo;
 
     ThreadLocal<String> localPlant = new ThreadLocal<>();
+
+    /**
+     * AEAZ-8898 ILot19 remove leading zero logic
+     */
+    private String removeLeadingZeros(String sourceStr) {
+        String destStr = "";
+
+        for(int i = 0;i < sourceStr.length();i++) {
+            String strUnit = sourceStr.substring(i, i + 1);
+            if (!strUnit.equals(ZERO)) {
+                destStr = destStr + strUnit;
+            }
+        }
+
+        return destStr;
+    }
 
     /**
      *  AEAZ-8898 Variable sub function
@@ -201,7 +218,10 @@ public class OMPGdmStock2Controller implements IEventProcessor {
 
         String lotNum = String.valueOf(map.get("lotNum"));
 
-        String vndrNum = String.valueOf(map.get("vndrNum"));
+        /**
+         * AEAZ-8898 ILot19 call remove leading zero logic
+         */
+        String vndrNum = removeLeadingZeros(String.valueOf(map.get("vndrNum")));
 
         String srcSysCd = String.valueOf(map.get("srcSysCd"));
 
