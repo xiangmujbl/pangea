@@ -189,23 +189,7 @@ Feature: OMPGdmReqFromErp-Consumption
       |    N7     |  Critical error - Cns Plan Unit - unit not found                                           |      SP        | OMPGdmReqFromErp | CONS_LATAM | 98016 |      |      |      | CONS_LATAM   |
 
 
-    And I will remove all data with region "/edm/purchase_requisition_v1"
-
-    And I will remove all data with region "/edm/material_global_v1"
-
-    And I will remove all data with region "/plan/cns_material_plan_status"
-
-    And I will remove all data with region "/plan/cns_plan_unit"
-
-    And I will remove all data with region "/plan/cns_plan_object_filter"
-
-    And I will remove all data with region "/edm/source_system_v1"
-
-    And I will remove all data with region "/edm/plant_v1"
-
-    And I will remove all data with region "/plan/cns_tlane_control"
-
-    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
+    And I delete the test data
 
     And I will remove all data with region "/omp/gdm_req_from_erp"
 
