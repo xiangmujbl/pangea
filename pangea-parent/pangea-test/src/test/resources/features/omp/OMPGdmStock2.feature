@@ -43,6 +43,24 @@ Feature:  OMPGdmStock2
       | 4              | CO01toCO02 | 1012018   | 31/12/2998 | CONS_LATAM_CO01 |        |              |                | CONS_LATAM_CO02     |                    |              |        | Ship         | 1              | No   | 1        | CONS_LATAM          |               |                                |               |                 |               | cns_prod_loc_attrib     | primarySupplierPlantCode | CO01                  |                        | =                          | I                    | material_plant          | localPlant              | CO02                  |                        | =                          | I                    | material_plant          | localProcurementType    | F                     |                        | =                          | I                    | material_plant          | localMrpType            | X0                    |                        | =                          | I                    | material_plant          | localMrpController      | 999                   |                        | =                          | E                    | material_plant          | localSpecialProcurementType | 44                    |                        | =                          | I                    | material_plant          | localPlantStatus        | 08,11,13              |                        | =                          | I                    |                         |                         |                       |                        |                            |                      |                         |                         |                       |                        |                            |                      |                          |                          |                        |                         |                             |                       |
       | 5              | CO01toCL01 | 1012018   | 31/12/2998 | CONS_LATAM_CO01 |        |              |                | CONS_LATAM_CL01     |                    |              |        | Ship         | 21             | No   | 1        | CONS_LATAM          |               |                                |               |                 |               | cns_prod_loc_attrib     | primarySupplierPlantCode | CO01                  |                        | =                          | I                    | material_plant          | localPlant              | CL01                  |                        | =                          | I                    | material_plant          | localProcurementType    | F                     |                        | =                          | I                    | material_plant          | localMrpType            | X0                    |                        | =                          | I                    | material_plant          | localMrpController      | 999                   |                        | =                          | E                    | material_plant          | localSpecialProcurementType | 44                    |                        | =                          | I                    | material_plant          | localPlantStatus        | 08,11,13              |                        | =                          | I                    |                         |                         |                       |                        |                            |                      |                         |                         |                       |                        |                            |                      |                          |                          |                        |                         |                             |                       |
 
+    And I wait "/plan/cns_tlane_control" Async Queue complete
+
+    Given I import "/plan/cns_tlane_control_triangulation" by keyFields "sequenceNumber,stepNumber,tlaneName"
+      | sequenceNumber | stepNumber | tlaneName  | originLocation  | destinatonLocation |
+      | 1              | 1          | CO01toMX02 | CONS_LATAM_CO01 | CONS_LATAM_MX01    |
+      | 1              | 2          | CO01toMX02 | CONS_LATAM_MX01 | CONS_LATAM_MX02    |
+      | 10             | 1          | CO01toCR01 | CONS_LATAM_CO01 | CONS_LATAM_CR02    |
+      | 10             | 2          | CO01toCR01 | CONS_LATAM_CR02 | CONS_LATAM_CR01    |
+      | 11             | 1          | CO01toGT01 | CONS_LATAM_CO01 | CONS_LATAM_GT02    |
+      | 11             | 2          | CO01toGT01 | CONS_LATAM_GT02 | CONS_LATAM_GT01    |
+      | 20             | 1          | BR12toMX03 | CONS_LATAM_BR12 | CONS_LATAM_MX01    |
+      | 20             | 2          | BR12toMX03 | CONS_LATAM_MX01 | CONS_LATAM_MX02    |
+      | 28             | 1          | PA03toGT01 | CONS_LATAM_PA03 | CONS_LATAM_GT02    |
+      | 28             | 2          | PA03toGT01 | CONS_LATAM_GT02 | CONS_LATAM_GT01    |
+      | 29             | 1          | PA03toCR01 | CONS_LATAM_PA03 | CONS_LATAM_CR02    |
+      | 29             | 2          | PA03toCR01 | CONS_LATAM_CR02 | CONS_LATAM_CR01    |
+
+    And I wait "/plan/cns_tlane_control_triangulation" Async Queue complete
 
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
       | localBaseUom | localDpParentCode | localManufacturingTechnology | localMaterialGroup | localMaterialNumber | localMaterialType | localRefDescription                      | localbaseuom | localdpparentcode | localmanufacturingtechnology | materialNumber | materialStatus | materialType | minRemShelfLife | minremshelflife | parentCode | parentcode | primaryPlanningCode | primaryplanningcode | productFamily | productfamily | refDescription                           | refdescription | sourceSystem |
@@ -180,16 +198,18 @@ Feature:  OMPGdmStock2
 
 
 
-    Then I delete the test data
-    And I will remove all data with region "/edm/inspection_lot_v1"
-    And I will remove all data with region "/edm/material_global_v1"
-    And I will remove all data with region "/edm/plant_v1"
-    And I will remove all data with region "/edm/purchase_order_oa_v1"
-    And I will remove all data with region "/plan/cns_material_plan_status"
-    And I will remove all data with region "/edm/purchasing_info_record_v1"
-    And I will remove all data with region "/edm/process_order_v1"
+#    Then I delete the test data
+#    And I will remove all data with region "/edm/inspection_lot_v1"
+#    And I will remove all data with region "/edm/material_global_v1"
+#    And I will remove all data with region "/edm/plant_v1"
+#    And I will remove all data with region "/edm/purchase_order_oa_v1"
+#    And I will remove all data with region "/plan/cns_material_plan_status"
+#    And I will remove all data with region "/edm/purchasing_info_record_v1"
+#    And I will remove all data with region "/edm/process_order_v1"
     And I will remove all data with region "/plan/edm_failed_data"
-    And I will remove all data with region "/omp/gdm_stock"
+#    And I will remove all data with region "/plan/cns_tlane_control"
+#    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
+#    And I will remove all data with region "/omp/gdm_stock"
 
 
     
