@@ -82,6 +82,9 @@ public class OMPGdmStock2Controller implements IEventProcessor {
         EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(srcSysCd, localPlant.get());
         if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(X)){
             //gdmReqFromErpBo.setLocationId(edmPurchaseRequisitionV1Entity.getSourceSystem()+UNDERLINE+localPlant.get());
+            LogUtil.getCoreLog().info("srcSysCd: " + srcSysCd);
+            LogUtil.getCoreLog().info("localPlant.get(): " + localPlant.get());
+            locationBo = new LocationBo();
             locationBo.setLocationId(srcSysCd + UNDERLINE + localPlant.get());
             return true;
         }
