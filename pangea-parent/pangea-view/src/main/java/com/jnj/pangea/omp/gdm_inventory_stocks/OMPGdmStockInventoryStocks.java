@@ -747,7 +747,130 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 
 
 					String batchId = null;
-					builder.put("batchId", stockId);
+
+                    if (StringInner.isStringNotEmpty(localMaterial)
+                            && StringInner.isStringNotEmpty(sourceSystem)) {
+                        Map map5 = getMaterialGlobalV1(sourceSystem,
+                                localMaterial);
+                        if (map5 != null) {
+                            primaryPlanningCode = StringInner.getString(
+                                    map5, "primaryPlanningCode");
+                            materialNumber = StringInner.getString(map5,
+                                    "materialNumber");
+                            if (StringInner
+                                    .isStringNotEmpty(primaryPlanningCode)) {
+                                productId = primaryPlanningCode;
+                            } else {
+                                if (StringInner
+                                        .isStringNotEmpty(materialNumber)) {
+                                    productId = materialNumber;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        }
+                        if (StringInner
+                                .isStringEmpty(localConsignmentSpecialStockIndicator)
+                                && StringInner
+                                .isStringEmpty(localSpecialStockIndicator)) {
+                            if (StringInner.isStringNotEmpty(productId)
+                                    && StringInner
+                                    .isStringNotEmpty(sourceSystem)
+                                    && StringInner
+                                    .isStringNotEmpty(localPlant)
+                                    && StringInner
+                                    .isStringNotEmpty(localBatchId)) {
+                                batchId = StringInner.join(productId, "/",
+                                        sourceSystem, "_", localPlant, "/",
+                                        localBatchId);
+                            } else {
+                                if (StringInner.isStringNotEmpty(productId)
+                                        && StringInner
+                                        .isStringNotEmpty(sourceSystem)
+                                        && StringInner
+                                        .isStringNotEmpty(localPlant)
+                                        && StringInner
+                                        .isStringEmpty(localBatchId)) {
+                                    batchId = StringInner.join(productId,
+                                            "/", sourceSystem, "_",
+                                            localPlant);
+                                }
+                            }
+                        } else {
+                            if (localConsignmentSpecialStockIndicator
+                                    .equals("K")
+                                    && StringInner
+                                    .isStringEmpty(localSpecialStockIndicator)) {
+                                if (StringInner.isStringNotEmpty(productId)
+                                        && StringInner
+                                        .isStringNotEmpty(sourceSystem)
+                                        && StringInner
+                                        .isStringNotEmpty(localPlant)
+                                        && StringInner
+                                        .isStringNotEmpty(localBatchId)) {
+                                    batchId = StringInner.join(productId,
+                                            "/", sourceSystem, "_",
+                                            localPlant, "/", localBatchId);
+                                } else {
+                                    return false;
+                                }
+                            } else {
+                                if (StringInner
+                                        .isStringEmpty(localConsignmentSpecialStockIndicator)
+                                        && localSpecialStockIndicator
+                                        .equals("O")) {
+                                    if (StringInner
+                                            .isStringNotEmpty(sourceSystem)
+                                            && StringInner
+                                            .isStringNotEmpty(localVendorNumber)
+                                            && StringInner
+                                            .isStringNotEmpty(vendorOrCustomer)) {
+                                        Map map6 = getCnsSplPlnLoc(
+                                                sourceSystem,
+                                                localVendorNumber,
+                                                vendorOrCustomer);
+                                        if (map6 != null) {
+                                            localNumber = StringInner
+                                                    .getString(map6,
+                                                            "localNumber").replaceFirst("^0*", "");
+                                            if (StringInner
+                                                    .isStringNotEmpty(localNumber)) {
+                                                if (StringInner
+                                                        .isStringNotEmpty(productId)
+                                                        && StringInner
+                                                        .isStringNotEmpty(sourceSystem)
+                                                        && StringInner
+                                                        .isStringNotEmpty(localPlant)
+                                                        && StringInner
+                                                        .isStringNotEmpty(localBatchId)) {
+                                                    batchId = StringInner
+                                                            .join(productId,
+                                                                    "/",
+                                                                    sourceSystem,
+                                                                    "_",
+                                                                    localPlant,
+                                                                    "$",
+                                                                    localNumber,
+                                                                    "/",
+                                                                    localBatchId);
+                                                } else {
+                                                    return false;
+                                                }
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        return false;
+                    }
+
+					builder.put("batchId", batchId);
 
 
 					String processId = null;
