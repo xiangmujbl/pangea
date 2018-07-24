@@ -12,6 +12,15 @@ Feature: OMPGdmReqFromErp-Consumption
     | 1773765928 | 66845 | 20190101 | CO01 | 2 | GTQ | 4672 | 40 |  | 0 | 0 | 7 | 10 | 120 | EA | 08D | 20180709 | K | B |  | N | NB | 1 |  |  |  |  |  | 0 | 0 | FALSE |  | FALSE |  |  | 0 |  |  |  | JB BABY GEL CRE HID TOQUE FRESCO 12X200 | P06 | CO00 | A | CO01 | CONS_LATAM |  |  | CO01 |  |  | 20180709 | ALEREMOTE | 5100004012 | 8170 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | FALSE |  | 20181122 | TRUE      |
     | 1402042616 | 56424 | 20190101 | AR01 | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 1992 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | AR00 | A | AR01 | CONS_LATAM |  |  | AR01 |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                |
     | 1402042617 | 56425 | 20190101 | CR01 | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
+    | 1402042901 | 98011 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1402042902 | 98012 | 20180727 | MX02 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 120 | EA | M59 | 20180727 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20180723 | FALSE |
+    | 1402042903 | 98013 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | MDD_BtB |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1402042904 | 98014 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B | FALSE | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1402042905 | 98015 | 20180727 | UY09 | 2 | USS | 0000001234 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | UY09 | UY00 | A | UY09 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1402042906 | 98016 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1402042907 | 98017 | 20180727 | VE01 | 2 | USS | 0000004321 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | VE01 | VE00 | A | VE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1402042908 | 98018 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B | FALSE | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1402042909 | 98019 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B | FALSE | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
 
     And I wait "/edm/purchase_requisition_v1" Async Queue complete
 
@@ -57,6 +66,9 @@ Feature: OMPGdmReqFromErp-Consumption
     | | I | plntCd | CO01 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
     | | I | plntCd | CL01 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
     | | I | plntCd | CR02 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+    | | I | plntCd | PE01 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+    | | I | plntCd | UY09 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+    | | I | plntCd | VE02 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
 
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
 
@@ -70,6 +82,7 @@ Feature: OMPGdmReqFromErp-Consumption
     | KI | KI, Crate | mmarik | DPSP | 0 | CONS_LATAM | N | 10/07/2018 17:17 | CA |
     | CD | CD, Cd | mmarik | SP | 0 | CONS_LATAM | N | 10/07/2018 17:17 | CD |
     | YD | Yard |  | SP | 3 | CONS_LATAM |  |  | YD |
+    | TS | TS |  | SP | 3 | CONS_LATAM |  |  | LA_ZUM |
 
     And I wait "/plan/cns_plan_unit" Async Queue complete
 
@@ -84,6 +97,10 @@ Feature: OMPGdmReqFromErp-Consumption
     | AR | AR | ARS | X | AR02 | S & M Pilar | DC | AR07 | AR, ARGENTINA ARGENTINA | Pilar DC | CONS_LATAM |
     | PA | PA | PAB | X | PA01 | J&J Panama - S&M Consumer | DC | PA05 | PA, PANAMA PANAMA | Panama DC | CONS_LATAM |
     | | GT | GTQ | X | GT01 | J&J Guatemala - S&M Consumer | DC | GT01 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
+    |  | GT | USD | X | PE01 | J&J Guatemala - S&M Consumer | DC | PE01 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
+    | UY | UY | UYL |  | UY09 | J&J Guatemala - S&M Consumer | DC | UY09 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
+    | VE | VT | USD | X | VE01 | J&J Guatemala - S&M Consumer | DC | VE01 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
+
 
     And I wait "/edm/plant_v1" Async Queue complete
 
@@ -96,6 +113,14 @@ Feature: OMPGdmReqFromErp-Consumption
     | X |  | 66845 | 7.50101E+16 | CO01 | 66845 |  | X | 66845 | CONS_LATAM | X |
     | X |  | 56424 |  | AR01 | 56424 |  |  | 56424 | CONS_LATAM | X |
     | X |  | 56425 |  | CR01 | 56425 |  |  | 56425 | CONS_LATAM | X |
+    | X |  | 98011 |  | PE01 | 98011 |  |  | 98011 | CONS_LATAM | X |
+    | X |  | 98012 |  | MX02 | 98012 |  |  | 98012 | CONS_LATAM | X |
+    | X |  | 98013 |  | PE01 | 98013 |  |  | 98013 | CONS_LATAM | X |
+    | X |  | 98014S|  | PE01 | 98014 |  |  | 98014 | CONS_LATAM | X |
+    | X |  | 98015 |  | UY09 | 98015 |  |  | 98015 | CONS_LATAM | X |
+    | X |  | 98016 |  | PE01 | 98016 |  |  | 98016 | CONS_LATAM | X |
+    | X |  | 98017 |  | VE01 | 98017 |  |  | 98017 | CONS_LATAM | S |
+    | X |  | 98018 |  | PE01 | 98018 |  |  | 98018 | CONS_LATAM | X |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -108,6 +133,15 @@ Feature: OMPGdmReqFromErp-Consumption
     | EA | X | EA | 1 | 66845 | 66845 | 8 | FERT | 180 |  | 66845 |  | KIT RUTINA DL BAÃ‘O:HTT SHAMP CREMA 200ML | CONS_LATAM |  | 730 |  |  | 10 |   |  |  |  |  |  |  |  |  |  | FERT | Kit Rutina dl baÃ±o:HTT Shamp Crema 200ml |
     | | X | EA | FNW011 | 56424 | 56424 | 5 |  | 180 |  | 56424 |  |  | CONS_LATAM |  | 730 |  |  | 10 |   |  |  |  |  |  |  |  |  |  | ROH | PAPEL SILICONADO TEKKOTE 35 LB - 96MM |
     | |   | EA |   | 56425 | 56425 | 1 |  | 0 |  | 56425 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 98011 | 98011 | 1 |  | 0 |  | 98011 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 98012 | 98012 | 1 |  | 0 |  | 98012 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 98013 | 98013 | 1 |  | 0 |  | 98013 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 98014 | 98014 | 1 |  | 0 |  | 98014 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 98015 | 98015 | 1 |  | 0 |  | 98015 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TX |   | 98016 | 98016 | 1 |  | 0 |  | 98016 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 98017 | 98017 | 1 |  | 0 |  | 98017 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 98018 | 98018 | 1 |  | 0 |  | 98018 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+
 
     And I wait "/edm/material_global_v1" Async Queue complete
 
@@ -127,6 +161,8 @@ Feature: OMPGdmReqFromErp-Consumption
     | Project_One | Project One |  | CONS_LATAM | Consumer Latam Ent | SAP |  |  |  |  |  |  |  |  |  |
     | endo | JDE ENDO E1 |  | MDD_ENDO |  |  |  |  |  |  |  |  |  |  |  |
     | [Consumer LATAM] | Consumer Latam |  | CONS_LATAM | Consumer Latam Ent | NGEMS |  |  |  |  |  |  |  |  |  |
+    | [BtB] | Back to Basics - MDG |  | MDD_BtB |  |  |  |  |  |  |  |  |  |  |  |
+    | [MDD MARS] | MARS-SAP |  | MDD_MARS |  |  |  |  |  |  |  |  |  |  |  |
 
     And I wait "/edm/source_system_v1" Async Queue complete
 
@@ -143,9 +179,14 @@ Feature: OMPGdmReqFromErp-Consumption
     | CONS_LATAM/1402042617/10 |  |  | NO | 2019/01/01 00:00:00 | BA | CONS_LATAM/1402042617 | 10 | CONS_LATAM/1402042617/10 | 8917 | CONS_LATAM_CR01 | 0 | 0 | 0 | 56425 | NB | 90   | EA |  |  |
     | CONS_LATAM/1773590231/10 |  |  | NO | 2018/07/22 00:00:00 | BA | CONS_LATAM/1773590231 | 10 | CONS_LATAM/1773590231/10 | 8917 | CONS_LATAM_MX02 | 0 | 2 | 0 | 61021 | NB | 4476 | EA |  | CONS_LATAM_MX02 |
     | CONS_LATAM/1505694359/10 |  |  | NO | 2019/11/04 00:00:00 | BA | CONS_LATAM/1505694359 | 10 | CONS_LATAM/1505694359/10 | 1111 | CONS_LATAM_MX02 | 0 | 40| 0 | 96877 | NB | 504  | EA |  | CONS_LATAM_MX02 |
+    | CONS_LATAM/1402042901/20 |  |  | NO | 2018/07/28 00:00:00 | BA | CONS_LATAM/1402042901 | 20 | CONS_LATAM/1402042901/20 | 8898 | CONS_LATAM_PE01 | 0 | 10 | 0 | 98011 | NB | 110 | LA_ZUM |  |             |
+    | CONS_LATAM/1402042902/20 |  |  | NO | 2018/07/28 00:00:00 | BA | CONS_LATAM/1402042902 | 20 | CONS_LATAM/1402042902/20 | 8898 | CONS_LATAM_MX02 | 0 | 10 | 0 | 98012 | NB | 120 | LA_ZUM |  |             |
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
+
+    Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode |              errorValue                                                                    | functionalArea |  interfaceID     | key1       | key2  | key3 | key4 | key5 | sourceSystem |
+      |    N6     |  Critical error - material_global_v1 null or localMaterialNumber not found                 |      SP        | OMPGdmReqFromErp | CONS_LATAM | 98019 |      |      |      | CONS_LATAM   |
+      |    N7     |  Critical error - Cns Plan Unit - unit not found                                           |      SP        | OMPGdmReqFromErp | CONS_LATAM | 98016 |      |      |      | CONS_LATAM   |
 
 
     And I will remove all data with region "/edm/purchase_requisition_v1"
@@ -167,6 +208,8 @@ Feature: OMPGdmReqFromErp-Consumption
     And I will remove all data with region "/plan/cns_tlane_control_triangulation"
 
     And I will remove all data with region "/omp/gdm_req_from_erp"
+
+    And I will remove all data with region "/plan/edm_failed_data"
 
     And I will remove the test file on sink application "REQFROMERP.tsv"
 
