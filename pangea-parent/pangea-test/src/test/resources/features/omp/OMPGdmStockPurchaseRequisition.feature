@@ -190,7 +190,7 @@ Feature: OMPGdmStockPurchaseRequisition AEAZ-5952
       | 55755/CONS_LATAM_BR12/1420964650/10  | YES    | YES          | NO           |         | 0.0             | YES         | BA          | 1420964650 | 55755/CONS_LATAM_BR12/1420964650/10  | 2345     | CONS_LATAM_BR12 | SU/55755/CONS_LATAM_BR12/2345/DEFAULT   | VendorTransport   | 55755     | 0.0             | 1104.0   | 2014/06/05 00:00:00 | 0.0                | 0.0             | 2014/06/05 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
       | 88732/CONS_LATAM_PE01/1420964651/10  | YES    | YES          | NO           |         | 0.0             | YES         | BA          | 1420964651 | 88732/CONS_LATAM_PE01/1420964651/10  | 6109     | CONS_LATAM_PE01 | SU/88732/CONS_LATAM_PE01/6109/DEFAULT   | VendorTransport   | 88732     | 0.0             | 1104.0   | 2014/06/05 00:00:00 | 0.0                | 0.0             | 2014/06/05 00:00:00 | movement  | 0.0              | 1980/01/01 00:00:00 | 0.0                  |
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
+    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID                    | errorCode | sourceSystem | key1 | key2       | key3 | key4 | key5 | errorValue                         |
       | SP             | OMPGdmStockPurchaseRequisition | PR10      | CONS_LATAM   | 10   | 1420964901 |      |      |      | Product ID could not be determined |
 
@@ -200,7 +200,7 @@ Feature: OMPGdmStockPurchaseRequisition AEAZ-5952
 
     And I will remove all data with region "/omp/gdm_stock_purchase_requisition_v1"
 
-    And I will remove all data with region "/dev/plan/edm_failed_data"
+    And I will remove all data with region "/plan/edm_failed_data"
 
     And I will remove the test file on sink application "GDMStock_3_Purchase_requisition.tsv"
 
