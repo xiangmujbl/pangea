@@ -221,7 +221,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
         /**
          * AEAZ-8898 ILot19 call remove leading zero logic
          */
-        String vndrNum = removeLeadingZeros(String.valueOf(map.get("vndrNum")));
+        String vndrNum = StringUtils.stripStart(String.valueOf(map.get("vndrNum")), "0");
 
         String srcSysCd = String.valueOf(map.get("srcSysCd"));
 
@@ -243,6 +243,9 @@ public class OMPGdmStock2Controller implements IEventProcessor {
         /* AEAZ-8898 ILot7 */
         if (!plantN7(srcSysCd, plntCd)) {
             return false;
+        }
+        if (!localPlant.get().equals("")) {
+            plntCd = localPlant.get();
         }
 
         /* AEAZ-8898 - ILot9 */
@@ -325,7 +328,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
         builder.put("blockedQuantity", "0.0");
         builder.put("certaintyId", "QM");
         //vendorId
-        String vendorId = String.valueOf(map.get("vndrNum"));
+        String vendorId = StringUtils.stripStart(String.valueOf(map.get("vndrNum")), "0");
         builder.put("vendorId", vendorId);
         builder.put("qualityQuantity", "0.0");
         //quantity
