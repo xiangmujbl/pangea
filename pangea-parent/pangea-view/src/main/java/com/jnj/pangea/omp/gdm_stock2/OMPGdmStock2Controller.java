@@ -57,22 +57,6 @@ public class OMPGdmStock2Controller implements IEventProcessor {
     ThreadLocal<String> localPlant = new ThreadLocal<>();
 
     /**
-     * AEAZ-8898 ILot19 remove leading zero logic
-     */
-    private String removeLeadingZeros(String sourceStr) {
-        String destStr = "";
-
-        for(int i = 0;i < sourceStr.length();i++) {
-            String strUnit = sourceStr.substring(i, i + 1);
-            if (!strUnit.equals(ZERO)) {
-                destStr = destStr + strUnit;
-            }
-        }
-
-        return destStr;
-    }
-
-    /**
      *  AEAZ-8898 Variable sub function
      **/
     private PlanCnsTlaneControlTriangulationEntity findHighestStepNumber(List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities) {
