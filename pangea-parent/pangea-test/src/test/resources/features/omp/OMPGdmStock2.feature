@@ -1,4 +1,4 @@
-@pangea_test @AEAZ-5867
+@pangea_test @AEAZ-8898
 Feature:  OMPGdmStock2
 
   Scenario: Full Load curation
