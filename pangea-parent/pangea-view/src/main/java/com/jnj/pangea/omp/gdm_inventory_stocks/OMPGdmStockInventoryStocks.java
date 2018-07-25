@@ -240,7 +240,7 @@ public class OMPGdmStockInventoryStocks implements IEventProcessor {
 									localNumber = StringInner.getString(map4,
 											"localNumber");
 									if (StringUtils.isNotEmpty(localNumber)) {
-										locationId = sourceSystem + localPlant + localNumber.replaceFirst("^0*", "");
+										locationId = sourceSystem + localPlant + "$" + localNumber.replaceFirst("^0*", "");
 									} else {
 										return false;
 									}
