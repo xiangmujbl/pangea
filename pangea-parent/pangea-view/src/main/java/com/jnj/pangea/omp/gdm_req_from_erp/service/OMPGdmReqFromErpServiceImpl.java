@@ -79,9 +79,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setVERID(edmPurchaseRequisitionV1Entity.getLocalProdVersion());
 
         //N1
-        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()
-                + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum()
-                + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
+        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
 
         //N2
         calcDateN2(edmPurchaseRequisitionV1Entity);
@@ -194,6 +192,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
                 if(triangulationEntities != null) {
                     PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
                     localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+UNDERLINE,EMPTY));
+                    break;
                 }
             }
         }
@@ -282,17 +281,11 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
     private boolean ruleN9(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
         if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty() && edmPurchaseRequisitionV1Entity.getPrClseInd().isEmpty()) {
             PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
-                    SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
-                    edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
-                    "plntCd", localPlant.get(), "prTypeCd", INCLUSION);
-
+                    SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,edmPurchaseRequisitionV1Entity.getSourceSystem(),
+                    edmPurchaseRequisitionV1Entity.getPrTypeCd(),"plntCd", localPlant.get(), "prTypeCd", INCLUSION);
             if (planObjectFilterEntity != null && edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-
-                gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()+BACK_SLASH
-                        + edmPurchaseRequisitionV1Entity.getPrNum()
-                        + BACK_SLASH
-                        + edmPurchaseRequisitionV1Entity.getPrLineNbr());
-
+                gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()
+                        + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
                  return true;
             }
         }
