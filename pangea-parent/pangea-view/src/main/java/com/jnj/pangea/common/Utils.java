@@ -1,23 +1,5 @@
 package com.jnj.pangea.common;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jnj.adf.client.api.ADFCriteria;
-import com.jnj.adf.client.api.IBiz;
-import com.jnj.adf.client.api.IRemoteService;
-import com.jnj.adf.client.api.JsonObject;
-import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.adf.grid.support.IGridService;
-import com.jnj.adf.grid.utils.DateUtil;
-import com.jnj.adf.grid.utils.LogUtil;
-import com.jnj.adf.grid.utils.Util;
-import com.jnj.adf.grid.view.common.AdfViewHelper;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class Utils {
 
@@ -34,38 +16,25 @@ public class Utils {
     public static final String EMS = "[EMS]";
     public static final String USD = "USD";
     public static final String NGEMS = "NGEMS";
-
-    //Letters
-    public static final String O = "O";
-    public static final String A = "A";
-    public static final String V = "V";
-    public static final String C = "C";
-    public static final String S = "S";
-    public static final String M = "M";
-    public static final String N = "N";
-    public static final String E = "E";
-    public static final String I = "I";
-    public static final String J = "J";
-    public static final String X = "X";
-    public static final String Y = "Y";
-    public static final String F = "F";
-    public static final String L = "L";
-    public static final String K = "K";
+    public static final String DP = "DP";
+    public static final String SP = "SP";
+    public static final String PP = "PP";
 
     //Keywords
+    public static final String NA = "NA";
     public static final String NP = "NP";
     public static final String YES = "YES";
     public static final String NO = "NO";
-    public static final String WE = "WE";
     public static final String ACTIVE = "ACTIVE";
     public static final String FALSE = "FALSE";
+    public static final String TRUE = "TRUE";
     public static final String DEFAULT = "DEFAULT";
     public static final String INCLUSION = "I";
     public static final String EXCLUSION = "E";
-    public static final String WHERE = "WHERE";
     public static final String AND = "AND";
     public static final String OR = "OR";
     public static final String ALL = "ALL";
+    public static final String EN = "EN";
 
     //Separators / Operators
     public static final String UNDERLINE = "_";
@@ -81,6 +50,8 @@ public class Utils {
     public static final String OPERATOR_NOT_EQUAL = "!=";
     public static final String BLANK = "";
     public static final String SPACE = " ";
+    public static final String X = "X";
+    public static final String I = "I";
 
     //Date Time
     public static final String YYYYMMDD = "yyyyMMdd";
@@ -94,19 +65,11 @@ public class Utils {
     public static final String MMDYYYY = "MM/d/yyyy";
     public static final String DDMMYYYY = "dd/MM/yyyy";
 
-    //Numbers
+    //Regex patterns and values
+    public static final String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
     public static final String ZERO = "0";
     public static final String ZEROZERO = "0.0";
-    public static final String ONE = "1";
-    public static final String TWO = "2";
-    public static final String SEVEN = "7";
-    public static final String THIRTY = "30";
-    public static final String THIRTY_ONE = "31";
-
-    //Regex
-    public static final String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
 
 
-
-
+    //
 }

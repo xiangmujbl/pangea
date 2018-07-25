@@ -2,7 +2,7 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 
-
+import com.jnj.pangea.common.Utils;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import org.apache.commons.lang.StringUtils;
@@ -15,8 +15,6 @@ public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
     public static final String LOCAL_SOURCE_SYSTEM = "localSourceSystem";
     public static final String SOURCE_SYSTEM = "sourceSystem";
     public static final String SOURCE_SYSTEM_TYPE = "sourceSystemType";
-
-    private static final String PROJECT_ONE = "project_one";
 
     private static EDMSourceSystemV1DaoImpl instance;
 
@@ -40,14 +38,14 @@ public class EDMSourceSystemV1DaoImpl extends CommonDaoImpl {
 
     public EDMSourceSystemV1Entity getSourceSystemWithProjectOne() {
 
-        String queryString = QueryHelper.buildCriteria(LOCAL_SOURCE_SYSTEM).is(PROJECT_ONE).toQueryString();
+        String queryString = QueryHelper.buildCriteria(LOCAL_SOURCE_SYSTEM).is(Utils.PROJECT_ONE).toQueryString();
 
         return queryForObject(EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
     }
 
     public List<EDMSourceSystemV1Entity> getListWithSourceSystemWithProjectOne() {
 
-        String queryString = QueryHelper.buildCriteria(LOCAL_SOURCE_SYSTEM).is(PROJECT_ONE).toQueryString();
+        String queryString = QueryHelper.buildCriteria(LOCAL_SOURCE_SYSTEM).is(Utils.PROJECT_ONE).toQueryString();
         return queryForList(EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
     }
 

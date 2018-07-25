@@ -2,7 +2,7 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-
+import com.jnj.pangea.common.Utils;
 
 import com.jnj.pangea.common.entity.edm.EDMMatPlantFiV1Entity;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
@@ -15,8 +15,6 @@ public class EDMMatlBomDaoImpl extends CommonDaoImpl {
     public static final String SOURCE_SYSTEM = "sourceSystem";
     public static final String SOURCE_SYSTEM_TYPE = "sourceSystemType";
 
-    private static final String PROJECT_ONE = "project_one";
-
     private static EDMMatPlantFiV1DaoImpl instance;
 
     public static EDMMatPlantFiV1DaoImpl getInstance() {
@@ -28,7 +26,7 @@ public class EDMMatlBomDaoImpl extends CommonDaoImpl {
 
 
     public EDMMatPlantFiV1Entity getSourceSystemWithProjectOne() {
-        String queryString = QueryHelper.buildCriteria(LOCAL_SOURCE_SYSTEM).is(PROJECT_ONE).toQueryString();
+        String queryString = QueryHelper.buildCriteria(LOCAL_SOURCE_SYSTEM).is(Utils.PROJECT_ONE).toQueryString();
         return queryForObject(EDM_SOURCE_SYSTEM_V1, queryString, EDMSourceSystemV1Entity.class);
     }
 }
