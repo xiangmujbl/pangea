@@ -242,6 +242,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
 
         /* AEAZ-8898 ILot7 */
         if (!plantN7(srcSysCd, plntCd)) {
+            LogUtil.getCoreLog().info("Skip by ILot7 - inspection_lot_v1-lotNum: " + lotNum);
             return false;
         }
         if (!localPlant.get().equals("")) {
@@ -271,6 +272,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
                                     "primaryPlanningCode and materialNumber are both blank",
                                     srcSysCd, lotNum, "",
                                     "", "", "", "");
+                            LogUtil.getCoreLog().info("Skip by ILot9_1 - inspection_lot_v1-lotNum: " + lotNum);
                             return false;
                         }
                         break;
@@ -278,9 +280,11 @@ public class OMPGdmStock2Controller implements IEventProcessor {
                 }
             }
         }else{
+            LogUtil.getCoreLog().info("Skip by ILot9_2 - inspection_lot_v1-lotNum: " + lotNum);
             return false;
         }
         if(null==productId||productId.isEmpty()){
+            LogUtil.getCoreLog().info("Skip by ILot9_3 - inspection_lot_v1-lotNum: " + lotNum);
             return false;
         }else{
             builder.put("productId", productId);
@@ -294,6 +298,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
             locationId = iLot7Udf(localPlanningrelevant, plntCd, srcSysCd);
         }
         if(null==locationId||locationId.isEmpty()){
+            LogUtil.getCoreLog().info("Skip by LocationId is empty - inspection_lot_v1-lotNum: " + lotNum);
             return false;
         }else{
             builder.put("locationId", locationId);
@@ -334,6 +339,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
         //quantity
         String quantity = String.valueOf(map.get("toBePostedQty")).trim();
         if(quantity.isEmpty()||quantity.equals("0.000")){
+            LogUtil.getCoreLog().info("Skip by toBePostedQty is zero or empty - inspection_lot_v1-lotNum: " + lotNum);
             return false;
         }else{
             builder.put("quantity", quantity);
@@ -377,6 +383,7 @@ public class OMPGdmStock2Controller implements IEventProcessor {
 
         erpOrderId = iLot6Udf(toBePostedQty, lotNum, qcStsCd);
         if(erpOrderId.equals("invalid")){
+            LogUtil.getCoreLog().info("Skip by erpOrderId is invalid - inspection_lot_v1-lotNum: " + lotNum);
             return false;
         }
         builder.put("erpOrderId", erpOrderId);
@@ -429,7 +436,8 @@ public class OMPGdmStock2Controller implements IEventProcessor {
                 } else if (poTypeCd.equals("NB") && lineItemTypeCd.equals("3")) {
                     localProductionVersion = method142(matlNum, plntCd,
                             prchsngOrgNum, lineItemTypeCd, supNum);
-                    if (localProductionVersion.isEmpty()) {
+                    // AEAZ-8898 fix previous bug
+                    if (localProductionVersion != null && localProductionVersion.isEmpty()) {
 
                         processId = iLot1431Udf(locationId,productId);
                     } else {
