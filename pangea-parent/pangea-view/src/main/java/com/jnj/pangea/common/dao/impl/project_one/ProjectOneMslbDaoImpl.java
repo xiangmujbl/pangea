@@ -1,7 +1,8 @@
 package com.jnj.pangea.common.dao.impl.project_one;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.RegionsConstant;
+ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.project_one.MslbEntity;
 
@@ -9,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectOneMslbDaoImpl extends CommonDaoImpl {
+
+    public static final String PROJECT_ONE_MSLB = "/project_one/mslb";
+
+    public static final String MATNR = "matnr";
+    public static final String WERKS = "werks";
 
     private static ProjectOneMslbDaoImpl instance;
 
@@ -24,8 +30,8 @@ public class ProjectOneMslbDaoImpl extends CommonDaoImpl {
         if ("".equals(matnr) || "".equals(werks)){
             return list;
         }
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_MSLB.MATNR).is(matnr)
-                .and(IConstant.PROJECT_ONE_MSLB.WERKS).is(werks).toQueryString();
-        return queryForList(IConstant.REGION.PROJECT_ONE_MSLB,queryString,MslbEntity.class);
+        String queryString = QueryHelper.buildCriteria(MATNR).is(matnr)
+                .and(WERKS).is(werks).toQueryString();
+        return queryForList(PROJECT_ONE_MSLB,queryString,MslbEntity.class);
     }
 }
