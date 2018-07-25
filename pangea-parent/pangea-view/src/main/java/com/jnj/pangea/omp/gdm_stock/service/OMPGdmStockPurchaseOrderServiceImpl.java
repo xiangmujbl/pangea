@@ -232,6 +232,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
                 if(triangulationEntities != null) {
                     PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
                     localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+UNDERLINE,EMPTY));
+                    break;
                 }
             }
         }
