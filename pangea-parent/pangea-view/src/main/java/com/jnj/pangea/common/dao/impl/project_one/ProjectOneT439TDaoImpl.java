@@ -32,7 +32,7 @@ public class ProjectOneT439TDaoImpl extends CommonDaoImpl {
 
     public T439TEntity getEntityWithSpras() {
 
-        String queryString = QueryHelper.buildCriteria(SPRAS).is(Utils.EN).toQueryString();
+        String queryString = QueryHelper.buildCriteria(SPRAS).is(Utils.SPRAS_EN).toQueryString();
         return queryForObject(PROJECT_ONE_T439T, queryString, T439TEntity.class);
     }
 }

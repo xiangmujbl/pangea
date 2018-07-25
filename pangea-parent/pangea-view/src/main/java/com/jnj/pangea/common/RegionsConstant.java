@@ -5,7 +5,7 @@ package com.jnj.pangea.common;
  * Replace old IConstant
  */
 public class RegionsConstant {
-
+/*
     // -----region
     public static final String PLAN_CNS_PROD_CTY_AFFL_TEMP = "/plan/cns_prod_cty_affl_input";
     public static final String EDM_CAPY_HDR = "/edm/capy_hdr/edm/capy_hdr";
@@ -173,7 +173,7 @@ public class RegionsConstant {
 
     public static final String PROJECT_ONE_PLMZ = "/project_one/plmz";
     public static final String PROJECT_ONE_PLMZ_CLONE = "/project_one/plmz_clone";
-
+*/
 
 
 }

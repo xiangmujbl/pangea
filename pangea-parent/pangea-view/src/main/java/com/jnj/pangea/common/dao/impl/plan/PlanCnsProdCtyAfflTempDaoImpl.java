@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 public class PlanCnsProdCtyAfflTempDaoImpl extends CommonDaoImpl {
 
     public static final String PLAN_CNS_PROD_CTY_AFFL = "/plan/cns_prod_cty_affl";
+    public static final String PLAN_CNS_PROD_CTY_AFFL_TEMP = "/plan/cns_prod_cty_affl_input";
 
     public static final String SOURCE_SYSTEM = "sourceSystem";
     public static final String COUNTRY = "country";

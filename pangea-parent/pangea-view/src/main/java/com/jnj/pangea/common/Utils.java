@@ -19,6 +19,7 @@ public class Utils {
     public static final String DP = "DP";
     public static final String SP = "SP";
     public static final String PP = "PP";
+    public static final String SPRAS_EN = "EN";
 
     //Keywords
     public static final String NA = "NA";
@@ -34,7 +35,7 @@ public class Utils {
     public static final String AND = "AND";
     public static final String OR = "OR";
     public static final String ALL = "ALL";
-    public static final String EN = "EN";
+    public static final String EN = "E";
 
     //Separators / Operators
     public static final String UNDERLINE = "_";

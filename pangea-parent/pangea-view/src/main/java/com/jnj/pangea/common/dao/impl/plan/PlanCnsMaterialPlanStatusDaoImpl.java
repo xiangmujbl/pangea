@@ -2,8 +2,8 @@ package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
- import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.Utils;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import org.apache.commons.lang3.StringUtils;
@@ -20,11 +20,12 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
     public static final String SP_RELEVANT = "spRelevant";
     public static final String NO_PLAN_RELEVANT = "noPlanRelevant";
 
-    private static final String X = "X";
-    private static final String PROJECT_ONE = "PROJECT_ONE";
     private static final String DP_RELEVANT = "DPRelevant";
     private static final String LOCAL_PARENT_CODE = "localParentCode";
     private static final String MATERIAL_NUMBER = "materialNumber";
+
+
+
 
     private static PlanCnsMaterialPlanStatusDaoImpl instance;
 
@@ -49,9 +50,9 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
 
     public PlanCnsMaterialPlanStatusEntity getEntityWithConditions(String localMaterialNumber) {
         String queryString = QueryHelper.buildCriteria(DP_RELEVANT)
-                .is(X).and(LOCAL_MATERIAL_NUMBER)
+                .is(Utils.X).and(LOCAL_MATERIAL_NUMBER)
                 .is(localMaterialNumber).and(SOURCE_SYSTEM)
-                .is(PROJECT_ONE).toQueryString();
+                .is(Utils.PROJECT_ONE).toQueryString();
         return queryForObject(PLAN_CNS_MATERIAL_PLAN_STATUS, queryString,
                 PlanCnsMaterialPlanStatusEntity.class);
     }
@@ -109,7 +110,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
 
     public PlanCnsMaterialPlanStatusEntity getEntityWithDpRelevantAndLocalMaterialnumber(String localMaterialnumber) {
         String queryString = QueryHelper.buildCriteria(DP_RELEVANT)
-                .is(X).and(LOCAL_MATERIAL_NUMBER)
+                .is(Utils.X).and(LOCAL_MATERIAL_NUMBER)
                 .is(localMaterialnumber).toQueryString();
         return queryForObject(PLAN_CNS_MATERIAL_PLAN_STATUS, queryString,
                 PlanCnsMaterialPlanStatusEntity.class);
@@ -121,9 +122,9 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         ADFCriteria adfCriteria = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER)
                 .is(localMaterialnumber);
         adfCriteria.and(
-                QueryHelper.buildCriteria(SP_RELEVANT).is(X)
+                QueryHelper.buildCriteria(SP_RELEVANT).is(Utils.X)
                         .or(QueryHelper.buildCriteria(NO_PLAN_RELEVANT)
-                                .is(X)));
+                                .is(Utils.X)));
 
         String queryString = adfCriteria.toQueryString();
         return queryForObject(PLAN_CNS_MATERIAL_PLAN_STATUS, queryString,
@@ -200,9 +201,9 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
                     PLAN_CNS_MATERIAL_PLAN_STATUS, queryString, PlanCnsMaterialPlanStatusEntity.class);
 
             if (null != materialPlanStatusEntity) {
-                if (X.equals(materialPlanStatusEntity.getDpRelevant())
-                        || X.equals(materialPlanStatusEntity.getSpRelevant())
-                        || X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
+                if (Utils.X.equals(materialPlanStatusEntity.getDpRelevant())
+                        || Utils.X.equals(materialPlanStatusEntity.getSpRelevant())
+                        || Utils.X.equals(materialPlanStatusEntity.getNoPlanRelevant())) {
 
                     return materialPlanStatusEntity;
                 }
@@ -250,7 +251,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
     public PlanCnsMaterialPlanStatusEntity getEntityWithLocalParentCodeAndDp(String localParentCode) {
         if (StringUtils.isNotEmpty(localParentCode)) {
             String queryString = QueryHelper.buildCriteria(LOCAL_PARENT_CODE)
-                    .is(localParentCode).and(DP_RELEVANT).is(X)
+                    .is(localParentCode).and(DP_RELEVANT).is(Utils.X)
                     .toQueryString();
 
             PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = queryForObject(
@@ -285,7 +286,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
                     .is(localPlant.trim()));
         }
         adfCriteria.and(QueryHelper.buildCriteria(SP_RELEVANT)
-                .is(X));
+                .is(Utils.X));
         return queryForObject(PLAN_CNS_MATERIAL_PLAN_STATUS, adfCriteria.toQueryString(),
                 PlanCnsMaterialPlanStatusEntity.class);
     }
@@ -295,7 +296,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
         String queryString = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER)
                 .is(localMaterialNumber).and(LOCAL_PLANT).is(localPlantNum)
                 .and(SOURCE_SYSTEM).is(sourceSystem)
-                .and(SP_RELEVANT).is(X).toQueryString();
+                .and(SP_RELEVANT).is(Utils.X).toQueryString();
         return queryForList(PLAN_CNS_MATERIAL_PLAN_STATUS, queryString,
                 PlanCnsMaterialPlanStatusEntity.class);
     }
@@ -304,7 +305,7 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
             String localMaterialNumber, String sourceSystem) {
         if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(localMaterialNumber)) {
             String queryString = QueryHelper.buildCriteria(DP_RELEVANT)
-                    .is(X).and(LOCAL_MATERIAL_NUMBER)
+                    .is(Utils.X).and(LOCAL_MATERIAL_NUMBER)
                     .is(localMaterialNumber).and(SOURCE_SYSTEM).is(sourceSystem)
                     .toQueryString();
             return queryForObject(PLAN_CNS_MATERIAL_PLAN_STATUS, queryString,
