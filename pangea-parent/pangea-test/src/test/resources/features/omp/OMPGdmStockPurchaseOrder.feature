@@ -268,35 +268,15 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
       | 1980/01/01 00:00:00 | VendorTransport   |         0.0     |                                        |  6109    |         |      YES     |      NO      |        0.0       |        0.0      | TR/58753/CONS_LATAM_MX02/CONS_LATAM_MX01/Default  | CONS_LATAM_MX02 |      YES    |     BE      | 3000793991 |  1800.0  |   58753   | movement  | 2017/01/03 00:00:00 |  YES   |      0.0        |         0.0          | 58753/CONS_LATAM_MX02/3000793991/20/1  |       0.0          | 2017/01/04 00:00:00 |
       | 1980/01/01 00:00:00 | VendorTransport   |         0.0     |                                        |  6109    |         |      YES     |      NO      |        0.0       |        0.0      | TR/58752/CONS_LATAM_MX02/CONS_LATAM_MX01/Default  | CONS_LATAM_MX02 |      YES    |     BE      | 3000793997 |  1968.0  |   58752   | movement  | 2017/01/03 00:00:00 |  YES   |      0.0        |         0.0          | 58752/CONS_LATAM_MX02/3000793997/10/1  |       0.0          | 2017/01/04 00:00:00 |
 
-    Then I check region data "/dev/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
+    Then I check region data "/plan/edm_failed_data" by keyFields "errorCode,functionalArea,interfaceID,key1,key2,key3,key4,key5,sourceSystem"
       | errorCode |              errorValue                                                                    | functionalArea |  interfaceID              | key1       | key2     | key3 | key4 | key5 | sourceSystem |
       |  PO9      | Material Global V1 - materialNumber and primaryPlanningCode are empty                      | SP             | OMPGdmStock_PurchaseOrder | CONS_LATAM |3000793211|58799 |      |      | CONS_LATAM   |
 
-    And I will remove all data with region "/edm/purchase_order_oa_v1"
+    And I delete the test data
 
-    And I will remove all data with region "/edm/material_global_v1"
-
-    And I will remove all data with region "/edm/plant_v1"
-
-    And I will remove all data with region "/plan/cns_material_plan_status"
-
-    And I will remove all data with region "/plan/cns_spl_pln_loc"
-
-    And I will remove all data with region "/plan/cns_plan_object_filter"
-
-    And I will remove all data with region "/edm/purchase_order_oa_v1_aggregation"
+    And I will remove all data with region "/plan/edm_failed_data"
 
     And I will remove all data with region "/omp/gdm_stock_purchase_order"
-
-    And I will remove all data with region "/edm/purchase_order_oa_v1_preAggregation"
-
-    And I will remove all data with region "/dev/plan/edm_failed_data"
-
-    And I will remove all data with region "/plan/cns_tlane_control"
-
-    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
-
-    And I will remove all data with region "/edm/source_system_v1"
 
     And I will remove the test file on sink application "GDMStock.tsv"
 
