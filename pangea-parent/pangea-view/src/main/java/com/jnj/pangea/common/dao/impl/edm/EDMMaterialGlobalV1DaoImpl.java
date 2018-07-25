@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.IConstant;
@@ -43,8 +44,9 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
         return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1_CLONE, queryString, EDMMaterialGlobalV1Entity.class);
     }
 
-    public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
-        if(localMaterialNumber.isEmpty() || sourceSystem.isEmpty()) {
+    public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem)
+    {
+          if(localMaterialNumber.isEmpty() || sourceSystem.isEmpty()) {
             return null;
         }
         String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)
@@ -72,8 +74,7 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
     }
 
     public List<EDMMaterialGlobalV1Entity> getEntitiesWithMaterialNumber(String materialNumber) {
-
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.MATERIAL_NUMBER).is(materialNumber).toQueryString();
+            String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.MATERIAL_NUMBER).is(materialNumber).toQueryString();
         return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
     }
 
@@ -98,7 +99,7 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
     }
 
     public List<EDMMaterialGlobalV1Entity> getEntitiesWithPrimaryPlanningCodeAndSourceSystem(String primaryPlanningCode, String sourceSystem) {
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.PRIMARY_PLANNING_CODE).is(primaryPlanningCode)
+               String queryString = QueryHelper.buildCriteria(IConstant.EDM_MATERIAL_GLOBAL_V1.PRIMARY_PLANNING_CODE).is(primaryPlanningCode)
                 .and(IConstant.EDM_MATERIAL_GLOBAL_V1.SOURCE_SYSTEM).is(sourceSystem)
                 .toQueryString();
         return queryForList(IConstant.REGION.EDM_MATERIAL_GLOBAL_V1, queryString, EDMMaterialGlobalV1Entity.class);
