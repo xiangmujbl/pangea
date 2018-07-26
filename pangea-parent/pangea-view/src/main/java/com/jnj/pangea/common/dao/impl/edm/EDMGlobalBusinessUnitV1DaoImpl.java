@@ -2,10 +2,15 @@ package com.jnj.pangea.common.dao.impl.edm;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMGlobalBusinessUnitV1Entity;
 
 public class EDMGlobalBusinessUnitV1DaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_GLOBAL_BASE_UNIT_V1 = "/edm/global_business_unit_v1";
+
+    public static final String GBU = "gbu";
 
     private static EDMGlobalBusinessUnitV1DaoImpl instance;
 
@@ -16,15 +21,9 @@ public class EDMGlobalBusinessUnitV1DaoImpl extends CommonDaoImpl {
         return instance;
     }
 
-    public EDMGlobalBusinessUnitV1Entity getEntityWithConditions(String param) {
-
-        //String queryString = QueryHelper.buildCriteria(IConstant.EDM_COUNTRY_V1.LOCAL_COUNTRY).is(land1).toQueryString();
-        //return queryForObject(IConstant.REGION.EDM_COUNTRY_V1, localQueryString, EDMCountryEntity.class);
-        return null;
-    }
 
     public EDMGlobalBusinessUnitV1Entity getEntityWithGbu(String globalBusinessUnit) {
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_GLOBAL_BASE_UNIT_V1.GBU).is(globalBusinessUnit).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_GLOBAL_BASE_UNIT_V1, queryString, EDMGlobalBusinessUnitV1Entity.class);
+        String queryString = QueryHelper.buildCriteria(GBU).is(globalBusinessUnit).toQueryString();
+        return queryForObject(EDM_GLOBAL_BASE_UNIT_V1, queryString, EDMGlobalBusinessUnitV1Entity.class);
     }
 }
