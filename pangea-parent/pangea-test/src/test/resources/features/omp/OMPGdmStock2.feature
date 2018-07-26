@@ -217,24 +217,23 @@ Feature:  OMPGdmStock2
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | functionalArea | interfaceID  | errorCode | sourceSystem | businessArea | key1        | key2 | key3 | key4 | key5 | errorValue                                            |
       | SP             | OMPGDMSTOCK2 | iLot9     | CONS_LATAM   |              | 40000409296 |      |      |      |      | primaryPlanningCode and materialNumber are both blank |
-
   Scenario: delete all test data
 
 
 
-#    Then I delete the test data
-    And I will remove all data with region "/edm/inspection_lot_v1"
-    And I will remove all data with region "/edm/material_global_v1"
-    And I will remove all data with region "/edm/plant_v1"
-    And I will remove all data with region "/edm/purchase_order_oa_v1"
-    And I will remove all data with region "/plan/cns_material_plan_status"
-    And I will remove all data with region "/edm/purchasing_info_record_v1"
-    And I will remove all data with region "/edm/process_order_v1"
-    And I will remove all data with region "/plan/edm_failed_data"
-    And I will remove all data with region "/plan/cns_tlane_control"
-    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
-    And I will remove all data with region "/edm/source_system_v1"
-#    And I will remove all data with region "/omp/gdm_stock"
+    Then I delete the test data
+#    And I will remove all data with region "/edm/inspection_lot_v1"
+#    And I will remove all data with region "/edm/material_global_v1"
+#    And I will remove all data with region "/edm/plant_v1"
+#    And I will remove all data with region "/edm/purchase_order_oa_v1"
+#    And I will remove all data with region "/plan/cns_material_plan_status"
+#    And I will remove all data with region "/edm/purchasing_info_record_v1"
+#    And I will remove all data with region "/edm/process_order_v1"
+#    And I will remove all data with region "/plan/edm_failed_data"
+#    And I will remove all data with region "/plan/cns_tlane_control"
+#    And I will remove all data with region "/plan/cns_tlane_control_triangulation"
+#    And I will remove all data with region "/edm/source_system_v1"
+    And I will remove all data with region "/omp/gdm_stock"
 
 
     
