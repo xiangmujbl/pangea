@@ -24,7 +24,6 @@ public class PangeaSteps extends CommonSteps {
     private static String computingNode = "";
     private static Integer computingPartition = 1;
     private static String kafkaSink = "";
-    private static String ceRegionAlias = "";
 
     private static String mergeJobDefinition = "xd/fileMerger.xml";
     private static String mergeJobParameter = "xd/context.properties";
@@ -35,7 +34,6 @@ public class PangeaSteps extends CommonSteps {
         if (StringUtils.isNotEmpty(partition))
             computingPartition = Integer.parseInt(partition);
         kafkaSink = ADFConfigHelper.getProperty("kafkaSink");
-        ceRegionAlias = ADFConfigHelper.getProperty("ceRegionAlias");
     }
 
     public PangeaSteps() {
@@ -248,8 +246,8 @@ public class PangeaSteps extends CommonSteps {
             client = new ComputeClient();
             client.connect(computingNode);
 
-            if (StringUtils.isNotEmpty(ENV) && StringUtils.isNotEmpty(ceRegionAlias)) {
-                client.submitTask(taskId, xml, jar, commandString, ceRegionAlias, computingPartition);
+            if (StringUtils.isNotEmpty(regionAlias)) {
+                client.submitTask(taskId, xml, jar, commandString, regionAlias, computingPartition);
             } else {
                 if (StringUtils.isEmpty(jar)) {
                     commandString = "-type Aggr";
