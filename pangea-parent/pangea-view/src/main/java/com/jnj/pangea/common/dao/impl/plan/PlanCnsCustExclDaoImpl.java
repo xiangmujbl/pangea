@@ -2,7 +2,7 @@ package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
+
  import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.entity.plan.PlanCnsCustExclEntity;
 import org.apache.commons.lang3.StringUtils;

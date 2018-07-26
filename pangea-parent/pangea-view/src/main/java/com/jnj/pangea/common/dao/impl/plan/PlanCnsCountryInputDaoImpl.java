@@ -1,7 +1,7 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.RegionsConstant;
+
  import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanEdmCountryInputEntity;
@@ -29,8 +29,8 @@ public class PlanCnsCountryInputDaoImpl extends CommonDaoImpl {
         }
         String queryString = QueryHelper.buildCriteria(SOURCE_SYSTEM).is(sourceSystem).and(LOCAL_COUNTRY).is(localCountry).toQueryString();
         PlanEdmCountryInputEntity cnsCountryInputEntity = queryForObject(PLAN_EDM_COUNTRY_INPUT, queryString, PlanEdmCountryInputEntity.class);
-        if(cnsCountryInputEntity!=null && StringUtils.isNotBlank(cnsCountryInputEntity.getPlanningRegionId())){
-            return cnsCountryInputEntity.getPlanningRegionId();
+        if(cnsCountryInputEntity!=null && StringUtils.isNotBlank(cnsCountryInputEntity.getPlanningRegionID())){
+            return cnsCountryInputEntity.getPlanningRegionID();
         }
 
         return null;

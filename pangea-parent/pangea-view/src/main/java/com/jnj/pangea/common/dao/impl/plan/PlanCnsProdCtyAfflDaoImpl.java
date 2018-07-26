@@ -1,6 +1,6 @@
 package com.jnj.pangea.common.dao.impl.plan;
 
-import com.jnj.pangea.common.RegionsConstant;
+
  import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsProdCtyAfflEntity;
