@@ -131,6 +131,8 @@ public class PlanCnsMaterialPlanStatusDaoImpl extends CommonDaoImpl {
                 PlanCnsMaterialPlanStatusEntity.class);
     }
 
+
+
     public PlanCnsMaterialPlanStatusEntity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber,
                                                                                            String sourceSystem) {
         if ("".equals(localMaterialNumber) || "".equals(sourceSystem)) {

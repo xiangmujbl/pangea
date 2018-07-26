@@ -1,5 +1,7 @@
 package com.jnj.pangea.omp.gdm_transport.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
+import com.jnj.inner.StringInner;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
@@ -18,23 +20,23 @@ import java.util.*;
 
 public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
-	private static OMPGdmTransportServiceImpl instance;
+    private static OMPGdmTransportServiceImpl instance;
 
-	public static OMPGdmTransportServiceImpl getInstance() {
-		if (instance == null) {
-			instance = new OMPGdmTransportServiceImpl();
-		}
-		return instance;
-	}
+    public static OMPGdmTransportServiceImpl getInstance() {
+        if (instance == null) {
+            instance = new OMPGdmTransportServiceImpl();
+        }
+        return instance;
+    }
 
-	private CnsTlaneItemExceptionDaoImpl tlaneExceptionDao = CnsTlaneItemExceptionDaoImpl.getInstance();
+    private CnsTlaneItemExceptionDaoImpl tlaneExceptionDao = CnsTlaneItemExceptionDaoImpl.getInstance();
 	private EDMMaterialGlobalV1DaoImpl materialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
 	private EDMMaterialPlantV1DaoImpl materialPlantV1Dao = EDMMaterialPlantV1DaoImpl.getInstance();
 	private EDMSourceListV1DaoImpl sourceListV1Dao = EDMSourceListV1DaoImpl.getInstance();
 	private PlanCnsProcessTypeDaoImpl processTypeDao = PlanCnsProcessTypeDaoImpl.getInstance();
 
 
-	public ResultObject buildView(String key, Object o, Object o2) {
+    public ResultObject buildView(String key, Object o, Object o2) {
 
 		ResultObject resultObject = new ResultObject();
 		OMPGdmTransportBo gdmTransportBo = new OMPGdmTransportBo();
@@ -60,8 +62,10 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//N1
 		if (!this.curationSkip && !this.curationFail) {
-			gdmTransportBo.setTransportId(this.ruleN1(tlaneItemEntity));
+
+			gdmTransportBo.setTransportId(totransform(this.ruleN1(tlaneItemEntity)));
 		}
+
 
 		if (!this.curationSkip && !this.curationFail) {
 			//N2
@@ -90,14 +94,13 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		//N9 & N10
 		if (!this.curationSkip && !this.curationFail && srcListV1Entity != null) {
-			gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
 			if(srcListV1Entity.getLocalPurchasingOrganization() == null || "".equals(srcListV1Entity.getLocalPurchasingOrganization())){
 				gdmTransportBo.setPurchasingOrganization(IConstant.VALUE.BLANK);
 			}else{
 				gdmTransportBo.setPurchasingOrganization(srcListV1Entity.getLocalPurchasingOrganization());
 
 			}
-			gdmTransportBo.setVendorId(srcListV1Entity.getLocalVendorAccountNumber());
+			gdmTransportBo.setVendorId(totransform(srcListV1Entity.getLocalVendorAccountNumber()));
 		}
 
 		//N11
@@ -109,44 +112,43 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		if (!this.curationSkip && !this.curationFail) {
 			PlanCnsProcessTypeEntity processTypeEntity =
 					this.processTypeDao.getCnsProcessTypeById(tlaneItemEntity.getProcessTypeId());
-			gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
-
-
 
 
 			try {
+
 				String validDateToFormat = tlaneItemEntity.getValidTo();
 				SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
 				SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
 				Date dValidTo = sdfFrom.parse(validDateToFormat);
 				String validDateToConverted = sdfTo.format(dValidTo) + IConstant.VALUE.HH_NN_SS_ZERO;
-				Date maxDate = sdfTo.parse(IConstant.VALUE.END_EFF_CHECK);
-//				gdmTransportBo.setEndEff(validDateToConverted);
-				if(dValidTo.getTime() > maxDate.getTime()){
-					gdmTransportBo.setEndEff(IConstant.VALUE.ENDEFF );
-				}else{
-					gdmTransportBo.setEndEff(validDateToConverted );
+				Date maxDate = sdfFrom.parse(IConstant.VALUE.MAX_DATE_VALIDTO);
+				if (dValidTo.getTime() > maxDate.getTime()) {
+					gdmTransportBo.setEndEff(IConstant.VALUE.MAX_DATE_VALIDTOSLASH);
+				} else {
+					gdmTransportBo.setEndEff(validDateToConverted);
 				}
+
 				String validDateFromFormat = tlaneItemEntity.getValidFrom();
 				Date dValidFrom = sdfFrom.parse(validDateFromFormat);
 				String validDateFromConverted = sdfTo.format(dValidFrom) + IConstant.VALUE.HH_NN_SS_ZERO;
-
-
 				gdmTransportBo.setStartEff(validDateFromConverted);
-			}
-			catch (ParseException e) {
+			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 
-			gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
-			gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
-			gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
-			gdmTransportBo.setFromProductId(tlaneItemEntity.getMaterialNumber());
-			gdmTransportBo.setToProductId(tlaneItemEntity.getMaterialNumber());
-			gdmTransportBo.setFromLocationId(tlaneItemEntity.getOriginLocation());
-			gdmTransportBo.setToLocationId(tlaneItemEntity.getDestinationLocation());
-		}
 
+			if (processTypeEntity != null) {
+				gdmTransportBo.setLabel(processTypeEntity.getProcessTypeDesc());
+			}
+				gdmTransportBo.setProcessTypeId(tlaneItemEntity.getProcessTypeId());
+				gdmTransportBo.setTransportOffset(tlaneItemEntity.getLeadTime());
+				gdmTransportBo.setTransportType(tlaneItemEntity.getMode());
+				gdmTransportBo.setFromProductId(totransform(tlaneItemEntity.getMaterialNumber()));
+				gdmTransportBo.setToProductId(totransform(tlaneItemEntity.getMaterialNumber()));
+				gdmTransportBo.setFromLocationId(totransform(tlaneItemEntity.getOriginLocation()));
+				gdmTransportBo.setToLocationId(totransform(tlaneItemEntity.getDestinationLocation()));
+
+		}
 		// set as a fail or as a success
 		if (this.curationFail) {
 			// failedRules could have multiple records in future if curationFail condition above is
@@ -160,13 +162,14 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 					)
 			);
 		} else if (this.curationSkip) {
+
 			resultObject = null;
 		} else {
 			resultObject.setBaseBo(gdmTransportBo);
 		}
 
 		return resultObject;
-	}
+    }
 
 	/**
 	 * 1) get mat_glob_v1.local_material_number where mat_glob_v1.ppcode = tlane.matnum
@@ -191,7 +194,44 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 		return locMatNum;
 	}
+	public String totransform(String str1) {
+//		String aa="cccrr_sdas_aaa_0100001223";
+//        str="cccrr_sdas_aaa$0100001223";
+		if (str1 != null) {
+			try {
+				String st = String.valueOf(Integer.parseInt(str1));
+				return st;
+			} catch (Exception ex) {
+				String newstr = "";
 
+				for (String str : str1.split("/")) {
+					String[] aa1 = StringInner.split(str, "_");
+
+					if (aa1.length == 4) {
+						String cc = StringInner.subString(str, str.lastIndexOf("_") + 1, str.length());
+						newstr += str.replace(cc, String.valueOf(Integer.parseInt(cc)));
+
+					} else if (str.contains("$")) {
+						String cc = StringInner.subString(str, str.lastIndexOf("$") + 1, str.length());
+						newstr += str.replace(cc, String.valueOf(Integer.parseInt(cc)));
+					} else {
+						newstr += str;
+					}
+					newstr += "/";
+				}
+				newstr = newstr.substring(0, newstr.length() - 1);
+				return newstr;
+			}
+
+		}
+		return str1;
+	}
+
+	public static void main(String[] args) {
+		String vendorId="CONS_LATAM_BR12";
+		OMPGdmTransportServiceImpl OMPGdmTransportServiceImpl=new OMPGdmTransportServiceImpl();
+		System.out.print(OMPGdmTransportServiceImpl.totransform(vendorId));
+	}
 	/**
 	 * 1) check for deletion indicator blank
 	 * 2) skip if not.
@@ -215,7 +255,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 		if (!tlaneItemExceptionEntities.isEmpty()) {
 			for (CnsTlaneItemExceptionEntity tlaneItemExceptionEntity : tlaneItemExceptionEntities) {
 				if (tlaneItemExceptionEntity.getDeletionIndicator().equals("X")) {
-					this.curationSkip = true;
+									this.curationSkip = true;
 					return null;
 				}
 			}
@@ -282,7 +322,7 @@ public class OMPGdmTransportServiceImpl extends OMPGdmTransportServiceParent {
 
 
 
-		String sourceSystem = this.getSourceSystem(tlaneItemEntity.getDestinationLocation());
+        String sourceSystem = this.getSourceSystem(tlaneItemEntity.getDestinationLocation());
 		String locMatNum = this.getMaterialNumber(tlaneItemEntity,sourceSystem);
 		String vendorId = this.getVendorId(tlaneItemEntity.getOriginLocation());
 

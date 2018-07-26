@@ -9,11 +9,11 @@ public class PlanEdmCountryInputEntity extends CommonEntity {
     public PlanEdmCountryInputEntity(Map<String, Object> map) {
         super(map);
         setSourceSystem((String) map.get("sourceSystem"));
-        setPlanningRegionId((String) map.get("planningRegionId"));
+        setPlanningRegionID((String) map.get("planningRegionID"));
         setLocalCountry((String) map.get("localCountry"));
         setLocalCurrency((String) map.get("localCurrency"));
     }
-    private String planningRegionId;
+    private String planningRegionID;
 
     private String sourceSystem;
 
@@ -21,12 +21,12 @@ public class PlanEdmCountryInputEntity extends CommonEntity {
 
     private String localCurrency;
 
-    public String getPlanningRegionId() {
-        return planningRegionId;
+    public String getPlanningRegionID() {
+        return planningRegionID;
     }
 
-    public void setPlanningRegionId(String planningRegionId) {
-        this.planningRegionId = planningRegionId;
+    public void setPlanningRegionID(String planningRegionID) {
+        this.planningRegionID = planningRegionID;
     }
 
     public String getSourceSystem() {

@@ -3,9 +3,10 @@
               executionClassName="com.jnj.pangea.edm.mfg_order.controller.EDMMfgOrderController">
         <regions>
 
+
             <region path="/project_one/afko">
                 <columns>
-                    aufnr,mandt,gstrp,gsuzp,gltrp,gluzp,gstrs,gsups,gltrs,glups,ftrms,gstri,gsuzi,gltri,getri,geuzi,ftrmp,ftrmi,rsnum,plnty,plnnr,plnal,stlty,stlnr,stlal,dispo,aufpl,fevor,igmng,iasmg
+                    aufnr,mandt,gstrp,gsuzp,gltrp,gluzp,gstrs,gsuzs,gltrs,gluzs,ftrms,gstri,gsuzi,gltri,getri,geuzi,ftrmp,ftrmi,rsnum,plnty,plnnr,plnal,stlty,stlnr,stlal,dispo,aufpl,fevor,igmng,iasmg
                 </columns>
                 <relations>
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
@@ -41,7 +42,7 @@
 
             <region path="/edm/mfg_order">
                 <columns>
-                    sourceSysCd,mfgOrdrNum,mfgOrdrTypCd,plntCd,crtdDttm,chgDttm,delInd,strtDt,strtTm,endDt,endTm,schdStrtDt,schdStrtTm,schdEndDt,schdEndTm,schRelDt,actStrtDt,actStrtTm,prdtnEndDt,cnfrmdEndDt,cnfrmdEndTm,planRlseDt,actRlseDt,rsrvtnNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,bomCatCd,bomNum,bomAltNum,mrpCntrllrCd,ordrRtngNum,prdSpvsrCd,cnfrmdYldQty,cnfrmdScrpQty,objectNumber,mfgOrdrSttsCd,localSystemStatus,localStatus1
+                    sourceSysCd,mfgOrdrNum,mfgOrdrTypCd,plntCd,crtdDttm,chgDttm,delInd,strtDt,strtTm,endDt,endTm,schdStrtDt,schdStrtTm,schdEndDt,schdEndTm,schRelDt,actStrtDt,actStrtTm,prdtnEndDt,cnfrmdEndDt,cnfrmdEndTm,planRlseDt,actRlseDt,rsrvtnNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,bomCatCd,bomNum,bomAltNum,mrpCntrllrCd,ordrRtngNum,prdSpvsrCd,cnfrmdYldQty,cnfrmdScrpQty,objectNumber,mfgOrdrSttsCd,localSystemStatus,localStatus1,internalTimeStamp
                 </columns>
             </region>
 

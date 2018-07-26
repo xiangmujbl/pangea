@@ -9,7 +9,7 @@ Feature:  OMPGdmTransport
 #		Then A file is found on sink application with name "GDMTransportMergeMain.tsv"
 #		And I execute xd job to merge file "GDMTransportMerge*" to "GDMTransport.tsv" by keyFields "machineTypeId, processTypeId, transportId, purchasingOrganization, active, vendorId, purchasingGroup, label, toLocationId, fromLocationId, planLevelId, activeOPRERP, activeSOPERP, minQuantity, transportOffset, toProductId, transportType, endEff, fromProductId, startEff"
 
-		# TEST AGAINST LOCAL VM
+		# TEST AGAINST LOCAL VM`
 		Given I import "/plan/cns_tlane_item_exception" by keyFields "sequenceNumber,tlaneName,materialNumber"
 			| sequenceNumber	| tlaneName		| materialNumber	| validFrom	| validTo	| originLocation	| destinationLocation	| mode	| leadTime	| deletionIndicator	| processTypeId		| refSeqNumTlaneItem	|
 			| 100				| CO01toBR12	| 59816				| 20180101	| 20181231	| CONS_LATAM_CO01	| CONS_LATAM_BR12		| Ship	| 77		| 					| InternalTransport	| 						|
@@ -205,8 +205,8 @@ Feature:  OMPGdmTransport
 			| TRANSPORT		| InternalTransport			| 60109/CONS_LATAM_BR12/CONS_LATAM_BR07		| BR00						| YES		| 15574		| A05				| Internal Transport (Transport from 1 plant to another plant in the same ERP system, modeled through transport lanes in SAP)	| CONS_LATAM_BR07	| CONS_LATAM_BR12		| *				| YES			| NO			| 	0.0				| 7					| 60109			| Ship			| 2018/12/31 00:00:00	| 60109			| 2018/01/01 00:00:00	|
 			| TRANSPORT		| SubcontractingTransport	| 93937/CONS_LATAM_V_15574/CONS_LATAM_CO01	| CO00						| YES		| 15574		| A03				| Subcontracting Transport (Transport to ship components to a subcontractor)													| CONS_LATAM_CO01	| CONS_LATAM_V_15574	| *				| YES			| NO			| 	0.0				| 28				| 93937			| Ship			| 2998/12/31 23:59:59	| 93937			| 2018/01/01 00:00:00	|
 			| TRANSPORT		| InternalTransport			| 60109/CONS_LATAM_BR12/CONS_LATAM_BR07		| BR00						| YES		| 15574		| A05				| Internal Transport (Transport from 1 plant to another plant in the same ERP system, modeled through transport lanes in SAP)	| CONS_LATAM_BR07	| CONS_LATAM_BR12		| *				| YES			| NO			| 	0.0				| 2					| 60109			| Air			| 2018/12/31 00:00:00	| 60109			| 2018/01/01 00:00:00	|
-#			| TRANSPORT		| InternalTransport			| 441526/CONS_LATAM_BR12/CONS_LATAM_BR25	| BR00						| YES		| 50161		| A08				| Internal Transport (Transport from 1 plant to another plant in the same ERP system, modeled through transport lanes in SAP)	| CONS_LATAM_BR25	| CONS_LATAM_BR12		| *				| YES			| NO			| 	0.0				| 4					| 441526		| Ship			| 2018/12/31 00:00:00	| 441526		| 2018/01/01 00:00:00	|
-#			| TRANSPORT		| InternalTransport			| 59816/CONS_LATAM_CO01/CONS_LATAM_BR12		| BR00						| YES		| 15574		| A07				| Internal Transport (Transport from 1 plant to another plant in the same ERP system, modeled through transport lanes in SAP)	| CONS_LATAM_BR12	| CONS_LATAM_CO01		| *				| YES			| NO			| 	0.0				| 77				| 59816			| Ship			| 2018/12/31 00:00:00	| 				| 2018/01/01 00:00:00	|
+			| TRANSPORT		| InternalTransport			| 441526/CONS_LATAM_BR12/CONS_LATAM_BR25	| BR00						| YES		| 50161		| A08				| Internal Transport (Transport from 1 plant to another plant in the same ERP system, modeled through transport lanes in SAP)	| CONS_LATAM_BR25	| CONS_LATAM_BR12		| *				| YES			| NO			| 	0.0				| 4					| 441526		| Ship			| 2018/12/31 00:00:00	| 441526		| 2018/01/01 00:00:00	|
+			| TRANSPORT		| InternalTransport			| 59816/CONS_LATAM_CO01/CONS_LATAM_BR12		| BR00						| YES		| 15574		| A07				| Internal Transport (Transport from 1 plant to another plant in the same ERP system, modeled through transport lanes in SAP)	| CONS_LATAM_BR12	| CONS_LATAM_CO01		| *				| YES			| NO			| 	0.0				| 77				| 59816			| Ship			| 2018/12/31 00:00:00	| 				| 2018/01/01 00:00:00	|
 
 		#And I delete the test data
 

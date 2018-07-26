@@ -1,5 +1,6 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
 
@@ -56,8 +57,9 @@ public class EDMMaterialGlobalV1DaoImpl extends CommonDaoImpl {
         return queryForList(EDM_MATERIAL_GLOBAL_V1_CLONE, queryString, EDMMaterialGlobalV1Entity.class);
     }
 
-    public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem) {
-        if(localMaterialNumber.isEmpty() || sourceSystem.isEmpty()) {
+    public EDMMaterialGlobalV1Entity getEntityWithLocalMaterialNumberAndSourceSystem(String localMaterialNumber, String sourceSystem)
+    {
+          if(localMaterialNumber.isEmpty() || sourceSystem.isEmpty()) {
             return null;
         }
         String queryString = QueryHelper.buildCriteria(LOCAL_MATERIAL_NUMBER).is(localMaterialNumber)

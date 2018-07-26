@@ -4,20 +4,28 @@ import com.jnj.pangea.common.entity.CommonEntity;
 
 import java.util.Map;
 
-public class PlanCnsCustExclInclEntity extends CommonEntity {
-    private String country;
+public class PlanCnsCustExclInclEntity extends CommonEntity{
+    private String sourceSystem;
     private String salesOrg;
     private String customerShipTo;
+    private String country;
     private String inclExcl;
-    private String sourceSystem;
-
+    ///plan/cns_cust_excl_incl
     public PlanCnsCustExclInclEntity(Map<String, Object> map) {
         super(map);
-        setCountry((String) map.get("country"));
+        setSourceSystem((String) map.get("sourceSystem"));
         setSalesOrg((String) map.get("salesOrg"));
         setCustomerShipTo((String) map.get("customerShipTo"));
+        setCountry((String) map.get("country"));
         setInclExcl((String) map.get("inclExcl"));
-        setSourceSystem((String) map.get("sourceSystem"));
+    }
+
+    public String getSourceSystem() {
+        return sourceSystem;
+    }
+
+    public void setSourceSystem(String sourceSystem) {
+        this.sourceSystem = sourceSystem;
     }
 
     public String getSalesOrg() {
@@ -50,13 +58,5 @@ public class PlanCnsCustExclInclEntity extends CommonEntity {
 
     public void setInclExcl(String inclExcl) {
         this.inclExcl = inclExcl;
-    }
-
-    public String getSourceSystem() {
-        return sourceSystem;
-    }
-
-    public void setSourceSystem(String sourceSystem) {
-        this.sourceSystem = sourceSystem;
     }
 }

@@ -4,7 +4,6 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.RegionsConstant;
  import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
-import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlTriangulationEntity;
 
 import java.util.List;

@@ -1,9 +1,9 @@
 <adf-curation>
-    <curation mainRegion="/ngems/brand_v1" viewRegion="/edm/brand_v1" chunkSize="1000" chunkBytes="4096"
+    <curation mainRegion="/infa_mdm/c_lkup_brnd" viewRegion="/edm/brand_v1" chunkSize="1000" chunkBytes="4096"
               executionClassName="com.jnj.pangea.common.controller.CopyController">
         <regions>
 
-            <region path="/ngems/brand_v1">
+            <region path="/infa_mdm/c_lkup_brnd">
                 <columns>brand,brandDescription</columns>
             </region>
 

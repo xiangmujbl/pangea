@@ -55,7 +55,7 @@
             <region path="/edm/sales_order_v1">
                 <columns>localMaterialNumber,lineDelvStat,localOrderDate,localOrderCreateDt,localOrderReason,localOrderType,localPlant,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,
                     localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,sourceSystem</columns>
-                <filter>lineDelvStat:A OR lineDelvStat:B</filter>
+                <filter>lineDelvStat:B OR lineDelvStat:C</filter>
             </region>
             <region path="/edm/purchase_order_oa_v1">
                 <columns>custNum,delInd,delvCmpltInd,matlNum,outbDelvCmpltInd,plntCd,poCatTypeCd,poLineNbr,poLineQty,poNum,poTypeCd,slsOrdrLineNbr,slsOrdrNum,sourceSystem,stkTfrRecvQty,subcntrcInd,supNum,suplPlntCd</columns>

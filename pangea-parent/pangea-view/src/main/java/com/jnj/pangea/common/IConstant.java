@@ -175,7 +175,6 @@ public interface IConstant {
         String EDM_ADVANCED_SHIP_NOTIFICATION_V1 = "/edm/advanced_ship_notification_v1";
         String EDM_PURCHASE_ORDER_OA_V1 = "/edm/purchase_order_oa_v1";
         String PLAN_CNS_PRODUCT_CUSTOMER = "/plan/cns_productcustomer";
-
         String PROJECT_ONE_PLMZ = "/project_one/plmz";
         String PROJECT_ONE_PLMZ_CLONE = "/project_one/plmz_clone";
     }
@@ -358,7 +357,7 @@ public interface IConstant {
     }
 
     interface PLAN_CNS_PLAN_REGION {
-        String PLANNING_REGION_ID = "planningRegionId";
+        String PLANNING_REGION_ID = "planningRegionID";
     }
 
 
@@ -1089,6 +1088,8 @@ public interface IConstant {
         String LATAM_TECH = "LATAM_TECH";
         String PROJECT_ONE = "project_one";
         String PROJECT_ONE_DEV = "Project_One";
+        String MAX_DATE_VALIDTO="29981231";
+        String MAX_DATE_VALIDTOSLASH="2998/12/31 23:59:59";
         String EMS = "[EMS]";
         String EN = "E";
         String PT = "P";

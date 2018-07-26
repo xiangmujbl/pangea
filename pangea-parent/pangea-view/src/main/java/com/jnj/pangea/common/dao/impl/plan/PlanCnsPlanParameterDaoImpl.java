@@ -201,4 +201,15 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         }
         return null;
     }
+
+    public List<PlanCnsPlanParameterEntity> getEntityWithAttributeListForFBP(String sourceSystem) {
+        if (StringUtils.isBlank(sourceSystem)) {
+            return null;
+        }
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .and("dataObject").is(IConstant.VALUE.SEND_TO_OMP)
+                .toQueryString();
+        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
+
 }
