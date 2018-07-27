@@ -33,7 +33,8 @@ import java.util.Map.Entry;
 
 public class TestBase implements En {
 
-    public static String ENV = "";
+    public static String regionAlias = "";
+    public static Properties regionAliasProperties = null;
 
     public static final String TEST_DATA_FLAG = "_test_reservation_";
     public static final String TOKEN = "token";
@@ -74,10 +75,10 @@ public class TestBase implements En {
     }
 
     public static String getRealRegionPath(String region) {
-        if (StringUtils.isNotEmpty(ENV)) {
-            return "/" + ENV + region;
-        }
-        return region;
+
+        String regionName = regionAliasProperties.getProperty(region);
+        Assert.assertNotNull("region alias not defined! " + region, regionName);
+        return regionName;
     }
 
     public void doExcelData(String excelPath, String[] sheetName, String operationFlg) {
@@ -197,7 +198,7 @@ public class TestBase implements En {
 
     public Set<String> checkData(List<List<String>> list, String[] keyFields, String regionPath) {
         ((HashMap) viewKeys.get()).clear();
-        Assert.assertEquals(list.size()-1, adfService.onPath(getRealRegionPath(regionPath)).count()); //-1 for headers
+        Assert.assertEquals(list.size() - 1, adfService.onPath(getRealRegionPath(regionPath)).count()); //-1 for headers
         Map<String, String> map = Utils.parseList(list, keyFields);
         map.forEach((k, source) -> {
             String value = adfService.onPath(getRealRegionPath(regionPath)).get(k);
@@ -517,7 +518,55 @@ public class TestBase implements En {
         TEST_BASEURL = ADFConfigHelper.getProperty("ui.baseUrl");
         TEST_CTRL_NAME = ADFConfigHelper.getProperty("ui.controlName");
         adfService.login(USERNAME, PASSWORD);
-        ENV = ADFConfigHelper.getProperty("env");
+        regionAlias = ADFConfigHelper.getProperty("regionAlias");
+        loadAlias();
+    }
+
+    private static void loadAlias() {
+        if (StringUtils.isNotEmpty(regionAlias) && null == regionAliasProperties) {
+            try {
+                regionAliasProperties = new Properties();
+                regionAliasProperties.load(TestBase.class.getClassLoader().getResourceAsStream(regionAlias));
+                checkRegionAlias();
+                System.out.println("load region alias:");
+                System.out.println("-----------------------------------------------------");
+                System.out.println(regionAliasProperties);
+                System.out.println("-----------------------------------------------------");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Assert.fail("No alias properties found!");
+        }
+    }
+
+    private static void checkRegionAlias() {
+
+        Map<String, String> error = new HashMap<>();
+        Map<String, String> issue = new HashMap<>();
+        regionAliasProperties.forEach((Object k, Object v) -> {
+            String region = k + "";
+            String alias = v + "";
+            if (region.length() >= alias.length()) {
+                error.put(region, "alias with prefix should be longer than region name");
+            }
+            if (!region.toLowerCase().equals(region) || !alias.toLowerCase().equals(alias)) {
+                issue.put(region, "region name should be in camel case");
+            }
+        });
+
+        System.out.println("check region name:");
+        error.forEach((k, v) -> {
+            System.err.print(String.format("%-50s", k));
+            System.err.print("Error: " + v + "\r\n");
+        });
+        issue.forEach((k, v) -> {
+            System.out.print(String.format("%-50s", k));
+            System.out.print("Warning: " + v + "\r\n");
+        });
+        if (error.size() > 0 || issue.size() > 0) {
+            Assert.fail("invalid region name or alias!");
+        }
     }
 
     @EnableADF
