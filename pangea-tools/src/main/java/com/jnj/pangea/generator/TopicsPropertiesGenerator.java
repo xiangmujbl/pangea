@@ -28,8 +28,8 @@ public class TopicsPropertiesGenerator {
             topicsLocation.add(topicName + ":'${static.file.location}'");
         });
 
-        System.out.println("\r\ntopics=" + String.join(",", topics));
-        System.out.println("\r\nfilenamePrefix.map=" + String.join(",", topicsMaps));
-        System.out.println("\r\nfilePath.map=" + String.join(",", topicsLocation));
+        System.out.println("\ntopics=" + String.join(",", topics));
+        System.out.println("\nfilenamePrefix.map={" + String.join(",", topicsMaps) + "}\n");
+        System.out.println("filePath.map={" + String.join(",", topicsLocation) + "}\n\n");
     }
 }

@@ -13,11 +13,21 @@ public class OMPGdmLfuBo extends BaseBo {
     private String productId;
     private String value;
     private String volume;
+    private String aggregationId;
+
+    public String getAggregationId() {
+        return aggregationId;
+    }
+
+    public void setAggregationId(String aggregationId) {
+        this.aggregationId = aggregationId;
+    }
 
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("lfuId", this.lfuId)
+                .add ( "aggregationId", this.aggregationId)
                 .toJsonString();
     }
 

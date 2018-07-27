@@ -9,7 +9,7 @@ Feature:  OMPGdmTransport
 #		Then A file is found on sink application with name "GDMTransportMergeMain.tsv"
 #		And I execute xd job to merge file "GDMTransportMerge*" to "GDMTransport.tsv" by keyFields "machineTypeId, processTypeId, transportId, purchasingOrganization, active, vendorId, purchasingGroup, label, toLocationId, fromLocationId, planLevelId, activeOPRERP, activeSOPERP, minQuantity, transportOffset, toProductId, transportType, endEff, fromProductId, startEff"
 
-		# TEST AGAINST LOCAL VM
+		# TEST AGAINST LOCAL VM`
 		Given I import "/plan/cns_tlane_item_exception" by keyFields "sequenceNumber,tlaneName,materialNumber"
 			| sequenceNumber	| tlaneName		| materialNumber	| validFrom	| validTo	| originLocation	| destinationLocation	| mode	| leadTime	| deletionIndicator	| processTypeId		| refSeqNumTlaneItem	|
 			| 100				| CO01toBR12	| 59816				| 20180101	| 20181231	| CONS_LATAM_CO01	| CONS_LATAM_BR12		| Ship	| 77		| 					| InternalTransport	| 						|
