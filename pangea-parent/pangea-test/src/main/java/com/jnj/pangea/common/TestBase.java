@@ -18,7 +18,6 @@ import com.jnj.pangea.common.utils.ExcelData;
 import com.jnj.pangea.common.utils.RegionData;
 import com.jnj.pangea.common.utils.ResolveData;
 import com.jnj.pangea.common.utils.Utils;
-import com.jnj.pangea.sentence.PangeaSteps;
 import cucumber.api.java8.En;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -528,6 +527,7 @@ public class TestBase implements En {
             try {
                 regionAliasProperties = new Properties();
                 regionAliasProperties.load(TestBase.class.getClassLoader().getResourceAsStream(regionAlias));
+                checkRegionAlias();
                 System.out.println("load region alias:");
                 System.out.println("-----------------------------------------------------");
                 System.out.println(regionAliasProperties);
@@ -535,6 +535,37 @@ public class TestBase implements En {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            Assert.fail("No alias properties found!");
+        }
+    }
+
+    private static void checkRegionAlias() {
+
+        Map<String, String> error = new HashMap<>();
+        Map<String, String> issue = new HashMap<>();
+        regionAliasProperties.forEach((Object k, Object v) -> {
+            String region = k + "";
+            String alias = v + "";
+            if (region.length() >= alias.length()) {
+                error.put(region, "alias with prefix should be longer than region name");
+            }
+            if (!region.toLowerCase().equals(region) || !alias.toLowerCase().equals(alias)) {
+                issue.put(region, "region name should be in camel case");
+            }
+        });
+
+        System.out.println("check region name:");
+        error.forEach((k, v) -> {
+            System.err.print(String.format("%-50s", k));
+            System.err.print("Error: " + v + "\r\n");
+        });
+        issue.forEach((k, v) -> {
+            System.out.print(String.format("%-50s", k));
+            System.out.print("Warning: " + v + "\r\n");
+        });
+        if (error.size() > 0 || issue.size() > 0) {
+            Assert.fail("invalid region name or alias!");
         }
     }
 
