@@ -21,7 +21,13 @@ Feature: OMPGdmReqFromErp-Consumption
     | 1402042907 | 98017 | 20180727 | VE01 | 2 | USS | 0000004321 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | VE01 | VE00 | A | VE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
     | 1402042908 | 98018 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B | FALSE | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
     | 1402042909 | 98019 | 20180727 | PE01 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B | FALSE | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | PE01 | PE00 | A | PE01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
-
+    | 1402042910 | 56425 | 20190101 | CR01 | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE | X | TRUE |  | 20121001 | FALSE                  |
+    | 1402042911 | 56425 | 20190101 | CR01 | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B | X | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
+    | 1402042912 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
+    | 1402042913 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
+    | 1402042914 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
+    | 1402042915 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
+    | 1402042916 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
     And I wait "/edm/purchase_requisition_v1" Async Queue complete
 
     Given I import "/plan/cns_tlane_control" by keyFields "sequenceNumber,tlaneName"
@@ -69,6 +75,11 @@ Feature: OMPGdmReqFromErp-Consumption
     | | I | plntCd | PE01 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
     | | I | plntCd | UY09 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
     | | I | plntCd | VE02 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+    | | E | plntCd | CR0X | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+    | | I | X      | CR0X | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+    | | I | plntCd | CR0X | X        | NB | purchase_requisition | CONS_LATAM |
+    | | I | plntCd | CR0X | prTypeCd | NB | X                    | CONS_LATAM |
+    | | I | plntCd | CR0X | prTypeCd | NB | purchase_requisition | X          |
 
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
 
@@ -100,6 +111,7 @@ Feature: OMPGdmReqFromErp-Consumption
     |  | GT | USD | X | PE01 | J&J Guatemala - S&M Consumer | DC | PE01 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
     | UY | UY | UYL |  | UY09 | J&J Guatemala - S&M Consumer | DC | UY09 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
     | VE | VT | USD | X | VE01 | J&J Guatemala - S&M Consumer | DC | VE01 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
+    | CR | AR | ARS | X | CR0X | Pilar Plant |  | CR0X | AR, ARGENTINA ARGENTINA | Pilar | CONS_LATAM |
 
 
     And I wait "/edm/plant_v1" Async Queue complete
@@ -121,12 +133,13 @@ Feature: OMPGdmReqFromErp-Consumption
     | X |  | 98016 |  | PE01 | 98016 |  |  | 98016 | CONS_LATAM | X |
     | X |  | 98017 |  | VE01 | 98017 |  |  | 98017 | CONS_LATAM | S |
     | X |  | 98018 |  | PE01 | 98018 |  |  | 98018 | CONS_LATAM | X |
+    | X |  | 56425 |  | CR0X | 56425 |  |  | 56425 | CONS_LATAM | X |
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
     Given I import "/edm/material_global_v1" by keyFields "localMaterialNumber,sourceSystem"
     | baseUom | batchManageIndicator | localBaseUom | localMaterialGroup | localMaterialNumber | materialNumber | materialStatus | materialType | minRemShelfLife | parentCode | primaryPlanningCode | productFamily | refDescription | sourceSystem | subBrand | totalShelfLife | brand | category | division | flagForDeletion | form | franchise | globalBusinessUnit | globalDpParentCode |  | localDpParentCode | localManufacturingTechnology |  |  | localMaterialType | localRefDescription |
-    | |   | EA | 80141605 | 61021 |  | 8 |  | 0 |  | 61021 |  |  | CONS_LATAM |  | 0 |  |  | 10 |   |  |  |  |  |  |  |  |  |  | PROM | TM-DVD LG TAT |
+    | |   | EA | 80141605 | 61021 |  | 8 |  | 0 |  | 61022 |  |  | CONS_LATAM |  | 0 |  |  | 10 |   |  |  |  |  |  |  |  |  |  | PROM | TM-DVD LG TAT |
     | | X | TH | PKG009 | 55755 | 55755 | 8 |  | 1 |  |  |  |  | CONS_LATAM |  | 550 |  |  | 10 |   |  |  |  |  |  |  |  |  |  | PACK | C-ROT PARA FR 200ML JS OLEO AMENDOAS |
     | |   | EA | 1 | 60831 | 60831 | 8 |  | 0 |  | 60831 |  |  | CONS_LATAM |  | 0 |  |  | 10 |   |  |  |  |  |  |  |  |  |  | NLAG | SUNDOWN GEL APOS-SOL 12X130 GR(55698)  |
     | |   | EA | 0 | 96877 | 96877 | 0 |  | 1 |  | 96877 |  |  | CONS_LATAM |  | 730 |  |  | 10 |   |  |  |  |  |  |  |  |  |  | PACK | CX 6 KIT PROM SDW FPS50 200 ML GR SOFT |
@@ -177,7 +190,7 @@ Feature: OMPGdmReqFromErp-Consumption
     | CONS_LATAM/1505694358/10 |  |  | NO | 2015/10/23 00:00:00 | BA | CONS_LATAM/1505694358 | 10 | CONS_LATAM/1505694358/10 | 26593| CONS_LATAM_GT01 | 0 | 1 | 0 | 60831 | NB | 72   | EA |  | CONS_LATAM_GT01 |
     | CONS_LATAM/1773765928/10 |  |  | NO | 2019/01/01 00:00:00 | BA | CONS_LATAM/1773765928 | 10 | CONS_LATAM/1773765928/10 | 4672 | CONS_LATAM_CO01 | 0 | 40| 0 | 66845 | NB | 120  | EA |  | CONS_LATAM_CO01 |
     | CONS_LATAM/1402042617/10 |  |  | NO | 2019/01/01 00:00:00 | BA | CONS_LATAM/1402042617 | 10 | CONS_LATAM/1402042617/10 | 8917 | CONS_LATAM_CR01 | 0 | 0 | 0 | 56425 | NB | 90   | EA |  |  |
-    | CONS_LATAM/1773590231/10 |  |  | NO | 2018/07/22 00:00:00 | BA | CONS_LATAM/1773590231 | 10 | CONS_LATAM/1773590231/10 | 8917 | CONS_LATAM_MX02 | 0 | 2 | 0 | 61021 | NB | 4476 | EA |  | CONS_LATAM_MX02 |
+    | CONS_LATAM/1773590231/10 |  |  | NO | 2018/07/22 00:00:00 | BA | CONS_LATAM/1773590231 | 10 | CONS_LATAM/1773590231/10 | 8917 | CONS_LATAM_MX02 | 0 | 2 | 0 | 61022 | NB | 4476 | EA |  | CONS_LATAM_MX02 |
     | CONS_LATAM/1505694359/10 |  |  | NO | 2019/11/04 00:00:00 | BA | CONS_LATAM/1505694359 | 10 | CONS_LATAM/1505694359/10 | 1111 | CONS_LATAM_MX02 | 0 | 40| 0 | 96877 | NB | 504  | EA |  | CONS_LATAM_MX02 |
     | CONS_LATAM/1402042901/20 |  |  | NO | 2018/07/28 00:00:00 | BA | CONS_LATAM/1402042901 | 20 | CONS_LATAM/1402042901/20 | 8898 | CONS_LATAM_PE01 | 0 | 10 | 0 | 98011 | NB | 110 | LA_ZUM |  |             |
     | CONS_LATAM/1402042902/20 |  |  | NO | 2018/07/28 00:00:00 | BA | CONS_LATAM/1402042902 | 20 | CONS_LATAM/1402042902/20 | 8898 | CONS_LATAM_MX02 | 0 | 10 | 0 | 98012 | NB | 120 | LA_ZUM |  |             |
