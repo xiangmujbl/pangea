@@ -28,6 +28,11 @@ Feature: OMPGdmReqFromErp-Consumption
     | 1402042914 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
     | 1402042915 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
     | 1402042916 | 56425 | 20190101 | CR0X | 2 | USS | 8917 | 0 |  | 0 | 0 | 3 | 10 | 90 | EA | M59 | 20121001 | K | B |  | N | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | CR00 | A | CR01 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE                  |
+    | 1500000001 | 15051 | 20180727 | MX02 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | M59 | 20180727 | K | B |  | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | MX00 | A | MX02 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE | X | TRUE |  | 20121001 | FALSE |
+    | 1500000002 | 15052 | 20180727 | VE09 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | V59 | 20180727 | K | B |  | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | VE00 | A | VE09 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1500000003 | 15053 | 20180727 | VE08 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | V59 | 20180727 | K | B |  | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | VE00 | A | VE08 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1500000004 | 15054 | 20180727 | VE07 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | V59 | 20180727 | K | B |  | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | VE00 | A | VE07 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
+    | 1500000005 | 15055 | 20180727 | VE06 | 2 | USS | 0000008898 | 10 |  | 0 | 1 | 3 | 20 | 110 | EA | V59 | 20180727 | K | B |  | M | NB | 3 |  |  |  |  |  | 0 | 47920410 | FALSE |  | FALSE |  |  | 0 |  |  |  | MOTRIN INFANTIL 120ML 2 PACK C/12 | M11 | VE00 | A | VE06 | CONS_LATAM |  |  |  |  |  | 20130110 | Motrin PROD |  | 0 |  |  |  |  |  | TRUE | FALSE |  |  | 0 |  |  | FALSE |  | TRUE |  | 20121001 | FALSE |
     And I wait "/edm/purchase_requisition_v1" Async Queue complete
 
     Given I import "/plan/cns_tlane_control" by keyFields "sequenceNumber,tlaneName"
@@ -80,6 +85,11 @@ Feature: OMPGdmReqFromErp-Consumption
     | | I | plntCd | CR0X | X        | NB | purchase_requisition | CONS_LATAM |
     | | I | plntCd | CR0X | prTypeCd | NB | X                    | CONS_LATAM |
     | | I | plntCd | CR0X | prTypeCd | NB | purchase_requisition | X          |
+    | | I | plntCd | VE09 | prTypeCd | NB | purchase_order | CONS_LATAM |
+    | | I |  | VE08 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+    | | I | plntCd | VE07 |  | NB | purchase_requisition | CONS_LATAM |
+    | | E | plntCd | VE06 | prTypeCd | NB | purchase_requisition | CONS_LATAM |
+
 
     And I wait "/plan/cns_plan_object_filter" Async Queue complete
 
@@ -112,6 +122,11 @@ Feature: OMPGdmReqFromErp-Consumption
     | UY | UY | UYL |  | UY09 | J&J Guatemala - S&M Consumer | DC | UY09 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
     | VE | VT | USD | X | VE01 | J&J Guatemala - S&M Consumer | DC | VE01 | GT, GUATEMALA GUATEMALA | Guatemala DC | CONS_LATAM |
     | CR | AR | ARS | X | CR0X | Pilar Plant |  | CR0X | AR, ARGENTINA ARGENTINA | Pilar | CONS_LATAM |
+    | VE | CL | CLP | X | VE09 | J&J CL-Santiago-Chile Consumer | DC | VE09 | CL, CHILE CHILE | Chile DC | CONS_LATAM |
+    | VE | CL | CLP | X | VE08 | J&J CL-Santiago-Chile Consumer | DC | VE08 | CL, CHILE CHILE | Chile DC | CONS_LATAM |
+    | VE | CL | CLP | X | VE07 | J&J CL-Santiago-Chile Consumer | DC | VE07 | CL, CHILE CHILE | Chile DC | CONS_LATAM |
+    | VE | CL | CLP | X | VE06 | J&J CL-Santiago-Chile Consumer | DC | VE06 | CL, CHILE CHILE | Chile DC | CONS_LATAM |
+
 
 
     And I wait "/edm/plant_v1" Async Queue complete
@@ -134,6 +149,12 @@ Feature: OMPGdmReqFromErp-Consumption
     | X |  | 98017 |  | VE01 | 98017 |  |  | 98017 | CONS_LATAM | S |
     | X |  | 98018 |  | PE01 | 98018 |  |  | 98018 | CONS_LATAM | X |
     | X |  | 56425 |  | CR0X | 56425 |  |  | 56425 | CONS_LATAM | X |
+    | X |  | 15051 |  | MX02 | 15051 |  |  | 15051 | CONS_LATAM | X |
+    | X |  | 15052 |  | VE09 | 15052 |  |  | 15052 | CONS_LATAM | X |
+    | X |  | 15053 |  | VE08 | 15053 |  |  | 15053 | CONS_LATAM | X |
+    | X |  | 15054 |  | VE07 | 15054 |  |  | 15054 | CONS_LATAM | X |
+    | X |  | 15055 |  | VE06 | 15055 |  |  | 15055 | CONS_LATAM | X |
+
 
     And I wait "/plan/cns_material_plan_status" Async Queue complete
 
@@ -154,6 +175,12 @@ Feature: OMPGdmReqFromErp-Consumption
     | TS | X | TX |   | 98016 | 98016 | 1 |  | 0 |  | 98016 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
     | TS | X | TS |   | 98017 | 98017 | 1 |  | 0 |  | 98017 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
     | TS | X | TS |   | 98018 | 98018 | 1 |  | 0 |  | 98018 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 15051 | 14051 | 1 |  | 0 |  | 15051 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 15052 | 15052 | 1 |  | 0 |  | 15052 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 15053 | 15053 | 1 |  | 0 |  | 15053 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 15054 | 15054 | 1 |  | 0 |  | 15054 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+    | TS | X | TS |   | 15055 | 15055 | 1 |  | 0 |  | 15055 |  |  | CONS_LATAM |  | 0 |  |  |   |   |  |  |  |  |  |  |  |  |  | CBAU | EMS - Indisponivel para LATAM |
+
 
 
     And I wait "/edm/material_global_v1" Async Queue complete
