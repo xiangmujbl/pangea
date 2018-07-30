@@ -9,11 +9,10 @@ import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mfg_rtng_seq.bo.EDMMfgRtngSeqBo;
+import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class EDMMfgRtngSeqServiceImpl implements ICommonService {
     private static EDMMfgRtngSeqServiceImpl instance;
@@ -47,6 +46,8 @@ public class EDMMfgRtngSeqServiceImpl implements ICommonService {
            if (StringUtils.isNotEmpty(plnty)){
                if ( IConstant.VALUE.TWO.equals(plnty) || IConstant.VALUE.N.equals(plnty) ){
                    mfgRtngSeqBo.setRtngTypCd(plnty);
+               }else{
+                   return resultObject;
                }
            }
         }
@@ -95,14 +96,20 @@ public class EDMMfgRtngSeqServiceImpl implements ICommonService {
                 }
                 for (PlflEntity st : plflEntitylist) {
                     if (Integer.parseInt(st.getZaehl()) > Integer.parseInt(zaehl)) {
-                        mfgRtngSeqBo.setSeqValidToDate(st.getDatuv());
+                        //mfgRtngSeqBo.setSeqValidToDate(st.getDatuv());
+                        Date fromDueDate = DateUtils.stringToDate(st.getDatuv(), DateUtils.F_yyyyMMdd);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(fromDueDate);
+                        calendar.add(Calendar.DATE, -1);
+                        String datu = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
+                        mfgRtngSeqBo.setSeqValidToDate(datu);
                         mfgRtngSeqBo.setChgNum(st.getAennr());
                         break;
                     }
                 }
             } else {
                 mfgRtngSeqBo.setSeqValidToDate(IConstant.VALUE.BOM_VlD_ToDt);
-                mfgRtngSeqBo.setChgNum(plflEntity.getAennr());
+               // mfgRtngSeqBo.setChgNum(plflEntity.getAennr());
 
             }
         }

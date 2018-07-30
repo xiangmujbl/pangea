@@ -1,16 +1,16 @@
 package com.jnj.pangea.edm.mfg_rtng_hdr.service;
 
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOnePlkoDaoImpl;
-import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.project_one.PlkoEntity;
+import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
+import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
 import com.jnj.pangea.common.service.ICommonService;
 import com.jnj.pangea.edm.mfg_rtng_hdr.bo.EDMMfgRtngHdrBo;
 import com.jnj.pangea.util.DateUtils;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -37,10 +37,10 @@ public class EDMMfgRtngHdrServiceImpl implements ICommonService {
 
         EDMMfgRtngHdrBo mfgRtngHdrBo = new EDMMfgRtngHdrBo();
 
-        if (plkoEntity.getLoekz() != null && plkoEntity.getLoekz().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_LOEKZ_VALUE_X)) {
+        if(plkoEntity.getLoekz()!=null&&plkoEntity.getLoekz().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_LOEKZ_VALUE_X)){
             return resultObject;
         }
-        if (plkoEntity.getPlnty() != null && !plkoEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_2) && !plkoEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_N)) {
+        if(plkoEntity.getPlnty()!=null&&!plkoEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_2)&&!plkoEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_N)){
             return resultObject;
         }
         mfgRtngHdrBo.setRtngTypCd(plkoEntity.getPlnty());
@@ -66,40 +66,36 @@ public class EDMMfgRtngHdrServiceImpl implements ICommonService {
             mfgRtngHdrBo.setSrcSysCd(sourceSystemV1Entity.getSourceSystem());
         }
 
-        List<PlkoEntity> list = projectOnePlkoDao.getProjectOneMaplClone(plkoEntity.getPlnty(), plkoEntity.getPlnnr(), plkoEntity.getPlnal());
-        if (list != null && list.size() > 1) {
-            PlkoEntity projectOneplkoEntity = getNextRecord(list, plkoEntity.getZaehl());
-            if (projectOneplkoEntity != null) {
+        List<PlkoEntity> list= projectOnePlkoDao.getProjectOneMaplClone(plkoEntity.getPlnty(),plkoEntity.getPlnnr(),plkoEntity.getPlnal());
+        if(list!=null&&list.size()>1){
+            PlkoEntity projectOneplkoEntity=getNextRecord(list,plkoEntity.getZaehl());
+            if(projectOneplkoEntity!=null){
                 Date fromDueDate = DateUtils.stringToDate(projectOneplkoEntity.getDatuv(), DateUtils.F_yyyyMMdd);
-                mfgRtngHdrBo.setRtgVld_ToDt(DateUtils.dateToString(fromDueDate, DateUtils.yyyy_MM_dd));
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(fromDueDate);
-                calendar.add(Calendar.DATE, -1);
-                String VldToDt = DateUtils.dateToString(calendar.getTime(), DateUtils.F_yyyyMMdd);
-                mfgRtngHdrBo.setRtgVld_ToDt(VldToDt);
-            } else {
-                mfgRtngHdrBo.setRtgVld_ToDt(IConstant.MFG_RTNG_HDR.FIELD_MATLRTNGVALID_TO);
+                mfgRtngHdrBo.setRtgVld_ToDt(DateUtils.dateToString(fromDueDate, DateUtils.F_yyyyMMdd));
+            }else{
+                mfgRtngHdrBo.setRtgVld_ToDt(IConstant.MFG_RTNG_RLTNSHP.FIELD_MATLRTNGVALID_TO);
             }
-        } else {
-            mfgRtngHdrBo.setRtgVld_ToDt(IConstant.MFG_RTNG_HDR.FIELD_MATLRTNGVALID_TO);
+        }else{
+            mfgRtngHdrBo.setRtgVld_ToDt(IConstant.MFG_RTNG_RLTNSHP.FIELD_MATLRTNGVALID_TO);
         }
 
         resultObject.setBaseBo(mfgRtngHdrBo);
         return resultObject;
     }
 
-    public PlkoEntity getNextRecord(List<PlkoEntity> list, String zaehl) {
-        Iterator<PlkoEntity> iterable = list.iterator();
+    public PlkoEntity getNextRecord(List<PlkoEntity> list, String zaehl){
+        Iterator<PlkoEntity> iterable=list.iterator();
         try {
-            while (iterable.hasNext()) {
-                PlkoEntity ProjectOnePlkoEntity = iterable.next();
-                if (ProjectOnePlkoEntity.getZaehl().equalsIgnoreCase(zaehl)) {
-                    if (iterable.hasNext()) {
+            while (iterable.hasNext()){
+                PlkoEntity ProjectOnePlkoEntity=  iterable.next();
+                LogUtil.getCoreLog().info("==========="+zaehl+ProjectOnePlkoEntity.toString());
+                if(ProjectOnePlkoEntity.getZaehl().equalsIgnoreCase(zaehl)){
+                    if(iterable.hasNext()){
                         return iterable.next();
                     }
                 }
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
         return null;
