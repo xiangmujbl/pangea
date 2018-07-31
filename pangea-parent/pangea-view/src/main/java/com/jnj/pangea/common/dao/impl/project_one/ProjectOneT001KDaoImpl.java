@@ -1,11 +1,16 @@
 package com.jnj.pangea.common.dao.impl.project_one;
 
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
+
+ import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.project_one.T001KEntity;
 
 public class ProjectOneT001KDaoImpl extends CommonDaoImpl {
+
+    public static final String PROJECT_ONE_T001K = "/project_one/t001k";
+
+    public static final String BWKEY = "bwkey";
 
     private static ProjectOneT001KDaoImpl instance;
 
@@ -19,7 +24,7 @@ public class ProjectOneT001KDaoImpl extends CommonDaoImpl {
 
     public T001KEntity getEntityWithBwkey(String bwkey) {
 
-        String QueryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_T001K.BWKEY).is(bwkey).toQueryString();
-        return queryForObject(IConstant.REGION.PROJECT_ONE_T001K, QueryString, T001KEntity.class);
+        String QueryString = QueryHelper.buildCriteria(BWKEY).is(bwkey).toQueryString();
+        return queryForObject(PROJECT_ONE_T001K, QueryString, T001KEntity.class);
     }
 }

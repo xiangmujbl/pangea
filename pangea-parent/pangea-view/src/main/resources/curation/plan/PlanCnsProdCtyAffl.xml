@@ -1,5 +1,5 @@
 <adf-curation>
-    <curation mainRegion="/edm/material_global_v1" viewRegion="/plan/cns_prod_cty_affl" chunkSize="1000" chunkBytes="40096"
+    <curation mainRegion="/edm/material_global_v1" viewRegion="/plan/cns_prod_cty_affl_temp" chunkSize="1000" chunkBytes="40096"
               executionClassName="com.jnj.pangea.plan.cns_prod_cty_affl.controller.PlanCnsProdCtyAfflController">
         <regions>
 
@@ -12,7 +12,7 @@
                     <relation path="/edm/source_system_v1" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
-                    <relation path="/plan/cns_prod_cty_affl_input" isPrimaryKey="false">
+                    <relation path="/plan/cns_prod_cty_affl" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
 
@@ -35,11 +35,11 @@
             <region path="/edm/plant_v1">
                 <columns>sourceSystem,localPlant,country</columns>
             </region>
-            <region path="/plan/cns_prod_cty_affl_input">
+            <region path="/plan/cns_prod_cty_affl">
                 <columns>sourceSystem,dpParentCode,country,prodClassification,ovrProdClass,prodStatus,ovrProdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp</columns>
             </region>
 
-            <region path="/plan/cns_prod_cty_affl">
+            <region path="/plan/cns_prod_cty_affl_temp">
                 <columns>sourceSystem,dpParentCode,country,prodClassification,ovrProdClass,prodStatus,ovrProdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp</columns>
             </region>
 

@@ -243,7 +243,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
      */
     private boolean ruleN6(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity){
         if ((planCnsMaterialPlanStatusEntity.getSpRelevant() != null && planCnsMaterialPlanStatusEntity.getSpRelevant().equals(X)) && (materialGlobalV1Entity.getLocalMaterialNumber() != null && materialGlobalV1Entity.getLocalMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum()))) {
-                //Step 3
+            //Step 3
             if (materialGlobalV1Entity.getPrimaryPlanningCode() != null && materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
                 gdmReqFromErpBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
             } else {
@@ -286,7 +286,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             if (planObjectFilterEntity != null && edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
                 gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()
                         + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
-                 return true;
+                return true;
             }
         }
         return false;

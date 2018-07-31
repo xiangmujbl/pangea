@@ -1,8 +1,9 @@
 <adf-curation xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.omp.gdm_demand_sto.OMPGdmDemandSTO" writeTo="all"
-                  topic="PANGEA_V1_omp_gdm_demand">
+                  topic="PANGEA_V1_omp_gdm_demand_sto">
 
         <regions>
             <region path="/edm/purchase_order_oa_v1" mainRegion="true" lucene="true">
+                <filter>evTypeCd:8</filter>
                 <columns>
                     delvSchedCntNbr,poLineNbr,poNum,localdelvDt,poTypeCd,poUomCd,prchsngOrgNum,sourceSystem,
                     custNum,plntCd,poLineQty,suplPlntCd,matlNum,cnfrmQty,recvEaQty,localNumerator,localDenominator,localPDT,delInd,localBaseUOM,
@@ -31,7 +32,7 @@
                     <region path="/plan/cns_plan_unit" isPrimaryKey="false">
                         <columns>localUom,sourceSystem,uom,unit</columns>
                         <expression>
-                            localUom=/edm/purchase_order_oa_v1.poUomCd,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
+                            localUom=/edm/purchase_order_oa_v1.localBaseUOM,sourceSystem=/edm/purchase_order_oa_v1.sourceSystem
                         </expression>
                     </region>
                     <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
@@ -161,7 +162,7 @@
                                         <set name="productId" value="materialMumber"/>
                                     </elseIf>
                                     <else>
-                                        <set name="productId" value="''"/>
+                                        <return/>
                                     </else>
                                 </ref>
                             </if>
@@ -176,6 +177,7 @@
                 </column>
                 <!--ST05-->
                 <column name="demandId" isPK="true">
+
                     <if test="StringInner.isStringNotEmpty(delInd) || StringInner.isStringNotEmpty(delvCmpltInd) || StringInner.isStringNotEmpty(outbDelvCmpltInd)">
                         <return/>
                     </if>
@@ -237,6 +239,9 @@
 
                 <!--ST10-->
                 <column name="minRemainingShelfLife" var="minShelfLife">
+                    <if test="StringInner.isStringEmpty(productId)">
+                        <return/>
+                    </if>
                     <ref method="ConProdLocMinshelfThree" parameter="sourceSystem,plntCd,matlNum" value="minShelfLife"
                          resultType="Map" var="mapThree">
                         <if test="mapThree == null">

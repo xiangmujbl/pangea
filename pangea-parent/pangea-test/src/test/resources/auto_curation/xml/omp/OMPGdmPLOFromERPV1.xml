@@ -1,0 +1,240 @@
+<adf-curation  xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.omp.gdm_plo_from_erp.controller.OMPGdmPLOFromERPController" writeTo="all" topic="PANGEA_V1_omp_gdm_plo_from_erp_v1">
+    <regions>
+        <region path="/edm/planned_order_v1" mainRegion="true" lucene="true">
+            <columns>srcSysCd,mfgPlanOrdrDocId,prdtnFnshdDt,planOrdrEndDt,grDaysLeadQty,plntCd,matlNum,prdtnStrtDt,planOrdrStrtDt,plngScnroCd,prdtnVers,planOrdrQty,planOrdrTypeCd,internalTimeStamp</columns>
+            <filter>plngScnroCd:000</filter>
+            <relations>
+                <region path="/plan/cns_material_plan_status" isPrimaryKey="false"  lucene="true">
+                    <columns>sourceSystem,localPlant,localMaterialNumber,materialNumber,spRelevant</columns>
+                    <expression>sourceSystem=/edm/planned_order_v1.srcSysCd,localPlant=/edm/planned_order_v1.plntCd,materialNumber=/edm/planned_order_v1.matlNum</expression>
+                    <filter>spRelevant:X</filter>
+                </region>
+                <region path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true">
+                    <columns>UUID,sourceSystem,localPlant,localPlanningRelevant</columns>
+                    <expression>sourceSystem=/edm/planned_order_v1.srcSysCd,localPlant=/edm/planned_order_v1.plntCd</expression>
+                    <filter>localPlanningRelevant:X</filter>
+                </region>
+                <region path="/edm/material_global_v1" isPrimaryKey="false">
+                    <columns>sourceSystem,localMaterialNumber,primaryPlanningCode,localBaseUom</columns>
+                    <expression>sourceSystem=/edm/planned_order_v1.srcSysCd,localMaterialNumber=/edm/planned_order_v1.matlNum</expression>
+                    <relations>
+                        <region path="/plan/cns_plan_unit" isPrimaryKey="false">
+                            <columns>localUom,localUomName,plantFlag,sourceSystem,unit</columns>
+                            <expression>localUom=/edm/material_global_v1.localBaseUom</expression>
+                        </region>
+                    </relations>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="joinCnsMaterialPlanStatus" resultType="Map" isPK="false" path="/plan/cns_material_plan_status">
+            <parameters>
+                <parameter name="sourceSystem" value="srcSysCd" relationship="and"/>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
+                <parameter name="materialNumber" value="matlNum" relationship="and"/>
+                <parameter name="spRelevant" value="'X'"/>
+            </parameters>
+        </method>
+        <method name="joinCnsPlantAttr"  resultType="Map" isPK="false" path="/plan/cns_plant_attr" >
+            <parameters>
+                <parameter name="sourceSystem" value="srcSysCd"  relationship="and"/>
+                <parameter name="localPlant" value="plntCd" relationship="and"/>
+                <parameter name="localPlanningRelevant" value="'X'"/>
+            </parameters>
+        </method>
+        <method name="joinMaterialGlobalV1" path="/edm/material_global_v1" resultType="Map" isPK="false">
+            <parameters>
+                <parameter name="sourceSystem" value="srcSysCd" relationship="and"/>
+                <parameter name="localMaterialNumber" value="matlNum"/>
+            </parameters>
+        </method>
+        <method name="joinCnsPlanUnit" isPK="false" resultType="Map" path="/plan/cns_plan_unit">
+            <parameters>
+                <parameter name="localUom" value="localBaseUom"/>
+            </parameters>
+        </method>
+    </methods>
+    <viewRegion name="/omp/gdm_plo_from_erp">
+        <vars>
+            <var name="prdtnVers" value="prdtnVers" />
+            <var name="srcSysCd" value="srcSysCd"/>
+            <var name="plntCd" value="plntCd"/>
+            <var name="matlNum" value="matlNum"/>
+            <var name="planOrdrQty" value="planOrdrQty"/>
+            <var name="mfgPlanOrdrDocId" value="mfgPlanOrdrDocId"/>
+            <var name="prdtnFnshdDt" value="prdtnFnshdDt"/>
+            <var name="planOrdrEndDt" value="planOrdrEndDt"/>
+            <var name="grDaysLeadQty" value="grDaysLeadQty"/>
+            <var name="prdtnStrtDt" value="prdtnStrtDt"/>
+            <var name="planOrdrStrtDt" value="planOrdrStrtDt"/>
+            <var name="planOrdrTypeCd" value="planOrdrTypeCd"/>
+            <var name="internalTimeStamp" value="internalTimeStamp"/>
+
+            <var name="totalQuantityOut" value=""/>
+            <var name="unitIdOut" value=""/>
+            <var name="deleted" value="'NO'"/>
+        </vars>
+        <columns >
+            <column name="PLOFromERPId"  isPK="true" >
+                <if test="StringInner.isStringNotEmpty(srcSysCd)&amp;&amp;StringInner.isStringNotEmpty(mfgPlanOrdrDocId)">
+                    <set name="PLOFromERPId" value="StringInner.join(srcSysCd,'/',mfgPlanOrdrDocId)"/>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <column name="deleted" var="'NO'"/>
+            <column name="endDate" >
+                <if test="StringInner.isStringNotEmpty(prdtnFnshdDt)&amp;&amp;StringInner.isStringNotEmpty(grDaysLeadQty)">
+                    <set name="endDate" value="OMPGdmPLOFromErpV1Hook.addDateByWorksday(prdtnFnshdDt,grDaysLeadQty)"/>
+                </if>
+                <else>
+                    <if test="StringInner.isStringNotEmpty(planOrdrEndDt)&amp;&amp;StringInner.isStringNotEmpty(grDaysLeadQty)">
+                        <set name="endDate" value="OMPGdmPLOFromErpV1Hook.addDateByWorksday(planOrdrEndDt,grDaysLeadQty)"/>
+                    </if>
+                    <else>
+                        <set name="endDate" value="OMPGdmPLOFromErpV1Hook.addDateByWorksday(planOrdrEndDt,'0')"/>
+                    </else>
+                </else>
+            </column>
+            <column name="ERPId" >
+                <if test="StringInner.isStringNotEmpty(srcSysCd)&amp;&amp;StringInner.isStringNotEmpty(mfgPlanOrdrDocId)">
+                    <set name="ERPId" value="StringInner.join(srcSysCd,'/',mfgPlanOrdrDocId)"/>
+                </if>
+                <else>
+                    <return/>
+                </else>
+            </column>
+            <column name="internalTimeStamp" >
+                <if test="StringInner.isStringNotEmpty(internalTimeStamp)">
+                    <set name="internalTimeStamp" value="internalTimeStamp"/>
+                </if>
+                <else>
+                    <set name="internalTimeStamp" value="''"/>
+                </else>
+            </column>
+            <column name="kdauf" var="''" />
+            <column name="kdpos" var="''" />
+            <column name="locationId" >
+                <if test="StringInner.isStringNotEmpty(srcSysCd)&amp;&amp;StringInner.isStringNotEmpty(plntCd)">
+                    <ref method="joinCnsPlantAttr" parameter="srcSysCd,plntCd" resultType="Map" var="cnsPlantAttrMap">
+                        <if test="StringInner.isStringNotEmpty(matlNum)">
+                            <ref method="joinCnsMaterialPlanStatus" parameter="srcSysCd,plntCd,matlNum" resultType="Map" var="cnsMaterialPlanStatusMap">
+                                <set name="locationId" value="StringInner.join(srcSysCd,'_',plntCd)"/>
+                            </ref>
+                            <if test="cnsMaterialPlanStatusMap==null">
+                                <set name="locationId" value="''"/>
+                            </if>
+                        </if>
+                        <else>
+                            <set name="locationId" value="''"/>
+                        </else>
+                    </ref>
+                    <if test="cnsPlantAttrMap==null">
+                        <set name="locationId" value="''"/>
+                    </if>
+                </if>
+                <else>
+                    <set name="locationId" value="''"/>
+                </else>
+            </column>
+            <column name="manualOffset" var="'0'" />
+            <column name="PLOType">
+                <if test="StringInner.isStringNotEmpty(planOrdrTypeCd)">
+                    <set name="PLOType" value="planOrdrTypeCd"/>
+                </if>
+                <else>
+                    <set name="PLOType" value="''"/>
+                </else>
+            </column>
+            <column name="productId">
+                <if test="StringInner.isStringNotEmpty(srcSysCd)&amp;&amp;StringInner.isStringNotEmpty(plntCd)">
+                    <ref method="joinCnsPlantAttr" parameter="srcSysCd,plntCd" resultType="Map" var="cnsPlantAttrMap">
+                       <if test="StringInner.isStringNotEmpty(matlNum)">
+                           <ref method="joinCnsMaterialPlanStatus" parameter="srcSysCd,plntCd,matlNum" resultType="Map" var="cnsMaterialPlanStatusMap">
+                               <if test="true">
+                                   <ref method="joinMaterialGlobalV1" parameter="srcSysCd,matlNum" resultType="Map" value="primaryPlanningCode" var="materialGlobalV1Map">
+                                       <if test="StringInner.isStringNotEmpty(primaryPlanningCode)">
+                                           <set name="productId" value="primaryPlanningCode"/>
+                                       </if>
+                                       <else>
+                                           <set name="productId" value="''"/>
+                                       </else>
+                                   </ref>
+                                   <if test="materialGlobalV1Map==null">
+                                       <set name="productId" value="''"/>
+                                   </if>
+                               </if>
+                           </ref>
+                           <if test="cnsMaterialPlanStatusMap==null">
+                               <set name="productId" value="''"/>
+                           </if>
+                       </if>
+                       <else>
+                           <set name="productId" value="''"/>
+                       </else>
+                    </ref>
+                    <if test="cnsPlantAttrMap==null">
+                        <set name="productId" value="''"/>
+                    </if>
+                </if>
+                <else>
+                    <set name="productId" value="''"/>
+                </else>
+            </column>
+            <column name="startDate">
+                <if test="StringInner.isStringNotEmpty(prdtnStrtDt)">
+                    <set name="startDate" value="DateInner.dateToString(DateInner.stringToDate(prdtnStrtDt,DateInner.F_yyyyMMdd),DateInner.yyyy_MM_dd_HHmmss_2)"/>
+                </if>
+                <else>
+                    <if test="StringInner.isStringNotEmpty(planOrdrStrtDt)">
+                        <set name="startDate" value="DateInner.dateToString(DateInner.stringToDate(planOrdrStrtDt,DateInner.F_yyyyMMdd),DateInner.yyyy_MM_dd_HHmmss_2)"/>
+                    </if>
+                    <else>
+                        <set name="startDate" value="''"/>
+                    </else>
+                </else>
+            </column>
+            <column name="totalQuantity">
+                <if test="StringInner.isStringNotEmpty(planOrdrQty)">
+                    <set name="totalQuantity" value="planOrdrQty"/>
+                </if>
+                <else>
+                    <set name="totalQuantity" value="''"/>
+                </else>
+            </column>
+            <column name="unitId" var="unitIdOut">
+                <ref method="joinMaterialGlobalV1" resultType="Map" parameter="srcSysCd,matlNum" value="localBaseUom" var="materialGlobalV1Map">
+                    <if test="StringInner.isStringNotEmpty(localBaseUom)">
+                        <ref method="joinCnsPlanUnit" parameter="localBaseUom" resultType="Map" value="unit" var="cnsPlantUnitMap">
+                            <if test="StringInner.isStringNotEmpty(unit)">
+                                <set name="unitIdOut" value="unit"/>
+                            </if>
+                            <else>
+                                <set name="unitIdOut" value="''"/>
+                            </else>
+                        </ref>
+                        <if test="cnsPlantUnitMap == null">
+                            <set name="unitIdOut" value="''"/>
+                        </if>
+                    </if>
+                    <else>
+                        <set name="unitIdOut" value="''"/>
+                    </else>
+                </ref>
+                <if test="materialGlobalV1Map == null">
+                    <set name="unitIdOut" value="''"/>
+                </if>
+            </column>
+            <column name="verid">
+                <if test="StringInner.isStringEmpty(prdtnVers)">
+                    <set name="verid" value="''"/>
+                </if>
+                <else>
+                    <set name="verid" value="prdtnVers"/>
+                </else>
+            </column>
+    </columns>
+    </viewRegion>
+</adf-curation>
