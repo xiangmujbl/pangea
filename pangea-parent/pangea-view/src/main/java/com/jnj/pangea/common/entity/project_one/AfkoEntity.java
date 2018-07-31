@@ -46,6 +46,26 @@ public class AfkoEntity extends CommonEntity {
     private String terkz;
     private String rueck;
     private String rmzhl;
+    private String gsuzs;
+    private String gluzs;
+
+    public String getGsuzs() {
+        return gsuzs;
+    }
+
+    public void setGsuzs(String gsuzs) {
+        this.gsuzs = gsuzs;
+    }
+
+    public String getGluzs() {
+        return gluzs;
+    }
+
+    public void setGluzs(String gluzs) {
+        this.gluzs = gluzs;
+    }
+
+
 
     public String getGasmg() {
         return gasmg;
@@ -170,6 +190,8 @@ public class AfkoEntity extends CommonEntity {
         setTerkz((String) map.get("terkz"));
         setRueck((String) map.get("rueck"));
         setRmzhl((String) map.get("rmzhl"));
+        setGsuzs((String) map.get("gsuzs"));
+        setGluzs((String) map.get("gluzs"));
 
 
 

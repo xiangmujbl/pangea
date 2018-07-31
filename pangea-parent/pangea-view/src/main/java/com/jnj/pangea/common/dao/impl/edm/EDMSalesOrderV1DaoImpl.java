@@ -1,8 +1,21 @@
 package com.jnj.pangea.common.dao.impl.edm;
 
+import com.jnj.adf.client.api.query.QueryHelper;
+
+
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
+import org.apache.commons.lang3.StringUtils;
+import com.jnj.pangea.common.entity.edm.EDMSalesOrderV1Entity;
+
+import java.util.List;
 
 public class EDMSalesOrderV1DaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_SALES_ORDER_V1 = "/edm/sales_order_v1";
+
+    public static final String SALES_ORDER_NO = "salesOrderNo";
+    public static final String SALES_ORDER_ITEM = "salesOrderItem";
+    public static final String SOURCE_SYSTEM = "sourceSystem";
 
     private static EDMSalesOrderV1DaoImpl instance;
 
@@ -12,5 +25,17 @@ public class EDMSalesOrderV1DaoImpl extends CommonDaoImpl {
         }
         return instance;
     }
+
+    public EDMSalesOrderV1Entity getSalesOrderForHistoryDoc(String salesOrderNo, String salesOrderItem, String sourceSystem){
+        if(StringUtils.isNotEmpty(salesOrderNo) && StringUtils.isNotEmpty(salesOrderItem)){
+            String queryString = QueryHelper.buildCriteria(SALES_ORDER_NO).is(salesOrderNo)
+                    .and(SALES_ORDER_ITEM).is(salesOrderItem)
+                    .and(SOURCE_SYSTEM).is(sourceSystem)
+                    .toQueryString();
+            return queryForObject(EDM_SALES_ORDER_V1, queryString, EDMSalesOrderV1Entity.class);
+        }
+        return null;
+    }
+
 
 }

@@ -254,9 +254,9 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
 
     When I submit task with xml file "xml/omp/OMPGdmStockPurchaseOrder.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMStock.tsv"
+    Then A file is found on sink application with name "GDMStock_4_Purchase_order.tsv"
 
-    And I check file data for filename "GDMStock.tsv" by keyFields "stockId"
+    And I check file data for filename "GDMStock_4_Purchase_order.tsv" by keyFields "stockId"
       |      transitDate    |    processTypeId  | returnsQuantity |          inventoryLinkGroupId          | vendorId | batchId | activeOPRERP | activeSOPERP | transferQuantity | qualityQuantity |                processId                          |   locationId    | consignment | certaintyId | erpOrderId | quantity | productId | stockType |      receiptDate    | active | blockedQuantity | unrestrictedQuantity |                  stockId               | restrictedQuantity |      startDate      |
       | 1980/01/01 00:00:00 | InternalTransport |         0.0     | 57039/CONS_LATAM_MX02/3000793990/40/1  |  1189    |         |      YES     |      NO      |        0.0       |        0.0      | SU/57039/CONS_LATAM_MX02/1189/Default             | CONS_LATAM_MX02 |      YES    |     LE      | 3000793990 |  1800.0  |   57039   | movement  | 2017/01/03 00:00:00 |  YES   |      0.0        |         0.0          | 57039/CONS_LATAM_MX02/3000793990/40/1  |       0.0          | 2017/01/04 00:00:00 |
       | 1980/01/01 00:00:00 | VendorTransport   |         0.0     |                                        |  6109    |         |      YES     |      NO      |        0.0       |        0.0      | TR/58756/CONS_LATAM_PE01/CONS_LATAM_MX01/Default  | CONS_LATAM_PE01 |      YES    |     BE      | 3000793200 |  1000.0  |   58756   | movement  | 2017/01/03 00:00:00 |  YES   |      0.0        |         0.0          | 58756/CONS_LATAM_PE01/3000793200/10/1  |       0.0          | 2017/01/04 00:00:00 |
@@ -278,5 +278,5 @@ Feature:  OMPGdmStockPurchaseOrder-Curation
 
     And I will remove all data with region "/omp/gdm_stock_purchase_order"
 
-    And I will remove the test file on sink application "GDMStock.tsv"
+    And I will remove the test file on sink application "GDMStock_4_Purchase_order.tsv"
 

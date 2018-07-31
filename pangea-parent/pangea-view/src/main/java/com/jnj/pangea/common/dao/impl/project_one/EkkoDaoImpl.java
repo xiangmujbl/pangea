@@ -14,7 +14,7 @@ public class EkkoDaoImpl extends CommonDaoImpl {
 
      /*public SomeEntity getEntityWith(String entityVar) {
 
-        String queryString = QueryHelper.buildCriteria(IConstant.PROJECT_ONE_EntityName.EntityVariable).is(entityVar).toQueryString();
-        return queryForObject(IConstant.REGION.PROJECT_ONE_EntityName, queryString, SomeEntity.class);
+        String queryString = QueryHelper.buildCriteria(EntityVariable).is(entityVar).toQueryString();
+        return queryForObject(PROJECT_ONE_EntityName, queryString, SomeEntity.class);
     }*/
 }

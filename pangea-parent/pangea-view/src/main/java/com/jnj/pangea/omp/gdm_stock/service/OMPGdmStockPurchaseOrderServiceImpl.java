@@ -228,7 +228,7 @@ public class OMPGdmStockPurchaseOrderServiceImpl implements ICommonService{
         List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(purchaseOrderOAV1Entity.getSourceSystem());
         for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
             if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("Purchase Order")) {
-                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSeqNumberTlaneName(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
+                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
                 if(triangulationEntities != null) {
                     PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
                     localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+UNDERLINE,EMPTY));

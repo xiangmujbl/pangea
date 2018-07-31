@@ -94,11 +94,11 @@ public class OMPGdmProductLocationDetailServiceImpl {
                                 String productLocationId = "";
                                 if (StringUtils.isNotEmpty(materialGlobalV1Entity.getPrimaryPlanningCode())) {
 
-                                    productLocationId = materialGlobalV1Entity.getPrimaryPlanningCode() + IConstant.VALUE.LINE + sourceSystemPr + IConstant.VALUE.UNDERLINE + prodLocAttribEntity.getLocalPlant();
+                                    productLocationId = materialGlobalV1Entity.getPrimaryPlanningCode() + IConstant.VALUE.BACK_SLANT + sourceSystemPr + IConstant.VALUE.UNDERLINE + prodLocAttribEntity.getLocalPlant();
                                     gdmProductLocationDetailBo.setProductLocationId(productLocationId);
                                 } else {
 
-                                    productLocationId = materialGlobalV1Entity.getMaterialNumber() + IConstant.VALUE.LINE + sourceSystemPr + IConstant.VALUE.UNDERLINE + prodLocAttribEntity.getLocalPlant();
+                                    productLocationId = materialGlobalV1Entity.getMaterialNumber() + IConstant.VALUE.BACK_SLANT + sourceSystemPr + IConstant.VALUE.UNDERLINE + prodLocAttribEntity.getLocalPlant();
                                     gdmProductLocationDetailBo.setProductLocationId(productLocationId);
                                 }
 

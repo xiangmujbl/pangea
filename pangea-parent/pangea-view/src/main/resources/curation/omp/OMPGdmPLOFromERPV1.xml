@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/planned_order_v1" viewRegion="/omp/gdm_plo_from_erp" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_plo_from_erp.controller.OMPGdmPLOFromERPController" writeTo="all" topic="PANGEA_V1_omp_gdm_plo_from_erp_v1"> 
+    <regions> 
+      <region path="/edm/material_global_v1"> 
+        <columns>sourceSystem,localMaterialNumber,primaryPlanningCode,localBaseUom</columns>  
+        <relations> 
+          <relation path="/plan/cns_plan_unit" isPrimaryKey="false"> 
+            <expression>localUom=/edm/material_global_v1.localBaseUom</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/edm/planned_order_v1" lucene="true"> 
+        <columns>srcSysCd,mfgPlanOrdrDocId,prdtnFnshdDt,planOrdrEndDt,grDaysLeadQty,plntCd,matlNum,prdtnStrtDt,planOrdrStrtDt,plngScnroCd,prdtnVers,planOrdrQty,planOrdrTypeCd,internalTimeStamp</columns>  
+        <filter>plngScnroCd:000</filter>  
+        <relations> 
+          <relation path="/plan/cns_material_plan_status" isPrimaryKey="false" lucene="true"> 
+            <expression>sourceSystem=/edm/planned_order_v1.srcSysCd,localPlant=/edm/planned_order_v1.plntCd,materialNumber=/edm/planned_order_v1.matlNum</expression>  
+            <filter>spRelevant:X</filter> 
+          </relation>  
+          <relation path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true"> 
+            <expression>sourceSystem=/edm/planned_order_v1.srcSysCd,localPlant=/edm/planned_order_v1.plntCd</expression>  
+            <filter>localPlanningRelevant:X</filter> 
+          </relation>  
+          <relation path="/edm/material_global_v1" isPrimaryKey="false"> 
+            <expression>sourceSystem=/edm/planned_order_v1.srcSysCd,localMaterialNumber=/edm/planned_order_v1.matlNum</expression> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/cns_material_plan_status"> 
+        <columns>sourceSystem,localPlant,localMaterialNumber,materialNumber,spRelevant</columns> 
+      </region>  
+      <region path="/plan/cns_plant_attr"> 
+        <columns>UUID,sourceSystem,localPlant,localPlanningRelevant</columns> 
+      </region>  
+      <region path="/plan/cns_plan_unit"> 
+        <columns>localUom,localUomName,plantFlag,sourceSystem,unit</columns> 
+      </region>  
+      <region path="/omp/gdm_plo_from_erp"> 
+        <columns>PLOFromERPId,deleted,endDate,ERPId,internalTimeStamp,kdauf,kdpos,locationId,manualOffset,PLOType,productId,startDate,totalQuantity,unitId,verid</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>

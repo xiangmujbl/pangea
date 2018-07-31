@@ -2,7 +2,6 @@ package com.jnj.pangea.omp.gdm_req_from_erp.service;
 
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
-import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
@@ -43,14 +42,31 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
     private PlanCnsTlaneControlTriangulationDaoImpl tlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
     private EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
 
-
     private OMPGdmReqFromErpBo gdmReqFromErpBo = new OMPGdmReqFromErpBo();
-    private String localPlant = "";
+
+    ThreadLocal<String> localPlant = new ThreadLocal<>();
+
+    private static final String BACK_SLASH = "/";
+    private static final String BA = "BA";
+    private static final String NO = "NO";
+    private static final String YES = "YES";
+    private static final String UNDERLINE = "_";
+    private static final String EMPTY = "";
+    private static final String X = "X";
+    private static final String ZERO = "0";
+    private static final String INCLUSION = "I";
+    private static final String YYYYMMDD = "yyyyMMdd";
+    private static final String YYYYMMDDBS = "yyyy/MM/dd";
+    private static final String HH_NN_SS_ZERO = " 00:00:00";
+    private static final String PROJECT_ONE_DEV = "Project_One";
+    private static final String CONS_LATAM = "CONS_LATAM";
+    private static final String SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION = "purchase_requisition";
 
     @Override
     public ResultObject buildView(String key, Object o, Object o2) {
         ResultObject resultObject = new ResultObject();
         ResultObject resultObjectSkip = new ResultObject();
+        localPlant.set("");
 
         EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity = (EDMPurchaseRequisitionV1Entity) o;
 
@@ -63,15 +79,13 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setVERID(edmPurchaseRequisitionV1Entity.getLocalProdVersion());
 
         //N1
-        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()
-                + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrNum()
-                + IConstant.VALUE.BACK_SLANT + edmPurchaseRequisitionV1Entity.getPrLineNbr());
+        gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
 
         //N2
         calcDateN2(edmPurchaseRequisitionV1Entity);
 
         //N3
-        gdmReqFromErpBo.setDELKZ(IConstant.VALUE.BA);
+        gdmReqFromErpBo.setDELKZ(BA);
 
         //N4
         if(!plantN4(edmPurchaseRequisitionV1Entity)){
@@ -86,7 +100,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         EDMMaterialGlobalV1Entity materialGlobalV1Entity = materialGlobalV1Dao.getEntityWithLocalMaterialNumberAndSourceSystem(edmPurchaseRequisitionV1Entity.getMatlNum(),edmPurchaseRequisitionV1Entity.getSourceSystem());
         if(materialGlobalV1Entity != null && !materialGlobalV1Entity.getLocalMaterialNumber().isEmpty()) {
             //Step 2
-            PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), localPlant, edmPurchaseRequisitionV1Entity.getSourceSystem());
+            PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), localPlant.get(), edmPurchaseRequisitionV1Entity.getSourceSystem());
             if(planCnsMaterialPlanStatusEntity != null) {
                 if (!ruleN6(edmPurchaseRequisitionV1Entity, materialGlobalV1Entity, planCnsMaterialPlanStatusEntity)) {
                     return resultObjectSkip;
@@ -107,7 +121,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
         //N8
         //version 2: set default as 'NO'
-        gdmReqFromErpBo.setDELETED(IConstant.VALUE.NO);
+        gdmReqFromErpBo.setDELETED(NO);
 
         //N9
         if(!ruleN9(edmPurchaseRequisitionV1Entity)){
@@ -116,12 +130,12 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
 
         //N10
         gdmReqFromErpBo.setDELNR(edmPurchaseRequisitionV1Entity.getSourceSystem()
-                + IConstant.VALUE.UNDERLINE + edmPurchaseRequisitionV1Entity.getPrNum());
+                + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum());
 
         //N11
         if(!edmPurchaseRequisitionV1Entity.getSuplPlntCd().isEmpty()) {
             gdmReqFromErpBo.setWRK02(edmPurchaseRequisitionV1Entity.getSourceSystem()
-                    + IConstant.VALUE.UNDERLINE + edmPurchaseRequisitionV1Entity.getSuplPlntCd());
+                    + UNDERLINE + edmPurchaseRequisitionV1Entity.getSuplPlntCd());
         } else{
             gdmReqFromErpBo.setWRK02("");
         }
@@ -133,11 +147,16 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         return resultObject;
     }
 
+    /**
+     * set deliveryDate - implement N2 - Adding a number of days to the date
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     */
     private void calcDateN2(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
         try {
             String dateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
-            SimpleDateFormat sdfFrom = new SimpleDateFormat(IConstant.VALUE.YYYYMMDD);
-            SimpleDateFormat sdfTo = new SimpleDateFormat(IConstant.VALUE.YYYYMMDDBS);
+            SimpleDateFormat sdfFrom = new SimpleDateFormat(YYYYMMDD);
+            SimpleDateFormat sdfTo = new SimpleDateFormat(YYYYMMDDBS);
             Date dFrom = sdfFrom.parse(dateToFormat);
 
             String timeToMove = edmPurchaseRequisitionV1Entity.getLocalPrGRLeadTimeDays();
@@ -145,40 +164,53 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             cal.setTime(dFrom);
             cal.add(Calendar.DATE, Integer.parseInt(timeToMove));
             Date d2 = cal.getTime();
-            String deliveryDate = sdfTo.format(d2) + IConstant.VALUE.HH_NN_SS_ZERO;
+            String deliveryDate = sdfTo.format(d2) + HH_NN_SS_ZERO;
             gdmReqFromErpBo.setDeliveryDate(deliveryDate);
         } catch (ParseException e) {
             LogUtil.getCoreLog().error(e.getMessage());
         }
     }
 
+    /**
+     * set locationId - implement N4 - Triangulation logic, plant replacement
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     * @return boolean for skip validation
+     */
     private boolean plantN4(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
-        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(IConstant.VALUE.PROJECT_ONE_DEV, edmPurchaseRequisitionV1Entity.getSourceSystem());
+        EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(PROJECT_ONE_DEV, edmPurchaseRequisitionV1Entity.getSourceSystem());
         if(sourceSystemEntity == null){
             return false;
         }
-        localPlant = edmPurchaseRequisitionV1Entity.getPlntCd();
+        localPlant.set(edmPurchaseRequisitionV1Entity.getPlntCd());
 
         List<PlanCnsTlaneControlEntity> tlaneControlEntityList = tlaneControlDao.getEntityWithSourceSystemCriticalParameters(edmPurchaseRequisitionV1Entity.getSourceSystem());
 
         for(PlanCnsTlaneControlEntity tlaneControl : tlaneControlEntityList) {
-            if(tlaneControl.getTrigSysPlant().equals(localPlant) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(IConstant.VALUE.YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("Purchase Order")) {
-                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSeqNumberTlaneName(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
+            if(tlaneControl.getTrigSysPlant().equals(localPlant.get()) && tlaneControl.getTriangulationDetail().equalsIgnoreCase(YES) && tlaneControl.getTrigSysTransaction().equalsIgnoreCase("purchase_order")) {
+                List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities = tlaneControlTriangulationDao.getEntityWithSourceSystemCriticalParameters(tlaneControl.getSequenceNumber(), tlaneControl.getTlaneName());
                 if(triangulationEntities != null) {
                     PlanCnsTlaneControlTriangulationEntity stepNumberEntity = findHighestStepNumber(triangulationEntities);
-                    localPlant = stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+IConstant.VALUE.UNDERLINE,IConstant.VALUE.EMPTY);
+                    localPlant.set(stepNumberEntity.getDestinatonLocation().replace(tlaneControl.getSourceSystemCriticalParameters()+UNDERLINE,EMPTY));
+                    break;
                 }
             }
         }
         //Planning relevancy check
-        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(edmPurchaseRequisitionV1Entity.getSourceSystem(), localPlant);
-        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(IConstant.VALUE.X)){
-            gdmReqFromErpBo.setLocationId(edmPurchaseRequisitionV1Entity.getSourceSystem()+IConstant.VALUE.UNDERLINE+localPlant);
+        EDMPlantV1Entity plantV1Entity = plantV1Dao.getPlantWithSourceSystemAndLocalPlant(edmPurchaseRequisitionV1Entity.getSourceSystem(), localPlant.get());
+        if(plantV1Entity != null && plantV1Entity.getLocalPlanningRelevant().equalsIgnoreCase(X)){
+            gdmReqFromErpBo.setLocationId(edmPurchaseRequisitionV1Entity.getSourceSystem()+UNDERLINE+localPlant.get());
             return true;
         }
         return false;
     }
 
+    /**
+     *  Finding the highest step number for triangulation logic
+     *
+     * @param triangulationEntities List of TlaneControlTriangulation entities
+     * @return PlanCnsTlaneControlTriangulationEntity Returning the TlaneControlTriangulation entity with the highest step number
+     */
     private PlanCnsTlaneControlTriangulationEntity findHighestStepNumber(List<PlanCnsTlaneControlTriangulationEntity> triangulationEntities) {
         PlanCnsTlaneControlTriangulationEntity tempEntity = triangulationEntities.get(0);
         for (PlanCnsTlaneControlTriangulationEntity triangulationEntity : triangulationEntities) {
@@ -189,17 +221,30 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         return tempEntity;
     }
 
+    /**
+     * set manualOffset - set PRIO_URG - N5 implementation
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     */
     private void ruleN5(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
-        if(IConstant.VALUE.CONS_LATAM.equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getSourceSystem())) {
-            gdmReqFromErpBo.setManualOffset(IConstant.VALUE.ZERO);
-            gdmReqFromErpBo.setPRIO_URG(IConstant.VALUE.ZERO);
+        if(CONS_LATAM.equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getSourceSystem())) {
+            gdmReqFromErpBo.setManualOffset(ZERO);
+            gdmReqFromErpBo.setPRIO_URG(ZERO);
         }
     }
 
+    /**
+     * set productId - N6 implementation
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     * @param materialGlobalV1Entity region lookup material global v1 entity
+     * @param planCnsMaterialPlanStatusEntity region lookup material plan status entity
+     * @return boolean for skip and or reject validation
+     */
     private boolean ruleN6(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity){
-        if (planCnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X) && materialGlobalV1Entity.getLocalMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum())) {
-                //Step 3
-            if (materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
+        if ((planCnsMaterialPlanStatusEntity.getSpRelevant() != null && planCnsMaterialPlanStatusEntity.getSpRelevant().equals(X)) && (materialGlobalV1Entity.getLocalMaterialNumber() != null && materialGlobalV1Entity.getLocalMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum()))) {
+            //Step 3
+            if (materialGlobalV1Entity.getPrimaryPlanningCode() != null && materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
                 gdmReqFromErpBo.setProductId(materialGlobalV1Entity.getMaterialNumber());
             } else {
                 gdmReqFromErpBo.setProductId(materialGlobalV1Entity.getPrimaryPlanningCode());
@@ -209,8 +254,15 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         return false;
     }
 
+    /**
+     * set unitId - N7 implementation
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     * @param materialGlobalV1Entity region lookup material global v1 entity
+     * @return boolean for skip and or reject validation
+     */
     private boolean ruleN7(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity){
-        if (materialGlobalV1Entity.getLocalMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum()) && materialGlobalV1Entity.getSourceSystem().equals(edmPurchaseRequisitionV1Entity.getSourceSystem())) {
+        if ((materialGlobalV1Entity.getLocalMaterialNumber() != null && materialGlobalV1Entity.getLocalMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum())) && (materialGlobalV1Entity.getSourceSystem() != null && materialGlobalV1Entity.getSourceSystem().equals(edmPurchaseRequisitionV1Entity.getSourceSystem()))) {
             PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
             if (cnsPlanUnitEntity != null && !cnsPlanUnitEntity.getUnit().isEmpty()) {
                 gdmReqFromErpBo.setUnitId(cnsPlanUnitEntity.getUnit());
@@ -220,32 +272,40 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         return false;
     }
 
+    /**
+     * set erpId - N9 implementation
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     * @return boolean for skip and validation
+     */
     private boolean ruleN9(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
         if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty() && edmPurchaseRequisitionV1Entity.getPrClseInd().isEmpty()) {
             PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
-                    IConstant.PLAN_CNS_PLAN_OBJECT_FILTER.SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,
-                    edmPurchaseRequisitionV1Entity.getSourceSystem(), edmPurchaseRequisitionV1Entity.getPrTypeCd(),
-                    "plntCd", localPlant, "prTypeCd", IConstant.VALUE.INCLUSION);
-
+                    SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,edmPurchaseRequisitionV1Entity.getSourceSystem(),
+                    edmPurchaseRequisitionV1Entity.getPrTypeCd(),"plntCd", localPlant.get(), "prTypeCd", INCLUSION);
             if (planObjectFilterEntity != null && edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-
-                gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()+IConstant.VALUE.BACK_SLANT
-                        + edmPurchaseRequisitionV1Entity.getPrNum()
-                        + IConstant.VALUE.BACK_SLANT
-                        + edmPurchaseRequisitionV1Entity.getPrLineNbr());
-
-                 return true;
+                gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()
+                        + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
+                return true;
             }
         }
         return false;
     }
 
+    /**
+     * set failedData object for rejection
+     *
+     * @param edmPurchaseRequisitionV1Entity main data region
+     * @param ruleCode rule number
+     * @param errorValue error to write out
+     * @return FailData object to write to the failed data region
+     */
     private FailData writeFailDataToRegion(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, String ruleCode, String errorValue) {
         FailData failData = new FailData();
         failData.setFunctionalArea("SP");
         failData.setInterfaceID("OMPGdmReqFromErp");
         failData.setErrorCode(ruleCode);
-        failData.setSourceSystem("CONS_LATAM");
+        failData.setSourceSystem(CONS_LATAM);
         failData.setKey1(edmPurchaseRequisitionV1Entity.getSourceSystem());
         failData.setKey2(edmPurchaseRequisitionV1Entity.getMatlNum());
         failData.setKey3(edmPurchaseRequisitionV1Entity.getLocalProcuringPlant());

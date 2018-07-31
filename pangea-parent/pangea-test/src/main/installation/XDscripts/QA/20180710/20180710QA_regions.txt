@@ -1,0 +1,28 @@
+## CUR1101
+/qa/edm/sales_history_v1
+/qa/edm/inspection_lot_v1
+/qa/edm/purchase_order_oa_v1
+/qa/omp/gdm_stock
+/qa/plan/cns_oor_forecast
+/qa/omp/gdm_stock_asn
+/qa/omp/gdm_forecast
+/qa/omp/gdm_stock_purchase_requisition_v1
+/qa/edm/inventory_stock_v1
+/qa/edm/fail_data
+/qa/plan/cns_root_description_user_override
+/qa/plan/cns_error_def
+
+/dqqa/edm/sales_history_v1
+/dqqa/edm/inspection_lot_v1
+/dqqa/edm/purchase_order_oa_v1
+/dqqa/omp/gdm_stock
+/dqqa/omp/gdm_stock_asn
+/dqqa/omp/gdm_forecast
+/dqqa/omp/gdm_stock_purchase_requisition_v1
+/dqqa/edm/inventory_stock_v1
+/dqqa/edm/fail_data
+
+## EDG1101 clone from raw region
+/qa/project_one/vbfa
+/qa/project_one/vbuk
+/qa/project_one/vbup

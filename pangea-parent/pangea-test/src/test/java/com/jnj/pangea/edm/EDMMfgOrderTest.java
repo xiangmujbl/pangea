@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features/edm/EDMMfgOrder.feature"},
         tags = {"@pangea_test"},
         glue = "com.jnj.pangea.sentence",
-        plugin = {"pretty", "json:target/reports/json/AEAZ-4249 EDMMfgOrder.json"})
+        plugin = {"pretty", "json:target/reports/json/AEAZ-8798 EDMMfgOrder.json"})
+
 public class EDMMfgOrderTest {
 }
