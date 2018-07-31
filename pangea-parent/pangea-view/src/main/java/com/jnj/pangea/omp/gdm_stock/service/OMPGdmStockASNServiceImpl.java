@@ -3,7 +3,7 @@ package com.jnj.pangea.omp.gdm_stock.service;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
-import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.Utils;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPurchaseOrderOAV1DaoImpl;
@@ -41,6 +41,8 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         return instance;
     }
 
+    public static final String INTERFACE_ID = "OMPGdmStockASN";
+
     private EDMMaterialGlobalV1DaoImpl materialGlobalDao = EDMMaterialGlobalV1DaoImpl.getInstance();
     private EDMPlantV1DaoImpl plantDao = EDMPlantV1DaoImpl.getInstance();
     private EDMPurchaseOrderOAV1DaoImpl purchaseDao = EDMPurchaseOrderOAV1DaoImpl.getInstance();
@@ -51,6 +53,25 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     private PlanCnsTlaneControlTriangulationDaoImpl cnsTlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
 
     private static final String ERROR = "ERROR";
+    private static final String DEFAULT_CERTAINTY = "LA";
+    private static final String DELV_CATG = "7";
+    private static final String TRANSIT_DATE = "1980/01/01 00:00:00";
+    private static final String MOVEMENT = "movement";
+    private static final String LINE_ITEM_TYPE_CD = "2";
+    private static final String ADVANCE_SHIP_NOTIFICATIONS = "advance_ship_notifications";
+    private static final String LOCAL_RECEIVING_PLANT = "localReceivingPlant";
+    private static final String LOCAL_DELIVERY_TYPE = "localdeliveryType";
+
+    private static final String VENDOR_TRANSPORT = "VendorTransport";
+    private static final String INTERNAL_TRANSPORT = "InternalTransport";
+    private static final String EXTERNAL_TRANSPORT = "ExternalTransport";
+
+    interface ERROR_CODE {
+        String ASN9 = "ASN9";
+        String ASN9a = "ASN9a";
+        String ASN9b = "ASN9b";
+        String ASN9c = "ASN9c";
+    }
 
 
     @Override
@@ -68,7 +89,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         String localPlant = "";
         if(shipNotifEntity == null)
         {
-            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9c, "shipNotifEntity is null");
+            FailData failData = writeFailData(shipNotifEntity, ERROR_CODE.ASN9c, "shipNotifEntity is null");
             resultObject.setFailData(failData);
             return resultObject;
         }
@@ -82,7 +103,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         if(localPlant.isEmpty()){
             return resultObjectSkip;
         } else {
-            stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + localPlant);
+            stockBo.setLocationId(shipNotifEntity.getSrcSysCd() + Utils.UNDERLINE + localPlant);
         }
 
 
@@ -90,7 +111,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         String asn1_locationId = "";
         String asn1_productId = "";
         if(materialGlobalEntity == null) {
-            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9b, "Both (material_global_v1-primaryPlanningCode) and (material_global_v1-MaterialNumber) are Blank ");
+            FailData failData = writeFailData(shipNotifEntity, ERROR_CODE.ASN9b, "Both (material_global_v1-primaryPlanningCode) and (material_global_v1-MaterialNumber) are Blank ");
             resultObject.setFailData(failData);
             return resultObject;
         }
@@ -99,24 +120,24 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         if(null == asn1_productId || asn1_productId.isEmpty()){
             asn1_productId = materialGlobalEntity.getMaterialNumber();
         }
-        asn1_locationId = shipNotifEntity.getSrcSysCd() + IConstant.VALUE.UNDERLINE + localPlant;
-        stockBo.setStockId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvDocId() + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getDelvLineNbr());
+        asn1_locationId = shipNotifEntity.getSrcSysCd() + Utils.UNDERLINE + localPlant;
+        stockBo.setStockId(asn1_productId + Utils.BACK_SLANT + asn1_locationId + Utils.BACK_SLANT + shipNotifEntity.getDelvDocId() + Utils.BACK_SLANT + shipNotifEntity.getDelvLineNbr());
 
         //ASN 2
-        stockBo.setActive(IConstant.VALUE.YES);
-        stockBo.setActiveOPRERP(IConstant.VALUE.YES);
+        stockBo.setActive(Utils.YES);
+        stockBo.setActiveOPRERP(Utils.YES);
 
         //ASN 3
-        stockBo.setBatchId(asn1_productId + IConstant.VALUE.BACK_SLANT + asn1_locationId + IConstant.VALUE.BACK_SLANT + shipNotifEntity.getLocalBatchNo());
+        stockBo.setBatchId(asn1_productId + Utils.BACK_SLANT + asn1_locationId + Utils.BACK_SLANT + shipNotifEntity.getLocalBatchNo());
 
         //ASN 4
         stockBo.setInventoryLinkGroupId("");
 
         //ASN 5
-        stockBo.setCertaintyId(IConstant.VALUE.LA); //default
+        stockBo.setCertaintyId(DEFAULT_CERTAINTY); //default
 
         //ASN 6
-        if( shipNotifEntity.getLocalDeliveryCatg()!= null &&  shipNotifEntity.getLocalDeliveryCatg().equals(IConstant.VALUE.SEVEN) && StringUtils.isBlank(shipNotifEntity.getActGRDt()) ) {
+        if( shipNotifEntity.getLocalDeliveryCatg()!= null &&  shipNotifEntity.getLocalDeliveryCatg().equals(DELV_CATG) && StringUtils.isBlank(shipNotifEntity.getActGRDt()) ) {
             String erp = asn6Rule(shipNotifEntity, localPlant);
             if(StringUtils.isBlank(erp)){
                 //reject
@@ -132,12 +153,12 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         //moved to top
 
         //ASN 8
-        stockBo.setTransitDate(IConstant.VALUE.TRANSIT_DATE);
+        stockBo.setTransitDate(TRANSIT_DATE);
 
         //ASN 9
         String asn9_productId = asn9Rule(shipNotifEntity, materialGlobalEntity, localPlant);
         if(ERROR.equals(asn9_productId)){
-            FailData failData = writeFailData(shipNotifEntity, IConstant.FAILED.ERROR_CODE.ASN9, "Both Primary Planning Code and Material Number are missing");
+            FailData failData = writeFailData(shipNotifEntity, ERROR_CODE.ASN9, "Both Primary Planning Code and Material Number are missing");
             resultObject.setFailData(failData);
             return resultObject;
         }
@@ -152,7 +173,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         }
 
         //ASN 11
-        stockBo.setStockType(IConstant.VALUE.MOVEMENT);
+        stockBo.setStockType(MOVEMENT);
 
         //ASN 12
         // unused
@@ -161,15 +182,15 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         stockBo.setReceiptDate(asn13Rule(shipNotifEntity));
 
         //ASN 14
-        stockBo.setBlockedQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setQualityQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setRestrictedQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setReturnsQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setTransferQuantity(IConstant.VALUE.ZEROZERO);
-        stockBo.setUnrestrictedQuantity(IConstant.VALUE.ZEROZERO);
+        stockBo.setBlockedQuantity(Utils.ZEROZERO);
+        stockBo.setQualityQuantity(Utils.ZEROZERO);
+        stockBo.setRestrictedQuantity(Utils.ZEROZERO);
+        stockBo.setReturnsQuantity(Utils.ZEROZERO);
+        stockBo.setTransferQuantity(Utils.ZEROZERO);
+        stockBo.setUnrestrictedQuantity(Utils.ZEROZERO);
 
         //ASN 15
-        stockBo.setActiveSOPERP(IConstant.VALUE.NO);
+        stockBo.setActiveSOPERP(Utils.NO);
 
         if(null != purchaseEntity){
             //ASN 16 17
@@ -182,10 +203,10 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
             }
 
             //ASN 18
-            if( (purchaseEntity.getLineItemTypeCd() != null &&  purchaseEntity.getLineItemTypeCd().equals(IConstant.VALUE.TWO))){
-                stockBo.setConsignment(IConstant.VALUE.YES);
+            if( (purchaseEntity.getLineItemTypeCd() != null &&  purchaseEntity.getLineItemTypeCd().equals(LINE_ITEM_TYPE_CD))){
+                stockBo.setConsignment(Utils.YES);
             } else {
-                stockBo.setConsignment(IConstant.VALUE.NO);
+                stockBo.setConsignment(Utils.NO);
             }
 
         } else {
@@ -221,20 +242,20 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     }
 
     private String asn6Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, String localPlant){
-        ArrayList<PlanCnsPlanObjectFilterEntity> cnsPlanObjectFilterEntityList = new ArrayList<>(cnsPlanObjectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem(IConstant.VALUE.ADVANCE_SHIP_NOTIFICATIONS, shipNotifEntity.getSrcSysCd()));
+        ArrayList<PlanCnsPlanObjectFilterEntity> cnsPlanObjectFilterEntityList = new ArrayList<>(cnsPlanObjectFilterDao.getEntitiesWithSourceObjectTechNameAndSourceSystem(ADVANCE_SHIP_NOTIFICATIONS, shipNotifEntity.getSrcSysCd()));
 
         if( cnsPlanObjectFilterEntityList != null &&  !cnsPlanObjectFilterEntityList.isEmpty())
 
         {
             for(PlanCnsPlanObjectFilterEntity filterEntity : cnsPlanObjectFilterEntityList) {
-                if( filterEntity.getSourceObjectAttribute1() != null &&  filterEntity.getSourceObjectAttribute1().equals(IConstant.VALUE.LOCAL_RECEIVING_PLANT)
+                if( filterEntity.getSourceObjectAttribute1() != null &&  filterEntity.getSourceObjectAttribute1().equals(LOCAL_RECEIVING_PLANT)
                         && filterEntity.getSourceObjectAttribute1Value() != null && filterEntity.getSourceObjectAttribute1Value().equals(localPlant)
 
                         && filterEntity.getSourceObjectAttribute2Value()!= null
                         && shipNotifEntity.getLocalDeliveryType() != null
                         && filterEntity.getSourceObjectAttribute2() != null
                         && filterEntity.getSourceObjectAttribute2Value().equals(shipNotifEntity.getLocalDeliveryType())
-                        && filterEntity.getSourceObjectAttribute2().equals((IConstant.VALUE.LOCAL_DELIVERY_TYPE))){
+                        && filterEntity.getSourceObjectAttribute2().equals((LOCAL_DELIVERY_TYPE))){
 
                     return shipNotifEntity.getDelvDocId();
                 }
@@ -244,7 +265,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     }
 
     private String asn7Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, String localPlant){
-        ArrayList<PlanCnsTlaneControlEntity> tlaneControlEntityList = new ArrayList(cnsTlaneControlDao.getEntityListWithTriangulationParamsAnySequence(shipNotifEntity.getSrcSysCd(),localPlant,"purchase_order",IConstant.VALUE.YES));
+        ArrayList<PlanCnsTlaneControlEntity> tlaneControlEntityList = new ArrayList(cnsTlaneControlDao.getEntityListWithTriangulationParamsAnySequence(shipNotifEntity.getSrcSysCd(),localPlant,"purchase_order",Utils.YES));
 
         if(null != tlaneControlEntityList && !tlaneControlEntityList.isEmpty()){
 
@@ -272,7 +293,7 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
         //Planning relevancy check
         EDMPlantV1Entity plantEntity = plantDao.getPlantWithSourceSystemAndLocalPlant(shipNotifEntity.getSrcSysCd(), localPlant);
-        if(null != plantEntity && IConstant.VALUE.X.equals(plantEntity.getLocalPlanningRelevant()) ){
+        if(null != plantEntity && Utils.X.equals(plantEntity.getLocalPlanningRelevant()) ){
             return localPlant;
         }
         return "";
@@ -281,8 +302,8 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
     private String asn9Rule(EDMAdvancedShipNotificationV1Entity shipNotifEntity, EDMMaterialGlobalV1Entity materialGlobalEntity, String localPlant){
         PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatusEntity = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity(shipNotifEntity.getSrcSysCd(),shipNotifEntity.getMatlNum(),localPlant);
 
-        if((cnsMaterialPlanStatusEntity != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(IConstant.VALUE.X)) ||
-                (cnsMaterialPlanStatusEntity != null &&  cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(IConstant.VALUE.X))){
+        if((cnsMaterialPlanStatusEntity != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant() != null && cnsMaterialPlanStatusEntity.getNoPlanRelevant().equals(Utils.X)) ||
+                (cnsMaterialPlanStatusEntity != null &&  cnsMaterialPlanStatusEntity.getSpRelevant() != null && cnsMaterialPlanStatusEntity.getSpRelevant().equals(Utils.X))){
             if(!materialGlobalEntity.getPrimaryPlanningCode().isEmpty()){
                 return materialGlobalEntity.getPrimaryPlanningCode();
             } else if(!materialGlobalEntity.getMaterialNumber().isEmpty()){
@@ -348,18 +369,18 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         String poTypeCd = purchaseEntity.getPoTypeCd();
         switch(poTypeCd){
             case "NB":
-                if( StringUtils.isBlank(purchaseEntity.getLineItemTypeCd()) || purchaseEntity.getLineItemTypeCd().equals(IConstant.VALUE.ZERO)){
-                    processId = "SU" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() + IConstant.VALUE.BACK_SLANT + "Default";
+                if( StringUtils.isBlank(purchaseEntity.getLineItemTypeCd()) || purchaseEntity.getLineItemTypeCd().equals(Utils.ZERO)){
+                    processId = "SU" + Utils.BACK_SLANT + stockBo.getProductId() + Utils.BACK_SLANT + stockBo.getLocationId() + Utils.BACK_SLANT + purchaseEntity.getSupNum() + Utils.BACK_SLANT + "Default";
                 } else {
-                    processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
+                    processId = "TR" + Utils.BACK_SLANT + stockBo.getProductId() + Utils.BACK_SLANT + stockBo.getLocationId() + Utils.BACK_SLANT + purchaseEntity.getSuplPlntCd() + Utils.BACK_SLANT + purchaseEntity.getSupNum() ;
                 }
                 break;
             case "UB":
-                processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
+                processId = "TR" + Utils.BACK_SLANT + stockBo.getProductId() + Utils.BACK_SLANT + stockBo.getLocationId() + Utils.BACK_SLANT + purchaseEntity.getSuplPlntCd() + Utils.BACK_SLANT + purchaseEntity.getSupNum() ;
                 break;
             case "ZLA":
             case "ZNB":
-                processId = "TR" + IConstant.VALUE.BACK_SLANT + stockBo.getProductId() + IConstant.VALUE.BACK_SLANT + stockBo.getLocationId() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSuplPlntCd() + IConstant.VALUE.BACK_SLANT + purchaseEntity.getSupNum() ;
+                processId = "TR" + Utils.BACK_SLANT + stockBo.getProductId() + Utils.BACK_SLANT + stockBo.getLocationId() + Utils.BACK_SLANT + purchaseEntity.getSuplPlntCd() + Utils.BACK_SLANT + purchaseEntity.getSupNum() ;
                 break;
             default:
                 break;
@@ -373,16 +394,16 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
 
         switch(poTypeCd){
             case "NB":
-                if( StringUtils.isBlank(purchaseEntity.getLineItemTypeCd()) || purchaseEntity.getLineItemTypeCd().equals(IConstant.VALUE.ZERO)){
-                    processTypeId = IConstant.VALUE.VENDOR_TRANSPORT;
+                if( StringUtils.isBlank(purchaseEntity.getLineItemTypeCd()) || purchaseEntity.getLineItemTypeCd().equals(Utils.ZERO)){
+                    processTypeId = VENDOR_TRANSPORT;
                 }
                 break;
             case "UB":
-                processTypeId = IConstant.VALUE.INTERNAL_TRANSPORT;
+                processTypeId = INTERNAL_TRANSPORT;
                 break;
             case "ZLA":
             case "ZNB":
-                processTypeId = IConstant.VALUE.EXTERNAL_TRANSPORT;
+                processTypeId = EXTERNAL_TRANSPORT;
                 break;
             default:
                 break;
@@ -394,8 +415,8 @@ public class OMPGdmStockASNServiceImpl implements ICommonService {
         FailData failData = new FailData();
         failData.setErrorCode(errorCode);
         failData.setErrorValue(errorValue);
-        failData.setFunctionalArea(IConstant.FAILED.FUNCTIONAL_AREA.DP);
-        failData.setInterfaceID(IConstant.FAILED.INTERFACE_ID.OMP_GDM_STOCK_ASN);
+        failData.setFunctionalArea(Utils.DP);
+        failData.setInterfaceID(INTERFACE_ID);
         failData.setKey1(shipNotifEntity.getDelvDocId());
         failData.setKey2(shipNotifEntity.getDelvLineNbr());
         failData.setKey3(shipNotifEntity.getMatlNum());

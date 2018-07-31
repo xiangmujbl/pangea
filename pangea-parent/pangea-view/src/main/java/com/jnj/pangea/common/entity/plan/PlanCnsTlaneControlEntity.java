@@ -16,9 +16,6 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
     private String leadTime;
     private String processTypeId;
     private String sourceSystemCriticalParameters;
-    private String trigSysPlant;
-    private String triangulationDetail;
-    private String trigSysTransaction;
 
     private String triangulationDetail;
     private String trigSysTransaction;

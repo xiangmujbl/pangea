@@ -14,6 +14,8 @@ public class PlanCnsTlaneControlDaoImpl extends CommonDaoImpl {
     public static final String PLAN_CNS_TLANE_CONTROL = "/plan/cns_tlane_control";
 
     // field names for this region
+    public static final String SEQUENCE_NUMBER = "sequenceNumber";
+    public static final String TLANE_NAME = "tlaneName";
     public static final String TRIG_SYS_PLANT = "trigSysPlant";
     public static final String TRIG_SYS_TRANSACTION = "trigSysTransaction";
     public static final String TRIANGULATION_DETAIL = "triangulationDetail";
@@ -47,37 +49,37 @@ public class PlanCnsTlaneControlDaoImpl extends CommonDaoImpl {
                                                                                      String sysTransaction, String triangulationDetail) {
         if (StringUtils.isNotBlank(sourceSystem) && StringUtils.isNotBlank(localPlant) &&
                 StringUtils.isNotBlank(sysTransaction) && StringUtils.isNotBlank(triangulationDetail)) {
-            String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_TLANE_CONTROL.SOURCE_SYSTEM_CRITICAL_PARAMETERS).is(sourceSystem)
+            String queryString = QueryHelper.buildCriteria(SOURCE_SYSTEM_CRITICAL_PARAMETERS).is(sourceSystem)
                     .and(TRIG_SYS_PLANT).is(localPlant)
                     .and(TRIG_SYS_TRANSACTION).is(sysTransaction)
                     .and(TRIANGULATION_DETAIL).is(triangulationDetail)
                     .toQueryString();
 
-            return queryForList(IConstant.REGION.PLAN_CNS_TLANE_CONTROL, queryString, PlanCnsTlaneControlEntity.class);
+            return queryForList(PLAN_CNS_TLANE_CONTROL, queryString, PlanCnsTlaneControlEntity.class);
         }
         return null;
     }
 
 
     public List<PlanCnsTlaneControlDaoImpl> getEntityListWithTriangulationParams(String sequenceNumber, String tlaneName, String sourceSystemCritical, String trigSysPlant, String trigSysTransaction, String triangulationDetail) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_TLANE_CONTROL.SEQUENCE_NUM).is(sequenceNumber)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.TLANE_NAME).is(tlaneName)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.SOURCE_SYSTEM_CRITICAL).is(sourceSystemCritical)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIG_SYS_PLANT).is(trigSysPlant)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIG_SYS_TRANSACTION).is(trigSysTransaction)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIANGULATION_DETAIL).is(triangulationDetail)
+        String queryString = QueryHelper.buildCriteria(SEQUENCE_NUMBER).is(sequenceNumber)
+                .and(TLANE_NAME).is(tlaneName)
+                .and(SOURCE_SYSTEM_CRITICAL_PARAMETERS).is(sourceSystemCritical)
+                .and(TRIG_SYS_PLANT).is(trigSysPlant)
+                .and(TRIG_SYS_TRANSACTION).is(trigSysTransaction)
+                .and(TRIANGULATION_DETAIL).is(triangulationDetail)
                 .toQueryString();
-        return queryForList(IConstant.REGION.PLAN_CNS_TLANE_CONTROL,queryString,PlanCnsTlaneControlEntity.class);
+        return queryForList(PLAN_CNS_TLANE_CONTROL,queryString,PlanCnsTlaneControlEntity.class);
 
     }
 
     public List<PlanCnsTlaneControlDaoImpl> getEntityListWithTriangulationParamsAnySequence(String sourceSystemCritical, String trigSysPlant, String trigSysTransaction, String triangulationDetail) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_TLANE_CONTROL.SOURCE_SYSTEM_CRITICAL).is(sourceSystemCritical)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIG_SYS_PLANT).is(trigSysPlant)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIG_SYS_TRANSACTION).is(trigSysTransaction)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL.TRIANGULATION_DETAIL).is(triangulationDetail)
+        String queryString = QueryHelper.buildCriteria(SOURCE_SYSTEM_CRITICAL_PARAMETERS).is(sourceSystemCritical)
+                .and(TRIG_SYS_PLANT).is(trigSysPlant)
+                .and(TRIG_SYS_TRANSACTION).is(trigSysTransaction)
+                .and(TRIANGULATION_DETAIL).is(triangulationDetail)
                 .toQueryString();
-        return queryForList(IConstant.REGION.PLAN_CNS_TLANE_CONTROL,queryString,PlanCnsTlaneControlEntity.class);
+        return queryForList(PLAN_CNS_TLANE_CONTROL,queryString,PlanCnsTlaneControlEntity.class);
 
     }
 

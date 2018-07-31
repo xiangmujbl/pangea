@@ -25,11 +25,11 @@ public class PlanCnsTlaneControlTriangulationDaoImpl extends CommonDaoImpl {
     }
 
     public List<PlanCnsTlaneControlTriangulationEntity> getStepsForSequence(String sequenceNumber, String tlaneName) {
-        String queryString = QueryHelper.buildCriteria(IConstant.PLAN_CNS_TLANE_CONTROL.SEQUENCE_NUM).is(sequenceNumber)
-                .and(IConstant.PLAN_CNS_TLANE_CONTROL_TRIANGULATION.TLANE_NAME).is(tlaneName)
+        String queryString = QueryHelper.buildCriteria(SEQUENCE_NUMBER).is(sequenceNumber)
+                .and(TLANE_NAME).is(tlaneName)
                 .toQueryString();
 
-        return queryForList(IConstant.REGION.PLAN_CNS_TLANE_CONTROL_TRIANGULATION,queryString,PlanCnsTlaneControlTriangulationEntity.class);
+        return queryForList(PLAN_CNS_TLANE_CONTROL_TRIANGULATION,queryString,PlanCnsTlaneControlTriangulationEntity.class);
     }
 
     public List<PlanCnsTlaneControlTriangulationEntity> getEntityWithSourceSystemCriticalParameters(String sequenceNumber, String tlaneName) {
