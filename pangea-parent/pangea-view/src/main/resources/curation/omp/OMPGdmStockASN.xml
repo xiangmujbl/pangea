@@ -93,7 +93,7 @@
 
             <region path="/plan/cns_tlane_control_triangulation">
                 <columns>
-                    sequenceNumber,stepNumber,tlaneName,originLocation,destinationLocation
+                    sequenceNumber,stepNumber,tlaneName,originLocation,destinationLocaton
                 </columns>
             </region>
 

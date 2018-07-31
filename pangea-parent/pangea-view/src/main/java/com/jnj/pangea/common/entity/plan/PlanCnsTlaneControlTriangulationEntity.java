@@ -18,7 +18,7 @@ public class PlanCnsTlaneControlTriangulationEntity extends CommonEntity {
         setStepNumber((String) map.get("stepNumber"));
         setTlaneName((String) map.get("tlaneName"));
         setOriginLocation((String) map.get("originLocation"));
-        setDestinationLocation((String) map.get("destinationLocation"));
+        setDestinationLocation((String) map.get("destinationLocaton"));
     }
 
     public String getSequenceNumber() {
