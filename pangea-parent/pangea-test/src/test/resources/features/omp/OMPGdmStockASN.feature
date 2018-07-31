@@ -133,8 +133,8 @@ Feature:  OMPGdmStockASN-Curation
           | 29             | PA03toCR01 | 1012018   | 31/12/2998 | CONS_LATAM_PA03 |        |              |                | CONS_LATAM_CR01     | Ship | 20       | YES                 | 1             | CONS_LATAM                     | purchase_order     | CR02         |               |                 |               |
     And I wait "/plan/cns_tlane_control" Async Queue complete
 
-    Given I import "/plan/cns_tlane_control_triangulation" by keyFields "sequenceNumber,stepNumber,tlaneName,originLocation,destinationLocaton"
-      | sequenceNumber | stepNumber | tlaneName  | originLocation  | destinationLocaton |
+    Given I import "/plan/cns_tlane_control_triangulation" by keyFields "sequenceNumber,stepNumber,tlaneName,originLocation,destinationLocation"
+      | sequenceNumber | stepNumber | tlaneName  | originLocation  | destinationLocation |
       | 1              | 1          | CO01toMX02 | CONS_LATAM_CO01 | CONS_LATAM_MX01     |
       | 1              | 2          | CO01toMX02 | CONS_LATAM_MX01 | CONS_LATAM_MX02     |
       | 10             | 1          | CO01toCR01 | CONS_LATAM_CO01 | CONS_LATAM_CR02     |
