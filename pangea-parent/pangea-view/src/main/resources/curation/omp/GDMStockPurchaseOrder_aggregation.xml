@@ -1,0 +1,95 @@
+<adf-curation>
+    <curation mainRegion="/edm/purchase_order_oa_v1_preAggregation" viewRegion="/edm/purchase_order_oa_v1_aggregation"
+              chunkSize="1000" partitionPerServer="2" chunkBytes="40096" parallelism="2">
+        <regions>
+            <region path="/edm/purchase_order_oa_v1_preAggregation" mvel="true">
+                <columns>
+                    sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,crtOnDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum,outbDelvCmpltInd,localConfCrtOnDt,localSeqNumVendConf,localSeqNumActAsgn
+                </columns>
+                <aggregator>
+                    <fields>
+                        <field name="cnfrmQty" aggr="SUM" type="NUMBER" scale="3"/>
+                        <field name="poNum" asKey="true"/>
+                        <field name="poLineNbr" asKey="true"/>
+                        <field name="sourceSystem" asKey="true"/>
+                        <field name="evTypeCd" asKey="true"/>
+                        <field name="matlMvmttYr" asKey="true"/>
+                        <field name="matlMvmtNum" asKey="true"/>
+                        <field name="matlMvmtSeqNbr" asKey="true"/>
+                        <field name="delvSchedCntNbr" asKey="true"/>
+                        <field name="poCatTypeCd"/>
+                        <field name="poTypeCd"/>
+                        <field name="crtOnDt"/>
+                        <field name="supNum"/>
+                        <field name="prchsngOrgNum"/>
+                        <field name="prchsngGrpNum"/>
+                        <field name="prchsngCoCd"/>
+                        <field name="crncyCd"/>
+                        <field name="poDt"/>
+                        <field name="vldFromDt"/>
+                        <field name="vldToDt"/>
+                        <field name="suplVendNum"/>
+                        <field name="suplPlntCd"/>
+                        <field name="rlseCmpltInd"/>
+                        <field name="rlseDocInd"/>
+                        <field name="delInd"/>
+                        <field name="matlNum"/>
+                        <field name="plntCd"/>
+                        <field name="slocCd"/>
+                        <field name="intrnlRefNum"/>
+                        <field name="poLineQty"/>
+                        <field name="poUomCd"/>
+                        <field name="localNumerator"/>
+                        <field name="localDenominator"/>
+                        <field name="stkTypeCd"/>
+                        <field name="delvCmpltInd"/>
+                        <field name="lineItemTypeCd"/>
+                        <field name="acctAsgnmtCatCd"/>
+                        <field name="prinPrchAgmtNum"/>
+                        <field name="prinPrchAgmtLineNbr"/>
+                        <field name="localBaseUOM"/>
+                        <field name="delvAddrNum"/>
+                        <field name="localPDT"/>
+                        <field name="localSpecialStock"/>
+                        <field name="cnfrmCd"/>
+                        <field name="subcntrcInd"/>
+                        <field name="localdelvAddrNum"/>
+                        <field name="prDocId"/>
+                        <field name="prLineNbr"/>
+                        <field name="localBrazilianNCMCode"/>
+                        <field name="isuSlocCd"/>
+                        <field name="poHistCatCd"/>
+                        <field name="localMovementType"/>
+                        <field name="localPostingDate"/>
+                        <field name="recvEaQty" aggr="SUM" type="NUMBER" scale="3"/>
+                        <field name="cnfrmSeqNbr"/>
+                        <field name="delvDt"/>
+                        <field name="crtOnDt"/>
+                        <field name="mrpAdjQty"/>
+                        <field name="localCreationIndVendorConf"/>
+                        <field name="slsOrdrNum"/>
+                        <field name="slsOrdrLineNbr"/>
+                        <field name="vendBtchNum"/>
+                        <field name="localdelvDt"/>
+                        <field name="schdQty"/>
+                        <field name="recvQty"/>
+                        <field name="localPurchaseReq"/>
+                        <field name="localPurchaseReqItem"/>
+                        <field name="stkTfrRecvQty"/>
+                        <field name="localmrpAdjQty"/>
+                        <field name="grLeadTimeDays"/>
+                        <field name="custNum"/>
+                        <field name="localSeqNumActAsgn" asKey="true"/>
+                        <field name="localSeqNumVendConf" asKey="true"/>
+                    </fields>
+                    <groupBy>poNum,poLineNbr</groupBy>
+                </aggregator>
+            </region>
+            <region path="/edm/purchase_order_oa_v1_aggregation">
+                <columns>
+                    sourceSystem,poNum,poLineNbr,evTypeCd,matlMvmttYr,matlMvmtNum,matlMvmtSeqNbr,delvSchedCntNbr,poCatTypeCd,poTypeCd,crtOnDt,supNum,prchsngOrgNum,prchsngGrpNum,prchsngCoCd,crncyCd,poDt,vldFromDt,vldToDt,suplVendNum,suplPlntCd,rlseCmpltInd,rlseDocInd,delInd,matlNum,plntCd,slocCd,intrnlRefNum,poLineQty,poUomCd,localNumerator,localDenominator,stkTypeCd,delvCmpltInd,lineItemTypeCd,acctAsgnmtCatCd,prinPrchAgmtNum,prinPrchAgmtLineNbr,localBaseUOM,delvAddrNum,localPDT,localSpecialStock,cnfrmCd,subcntrcInd,localdelvAddrNum,prDocId,prLineNbr,localBrazilianNCMCode,isuSlocCd,poHistCatCd,localMovementType,localPostingDate,recvEaQty,cnfrmSeqNbr,delvDt,crtOnDt,cnfrmQty,mrpAdjQty,localCreationIndVendorConf,slsOrdrNum,slsOrdrLineNbr,vendBtchNum,localdelvDt,schdQty,recvQty,localPurchaseReq,localPurchaseReqItem,stkTfrRecvQty,localmrpAdjQty,grLeadTimeDays,custNum,outbDelvCmpltInd,localConfCrtOnDt,localSeqNumVendConf,localSeqNumActAsgn
+                </columns>
+            </region>
+        </regions>
+    </curation>
+</adf-curation>

@@ -13,20 +13,30 @@ public class OMPGdmFbpBo extends BaseBo {
     private String productId;
     private String value;
     private String volume;
+    private String aggregationId;
 
-    // TODO add keys
+
+
+
     @Override
     public String getKey() {
         return RawDataHelper.getInstance()
                 .makeJsonObject("fbpId", this.fbpId)
+                .add("aggregationId", this.aggregationId)
                 .toJsonString();
     }
 
-    public String getfbpId() {
-        return this.fbpId;
+    public String getFbpId() {
+        return fbpId;
+    }
+    public String getAggregationId() {
+        return aggregationId;
     }
 
-    public void setfbpId(String fbpId) {
+    public void setAggregationId(String aggregationId) {
+        this.aggregationId = aggregationId;
+    }
+    public void setFbpId(String fbpId) {
         this.fbpId = fbpId;
     }
 
@@ -97,6 +107,7 @@ public class OMPGdmFbpBo extends BaseBo {
                 ", productId='" + productId + '\'' +
                 ", value='" + value + '\'' +
                 ", volume='" + volume + '\'' +
+                ", aggregationId='" + aggregationId + '\'' +
                 '}';
     }
 }

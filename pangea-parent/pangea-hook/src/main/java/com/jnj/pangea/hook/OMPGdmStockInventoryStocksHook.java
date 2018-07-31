@@ -1,6 +1,7 @@
 package com.jnj.pangea.hook;
 
 import com.jnj.adf.client.api.JsonObject;
+import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.hook.common.DateUtils;
 import com.jnj.pangea.hook.common.IConstant;
 import org.apache.commons.lang.StringUtils;
@@ -744,5 +745,33 @@ public class OMPGdmStockInventoryStocksHook {
 
 		return true;
 
+	}
+
+
+	/**
+	 *
+	 * @param cnsTlaneControlTriangulationList
+	 * @return
+	 */
+	public static String getLocalPlantByTriangulation (List<Map.Entry<String, String>> cnsTlaneControlTriangulationList) {
+
+		String localPlant = null;
+		int stepNumberCount = 0;
+
+		for (Map.Entry<String, String> cnsTlaneControlTriangulationListEntry : cnsTlaneControlTriangulationList) {
+
+			Map<String, Object> cnsTlaneControlTriangulationListMap = JsonObject.append(cnsTlaneControlTriangulationListEntry.getValue()).toMap();
+
+			String destinationLocation = String.valueOf(cnsTlaneControlTriangulationListMap.get("destinationLocation"));
+			String stepNumber = String.valueOf(cnsTlaneControlTriangulationListMap.get("stepNumber"));
+			int stepNumberInt = Integer.parseInt(stepNumber);
+
+			if (stepNumberCount < stepNumberInt) {
+
+				stepNumberCount = Integer.parseInt(stepNumber);
+				localPlant = destinationLocation.substring(destinationLocation.length()-4, destinationLocation.length());
+			}
+		}
+		return localPlant;
 	}
 }

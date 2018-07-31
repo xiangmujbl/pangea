@@ -12,6 +12,11 @@
                     <relation path="/plan/cns_plan_parameter" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+                    <relation path="/plan/cns_plant_attr" isPrimaryKey="false">
+                        <expression>
+                            sourceSystem =/edm/matl_bom.srcSysCd
+                        </expression>
+                    </relation>
                     <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
                         <expression>
                             srcSysCd=/edm/matl_bom.srcSysCd,matlNum=/edm/matl_bom.matlNum,plntCd=/edm/matl_bom.plntCd,altBomNum=/edm/matl_bom.altBomNum
@@ -44,6 +49,9 @@
                         </expression>
                     </relation>
                 </relations>
+                <filter>
+                    bomUsgCd:1 or bomUsgCd:2
+                </filter>
             </region>
 
 
@@ -79,6 +87,14 @@
                 <filter>dataObject:SEND_TO_OMP</filter>
             </region>
 
+            <region path="/plan/cns_plant_attr">
+                <columns>
+                    sourceSystem,localPlanningRelevant,planLocTypeId
+                </columns>
+                <filter>
+                    localPlanningRelevant:X AND planLocTypeId:IM
+                </filter>
+            </region>
             <region path="/edm/matl_prod_versn">
                 <columns>
                     srcSysCd,plntCd,altBomNum,matlNum,rtngGrpCntrNum,rtngGrpCd,prdntVrsnNum,dstrbtnKeyCd,valToDt,valFromDt

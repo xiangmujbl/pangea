@@ -1,0 +1,365 @@
+<adf-curation xmlPathPrefix="/omp" executionClassName="com.jnj.pangea.GDMDemandSalesOrder" writeTo="all" topic="PANGEA_V1_gdm_demand_sales_order" failRegion="/plan/edm_failed_data">
+
+    <regions>
+        <region path="/edm/sales_order_v1" mainRegion="true" lucene="true">
+            <columns>
+                localBillingBlock,localBillingBlockItem,localChangeDt,localCustomerGroup,localCustomerPO,localDeliveryBlock,localDentoBase,localDistrChannel,localDivision,localDocumentCateg,localIncoTerms1,localIncoTerms2,localItemBillRlvnt,localItemCategory,localItemDlvRlvnt,localMaterialNumber,localNumtoBase,localOrderCreateDt,localOrderDate,localOrderReason,localOrderType,localPlant,localPricingProcedure,localRejReason,localRequestedDate,localRoute,localSDItemCurrency,localSDItemValue,localSalesGroup,localSalesOffice,localSalesOrg,localSalesUnit,localSchLineConfimQty,localSchLineQty,localScheduleLineDate,localShipToParty,localShippingPoint,localSoldToParty,localStorageLocation,localValidFromDt,localValidToDt,salesOrderItem,salesOrderNo,salesOrderQty,scheduleLineItem,sourceSystem,lineRejStat,lineDelvStat
+            </columns>
+            <filter>lineDelvStat:A OR lineDelvStat:B</filter>
+            <relations>
+                <region path="/plan/prod_loc_min_shelf" isPrimaryKey="true">
+                    <columns>
+                        localMaterialNumber,localPlant,minMinShelfLife,minShelfLife,sourceSystem
+                    </columns>
+                    <expression>
+                        sourceSystem=/edm/sales_order_v1.sourceSystem,localPlant=/edm/sales_order_v1.localPlant,localMaterialNumber=/edm/sales_order_v1.localMaterialNumber
+                    </expression>
+                </region>
+                <region path="/edm/material_global_v1" isPrimaryKey="true">
+                    <columns>
+                        baseUom,batchManageIndicator,brand,category,division,flagForDeletion,form,franchise,globalBusinessUnit,globalDpParentCode,localBaseUom,localDpParentCode,localManufacturingTechnology,localMaterialGroup,localMaterialNumber,localMaterialType,localRefDescription,manufacturingTechnology,materialGroup,materialNumber,materialStatus,materialType,minRemShelfLife,parentCode,primaryPlanningCode,productFamily,refDescription,sourceSystem,subBrand,totalShelfLife
+                    </columns>
+                    <expression>
+                        sourceSystem=/edm/sales_order_v1.sourceSystem,localMaterialNumber=/edm/sales_order_v1.localMaterialNumber
+                    </expression>
+                </region>
+                <region path="/plan/cns_material_plan_status" isPrimaryKey="true">
+                    <columns>
+                        active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant
+                    </columns>
+                    <expression>
+                        localMaterialNumber=/edm/sales_order_v1.localMaterialNumber,localPlant=/edm/sales_order_v1.localPlant,sourceSystem=/edm/sales_order_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/plan/cns_dem_grp_asgn" isPrimaryKey="false">
+                    <columns>
+                        channel,channelDescription,companyCode,countryAffiliate,customerId,customerName,customerShipTo,demandGroup,demandGroupDescription,demandGrpDescription,fromDate,group,region,salesOrg,salesOrganization,sourceSystem,subFranchise,toDate
+                    </columns>
+                    <expression>
+                        customerId=/edm/sales_order_v1.localShipToParty,salesOrganization=/edm/sales_order_v1.localSalesOrg
+                    </expression>
+                </region>
+                <region path="/plan/cns_plan_unit" isPrimaryKey="false">
+                    <columns>
+                        factor,localUom,localUomName,planFlag,plantFlag,roundingDecimal,sourceSystem,unit
+                    </columns>
+                    <expression>
+                        sourceSystem=/edm/sales_order_v1.sourceSystem
+                    </expression>
+                </region>
+                <region path="/edm/sales_history_v1_aggregation" isPrimaryKey="false">
+                    <columns>
+                        localBaseQuantity,localPrecDocNo,localSPrecDocLnNo,localSubDocCatg
+                    </columns>
+                    <expression>
+                    </expression>
+                </region>
+                <region path="/project_one/knvh" isPrimaryKey="false">
+                    <columns>
+                        bokre,datab,datbi,grpno,hityp,hkunnr,hspart,hvkorg,hvtweg,hzuor,kunnr,mandt,prfre,spart,vkorg,vtweg
+                    </columns>
+                    <expression>
+                    </expression>
+                </region>
+                <region path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                    <columns>
+                       inclusionExclusion,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem
+                    </columns>
+                    <expression>
+                    </expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
+
+    <methods>
+        <method name="joinCnsDemGrpAsgn" isPK="false" resultType="Map" path="/plan/cns_dem_grp_asgn">
+            <parameters>
+                <parameter name="customerId" value="localShipToParty" relationship="and"/>
+                <parameter name="salesOrganization" value="localSalesOrg"/>
+            </parameters>
+        </method>
+        <method name="joinProdLocMinShelf" isPK="true" resultType="Map" path="/plan/prod_loc_min_shelf">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localPlant" value="localPlant" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+        <method name="joinMaterialGlobal" isPK="true" resultType="Map" path="/edm/material_global_v1">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+        <method name="joinCnsMaterialPlanStatus" isPK="true" resultType="Map" path="/plan/cns_material_plan_status">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localPlant" value="localPlant" relationship="and"/>
+                <parameter name="localMaterialNumber" value="localMaterialNumber"/>
+            </parameters>
+        </method>
+        <method name="joinCnsPlanUnit" isPK="false" resultType="Map" path="/plan/cns_plan_unit">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="localUom" value="localBaseUom"/>
+            </parameters>
+        </method>
+        <method name="joinSalesHistoryAggr" isPK="true" resultType="Map" path="/edm/sales_history_v1_aggregation">
+            <parameters>
+                <parameter name="localPrecDocNo" value="salesOrderNo" relationship="and"/>
+                <parameter name="localSPrecDocLnNo" value="salesOrderItem" relationship="and"/>
+                <parameter name="localSubDocCatg" value="localSubDocCatg"/>
+            </parameters>
+        </method>
+        <method name="joinCnsPlanObjectFilter" isPK="false" resultType="Map" path="/plan/cns_plan_object_filter">
+            <parameters>
+                <parameter name="sourceObjectTechName" value="sourceObjName" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="sourceObjectAttribute1" value="sourceObjAttr1" relationship="and"/>
+                <parameter name="sourceObjectAttribute1Value" value="sourceObjAttr1Val" relationship="and"/>
+                <parameter name="sourceObjectAttribute2" value="sourceObjAttr2" relationship="and"/>
+                <parameter name="sourceObjectAttribute2Value" value="sourceObjAttr2Val" relationship="and"/>
+                <parameter name="inclusionExclusion" value="inclFlag"/>
+            </parameters>
+        </method>
+        <method name="joinCnsPlanObjectAllFilter" isPK="false" resultType="Map" path="/plan/cns_plan_object_filter">
+            <parameters>
+                <parameter name="sourceObjectTechName" value="sourceObjName" relationship="and"/>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"/>
+                <parameter name="sourceObjectAttribute1" value="sourceObjAttr1" relationship="and"/>
+                <parameter name="sourceObjectAttribute1Value" value="sourceObjAttr1Val" relationship="and"/>
+                <parameter name="inclusionExclusion" value="inclFlag" relationship="and"/>
+                <parameter name="sourceObjectAttribute2" value="sourceObjAttr2" relationship="and"/>
+                <parameter name="sourceObjectAttribute2Value" value="sourceObjAttr2Val" relationship="or"/>
+                <parameter name="sourceObjectAttribute2Value" value="allFlag"/>
+            </parameters>
+        </method>
+    </methods>
+
+    <udfs>
+        <udf name="addSecond" resultType="String" parameter="fromDueDate">
+            Calendar startDate = Calendar.getInstance();
+            startDate.setTime(DateInner.offsetSecond(DateInner.stringToDate(fromDueDate, "yyyy/MM/dd HH:mm:ss"), 1));
+            return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd HH:mm:ss");
+        </udf>
+
+        <udf name="calcDate" resultType="String" parameter="localScheduleLineDate">
+            Calendar startDate = Calendar.getInstance();
+            startDate.setTime(DateInner.stringToDate(localScheduleLineDate, "yyyyMMdd"));
+            return DateInner.dateToString(startDate.getTime(), "yyyy/MM/dd HH:mm:ss");
+        </udf>
+    </udfs>
+
+    <viewRegion name="/omp/gdm_demand_sales_order">
+        <vars>
+            <var name="localShipToParty" value="localShipToParty"/>
+            <var name="localSalesOrg" value="localSalesOrg"/>
+            <var name="localScheduleLineDate" value="localScheduleLineDate"/>
+            <var name="sourceSystem" value="sourceSystem"/>
+            <var name="localPlant" value="localPlant"/>
+            <var name="localMaterialNumber" value="localMaterialNumber"/>
+            <var name="allMaterialNumber" value="'*'"/>
+            <var name="inclFlag" value="'I'"/>
+            <var name="exclFlag" value="'E'"/>
+            <var name="allFlag" value="'ALL'"/>
+            <var name="salesOrderFlag" value="'sales_order'"/>
+            <var name="localPlantFlag" value="'localPlant'"/>
+            <var name="localOrderTypeFlag" value="'localOrderType'"/>
+            <var name="localSalesOrgFlag" value="'localSalesOrg'"/>
+            <var name="localShipToPartyFlag" value="'localShipToParty'"/>
+            <var name="scheduleLineItem" value="scheduleLineItem"/>
+            <var name="salesOrderQty" value="salesOrderQty"/>
+            <var name="localRejReason" value="localRejReason"/>
+            <var name="salesOrderNo" value="salesOrderNo"/>
+            <var name="salesOrderItem" value="salesOrderItem"/>
+            <var name="lineRejStat" value="lineRejStat"/>
+            <var name="localNumtoBase" value="localNumtoBase"/>
+            <var name="localDentoBase" value="localDentoBase"/>
+            <var name="localSubDocCatg" value="'J'"/>
+            <var name="localOrderType" value="localOrderType"/>
+            <var name="localOrderCreateDt" value="localOrderCreateDt"/>
+        </vars>
+        <columns>
+            <!-- fixed value fields first -->
+            <column name="active" hardCode="'YES'"/>                                <!-- SO01-->
+            <column name="activeFCTERP" hardCode="'NO'"/>                           <!-- SO02-->
+            <column name="activeOPRERP" hardCode="'YES'"/>                          <!-- SO01-->
+            <column name="activeSOPERP" hardCode="'NO'"/>                           <!-- SO02-->
+            <column name="batchId" hardCode="''"/>                                  <!-- SO03-->
+            <column name="certaintyId" hardCode="'VC'"/>                            <!-- SO04-->
+            <column name="inventoryLinkGroupId" hardCode="''"/>                     <!-- SO03-->
+            <column name="wRK02" hardCode="''"/>                                    <!-- SO03-->
+            <column name="planningStrategy" hardCode="'ProductLocationBalanced'"/>  <!-- SO11-->
+
+            <!-- SO14 -->
+            <!-- Do this rule first to process the rejects before skipping any records --> <!-- TODO maybe ?? :) -->
+            <column name="unitId" var="unitId">
+                <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
+                     value="localBaseUom" resultType="Map"/>
+                <ref method="joinCnsPlanUnit" parameter="sourceSystem,StringInner.trim(localBaseUom)" value="unit" resultType="Map">
+                    <if test="unit != null">
+                        <set name="unitId" value="unit"/>
+                    </if>
+                    <else>
+                        <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO14'"
+                                  errorValue="'Plan unit is null'" sourceSystem="sourceSystem" key1="salesOrderNo"
+                                  key2="salesOrderItem" key3="scheduleLineItem" key4="localMaterialNumber"/>
+                    </else>
+                </ref>
+            </column>
+
+            <!-- SO5 -->
+            <column name="customerId">
+                <if test="StringInner.isStringEmpty(localSalesOrg) || StringInner.isStringEmpty(localShipToParty)">
+                    <!-- skip - would result in exceptions in the next queries anyway -->
+                    <return/>
+                </if>
+                <else>
+                    <ref method="joinCnsPlanObjectFilter" parameter="salesOrderFlag,sourceSystem,localSalesOrgFlag,localSalesOrg,localShipToPartyFlag,localShipToParty,exclFlag"
+                         value="inclusionExclusion" resultType="Map">
+                        <if test="inclusionExclusion != null">
+                            <!-- skip -->
+                            <return/>
+                        </if>
+                    </ref>
+                    <if test="StringInner.isStringEmpty(customerId)">
+                        <ref method="joinCnsPlanObjectAllFilter" parameter="salesOrderFlag,sourceSystem,localSalesOrgFlag,localSalesOrg,inclFlag,localShipToPartyFlag,localShipToParty,allFlag"
+                             value="inclusionExclusion" resultType="Map">
+                            <if test="inclusionExclusion == null">
+                                <!-- skip -->
+                                <return/>
+                            </if>
+                        </ref>
+                        <if test="StringInner.isStringEmpty(customerId)">
+                            <ref method="joinCnsDemGrpAsgn" parameter="localShipToParty,localSalesOrg"
+                                 value="demandGroup" resultType="Map">
+                                <if test="StringInner.isStringNotEmpty(demandGroup)">
+                                    <set name="customerId" value="demandGroup"/>
+                                </if>
+                            </ref>
+                            <if test="StringInner.isStringEmpty(customerId)">
+                                <ref hook="OMPGdmDemandSalesOrderHook.determineCustomerId(localShipToParty,localSalesOrg,localOrderCreateDt)"/>
+                                <if test="StringInner.isStringEmpty(customerId)">
+                                    <failData functionalArea="'SP'" interfaceID="'GDMDemandSalesOrder'" errorCode="'SO5'"
+                                              errorValue="'Demand Group can not be determined'" sourceSystem="sourceSystem" key1="salesOrderNo"
+                                              key2="salesOrderItem" key3="scheduleLineItem" key4="localMaterialNumber"/>
+                                </if>
+                            </if>
+                        </if>
+                    </if>
+                </else>
+            </column>
+
+            <!-- SO8 -->
+            <column name="fromDueDate">
+                <ref udf="calcDate" parameter="localScheduleLineDate" value="resultStartDate" resultType="String"></ref>
+            </column>
+
+            <!-- SO7 -->
+            <column name="dueDate">
+                <ref udf="addSecond" parameter="fromDueDate" value="resultDate" resultType="String"></ref>
+            </column>
+
+            <!-- SO9 -->
+            <column name="locationId">
+                <set name="locationId" value="StringInner.join(sourceSystem,'_',localPlant)"/>
+            </column>
+
+            <!-- SO10 -->
+            <column name="minRemainingShelfLife">
+                <!-- try match on all 3; sourceSystem, localPlant, localMaterialNumber -->
+                <ref method="joinProdLocMinShelf" parameter="sourceSystem,localPlant,localMaterialNumber"
+                     value="minShelfLife" resultType="Map">
+                    <if test="minShelfLife != null">
+                        <set name="minRemainingShelfLife" value="minShelfLife"/>
+                    </if>
+                    <else>
+                        <!-- if no match, try sourceSystem, localPlant and localMaterialNumber = "*" -->
+                        <ref method="joinProdLocMinShelf" parameter="sourceSystem,localPlant,allMaterialNumber"
+                             value="minShelfLife" resultType="Map">
+                            <if test="minShelfLife != null">
+                                <set name="minRemainingShelfLife" value="minShelfLife"/>
+                            </if>
+                        </ref>
+                    </else>
+                </ref>
+                <if test="minRemainingShelfLife == null">
+                    <!-- if no match, try material_global_v1 region instead -->
+                    <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
+                         value="minRemShelfLife" resultType="Map">
+                        <if test="minRemShelfLife != null">
+                            <set name="minRemainingShelfLife" value="minRemShelfLife"/>
+                        </if>
+                        <else>
+                            <!-- if no match, set blank -->
+                            <set name="minRemainingShelfLife" value="''"/>
+                        </else>
+                    </ref>
+                </if>
+            </column>
+
+            <!-- SO12 -->
+            <column name="productId">
+                <ref method="joinCnsMaterialPlanStatus" parameter="sourceSystem,localPlant,localMaterialNumber"
+                     value="spRelevant,noPlanRelevant" resultType="Map">
+                    <if test="'X'.equals(spRelevant) || 'X'.equals(noPlanRelevant)">
+                        <ref method="joinMaterialGlobal" parameter="sourceSystem,localMaterialNumber"
+                             value="primaryPlanningCode,materialNumber" resultType="Map">
+                            <if test="StringInner.isStringEmpty(primaryPlanningCode)">
+                                <set name="productId" value="materialNumber"/>
+                            </if>
+                            <else>
+                                <set name="productId" value="primaryPlanningCode"/>
+                            </else>
+                        </ref>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </ref>
+                <!-- autocuration hackery - need this var reset before its use in the next column -->
+                <set name="inclusionExclusion" value="null"/>
+            </column>
+
+            <!-- SO6 -->
+            <column name="demandId">
+                <ref method="joinCnsPlanObjectFilter" parameter="salesOrderFlag,sourceSystem,localPlantFlag,localPlant,localOrderTypeFlag,localOrderType,inclFlag"
+                     value="inclusionExclusion" resultType="Map">
+                    <if test="inclusionExclusion != null">
+                        <if test="Integer.parseInt(scheduleLineItem) != 1 ||
+                            Double.parseDouble(salesOrderQty) &lt;= 0 ||
+                            StringInner.isStringNotEmpty(localRejReason) ||
+                            'C'.equals(lineRejStat)">
+                            <return/>
+                        </if>
+                        <else>
+                            <set name="demandId"
+                                 value="StringInner.join(productId,'/',locationId,'/',salesOrderNo,'/',salesOrderItem)"/>
+                        </else>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </ref>
+            </column>
+
+            <!-- SO13 -->
+            <column name="quantity">
+                <ref method="joinSalesHistoryAggr" parameter="salesOrderNo,salesOrderItem,localSubDocCatg"
+                     value="localBaseQuantity" resultType="Map">
+                    <if test="(Double.parseDouble(salesOrderQty) *
+                                    Integer.parseInt(localNumtoBase) / Integer.parseInt(localDentoBase)) >
+                                    Double.parseDouble(localBaseQuantity)">
+                        <set name="quantity"
+                             value="String.format(&quot;%.2f&quot;, (Double.parseDouble(salesOrderQty) * Integer.parseInt(localNumtoBase) / Integer.parseInt(localDentoBase)) -
+                             Double.parseDouble(localBaseQuantity))"/>
+                    </if>
+                    <else>
+                        <return/>
+                    </else>
+                </ref>
+            </column>
+        </columns>
+    </viewRegion>
+</adf-curation>

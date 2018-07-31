@@ -29,6 +29,8 @@ pangea-parent/pangea-parent\.iws
 
 pangea-parent/pangea-view/target/
 
-*.ipr
-
 *.iws
+
+*.jar
+
+pangea-parent/pangea-view/src/main/java/com/jnj/pangea/common/IConstant\.java

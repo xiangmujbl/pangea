@@ -13,6 +13,9 @@
                             ebeln=/project_one/ekko.ebeln
                         </expression>
                     </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                 </relations>
             </region>
 
@@ -55,44 +58,24 @@
                 <columns>
                     mandt,ebeln,ebelp,zekkn,vgabe,gjahr,belnr,buzei,bewtp,bwart,budat,menge
                 </columns>
-                <relations>
-                    <relation path="/project_one/ekes" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/project_one/ekes">
                 <columns>
                     charg,dabmg,ebeln,ebelp,ebtyp,eindt,ematn,erdat,estkz,etens,ezeit,imwrk,kzdis,loekz,lpein,mahnz,mandt,menge,mprof,refEtens,uecha,uzeit,vbeln,vbelp,xblnr
                 </columns>
-                <relations>
-                    <relation path="/project_one/eket" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/project_one/eket">
                 <columns>
                     mandt,ebeln,ebelp,etenr,eindt,menge,wemng,banfn,bnfpo,glmng,dabmg
                 </columns>
-                <relations>
-                    <relation path="/project_one/ekpv" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/project_one/ekpv">
                 <columns>
                     kunnr,ebeln,ebelp,mandt
                 </columns>
-                <relations>
-                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
-                        <expression></expression>
-                    </relation>
-                </relations>
             </region>
 
             <region path="/edm/source_system_v1">

@@ -1,0 +1,16 @@
+<adf-curation>
+    <curation mainRegion="/plan/cns_prod_cty_affl_temp" viewRegion="/plan/cns_prod_cty_affl" chunkSize="1000" chunkBytes="4096"
+              executionClassName="com.jnj.pangea.common.controller.CopyController">
+        <regions>
+
+            <region path="/plan/cns_prod_cty_affl_temp">
+                <columns>sourceSystem,dpParentCode,country,prodClassification,ovrProdClass,prodStatus,ovrProdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp</columns>
+            </region>
+
+            <region path="/plan/cns_prod_cty_affl">
+                <columns>sourceSystem,dpParentCode,country,prodClassification,ovrProdClass,prodStatus,ovrProdStat,dpSegmentation,dpPlannerId,rootSize,countryGrp</columns>
+            </region>
+
+        </regions>
+    </curation>
+</adf-curation>

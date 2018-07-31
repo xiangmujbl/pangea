@@ -6,12 +6,19 @@
         <regions>
 
             <region path="/edm/purchase_requisition_v1">
-                <columns>apprByDt, chngOnDt, crtByNm, lineStsCd, localAgreementItem, localCurrency, localFixedVendor,
-                    localPDT, localPOQuantity, localPrGRLeadTimeDays, matlNum, needByDt, plntCd, poTypeCd, prLineNbr,
-                    prLineQty, prLineUomCd, prMrpHrzn, prNum, prRqstDt, prStsCd, prTypeCd, prchInfoDesc,
-                    prchsngGrpNum, prchsngOrgNum, slocCd, sourceSystem, suplPlntCd, prLineCatCd, prCatCd, localSupNum
+                <columns>
+                    apprByDt,chngOnDt,crtByNm,lineStsCd,localAgreementItem,localCurrency,localFixedVendor,plntCd,
+                    localPDT,localPOQuantity,localPrGRLeadTimeDays,matlNum,needByDt,poTypeCd,prLineNbr,prLineQty,
+                    prLineUomCd,prMrpHrzn,prNum,prRqstDt,prStsCd,prTypeCd,prchInfoDesc,prchsngGrpNum,prchsngOrgNum,
+                    slocCd,sourceSystem,suplPlntCd,prLineCatCd,prCatCd,localSupNum,prClseInd
                 </columns>
                 <relations>
+                    <relation path="/plan/cns_tlane_control" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_tlane_control_triangulation" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                     <relation path="/edm/material_global_v1" isPrimaryKey="false">
                         <expression>
                             matlNum=/edm/material_global_v1.localMaterialNumber,
@@ -30,7 +37,35 @@
                     <relation path="/plan/cns_spl_pln_loc" isPrimaryKey="false">
                         <expression></expression>
                     </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
                 </relations>
+            </region>
+
+            <region path="/plan/cns_tlane_control">
+                <columns>sequenceNumber,tlaneName,validFrom,validTo,originLocation,supSys,supSysVendor,supSysCustomer,
+                    destinationLocation,trigSysTransaction,trigSysPlant,recSys,
+                    recSysVendor,recSysCustomer,mode,leadTime,triangulationDetail,processTypeId,
+                    sourceSystemCriticalParameters,trigSysVendor,trigSysCustomer,trigSysShipTo,criticalParameter1Table,
+                    criticalParameter1Field,criticalParameter1Low,criticalParameter1High,criticalParameter1Operator,
+                    criticalParameter1IE,
+                    criticalParameter2Table,criticalParameter2Field,criticalParameter2Low,criticalParameter2High,
+                    criticalParameter2Operator,criticalParameter2IE,criticalParameter3Table,criticalParameter3Field,
+                    criticalParameter3Low,criticalParameter3High,criticalParameter3Operator,criticalParameter3IE,
+                    criticalParameter4Table,criticalParameter4Field,criticalParameter4Low,criticalParameter4High,
+                    criticalParameter4Operator,criticalParameter4IE,criticalParameter5Table,criticalParameter5Field,
+                    criticalParameter5Low,criticalParameter5High,criticalParameter5Operator,criticalParameter5IE,
+                    criticalParameter6Table,criticalParameter6Field,criticalParameter6Low,criticalParameter6High,
+                    criticalParameter6Operator,criticalParameter6IE,
+                    criticalParameter7Table,criticalParameter7Field,criticalParameter7Low,criticalParameter7High,
+                    criticalParameter7Operator,criticalParameter7IE
+                </columns>
+            </region>
+
+            <region path="/plan/cns_tlane_control_triangulation">
+                <columns>sequenceNumber,stepNumber,tlaneName,originLocation,destinatonLocation
+                </columns>
             </region>
 
             <region path="/edm/material_global_v1">
@@ -39,8 +74,7 @@
                     localmaterialgroup, localmaterialnumber, localmaterialtype, localrefdescription, materialNumber,
                     materialStatus, materialType, materialgroup, materialnumber, materialstatus, materialtype,
                     minRemShelfLife, minremshelflife, parentCode, parentcode, primaryPlanningCode, primaryplanningcode,
-                    productFamily, productfamily, refDescription, refdescription, sourceSystem, sourceSystem25,
-                    sourcesystem
+                    productFamily, productfamily, refDescription, refdescription, sourceSystem
                 </columns>
             </region>
 
@@ -66,6 +100,11 @@
                 <columns>localCountry, localCurrency, localName, localNumber, localPlant, localRegion, planLocTypeDesc,
                     planLocTypeId, sourceSystem, specLocAtt1, specLocAtt2, specLocAtt3, specLocAttDesc1,
                     specLocAttDesc3, specLocAttdEsc2, vendorCustomer, vendorOrCustomer, vendorOrCustomer
+                </columns>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>localSourceSystem,localSourceSystemName,modifiedBy,sourceSystem,sourceSystemName,sourceSystemType
                 </columns>
             </region>
 

@@ -3,7 +3,7 @@ package com.jnj.pangea.edm.matl_prod_versn.service;
 import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.projectOne.ProjectOneMkalAendDaoImpl;
+import com.jnj.pangea.common.dao.impl.project_one.ProjectOneMkalAendDaoImpl;
 import com.jnj.pangea.common.entity.edm.EDMSourceSystemV1Entity;
 import com.jnj.pangea.common.entity.projectOne.ProjectOneMkalEntity;
 import com.jnj.pangea.common.entity.projectOne.ProjectOneMkalAendEntity;

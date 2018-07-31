@@ -1,5 +1,5 @@
-@pangea_test @AEAZ-3683
-Feature: OMPGdmUnit AEAZ-3683
+@pangea_test @AEAZ-10877
+Feature: OMPGdmUnit AEAZ-10877
 
   Scenario: Full Load consumption for currency
     #  1. If no records found from currency_v1, skip insertion (rule E1)
@@ -11,17 +11,19 @@ Feature: OMPGdmUnit AEAZ-3683
     Given I import "/edm/currency_v1" by keyFields "localCurrency,sourceSystem"
       | localCurrency | sourceSystem | isoNumeric | currencyName | currencyCode |
       | USD           | MDDePuy      | -          | US Dollar    | USD          |
-      | AFA           | CONS_LATAM   | -          | -            |              |
+      | AFA           | CONS_LATAM   | -          | -            |          	    |
 
     And I wait "/edm/currency_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmUnitCurrency.xml" and execute file "jar/pangea-view.jar"
+    
+    And wait 5000 millisecond
 
     Then A file is found on sink application with name "GDMUnit_currency.tsv"
 
     Then I check file data for filename "GDMUnit_currency.tsv" by keyFields "unitId"
       | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription | measure  | precision | shortDescription |
-      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar       | CURRENCY | 0         | US Dollar        |
+      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar       | Currency | 0         | US Dollar        |
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1 | key2 | key3 | key4 | key5 | errorValue | sourceSystem |
@@ -86,6 +88,8 @@ Feature: OMPGdmUnit AEAZ-3683
     And I wait "/edm/unit_of_measure_v1" Async Queue complete
 
     When I submit task with xml file "xml/omp/OMPGdmUnitMeasurable.xml" and execute file "jar/pangea-view.jar"
+    
+    And wait 5000 millisecond
 
     Then A file is found on sink application with name "GDMUnit_measure.tsv"
 
@@ -101,6 +105,7 @@ Feature: OMPGdmUnit AEAZ-3683
       | M2     | YES    | NO           | YES          | NO           | 2      | MTK     | Square meter        | AAAADL  | 3         | Square meter        |
       | TS     | YES    | NO           | YES          | NO           | 2      |         | Thousand            | AAAADL  | 6         | Thousand            |
       | PAL    | YES    | NO           | YES          | NO           | 2      | PL      | Pallet              | AAAADL  | 0         | Pallet              |
+      | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case                | 0       | 0         | Case                |      
 
     Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
       | errorCode | functionalArea | interfaceID | key1 | key2 | key3 | key4 | key5 | errorValue | sourceSystem |
@@ -121,7 +126,7 @@ Feature: OMPGdmUnit AEAZ-3683
 
     Then I check file data for filename "GDMUnit.tsv" by keyFields "unitId"
       | unitId | active | activeFCTERP | activeOPRERP | activeSOPERP | factor | isoCode | longDescription     | measure  | precision | shortDescription    |
-      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar           | CURRENCY | 0         | US Dollar           |
+      | USD    | YES    | YES          | YES          | NO           | 1.0    |         | US Dollar           | Currency | 0         | US Dollar           |
       | CA     | YES    | YES          | YES          | NO           | 2      | CS      | Case                | 0        | 0         | Case                |
       | EA     | YES    | YES          | YES          | NO           | 2      | EA      | Each                | AAAADL   | 0         | Each                |
       | KG     | YES    | NO           | YES          | NO           | 2      | KGM     | KiloGram            | AAAADL   | 3         | KiloGram            |

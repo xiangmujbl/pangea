@@ -62,7 +62,7 @@
         <property name="duplicationFlag" value="${duplicationFlag}"/>
     </bean>
 
-    <bean id="writeFTP" class="com.jnj.files.merger.writer.FTPWriter"
+    <bean id="writeFTP" class="com.jnj.files.merger.FTPWriter"
           scope="step">
         <property name="tLocation" value="${tLocation}"/>
         <property name="tHost" value="${tHost}"/>
