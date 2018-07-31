@@ -1194,7 +1194,6 @@ public interface IConstant {
         String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
         String INTERNAL_TRANSPORT = "InternalTransport";
         String EXTERNAL_TRANSPORT = "ExternalTransport";
-        String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
         String SUPPLY = "SUPPLY";
         String INFINITE = "INFINITE";
         String ASTERIX = "*";
@@ -1258,7 +1257,6 @@ public interface IConstant {
         int VALUE_24 = 24;
         int VALUE_60 = 60;
         String FLOAT_ZERO = "0.0";
-        String K = "K";
         String O = "O";
         String A = "A";
         String ENDEFF_NOHMS = "2998/12/31";
