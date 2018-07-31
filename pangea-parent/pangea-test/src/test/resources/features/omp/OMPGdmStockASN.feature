@@ -42,26 +42,26 @@ Feature:  OMPGdmStockASN-Curation
       | 53130000           | 97360               | SAPR              |                | 9              |              | 11              |            |                     | CONS_LATAM   | 1              |
       | 53130000           | 96161               | SAPR              | 96161          | 8              |              | 8               |            |                     | CONS_LATAM   | 2              |
       | 53130000           | 80990               | SAPR              | 80990          | 9              |              | 9               |            | 80990               | CONS_LATAM   | 6              |
-      | 53130000           | 59573               | SAPR              |                | 9              |              | 9               |            | 8641                | CONS_LATAM   | 9              |
+      | 53130000           | 59573               | SAPR              | 12345          | 9              |              | 9               |            | 8641                | CONS_LATAM   | 9              |
       | 53130000           | 91732               | SAPR              | 91732          | 9              |              | 9               |            | 91732               | CONS_LATAM   | 9              |
       | 53130000           | 441424              | SAPR              | 441424         | 9              |              | 9               |            | 441424              | CONS_LATAM   | 9              |
       | 5313000            | 441425              | SAPR              | 441425         | 9              |              | 9               |            | 441425              | CONS_LATAM   | 9              |
     And I wait "/edm/material_global_v1" Async Queue complete
 
     Given I import "/edm/plant_v1" by keyFields "localPlant,sourceSystem"
-      | country | localCountry | localCurrency | localPlanningRelevant | localPlant | localPlantName                 | localPlantType | plant | plantType               | region            |  | site           | sourceSystem |
-      | BR      | BR           | BRL           | X                     | BR19       | J&J BR-Nova Odessa - Com&Distr | DC             | BR63  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | BR01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR61  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | BR20       | J&J BR-Nova Odessa - Com&Distr | DC             | BR60  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | BR21       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | CR02       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | CR01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | MX01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | MX02       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | GT02       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | GT01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | CO01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
-      | BR      | BR           | BRL           | X                     | PE01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL |  | Nova Odessa DC | CONS_LATAM   |
+      | country | localCountry | localCurrency | localPlanningRelevant | localPlant | localPlantName                 | localPlantType | plant | plantType               | region            | site           | sourceSystem |
+      | BR      | BR           | BRL           | X                     | BR19       | J&J BR-Nova Odessa - Com&Distr | DC             | BR63  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | BR01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR61  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | BR20       | J&J BR-Nova Odessa - Com&Distr | DC             | BR60  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | BR21       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | CR02       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | CR01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | MX01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | MX02       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | GT02       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | GT01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | CO01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
+      | BR      | BR           | BRL           | X                     | PE01       | J&J BR-Nova Odessa - Com&Distr | DC             | BR62  | DC, Distribution Center | BR, BRAZIL BRAZIL | Nova Odessa DC | CONS_LATAM   |
     And I wait "/edm/plant_v1" Async Queue complete
 
     Given I import "/edm/source_system_v1" by keyFields "localSourceSystem,sourceSystem"
