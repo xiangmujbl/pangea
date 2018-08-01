@@ -46,35 +46,23 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
 
 		ResultObject resultObject = new ResultObject();
 		MaraEntity maraEntity = (MaraEntity) o;
+		String sourceSystem = "";
 
 		EDMMaterialGlobalBo materialGlobalBo = new EDMMaterialGlobalBo();
 		// rules T1
 		EDMSourceSystemV1Entity sourceSystemV1Entity = sourceSystemV1Dao.getSourceSystemWithProjectOne();
 		if (null != sourceSystemV1Entity) {
-			materialGlobalBo.setSourceSystem(sourceSystemV1Entity.getSourceSystem());
+			sourceSystem = sourceSystemV1Entity.getSourceSystem();
+			materialGlobalBo.setSourceSystem(sourceSystem);
 		}
 
 		// rules J1
-		String matnr = maraEntity.getMatnr();
+		String localRefDescription = checkJ1(maraEntity.getMatnr());
 		if (StringUtils.isNotEmpty(matnr)) {
-			MaktEntity maktEntityEn = maktDao.getEntityWithMatnrAndSpras(matnr, EN);
-			if (null != maktEntityEn) {
-				materialGlobalBo.setLocalRefDescription(maktEntityEn.getMaktx());
-			} else {
-				MaktEntity maktEntityPt = maktDao.getEntityWithMatnrAndSpras(matnr, PT);
-				if (null != maktEntityPt) {
-					materialGlobalBo.setLocalRefDescription(maktEntityPt.getMaktx());
-				} else {
-					MaktEntity maktEntitySp = maktDao.getEntityWithMatnrAndSpras(matnr, SP);
-					if (null != maktEntitySp) {
-						materialGlobalBo.setLocalRefDescription(maktEntitySp.getMaktx());
-					}
-				}
-			}
+			materialGlobalBo.setLocalRefDescription(localRefDescription);
 		}
-
+		
 		// rules J2
-		String sourceSystem = sourceSystemV1Entity.getSourceSystem();
 		String localMaterialNumber = maraEntity.getMatnr();
 
 		if (StringUtils.isNotEmpty(sourceSystem) && StringUtils.isNotEmpty(localMaterialNumber)) {
@@ -135,5 +123,25 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
 
 		resultObject.setBaseBo(materialGlobalBo);
 		return resultObject;
+	}
+	
+	private String checkJ1(String matnr) {
+		if (StringUtils.isNotEmpty(matnr)) {
+			MaktEntity maktEntityEn = maktDao.getEntityWithMatnrAndSpras(matnr, EN);
+			if (null != maktEntityEn) {
+				return maktEntityEn.getMaktx();
+			} else {
+				MaktEntity maktEntityPt = maktDao.getEntityWithMatnrAndSpras(matnr, PT);
+				if (null != maktEntityPt) {
+					return maktEntityPt.getMaktx();
+				} else {
+					MaktEntity maktEntitySp = maktDao.getEntityWithMatnrAndSpras(matnr, SP);
+					if (null != maktEntitySp) {
+						return maktEntitySp.getMaktx();
+					}
+				}
+			}
+		}
+		return null;
 	}
 }
