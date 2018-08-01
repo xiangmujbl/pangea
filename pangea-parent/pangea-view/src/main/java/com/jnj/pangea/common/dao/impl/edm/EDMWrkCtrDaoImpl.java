@@ -8,6 +8,8 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.pangea.common.entity.edm.EDMWrkCtrEntity;
 import com.jnj.pangea.edm.wrk_ctr.bo.EDMWrkCtrBo;
 
+import java.util.List;
+
 public class EDMWrkCtrDaoImpl extends CommonDaoImpl {
 
     public static final String EDM_WRK_CTR = "/edm/wrk_ctr";
@@ -36,4 +38,22 @@ public class EDMWrkCtrDaoImpl extends CommonDaoImpl {
         return queryForObject(EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
 
     }
+
+    public List<EDMWrkCtrEntity> getEntityWithwrkCtrUsgCd(String srcSysCd, String wrkCtrNum) {
+        String queryString = QueryHelper.buildCriteria(SRC_SYS_CD).is(srcSysCd)
+                .and("wrkCtrNum").is(wrkCtrNum)
+                .and("wrkCtrUsgCd").in("001","009").toQueryString();
+//        LogUtil.getCoreLog().info("-----EDMWrkCtr>>"+queryString);
+        return queryForList(EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
+
+    }
+
+    public List<EDMWrkCtrEntity> getEntityWithoutwrkCtrUsgCd(String srcSysCd, String wrkCtrNum) {
+        String queryString = QueryHelper.buildCriteria(SRC_SYS_CD).is(srcSysCd)
+                .and("wrkCtrNum").is(wrkCtrNum).toQueryString();
+//        LogUtil.getCoreLog().info("-----EDMWrkCtr>>"+queryString);
+        return queryForList(EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
+
+    }
+
 }

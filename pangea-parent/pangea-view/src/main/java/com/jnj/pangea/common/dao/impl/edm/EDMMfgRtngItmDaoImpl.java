@@ -55,4 +55,20 @@ public class EDMMfgRtngItmDaoImpl extends CommonDaoImpl {
         }
         return mfgRtngItmEntityList;
     }
+
+    public List<EDMMfgRtngItmEntity> getEntityLstWithCondsAndOperNm(String srcSysCd,String rtngTypCd,String rtngItmNum,String rtngGrpCd, String operNum) {
+
+        List<EDMMfgRtngItmEntity> mfgRtngItmEntityList = new ArrayList<>();
+        if(StringUtils.isNotEmpty(srcSysCd) && StringUtils.isNotEmpty(rtngTypCd) &&StringUtils.isNotEmpty(rtngItmNum) && StringUtils.isNotEmpty(rtngGrpCd)){
+            String queryString = QueryHelper.buildCriteria(SRCSYSCD).is(srcSysCd)
+                    .and(RTNGTYPCD).is(rtngTypCd)
+                    .and(RTNGITMNUM).is(rtngItmNum)
+                    .and(RTNGGRPCD).is(rtngGrpCd)
+                    .and("operNum").is(operNum)
+                    .toQueryString();
+//            LogUtil.getCoreLog().info("-------------EDMMfgRtngItm>>"+queryString);
+            mfgRtngItmEntityList = queryForList(MFG_RTNG_ITM, queryString, EDMMfgRtngItmEntity.class);
+        }
+        return mfgRtngItmEntityList;
+    }
 }

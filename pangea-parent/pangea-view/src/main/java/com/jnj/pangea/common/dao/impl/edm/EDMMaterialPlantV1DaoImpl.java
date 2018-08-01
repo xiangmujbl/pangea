@@ -17,7 +17,7 @@ public class EDMMaterialPlantV1DaoImpl extends CommonDaoImpl {
     public static final String SOURCE_SYSTEM = "sourceSystem";
     public static final String LOCAL_MATERIAL_NUMBER = "localMaterialNumber";
     public static final String PRIMARY_PLANNING_CODE = "primaryPlanningCode";
-    
+
     private static EDMMaterialPlantV1DaoImpl instance;
 
     public static EDMMaterialPlantV1DaoImpl getInstance() {

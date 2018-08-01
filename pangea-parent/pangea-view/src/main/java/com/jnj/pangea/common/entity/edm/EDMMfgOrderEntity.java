@@ -18,6 +18,7 @@ public class EDMMfgOrderEntity extends CommonEntity {
     private String primaryPlanningCode;
     private String mfgOrdrSttsCd;
     private String rtngSqncNum;
+    private String localTargetQty;
 
     public EDMMfgOrderEntity(Map<String, Object> map) {
         super(map);
@@ -34,6 +35,7 @@ public class EDMMfgOrderEntity extends CommonEntity {
         setPrimaryPlanningCode((String) map.get("primaryPlanningCode"));
         setMfgOrdrSttsCd((String) map.get("mfgOrdrSttsCd"));
         setRtngSqncNum((String) map.get("rtngSqncNum"));
+        setLocalTargetQty((String) map.get("localTargetQty"));
     }
 
     public String getPrimaryPlanningCode() {
@@ -130,5 +132,13 @@ public class EDMMfgOrderEntity extends CommonEntity {
 
     public void setRtngSqncNum(String rtngSqncNum) {
         this.rtngSqncNum = rtngSqncNum;
+    }
+
+    public String getLocalTargetQty() {
+        return localTargetQty;
+    }
+
+    public void setLocalTargetQty(String localTargetQty) {
+        this.localTargetQty = localTargetQty;
     }
 }

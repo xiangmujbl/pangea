@@ -9,6 +9,21 @@ public class EDMMfgOrderRtngEntity extends CommonEntity {
     private String srcSysCd;
     private String ordrRtngNum;
     private String operNum;
+    private String operCd;
+    private String wrkCntrId;
+    private String oprQty;
+
+    @Override
+    public String toString() {
+        return "EDMMfgOrderRtngEntity{" +
+                "srcSysCd='" + srcSysCd + '\'' +
+                ", ordrRtngNum='" + ordrRtngNum + '\'' +
+                ", operNum='" + operNum + '\'' +
+                ", operCd='" + operCd + '\'' +
+                ", wrkCntrId='" + wrkCntrId + '\'' +
+                ", oprQty='" + oprQty + '\'' +
+                '}';
+    }
 
     public EDMMfgOrderRtngEntity(Map<String, Object> map) {
         super(map);
@@ -16,6 +31,25 @@ public class EDMMfgOrderRtngEntity extends CommonEntity {
         setSrcSysCd((String) map.get("srcSysCd"));
         setOrdrRtngNum((String) map.get("ordrRtngNum"));
         setOperNum((String) map.get("operNum"));
+        setOperCd((String) map.get("operCd"));
+        setWrkCntrId((String) map.get("wrkCntrId"));
+        setOprQty((String) map.get("oprQty"));
+    }
+
+    public String getOperCd() {
+        return operCd;
+    }
+
+    public void setOperCd(String operCd) {
+        this.operCd = operCd;
+    }
+
+    public String getWrkCntrId() {
+        return wrkCntrId;
+    }
+
+    public void setWrkCntrId(String wrkCntrId) {
+        this.wrkCntrId = wrkCntrId;
     }
 
     public String getOperNum() {
@@ -42,4 +76,11 @@ public class EDMMfgOrderRtngEntity extends CommonEntity {
         this.ordrRtngNum = ordrRtngNum;
     }
 
+    public String getOprQty() {
+        return oprQty;
+    }
+
+    public void setOprQty(String oprQty) {
+        this.oprQty = oprQty;
+    }
 }

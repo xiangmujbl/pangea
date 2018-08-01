@@ -212,4 +212,17 @@ public class PlanCnsPlanParameterDaoImpl extends CommonDaoImpl {
         return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
     }
 
+
+    public List<PlanCnsPlanParameterEntity> getEntriessWithPKConditions(String sourceSystem, String dataObject, String attribute, String parameter, String parameterValue, String inclExcl) {
+        String queryString = QueryHelper.buildCriteria(IConstant.CNS_PLAN_PARAMETER.SOURCE_SYSTEM).is(sourceSystem)
+                .and(IConstant.CNS_PLAN_PARAMETER.DATA_OBJECT).is(dataObject)
+                .and(IConstant.CNS_PLAN_PARAMETER.ATTRIBUTE).is(attribute)
+                .and(IConstant.CNS_PLAN_PARAMETER.PARAMETER).is(parameter)
+                .and(IConstant.CNS_PLAN_PARAMETER.PARAMETER_VALUE).is(parameterValue)
+                .and(IConstant.CNS_PLAN_PARAMETER.INCL_EXCL).is(inclExcl)
+                .toQueryString();
+
+//        LogUtil.getCoreLog().info("-----PlanCnsPlanParameter>>"+queryString);
+        return queryForList(IConstant.REGION.PLAN_CNS_PLAN_PARAMETER, queryString, PlanCnsPlanParameterEntity.class);
+    }
 }

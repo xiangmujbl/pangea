@@ -12,6 +12,7 @@ public class EDMWrkCtrEntity extends CommonEntity {
     private String wrkCtrCd;
     private String wrkCtrTypeCd;
     private String wrkCtrNum;
+    private String plntCd;
 
     public EDMWrkCtrEntity(Map<String, Object> map) {
         super(map);
@@ -22,6 +23,7 @@ public class EDMWrkCtrEntity extends CommonEntity {
         setWrkCtrCd((String) map.get("wrkCtrCd"));
         setWrkCtrTypeCd((String) map.get("wrkCtrTypeCd"));
         setWrkCtrNum((String) map.get("wrkCtrNum"));
+        setPlntCd((String) map.get("plntCd"));
     }
 
     @Override
@@ -33,6 +35,7 @@ public class EDMWrkCtrEntity extends CommonEntity {
                 ", wrkCtrCd='" + wrkCtrCd + '\'' +
                 ", wrkCtrTypeCd='" + wrkCtrTypeCd + '\'' +
                 ", wrkCtrNum='" + wrkCtrNum + '\'' +
+                ", plntCd='" + plntCd + '\'' +
                 '}';
     }
 
@@ -84,4 +87,11 @@ public class EDMWrkCtrEntity extends CommonEntity {
         this.wrkCtrNum = wrkCtrNum;
     }
 
+    public String getPlntCd() {
+        return plntCd;
+    }
+
+    public void setPlntCd(String plntCd) {
+        this.plntCd = plntCd;
+    }
 }

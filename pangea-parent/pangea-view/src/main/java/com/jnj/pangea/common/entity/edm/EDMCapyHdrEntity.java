@@ -11,6 +11,7 @@ public class EDMCapyHdrEntity extends CommonEntity {
     private String srcSysCd;
     private String capyNum;
     private String capyCatCd;
+    private String capyNm;
 
     public EDMCapyHdrEntity(Map<String, Object> map) {
         super(map);
@@ -20,6 +21,7 @@ public class EDMCapyHdrEntity extends CommonEntity {
         setSrcSysCd((String) map.get("srcSysCd"));
         setCapyNum((String) map.get("capyNum"));
         setCapyCatCd((String) map.get("capyCatCd"));
+        setCapyNm((String) map.get("capyNm"));
     }
 
     public String getCapyDesc() {
@@ -62,4 +64,11 @@ public class EDMCapyHdrEntity extends CommonEntity {
         this.capyCatCd = capyCatCd;
     }
 
+    public String getCapyNm() {
+        return capyNm;
+    }
+
+    public void setCapyNm(String capyNm) {
+        this.capyNm = capyNm;
+    }
 }

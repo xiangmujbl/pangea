@@ -46,4 +46,25 @@ public class EDMMfgOrderItmDaoImpl extends CommonDaoImpl {
 
         return queryForList(EDM_MFG_ORDER_ITM, adfCriteria.toQueryString(), EDMMfgOrderItmEntity.class);
     }
+
+    public EDMMfgOrderItmEntity getEntityWithSrcSysAndOrdrNumAndPlntCd(String srcSysCd, String mfgOrdrNum, String plntCd){
+        ADFCriteria adfCriteria=QueryHelper.buildCriteria();
+        if(StringUtils.isBlank(srcSysCd)){
+            adfCriteria.and(QueryHelper.buildCriteria(EDM_MFG_ORDER_ITM_SRCSYSCD).isNull());
+        }else{
+            adfCriteria.and(QueryHelper.buildCriteria(EDM_MFG_ORDER_ITM_SRCSYSCD).is(srcSysCd.trim()));
+        }
+
+        if(StringUtils.isBlank(mfgOrdrNum)){
+            adfCriteria.and(QueryHelper.buildCriteria(EDM_MFG_ORDER_ITM_MFGORDRNUM).isNull());
+        }else{
+            adfCriteria.and(QueryHelper.buildCriteria(EDM_MFG_ORDER_ITM_MFGORDRNUM).is(mfgOrdrNum.trim()));
+        }
+
+        adfCriteria.and("plntCd").is(plntCd);
+
+        String queryString = adfCriteria.toQueryString();
+//        LogUtil.getCoreLog().info("-----EDMMfgOrderItm>>"+queryString);
+        return queryForObject(EDM_MFG_ORDER_ITM, queryString, EDMMfgOrderItmEntity.class);
+    }
 }

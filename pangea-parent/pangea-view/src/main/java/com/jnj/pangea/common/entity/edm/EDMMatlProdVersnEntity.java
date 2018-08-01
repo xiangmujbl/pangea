@@ -12,6 +12,7 @@ public class EDMMatlProdVersnEntity extends CommonEntity {
     private String matlNum;
     private String rtngGrpCntrNum;
     private String rtngGrpCd;
+    private String rtngTypCd;
     private String prdntVrsnNum;
     private String dstrbtnKeyCd;
     private String valToDt;
@@ -26,6 +27,7 @@ public class EDMMatlProdVersnEntity extends CommonEntity {
         setMatlNum((String) map.get("matlNum"));
         setRtngGrpCntrNum((String) map.get("rtngGrpCntrNum"));
         setRtngGrpCd((String) map.get("rtngGrpCd"));
+        setRtngTypCd((String) map.get("rtngTypCd"));
         setPrdntVrsnNum((String) map.get("prdntVrsnNum"));
         setDstrbtnKeyCd((String) map.get("dstrbtnKeyCd"));
         setValToDt((String) map.get("valToDt"));
@@ -46,6 +48,14 @@ public class EDMMatlProdVersnEntity extends CommonEntity {
 
     public void setPlntCd(String plntCd) {
         this.plntCd = plntCd;
+    }
+
+    public String getRtngTypCd() {
+        return rtngTypCd;
+    }
+
+    public void setRtngTypCd(String rtngTypCd) {
+        this.rtngTypCd = rtngTypCd;
     }
 
     public String getAltBomNum() {
@@ -111,6 +121,7 @@ public class EDMMatlProdVersnEntity extends CommonEntity {
     public void setValFromDt(String valFromDt) {
         this.valFromDt = valFromDt;
     }
+
 
     @Override
     public String toString() {
