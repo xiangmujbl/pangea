@@ -58,7 +58,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
 
 		// rules J1
 		String localRefDescription = checkJ1(maraEntity.getMatnr());
-		if (StringUtils.isNotEmpty(matnr)) {
+		if (StringUtils.isNotEmpty(localRefDescription)) {
 			materialGlobalBo.setLocalRefDescription(localRefDescription);
 		}
 		
