@@ -42,8 +42,6 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
     private PlanCnsTlaneControlTriangulationDaoImpl tlaneControlTriangulationDao = PlanCnsTlaneControlTriangulationDaoImpl.getInstance();
     private EDMPlantV1DaoImpl plantV1Dao = EDMPlantV1DaoImpl.getInstance();
 
-    private OMPGdmReqFromErpBo gdmReqFromErpBo = new OMPGdmReqFromErpBo();
-
     ThreadLocal<String> localPlant = new ThreadLocal<>();
 
     private static final String BACK_SLASH = "/";
@@ -67,6 +65,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         ResultObject resultObject = new ResultObject();
         ResultObject resultObjectSkip = new ResultObject();
         localPlant.set("");
+        OMPGdmReqFromErpBo gdmReqFromErpBo = new OMPGdmReqFromErpBo();
 
         EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity = (EDMPurchaseRequisitionV1Entity) o;
 
@@ -82,18 +81,18 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setREQFromERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
 
         //N2
-        calcDateN2(edmPurchaseRequisitionV1Entity);
+        calcDateN2(edmPurchaseRequisitionV1Entity, gdmReqFromErpBo);
 
         //N3
         gdmReqFromErpBo.setDELKZ(BA);
 
         //N4
-        if(!plantN4(edmPurchaseRequisitionV1Entity)){
+        if(!plantN4(edmPurchaseRequisitionV1Entity, gdmReqFromErpBo)){
             return resultObjectSkip;
         }
 
         //N5
-        ruleN5(edmPurchaseRequisitionV1Entity);
+        ruleN5(edmPurchaseRequisitionV1Entity, gdmReqFromErpBo);
 
         //N6
         //Step 1
@@ -102,7 +101,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
             //Step 2
             PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity = planCnsMaterialPlanStatusDao.getEntityWithLocalMaterialNumberAndlLocalPlantAndSourceSystem(materialGlobalV1Entity.getLocalMaterialNumber(), localPlant.get(), edmPurchaseRequisitionV1Entity.getSourceSystem());
             if(planCnsMaterialPlanStatusEntity != null) {
-                if (!ruleN6(edmPurchaseRequisitionV1Entity, materialGlobalV1Entity, planCnsMaterialPlanStatusEntity)) {
+                if (!ruleN6(edmPurchaseRequisitionV1Entity, materialGlobalV1Entity, planCnsMaterialPlanStatusEntity, gdmReqFromErpBo)) {
                     return resultObjectSkip;
                 }
             } else {
@@ -114,7 +113,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         }
 
         //N7
-        if(!ruleN7(edmPurchaseRequisitionV1Entity, materialGlobalV1Entity)){
+        if(!ruleN7(edmPurchaseRequisitionV1Entity, materialGlobalV1Entity, gdmReqFromErpBo)){
             resultObject.setFailData(writeFailDataToRegion(edmPurchaseRequisitionV1Entity, "N7", "Critical error - Cns Plan Unit - unit not found"));
             return resultObject;
         }
@@ -124,7 +123,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
         gdmReqFromErpBo.setDELETED(NO);
 
         //N9
-        if(!ruleN9(edmPurchaseRequisitionV1Entity)){
+        if(!ruleN9(edmPurchaseRequisitionV1Entity, gdmReqFromErpBo)){
             return resultObjectSkip;
         }
 
@@ -152,7 +151,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
      *
      * @param edmPurchaseRequisitionV1Entity main data region
      */
-    private void calcDateN2(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
+    private void calcDateN2(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, OMPGdmReqFromErpBo gdmReqFromErpBo){
         try {
             String dateToFormat = edmPurchaseRequisitionV1Entity.getNeedByDt();
             SimpleDateFormat sdfFrom = new SimpleDateFormat(YYYYMMDD);
@@ -177,7 +176,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
      * @param edmPurchaseRequisitionV1Entity main data region
      * @return boolean for skip validation
      */
-    private boolean plantN4(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
+    private boolean plantN4(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, OMPGdmReqFromErpBo gdmReqFromErpBo){
         EDMSourceSystemV1Entity sourceSystemEntity = sourceSystemV1Dao.getEntityWithLocalSourceSystemAndSourceSystem(PROJECT_ONE_DEV, edmPurchaseRequisitionV1Entity.getSourceSystem());
         if(sourceSystemEntity == null){
             return false;
@@ -226,7 +225,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
      *
      * @param edmPurchaseRequisitionV1Entity main data region
      */
-    private void ruleN5(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
+    private void ruleN5(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, OMPGdmReqFromErpBo gdmReqFromErpBo){
         if(CONS_LATAM.equalsIgnoreCase(edmPurchaseRequisitionV1Entity.getSourceSystem())) {
             gdmReqFromErpBo.setManualOffset(ZERO);
             gdmReqFromErpBo.setPRIO_URG(ZERO);
@@ -241,7 +240,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
      * @param planCnsMaterialPlanStatusEntity region lookup material plan status entity
      * @return boolean for skip and or reject validation
      */
-    private boolean ruleN6(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity){
+    private boolean ruleN6(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, PlanCnsMaterialPlanStatusEntity planCnsMaterialPlanStatusEntity, OMPGdmReqFromErpBo gdmReqFromErpBo){
         if ((planCnsMaterialPlanStatusEntity.getSpRelevant() != null && planCnsMaterialPlanStatusEntity.getSpRelevant().equals(X)) && (materialGlobalV1Entity.getLocalMaterialNumber() != null && materialGlobalV1Entity.getLocalMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum()))) {
             //Step 3
             if (materialGlobalV1Entity.getPrimaryPlanningCode() != null && materialGlobalV1Entity.getPrimaryPlanningCode().isEmpty()) {
@@ -261,7 +260,7 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
      * @param materialGlobalV1Entity region lookup material global v1 entity
      * @return boolean for skip and or reject validation
      */
-    private boolean ruleN7(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity){
+    private boolean ruleN7(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, EDMMaterialGlobalV1Entity materialGlobalV1Entity, OMPGdmReqFromErpBo gdmReqFromErpBo){
         if ((materialGlobalV1Entity.getLocalMaterialNumber() != null && materialGlobalV1Entity.getLocalMaterialNumber().equals(edmPurchaseRequisitionV1Entity.getMatlNum())) && (materialGlobalV1Entity.getSourceSystem() != null && materialGlobalV1Entity.getSourceSystem().equals(edmPurchaseRequisitionV1Entity.getSourceSystem()))) {
             PlanCnsPlanUnitEntity cnsPlanUnitEntity = planCnsPlanUnitDao.getCnsPlanUnitEntityWithLocalUom(materialGlobalV1Entity.getLocalBaseUom());
             if (cnsPlanUnitEntity != null && !cnsPlanUnitEntity.getUnit().isEmpty()) {
@@ -278,14 +277,13 @@ public class OMPGdmReqFromErpServiceImpl implements ICommonService {
      * @param edmPurchaseRequisitionV1Entity main data region
      * @return boolean for skip and validation
      */
-    private boolean ruleN9(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity){
+    private boolean ruleN9(EDMPurchaseRequisitionV1Entity edmPurchaseRequisitionV1Entity, OMPGdmReqFromErpBo gdmReqFromErpBo){
         if (edmPurchaseRequisitionV1Entity.getDelInd().isEmpty() && edmPurchaseRequisitionV1Entity.getPrClseInd().isEmpty()) {
             PlanCnsPlanObjectFilterEntity planObjectFilterEntity = planCnsPlanObjectFilterDao.getEntityWithSourceObjectTechNameAndSourceSystemPrTypeCdAndPlntCdAndInclusion(
                     SOURCE_FILTER_SOURCE_OBJECT_TECHNAME_PURCHASE_REQUISITION,edmPurchaseRequisitionV1Entity.getSourceSystem(),
                     edmPurchaseRequisitionV1Entity.getPrTypeCd(),"plntCd", localPlant.get(), "prTypeCd", INCLUSION);
             if (planObjectFilterEntity != null && edmPurchaseRequisitionV1Entity.getPrStsCd().equalsIgnoreCase("N")) {
-                gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getSourceSystem()
-                        + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
+                gdmReqFromErpBo.setERPId(edmPurchaseRequisitionV1Entity.getSourceSystem() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrNum() + BACK_SLASH + edmPurchaseRequisitionV1Entity.getPrLineNbr());
                 return true;
             }
         }
