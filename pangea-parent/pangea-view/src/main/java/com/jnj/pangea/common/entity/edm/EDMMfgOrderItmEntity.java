@@ -7,6 +7,7 @@ import java.util.Map;
 public class EDMMfgOrderItmEntity extends CommonEntity {
 
     private String srcSysCd,mfgOrdrNum,matlNum,plntCd,prdntVrsnNum,bomItmNum,btchNum,rcvdQty,lnItmNbr,goodRcptLdDaysQty,itmQty;
+    private String bsQty;
 
     public EDMMfgOrderItmEntity(Map<String, Object> map) {
         super(map);
@@ -21,6 +22,7 @@ public class EDMMfgOrderItmEntity extends CommonEntity {
         setLnItmNbr((String) map.get("lnItmNbr"));
         setGoodRcptLdDaysQty((String) map.get("goodRcptLdDaysQty"));
         setItmQty((String) map.get("itmQty"));
+        setBsQty((String) map.get("bsQty"));
 
     }
 
@@ -112,6 +114,14 @@ public class EDMMfgOrderItmEntity extends CommonEntity {
         this.prdntVrsnNum = prdntVrsnNum;
     }
 
+    public String getBsQty() {
+        return bsQty;
+    }
+
+    public void setBsQty(String bsQty) {
+        this.bsQty = bsQty;
+    }
+
     @Override
     public String toString() {
         return "EDMMfgOrderItmEntity{" +
@@ -126,6 +136,7 @@ public class EDMMfgOrderItmEntity extends CommonEntity {
                 ", lnItmNbr='" + lnItmNbr + '\'' +
                 ", goodRcptLdDaysQty='" + goodRcptLdDaysQty + '\'' +
                 ", itmQty='" + itmQty + '\'' +
+                ", bsQty='" + bsQty + '\'' +
                 '}';
     }
 }

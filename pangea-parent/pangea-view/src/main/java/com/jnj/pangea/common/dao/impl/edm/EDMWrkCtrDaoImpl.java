@@ -3,11 +3,19 @@ package com.jnj.pangea.common.dao.impl.edm;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.adf.client.api.query.QueryHelper;
-import com.jnj.pangea.common.IConstant;
+
+
 import com.jnj.pangea.common.entity.edm.EDMWrkCtrEntity;
 import com.jnj.pangea.edm.wrk_ctr.bo.EDMWrkCtrBo;
 
+import java.util.List;
+
 public class EDMWrkCtrDaoImpl extends CommonDaoImpl {
+
+    public static final String EDM_WRK_CTR = "/edm/wrk_ctr";
+
+    public static final String SRC_SYS_CD = "srcSysCd";
+    public static final String CAPY_NUM = "capyNum";
 
     private static EDMWrkCtrDaoImpl instance;
 
@@ -19,15 +27,33 @@ public class EDMWrkCtrDaoImpl extends CommonDaoImpl {
     }
 
     public EDMWrkCtrEntity getEntityWithSrcSysCdAndCapyNum(String srcSysCd,String capyNum) {
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_WRK_CTR.SRC_SYS_CD).is(srcSysCd).
-                and(IConstant.EDM_WRK_CTR.CAPY_NUM).is(capyNum).toQueryString();
+        String queryString = QueryHelper.buildCriteria(SRC_SYS_CD).is(srcSysCd).
+                and(CAPY_NUM).is(capyNum).toQueryString();
                 //and(IConstant.EDM_CAPY_HDR.CAP_CAT_CD).is(catcd).is(IConstant.VALUE.STR_ONE).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
+        return queryForObject(EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
 
     }
     public EDMWrkCtrEntity getEntityWithAttribute(String srcSysCd) {
-        String queryString = QueryHelper.buildCriteria(IConstant.EDM_WRK_CTR.SRC_SYS_CD).is(srcSysCd).toQueryString();
-        return queryForObject(IConstant.REGION.EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
+        String queryString = QueryHelper.buildCriteria(SRC_SYS_CD).is(srcSysCd).toQueryString();
+        return queryForObject(EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
 
     }
+
+    public List<EDMWrkCtrEntity> getEntityWithwrkCtrUsgCd(String srcSysCd, String wrkCtrNum) {
+        String queryString = QueryHelper.buildCriteria(SRC_SYS_CD).is(srcSysCd)
+                .and("wrkCtrNum").is(wrkCtrNum)
+                .and("wrkCtrUsgCd").in("001","009").toQueryString();
+//        LogUtil.getCoreLog().info("-----EDMWrkCtr>>"+queryString);
+        return queryForList(EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
+
+    }
+
+    public List<EDMWrkCtrEntity> getEntityWithoutwrkCtrUsgCd(String srcSysCd, String wrkCtrNum) {
+        String queryString = QueryHelper.buildCriteria(SRC_SYS_CD).is(srcSysCd)
+                .and("wrkCtrNum").is(wrkCtrNum).toQueryString();
+//        LogUtil.getCoreLog().info("-----EDMWrkCtr>>"+queryString);
+        return queryForList(EDM_WRK_CTR, queryString, EDMWrkCtrEntity.class);
+
+    }
+
 }

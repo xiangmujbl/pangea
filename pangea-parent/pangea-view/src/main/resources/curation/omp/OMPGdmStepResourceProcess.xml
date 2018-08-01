@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation>
+  <curation mainRegion="/edm/mfg_order" viewRegion="/omp/gdm_step_resource" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.gdm_step_resouce.controller.OMPGdmStepResourceProcessController" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_process">
+    <regions>
+      <region path="/edm/mfg_order_itm">
+        <columns>srcSysCd,mfgOrdrNum,matlNum,plntCd,prdntVrsnNum</columns>
+        <relations>
+          <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
+            <expression>srcSysCd=/edm/mfg_order_itm.srcSysCd,matlNum=/edm/mfg_order_itm.matlNum,plntCd=/edm/mfg_order_itm.plntCd,prdntVrsnNum=/edm/mfg_order_itm.prdntVrsnNum</expression>
+          </relation>
+        </relations>
+      </region>
+      <region path="/edm/matl_prod_versn">
+        <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum</columns>
+        <relations>
+          <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false">
+            <expression>srcSysCd=/edm/matl_prod_versn.srcSysCd,rtngTypCd=/edm/matl_prod_versn.rtngTypCd,rtngGrpCd=/edm/matl_prod_versn.rtngGrpCd,rtngGrpCntrNbr=/edm/matl_prod_versn.rtngGrpCntrNum</expression>
+          </relation>
+        </relations>
+      </region>
+      <region path="/edm/wrk_ctr" lucene="true">
+        <columns>srcSysCd,wrkCtrNum,wrkCtrUsgCd,capyNum,plntCd,wrkCtrCd,wrkCtrTypeCd</columns>
+        <filter>wrkCtrUsgCd:(001 009)</filter>
+        <relations>
+          <relation path="/edm/wrk_ctr_capy" isPrimaryKey="false">
+            <expression>srcSysCd=/edm/wrk_ctr.srcSysCd,wrkCtrTypeCd=/edm/wrk_ctr.wrkCtrTypeCd,wrkCtrNum=/edm/wrk_ctr.wrkCtrNum</expression>
+          </relation>
+        </relations>
+      </region>
+      <region path="/edm/wrk_ctr_capy">
+        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyNum</columns>
+        <relations>
+          <relation path="/edm/capy_hdr" isPrimaryKey="false" lucene="true">
+            <expression>srcSysCd=/edm/wrk_ctr_capy.srcSysCd,capyNum=/edm/wrk_ctr_capy.capyNum</expression>
+            <filter>capyCatCd:(001 002)</filter>
+          </relation>
+        </relations>
+      </region>
+      <region path="/edm/mfg_order" lucene="true">
+        <columns>sourceSysCd,actRlseDt,mfgOrdrSttsCd,mfgOrdrNum,ordrRtngNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,plntCd</columns>
+        <!--<filter>(*:* -mfgOrdrSttsCd:(*I0012* *I0045* *I0046*)) AND (mfgOrdrSttsCd:I0002)</filter>  -->
+        <relations>
+          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false" lucene="true">
+            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+            <!--<filter>(((dataObject:ALL AND parameter:SYSTEMNAME) OR (dataObject:GDMSTEPRESOURCE AND parameter:DAYS)) AND attribute:SEND_TO_OMP AND inclExcl:I) OR (dataObject:PROSTATUS AND attribute:SEND_TO_OMP AND parameter:ORDER AND inclExcl:(I E))</filter>-->
+          </relation>
+          <relation path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true">
+            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
+            <filter>localPlanningRelevant:X</filter>
+          </relation>
+          <relation path="/edm/mfg_order_itm" isPrimaryKey="false">
+            <expression>srcSysCd=/edm/mfg_order.sourceSysCd,mfgOrdrNum=/edm/mfg_order.mfgOrdrNum,plntCd=/edm/mfg_order.plntCd</expression>
+          </relation>
+          <relation path="/edm/mfg_order_rtng" isPrimaryKey="false">
+            <expression>srcSysCd=/edm/mfg_order.sourceSysCd,ordrRtngNum=/edm/mfg_order.ordrRtngNum</expression>
+          </relation>
+        </relations>
+      </region>
+      <region path="/edm/mfg_rtng_itm_nde">
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngNdeNum</columns>
+        <relations>
+          <relation path="/edm/mfg_rtg_parm" isPrimaryKey="false" lucene="true">
+            <expression>srcSysCd=/edm/mfg_rtng_itm_nde.srcSysCd,rtgTypeCd=/edm/mfg_rtng_itm_nde.rtngTypCd,rtgGrpCd=/edm/mfg_rtng_itm_nde.rtngGrpCd,rtgNodeNum=/edm/mfg_rtng_itm_nde.rtngNdeNum</expression>
+            <filter>(*:* -delInd:X) AND charCd:EFICIENCIA</filter>
+          </relation>
+        </relations>
+      </region>
+      <region path="/edm/mfg_order_rtng">
+        <columns>srcSysCd,ordrRtngNum,operCd,wrkCntrId,operNum</columns>
+        <relations>
+          <relation path="/project_one/t430" isPrimaryKey="false" lucene="true">
+            <expression>steus=/edm/mfg_order_rtng.operCd</expression>
+            <filter>term:X</filter>
+          </relation>
+          <relation path="/edm/wrk_ctr" isPrimaryKey="false" lucene="true">
+            <expression>srcSysCd=/edm/mfg_order_rtng.srcSysCd,wrkCtrNum=/edm/mfg_order_rtng.wrkCntrId</expression>
+            <filter>wrkCtrUsgCd:(001 009)</filter>
+          </relation>
+        </relations>
+      </region>
+      <region path="/plan/cns_plan_parameter">
+        <columns>sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl</columns>
+      </region>
+      <region path="/plan/cns_plant_attr">
+        <columns>sourceSystem,localPlant,localPlanningRelevant,planLocTypeId</columns>
+      </region>
+      <region path="/edm/mfg_rtg_parm">
+        <columns>srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,vldFromDt,delInd,charCd,charVal,intrnlPrcsInstrNum</columns>
+      </region>
+      <region path="/project_one/t430">
+        <columns>mandt,steus,plnaw,term</columns>
+      </region>
+      <region path="/edm/capy_hdr">
+        <columns>srcSysCd,capyNum,capyCatCd,capyNm,plntCd</columns>
+      </region>
+      <region path="/omp/gdm_step_resource">
+        <columns>stepResourceId,active,activeOPRERP,activeSOPERP,machineId,minQuantity,operationId,quantity,resourceId,stepResourceType</columns>
+      </region>
+    </regions>
+  </curation>
+</adf-curation>
