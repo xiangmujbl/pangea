@@ -20,7 +20,7 @@ public class MaterialEntity extends CommonEntity {
 	private String manufacturingTechnology;
 	private String category;
 	private String productFamily;
-	private String globalBusinessUnit;
+	private String globalBusinessUnitGbu;
 	private String materialGroup;
 
 	public MaterialEntity(Map<String, Object> map) {
@@ -39,7 +39,7 @@ public class MaterialEntity extends CommonEntity {
 		setManufacturingTechnology((String) map.get("manufacturingTechnology"));
 		setCategory((String) map.get("category"));
 		setProductFamily((String) map.get("productFamily"));
-		setGlobalBusinessUnit((String) map.get("globalBusinessUnit"));
+		setGlobalBusinessUnitGbu((String) map.get("globalBusinessUnitGbu"));
 		setMaterialGroup((String) map.get("materialGroup"));
 	}
 
@@ -155,12 +155,12 @@ public class MaterialEntity extends CommonEntity {
 		this.productFamily = productFamily;
 	}
 
-	public String getGlobalBusinessUnit() {
-		return globalBusinessUnit;
+	public String getGlobalBusinessUnitGbu() {
+		return globalBusinessUnitGbu;
 	}
 
-	public void setGlobalBusinessUnit(String globalBusinessUnit) {
-		this.globalBusinessUnit = globalBusinessUnit;
+	public void setGlobalBusinessUnitGbu(String globalBusinessUnitGbu) {
+		this.globalBusinessUnitGbu = globalBusinessUnitGbu;
 	}
 
 	public String getMaterialGroup() {

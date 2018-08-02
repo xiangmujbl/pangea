@@ -90,7 +90,7 @@ public class EDMMaterialGlobalServiceImpl implements ICommonService {
 							materialGlobalBo.setSubBrand(materialEntity.getSubBrand());
 							materialGlobalBo.setBrand(materialEntity.getBrand());
 							materialGlobalBo.setFranchise(materialEntity.getFranchise());
-							materialGlobalBo.setGlobalBusinessUnit(materialEntity.getGlobalBusinessUnit());
+							materialGlobalBo.setGlobalBusinessUnit(materialEntity.getGlobalBusinessUnitGbu());
 							materialGlobalBo.setProductFamily(materialEntity.getProductFamily());
 							materialGlobalBo.setManufacturingTechnology(materialEntity.getManufacturingTechnology());
 							materialGlobalBo.setPrimaryPlanningCode(materialEntity.getEnterpriseMaterialNumber());
