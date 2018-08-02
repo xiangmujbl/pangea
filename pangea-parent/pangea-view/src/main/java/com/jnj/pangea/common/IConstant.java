@@ -1032,6 +1032,13 @@ public interface IConstant {
     }
 
     interface PLAN_CNS_TLANE_CONTROL {
+        String SEQUENCE_NUM = "sequenceNumber";
+        String TLANE_NAME = "tlaneName";
+        String SOURCE_SYSTEM_CRITICAL = "sourceSystemCriticalParameters";
+        String TRIG_SYS_PLANT = "trigSysPlant";
+        String TRIG_SYS_TRANSACTION = "trigSysTransaction";
+        String TRIANGULATION_DETAIL = "triangulationDetail";
+
         String CRITICAL_PARAMETER = "criticalParameter{0}";
         String CRITICAL_PARAMETER_HIGH = "criticalParameter{0}High";
         String CRITICAL_PARAMETER_TABLE = "criticalParameter{0}Table";
@@ -1220,6 +1227,7 @@ public interface IConstant {
         String LOCAL_PLANT = "localPlant";
         String LOCAL_MATERIAL_NUMBER_FIREST_LOWER = "localMaterialNumber";
         String LOCAL_RECEIVING_PLANT = "localReceivingPlant";
+        String LOCAL_DELIVERY_TYPE = "localdeliveryType";
         String BR = "BR";
         String BATCH_START = "batchstart";
         String BATCH_END = "batchend";

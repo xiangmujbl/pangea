@@ -16,10 +16,13 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
     private String leadTime;
     private String processTypeId;
     private String sourceSystemCriticalParameters;
-    private String trigSysPlant;
+
     private String triangulationDetail;
     private String trigSysTransaction;
-
+    private String trigSysPlant;
+    private String trigSysVendor;
+    private String trigSysCustomer;
+    private String trigSysShipTo;
 
     public PlanCnsTlaneControlEntity(Map<String, Object> map) {
         super(map);
@@ -34,9 +37,14 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
         setLeadTime((String) map.get("leadTime"));
         setProcessTypeId((String) map.get("processTypeId"));
         setSourceSystemCriticalParameters((String) map.get("sourceSystemCriticalParameters"));
-        setTrigSysPlant((String) map.get("trigSysPlant"));
+
         setTriangulationDetail((String) map.get("triangulationDetail"));
         setTrigSysTransaction((String) map.get("trigSysTransaction"));
+        setTrigSysPlant((String) map.get("trigSysPlant"));
+        setTrigSysVendor((String) map.get("trigSysVendor"));
+        setTrigSysCustomer((String) map.get("trigSysCustomer"));
+        setTrigSysShipTo((String) map.get("trigSysShipTo"));
+
     }
 
     public String getSequenceNumber() {
@@ -119,13 +127,8 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
         this.sourceSystemCriticalParameters = sourceSystemCriticalParameters;
     }
 
-    public String getTrigSysPlant() {
-        return trigSysPlant;
-    }
+    /////
 
-    public void setTrigSysPlant(String trigSysPlant) {
-        this.trigSysPlant = trigSysPlant;
-    }
 
     public String getTriangulationDetail() {
         return triangulationDetail;
@@ -142,4 +145,37 @@ public class PlanCnsTlaneControlEntity extends CommonEntity {
     public void setTrigSysTransaction(String trigSysTransaction) {
         this.trigSysTransaction = trigSysTransaction;
     }
+
+    public String getTrigSysPlant() {
+        return trigSysPlant;
+    }
+
+    public void setTrigSysPlant(String trigSysPlant) {
+        this.trigSysPlant = trigSysPlant;
+    }
+
+    public String getTrigSysVendor() {
+        return trigSysVendor;
+    }
+
+    public void setTrigSysVendor(String trigSysVendor) {
+        this.trigSysVendor = trigSysVendor;
+    }
+
+    public String getTrigSysCustomer() {
+        return trigSysCustomer;
+    }
+
+    public void setTrigSysCustomer(String trigSysCustomer) {
+        this.trigSysCustomer = trigSysCustomer;
+    }
+
+    public String getTrigSysShipTo() {
+        return trigSysShipTo;
+    }
+
+    public void setTrigSysShipTo(String trigSysShipTo) {
+        this.trigSysShipTo = trigSysShipTo;
+    }
+
 }

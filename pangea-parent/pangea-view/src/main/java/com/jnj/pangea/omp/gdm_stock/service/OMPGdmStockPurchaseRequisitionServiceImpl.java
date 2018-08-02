@@ -207,7 +207,7 @@ public class OMPGdmStockPurchaseRequisitionServiceImpl implements ICommonService
                     int thisSequence = Integer.parseInt(triangulationEntity.getStepNumber());
                     if (thisSequence > maxSequence) {
                         maxSequence = thisSequence;
-                        localPlant = StringUtils.remove(triangulationEntity.getDestinatonLocation(),
+                        localPlant = StringUtils.remove(triangulationEntity.getDestinationLocation(),
                                 edmPurchaseRequisitionV1Entity.getSourceSystem() + "_");
                     }
                 }
