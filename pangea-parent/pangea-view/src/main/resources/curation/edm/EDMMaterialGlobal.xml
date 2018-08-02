@@ -51,7 +51,7 @@
 
             <region path="/p360/material">
                 <columns>
-                    enterpriseMaterialNumber,materialDescription,materialType,baseUnitOfMeasure,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufacturingTechnology
+                    enterpriseMaterialNumber,materialDescription,materialType,baseUnitOfMeasure,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnitGbu,productFamily,manufacturingTechnology
                 </columns>
             </region>
             
