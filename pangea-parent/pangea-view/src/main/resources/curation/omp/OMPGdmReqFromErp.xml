@@ -6,62 +6,98 @@
 
             <region path="/edm/purchase_requisition_v1">
                 <columns>
-                    sourceSystem,prNum,prLineNbr,plntCd,matlNum,prLineUomCd,prTypeCd,prCatCd,localControlInd,delInd,prStsCd,recCrtInd,prchsngGrpNum,crtByNm,chngOnDt,prchInfoDesc,mfrPartNum,slocCd,intrnlRefNum,locaalMaterialGroup,suplPlntCd,prLineQty,prRqstDt,needByDt,apprByDt,localPrGRLeadTimeDays,prLineCatCd,acctAsgnmtCatCd,localGRInd,localSupNum,localFixedVendor,prchsngOrgNum,poTypeCd,localAgreement,localAgreementItem,localInfoRecord,asgnSuplSrcInd,localQuotaArr,localQuotaArrItem,prMrpHrzn,bomNum,localPurchaseOrder,localItem,localPODate,localPOQuantity,prClseInd,localReservation,splStkInd,fxInd,localOrderUnit,localSubjToRelease,localBatch,localSpIndStckTfr,localProdVersion,localdelvAddrADRNR,localdelvAddrADRN2,localCustomer,supNum,localSCVendor,localCurrency,localOverallReqRel,mfrPartNum,localManufacturer,localExternalManuf,localPDT,localIncomplete,lineStsCd,blokInd,localBlockingText,localProcuringPlant,localIssStorLoc,localXSysPReqNo,localXSysPReqItem,localXSysItemCat
+                    prNum,matlNum,needByDt,plntCd,lineStsCd,localCurrency,localFixedVendor,localPDT,localPODate,localPOQuantity,localPrGRLeadTimeDays,prLineCatCd,prLineNbr,prLineQty,prLineUomCd,prMrpHrzn,prRqstDt,poTypeCd,prCatCd,prClseInd,prStsCd,prTypeCd,locaalMaterialGroup,intrnlRefNum,localProcuringPlant,localProdVersion,mfrPartNum,localQuotaArr,localQuotaArrItem,localReservation,localSCVendor,localSpIndStckTfr,localSubjToRelease,localSupNum,localXSysItemCat,localXSysPReqItem,localXSysPReqNo,localdelvAddrADRN2,localdelvAddrADRNR,prchInfoDesc,prchsngGrpNum,prchsngOrgNum,recCrtInd,slocCd,sourceSystem,splStkInd,supNum,suplPlntCd,blokInd,bomNum,chngOnDt,crtByNm,localAgreement,localAgreementItem,localBatch,localBlockingText,localCustomer,localExternalManuf,localControlInd,localGRInd,localIncomplete,localInfoRecord,localIssStorLoc,localItem,localManufacturer,localOrderUnit,localOverallReqRel,delInd,fxInd,acctAsgnmtCatCd,apprByDt,asgnSuplSrcInd
                 </columns>
                 <relations>
-                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                    <relation path="/plan/cns_tlane_control" isPrimaryKey="false">
                         <expression>
-                            materialNumber=/edm/purchase_requisition_v1.matlNum,
-                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem
+                            sourceSystemCriticalParameters=/edm/purchase_requisition_v1.sourceSystem
                         </expression>
                     </relation>
-                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
-                        <expression>
-                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem
-                        </expression>
+                    <relation path="/plan/cns_tlane_control_triangulation" isPrimaryKey="false">
+                        <expression></expression>
                     </relation>
                     <relation path="/plan/cns_plan_object_filter" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/plant_v1" isPrimaryKey="false">
                         <expression>
                             sourceSystem=/edm/purchase_requisition_v1.sourceSystem
                         </expression>
                     </relation>
-
+                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
+                        <expression></expression>
+                    </relation>
+                    <relation path="/edm/material_global_v1" isPrimaryKey="false">
+                        <expression>
+                            localMaterialNumber=/edm/purchase_requisition_v1.matlNum,
+                            sourceSystemCriticalParameters=/edm/purchase_requisition_v1.sourceSystem
+                        </expression>
+                    </relation>
+                    <relation path="/edm/source_system_v1" isPrimaryKey="false">
+                        <expression>
+                            sourceSystem=/edm/purchase_requisition_v1.sourceSystem
+                        </expression>
+                    </relation>
                 </relations>
             </region>
 
-            <region path="/edm/material_global_v1">
+            <region path="/plan/cns_tlane_control">
                 <columns>
-                    localMaterialNumber,materialNumber,sourceSystem,primaryPlanningCode,localBaseUom
+                    criticalParameter1Table,criticalParameter6Field,processTypeId,trigSysTransaction,criticalParameter7Table,criticalParameter10Table,criticalParameter8Operator,criticalParameter10Ie,validFrom,criticalParameter4Operator,recSysVendor,criticalParameter8High,mode,criticalParameter8Ie,criticalParameter6Ie,triangulationDetail,criticalParameter7Low,criticalParameter1High,criticalParameter8Table,criticalParameter2Table,criticalParameter3Low,criticalParameter6Operator,criticalParameter4Ie,criticalParameter2Ie,criticalParameter9High,sequenceNumber,trigSysShipTo,recSysCustomer,criticalParameter10IE,criticalParameter6High,criticalParameter10Operator,tlaneName,criticalParameter7Field,criticalParameter7Opearator,criticalParameter10Field,criticalParameter8IE,criticalParameter6IE,criticalParameter4Field,criticalParameter8Low,criticalParameter1Field,criticalParameter2Operator,criticalParameter4Low,criticalParameter4IE,criticalParameter7High,criticalParameter2IE,criticalParameterOperator,criticalParameter7Operator,criticalParameter1Low,criticalParameter4Table,criticalParameter4High,supSysVendor,criticalParameter5Operator,criticalParameter9Field,destinationLocation,criticalParameter9Operator,leadTime,criticalParameter10High,supSysCustomer,criticalParameter9Ie,criticalParameter9Table,criticalParameter7Ie,criticalParameter9Low,criticalParameter1Ie,criticalParameter5Low,criticalParameter10Low,criticalParameter5Table,criticalParameter5High,recSys,trigSysVendor,criticalParameter5Ie,criticalParameter3Field,criticalParameter3Ie,validTo,criticalParameter2Low,criticalParameter2High,sourceSystemCriticalParameters,criticalParameter2Field,criticalParameter5Opeartor,criticalParameter6Table,originLocation,criticalParameter9IE,criticalParameter3High,criticalParameter3Operator,criticalParameter7IE,trigSysCustomer,trigSysPlant,criticalParameter3Table,criticalParameter5Field,criticalParameter1IE,criticalParameter6Low,criticalParameter8Field,criticalParameter5IE,criticalParameter1Operator,supSys,criticalParameter3IE,_UPT_,_UPUN_,sequenceNumber(key),tlaneName(key),criticalParameter1Table,criticalParameter6Field,processTypeId,trigSysTransaction,criticalParameter7Table,criticalParameter10Table,criticalParameter8Operator,criticalParameter10Ie,validFrom,criticalParameter4Operator,recSysVendor,criticalParameter8High,mode,criticalParameter8Ie,criticalParameter6Ie,triangulationDetail,criticalParameter7Low,criticalParameter1High,criticalParameter8Table,criticalParameter2Table,criticalParameter3Low,criticalParameter6Operator,criticalParameter4Ie,criticalParameter2Ie,criticalParameter9High,sequenceNumber,trigSysShipTo,recSysCustomer,criticalParameter10IE,criticalParameter6High,criticalParameter10Operator,tlaneName,criticalParameter7Field,criticalParameter7Opearator,criticalParameter10Field,criticalParameter8IE,criticalParameter6IE,criticalParameter4Field,criticalParameter8Low,criticalParameter1Field,criticalParameter2Operator,criticalParameter4Low,criticalParameter4IE,criticalParameter7High,criticalParameter2IE,criticalParameterOperator,criticalParameter7Operator,criticalParameter1Low,criticalParameter4Table,criticalParameter4High,supSysVendor,criticalParameter5Operator,criticalParameter9Field,destinationLocation,criticalParameter9Operator,leadTime,criticalParameter10High,supSysCustomer,criticalParameter9Ie,criticalParameter9Table,criticalParameter7Ie,criticalParameter9Low,criticalParameter1Ie,criticalParameter5Low,criticalParameter10Low,criticalParameter5Table,criticalParameter5High,recSys,trigSysVendor,criticalParameter5Ie,criticalParameter3Field,criticalParameter3Ie,validTo,criticalParameter2Low,criticalParameter2High,sourceSystemCriticalParameters,criticalParameter2Field,criticalParameter5Opeartor,criticalParameter6Table,originLocation,criticalParameter9IE,criticalParameter3High,criticalParameter3Operator,criticalParameter7IE,trigSysCustomer,trigSysPlant,criticalParameter3Table,criticalParameter5Field,criticalParameter1IE,criticalParameter6Low,criticalParameter8Field,criticalParameter5IE,criticalParameter1Operator,supSys,criticalParameter3IE
                 </columns>
                 <relations>
-                    <relation path="/plan/cns_plan_unit" isPrimaryKey="false">
+                    <relation path="/plan/cns_tlane_control_triangulation" isPrimaryKey="false">
                         <expression>
-                            localUom=/edm/material_global_v1.localBaseUom
-                        </expression>
-                    </relation>
-                    <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
-                        <expression>
-                            localMaterialNumber=/edm/material_global_v1.localMaterialNumber
+                            sequenceNumber=/plan/cns_tlane_control.sequenceNumber,
+                            tlaneName=/plan/cns_tlane_control.tlaneName
                         </expression>
                     </relation>
                 </relations>
             </region>
 
-            <region path="/plan/cns_plan_unit">
+            <region path="/plan/cns_tlane_control_triangulation">
                 <columns>
-                    plantFlag,unit,localUom,sourceSystem,localUomName
-                </columns>
-            </region>
-
-            <region path="/plan/cns_material_plan_status">
-                <columns>
-                    sourceSystem,localPlant,localMaterialNumber,spRelevant
+                    sequenceNumber,stepNumber,destinationLocation,tlaneName,originLocation
                 </columns>
             </region>
 
             <region path="/plan/cns_plan_object_filter">
                 <columns>
-                    sourceObjectTechName,sourceSystem,inclusionExclusion,sourceObjectAttribute1Value,sourceObjectAttribute1,sourceObjectAttribute2Value,sourceObjectAttribute2
+                    comments,inclusionExclusion,sourceObjectAttribute1,sourceObjectAttribute1Value,sourceObjectAttribute2,sourceObjectAttribute2Value,sourceObjectTechName,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/plan/cns_plan_unit">
+                <columns>
+                    localUom,localUomName,modifiedBy,planFlag,roundingDecimal,sourceSystem,status,timeStamp,unit
+                </columns>
+            </region>
+
+            <region path="/edm/plant_v1">
+                <columns>
+                    country,localCountry,localCurrency,localPlanningRelevant,localPlant,localPlantName,localPlantType,plant,region,site,sourceSystem
+                </columns>
+            </region>
+
+            <region path="/plan/cns_material_plan_status">
+                <columns>
+                    active,dpRelevant,localMaterialNumber,localParentCode,localPlant,materialNumber,noPlanRelevant,parentActive,ppc,sourceSystem,spRelevant
+                </columns>
+            </region>
+
+            <region path="/edm/material_global_v1">
+                <columns>
+                    baseUom,batchManageIndicator,localBaseUom,localMaterialGroup,localMaterialNumber,materialNumber,materialStatus,materialType,minRemShelfLife,parentCode,primaryPlanningCode,productFamily,refDescription,sourceSystem,subBrand,totalShelfLife,brand,category,division,flagForDeletion,form,franchise,globalBusinessUnit,globalDpParentCode,localDpParentCode,localManufacturingTechnology,localMaterialType,localRefDescription
+                </columns>
+            </region>
+
+            <region path="/edm/source_system_v1">
+                <columns>
+                    localSourceSystem,localSourceSystemName,modifiedBy,sourceSystem,sourceSystemName,sourceSystemType,status,timeStamp,valid,LOCAL_SOURCE_SYSTEM,LOCAL_SOURCE_SYSTEM_NAME,SOURCE_SYSTEM,SOURCE_SYSTEM_NAME,comments,flatFile
                 </columns>
             </region>
 

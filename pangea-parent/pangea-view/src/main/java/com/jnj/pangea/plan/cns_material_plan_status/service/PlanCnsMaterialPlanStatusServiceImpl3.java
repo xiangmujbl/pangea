@@ -7,13 +7,12 @@ import com.jnj.pangea.common.dao.impl.edm.EDMMaterialGlobalV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMMaterialPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMPlantV1DaoImpl;
 import com.jnj.pangea.common.dao.impl.edm.EDMSourceSystemV1DaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustExclDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsCustExclInclDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
-import com.jnj.pangea.common.dao.impl.plan.PlanCnsSoTypeInclDaoImpl;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsSoTypeInclExclDaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
-import com.jnj.pangea.common.entity.plan.PlanCnsCustExclEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
-import com.jnj.pangea.common.entity.plan.PlanCnsSoTypeInclEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsCustExclInclEntity;
+import com.jnj.pangea.common.entity.plan.PlanCnsSoTypeInclExclEntity;
 import com.jnj.pangea.plan.cns_material_plan_status.bo.PlanCnsMaterialPlanStatusBo;
 import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang.StringUtils;
@@ -34,7 +33,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         return instance;
     }
 
-    private PlanCnsCustExclDaoImpl planCnsCustExclDao = PlanCnsCustExclDaoImpl.getInstance();
+    private PlanCnsCustExclInclDaoImpl planCnsCustExclInclDao = PlanCnsCustExclInclDaoImpl.getInstance();
 
     private EDMSourceSystemV1DaoImpl edmSourceSystemV1Dao = EDMSourceSystemV1DaoImpl.getInstance();
 
@@ -42,7 +41,7 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
 
     private EDMMaterialGlobalV1DaoImpl edmMaterialGlobalV1Dao = EDMMaterialGlobalV1DaoImpl.getInstance();
 
-    private PlanCnsSoTypeInclDaoImpl planCnsSoTypeInclDao = PlanCnsSoTypeInclDaoImpl.getInstance();
+    private PlanCnsSoTypeInclExclDaoImpl planCnsSoTypeInclExclDao = PlanCnsSoTypeInclExclDaoImpl.getInstance();
 
     private EDMPlantV1DaoImpl edmPlantV1Dao = EDMPlantV1DaoImpl.getInstance();
 
@@ -124,9 +123,9 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
     }
 
     private boolean checkF2(EDMSalesOrderV1Entity salesOrderV1Entity) {
-        PlanCnsCustExclEntity cnsCustExclEntityF2A = planCnsCustExclDao.getEntityWithSalesOrgNotCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
-        PlanCnsCustExclEntity cnsCustExclEntityF2B = planCnsCustExclDao.getEntityWithSalesOrgIsCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
-        if (null != cnsCustExclEntityF2A||null !=cnsCustExclEntityF2B) {
+        PlanCnsCustExclInclEntity cnsCustExclInclEntityF2A = planCnsCustExclInclDao.getEntityWithSalesOrgNotCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
+        PlanCnsCustExclInclEntity cnsCustExclInclEntityF2B = planCnsCustExclInclDao.getEntityWithSalesOrgIsCustomerShipTo(salesOrderV1Entity.getLocalSalesOrg(), salesOrderV1Entity.getLocalShipToParty());
+        if (null != cnsCustExclInclEntityF2A||null !=cnsCustExclInclEntityF2B) {
             return true;
         }
         return false;
@@ -139,12 +138,12 @@ public class PlanCnsMaterialPlanStatusServiceImpl3 {
         }
         boolean flagTwo = false;
         if (StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalSalesOrg()) && StringUtils.isNotEmpty(edmSalesOrderV1Entity.getLocalOrderType())) {
-            PlanCnsSoTypeInclEntity entityWithSalesOrgAndOrderTypeA = planCnsSoTypeInclDao.getEntityWithSalesOrgAndOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
-            PlanCnsSoTypeInclEntity entityWithSalesOrgAndOrderTypeB = planCnsSoTypeInclDao.getEntityWithSalesOrgAndNotOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
-            List<PlanCnsSoTypeInclEntity> planCnsSoTypeInclEntityList = Arrays.asList(entityWithSalesOrgAndOrderTypeA,entityWithSalesOrgAndOrderTypeB);
-            for(PlanCnsSoTypeInclEntity planCnsSoTypeInclEntity:planCnsSoTypeInclEntityList){
-                if(planCnsSoTypeInclEntity!=null){
-                    EDMPlantV1Entity plantWithLocalPlantAndCountry = edmPlantV1Dao.getPlantWithLocalPlantAndCountry(edmSalesOrderV1Entity.getLocalPlant(), planCnsSoTypeInclEntity.getCountry());
+            PlanCnsSoTypeInclExclEntity entityWithSalesOrgAndOrderTypeA = planCnsSoTypeInclExclDao.getEntityWithSalesOrgAndOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
+            PlanCnsSoTypeInclExclEntity entityWithSalesOrgAndOrderTypeB = planCnsSoTypeInclExclDao.getEntityWithSalesOrgAndNotOrderType(edmSalesOrderV1Entity.getLocalSalesOrg(), edmSalesOrderV1Entity.getLocalOrderType());
+            List<PlanCnsSoTypeInclExclEntity> planCnsSoTypeInclExclEntityList = Arrays.asList(entityWithSalesOrgAndOrderTypeA,entityWithSalesOrgAndOrderTypeB);
+            for(PlanCnsSoTypeInclExclEntity planCnsSoTypeInclExclEntity:planCnsSoTypeInclExclEntityList){
+                if(planCnsSoTypeInclExclEntity!=null){
+                    EDMPlantV1Entity plantWithLocalPlantAndCountry = edmPlantV1Dao.getPlantWithLocalPlantAndCountry(edmSalesOrderV1Entity.getLocalPlant(), planCnsSoTypeInclExclEntity.getCountry());
                     if (plantWithLocalPlantAndCountry != null) {
                         flagTwo = true;
                     }

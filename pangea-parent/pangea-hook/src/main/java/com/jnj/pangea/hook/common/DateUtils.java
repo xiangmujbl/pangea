@@ -17,6 +17,7 @@ public class DateUtils {
     public final static String F_yyyyMMddHHmmss_ = "yyyyMMddHH:mm:ss";
     public final static String yyyyMMdd_HHmmss = "yyyyMMdd_HH-mm-ss";
     public final static String yyyy_MM_dd_HHmmss_SSS = "yyyy/MM/dd HH:mm:ss.SSS";
+    public final static String yyyy_MM_dd_HHmmss_2 = "yyyy/MM/dd HH:mm:ss";
     public final static String yyyyMMdd_HHmmssSSS = "yyyyMMdd HH:mm:ss:SSS";
     public final static String yyyy_MM_dd_HHmmssSSS = "yyyy-MM-dd HH:mm:ss:SSS";
     public final static String US_MMM_dd_yyyy_hhmmssSSSaa = "MMM dd yyyy hh:mm:ss:SSSaa";
@@ -126,6 +127,11 @@ public class DateUtils {
         calendar.setTime(date);
         calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
         return calendar.getTime();
+    }
+
+
+    public static Date offsetDay(Date date, int day) {
+        return changeDate(date,0,0,day,0,0,0);
     }
 
     public static String derivationDate(String dateString, int num) {

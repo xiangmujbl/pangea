@@ -1088,6 +1088,8 @@ public interface IConstant {
         String LATAM_TECH = "LATAM_TECH";
         String PROJECT_ONE = "project_one";
         String PROJECT_ONE_DEV = "Project_One";
+        String MAX_DATE_VALIDTO="29981231";
+        String MAX_DATE_VALIDTOSLASH="2998/12/31 23:59:59";
         String EMS = "[EMS]";
         String EN = "E";
         String PT = "P";
@@ -1189,9 +1191,9 @@ public interface IConstant {
         String PATTERN_DIGITAL = "^-?[1-9]\\d*$";
         String SEVEN = "7";
         String VENDOR_TRANSPORT = "VendorTransport";
+        String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
         String INTERNAL_TRANSPORT = "InternalTransport";
         String EXTERNAL_TRANSPORT = "ExternalTransport";
-        String SUBCONTRACTING_TRANSPORT = "SubcontractingTransport";
         String SUPPLY = "SUPPLY";
         String INFINITE = "INFINITE";
         String ASTERIX = "*";
