@@ -50,7 +50,7 @@ public class EDMUnitOfMeasureServiceImpl implements ICommonService {
 
         //T3
 
-        EMSEdmUnitInputEntity emsEdmUnitInputEntity  = emsEdmUnitInputDao.queryEdmUnitInput(mainData.getzSourceSystem(),mainData.getMdmSapCode());
+        EMSEdmUnitInputEntity emsEdmUnitInputEntity  = emsEdmUnitInputDao.queryEdmUnitInput(edmUnitOfMeasureBo.getSourceSystem(),mainData.getMdmSapCode());
         if(emsEdmUnitInputEntity!=null) {
 
             edmUnitOfMeasureBo.setFactor(emsEdmUnitInputEntity.getFactor());
