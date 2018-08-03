@@ -54,7 +54,7 @@
                     </expression>
                 </region>
                 <region path="/edm/capy_hdr" isPrimaryKey="false" lucene="true">
-                    <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd
+                    <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd,capyNm
                     </columns>
                     <expression></expression>
                 </region>

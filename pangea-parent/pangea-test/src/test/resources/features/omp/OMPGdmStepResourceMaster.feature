@@ -1,4 +1,5 @@
 Feature:GDMStepResourceMaster AEAZ-9092
+
   @Scenario1
   Scenario: GdmStepResourceMaster
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl"
@@ -65,13 +66,6 @@ Feature:GDMStepResourceMaster AEAZ-9092
       | CONS_LATAM | A            | 10001464  | 20020520  | 20180501 | SAN-W+D64 | BR12   | 0001        |        | 009         | 300         |             |              |         |            | PP01        |       |             |           |                | 10001464 |          |            |           |           |            |        |           | MáquinaW+64 |
       | CONS_LATAM | A            | 10001465  | 20020520  | 20180501 | SAN-W+D65 | BR12   | 0001        |        | 009         | 300         |             |              |         |            | PP01        |       |             |           |                | 10001465 |          |            |           |           |            |        |           | MáquinaW+65 |
     And I wait "/edm/wrk_ctr" Async Queue complete
-    Given I import "/plan/cns_plant_attr" by keyFields "sourceSystem,localPlant"
-
-      | sourceSystem | localPlant | localPlantName | localPlanningRelevant | locationAttribute1Desc | locationAttribute1Value | locationAttribute2Desc | locationAttribute2Value | planLocTypeDesc              | planLocTypeId | plant | plantType |
-      | CONS_LATAM   | BR11       | J&J BR Indus   |                       | Country                | Brazil                  | Volume                 | High                    | Internal Manufacturing Plant | IM            | BR59  | MP,Plant  |
-      | CONS_LATAM   | BR12       | J&J BR Indus   | X                     | Country                | Brazil                  | Volume                 | High                    | Internal Manufacturing Plant | IM            | BR59  | MP,Plant  |
-
-    And I wait "/plan/cns_plant_attr" Async Queue complete
     Given I import "/edm/wrk_ctr_capy" by keyFields "srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum"
       | srcSysCd   | wrkCtrTypeCd | wrkCtrNum | capyAllcNbr | capyNum  |
       | CONS_LATAM | A            | 10001460  | 1000        | 40001460 |
@@ -89,7 +83,7 @@ Feature:GDMStepResourceMaster AEAZ-9092
       | CONS_LATAM | A            | 10001465  | 2004        | 40001465 |
     And I wait "/edm/wrk_ctr_capy" Async Queue complete
     Given I import "/edm/capy_hdr" by keyFields "srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd"
-      | srcSysCd   | capyNum  | capyNbr | strtTm | endTm | fctryCalCd | capyCatCd | capyNum   | plntCd |
+      | srcSysCd   | capyNum  | capyNbr | strtTm | endTm | fctryCalCd | capyCatCd | capyNm    | plntCd |
       | CONS_LATAM | 40001460 | 1       |        |       | BR         | 001       | SAN-W+D60 | BR11   |
       | CONS_LATAM | 40001460 | 1       |        |       | BR         | 002       | SAN-W+D60 | BR11   |
       | CONS_LATAM | 40002460 | 1       |        |       | BR         | 002       | SAN-R+D60 | BR11   |
@@ -112,5 +106,5 @@ Feature:GDMStepResourceMaster AEAZ-9092
     And I wait "/edm/capy_hdr" Async Queue complete
     When I submit task with xml file "xml/omp/GDMStepResourceMaster.xml" and execute file "jar/pangea-view.jar"
     Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
-      | resourceId                    | machineId                | quantity | minQuantity | stepResourceId                                         | active | operationId                     | stepResourceType | activeOPRERP | activeSOPERP |
-      | CONS_LATAM/SAN-R+D60/40002460 | CONS_LATAM/BR12/SAN-W+D1 | 0        | 66.1        | CONS_LATAM/SAN-R+D60/40002460/SAN-W+D1/V006/69349/0010 | YES    | V006/69349/CONS_LATAM/BR12/0010 | production       | YES          | NO           |
+      | resourceId                | machineId                | quantity | minQuantity | stepResourceId                                              | active | operationId                     | stepResourceType | activeOPRERP | activeSOPERP |
+      | CONS_LATAM_BR11/SAN-R+D60 | CONS_LATAM_BR12/SAN-W+D1 | 0        | 66.1        | CONS_LATAM_BR11/SAN-R+D60/SAN-W+D1/V006/69349/0010 | YES    | V006/69349/CONS_LATAM_BR12/0010 | production       | YES          | NO           |
