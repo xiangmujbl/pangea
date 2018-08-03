@@ -1,71 +1,196 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<adf-curation> 
-  <curation mainRegion="/edm/matl_mfg_rtng" viewRegion="/omp/gdm_step_resource" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.step_resource.controller.StepResourceController" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_process"> 
-    <regions> 
-      <region path="/edm/matl_mfg_rtng"> 
-        <columns>srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To,prdtnVersNum</columns>  
-        <relations> 
-          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false"> 
-            <expression/> 
-          </relation>  
-          <relation path="/edm/matl_prod_versn" isPrimaryKey="false"> 
-            <expression>srcSysCd = /edm/matl_mfg_rtng.srcSysCd, matlNum = /edm/matl_mfg_rtng.matlNum, plntCd = /edm/matl_mfg_rtng.plntCd, prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum</expression> 
-          </relation>  
-          <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false"> 
-            <expression>srcSysCd = /edm/matl_prod_versn.srcSysCd, rtngTypCd = /edm/matl_prod_versn.rtngTypCd, rtngGrpCd = /edm/matl_prod_versn.rtngGrpCd, rtngGrpCntrNbr = /edm/matl_prod_versn.rtngGrpCntrNum</expression> 
-          </relation>  
-          <relation path="/edm/mfg_rtng_itm" isPrimaryKey="false"> 
-            <expression>srcSysCd = /edm/mfg_rtng_itm_nde.srcSysCd, rtngTypCd = /edm/mfg_rtng_itm_nde.rtngTypCd, rtngGrpCd = /edm/mfg_rtng_itm_nde.rtngGrpCd, rtngItmNum = /edm/mfg_rtng_itm_nde.rtngNdeNum</expression> 
-          </relation>  
-          <relation path="/edm/wrk_ctr" isPrimaryKey="false"> 
-            <expression>srcSysCd = /edm/mfg_rtng_itm.srcSysCd, wrkCtrNum = /edm/mfg_rtng_itm.wrkCntrCd</expression> 
-          </relation>  
-          <relation path="/edm/capy_hdr" isPrimaryKey="false"> 
-            <expression/> 
-          </relation>  
-          <relation path="/edm/mfg_rtg_parm" isPrimaryKey="false" lucene="true"> 
-            <expression/>  
-            <filter>(*:* -delInd:X)</filter> 
-          </relation>  
-          <relation path="/plan/cns_plant_attr" isPrimaryKey="false"> 
-            <expression/> 
-          </relation>  
-          <relation path="/edm/wrk_ctr_capy" isPrimaryKey="false"> 
-            <expression/> 
-          </relation> 
-        </relations> 
-      </region>  
-      <region path="/plan/cns_plan_parameter"> 
-        <columns>sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl,comments</columns> 
-      </region>  
-      <region path="/edm/matl_prod_versn"> 
-        <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,altBomNum,bomUsgCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum</columns> 
-      </region>  
-      <region path="/edm/mfg_rtng_itm_nde"> 
-        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr,Valid-FromDate,chgNum,delInd,CreateDttm,chgDttm</columns> 
-      </region>  
-      <region path="/edm/mfg_rtng_itm"> 
-        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum ,operNum,operCd ,wrkCntrCd,plntCd,operDesc,operUom,bsQty,rtgItemEndDate,attr2Desc</columns> 
-      </region>  
-      <region path="/edm/wrk_ctr"> 
-        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc</columns> 
-      </region>  
-      <region path="/edm/capy_hdr"> 
-        <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd</columns> 
-      </region>  
-      <region path="/edm/mfg_rtg_parm"> 
-        <columns>srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr,vldFromDt,delInd,chgNum,crtDttm,chgDttm,charCd,charVal</columns> 
-      </region>  
-      <region path="/plan/cns_plant_attr"> 
-        <columns>sourceSystem,localPlant,localPlantName,localPlanningRelevant,locationAttribute1Desc,locationAttribute1Value,locationAttribute2Desc,locationAttribute2Value,planLocTypeDesc,planLocTypeId,plant,plantType</columns> 
-      </region>  
-      <region path="/edm/wrk_ctr_capy"> 
-        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum</columns> 
-      </region>  
-      <region path="/omp/gdm_step_resource"> 
-        <columns>minQuantity,resourceId,stepResourceId,operationId,machineId,active,activeOPRERP,activeSOPERP,quantity,stepResourceType</columns> 
-      </region> 
-    </regions> 
-  </curation>
+<adf-curation type="M2" executionClassName="com.jnj.pangea.omp.step_resource.controller.StepResourceController"
+              failRegion="/plan/fail_data" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_process">
+    <regions>
+        <region mainRegion="true" path="/edm/matl_mfg_rtng">
+            <columns>
+                srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To,prdtnVersNum
+            </columns>
+            <relations>
+                <region path="/plan/cns_plan_parameter">
+                    <columns>sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl,comments</columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/matl_prod_versn">
+                    <columns>
+                        srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,altBomNum,bomUsgCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum
+                    </columns>
+                    <expression>
+                        srcSysCd = /edm/matl_mfg_rtng.srcSysCd,
+                        matlNum = /edm/matl_mfg_rtng.matlNum,
+                        plntCd = /edm/matl_mfg_rtng.plntCd,
+                        prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum
+                    </expression>
+                </region>
+                <region path="/edm/mfg_rtng_itm_nde">
+                    <columns>
+                        srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr,Valid-FromDate,chgNum,delInd,CreateDttm,chgDttm
+                    </columns>
+                    <expression>
+                        srcSysCd = /edm/matl_prod_versn.srcSysCd,
+                        rtngTypCd = /edm/matl_prod_versn.rtngTypCd,
+                        rtngGrpCd = /edm/matl_prod_versn.rtngGrpCd,
+                        rtngGrpCntrNbr = /edm/matl_prod_versn.rtngGrpCntrNum
+                    </expression>
+                </region>
+                <region path="/edm/mfg_rtng_itm">
+                    <columns>
+                        srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum
+                        ,operNum,operCd ,wrkCntrCd,plntCd,operDesc,operUom,bsQty,rtgItemEndDate,attr2Desc
+                    </columns>
+                    <expression>
+                        srcSysCd = /edm/mfg_rtng_itm_nde.srcSysCd,
+                        rtngTypCd = /edm/mfg_rtng_itm_nde.rtngTypCd,
+                        rtngGrpCd = /edm/mfg_rtng_itm_nde.rtngGrpCd,
+                        rtngItmNum = /edm/mfg_rtng_itm_nde.rtngNdeNum
+                    </expression>
+                </region>
+                <region path="/edm/wrk_ctr" isPrimaryKey="false" lucene="true">
+                    <columns>
+                        srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc
+                    </columns>
+                    <expression>
+                        srcSysCd = /edm/mfg_rtng_itm.srcSysCd,
+                        wrkCtrNum = /edm/mfg_rtng_itm.wrkCntrCd
+                    </expression>
+                </region>
+                <region path="/edm/capy_hdr" isPrimaryKey="false" lucene="true">
+                    <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd
+                    </columns>
+                    <expression></expression>
+                </region>
+                <region path="/edm/mfg_rtg_parm" isPrimaryKey="false" lucene="true">
+                    <columns>
+                        srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr,vldFromDt,delInd,chgNum,crtDttm,chgDttm,charCd,charVal
+                    </columns>
+                    <filter>(*:* -delInd:X)</filter>
+                    <expression></expression>
+                </region>
+                <region path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true">
+                    <columns>
+                        sourceSystem,localPlant,localPlantName,localPlanningRelevant,locationAttribute1Desc,locationAttribute1Value,locationAttribute2Desc,locationAttribute2Value,planLocTypeDesc,planLocTypeId,plant,plantType
+                    </columns>
+                    <expression>
+                    </expression>
+                </region>
+                <region path="/edm/wrk_ctr_capy" isPrimaryKey="false" lucene="true">
+                    <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum</columns>
+                    <expression>
+                    </expression>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="X1" resultType="List" path="/edm/matl_prod_versn">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and" var="hhh"></parameter>
+                <parameter name="matlNum" value="matlNum" relationship="and"></parameter>
+                <parameter name="plntCd" value="plntCd" relationship="and"></parameter>
+            </parameters>
+        </method>
+        <method name="X2" resultType="List" path="/edm/mfg_rtng_itm_nde">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+                <parameter name="rtngGrpCd" value="rtngGrpCd" relationship="and"></parameter>
+                <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
+                <parameter name="rtngGrpCntrNbr" value="rtngGrpCntrNum"></parameter>
+            </parameters>
+        </method>
+        <method name="X3" resultType="List" path="/edm/mfg_rtng_itm">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+                <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
+                <parameter name="rtngGrpCd" value="rtngGrpCd" relationship="and"></parameter>
+                <parameter name="rtngItmNum" value="rtngItmNum"></parameter>
+            </parameters>
+        </method>
+        <method name="X4" resultType="Map" path="/edm/wrk_ctr">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+                <parameter name="wrkCtrNum" value="wrkCtrCd"></parameter>
+            </parameters>
+        </method>
+        <method name="T7" resultType="Map" path="/edm/mfg_rtg_parm">
+            <parameters>
+                <parameter name="srcSysCd" value="srcSysCd" relationship="and"></parameter>
+                <parameter name="rtgTypeCd" value="rtgTypeCd" relationship="and"></parameter>
+                <parameter name="rtgGrpCd" value="rtgGrpCd" relationship="and"></parameter>
+                <parameter name="rtgNodeNum" value="rtgNodeNum" relationship="and"></parameter>
+                <parameter name="charCd" value="'EFICIENCIA'" relationship="and"></parameter>
+            </parameters>
+        </method>
+    </methods>
+    <viewRegion name="/omp/gdm_step_resource">
+        <multis>
+            <multi method="X1" parameter="srcSysCd,matlNum,plntCd" var="retList1"
+                   value="srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum" resultType="List"/>
+            <multi method="X2" parameter="srcSysCd,rtngGrpCd,rtngTypCd,rtngGrpCntrNum" var="retList2"
+                   value="srcSysCd,rtngGrpCd,rtngTypCd,rtngNdeNum" resultType="List"/>
+            <multi method="X3" parameter="srcSysCd,rtngTypCd,rtngGrpCd,rtngNdeNum" var="retList3"
+                   value="srcSysCd,wrkCntrCd,operCd,steus" resultType="List"/>
+            
+        </multis>
+        <filters>
+            <filter hook="StepResourceHook.filterraw(e.getValue())"></filter>
+        </filters>
+        <vars>
+            <var name="srcSysCd" value="srcSysCd"/>
+            <var name="matlNum" value="matlNum"/>
+            <var name="plntCd" value="plntCd"/>
+            <var name="rtngTypCd" value="rtngTypCd"/>
+            <var name="rntgGrpCd" value="rntgGrpCd"/>
+            <var name="rntgGrpCntrNbr" value="rntgGrpCntrNbr"/>
+            <var name="rntgAddtnlCntrNbr" value="rntgAddtnlCntrNbr"/>
+            <var name="matlRtngVrsnCntrNbr" value="matlRtngVrsnCntrNbr"/>
+            <var name="valFromDt" value="valFromDt"/>
+            <var name="chgNum" value="chgNum"/>
+            <var name="delInd" value="delInd"/>
+            <var name="crtDttm" value="crtDttm"/>
+            <var name="chgDttm" value="chgDttm"/>
+            <var name="matlRtngValid_To" value="matlRtngValid_To"/>
+            <var name="steus"/>
+            <var name="charVal"/>
+            <var name="rtngGrpCntrNum"/>
+            <var name="prdntVrsnNum" value="prdntVrsnNum"/>
+            <var name="rntgGrpCd" value="rntgGrpCd"/>
+        </vars>
+        <columns>
+            <column name="minQuantity" var="charVal">
+                <if test="String.valueOf(retList2Map.get(&quot;rtngNdeNum&quot;))!=null&amp;&amp;String.valueOf(retList1Map.get(&quot;rtngTypCd&quot;))!=null&amp;&amp;String.valueOf(map.get(&quot;srcSysCd&quot;))!=null&amp;&amp;String.valueOf(retList1Map.get(&quot;rtngGrpCd&quot;))!=null">
+                    <ref method="T7"
+                         parameter="String.valueOf(map.get(&quot;srcSysCd&quot;)),String.valueOf(retList1Map.get(&quot;rtngTypCd&quot;)),String.valueOf(retList1Map.get(&quot;rtngGrpCd&quot;)),String.valueOf(retList2Map.get(&quot;rtngNdeNum&quot;))"
+                         value="charVal,delInd" var="mapT7" resultType="Map">
+                        <if test="mapT7==null">
+                            <set name="charVal" value="''"/>
+                        </if>
+                        <elseIf test="delInd.equals('X')">
+                            <set name="charVal" value="''"/>
+                        </elseIf>
+                    </ref>
+                </if>
+            </column>
+            <column name="resourceId">
+                <ref method="X4" parameter="srcSysCd,wrkCntrCd"  value="srcSysCd,wrkCtrNum"  resultType="Map" var="X4Map">
+                    <set name="resourceId" value="StepResourceHook.setResourceIdT5(X4Map)"></set>
+                    <if test="''.equals(resourceId)||resourceId==null||'null'.equals(resourceId)||'-'.equals(resourceId)"><continue></continue></if>
+                </ref>
+            </column>
+            <column name="stepResourceId" isPK="true">
+                <if test="resourceId==null"><continue></continue></if>
+                <ref hook="StepResourceHook.StepResourceId(map,retList1Map,retList3Map,X4Map,resourceId)"></ref>
+            </column>
+            <column name="operationId">
+                <ref hook="StepResourceHook.C1(retList1Map,map,retList3Map)"></ref>
+            </column>
+            <column name="machineId">
+                <ref hook="StepResourceHook.setT3MachineId(X4Map)"></ref>
+                <if test="''.equals(machineId)"><continue></continue></if>
+            </column>
+            <column name="active" hardCode="'YES'"/>
+            <column name="activeOPRERP" hardCode="'YES'"/>
+            <column name="activeSOPERP" hardCode="'NO'"/>
+            <column name="quantity" hardCode="'0'"/>
+            <column name="stepResourceType" hardCode="'production'"/>
+        </columns>
+    </viewRegion>
 </adf-curation>
