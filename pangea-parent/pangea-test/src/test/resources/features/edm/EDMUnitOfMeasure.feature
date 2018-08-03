@@ -29,10 +29,10 @@ Feature: EDMUnitOfMeasure AEAZ-7319
 
     And I import "/ems/edm_unit_input" by keyFields "sourceSystem,localUom"
       | sourceSystem       | localUom | roundingDecimal | factor |
-      | [Consumer LATAM]   | CRT      | 0               | 1      |
-      | [Consumer LATAM]   | EA       | 0               | 1      |
-      | [Consumer LATAM]   | KG       | 0               | 1      |
-      | [Consumer LATAM]   | ZUM      | 0               | 2      |
+      | CONS_LATAM		   | CRT      | 0               | 1      |
+      | CONS_LATAM		   | EA       | 0               | 1      |
+      | CONS_LATAM		   | KG       | 0               | 1      |
+      | CONS_LATAM		   | ZUM      | 0               | 2      |
       | APAC_ECC           | PC       | 0               | 1      |
 
     And I wait "/ems/edm_unit_input" Async Queue complete
@@ -53,9 +53,9 @@ Feature: EDMUnitOfMeasure AEAZ-7319
 
   Scenario: delete all test data
 
-    Then I delete the test data
+#    Then I delete the test data
 
-    And I will remove all data with region "/edm/unit_of_measure_v1"
+#    And I will remove all data with region "/edm/unit_of_measure_v1"
 
-    And I will remove all data with region "/plan/edm_failed_data"
+#    And I will remove all data with region "/plan/edm_failed_data"
 
