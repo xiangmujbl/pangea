@@ -40,8 +40,6 @@ import java.nio.*;
 
 
 
-
-
 @SuppressWarnings("unchecked")
 public class StepResourceController implements IEventProcessor {
 
