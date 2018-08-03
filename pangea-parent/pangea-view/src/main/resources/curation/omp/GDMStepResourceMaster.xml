@@ -52,7 +52,7 @@
         <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc</columns> 
       </region>  
       <region path="/edm/capy_hdr"> 
-        <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd</columns> 
+        <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd,capyNm</columns>
       </region>  
       <region path="/edm/mfg_rtg_parm"> 
         <columns>srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr,vldFromDt,delInd,chgNum,crtDttm,chgDttm,charCd,charVal</columns> 
@@ -61,7 +61,7 @@
         <columns>sourceSystem,localPlant,localPlantName,localPlanningRelevant,locationAttribute1Desc,locationAttribute1Value,locationAttribute2Desc,locationAttribute2Value,planLocTypeDesc,planLocTypeId,plant,plantType</columns> 
       </region>  
       <region path="/edm/wrk_ctr_capy"> 
-        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum</columns> 
+        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum</columns>
       </region>  
       <region path="/omp/gdm_step_resource"> 
         <columns>minQuantity,resourceId,stepResourceId,operationId,machineId,active,activeOPRERP,activeSOPERP,quantity,stepResourceType</columns> 
