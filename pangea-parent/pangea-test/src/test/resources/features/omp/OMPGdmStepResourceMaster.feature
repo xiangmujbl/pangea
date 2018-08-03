@@ -49,7 +49,6 @@ Feature:GDMStepResourceMaster AEAZ-9092
       | CONS_LATAM | N         | 50019343 | 00000004   | 00000004         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EFICIENCIA |         |
       | CONS_LATAM | N         | 50019343 | 00000005   | 00000005         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EFICIENCIA | 66.1    |
       | CONS_LATAM | N         | 50019343 | 00000006   | 00000006         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EFICIENCIA | 66.1    |
-
     And I wait "/edm/mfg_rtg_parm" Async Queue complete
 
     Given I import "/edm/wrk_ctr" by keyFields "srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc"
