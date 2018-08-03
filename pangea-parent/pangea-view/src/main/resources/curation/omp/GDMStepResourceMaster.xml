@@ -10,7 +10,7 @@
             <expression/> 
           </relation>  
           <relation path="/edm/matl_prod_versn" isPrimaryKey="false"> 
-            <expression>srcSysCd = /edm/matl_mfg_rtng.srcSysCd, matlNum = /edm/matl_mfg_rtng.matlNum, plntCd = /edm/matl_mfg_rtng.plntCd, prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum</expression> 
+            <expression>srcSysCd = /edm/matl_mfg_rtng.srcSysCd, matlNum = /edm/matl_mfg_rtng.matlNum, plntCd = /edm/matl_mfg_rtng.plntCd<!-- , prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum --></expression> 
           </relation>  
           <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false"> 
             <expression>srcSysCd = /edm/matl_prod_versn.srcSysCd, rtngTypCd = /edm/matl_prod_versn.rtngTypCd, rtngGrpCd = /edm/matl_prod_versn.rtngGrpCd, rtngGrpCntrNbr = /edm/matl_prod_versn.rtngGrpCntrNum</expression> 

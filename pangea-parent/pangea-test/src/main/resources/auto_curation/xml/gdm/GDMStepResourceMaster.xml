@@ -18,7 +18,7 @@
                         srcSysCd = /edm/matl_mfg_rtng.srcSysCd,
                         matlNum = /edm/matl_mfg_rtng.matlNum,
                         plntCd = /edm/matl_mfg_rtng.plntCd,
-                        prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum
+                        <!-- prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum -->
                     </expression>
                 </region>
                 <region path="/edm/mfg_rtng_itm_nde">
