@@ -38,8 +38,9 @@
         </relations>
       </region>
       <region path="/edm/mfg_order" lucene="true">
-        <columns>sourceSysCd,actRlseDt,mfgOrdrSttsCd,mfgOrdrNum,ordrRtngNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,plntCd</columns>
+        <columns>sourceSysCd,actRlseDt,mfgOrdrSttsCd,mfgOrdrNum,ordrRtngNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum,plntCd,mfgOrdrTypCd,delInd</columns>
         <!--<filter>(*:* -mfgOrdrSttsCd:(*I0012* *I0045* *I0046*)) AND (mfgOrdrSttsCd:I0002)</filter>  -->
+        <filter>(*:* -delInd:X)</filter>
         <relations>
           <relation path="/plan/cns_plan_parameter" isPrimaryKey="false" lucene="true">
             <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
