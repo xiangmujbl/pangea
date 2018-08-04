@@ -46,10 +46,10 @@
             <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
             <!--<filter>(((dataObject:ALL AND parameter:SYSTEMNAME) OR (dataObject:GDMSTEPRESOURCE AND parameter:DAYS)) AND attribute:SEND_TO_OMP AND inclExcl:I) OR (dataObject:PROSTATUS AND attribute:SEND_TO_OMP AND parameter:ORDER AND inclExcl:(I E))</filter>-->
           </relation>
-          <relation path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true">
-            <expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>
-            <filter>localPlanningRelevant:X</filter>
-          </relation>
+          <!--<relation path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true">-->
+            <!--<expression>sourceSystem=/edm/mfg_order.sourceSysCd</expression>-->
+            <!--<filter>localPlanningRelevant:X</filter>-->
+          <!--</relation>-->
           <relation path="/edm/mfg_order_itm" isPrimaryKey="false">
             <expression>srcSysCd=/edm/mfg_order.sourceSysCd,mfgOrdrNum=/edm/mfg_order.mfgOrdrNum,plntCd=/edm/mfg_order.plntCd</expression>
           </relation>
@@ -83,9 +83,9 @@
       <region path="/plan/cns_plan_parameter">
         <columns>sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl</columns>
       </region>
-      <region path="/plan/cns_plant_attr">
-        <columns>sourceSystem,localPlant,localPlanningRelevant,planLocTypeId</columns>
-      </region>
+      <!--<region path="/plan/cns_plant_attr">-->
+        <!--<columns>sourceSystem,localPlant,localPlanningRelevant,planLocTypeId</columns>-->
+      <!--</region>-->
       <region path="/edm/mfg_rtg_parm">
         <columns>srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,vldFromDt,delInd,charCd,charVal,intrnlPrcsInstrNum</columns>
       </region>
