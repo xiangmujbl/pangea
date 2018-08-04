@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/edm/matl_mfg_rtng" viewRegion="/omp/gdm_step_resource" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.step_resource.controller.StepResourceController" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_process"> 
+    <regions> 
+      <region path="/edm/matl_mfg_rtng"> 
+        <columns>srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To,prdtnVersNum</columns>  
+        <relations> 
+          <relation path="/plan/cns_plan_parameter" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/edm/matl_prod_versn" isPrimaryKey="false"> 
+            <expression>srcSysCd = /edm/matl_mfg_rtng.srcSysCd, matlNum = /edm/matl_mfg_rtng.matlNum, plntCd = /edm/matl_mfg_rtng.plntCd<!-- , prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum --></expression> 
+          </relation>  
+          <relation path="/edm/mfg_rtng_itm_nde" isPrimaryKey="false"> 
+            <expression>srcSysCd = /edm/matl_prod_versn.srcSysCd, rtngTypCd = /edm/matl_prod_versn.rtngTypCd, rtngGrpCd = /edm/matl_prod_versn.rtngGrpCd, rtngGrpCntrNbr = /edm/matl_prod_versn.rtngGrpCntrNum</expression> 
+          </relation>  
+          <relation path="/edm/mfg_rtng_itm" isPrimaryKey="false"> 
+            <expression>srcSysCd = /edm/mfg_rtng_itm_nde.srcSysCd, rtngTypCd = /edm/mfg_rtng_itm_nde.rtngTypCd, rtngGrpCd = /edm/mfg_rtng_itm_nde.rtngGrpCd, rtngItmNum = /edm/mfg_rtng_itm_nde.rtngNdeNum</expression> 
+          </relation>  
+          <relation path="/edm/wrk_ctr" isPrimaryKey="false"> 
+            <expression>srcSysCd = /edm/mfg_rtng_itm.srcSysCd, wrkCtrNum = /edm/mfg_rtng_itm.wrkCntrCd</expression> 
+          </relation>  
+          <relation path="/edm/capy_hdr" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/edm/mfg_rtg_parm" isPrimaryKey="false" lucene="true"> 
+            <expression/>  
+            <filter>(*:* -delInd:X)</filter> 
+          </relation>  
+          <relation path="/plan/cns_plant_attr" isPrimaryKey="false"> 
+            <expression/> 
+          </relation>  
+          <relation path="/edm/wrk_ctr_capy" isPrimaryKey="false"> 
+            <expression/> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/plan/cns_plan_parameter"> 
+        <columns>sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl,comments</columns> 
+      </region>  
+      <region path="/edm/matl_prod_versn"> 
+        <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,valFromDt,valToDt,altBomNum,bomUsgCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum</columns> 
+      </region>  
+      <region path="/edm/mfg_rtng_itm_nde"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr,Valid-FromDate,chgNum,delInd,CreateDttm,chgDttm</columns> 
+      </region>  
+      <region path="/edm/mfg_rtng_itm"> 
+        <columns>srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,rtngSupNdeNum ,operNum,operCd ,wrkCntrCd,plntCd,operDesc,operUom,bsQty,rtgItemEndDate,attr2Desc</columns> 
+      </region>  
+      <region path="/edm/wrk_ctr"> 
+        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc</columns> 
+      </region>  
+      <region path="/edm/capy_hdr"> 
+        <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd,capyNm</columns>
+      </region>  
+      <region path="/edm/mfg_rtg_parm"> 
+        <columns>srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr,vldFromDt,delInd,chgNum,crtDttm,chgDttm,charCd,charVal</columns> 
+      </region>  
+      <region path="/plan/cns_plant_attr"> 
+        <columns>sourceSystem,localPlant,localPlantName,localPlanningRelevant,locationAttribute1Desc,locationAttribute1Value,locationAttribute2Desc,locationAttribute2Value,planLocTypeDesc,planLocTypeId,plant,plantType</columns> 
+      </region>  
+      <region path="/edm/wrk_ctr_capy"> 
+        <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum</columns>
+      </region>  
+      <region path="/omp/gdm_step_resource"> 
+        <columns>minQuantity,resourceId,stepResourceId,operationId,machineId,active,activeOPRERP,activeSOPERP,quantity,stepResourceType</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>
