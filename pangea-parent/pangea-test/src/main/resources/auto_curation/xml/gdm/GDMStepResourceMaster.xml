@@ -1,5 +1,5 @@
 <adf-curation type="M2" executionClassName="com.jnj.pangea.omp.step_resource.controller.StepResourceController"
-              failRegion="/plan/fail_data" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_process">
+              failRegion="/plan/fail_data" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_master">
     <regions>
         <region mainRegion="true" path="/edm/matl_mfg_rtng">
             <columns>
@@ -18,7 +18,9 @@
                         srcSysCd = /edm/matl_mfg_rtng.srcSysCd,
                         matlNum = /edm/matl_mfg_rtng.matlNum,
                         plntCd = /edm/matl_mfg_rtng.plntCd,
-                        <!-- prdntVrsnNum = /edm/matl_mfg_rtng.prdtnVersNum -->
+                        rtngTypCd = /edm/matl_mfg_rtng.rtngTypCd,
+                        rtngGrpCd = /edm/matl_mfg_rtng.rntgGrpCd,
+                        rtngGrpCntrNum = /edm/matl_mfg_rtng.rntgGrpCntrNbr
                     </expression>
                 </region>
                 <region path="/edm/mfg_rtng_itm_nde">

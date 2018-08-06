@@ -17,7 +17,6 @@ import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.inner.DateInner;
 import com.jnj.inner.StringInner;
-import com.jnj.pangea.hook.StepResourceHook;
 
 import java.math.*;
 import java.text.*;
@@ -83,8 +82,8 @@ public class StepResourceController implements IEventProcessor {
 	}
 
 	public boolean buildView(RawDataValue raw,
-			List<RawDataBuilder> rawDataBuilderList,
-			Map<String, RawDataBuilder> failMap) {
+							 List<RawDataBuilder> rawDataBuilderList,
+							 Map<String, RawDataBuilder> failMap) {
 
 		Map map = raw.toMap();
 
@@ -176,11 +175,11 @@ public class StepResourceController implements IEventProcessor {
 								List<Map.Entry<String, String>> retList3 = null;
 								if (StringInner.isStringNotEmpty(srcSysCd)
 										&& StringInner
-												.isStringNotEmpty(rtngTypCd)
+										.isStringNotEmpty(rtngTypCd)
 										&& StringInner
-												.isStringNotEmpty(rtngGrpCd)
+										.isStringNotEmpty(rtngGrpCd)
 										&& StringInner
-												.isStringNotEmpty(rtngNdeNum)) {
+										.isStringNotEmpty(rtngNdeNum)) {
 									retList3 = X3(srcSysCd, rtngTypCd,
 											rtngGrpCd, rtngNdeNum);
 									if (retList3 != null && retList3.size() > 0) {
@@ -212,13 +211,13 @@ public class StepResourceController implements IEventProcessor {
 											if (String.valueOf(retList2Map
 													.get("rtngNdeNum")) != null
 													&& String
-															.valueOf(retList1Map
-																	.get("rtngTypCd")) != null
+													.valueOf(retList1Map
+															.get("rtngTypCd")) != null
 													&& String.valueOf(map
-															.get("srcSysCd")) != null
+													.get("srcSysCd")) != null
 													&& String
-															.valueOf(retList1Map
-																	.get("rtngGrpCd")) != null) {
+													.valueOf(retList1Map
+															.get("rtngGrpCd")) != null) {
 
 												Map mapT7 = T7(
 														String.valueOf(map
@@ -264,7 +263,7 @@ public class StepResourceController implements IEventProcessor {
 											if ("".equals(resourceId)
 													|| resourceId == null
 													|| "null"
-															.equals(resourceId)
+													.equals(resourceId)
 													|| "-".equals(resourceId)) {
 												continue;
 											}
@@ -349,7 +348,7 @@ public class StepResourceController implements IEventProcessor {
 	}
 
 	public List X2(String srcSysCd, String rtngGrpCd, String rtngTypCd,
-			String rtngGrpCntrNum) {
+				   String rtngGrpCntrNum) {
 
 		ADFCriteria adfCriteria4 = QueryHelper.buildCriteria("srcSysCd").is(
 				srcSysCd);
@@ -375,7 +374,7 @@ public class StepResourceController implements IEventProcessor {
 	}
 
 	public List X3(String srcSysCd, String rtngTypCd, String rtngGrpCd,
-			String rtngItmNum) {
+				   String rtngItmNum) {
 
 		ADFCriteria adfCriteria8 = QueryHelper.buildCriteria("srcSysCd").is(
 				srcSysCd);
@@ -424,7 +423,7 @@ public class StepResourceController implements IEventProcessor {
 	}
 
 	public Map T7(String srcSysCd, String rtgTypeCd, String rtgGrpCd,
-			String rtgNodeNum) {
+				  String rtgNodeNum) {
 
 		ADFCriteria adfCriteria14 = QueryHelper.buildCriteria("srcSysCd").is(
 				srcSysCd);
@@ -455,9 +454,9 @@ public class StepResourceController implements IEventProcessor {
 	}
 
 	private void writeFailDataToRegion(Map<String, RawDataBuilder> failMap,
-			String functionalArea, String interfaceID, String errorCode,
-			String errorValue, String sourceSystem, String key1, String key2,
-			String key3, String key4, String key5, String businessArea) {
+									   String functionalArea, String interfaceID, String errorCode,
+									   String errorValue, String sourceSystem, String key1, String key2,
+									   String key3, String key4, String key5, String businessArea) {
 		String keyJson = JsonObject.create()
 				.append("functionalArea", functionalArea)
 				.append("interfaceID", interfaceID)
