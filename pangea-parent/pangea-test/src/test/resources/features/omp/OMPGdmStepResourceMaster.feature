@@ -3,10 +3,11 @@ Feature:GDMStepResourceMaster AEAZ-9092
   @Scenario1
   Scenario: GdmStepResourceMaster
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl"
-      | sourceSystem | dataObject      | attribute   | parameter    | parameterValue | inclExcl | comments |
-      | CONS_LATAM   | SEND_TO_OMP     | CONS_LATAM  |              | LA             |          |          |
-      | CONS_LATAM   | ALL             | SEND_TO_OMP | SYSTEMNAME   | CONS_LATAM     | I        |          |
-      | CONS_LATAM   | GDMSTEPRESOURCE | SEND_TO_OMP | LOCATIONTYPE | IM             | I        |          |
+      | sourceSystem | dataObject | attribute   | parameter  | parameterValue | inclExcl | comments |
+      | CONS_LATAM   | ALL        | SEND_TO_OMP | SYSTEMNAME | CONS_LATAM     | I        |          |
+      | CONS_LATAM   | PP         | SEND_TO_OMP | PLANT      | BR12           | I        | IM       |
+      | CONS_LATAM   | PP         | SEND_TO_OMP | PLANT      | CO01           | I        | IM       |
+      | CONS_LATAM   | PP         | SEND_TO_OMP | PLANT      | AR01           | I        | IM       |
     And I wait "/plan/cns_plan_parameter" Async Queue complete
     Given I import "/edm/matl_mfg_rtng" by keyFields "srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr"
       | srcSysCd   | matlNum            | plntCd | rtngTypCd | rntgGrpCd | rntgGrpCntrNbr | rntgAddtnlCntrNbr | matlRtngVrsnCntrNbr | valFromDt | chgNum | delInd | crtDttm  | chgDttm  | matlRtngValid_To |
@@ -105,6 +106,9 @@ Feature:GDMStepResourceMaster AEAZ-9092
       | CONS_LATAM | 19999999 | 1       |        |       | BR         | 002       | SAN-W+D60 | BR11   |
     And I wait "/edm/capy_hdr" Async Queue complete
     When I submit task with xml file "xml/omp/GDMStepResourceMaster.xml" and execute file "jar/pangea-view.jar"
-    Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
-      | resourceId                | machineId                | quantity | minQuantity | stepResourceId                                              | active | operationId                     | stepResourceType | activeOPRERP | activeSOPERP |
+
+    Then A file is found on sink application with name "GDMStepResource_master.tsv"
+    Then I check file data for filename "GDMStepResource_master.tsv" by keyFields "stepResourceId"
+#    Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
+      | resourceId                | machineId                | quantity | minQuantity | stepResourceId                                     | active | operationId                     | stepResourceType | activeOPRERP | activeSOPERP |
       | CONS_LATAM_BR11/SAN-R+D60 | CONS_LATAM_BR12/SAN-W+D1 | 0        | 66.1        | CONS_LATAM_BR11/SAN-R+D60/SAN-W+D1/V006/69349/0010 | YES    | V006/69349/CONS_LATAM_BR12/0010 | production       | YES          | NO           |
