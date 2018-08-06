@@ -36,10 +36,6 @@ public class EDMMfgRtngHdrServiceImpl implements ICommonService {
         PlkoEntity plkoEntity = (PlkoEntity) o;
 
         EDMMfgRtngHdrBo mfgRtngHdrBo = new EDMMfgRtngHdrBo();
-
-        if (plkoEntity.getLoekz() != null && plkoEntity.getLoekz().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_LOEKZ_VALUE_X)) {
-            return resultObject;
-        }
         if (plkoEntity.getPlnty() != null && !plkoEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_2) && !plkoEntity.getPlnty().trim().equalsIgnoreCase(IConstant.MFG_RTNG_RLTNSHP.FIELD_PLNTY_VALUE_N)) {
             return resultObject;
         }

@@ -16,6 +16,7 @@ public class DateInner {
     public final static String F_yyyyMMdd_3 = "dd.MM.yyyy";
     public final static String F_yyyyMM = "yyyyMM";
     public final static String F_hhmmss_a = "hh:mm:ss a";
+    public final static String F_HHmmss = "HHmmss";
     public final static String F_yyyyMMddHHmmss = "yyyyMMddHHmmss";
     public final static String yyyyMMdd_HHmmss = "yyyyMMdd_HH-mm-ss";
     public final static String yyyy_MM_dd_HHmmss_SSS = "yyyy/MM/dd HH:mm:ss.SSS";
@@ -54,7 +55,11 @@ public class DateInner {
 
     public static String dateToString(Date dt, String format, Locale locale) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, locale);
-        return sdf.format(dt);
+        try {
+            return sdf.format(dt);
+        } catch (Exception e){
+        }
+        return "";
     }
 
     public static Date stringToDate(String dateStr, String format) {
@@ -72,45 +77,45 @@ public class DateInner {
         return s_date;
     }
 
-    public static Date offsetYear(Date date, int year) {
-        return changeDate(date, year, 0, 0, 0, 0, 0);
+    public static String StringToString(String dateStr, String format, String targetFormat){
+        return StringToString(dateStr, format, targetFormat, Locale.getDefault());
     }
 
-    public static Date offsetMonth(Date date, int month) {
-        return changeDate(date, 0, month, 0, 0, 0, 0);
-    }
-
-    public static Date offsetDay(Date date, int day) {
-        return changeDate(date, 0, 0, day, 0, 0, 0);
-    }
-
-    public static Date offsetHour(Date date, int hour) {
-        return changeDate(date, 0, 0, 0, hour, 0, 0);
-    }
-
-    public static Date offsetMinute(Date date, int minute) {
-        return changeDate(date, 0, 0, 0, 0, minute, 0);
-    }
-
-    public static Date offsetSecond(Date date, int second) {
-        return changeDate(date, 0, 0, 0, 0, 0, second);
-    }
-
-
-
-    public static String StringToString (String dateStr, String format, String targetFormat, Locale locale){
+    public static String StringToString(String dateStr, String format, String targetFormat, Locale locale){
         Date date = stringToDate(dateStr, format, locale);
         return dateToString(date, targetFormat, locale);
     }
 
+    public static Date offsetYear(Date date, int year) {
+        return changeDate(date,year,0,0,0,0,0);
+    }
 
+    public static Date offsetMonth(Date date, int month) {
+        return changeDate(date,0,month,0,0,0,0);
+    }
 
-    public static Date changeDate (Date date,int year, int month, int day, int hour, int minute, int second){
+    public static Date offsetDay(Date date, int day) {
+        return changeDate(date,0,0,day,0,0,0);
+    }
+
+    public static Date offsetHour(Date date, int hour) {
+        return changeDate(date,0,0,0,hour,0,0);
+    }
+
+    public static Date offsetMinute(Date date, int minute) {
+        return changeDate(date,0,0,0,0,minute,0);
+    }
+
+        public static Date offsetSecond(Date date, int second) {
+            return changeDate(date,0,0,0,0,0,second);
+        }
+
+    public static Date changeDate(Date date, int year, int month, int day, int hour, int minute, int second) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + year);
-        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + month);
+        calendar.set(Calendar.YEAR,calendar.get(Calendar.YEAR)+year);
+        calendar.set(Calendar.MONTH,calendar.get(Calendar.MONTH)+month);
         calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + day);
         calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + hour);
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + minute);
@@ -118,20 +123,15 @@ public class DateInner {
         return calendar.getTime();
     }
 
-    public static Date offsetDate (Date date,int year, int month, int day, int hour, int minute, int second){
+    public static Date offsetDate(Date date, int days) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + year);
-        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + month);
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + day);
-        calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + hour);
-        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + minute);
-        calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + second);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + days);
         return calendar.getTime();
     }
 
-    private static Date correctDate (String dateStr, String format){
+    private static Date correctDate(String dateStr, String format) {
         Map<String, Locale> set = new HashMap<String, Locale>();
         set.put(US_MMM_dd_yyyy_hhmmssSSSaa, Locale.US);
         set.put(yyyyMMdd_HHmmssSSS, Locale.US);
@@ -152,21 +152,18 @@ public class DateInner {
         return null;
     }
 
-    public static Date julianToDate (String julianDate){
-        if (julianDate != null && julianDate.length() == 6) {
-            String yearBefore = julianDate.substring(0, 1);
-            int yearBeforInt = Integer.parseInt(yearBefore) + 19;
-            String yearAfter = julianDate.substring(1, 3);
-            String year = yearBeforInt + yearAfter;
-            Calendar cal = new GregorianCalendar();
-            cal.set(Calendar.YEAR, Integer.parseInt(year));
-            cal.set(Calendar.DAY_OF_YEAR, Integer.parseInt(julianDate.substring(3)));
+    public static Date julianToDate(String julianDate){
+        if(julianDate!=null&&julianDate.length()==6){
+            String yearBefore=julianDate.substring(0,1);
+            int yearBeforInt=Integer.parseInt(yearBefore)+19;
+            String yearAfter=julianDate.substring(1,3);
+            String year=yearBeforInt+yearAfter;
+            Calendar cal  = new GregorianCalendar();
+            cal.set(Calendar.YEAR,Integer.parseInt(year));
+            cal.set(Calendar.DAY_OF_YEAR,Integer.parseInt(julianDate.substring(3)));
             return cal.getTime();
-        } else {
+        }else{
             return null;
         }
     }
 }
-
-
-
