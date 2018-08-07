@@ -63,7 +63,7 @@
         <relations>
           <relation path="/edm/mfg_rtg_parm" isPrimaryKey="false" lucene="true">
             <expression>srcSysCd=/edm/mfg_rtng_itm_nde.srcSysCd,rtgTypeCd=/edm/mfg_rtng_itm_nde.rtngTypCd,rtgGrpCd=/edm/mfg_rtng_itm_nde.rtngGrpCd,rtgNodeNum=/edm/mfg_rtng_itm_nde.rtngNdeNum</expression>
-            <filter>(*:* -delInd:X) AND charCd:EFICIENCIA</filter>
+            <filter>(*:* -delInd:X) AND charCd:EQUIPE</filter>
           </relation>
         </relations>
       </region>
