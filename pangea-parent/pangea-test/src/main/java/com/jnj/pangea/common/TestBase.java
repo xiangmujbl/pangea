@@ -564,7 +564,7 @@ public class TestBase implements En {
             System.out.print(String.format("%-50s", k));
             System.out.print("Warning: " + v + "\r\n");
         });
-        if (error.size() > 0 || issue.size() > 0) {
+        if (error.size() > 0) {
             Assert.fail("invalid region name or alias!");
         }
     }

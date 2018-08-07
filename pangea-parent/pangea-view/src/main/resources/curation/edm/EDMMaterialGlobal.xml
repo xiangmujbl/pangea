@@ -14,8 +14,11 @@
                     <relation path="/project_one/makt" isPrimaryKey="false">
                         <expression>matnr=/project_one/mara.matnr</expression>
                     </relation>
-                    <relation path="/ngems/material_linkage" isPrimaryKey="false">
-                        <expression>localMaterialNumber=/project_one/mara.matnr</expression>
+                    <relation path="/p360/material_cross_reference" isPrimaryKey="false">
+                        <expression>sourceSystemMaterialNumber=/project_one/mara.matnr</expression>
+                    </relation>
+                    <relation path="/p360/material" isPrimaryKey="false">
+                        <expression></expression>
                     </relation>
                     <relation path="/plan/edm_mat_input" isPrimaryKey="false">
                         <expression></expression>
@@ -35,26 +38,20 @@
                 </columns>
             </region>
 
-            <region path="/ngems/material_linkage">
+            <region path="/p360/material_cross_reference">
                 <columns>
-                    localMaterialNumber,sourceSystem,materialNumber
+                    sourceSystemName,sourceSystemMaterialNumber,enterpriseMaterialNumber
                 </columns>
                 <relations>
-                    <relation path="/ngems/golden_material" isPrimaryKey="false">
-                        <expression>materialNumber=/ngems/material_linkage.materialNumber</expression>
+                    <relation path="/p360/material" isPrimaryKey="false">
+                        <expression>enterpriseMaterialNumber=/p360/material_cross_reference.enterpriseMaterialNumber</expression>
                     </relation>
                 </relations>
             </region>
 
-            <region path="/ngems/golden_material">
+            <region path="/p360/material">
                 <columns>
-                    materialNumber,materialDescription,materialType,baseUom,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,manufTechnology,primaryPlanningCode
-                </columns>
-            </region>
-            
-            <region path="/plan/edm_mat_input">
-                <columns>
-                    localMaterialNumber,localTechnology,sourceSystem
+                    enterpriseMaterialNumber,materialDescription,materialType,baseUnitOfMeasure,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnitGbu,productFamily,manufacturingTechnology
                 </columns>
             </region>
             
@@ -69,7 +66,6 @@
                     sourceSystem,localMaterialNumber,localRefDescription,localMaterialType,localBaseUom,materialNumber,refDescription,materialType,baseUom,localDpParentCode,parentCode,globalDpParentCode,form,category,subBrand,brand,franchise,globalBusinessUnit,productFamily,localManufacturingTechnology,manufacturingTechnology,localMaterialGroup,materialGroup,flagForDeletion,materialStatus,division,batchManageIndicator,minRemShelfLife,totalShelfLife,primaryPlanningCode
                 </columns>
             </region>
-
         </regions>
     </curation>
 </adf-curation>

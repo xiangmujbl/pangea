@@ -2,7 +2,7 @@ package com.jnj.pangea.common.dao.impl.plan;
 
 import com.jnj.adf.client.api.query.QueryHelper;
 
- import com.jnj.pangea.common.IConstant;
+import com.jnj.pangea.common.IConstant;
 import com.jnj.pangea.common.dao.impl.CommonDaoImpl;
 import com.jnj.pangea.common.entity.plan.PlanCnsTlaneControlTriangulationEntity;
 
@@ -22,6 +22,14 @@ public class PlanCnsTlaneControlTriangulationDaoImpl extends CommonDaoImpl {
             instance = new PlanCnsTlaneControlTriangulationDaoImpl();
         }
         return instance;
+    }
+
+    public List<PlanCnsTlaneControlTriangulationEntity> getStepsForSequence(String sequenceNumber, String tlaneName) {
+        String queryString = QueryHelper.buildCriteria(SEQUENCE_NUMBER).is(sequenceNumber)
+                .and(TLANE_NAME).is(tlaneName)
+                .toQueryString();
+
+        return queryForList(PLAN_CNS_TLANE_CONTROL_TRIANGULATION,queryString,PlanCnsTlaneControlTriangulationEntity.class);
     }
 
     public List<PlanCnsTlaneControlTriangulationEntity> getEntityWithSourceSystemCriticalParameters(String sequenceNumber, String tlaneName) {

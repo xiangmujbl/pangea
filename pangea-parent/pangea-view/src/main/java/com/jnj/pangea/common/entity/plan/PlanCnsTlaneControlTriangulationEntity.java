@@ -8,19 +8,17 @@ public class PlanCnsTlaneControlTriangulationEntity extends CommonEntity {
 
     private String sequenceNumber;
     private String stepNumber;
-    private String destinatonLocation;
     private String tlaneName;
     private String originLocation;
-
+    private String destinationLocation;
 
     public PlanCnsTlaneControlTriangulationEntity(Map<String, Object> map) {
         super(map);
-
         setSequenceNumber((String) map.get("sequenceNumber"));
         setStepNumber((String) map.get("stepNumber"));
-        setDestinatonLocation((String) map.get("destinatonLocation"));
         setTlaneName((String) map.get("tlaneName"));
         setOriginLocation((String) map.get("originLocation"));
+        setDestinationLocation((String) map.get("destinationLocation"));
     }
 
     public String getSequenceNumber() {
@@ -39,14 +37,6 @@ public class PlanCnsTlaneControlTriangulationEntity extends CommonEntity {
         this.stepNumber = stepNumber;
     }
 
-    public String getDestinatonLocation() {
-        return destinatonLocation;
-    }
-
-    public void setDestinatonLocation(String destinatonLocation) {
-        this.destinatonLocation = destinatonLocation;
-    }
-
     public String getTlaneName() {
         return tlaneName;
     }
@@ -61,5 +51,13 @@ public class PlanCnsTlaneControlTriangulationEntity extends CommonEntity {
 
     public void setOriginLocation(String originLocation) {
         this.originLocation = originLocation;
+    }
+
+    public String getDestinationLocation() {
+        return destinationLocation;
+    }
+
+    public void setDestinationLocation(String destinationLocation) {
+        this.destinationLocation = destinationLocation;
     }
 }

@@ -137,7 +137,7 @@ public class Utils {
 
         int num;
         do {
-            num = ((IGridService) srv.onServer(fullPath)).getQueueSize(fullPath);
+            num = ((IGridService) srv.onRegion(fullPath)).getQueueSize(fullPath);
             total += num;
             if (num > 0) {
                 LogUtil.getCoreLog().info("Wati aq flush, size:{} ", new Object[]{num});
