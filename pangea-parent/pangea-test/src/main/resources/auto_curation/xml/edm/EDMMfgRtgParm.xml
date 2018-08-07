@@ -1,0 +1,82 @@
+<adf-curation executionClassName="com.jnj.pangea.edm.mfg_rtg_parm.MfgRtgParmController"
+              failRegion="/plan/edm_failed_data">
+    <regions>
+        <region path="/project_one/plfv" mainRegion="true" isPrimaryKey="false" lucene="true">
+            <columns>scenario,plnty,plnnr,plnkn,plnph,plnft,mkmzl,zaehl,datuv,loekz,aennr,andat,aedat,atinn,atwrt
+            </columns>
+            <filter>(*:* -loekz:X)</filter>
+            <relations>
+                <region path="/project_one/plph">
+                    <columns>mandt,plnty,plnnr,plnkn,plnph,zaehl,datuv,topnr</columns>
+                    <expression>
+                        plnty=/project_one/plfv.plnty,plnnr=/project_one/plfv.plnnr,plnkn=/project_one/plfv.plnkn,plnph=/project_one/plfv.plnph
+                    </expression>
+                </region>
+                <region path="/edm/source_system_v1">
+                    <columns>sourceSystem,localSourceSystem</columns>
+                </region>
+            </relations>
+        </region>
+    </regions>
+    <methods>
+        <method name="T_1" resultType="Map" isPK="false" path="/edm/source_system_v1">
+            <parameters>
+                <parameter name="localSourceSystem" value="project_one"/>
+            </parameters>
+        </method>
+        <method name="J1_2" resultType="Map" path="/project_one/plph">
+            <parameters>
+                <parameter name="plnty" value="plnty" relationship="and"/>
+                <parameter name="plnnr" value="plnnr" relationship="and"/>
+                <parameter name="plnkn" value="plnkn" relationship="and"/>
+                <parameter name="plnph" value="plnph" relationship="and"/>
+                <parameter name="topnr" value="'10'"/>
+            </parameters>
+        </method>
+    </methods>
+    <viewRegion name="/edm/mfg_rtg_parm">
+        <filters>
+            <filter hook="EDMMfgRtgParmHook.processmfgrtgparm(e.getValue())"/>
+        </filters>
+        <vars>
+            <var name="project_one" value="'project_one'"/>
+            <var name="plnty" value="plnty"/>
+            <var name="plnnr" value="plnnr"/>
+            <var name="plnkn" value="plnkn"/>
+            <var name="plnph" value="plnph"/>
+            <var name="plnft" value="plnft"/>
+            <var name="mkmzl" value="mkmzl"/>
+            <var name="zaehl" value="zaehl"/>
+            <var name="datuv" value="datuv"/>
+            <var name="loekz" value="loekz"/>
+            <var name="aennr" value="aennr"/>
+            <var name="andat" value="andat"/>
+            <var name="aedat" value="aedat"/>
+            <var name="atinn" value="atinn"/>
+            <var name="atwrt" value="atwrt"/>
+        </vars>
+
+        <columns>
+            <column name="srcSysCd" isPK="true" var="sourceSystem">
+                <ref method="T_1" parameter="project_one" resultType="Map" value="sourceSystem">
+                </ref>
+            </column>
+            <column name="rtgTypeCd" isPK="true" var="plnty">
+            </column>
+            <column name="rtgGrpCd" isPK="true" value="plnnr">
+            </column>
+            <column name="rtgNodeNum" isPK="true" value="plnkn"></column>
+            <column name="intrnlSubCalcNum" isPK="true" value="plnph"></column>
+            <column name="intrnlPrcsInstrNum" isPK="true" value="plnft"></column>
+            <column name="intrnlPrcsInstrCharValNum" isPK="true" value="mkmzl"></column>
+            <column name="mfgParmVersCntrNbr" isPK="true" value="zaehl"></column>
+            <column name="vldFromDt" value="datuv"></column>
+            <column name="delInd" value="loekz"></column>
+            <column name="chgNum" value="aennr"></column>
+            <column name="crtDttm" value="andat"></column>
+            <column name="chgDttm" value="aedat"></column>
+            <column name="charCd" value="atinn"></column>
+            <column name="charVal" value="atwrt"></column>
+        </columns>
+    </viewRegion>
+</adf-curation>

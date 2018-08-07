@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<adf-curation> 
+  <curation mainRegion="/project_one/plfv" viewRegion="/edm/mfg_rtg_parm" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.edm.mfg_rtg_parm.MfgRtgParmController"> 
+    <regions> 
+      <region path="/project_one/plfv" lucene="true"> 
+        <columns>scenario,plnty,plnnr,plnkn,plnph,plnft,mkmzl,zaehl,datuv,loekz,aennr,andat,aedat,atinn,atwrt</columns>  
+        <filter>(*:* -loekz:X)</filter>  
+        <relations> 
+          <relation path="/project_one/plph" isPrimaryKey="false"> 
+            <expression>plnty=/project_one/plfv.plnty,plnnr=/project_one/plfv.plnnr,plnkn=/project_one/plfv.plnkn,plnph=/project_one/plfv.plnph</expression> 
+          </relation>  
+          <relation path="/edm/source_system_v1" isPrimaryKey="false"> 
+            <expression/> 
+          </relation> 
+        </relations> 
+      </region>  
+      <region path="/project_one/plph"> 
+        <columns>mandt,plnty,plnnr,plnkn,plnph,zaehl,datuv,topnr</columns> 
+      </region>  
+      <region path="/edm/source_system_v1"> 
+        <columns>sourceSystem,localSourceSystem</columns> 
+      </region>  
+      <region path="/edm/mfg_rtg_parm"> 
+        <columns>srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr,vldFromDt,delInd,chgNum,crtDttm,chgDttm,charCd,charVal</columns> 
+      </region> 
+    </regions> 
+  </curation>
+</adf-curation>
