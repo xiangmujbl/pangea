@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <adf-curation> 
-  <curation mainRegion="/edm/matl_mfg_rtng" viewRegion="/omp/gdm_step_resource" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.step_resource.controller.StepResourceController" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_process"> 
+  <curation mainRegion="/edm/matl_mfg_rtng" viewRegion="/omp/gdm_step_resource" chunkSize="1000" chunkBytes="40096" partitionPerServer="2" parallelism="2" executionClassName="com.jnj.pangea.omp.step_resource.controller.StepResourceController" writeTo="all" topic="PANGEA_V1_omp_gdm_step_resource_master"> 
     <regions> 
       <region path="/edm/matl_mfg_rtng"> 
         <columns>srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To,prdtnVersNum</columns>  

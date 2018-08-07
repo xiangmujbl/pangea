@@ -118,7 +118,7 @@
                 <parameter name="rtgTypeCd" value="rtgTypeCd" relationship="and"></parameter>
                 <parameter name="rtgGrpCd" value="rtgGrpCd" relationship="and"></parameter>
                 <parameter name="rtgNodeNum" value="rtgNodeNum" relationship="and"></parameter>
-                <parameter name="charCd" value="'EFICIENCIA'" relationship="and"></parameter>
+                <parameter name="charCd" value="'EQUIPE'" relationship="and"></parameter>
             </parameters>
         </method>
     </methods>
