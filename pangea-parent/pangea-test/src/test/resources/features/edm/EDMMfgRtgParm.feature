@@ -10,7 +10,7 @@ Feature:EDMMfgRtgParm AEAZ-6665
       | CONS_LATAM    | project_one        |
 
     And I wait "/edm/source_system_v1" Async Queue complete
-    Given I import "/project_one/plfv" by keyFields "plnty,plnnr,plnkn,plnph"
+    Given I import "/project_one/plfv" by keyFields  "plnty,plnnr,plnkn,plnph"
       | plnty | plnnr    | plnkn    | plnph    | plnft | mkmzl    | zaehl    | datuv    | loekz | aennr | andat    | aedat    | atinn      | atwrt |
       | N     | 50019343 | 00000001 | 00000001 |       | 00000002 | 00000002 | 20150519 |       |       | 20071226 | 20170630 | EFICIENCIA | 80.1  |
       | N     | 50019343 | 00000001 | 00000002 |       | 00000008 | 00000008 | 20150519 |       |       | 20071226 | 20170630 | EFICIENCIA | 80.1  |
