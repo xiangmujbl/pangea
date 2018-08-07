@@ -164,30 +164,11 @@ public class OMPGdmStepResourceProcessService {
                                                                 continue;
                                                             }
                                                             if (capyHdr2 == null) {
-//                                                                LogUtil.getCoreLog().info("--------------------filter capyHdr2 null>>capyHdr2:{}", capyHdr2);
-//                                                                FailData failData = new FailData();
-//                                                                failData.setErrorCode("T7");
-//                                                                failData.setErrorValue("Unable find the Secondary Resource");
-//                                                                failData.setFunctionalArea("PP");
-//                                                                failData.setInterfaceID("OMPGdmStepResource");
-//                                                                failData.setSourceSystem("omp");
-//                                                                failData.setKey1(srcSysCd);
-//                                                                failData.setKey2(mfgOrdrNum);
-//                                                                failData.setKey3("");
-//                                                                failData.setKey4("");
-//                                                                failData.setKey5("");
-//                                                                ResultObject resultObject = new ResultObject();
-//                                                                resultObject.setFailData(failData);
-//                                                                RawDataBuilder rawDataBuilder = new RawDataBuilder();
-//                                                                rawDataBuilder.put(resultObject.getFailData().toMap());
-//                                                                failMap.put(failData.getKey(), rawDataBuilder);
-                                                                LogUtil.getCoreLog().info("Unable find the Secondary Resource");
-//                                                                continue;
                                                                 RawDataBuilder dataRaw = new RawDataBuilder();
                                                                 String machineId = StringInner.join(srcSysCd, "_", plntCd4T3, "/", wrkCtrCd);
                                                                 String operationId = StringInner.join("PRO/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
                                                                 String resourceId = "";
-                                                                String stepResourceId = StringInner.join(resourceId, "/", wrkCtrCd, "/PRO/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
+                                                                String stepResourceId = StringInner.join("PRO/",srcSysCd,"_", plntCd4T3,"//", wrkCtrCd, "/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
 
                                                                 dataRaw.put("stepResourceId", stepResourceId);
                                                                 dataRaw.put("machineId", machineId);
@@ -207,7 +188,7 @@ public class OMPGdmStepResourceProcessService {
                                                                 String machineId = StringInner.join(srcSysCd, "_", plntCd4T3, "/", wrkCtrCd);
                                                                 String operationId = StringInner.join("PRO/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
                                                                 String resourceId = StringInner.join(srcSysCd, "_", plntCd4capyHdr, "/", capyNm);
-                                                                String stepResourceId = StringInner.join(resourceId, "/", wrkCtrCd, "/PRO/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
+                                                                String stepResourceId = StringInner.join("PRO/",resourceId, "/", wrkCtrCd, "/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
 
                                                                 dataRaw.put("stepResourceId", stepResourceId);
                                                                 dataRaw.put("machineId", machineId);
@@ -426,7 +407,7 @@ public class OMPGdmStepResourceProcessService {
         String rtgTypeCdParm = checkNull4Str(rtgTypeCd);
         String rtgGrpCdParm = checkNull4Str(rtgGrpCd);
         String rtgNodeNumParm = checkNull4Str(rtgNodeNum);
-        String charCd = "EFICIENCIA";
+        String charCd = "EQUIPE";
         List<EDMMfgRtgParmEntity> edmMfgRtgParmEntities = edmMfgRtgParmDao.getEntityWithConditions(srcSysCdParm, rtgTypeCdParm, rtgGrpCdParm, rtgNodeNumParm, charCd);
         if (edmMfgRtgParmEntities != null && edmMfgRtgParmEntities.size() > 0) {
             edmMfgRtgParmEntities.sort((e1, e2) -> checkNull4Str(e1.getIntrnlPrcsInstrNum())
