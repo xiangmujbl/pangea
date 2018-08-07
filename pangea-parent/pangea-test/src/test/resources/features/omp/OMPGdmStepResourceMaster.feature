@@ -44,13 +44,13 @@ Feature:GDMStepResourceMaster AEAZ-9092
       | CONS_LATAM | 000000000000069349 | BR12   | V006         | 20170622  | 99991231 | 01        | 1        | N         | 50019343  | 06             |
     And I wait "/edm/matl_prod_versn" Async Queue complete
     Given I import "/edm/mfg_rtg_parm" by keyFields "srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr"
-      | srcSysCd   | rtgTypeCd | rtgGrpCd | rtgNodeNum | intrnlSubCalcNum | intrnlPrcsInstrNum | intrnlPrcsInstrCharValNum | mfgParmVersCntrNbr | vldFromDt | delInd | chgNum | crtDttm  | chgDttm  | charCd     | charVal |
-      | CONS_LATAM | N         | 50019342 | 00000001   | 00000001         |                    | 00000002                  | 00000002           | 20150519  |        |        | 20071226 | 20170630 | EFICIENCIA | 80.1    |
-      | CONS_LATAM | N         | 50019343 | 00000002   | 00000002         |                    | 00000023                  | 00000023           | 20150713  |        |        | 20130412 | 20171004 | EFICIENCIA | 78.0    |
-      | CONS_LATAM | N         | 50019343 | 00000003   | 00000003         |                    | 00000044                  | 00000044           | 20150713  |        |        | 20130412 | 20170622 | EFICIENCIA | 76.1    |
-      | CONS_LATAM | N         | 50019343 | 00000004   | 00000004         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EFICIENCIA |         |
-      | CONS_LATAM | N         | 50019343 | 00000005   | 00000005         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EFICIENCIA | 66.1    |
-      | CONS_LATAM | N         | 50019343 | 00000006   | 00000006         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EFICIENCIA | 66.1    |
+      | srcSysCd   | rtgTypeCd | rtgGrpCd | rtgNodeNum | intrnlSubCalcNum | intrnlPrcsInstrNum | intrnlPrcsInstrCharValNum | mfgParmVersCntrNbr | vldFromDt | delInd | chgNum | crtDttm  | chgDttm  | charCd | charVal |
+      | CONS_LATAM | N         | 50019342 | 00000001   | 00000001         |                    | 00000002                  | 00000002           | 20150519  |        |        | 20071226 | 20170630 | EQUIPE | 80.1    |
+      | CONS_LATAM | N         | 50019343 | 00000002   | 00000002         |                    | 00000023                  | 00000023           | 20150713  |        |        | 20130412 | 20171004 | EQUIPE | 78.0    |
+      | CONS_LATAM | N         | 50019343 | 00000003   | 00000003         |                    | 00000044                  | 00000044           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 76.1    |
+      | CONS_LATAM | N         | 50019343 | 00000004   | 00000004         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE |         |
+      | CONS_LATAM | N         | 50019343 | 00000005   | 00000005         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 66.1    |
+      | CONS_LATAM | N         | 50019343 | 00000006   | 00000006         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 66.1    |
     And I wait "/edm/mfg_rtg_parm" Async Queue complete
 
     Given I import "/edm/wrk_ctr" by keyFields "srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc"
