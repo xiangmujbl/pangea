@@ -1,10 +1,8 @@
 package com.jnj.pangea.xd;
 
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import com.jnj.pangea.generator.metadata.StringUtils;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
