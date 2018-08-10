@@ -199,20 +199,15 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
     Then I check file data for filename "GDMStepResource_process.tsv" by keyFields "stepResourceId"
 #    Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
       | stepResourceId                                     | active | activeOPRERP | activeSOPERP | machineId                | minQuantity | operationId      | quantity | resourceId               | stepResourceType |
-      | PRO/CONS_LATAM_BR12/SAN-R+D6/SAN-W+D6/1647956/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D6 |             | PRO/1647956/0010 | 0        | CONS_LATAM_BR12/SAN-R+D6 | production       |
+      | PRO/CONS_LATAM_BR12/SAN-R+D6/SAN-W+D6/1647956/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D6 | 0           | PRO/1647956/0010 | 0        | CONS_LATAM_BR12/SAN-R+D6 | production       |
       | PRO/CONS_LATAM_BR12/SAN-R+D7/SAN-W+D7/1647957/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D7 | 2.0         | PRO/1647957/0010 | 0        | CONS_LATAM_BR12/SAN-R+D7 | production       |
-      | PRO/CONS_LATAM_BR12//SAN-W+D5/1647955/0010         | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D5 | 2.0         | PRO/1647955/0010 | 0        |                          | production       |
-      | PRO/CONS_LATAM_BR12//SAN-W+D9/1647959/0010         | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D9 | 2.0         | PRO/1647959/0010 | 0        |                          | production       |
-
-#    Then I check region data "/plan/edm_failed_data" by keyFields "functionalArea,interfaceID,errorCode,sourceSystem,key1,key2,key3,key4,key5"
-#      | functionalArea | interfaceID        | errorCode | sourceSystem | businessArea | key1       | key2         | key3 | key4 | key5 | errorValue                         |
-#      | PP             | OMPGdmStepResource | T7        | omp          |              | CONS_LATAM | 000001647955 |      |      |      | Unable find the Secondary Resource |
+#      | PRO/CONS_LATAM_BR12//SAN-W+D5/1647955/0010         | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D5 | 2.0         | PRO/1647955/0010 | 0        |                          | production       |
+#      | PRO/CONS_LATAM_BR12//SAN-W+D9/1647959/0010         | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D9 | 2.0         | PRO/1647959/0010 | 0        |                          | production       |
 
   @Scenario2
   Scenario:delete Test Data
 ##    And I will remove the test file on sink application "GDMStepResource_process.tsv"
     And I delete the test data
     And I will remove all data with region "/omp/gdm_step_resource"
-#    And I will remove all data with region "/plan/edm_failed_data"
 
         

@@ -80,7 +80,7 @@ public class OMPGdmStepResourceProcessService {
                         if (StringInner.isStringNotEmpty(prdntVrsnNum) && StringInner.isStringNotEmpty(matlNum)) {
                             EDMMatlProdVersnEntity matlProdVersnEtt = joinMaltProdVersn(srcSysCd, matlNum, plntCd, prdntVrsnNum);
                             if (matlProdVersnEtt != null) {
-                                String minQuantity = "";
+                                String minQuantity = "0";
                                 srcSysCd = matlProdVersnEtt.getSrcSysCd();
                                 String rtngTypCd = matlProdVersnEtt.getRtngTypCd();
                                 String rtngGrpCd = matlProdVersnEtt.getRtngGrpCd();
@@ -164,23 +164,7 @@ public class OMPGdmStepResourceProcessService {
                                                                 continue;
                                                             }
                                                             if (capyHdr2 == null) {
-                                                                RawDataBuilder dataRaw = new RawDataBuilder();
-                                                                String machineId = StringInner.join(srcSysCd, "_", plntCd4T3, "/", wrkCtrCd);
-                                                                String operationId = StringInner.join("PRO/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
-                                                                String resourceId = "";
-                                                                String stepResourceId = StringInner.join("PRO/",srcSysCd,"_", plntCd4T3,"//", wrkCtrCd, "/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
-
-                                                                dataRaw.put("stepResourceId", stepResourceId);
-                                                                dataRaw.put("machineId", machineId);
-                                                                dataRaw.put("minQuantity", minQuantity);
-                                                                dataRaw.put("operationId", operationId);
-                                                                dataRaw.put("resourceId", resourceId);
-                                                                dataRaw.put("active", yesDefault);
-                                                                dataRaw.put("activeOPRERP", yesDefault);
-                                                                dataRaw.put("activeSOPERP", noDefault);
-                                                                dataRaw.put("quantity", zeroDefault);
-                                                                dataRaw.put("stepResourceType", prodStr);
-                                                                rawDataBuilderList.add(dataRaw);
+                                                                continue;
                                                             } else {
                                                                 String capyNm = checkNull4Str(capyHdr2.getCapyNm());
                                                                 String plntCd4capyHdr = checkNull4Str(capyHdr2.getPlntCd());
