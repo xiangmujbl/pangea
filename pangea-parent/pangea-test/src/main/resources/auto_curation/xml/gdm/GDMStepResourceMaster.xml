@@ -162,13 +162,17 @@
                     <ref method="T7"
                          parameter="String.valueOf(map.get(&quot;srcSysCd&quot;)),String.valueOf(retList1Map.get(&quot;rtngTypCd&quot;)),String.valueOf(retList1Map.get(&quot;rtngGrpCd&quot;)),String.valueOf(retList2Map.get(&quot;rtngNdeNum&quot;))"
                          value="charVal,delInd" var="mapT7" resultType="Map">
+                         <if test="StringInner.isStringEmpty(charVal)">
+                            <set name="charVal" value="'0'"></set>
+                            </if>
+                        </ref>
                         <if test="mapT7==null">
-                            <set name="charVal" value="''"/>
+                            <set name="charVal" value="'0'"/>
                         </if>
                         <elseIf test="delInd.equals('X')">
-                            <set name="charVal" value="''"/>
+                            <set name="charVal" value="'0'"/>
                         </elseIf>
-                    </ref>
+                        
                 </if>
             </column>
             <column name="resourceId">

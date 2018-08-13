@@ -219,33 +219,31 @@ public class StepResourceController implements IEventProcessor {
 															.valueOf(retList1Map
 																	.get("rtngGrpCd")) != null) {
 
-												Map mapT7 = T7(
-														String.valueOf(map
-																.get("srcSysCd")),
-														String.valueOf(retList1Map
-																.get("rtngTypCd")),
-														String.valueOf(retList1Map
-																.get("rtngGrpCd")),
-														String.valueOf(retList2Map
-																.get("rtngNdeNum")));
-												if (mapT7 != null) {
-													charVal = StringInner
-															.getString(mapT7,
-																	"charVal");
-													delInd = StringInner
-															.getString(mapT7,
-																	"delInd");
-													if (mapT7 == null) {
-														charVal = "";
-													} else if (delInd
-															.equals("X")) {
-														charVal = "";
-													}
-												}
-											}
+									Map mapT7 = T7(String.valueOf(map
+											.get("srcSysCd")), String
+											.valueOf(retList1Map
+													.get("rtngTypCd")), String
+											.valueOf(retList1Map
+													.get("rtngGrpCd")), String
+											.valueOf(retList2Map
+													.get("rtngNdeNum")));
+									if (mapT7 != null) {
+										charVal = String.valueOf(mapT7
+												.get("charVal"));
+										delInd = String.valueOf(mapT7
+												.get("delInd"));
+										if (StringInner.isStringEmpty(charVal)) {
+											charVal = "0";
+										}
+									}
+									if (mapT7 == null) {
+										charVal = "0";
+									} else if (delInd.equals("X")) {
+										charVal = "0";
+									}
+								}
 
-											minQuantity = charVal;
-											builder.put("minQuantity", charVal);
+								builder.put("minQuantity", charVal);
 
 											String resourceId = null;
 
