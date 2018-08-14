@@ -18,6 +18,7 @@ import com.jnj.pangea.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import sun.rmi.runtime.Log;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,7 @@ public class OMPGdmStepResourceProcessService {
 
         String yesDefault = "YES";
         String noDefault = "NO";
-        String zeroDefault = "0";
+        String zeroDefault = "0.000";
         String prodStr = "production";
 
         if (StringInner.isStringNotEmpty(sourceSysCd) && StringInner.isStringNotEmpty(plntCd)
@@ -80,7 +81,7 @@ public class OMPGdmStepResourceProcessService {
                         if (StringInner.isStringNotEmpty(prdntVrsnNum) && StringInner.isStringNotEmpty(matlNum)) {
                             EDMMatlProdVersnEntity matlProdVersnEtt = joinMaltProdVersn(srcSysCd, matlNum, plntCd, prdntVrsnNum);
                             if (matlProdVersnEtt != null) {
-                                String minQuantity = "0";
+                                String minQuantity = "0.000";
                                 srcSysCd = matlProdVersnEtt.getSrcSysCd();
                                 String rtngTypCd = matlProdVersnEtt.getRtngTypCd();
                                 String rtngGrpCd = matlProdVersnEtt.getRtngGrpCd();
@@ -95,7 +96,12 @@ public class OMPGdmStepResourceProcessService {
 //                                            LogUtil.getCoreLog().info("----------mfgRtgParm>>" + mfgRtgParmEtt.toString());
                                             String charVal = mfgRtgParmEtt.getCharVal();
                                             if (StringInner.isStringNotEmpty(charVal)) {
-                                                minQuantity = charVal;
+                                                DecimalFormat df = new DecimalFormat("0.000");
+                                                try {
+                                                    minQuantity = df.format(Double.parseDouble(StringUtils.replace(charVal, ",", ".")));
+                                                } catch (NumberFormatException ne) {
+                                                    LogUtil.getCoreLog().error(ne.getMessage());
+                                                }
                                             }
                                         }
                                     }
@@ -110,7 +116,7 @@ public class OMPGdmStepResourceProcessService {
                                         String operNum = checkNull4Str(item.getOperNum());
                                         if (StringInner.isStringNotEmpty(operCd)) {
 //                                            LogUtil.getCoreLog().info("-------------------mfgOrderRtng >>operCd:{}，wrkCntrId：{}", operCd, wrkCntrId);
-                                            if(checkT430(operCd) && StringInner.isStringNotEmpty(wrkCntrId)){
+                                            if (checkT430(operCd) && StringInner.isStringNotEmpty(wrkCntrId)) {
                                                 EDMWrkCtrEntity wrkCtrMap = joinWrkCtr(srcSysCd, wrkCntrId);
                                                 if (wrkCtrMap != null) {
 //                                                    LogUtil.getCoreLog().info("-------------------WrkCtr >>wrkCtrMap:{}",wrkCtrMap.toString());
@@ -172,7 +178,7 @@ public class OMPGdmStepResourceProcessService {
                                                                 String machineId = StringInner.join(srcSysCd, "_", plntCd4T3, "/", wrkCtrCd);
                                                                 String operationId = StringInner.join("PRO/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
                                                                 String resourceId = StringInner.join(srcSysCd, "_", plntCd4capyHdr, "/", capyNm);
-                                                                String stepResourceId = StringInner.join("PRO/",resourceId, "/", wrkCtrCd, "/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
+                                                                String stepResourceId = StringInner.join("PRO/", resourceId, "/", wrkCtrCd, "/", String.valueOf(Long.parseLong(mfgOrdrNum)), "/", operNum);
 
                                                                 dataRaw.put("stepResourceId", stepResourceId);
                                                                 dataRaw.put("machineId", machineId);

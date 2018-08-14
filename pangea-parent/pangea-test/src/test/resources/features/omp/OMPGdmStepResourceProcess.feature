@@ -69,7 +69,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | N         | 50019354 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150519  |        |        | 20071226 | 20170630 | EQUIPE | 2.0     |
       | CONS_LATAM | N         | 50019355 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20171004 | EQUIPE | 2.0     |
       | CONS_LATAM | N         | 50019356 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE |         |
-      | CONS_LATAM | N         | 50019357 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
+      | CONS_LATAM | N         | 50019357 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2,0     |
       | CONS_LATAM | N         | 50019358 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
       | CONS_LATAM | N         | 50019359 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
     And I wait "/edm/mfg_rtg_parm" Async Queue complete
@@ -134,12 +134,6 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | 10001459 | 1       |        |       | BR         | 001       | SAN-R+D9 | BR12   |
     And I wait "/edm/capy_hdr" Async Queue complete
 
-#    When I import "/plan/cns_plant_attr" by keyFields "sourceSystem,localPlant"
-#      | sourceSystem | localPlant | localPlantName      | localPlanningRelevant | locationAttribute1Desc | locationAttribute1Value | locationAttribute2Desc | locationAttribute2Value | planLocTypeDesc              | planLocTypeId | plant | plantType     |
-#      | CONS_LATAM   | BR11       | Campos - Indus      |                       | Country                | Brazil                  | Volume                 | High                    | Internal Manufacturing Plant | IM            | BR59  | Manufacturing |
-#      | CONS_LATAM   | BR12       | Campos - Indus plan | X                     | Country                | Brazil                  | Volume                 | High                    | Internal Manufacturing Plant | IM            | BR59  | Manufacturing |
-#    And I wait "/plan/cns_plant_attr" Async Queue complete
-
     When I import "/project_one/t430" by keyFields "mandt,steus"
       | mandt | steus | term |
       | 120   | PP01  | X    |
@@ -199,10 +193,8 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
     Then I check file data for filename "GDMStepResource_process.tsv" by keyFields "stepResourceId"
 #    Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
       | stepResourceId                                     | active | activeOPRERP | activeSOPERP | machineId                | minQuantity | operationId      | quantity | resourceId               | stepResourceType |
-      | PRO/CONS_LATAM_BR12/SAN-R+D6/SAN-W+D6/1647956/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D6 | 0           | PRO/1647956/0010 | 0        | CONS_LATAM_BR12/SAN-R+D6 | production       |
-      | PRO/CONS_LATAM_BR12/SAN-R+D7/SAN-W+D7/1647957/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D7 | 2.0         | PRO/1647957/0010 | 0        | CONS_LATAM_BR12/SAN-R+D7 | production       |
-#      | PRO/CONS_LATAM_BR12//SAN-W+D5/1647955/0010         | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D5 | 2.0         | PRO/1647955/0010 | 0        |                          | production       |
-#      | PRO/CONS_LATAM_BR12//SAN-W+D9/1647959/0010         | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D9 | 2.0         | PRO/1647959/0010 | 0        |                          | production       |
+      | PRO/CONS_LATAM_BR12/SAN-R+D6/SAN-W+D6/1647956/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D6 | 0.000       | PRO/1647956/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D6 | production       |
+      | PRO/CONS_LATAM_BR12/SAN-R+D7/SAN-W+D7/1647957/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D7 | 2.000       | PRO/1647957/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D7 | production       |
 
   @Scenario2
   Scenario:delete Test Data

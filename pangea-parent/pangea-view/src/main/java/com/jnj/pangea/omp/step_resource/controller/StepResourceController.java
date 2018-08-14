@@ -202,7 +202,7 @@ public class StepResourceController implements IEventProcessor {
 											builder.put("active", "YES");
 											builder.put("activeOPRERP", "YES");
 											builder.put("activeSOPERP", "NO");
-											builder.put("quantity", "0");
+											builder.put("quantity", "0.000");
 											builder.put("stepResourceType",
 													"production");
 
@@ -235,12 +235,20 @@ public class StepResourceController implements IEventProcessor {
 													delInd = StringInner
 															.getString(mapT7,
 																	"delInd");
-													if (mapT7 == null) {
-														charVal = "";
-													} else if (delInd
-															.equals("X")) {
-														charVal = "";
+													if (delInd.equals("X")) {
+														charVal = "0.000";
+													} else {
+														if (StringUtils
+																.isNotBlank(charVal)) {
+															charVal = StepResourceHook
+																	.formatNum(charVal);
+														} else {
+															charVal = "0.000";
+														}
 													}
+												}
+												if (mapT7 == null) {
+													charVal = "0.000";
 												}
 											}
 

@@ -10,11 +10,24 @@ import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 
 public class StepResourceHook {
+    public static String formatNum(String charVal){
+        String retStr = "0.000";
+        DecimalFormat df = new DecimalFormat("0.000");
+        if(StringUtils.isNotBlank(charVal)){
+            try{
+                retStr = df.format(Double.parseDouble(charVal.replaceAll(",",".")));
+            }catch (NumberFormatException ne){
+                LogUtil.getCoreLog().error(ne.getMessage());
+            }
+        }
+        return retStr;
+    }
     public static boolean filterraw(RawDataValue raw) {
         if (raw == null) {
             LogUtil.getCoreLog().info(" raw is null>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");

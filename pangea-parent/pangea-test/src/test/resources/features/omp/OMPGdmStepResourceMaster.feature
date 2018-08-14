@@ -45,12 +45,12 @@ Feature:GDMStepResourceMaster AEAZ-9092
     And I wait "/edm/matl_prod_versn" Async Queue complete
     Given I import "/edm/mfg_rtg_parm" by keyFields "srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr"
       | srcSysCd   | rtgTypeCd | rtgGrpCd | rtgNodeNum | intrnlSubCalcNum | intrnlPrcsInstrNum | intrnlPrcsInstrCharValNum | mfgParmVersCntrNbr | vldFromDt | delInd | chgNum | crtDttm  | chgDttm  | charCd | charVal |
-      | CONS_LATAM | N         | 50019342 | 00000001   | 00000001         |                    | 00000002                  | 00000002           | 20150519  |        |        | 20071226 | 20170630 | EQUIPE | 80.1    |
-      | CONS_LATAM | N         | 50019343 | 00000002   | 00000002         |                    | 00000023                  | 00000023           | 20150713  |        |        | 20130412 | 20171004 | EQUIPE | 78.0    |
-      | CONS_LATAM | N         | 50019343 | 00000003   | 00000003         |                    | 00000044                  | 00000044           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 76.1    |
+      | CONS_LATAM | N         | 50019342 | 00000001   | 00000001         |                    | 00000002                  | 00000002           | 20150519  |        |        | 20071226 | 20170630 | EQUIPE | 2.0     |
+      | CONS_LATAM | N         | 50019343 | 00000002   | 00000002         |                    | 00000023                  | 00000023           | 20150713  |        |        | 20130412 | 20171004 | EQUIPE | 2.0     |
+      | CONS_LATAM | N         | 50019343 | 00000003   | 00000003         |                    | 00000044                  | 00000044           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
       | CONS_LATAM | N         | 50019343 | 00000004   | 00000004         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE |         |
-      | CONS_LATAM | N         | 50019343 | 00000005   | 00000005         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 66.1    |
-      | CONS_LATAM | N         | 50019343 | 00000006   | 00000006         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 66.1    |
+      | CONS_LATAM | N         | 50019343 | 00000005   | 00000005         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
+      | CONS_LATAM | N         | 50019343 | 00000006   | 00000006         |                    | 00000002                  | 00000002           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2,0     |
     And I wait "/edm/mfg_rtg_parm" Async Queue complete
 
     Given I import "/edm/wrk_ctr" by keyFields "srcSysCd,wrkCtrTypeCd,wrkCtrNum,vldFromDt,vldToDt,wrkCtrCd,plntCd,wrkCtrCatCd,delInd,wrkCtrUsgCd,wrkCtrLocCd,respPrsnNum,wrkCtrActvCd,lockInd,schdlngInd,setupTypeCd,oprCd,setupFrmlCd,runFrmlCd,teardownFrmlCd,capyNum,locGrpCd,machTypeCd,plnrGrpCd,othFrmlCd,suplAreaCd,slocCd,mixingInd,wrkCtrDesc"
@@ -111,4 +111,4 @@ Feature:GDMStepResourceMaster AEAZ-9092
     Then I check file data for filename "GDMStepResource_master.tsv" by keyFields "stepResourceId"
 #    Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
       | resourceId                | machineId                | quantity | minQuantity | stepResourceId                                     | active | operationId                     | stepResourceType | activeOPRERP | activeSOPERP |
-      | CONS_LATAM_BR11/SAN-R+D60 | CONS_LATAM_BR12/SAN-W+D1 | 0        | 66.1        | CONS_LATAM_BR11/SAN-R+D60/SAN-W+D1/V006/69349/0010 | YES    | V006/69349/CONS_LATAM_BR12/0010 | production       | YES          | NO           |
+      | CONS_LATAM_BR11/SAN-R+D60 | CONS_LATAM_BR12/SAN-W+D1 | 0.000    | 2.000       | CONS_LATAM_BR11/SAN-R+D60/SAN-W+D1/V006/69349/0010 | YES    | V006/69349/CONS_LATAM_BR12/0010 | production       | YES          | NO           |

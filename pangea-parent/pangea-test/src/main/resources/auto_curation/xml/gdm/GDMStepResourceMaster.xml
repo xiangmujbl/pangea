@@ -162,13 +162,21 @@
                     <ref method="T7"
                          parameter="String.valueOf(map.get(&quot;srcSysCd&quot;)),String.valueOf(retList1Map.get(&quot;rtngTypCd&quot;)),String.valueOf(retList1Map.get(&quot;rtngGrpCd&quot;)),String.valueOf(retList2Map.get(&quot;rtngNdeNum&quot;))"
                          value="charVal,delInd" var="mapT7" resultType="Map">
-                        <if test="mapT7==null">
-                            <set name="charVal" value="''"/>
+                        <if test="delInd.equals('X')">
+                            <set name="charVal" value="'0.000'"/>
                         </if>
-                        <elseIf test="delInd.equals('X')">
-                            <set name="charVal" value="''"/>
-                        </elseIf>
+                        <else>
+                            <if test="StringUtils.isNotBlank(charVal)">
+                                <set name="charVal" value="StepResourceHook.formatNum(charVal)"/>
+                            </if>
+                            <else>
+                                <set name="charVal" value="'0.000'"/>
+                            </else>
+                        </else>
                     </ref>
+                    <if test="mapT7==null">
+                        <set name="charVal" value="'0.000'"/>
+                    </if>
                 </if>
             </column>
             <column name="resourceId">
@@ -191,7 +199,7 @@
             <column name="active" hardCode="'YES'"/>
             <column name="activeOPRERP" hardCode="'YES'"/>
             <column name="activeSOPERP" hardCode="'NO'"/>
-            <column name="quantity" hardCode="'0'"/>
+            <column name="quantity" hardCode="'0.000'"/>
             <column name="stepResourceType" hardCode="'production'"/>
         </columns>
     </viewRegion>
