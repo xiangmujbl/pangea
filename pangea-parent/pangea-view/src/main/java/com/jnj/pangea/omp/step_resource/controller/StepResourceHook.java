@@ -188,21 +188,27 @@ public class StepResourceHook {
         return str;
     }
 
-
-    public static String currentDate() {
+    public static String currentDate()
+    {
         Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);//获取年份
-        int month = c.get(Calendar.MONTH) + 1;//获取月份
+        String monthS = "";String dayS = "";
+        int year = c.get(1);
+        int month = c.get(2) + 1;
         if (month < 10) {
-            month = Integer.valueOf("0" + month);
+            monthS = "0" + month;
+        } else {
+            monthS = String.valueOf(month);
         }
-        int day = c.get(Calendar.DATE);//获取日
+        int day = c.get(5);
         if (day < 10) {
-            day = Integer.valueOf("0" + day);
+            dayS = "0" + day;
+        } else {
+            dayS = String.valueOf(day);
         }
-        String str = "" + year + month + day;
+        String str = "" + year + monthS + dayS;
         return str;
     }
+
 
     public static String C1(Map map1, Map map, Map map3) {
         String str = null;
