@@ -14,8 +14,9 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM  | 000001647955 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019355  | 01             | M        | 00034151 | 01        |              | 0000647955  | I0002                   |
       | CONS_LATAM  | 000001647956 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019356  | 01             | M        | 00034151 | 01        |              | 0000647956  | I0002                   |
       | CONS_LATAM  | 000001647957 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019357  | 01             | M        | 00034151 | 01        |              | 0000647957  | I0002,I0011,I0044       |
-      | CONS_LATAM  | 000001647958 | PP01         | BR12   | 20180613 | 20180613 | X      | 20180613 | 20180613  | 0078293328 | N         | 50019358  | 01             | M        | 00034151 | 01        |              | 0000647958  | I0002,I0011,I0044       |
+      | CONS_LATAM  | 000001647958 | PP01         | BR12   | 20180613 | 20180613 | X      | 20180613 | 20180613  | 0078293328 | N         | 50019358  | 01             | M        | 00034151 | 01        |              | 0000647958  | I0002,I0011,I0044,I0076 |
       | CONS_LATAM  | 000001647959 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019359  | 01             | M        | 00034151 | 01        |              | 0000647959  | I0002,I0011,I0044       |
+      | CONS_LATAM  | 000001647960 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019360  | 01             | M        | 00034151 | 01        |              | 0000647960  | I0002,I0011,I0044       |
     And I wait "/edm/mfg_order" Async Queue complete
 
     When I import "/edm/mfg_order_itm" by keyFields "srcSysCd,mfgOrdrNum,lnItmNbr"
@@ -30,6 +31,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | 000001647957 | 0001     |                 | 000000000000069357 |         | 2527   | 2523    | KI         | BR12   | V001         |
       | CONS_LATAM | 000001647958 | 0001     |                 | 000000000000069358 |         | 2527   | 2523    | KI         | BR12   | V001         |
       | CONS_LATAM | 000001647959 | 0001     |                 | 000000000000069359 |         | 2527   | 2523    | KI         | BR12   | V001         |
+      | CONS_LATAM | 000001647960 | 0001     |                 | 000000000000069360 |         | 2527   | 2523    | KI         | BR12   | V001         |
     And I wait "/edm/mfg_order_itm" Async Queue complete
 
     When I import "/edm/mfg_order_rtng" by keyFields "srcSysCd,ordrRtngNum,ordrRtngCtrNum"
@@ -44,6 +46,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | 0000647957  | 00000001       | 0010    | PP01   | 10001467  | Produzir |
       | CONS_LATAM | 0000647958  | 00000001       | 0010    | PP01   | 10001468  | Produzir |
       | CONS_LATAM | 0000647959  | 00000001       | 0010    | PP01   | 10001469  | Produzir |
+      | CONS_LATAM | 0000647960  | 00000001       | 0010    | PP01   | 10001469  | Produzir |
     And I wait "/edm/mfg_order_rtng" Async Queue complete
 
     When I import "/edm/matl_prod_versn" by keyFields "srcSysCd,matlNum,plntCd,prdntVrsnNum"
@@ -58,6 +61,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | 000000000000069357 | BR12   | V001         | 20150519  | 99991231 | 01        | 1        | N         | 50019357  | 01             |
       | CONS_LATAM | 000000000000069358 | BR12   | V001         | 20150519  | 99991231 | 01        | 1        | N         | 50019358  | 01             |
       | CONS_LATAM | 000000000000069359 | BR12   | V001         | 20150519  | 99991231 | 01        | 1        | N         | 50019359  | 01             |
+      | CONS_LATAM | 000000000000069360 | BR12   | V001         | 20150519  | 99991231 | 01        | 1        | N         | 50019360  | 01             |
     And I wait "/edm/matl_prod_versn" Async Queue complete
 
     When I import "/edm/mfg_rtg_parm" by keyFields "srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr"
@@ -72,6 +76,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | N         | 50019357 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2,0     |
       | CONS_LATAM | N         | 50019358 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
       | CONS_LATAM | N         | 50019359 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
+      | CONS_LATAM | N         | 50019360 | 00000001   | 00000001         |                    | 00000001                  | 00000001           | 20150713  |        |        | 20130412 | 20170622 | EQUIPE | 2.0     |
     And I wait "/edm/mfg_rtg_parm" Async Queue complete
 
     When I import "/edm/wrk_ctr" by keyFields "srcSysCd,wrkCtrTypeCd,wrkCtrNum"
@@ -156,6 +161,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0012          | E        |          |
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0045          | E        |          |
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0046          | E        |          |
+      | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0076          | E        |          |
     And I wait "/plan/cns_plan_parameter" Async Queue complete
 
     When I import "/edm/mfg_rtng_itm" by keyFields "srcSysCd,rtngTypCd,rtngGrpCd,rtngItmNum,rtngItmVersnCntrNbr"
@@ -170,6 +176,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | N         | 50019357  | 00000001   | 00000001            | 20170622  |        |        | 20170622 |         |               | 0010    | PP01   | 10001467  | BR12   | Produzir | EA      | 1000  | 99991231       |
       | CONS_LATAM | N         | 50019358  | 00000001   | 00000001            | 20170622  |        |        | 20170622 |         |               | 0010    | PP01   | 10001468  | BR12   | Produzir | EA      | 1000  | 99991231       |
       | CONS_LATAM | N         | 50019359  | 00000001   | 00000001            | 20170622  |        |        | 20170622 |         |               | 0010    | PP01   | 10001469  | BR12   | Produzir | EA      | 1000  | 99991231       |
+      | CONS_LATAM | N         | 50019360  | 00000001   | 00000001            | 20170622  |        |        | 20170622 |         |               | 0010    | PP01   | 10001469  | BR12   | Produzir | EA      | 1000  | 99991231       |
     And I wait "/edm/mfg_rtng_itm" Async Queue complete
 
     When I import "/edm/mfg_rtng_itm_nde" by keyFields "srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNbr,rtngSqncNum,rtngNdeNum,rtngNdeVrsnCntrNbr"
@@ -184,10 +191,26 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM | N         | 50019357  | 01             | 000000      | 00000001   | 00000001           | 20170622      |        |        | 20170622   |         |
       | CONS_LATAM | N         | 50019358  | 01             | 000000      | 00000001   | 00000001           | 20170622      |        |        | 20170622   |         |
       | CONS_LATAM | N         | 50019359  | 01             | 000000      | 00000001   | 00000001           | 20170622      |        |        | 20170622   |         |
+      | CONS_LATAM | N         | 50019360  | 01             | 000000      | 00000001   | 00000001           | 20170622      |        |        | 20170622   |         |
     And I wait "/edm/mfg_rtng_itm_nde" Async Queue complete
 
+    When I import "/plan/cns_material_plan_status" by keyFields "sourceSystem,localMaterialNumber,localPlant"
+      | sourceSystem | localMaterialNumber | localPlant | spRelevant | noPlanRelevant |
+      | CONS_LATAM   | 000000000000069350  | BR11       | X          |                |
+      | CONS_LATAM   | 000000000000069351  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069352  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069353  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069354  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069355  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069356  | BR12       |            | X              |
+      | CONS_LATAM   | 000000000000069357  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069358  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069359  | BR12       | X          |                |
+      | CONS_LATAM   | 000000000000069360  | BR12       |            |                |
+    And I wait "/plan/cns_material_plan_status" Async Queue complete
+
     When I submit task with xml file "xml/omp/OMPGdmStepResourceProcess.xml" and execute file "jar/pangea-view.jar"
-    And wait 5000 millisecond
+    And I wait "/omp/gdm_step_resource" Async Queue complete
 
     Then A file is found on sink application with name "GDMStepResource_process.tsv"
     Then I check file data for filename "GDMStepResource_process.tsv" by keyFields "stepResourceId"
@@ -195,6 +218,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | stepResourceId                                     | active | activeOPRERP | activeSOPERP | machineId                | minQuantity | operationId      | quantity | resourceId               | stepResourceType |
       | PRO/CONS_LATAM_BR12/SAN-R+D6/SAN-W+D6/1647956/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D6 | 0.000       | PRO/1647956/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D6 | production       |
       | PRO/CONS_LATAM_BR12/SAN-R+D7/SAN-W+D7/1647957/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D7 | 2.000       | PRO/1647957/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D7 | production       |
+      | PRO/CONS_LATAM_BR12/SAN-R+D2/SAN-W+D2/1647952/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D2 | 2.000       | PRO/1647952/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D2 | production       |
 
   @Scenario2
   Scenario:delete Test Data
