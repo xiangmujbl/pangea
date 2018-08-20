@@ -202,7 +202,7 @@ public class StepResourceController implements IEventProcessor {
 											builder.put("active", "YES");
 											builder.put("activeOPRERP", "YES");
 											builder.put("activeSOPERP", "NO");
-											builder.put("quantity", "0");
+											builder.put("quantity", "0.000");
 											builder.put("stepResourceType",
 													"production");
 
@@ -219,31 +219,41 @@ public class StepResourceController implements IEventProcessor {
 															.valueOf(retList1Map
 																	.get("rtngGrpCd")) != null) {
 
-									Map mapT7 = T7(String.valueOf(map
-											.get("srcSysCd")), String
-											.valueOf(retList1Map
-													.get("rtngTypCd")), String
-											.valueOf(retList1Map
-													.get("rtngGrpCd")), String
-											.valueOf(retList2Map
-													.get("rtngNdeNum")));
-									if (mapT7 != null) {
-										charVal = String.valueOf(mapT7
-												.get("charVal"));
-										delInd = String.valueOf(mapT7
-												.get("delInd"));
-										if (StringInner.isStringEmpty(charVal)) {
-											charVal = "0";
-										}
-									}
-									if (mapT7 == null) {
-										charVal = "0";
-									} else if (delInd.equals("X")) {
-										charVal = "0";
-									}
-								}
+												Map mapT7 = T7(
+														String.valueOf(map
+																.get("srcSysCd")),
+														String.valueOf(retList1Map
+																.get("rtngTypCd")),
+														String.valueOf(retList1Map
+																.get("rtngGrpCd")),
+														String.valueOf(retList2Map
+																.get("rtngNdeNum")));
+												if (mapT7 != null) {
+													charVal = StringInner
+															.getString(mapT7,
+																	"charVal");
+													delInd = StringInner
+															.getString(mapT7,
+																	"delInd");
+													if (delInd.equals("X")) {
+														charVal = "0.000";
+													} else {
+														if (StringUtils
+																.isNotBlank(charVal)) {
+															charVal = StepResourceHook
+																	.formatNum(charVal);
+														} else {
+															charVal = "0.000";
+														}
+													}
+												}
+												if (mapT7 == null) {
+													charVal = "0.000";
+												}
+											}
 
-								builder.put("minQuantity", charVal);
+											minQuantity = charVal;
+											builder.put("minQuantity", charVal);
 
 											String resourceId = null;
 

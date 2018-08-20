@@ -9,11 +9,14 @@
           <relation path="/edm/matl_prod_versn" isPrimaryKey="false">
             <expression>srcSysCd=/edm/mfg_order_itm.srcSysCd,matlNum=/edm/mfg_order_itm.matlNum,plntCd=/edm/mfg_order_itm.plntCd,prdntVrsnNum=/edm/mfg_order_itm.prdntVrsnNum</expression>
           </relation>
-          <relation path="/plan/cns_material_plan_status" isPrimaryKey="false">
-          <filter>spRelevant:X OR noPlanRelevant:X</filter>
+          <relation path="/plan/cns_material_plan_status" isPrimaryKey="false" lucene="true">
             <expression>sourceSystem=/edm/mfg_order_itm.srcSysCd,localMaterialNumber=/edm/mfg_order_itm.matlNum,localPlant=/edm/mfg_order_itm.plntCd</expression>
+            <filter>spRelevant:X OR noPlanRelevant:X</filter>
           </relation>
         </relations>
+      </region>
+      <region path="/plan/cns_material_plan_status">
+        <columns>sourceSystem,localMaterialNumber,localPlant,spRelevant,noPlanRelevant</columns>
       </region>
       <region path="/edm/matl_prod_versn">
         <columns>srcSysCd,matlNum,plntCd,prdntVrsnNum,rtngTypCd,rtngGrpCd,rtngGrpCntrNum</columns>
@@ -98,9 +101,6 @@
       </region>
       <region path="/edm/capy_hdr">
         <columns>srcSysCd,capyNum,capyCatCd,capyNm,plntCd</columns>
-      </region>
-      <region path="/plan/cns_material_plan_status">
-        <columns>sourceSystem,localMaterialNumber,localPlant,noPlanRelevant,spRelevant</columns>
       </region>
       <region path="/omp/gdm_step_resource">
         <columns>stepResourceId,active,activeOPRERP,activeSOPERP,machineId,minQuantity,operationId,quantity,resourceId,stepResourceType</columns>
