@@ -7,10 +7,12 @@ import com.jnj.inner.StringInner;
 import com.jnj.pangea.common.FailData;
 import com.jnj.pangea.common.ResultObject;
 import com.jnj.pangea.common.dao.impl.edm.*;
+import com.jnj.pangea.common.dao.impl.plan.PlanCnsMaterialPlanStatusDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlanParameterDaoImpl;
 import com.jnj.pangea.common.dao.impl.plan.PlanCnsPlantAttrDaoImpl;
 import com.jnj.pangea.common.dao.impl.project_one.ProjectOneT430DaoImpl;
 import com.jnj.pangea.common.entity.edm.*;
+import com.jnj.pangea.common.entity.plan.PlanCnsMaterialPlanStatusEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlanParameterEntity;
 import com.jnj.pangea.common.entity.plan.PlanCnsPlantAttrEntity;
 import com.jnj.pangea.common.entity.project_one.T430Entity;
@@ -44,11 +46,11 @@ public class OMPGdmStepResourceProcessService {
     private EDMWrkCtrDaoImpl edmWrkCtrDao = EDMWrkCtrDaoImpl.getInstance();
     private EDMWrkCtrCapyDaoImpl edmWrkCtrCapyDao = EDMWrkCtrCapyDaoImpl.getInstance();
     private EDMCapyHdrDaoImpl edmCapyHdrDao = EDMCapyHdrDaoImpl.getInstance();
+    private PlanCnsMaterialPlanStatusDaoImpl cnsMaterialPlanStatusDao = PlanCnsMaterialPlanStatusDaoImpl.getInstance();
 
     public boolean buildView(RawDataValue raw, List<RawDataBuilder> rawDataBuilderList, Map<String, RawDataBuilder> failMap) {
         Map map = raw.toMap();
         String sourceSysCd = map.get("sourceSysCd").toString();
-        String actRlseDt = map.get("actRlseDt").toString();
         String mfgOrdrSttsCd = map.get("mfgOrdrSttsCd").toString();
         String plntCd = map.get("plntCd").toString();
         String mfgOrdrNum = map.get("mfgOrdrNum").toString();
@@ -61,14 +63,12 @@ public class OMPGdmStepResourceProcessService {
         String prodStr = "production";
 
         if (StringInner.isStringNotEmpty(sourceSysCd) && StringInner.isStringNotEmpty(plntCd)
-                && StringInner.isStringNotEmpty(actRlseDt) && StringInner.isStringNotEmpty(mfgOrdrSttsCd)
+                 && StringInner.isStringNotEmpty(mfgOrdrSttsCd)
                 && StringInner.isStringNotEmpty(mfgOrdrTypCd)) {
 
             if (checkCnsPlanParameter4J1_1(sourceSysCd)
                     && checkCnsPlanParameter4J1_2(sourceSysCd, plntCd)
                     && checkCnsPlanParameter4J1_3(sourceSysCd, mfgOrdrTypCd)
-                    && checckCnsPlanParameter4J1_4(sourceSysCd, actRlseDt)
-                    && checkCnsPlanParameter4J1_51(sourceSysCd, mfgOrdrSttsCd)
                     && checkCnsPlanParameter4J1_52(sourceSysCd, mfgOrdrSttsCd)) {
                 if (StringInner.isStringNotEmpty(mfgOrdrNum) && StringInner.isStringNotEmpty(ordrRtngNum)) {
                     EDMMfgOrderItmEntity mfgOrderItmEtt = joinMfgOrderItm(sourceSysCd, mfgOrdrNum, plntCd);
@@ -79,7 +79,8 @@ public class OMPGdmStepResourceProcessService {
                         plntCd = mfgOrderItmEtt.getPlntCd();
                         if (StringInner.isStringNotEmpty(prdntVrsnNum) && StringInner.isStringNotEmpty(matlNum)) {
                             EDMMatlProdVersnEntity matlProdVersnEtt = joinMaltProdVersn(srcSysCd, matlNum, plntCd, prdntVrsnNum);
-                            if (matlProdVersnEtt != null) {
+                            PlanCnsMaterialPlanStatusEntity cnsMaterialPlanStatus = cnsMaterialPlanStatusDao.getCnsMaterialPlanStatusDaoEntity(srcSysCd, matlNum, plntCd);
+                            if (matlProdVersnEtt != null && cnsMaterialPlanStatus !=null) {
                                 String minQuantity = "0";
                                 srcSysCd = matlProdVersnEtt.getSrcSysCd();
                                 String rtngTypCd = matlProdVersnEtt.getRtngTypCd();
