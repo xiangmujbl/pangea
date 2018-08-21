@@ -72,7 +72,7 @@ public class OMPGdmStepResourceProcessService {
                     && checkCnsPlanParameter4J1_2(sourceSysCd, plntCd)
                     && checkCnsPlanParameter4J1_3(sourceSysCd, mfgOrdrTypCd)
                     //&& checckCnsPlanParameter4J1_4(sourceSysCd, actRlseDt) //delete dt filter
-                    && checkCnsPlanParameter4J1_51(sourceSysCd, mfgOrdrSttsCd)
+                    //&& checkCnsPlanParameter4J1_51(sourceSysCd, mfgOrdrSttsCd) //delete contains filter
                     && checkCnsPlanParameter4J1_52(sourceSysCd, mfgOrdrSttsCd)) {
                 if (StringInner.isStringNotEmpty(mfgOrdrNum) && StringInner.isStringNotEmpty(ordrRtngNum)) {
                     EDMMfgOrderItmEntity mfgOrderItmEtt = joinMfgOrderItm(sourceSysCd, mfgOrdrNum, plntCd);
