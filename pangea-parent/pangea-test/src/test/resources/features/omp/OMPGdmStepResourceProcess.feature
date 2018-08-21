@@ -8,8 +8,8 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | sourceSysCd | mfgOrdrNum   | mfgOrdrTypCd | plntCd | crtdDttm | chgDttm  | delInd | strtDt   | actRlseDt | rsrvtnNum  | rtngTypCd | rtngGrpCd | rtngGrpCntrNum | bomCatCd | bomNum   | bomAltNum | mrpCntrllrCd | ordrRtngNum | mfgOrdrSttsCd           |
       | CONS_LATAM  | 000001647950 | PP01         | BR11   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019350  | 01             | M        | 00034151 | 01        |              | 0000647950  | I0002                   |
       | CONS_LATAM  | 000001647951 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019351  | 01             | M        | 00034151 | 01        |              | 0000647951  | I0002                   |
-      | CONS_LATAM  | 000001647952 | PP01         | BR12   | 20150613 | 20150613 |        | 20150613 | 20150613  | 0078293328 | N         | 50019352  | 01             | M        | 00034151 | 01        |              | 0000647952  | I0002                   |
-      | CONS_LATAM  | 000001647953 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019353  | 01             | M        | 00034151 | 01        |              | 0000647953  | I0002,I0012,I0045,I0046 |
+      | CONS_LATAM  | 000001647952 | PP01         | BR12   | 20150613 | 20150613 |        | 20150613 | 20150613  | 0078293328 | N         | 50019352  | 01             | M        | 00034151 | 01        |              | 0000647952  | I0002,I0045             |
+      | CONS_LATAM  | 000001647953 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019353  | 01             | M        | 00034151 | 01        |              | 0000647953  | I0002,I0012,I0046       |
       | CONS_LATAM  | 000001647954 | PP01         | BR11   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019354  | 01             | M        | 00034151 | 01        |              | 0000647954  | I0002                   |
       | CONS_LATAM  | 000001647955 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019355  | 01             | M        | 00034151 | 01        |              | 0000647955  | I0002                   |
       | CONS_LATAM  | 000001647956 | PP01         | BR12   | 20180613 | 20180613 |        | 20180613 | 20180613  | 0078293328 | N         | 50019356  | 01             | M        | 00034151 | 01        |              | 0000647956  | I0002                   |
@@ -154,9 +154,10 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERTYPE  | PP01           | I        |          |
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERTYPE  | PP02           | I        |          |
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERTYPE  | PP03           | I        |          |
-      | CONS_LATAM   | PP         | SEND_TO_OMP | RELDAYS    | 365            | I        |          |
-      | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0001          | I        |          |
-      | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0002          | I        |          |
+      | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERTYPE  | PP04           | I        |          |
+#      | CONS_LATAM   | PP         | SEND_TO_OMP | RELDAYS    | 365            | I        |          |
+#      | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0001          | I        |          |
+#      | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0002          | I        |          |
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0009          | E        |          |
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0012          | E        |          |
       | CONS_LATAM   | PP         | SEND_TO_OMP | ORDERSTAT  | I0045          | E        |          |
@@ -218,7 +219,7 @@ Feature: OMPGdmStepResourceProcess AEAZ-9092
       | stepResourceId                                     | active | activeOPRERP | activeSOPERP | machineId                | minQuantity | operationId      | quantity | resourceId               | stepResourceType |
       | PRO/CONS_LATAM_BR12/SAN-R+D6/SAN-W+D6/1647956/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D6 | 0.000       | PRO/1647956/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D6 | production       |
       | PRO/CONS_LATAM_BR12/SAN-R+D7/SAN-W+D7/1647957/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D7 | 2.000       | PRO/1647957/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D7 | production       |
-      | PRO/CONS_LATAM_BR12/SAN-R+D2/SAN-W+D2/1647952/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D2 | 2.000       | PRO/1647952/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D2 | production       |
+#      | PRO/CONS_LATAM_BR12/SAN-R+D2/SAN-W+D2/1647952/0010 | YES    | YES          | NO           | CONS_LATAM_BR12/SAN-W+D2 | 2.000       | PRO/1647952/0010 | 0.000    | CONS_LATAM_BR12/SAN-R+D2 | production       |
 
   @Scenario2
   Scenario:delete Test Data

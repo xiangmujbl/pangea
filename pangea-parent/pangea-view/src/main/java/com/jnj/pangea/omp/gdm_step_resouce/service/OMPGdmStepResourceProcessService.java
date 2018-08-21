@@ -52,7 +52,6 @@ public class OMPGdmStepResourceProcessService {
     public boolean buildView(RawDataValue raw, List<RawDataBuilder> rawDataBuilderList, Map<String, RawDataBuilder> failMap) {
         Map map = raw.toMap();
         String sourceSysCd = map.get("sourceSysCd").toString();
-        String actRlseDt = map.get("actRlseDt").toString();
         String mfgOrdrSttsCd = map.get("mfgOrdrSttsCd").toString();
         String plntCd = map.get("plntCd").toString();
         String mfgOrdrNum = map.get("mfgOrdrNum").toString();
@@ -65,14 +64,14 @@ public class OMPGdmStepResourceProcessService {
         String prodStr = "production";
 
         if (StringInner.isStringNotEmpty(sourceSysCd) && StringInner.isStringNotEmpty(plntCd)
-                && StringInner.isStringNotEmpty(actRlseDt) && StringInner.isStringNotEmpty(mfgOrdrSttsCd)
+                 && StringInner.isStringNotEmpty(mfgOrdrSttsCd)
                 && StringInner.isStringNotEmpty(mfgOrdrTypCd)) {
 
             if (checkCnsPlanParameter4J1_1(sourceSysCd)
                     && checkCnsPlanParameter4J1_2(sourceSysCd, plntCd)
                     && checkCnsPlanParameter4J1_3(sourceSysCd, mfgOrdrTypCd)
                     //&& checckCnsPlanParameter4J1_4(sourceSysCd, actRlseDt) //delete dt filter
-                    && checkCnsPlanParameter4J1_51(sourceSysCd, mfgOrdrSttsCd)
+                    //&& checkCnsPlanParameter4J1_51(sourceSysCd, mfgOrdrSttsCd) //delete contains filter
                     && checkCnsPlanParameter4J1_52(sourceSysCd, mfgOrdrSttsCd)) {
                 if (StringInner.isStringNotEmpty(mfgOrdrNum) && StringInner.isStringNotEmpty(ordrRtngNum)) {
                     EDMMfgOrderItmEntity mfgOrderItmEtt = joinMfgOrderItm(sourceSysCd, mfgOrdrNum, plntCd);
