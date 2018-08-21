@@ -79,6 +79,11 @@
                     <expression>
                     </expression>
                 </region>
+                <region path="/project_one/t430" isPrimaryKey="false" lucene="true" >
+                    <columns>mandt,steus,term</columns>
+                    <expression>
+                    </expression>
+                </region>
             </relations>
         </region>
     </regions>
