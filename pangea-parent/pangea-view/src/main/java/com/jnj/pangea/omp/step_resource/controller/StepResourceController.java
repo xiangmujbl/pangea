@@ -200,126 +200,169 @@ public class StepResourceController implements IEventProcessor {
 											steus = StringInner.getString(
 													retList3Map, "steus");
 
-											RawDataBuilder builder = new RawDataBuilder();
+											List<Map.Entry<String, String>> retList8 = null;
+											if (StringInner
+													.isStringNotEmpty(operCd)) {
+												retList8 = X8(operCd);
+												if (retList8 != null
+														&& retList8.size() > 0) {
+													for (Map.Entry<String, String> retList8Entry : retList8) {
+														Map<String, Object> retList8Map = JsonObject
+																.append(retList8Entry
+																		.getValue())
+																.toMap();
 
-											builder.put("active", "YES");
-											builder.put("activeOPRERP", "YES");
-											builder.put("activeSOPERP", "NO");
-											builder.put("quantity", "0.000");
-											builder.put("stepResourceType",
-													"production");
+														RawDataBuilder builder = new RawDataBuilder();
 
-											String minQuantity = null;
+														builder.put("active",
+																"YES");
+														builder.put(
+																"activeOPRERP",
+																"YES");
+														builder.put(
+																"activeSOPERP",
+																"NO");
+														builder.put("quantity",
+																"0.000");
+														builder.put(
+																"stepResourceType",
+																"production");
 
-											if (String.valueOf(retList2Map
-													.get("rtngNdeNum")) != null
-													&& String
-															.valueOf(retList1Map
-																	.get("rtngTypCd")) != null
-													&& String.valueOf(map
-															.get("srcSysCd")) != null
-													&& String
-															.valueOf(retList1Map
-																	.get("rtngGrpCd")) != null) {
+														String minQuantity = null;
 
-												Map mapT7 = T7(
-														String.valueOf(map
-																.get("srcSysCd")),
-														String.valueOf(retList1Map
-																.get("rtngTypCd")),
-														String.valueOf(retList1Map
-																.get("rtngGrpCd")),
-														String.valueOf(retList2Map
-																.get("rtngNdeNum")));
-												if (mapT7 != null) {
-													charVal = StringInner
-															.getString(mapT7,
-																	"charVal");
-													delInd = StringInner
-															.getString(mapT7,
-																	"delInd");
-													if (delInd.equals("X")) {
-														charVal = "0.000";
-													} else {
-														if (StringUtils
-																.isNotBlank(charVal)) {
-															charVal = StepResourceHook
-																	.formatNum(charVal);
-														} else {
-															charVal = "0.000";
+														if (String
+																.valueOf(retList2Map
+																		.get("rtngNdeNum")) != null
+																&& String
+																		.valueOf(retList1Map
+																				.get("rtngTypCd")) != null
+																&& String
+																		.valueOf(map
+																				.get("srcSysCd")) != null
+																&& String
+																		.valueOf(retList1Map
+																				.get("rtngGrpCd")) != null) {
+
+															Map mapT7 = T7(
+																	String.valueOf(map
+																			.get("srcSysCd")),
+																	String.valueOf(retList1Map
+																			.get("rtngTypCd")),
+																	String.valueOf(retList1Map
+																			.get("rtngGrpCd")),
+																	String.valueOf(retList2Map
+																			.get("rtngNdeNum")));
+															if (mapT7 != null) {
+																charVal = StringInner
+																		.getString(
+																				mapT7,
+																				"charVal");
+																delInd = StringInner
+																		.getString(
+																				mapT7,
+																				"delInd");
+																if (delInd
+																		.equals("X")) {
+																	charVal = "0.000";
+																} else {
+																	if (StringUtils
+																			.isNotBlank(charVal)) {
+																		charVal = StepResourceHook
+																				.formatNum(charVal);
+																	} else {
+																		charVal = "0.000";
+																	}
+																}
+															}
+															if (mapT7 == null) {
+																charVal = "0.000";
+															}
 														}
+
+														minQuantity = charVal;
+														builder.put(
+																"minQuantity",
+																charVal);
+
+														String resourceId = null;
+
+														Map X4Map = X4(
+																srcSysCd,
+																wrkCntrCd);
+														if (X4Map != null) {
+															srcSysCd = StringInner
+																	.getString(
+																			X4Map,
+																			"srcSysCd");
+															wrkCtrNum = StringInner
+																	.getString(
+																			X4Map,
+																			"wrkCtrNum");
+														}
+														resourceId = StepResourceHook
+																.setResourceIdT5(X4Map);
+														if ("".equals(resourceId)
+																|| resourceId == null
+																|| "null"
+																		.equals(resourceId)
+																|| "-".equals(resourceId)) {
+															continue;
+														}
+
+														builder.put(
+																"resourceId",
+																resourceId);
+
+														String stepResourceId = null;
+
+														stepResourceId = StepResourceHook
+																.StepResourceId(
+																		map,
+																		retList1Map,
+																		retList3Map,
+																		X4Map,
+																		resourceId);
+
+														if (resourceId == null) {
+
+															continue;
+														}
+
+														builder.put(
+																"stepResourceId",
+																stepResourceId);
+
+														String operationId = null;
+
+														operationId = StepResourceHook
+																.C1(retList1Map,
+																		map,
+																		retList3Map);
+
+														builder.put(
+																"operationId",
+																operationId);
+
+														String machineId = null;
+
+														machineId = StepResourceHook
+																.setT3MachineId(X4Map);
+
+														if ("".equals(machineId)) {
+
+															continue;
+														}
+
+														builder.put(
+																"machineId",
+																machineId);
+
+														rawDataBuilderList
+																.add(builder);
 													}
 												}
-												if (mapT7 == null) {
-													charVal = "0.000";
-												}
 											}
 
-											minQuantity = charVal;
-											builder.put("minQuantity", charVal);
-
-											String resourceId = null;
-
-											Map X4Map = X4(srcSysCd, wrkCntrCd);
-											if (X4Map != null) {
-												srcSysCd = StringInner
-														.getString(X4Map,
-																"srcSysCd");
-												wrkCtrNum = StringInner
-														.getString(X4Map,
-																"wrkCtrNum");
-											}
-											resourceId = StepResourceHook
-													.setResourceIdT5(X4Map);
-											if ("".equals(resourceId)
-													|| resourceId == null
-													|| "null"
-															.equals(resourceId)
-													|| "-".equals(resourceId)) {
-												continue;
-											}
-
-											builder.put("resourceId",
-													resourceId);
-
-											String stepResourceId = null;
-
-											stepResourceId = StepResourceHook
-													.StepResourceId(map,
-															retList1Map,
-															retList3Map, X4Map,
-															resourceId);
-
-											if (resourceId == null) {
-
-												continue;
-											}
-
-											builder.put("stepResourceId",
-													stepResourceId);
-
-											String operationId = null;
-
-											operationId = StepResourceHook.C1(
-													retList1Map, map,
-													retList3Map);
-
-											builder.put("operationId",
-													operationId);
-
-											String machineId = null;
-
-											machineId = StepResourceHook
-													.setT3MachineId(X4Map);
-
-											if ("".equals(machineId)) {
-
-												continue;
-											}
-
-											builder.put("machineId", machineId);
-
-											rawDataBuilderList.add(builder);
 										}
 									}
 								}
@@ -346,10 +389,10 @@ public class StepResourceController implements IEventProcessor {
 				rntgGrpCd);
 		ADFCriteria adfCriteria4 = QueryHelper.buildCriteria("rntgGrpCntrNbr")
 				.is(rntgGrpCntrNbr);
-		ADFCriteria groupCriteria23 = adfCriteria4.and(adfCriteria3)
+		ADFCriteria groupCriteria25 = adfCriteria4.and(adfCriteria3)
 				.and(adfCriteria2).and(adfCriteria1);
 
-		ADFCriteria adfCriteria = groupCriteria23;
+		ADFCriteria adfCriteria = groupCriteria25;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/matl_prod_versn", queryStr, -1);
@@ -372,10 +415,10 @@ public class StepResourceController implements IEventProcessor {
 				rtngTypCd);
 		ADFCriteria adfCriteria8 = QueryHelper.buildCriteria("rtngGrpCntrNbr")
 				.is(rtngGrpCntrNum);
-		ADFCriteria groupCriteria24 = adfCriteria8.and(adfCriteria7)
+		ADFCriteria groupCriteria26 = adfCriteria8.and(adfCriteria7)
 				.and(adfCriteria6).and(adfCriteria5);
 
-		ADFCriteria adfCriteria = groupCriteria24;
+		ADFCriteria adfCriteria = groupCriteria26;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/mfg_rtng_itm_nde", queryStr, -1);
@@ -398,10 +441,10 @@ public class StepResourceController implements IEventProcessor {
 				rtngGrpCd);
 		ADFCriteria adfCriteria12 = QueryHelper.buildCriteria("rtngItmNum").is(
 				rtngItmNum);
-		ADFCriteria groupCriteria25 = adfCriteria12.and(adfCriteria11)
+		ADFCriteria groupCriteria27 = adfCriteria12.and(adfCriteria11)
 				.and(adfCriteria10).and(adfCriteria9);
 
-		ADFCriteria adfCriteria = groupCriteria25;
+		ADFCriteria adfCriteria = groupCriteria27;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/mfg_rtng_itm", queryStr, -1);
@@ -419,9 +462,9 @@ public class StepResourceController implements IEventProcessor {
 				srcSysCd);
 		ADFCriteria adfCriteria14 = QueryHelper.buildCriteria("wrkCtrNum").is(
 				wrkCtrCd);
-		ADFCriteria groupCriteria26 = adfCriteria14.and(adfCriteria13);
+		ADFCriteria groupCriteria28 = adfCriteria14.and(adfCriteria13);
 
-		ADFCriteria adfCriteria = groupCriteria26;
+		ADFCriteria adfCriteria = groupCriteria28;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/wrk_ctr", queryStr, -1);
@@ -449,10 +492,10 @@ public class StepResourceController implements IEventProcessor {
 				rtgNodeNum);
 		ADFCriteria adfCriteria19 = QueryHelper.buildCriteria("charCd").is(
 				"EQUIPE");
-		ADFCriteria groupCriteria27 = adfCriteria19.and(adfCriteria18)
+		ADFCriteria groupCriteria29 = adfCriteria19.and(adfCriteria18)
 				.and(adfCriteria17).and(adfCriteria16).and(adfCriteria15);
 
-		ADFCriteria adfCriteria = groupCriteria27;
+		ADFCriteria adfCriteria = groupCriteria29;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/mfg_rtg_parm", queryStr, -1);
@@ -476,13 +519,32 @@ public class StepResourceController implements IEventProcessor {
 				"localMaterialNumber").is(localMaterialNumber);
 		ADFCriteria adfCriteria22 = QueryHelper.buildCriteria("localPlant").is(
 				localPlant);
-		ADFCriteria groupCriteria28 = adfCriteria22.and(adfCriteria21).and(
+		ADFCriteria groupCriteria30 = adfCriteria22.and(adfCriteria21).and(
 				adfCriteria20);
 
-		ADFCriteria adfCriteria = groupCriteria28;
+		ADFCriteria adfCriteria = groupCriteria30;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/plan/cns_material_plan_status", queryStr, -1);
+		if (retList != null && retList.size() > 0) {
+			return retList;
+		}
+
+		return new ArrayList<>();
+
+	}
+
+	public List X8(String steus) {
+
+		ADFCriteria adfCriteria23 = QueryHelper.buildCriteria("term").is("X");
+		ADFCriteria adfCriteria24 = QueryHelper.buildCriteria("steus")
+				.is(steus);
+		ADFCriteria groupCriteria31 = adfCriteria24.and(adfCriteria23);
+
+		ADFCriteria adfCriteria = groupCriteria31;
+		String queryStr = adfCriteria.toQueryString();
+		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
+				"/project_one/t430", queryStr, -1);
 		if (retList != null && retList.size() > 0) {
 			return retList;
 		}
