@@ -118,13 +118,13 @@ public class StepResourceController implements IEventProcessor {
 		String matlRtngValid_To = StringInner
 				.getString(map, "matlRtngValid_To");
 
-		String steus = "";
-
-		String charVal = "";
-
 		String rtngGrpCntrNum = "";
 
 		String prdntVrsnNum = StringInner.getString(map, "prdntVrsnNum");
+
+		String rtngTypeCd = StringInner.getString(map, "rtngTypeCd");
+
+		String charVal = null;
 
 		String wrkCtrNum = null;
 
@@ -136,11 +136,14 @@ public class StepResourceController implements IEventProcessor {
 
 		String operCd = "";
 
+		String steus = "";
+
 		List<Map.Entry<String, String>> retList1 = null;
-		if (StringInner.isStringNotEmpty(srcSysCd)
-				&& StringInner.isStringNotEmpty(matlNum)
-				&& StringInner.isStringNotEmpty(plntCd)) {
-			retList1 = X1(srcSysCd, matlNum, plntCd);
+		if (StringInner.isStringNotEmpty(plntCd)
+				&& StringInner.isStringNotEmpty(rtngTypeCd)
+				&& StringInner.isStringNotEmpty(rtngGrpCd)
+				&& StringInner.isStringNotEmpty(rtngGrpCntrNum)) {
+			retList1 = X1(plntCd, rtngTypeCd, rtngGrpCd, rtngGrpCntrNum);
 			if (retList1 != null && retList1.size() > 0) {
 				for (Map.Entry<String, String> retList1Entry : retList1) {
 					Map<String, Object> retList1Map = JsonObject.append(
@@ -332,18 +335,21 @@ public class StepResourceController implements IEventProcessor {
 		return true;
 	}
 
-	public List X1(String srcSysCd, String matlNum, String plntCd) {
+	public List X1(String plntCd, String rtngTypCd, String rntgGrpCd,
+			String rntgGrpCntrNbr) {
 
-		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria("srcSysCd").is(
-				srcSysCd);
-		ADFCriteria adfCriteria2 = QueryHelper.buildCriteria("matlNum").is(
-				matlNum);
-		ADFCriteria adfCriteria3 = QueryHelper.buildCriteria("plntCd").is(
+		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria("plntCd").is(
 				plntCd);
-		ADFCriteria groupCriteria19 = adfCriteria3.and(adfCriteria2).and(
-				adfCriteria1);
+		ADFCriteria adfCriteria2 = QueryHelper.buildCriteria("rtngTypCd").is(
+				rtngTypCd);
+		ADFCriteria adfCriteria3 = QueryHelper.buildCriteria("rntgGrpCd").is(
+				rntgGrpCd);
+		ADFCriteria adfCriteria4 = QueryHelper.buildCriteria("rntgGrpCntrNbr")
+				.is(rntgGrpCntrNbr);
+		ADFCriteria groupCriteria23 = adfCriteria4.and(adfCriteria3)
+				.and(adfCriteria2).and(adfCriteria1);
 
-		ADFCriteria adfCriteria = groupCriteria19;
+		ADFCriteria adfCriteria = groupCriteria23;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/matl_prod_versn", queryStr, -1);
@@ -358,18 +364,18 @@ public class StepResourceController implements IEventProcessor {
 	public List X2(String srcSysCd, String rtngGrpCd, String rtngTypCd,
 			String rtngGrpCntrNum) {
 
-		ADFCriteria adfCriteria4 = QueryHelper.buildCriteria("srcSysCd").is(
+		ADFCriteria adfCriteria5 = QueryHelper.buildCriteria("srcSysCd").is(
 				srcSysCd);
-		ADFCriteria adfCriteria5 = QueryHelper.buildCriteria("rtngGrpCd").is(
+		ADFCriteria adfCriteria6 = QueryHelper.buildCriteria("rtngGrpCd").is(
 				rtngGrpCd);
-		ADFCriteria adfCriteria6 = QueryHelper.buildCriteria("rtngTypCd").is(
+		ADFCriteria adfCriteria7 = QueryHelper.buildCriteria("rtngTypCd").is(
 				rtngTypCd);
-		ADFCriteria adfCriteria7 = QueryHelper.buildCriteria("rtngGrpCntrNbr")
+		ADFCriteria adfCriteria8 = QueryHelper.buildCriteria("rtngGrpCntrNbr")
 				.is(rtngGrpCntrNum);
-		ADFCriteria groupCriteria20 = adfCriteria7.and(adfCriteria6)
-				.and(adfCriteria5).and(adfCriteria4);
+		ADFCriteria groupCriteria24 = adfCriteria8.and(adfCriteria7)
+				.and(adfCriteria6).and(adfCriteria5);
 
-		ADFCriteria adfCriteria = groupCriteria20;
+		ADFCriteria adfCriteria = groupCriteria24;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/mfg_rtng_itm_nde", queryStr, -1);
@@ -384,18 +390,18 @@ public class StepResourceController implements IEventProcessor {
 	public List X3(String srcSysCd, String rtngTypCd, String rtngGrpCd,
 			String rtngItmNum) {
 
-		ADFCriteria adfCriteria8 = QueryHelper.buildCriteria("srcSysCd").is(
+		ADFCriteria adfCriteria9 = QueryHelper.buildCriteria("srcSysCd").is(
 				srcSysCd);
-		ADFCriteria adfCriteria9 = QueryHelper.buildCriteria("rtngTypCd").is(
+		ADFCriteria adfCriteria10 = QueryHelper.buildCriteria("rtngTypCd").is(
 				rtngTypCd);
-		ADFCriteria adfCriteria10 = QueryHelper.buildCriteria("rtngGrpCd").is(
+		ADFCriteria adfCriteria11 = QueryHelper.buildCriteria("rtngGrpCd").is(
 				rtngGrpCd);
-		ADFCriteria adfCriteria11 = QueryHelper.buildCriteria("rtngItmNum").is(
+		ADFCriteria adfCriteria12 = QueryHelper.buildCriteria("rtngItmNum").is(
 				rtngItmNum);
-		ADFCriteria groupCriteria21 = adfCriteria11.and(adfCriteria10)
-				.and(adfCriteria9).and(adfCriteria8);
+		ADFCriteria groupCriteria25 = adfCriteria12.and(adfCriteria11)
+				.and(adfCriteria10).and(adfCriteria9);
 
-		ADFCriteria adfCriteria = groupCriteria21;
+		ADFCriteria adfCriteria = groupCriteria25;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/mfg_rtng_itm", queryStr, -1);
@@ -409,13 +415,13 @@ public class StepResourceController implements IEventProcessor {
 
 	public Map X4(String srcSysCd, String wrkCtrCd) {
 
-		ADFCriteria adfCriteria12 = QueryHelper.buildCriteria("srcSysCd").is(
+		ADFCriteria adfCriteria13 = QueryHelper.buildCriteria("srcSysCd").is(
 				srcSysCd);
-		ADFCriteria adfCriteria13 = QueryHelper.buildCriteria("wrkCtrNum").is(
+		ADFCriteria adfCriteria14 = QueryHelper.buildCriteria("wrkCtrNum").is(
 				wrkCtrCd);
-		ADFCriteria groupCriteria22 = adfCriteria13.and(adfCriteria12);
+		ADFCriteria groupCriteria26 = adfCriteria14.and(adfCriteria13);
 
-		ADFCriteria adfCriteria = groupCriteria22;
+		ADFCriteria adfCriteria = groupCriteria26;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/wrk_ctr", queryStr, -1);
@@ -433,20 +439,20 @@ public class StepResourceController implements IEventProcessor {
 	public Map T7(String srcSysCd, String rtgTypeCd, String rtgGrpCd,
 			String rtgNodeNum) {
 
-		ADFCriteria adfCriteria14 = QueryHelper.buildCriteria("srcSysCd").is(
+		ADFCriteria adfCriteria15 = QueryHelper.buildCriteria("srcSysCd").is(
 				srcSysCd);
-		ADFCriteria adfCriteria15 = QueryHelper.buildCriteria("rtgTypeCd").is(
+		ADFCriteria adfCriteria16 = QueryHelper.buildCriteria("rtgTypeCd").is(
 				rtgTypeCd);
-		ADFCriteria adfCriteria16 = QueryHelper.buildCriteria("rtgGrpCd").is(
+		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("rtgGrpCd").is(
 				rtgGrpCd);
-		ADFCriteria adfCriteria17 = QueryHelper.buildCriteria("rtgNodeNum").is(
+		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria("rtgNodeNum").is(
 				rtgNodeNum);
-		ADFCriteria adfCriteria18 = QueryHelper.buildCriteria("charCd").is(
+		ADFCriteria adfCriteria19 = QueryHelper.buildCriteria("charCd").is(
 				"EQUIPE");
-		ADFCriteria groupCriteria23 = adfCriteria18.and(adfCriteria17)
-				.and(adfCriteria16).and(adfCriteria15).and(adfCriteria14);
+		ADFCriteria groupCriteria27 = adfCriteria19.and(adfCriteria18)
+				.and(adfCriteria17).and(adfCriteria16).and(adfCriteria15);
 
-		ADFCriteria adfCriteria = groupCriteria23;
+		ADFCriteria adfCriteria = groupCriteria27;
 		String queryStr = adfCriteria.toQueryString();
 		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
 				"/edm/mfg_rtg_parm", queryStr, -1);
@@ -458,6 +464,30 @@ public class StepResourceController implements IEventProcessor {
 		}
 
 		return null;
+
+	}
+
+	public List cns_material_plan_status(String sourceSystem,
+			String localMaterialNumber, String localPlant) {
+
+		ADFCriteria adfCriteria20 = QueryHelper.buildCriteria("sourceSystem")
+				.is(sourceSystem);
+		ADFCriteria adfCriteria21 = QueryHelper.buildCriteria(
+				"localMaterialNumber").is(localMaterialNumber);
+		ADFCriteria adfCriteria22 = QueryHelper.buildCriteria("localPlant").is(
+				localPlant);
+		ADFCriteria groupCriteria28 = adfCriteria22.and(adfCriteria21).and(
+				adfCriteria20);
+
+		ADFCriteria adfCriteria = groupCriteria28;
+		String queryStr = adfCriteria.toQueryString();
+		List<Map.Entry<String, String>> retList = AdfViewHelper.queryForList(
+				"/plan/cns_material_plan_status", queryStr, -1);
+		if (retList != null && retList.size() > 0) {
+			return retList;
+		}
+
+		return new ArrayList<>();
 
 	}
 

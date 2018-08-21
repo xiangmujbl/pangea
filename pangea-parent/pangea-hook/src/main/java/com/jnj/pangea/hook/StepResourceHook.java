@@ -9,7 +9,6 @@ import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import org.apache.commons.lang3.StringUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -67,26 +66,71 @@ public class StepResourceHook {
         for (int i = 0; i < cnslist.size(); i++) {
             listplanLocTypeId.add(String.valueOf(JsonUtils.jsonToObject(cnslist.get(i).getKey(), Map.class).get("parameterValue")).trim());
         }
+//        try {
+//            ADFCriteria cns_plant_attr1 = QueryHelper.buildCriteria("sourceSystem").is(String.valueOf(map.get("srcSysCd")));
+//            ADFCriteria cns_plant_attr2 = QueryHelper.buildCriteria("localPlanningRelevant").is("X");
+//            ADFCriteria cns_plant_attr3 = QueryHelper.buildCriteria("planLocTypeId").in(listplanLocTypeId);
+//            String cns_plant_attr4 = cns_plant_attr3.and(cns_plant_attr2).and(cns_plant_attr1).toQueryString();
+//            Map.Entry<String, Map<String, Object>> mapattr = AdfViewHelper.queryForMap("/plan/cns_plant_attr", cns_plant_attr4);
+//
+//
+//            if (mapattr == null) {
+//                LogUtil.getCoreLog().info("mapattr=null");
+//                return true;
+//            }
+//        } catch (Exception e) {
+//            LogUtil.getCoreLog().info("failt to get /plan/cns_plant_attr cns_plant_attr4");
+//            return true;
+//        }
+
+//        MATL_MFG_RTNG-plntCd = MATL_PROD_VERSN-plntCd AND
+//        MATL_MFG_RTNG-rtngTypCd = MATL_PROD_VERSN-rtngTypCd AND
+//        MATL_MFG_RTNG-rntgGrpCd = MATL_PROD_VERSN-rtngGrpCd AND
+//        MATL_MFG_RTNG-rntgGrpCntrNbr = MATL_PROD_VERSN-rtngGrpCntrNum AND
+
+//                StepResourceController     sRC=new StepResourceController();
+//
+//
+//
+//        MATL_PROD_VERSN-srcSysCd = cns_material_plan_status-sourceSystem AND
+//        MATL_PROD_VERSN-matlNum = cns_material_plan_status-localMaterialNumber AND
+//        MATL_PROD_VERSN-plntCd = cns_material_plan_status-localPlant AND
+//                ( cns_material_plan_status-spRelevant = 'X' OR cns_material_plan_status-noPlanRelevant = 'X' )
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         try {
-            ADFCriteria cns_plant_attr1 = QueryHelper.buildCriteria("sourceSystem").is(String.valueOf(map.get("srcSysCd")));
-            ADFCriteria cns_plant_attr2 = QueryHelper.buildCriteria("localPlanningRelevant").is("X");
-            ADFCriteria cns_plant_attr3 = QueryHelper.buildCriteria("planLocTypeId").in(listplanLocTypeId);
-            String cns_plant_attr4 = cns_plant_attr3.and(cns_plant_attr2).and(cns_plant_attr1).toQueryString();
-            Map.Entry<String, Map<String, Object>> mapattr = AdfViewHelper.queryForMap("/plan/cns_plant_attr", cns_plant_attr4);
-
-
+            ADFCriteria cns_plant_attr1 = QueryHelper.buildCriteria("steus").is(String.valueOf(map.get("operCd")));
+            ADFCriteria cns_plant_attr2 = QueryHelper.buildCriteria("term").is("X");
+            String qurtyt430 = cns_plant_attr2.and(cns_plant_attr1).toQueryString();
+            Map.Entry<String, Map<String, Object>> mapattr = AdfViewHelper.queryForMap("/project_one/t430", qurtyt430);
             if (mapattr == null) {
-                LogUtil.getCoreLog().info("mapattr=null");
                 return true;
             }
         } catch (Exception e) {
-            LogUtil.getCoreLog().info("failt to get /plan/cns_plant_attr cns_plant_attr4");
-            return true;
+            LogUtil.getCoreLog().info(" t430 " + e);
         }
-
         return false;
     }
-
+  public static String   formatNum(String str){
+  return     String.format("%.3f", str);
+  }
 
     /**
      * rulet5

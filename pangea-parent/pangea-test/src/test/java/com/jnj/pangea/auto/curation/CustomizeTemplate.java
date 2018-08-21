@@ -1,4 +1,4 @@
-package com.jnj.pangea.curation;
+package com.jnj.pangea.auto.curation;
 
 
 import com.jnj.adf.curation.customize.CETemplateImpl;
@@ -12,7 +12,7 @@ public class CustomizeTemplate {
     public static void main(String[] args) {
 
         Template template = new CETemplateImpl();
-        String customizeXml = "auto_curation/xml/gdm/OMPGdmPLOFromERPV1.xml";
+        String customizeXml = "auto_curation/xml/gdm/GdmStepResourceMaster.xml";
 //        String customizeHook = "auto_curation/lib/pangea-hook.jar";
 //        template.generateAll(customizeHook, customizeXml);
         template.generateAll(customizeXml);

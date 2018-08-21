@@ -2,6 +2,11 @@ Feature:GDMStepResourceMaster AEAZ-9092
 
   @Scenario1
   Scenario: GdmStepResourceMaster
+    Given I import "/project_one/t430" by keyFields "mandt,steus,term"
+      |mandt        |steus         |term        |
+      |120          |PP01         |X            |
+      |120           |PP07        |             |
+    And I wait "/project_one/t430" Async Queue complete
     Given I import "/plan/cns_plan_parameter" by keyFields "sourceSystem,dataObject,attribute,parameter,parameterValue,inclExcl"
       | sourceSystem | dataObject | attribute   | parameter  | parameterValue | inclExcl | comments |
       | CONS_LATAM   | ALL        | SEND_TO_OMP | SYSTEMNAME | CONS_LATAM     | I        |          |
@@ -105,10 +110,11 @@ Feature:GDMStepResourceMaster AEAZ-9092
       | CONS_LATAM | 10001452 | 1       |        |       | BR         | 001       | SAN-W+D60 | BR11   |
       | CONS_LATAM | 19999999 | 1       |        |       | BR         | 002       | SAN-W+D60 | BR11   |
     And I wait "/edm/capy_hdr" Async Queue complete
+
     When I submit task with xml file "xml/omp/GDMStepResourceMaster.xml" and execute file "jar/pangea-view.jar"
 
-    Then A file is found on sink application with name "GDMStepResource_master.tsv"
-    Then I check file data for filename "GDMStepResource_master.tsv" by keyFields "stepResourceId"
-#    Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
+  #  Then A file is found on sink application with name "GDMStepResource_master.tsv"
+ #   Then I check file data for filename "GDMStepResource_master.tsv" by keyFields "stepResourceId"
+    Then I check region data "/omp/gdm_step_resource" by keyFields "stepResourceId"
       | resourceId                | machineId                | quantity | minQuantity | stepResourceId                                     | active | operationId                     | stepResourceType | activeOPRERP | activeSOPERP |
       | CONS_LATAM_BR11/SAN-R+D60 | CONS_LATAM_BR12/SAN-W+D1 | 0.000    | 2.000       | CONS_LATAM_BR11/SAN-R+D60/SAN-W+D1/V006/69349/0010 | YES    | V006/69349/CONS_LATAM_BR12/0010 | production       | YES          | NO           |

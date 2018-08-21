@@ -1,6 +1,7 @@
 package com.jnj.pangea.omp.step_resource.controller;
 
-
+import com.jnj.adf.client.api.JsonObject;
+import com.jnj.pangea.omp.step_resource.controller.StepResourceController;
 import com.jnj.adf.client.api.ADFCriteria;
 import com.jnj.adf.client.api.query.QueryHelper;
 import com.jnj.adf.client.api.remote.RawDataValue;
@@ -9,7 +10,7 @@ import com.jnj.adf.grid.utils.JsonUtils;
 import com.jnj.adf.grid.utils.LogUtil;
 import com.jnj.adf.grid.view.common.AdfViewHelper;
 import org.apache.commons.lang3.StringUtils;
-
+import com.jnj.pangea.omp.step_resource.controller.StepResourceController;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,8 +21,8 @@ public class StepResourceHook {
         String retStr = "0.000";
         DecimalFormat df = new DecimalFormat("0.000");
         if(StringUtils.isNotBlank(charVal)){
-            try{
-                retStr = df.format(Double.parseDouble(charVal.replaceAll(",",".")));
+            try{        retStr = df.format(Double.parseDouble(charVal.replaceAll(",",
+        ".")));
             }catch (NumberFormatException ne){
                 LogUtil.getCoreLog().error(ne.getMessage());
             }
@@ -77,7 +78,60 @@ public class StepResourceHook {
             LogUtil.getCoreLog().info("fail to get /plan/cns_plan_parameter cnslist");
             return true;
         }
-        return false;
+
+        try {
+            ADFCriteria cns_plant_attr1 = QueryHelper.buildCriteria("steus").is(String.valueOf(map.get("operCd")));
+            ADFCriteria cns_plant_attr2 = QueryHelper.buildCriteria("term").is("X");
+            String qurtyt430 = cns_plant_attr2.and(cns_plant_attr1).toQueryString();
+            Map.Entry<String, Map<String, Object>> mapattr = AdfViewHelper.queryForMap("/project_one/t430", qurtyt430);
+            if (mapattr == null) {
+                return true;
+            }
+        } catch (Exception e) {
+            LogUtil.getCoreLog().info(" t430 " + e);
+        }
+
+      StepResourceController     sRC=new StepResourceController();
+        List<Map.Entry<String, String>>   ListX  =   sRC.X1(String.valueOf(map.get("plntCd")),String.valueOf(map.get("rtngTypCd")),String.valueOf(map.get("rntgGrpCd")),String.valueOf(map.get("rntgGrpCntrNbr")));boolean flag=true;
+        if (ListX == null || ListX.size() == 0) return true;
+            for( int i=0;i<ListX.size();i++ ) {
+                Map<String,Object>       mapX =     JsonUtils.jsonToObject(ListX.get(i).getKey(), Map.class);
+         List<Map.Entry<String, String>> listS = sRC.cns_material_plan_status(String.valueOf(mapX.get("srcSysCd")), String.valueOf(mapX.get("matlNum")), String.valueOf(mapX.get("plntCd")));
+         for(int j=0;j<listS.size();j++){
+             Map<String,Object>       mapS =     JsonUtils.jsonToObject(listS.get(i).getKey(), Map.class);
+            if("X".equals(String.valueOf( mapS.get("spRelevant")))|| "X".equals(String.valueOf(mapS.get("noPlanRelevant")))){
+                flag=false;
+            }
+         }
+     }
+     return flag;
+//        if (retList != null && retList.size() > 0) {
+//            Map.Entry<String, String> entry = retList.get(0);
+//            Map<String, Object> map = JsonObject.append(entry.getValue())
+//                    .toMap();
+//            if ("X".equals(String.valueOf(map.get("spRelevant"))) || "X".equals(String.valueOf(map.get("noPlanRelevant"))))
+//                ;
+//            {
+//                return matlNum;
+//            }
+            //       <set name="ProductId" value="matlNum">
+            //     </set>
+            //</if>
+
+
+//        try {
+//            ADFCriteria matl_prod_versn1 = QueryHelper.buildCriteria("steus").is(String.valueOf(map.get("operCd")));
+//
+//
+//        MATL_PROD_VERSN-srcSysCd = cns_material_plan_status-sourceSystem AND
+//        MATL_PROD_VERSN-matlNum = cns_material_plan_status-localMaterialNumber AND
+//        MATL_PROD_VERSN-plntCd = cns_material_plan_status-localPlant AND
+          //      ( cns_material_plan_status-spRelevant = 'X' OR cns_material_plan_status-noPlanRelevant = 'X' )
+
+
+
+
+     //   return false;
     }
 
 

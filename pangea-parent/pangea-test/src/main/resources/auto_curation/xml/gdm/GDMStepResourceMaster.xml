@@ -85,9 +85,10 @@
     <methods>
         <method name="X1" resultType="List" path="/edm/matl_prod_versn">
             <parameters>
-                <parameter name="srcSysCd" value="srcSysCd" relationship="and" var="hhh"></parameter>
-                <parameter name="matlNum" value="matlNum" relationship="and"></parameter>
-                <parameter name="plntCd" value="plntCd" relationship="and"></parameter>
+                <parameter name="plntCd" value="plntCd" relationship="and" var="hhh"></parameter>
+                <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
+                <parameter name="rntgGrpCd" value="rntgGrpCd" relationship="and"></parameter>
+                <parameter name="rntgGrpCntrNbr" value="rntgGrpCntrNbr"></parameter>
             </parameters>
         </method>
         <method name="X2" resultType="List" path="/edm/mfg_rtng_itm_nde">
@@ -118,13 +119,30 @@
                 <parameter name="rtgTypeCd" value="rtgTypeCd" relationship="and"></parameter>
                 <parameter name="rtgGrpCd" value="rtgGrpCd" relationship="and"></parameter>
                 <parameter name="rtgNodeNum" value="rtgNodeNum" relationship="and"></parameter>
-                <parameter name="charCd" value="'EQUIPE'" relationship="and"></parameter>
+                <parameter name="charCd" value="'EQUIPE'"></parameter>
             </parameters>
         </method>
+        <!--MATL_PROD_VERSN-srcSysCd = cns_material_plan_status-sourceSystem AND-->
+        <!--MATL_PROD_VERSN-matlNum = cns_material_plan_status-localMaterialNumber AND-->
+        <!--MATL_PROD_VERSN-plntCd = cns_material_plan_status-localPlant AND-->
+        <!--( cns_material_plan_status-spRelevant = 'X' OR cns_material_plan_status-noPlanRelevant = 'X' )-->
+        <!---->
+
+    <method name="cns_material_plan_status" resultType="List" path="/plan/cns_material_plan_status">
+        <parameters>
+            <parameter name="sourceSystem" value="sourceSystem" relationship="and"></parameter>
+            <parameter name="localMaterialNumber" value="localMaterialNumber" relationship="and"></parameter>
+            <parameter name="localPlant" value="localPlant" relationship="and"></parameter>
+        </parameters>
+    </method>
+
+
+
     </methods>
     <viewRegion name="/omp/gdm_step_resource">
         <multis>
-            <multi method="X1" parameter="srcSysCd,matlNum,plntCd" var="retList1"
+            <!--<multi method="X1" parameter="srcSysCd,matlNum,plntCd" var="retList1"-->
+            <multi method="X1" parameter="plntCd,rtngTypeCd,rtngGrpCd,rtngGrpCntrNum" var="retList1"
                    value="srcSysCd,rtngTypCd,rtngGrpCd,rtngGrpCntrNum" resultType="List"/>
             <multi method="X2" parameter="srcSysCd,rtngGrpCd,rtngTypCd,rtngGrpCntrNum" var="retList2"
                    value="srcSysCd,rtngGrpCd,rtngTypCd,rtngNdeNum" resultType="List"/>
@@ -150,11 +168,12 @@
             <var name="crtDttm" value="crtDttm"/>
             <var name="chgDttm" value="chgDttm"/>
             <var name="matlRtngValid_To" value="matlRtngValid_To"/>
-            <var name="steus"/>
-            <var name="charVal"/>
+            <!--<var name="steus"/>-->
+            <!--<var name="charVal"/>-->
             <var name="rtngGrpCntrNum"/>
             <var name="prdntVrsnNum" value="prdntVrsnNum"/>
             <var name="rntgGrpCd" value="rntgGrpCd"/>
+            <var name="rtngTypeCd" value="rtngTypeCd"/>
         </vars>
         <columns>
             <column name="minQuantity" var="charVal">
