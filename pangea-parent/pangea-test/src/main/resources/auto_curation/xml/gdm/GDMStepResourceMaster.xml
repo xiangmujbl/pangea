@@ -79,7 +79,7 @@
                     <expression>
                     </expression>
                 </region>
-                <region path="/project_one/t430" isPrimaryKey="false" lucene="true" >
+                <region path="/project_one/t430" isPrimaryKey="false" lucene="true">
                     <columns>mandt,steus,term</columns>
                     <expression>
                     </expression>
@@ -127,22 +127,20 @@
                 <parameter name="charCd" value="'EQUIPE'"></parameter>
             </parameters>
         </method>
-        <!--MATL_PROD_VERSN-srcSysCd = cns_material_plan_status-sourceSystem AND-->
-        <!--MATL_PROD_VERSN-matlNum = cns_material_plan_status-localMaterialNumber AND-->
-        <!--MATL_PROD_VERSN-plntCd = cns_material_plan_status-localPlant AND-->
-        <!--( cns_material_plan_status-spRelevant = 'X' OR cns_material_plan_status-noPlanRelevant = 'X' )-->
-        <!---->
-
-    <method name="cns_material_plan_status" resultType="List" path="/plan/cns_material_plan_status">
-        <parameters>
-            <parameter name="sourceSystem" value="sourceSystem" relationship="and"></parameter>
-            <parameter name="localMaterialNumber" value="localMaterialNumber" relationship="and"></parameter>
-            <parameter name="localPlant" value="localPlant" relationship="and"></parameter>
-        </parameters>
-    </method>
-
-
-
+        <method name="cns_material_plan_status" resultType="List" path="/plan/cns_material_plan_status">
+            <parameters>
+                <parameter name="sourceSystem" value="sourceSystem" relationship="and"></parameter>
+                <parameter name="localMaterialNumber" value="localMaterialNumber" relationship="and"></parameter>
+                <parameter name="localPlant" value="localPlant" relationship="and"></parameter>
+            </parameters>
+        </method>
+        <method name="X8" resultType="List" path="/project_one/t430">
+            <parameters>
+                <parameter name="term" value="'X'" relationship="and">
+                </parameter>
+                <parameter name="steus" value="steus"></parameter>
+            </parameters>
+        </method>
     </methods>
     <viewRegion name="/omp/gdm_step_resource">
         <multis>
@@ -153,7 +151,8 @@
                    value="srcSysCd,rtngGrpCd,rtngTypCd,rtngNdeNum" resultType="List"/>
             <multi method="X3" parameter="srcSysCd,rtngTypCd,rtngGrpCd,rtngNdeNum" var="retList3"
                    value="srcSysCd,wrkCntrCd,operCd,steus" resultType="List"/>
-            
+           <!--<multi method="X4" parameter="" var="retList4"></multi>-->
+            <multi method="X8" parameter="operCd" var="retList8"/>
         </multis>
         <filters>
             <filter hook="StepResourceHook.filterraw(e.getValue())"></filter>
@@ -204,13 +203,17 @@
                 </if>
             </column>
             <column name="resourceId">
-                <ref method="X4" parameter="srcSysCd,wrkCntrCd"  value="srcSysCd,wrkCtrNum"  resultType="Map" var="X4Map">
+                <ref method="X4" parameter="srcSysCd,wrkCntrCd" value="srcSysCd,wrkCtrNum" resultType="Map" var="X4Map">
                     <set name="resourceId" value="StepResourceHook.setResourceIdT5(X4Map)"></set>
-                    <if test="''.equals(resourceId)||resourceId==null||'null'.equals(resourceId)||'-'.equals(resourceId)"><continue></continue></if>
+                    <if test="''.equals(resourceId)||resourceId==null||'null'.equals(resourceId)||'-'.equals(resourceId)">
+                        <continue></continue>
+                    </if>
                 </ref>
             </column>
             <column name="stepResourceId" isPK="true">
-                <if test="resourceId==null"><continue></continue></if>
+                <if test="resourceId==null">
+                    <continue></continue>
+                </if>
                 <ref hook="StepResourceHook.StepResourceId(map,retList1Map,retList3Map,X4Map,resourceId)"></ref>
             </column>
             <column name="operationId">
@@ -218,7 +221,9 @@
             </column>
             <column name="machineId">
                 <ref hook="StepResourceHook.setT3MachineId(X4Map)"></ref>
-                <if test="''.equals(machineId)"><continue></continue></if>
+                <if test="''.equals(machineId)">
+                    <continue></continue>
+                </if>
             </column>
             <column name="active" hardCode="'YES'"/>
             <column name="activeOPRERP" hardCode="'YES'"/>
