@@ -90,20 +90,21 @@ public class StepResourceHook {
         } catch (Exception e) {
             LogUtil.getCoreLog().info(" t430 " + e);
         }
-
-      StepResourceController     sRC=new StepResourceController();
-        List<Map.Entry<String, String>>   ListX  =   sRC.X1(String.valueOf(map.get("plntCd")),String.valueOf(map.get("rtngTypCd")),String.valueOf(map.get("rntgGrpCd")),String.valueOf(map.get("rntgGrpCntrNbr")));boolean flag=true;
+        StepResourceController sRC = new StepResourceController();
+        List<Map.Entry<String, String>> ListX = sRC.X1(String.valueOf(map.get("plntCd")), String.valueOf(map.get("rtngTypCd")), String.valueOf(map.get("rntgGrpCd")), String.valueOf(map.get("rntgGrpCntrNbr")));
+        boolean flag = true;
         if (ListX == null || ListX.size() == 0) return true;
-            for( int i=0;i<ListX.size();i++ ) {
-                Map<String,Object>       mapX =     JsonUtils.jsonToObject(ListX.get(i).getKey(), Map.class);
-         List<Map.Entry<String, String>> listS = sRC.cns_material_plan_status(String.valueOf(mapX.get("srcSysCd")), String.valueOf(mapX.get("matlNum")), String.valueOf(mapX.get("plntCd")));
-         for(int j=0;j<listS.size();j++){
-             Map<String,Object>       mapS =     JsonUtils.jsonToObject(listS.get(i).getKey(), Map.class);
-            if("X".equals(String.valueOf( mapS.get("spRelevant")))|| "X".equals(String.valueOf(mapS.get("noPlanRelevant")))){
-                flag=false;
+        for (int i = 0; i < ListX.size(); i++) {
+            Map<String, Object> mapX = JsonUtils.jsonToObject(ListX.get(i).getKey(), Map.class);
+            List<Map.Entry<String, String>> listS = sRC.cns_material_plan_status(String.valueOf(mapX.get("srcSysCd")), String.valueOf(mapX.get("matlNum")), String.valueOf(mapX.get("plntCd")));
+            for (int j = 0; j < listS.size(); j++) {
+                if (listS == null || listS.size() == 0) return true;
+                Map<String, Object> mapS = JsonUtils.jsonToObject(listS.get(i).getKey(), Map.class);
+                if ("X".equals(String.valueOf(mapS.get("spRelevant"))) || "X".equals(String.valueOf(mapS.get("noPlanRelevant")))) {
+                    flag = false;
+                }
             }
-         }
-     }
+        }
      return flag;
 //        if (retList != null && retList.size() > 0) {
 //            Map.Entry<String, String> entry = retList.get(0);
