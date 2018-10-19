@@ -84,7 +84,7 @@ public class DESEncryptor {
 
         System.err.println(encrypt(text, "LJOjdffjds*9jodfw3792jJJJNldsafasdfnsfeQEJOFdfcxdfewEOJRJJ=%&*25Bl"));
         System.err.println(decrypt(encrypt(text, "LJOjdffjds*9jodfw3792jJJJNldsafasdfnsfeQEJOFdfcxdfewEOJRJJ=%&*25Bl"), "LJOjdffjds*9jodfw3792jJJJNldsafasdfnsfeQEJOFdfcxdfewEOJRJJ=%&*25Bl"));
-        String psw = "KGpeDNizItkA8SM4q+C7yA==";
-        System.out.println(decrypt(psw, "LJOjdffjds*9jodfw3792jJJJNldsafasdfnsfeQEJOFdfcxdfewEOJRJJ=%&*25Bl"));
+      String psw = "KGpeDNizItkA8SM4q+C7yA==";
+     System.out.println(decrypt(psw, "LJOjdffjds*9jodfw3792jJJJNldsafasdfnsfeQEJOFdfcxdfewEOJRJJ=%&*25Bl"));
     }
 }

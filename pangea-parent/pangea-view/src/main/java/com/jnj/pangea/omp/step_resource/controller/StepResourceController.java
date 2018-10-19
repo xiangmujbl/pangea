@@ -97,7 +97,11 @@ public class StepResourceController implements IEventProcessor {
 
 		String rntgGrpCd = StringInner.getString(map, "rntgGrpCd");
 
+		String rtngGrpCd = StringInner.getString(map, "rtngGrpCd");
+
 		String rntgGrpCntrNbr = StringInner.getString(map, "rntgGrpCntrNbr");
+
+		String rtngGrpCntrNum = StringInner.getString(map, "rtngGrpCntrNum");
 
 		String rntgAddtnlCntrNbr = StringInner.getString(map,
 				"rntgAddtnlCntrNbr");
@@ -118,8 +122,6 @@ public class StepResourceController implements IEventProcessor {
 		String matlRtngValid_To = StringInner
 				.getString(map, "matlRtngValid_To");
 
-		String rtngGrpCntrNum = "";
-
 		String prdntVrsnNum = StringInner.getString(map, "prdntVrsnNum");
 
 		String rtngTypeCd = StringInner.getString(map, "rtngTypeCd");
@@ -127,8 +129,6 @@ public class StepResourceController implements IEventProcessor {
 		String charVal = null;
 
 		String wrkCtrNum = null;
-
-		String rtngGrpCd = "";
 
 		String rtngNdeNum = "";
 
@@ -378,17 +378,17 @@ public class StepResourceController implements IEventProcessor {
 		return true;
 	}
 
-	public List X1(String plntCd, String rtngTypCd, String rntgGrpCd,
-			String rntgGrpCntrNbr) {
+	public List X1(String plntCd, String rtngTypCd, String rtngGrpCd,
+			String rtngGrpCntrNum) {
 
 		ADFCriteria adfCriteria1 = QueryHelper.buildCriteria("plntCd").is(
 				plntCd);
 		ADFCriteria adfCriteria2 = QueryHelper.buildCriteria("rtngTypCd").is(
 				rtngTypCd);
-		ADFCriteria adfCriteria3 = QueryHelper.buildCriteria("rntgGrpCd").is(
-				rntgGrpCd);
-		ADFCriteria adfCriteria4 = QueryHelper.buildCriteria("rntgGrpCntrNbr")
-				.is(rntgGrpCntrNbr);
+		ADFCriteria adfCriteria3 = QueryHelper.buildCriteria("rtngGrpCd").is(
+				rtngGrpCd);
+		ADFCriteria adfCriteria4 = QueryHelper.buildCriteria("rtngGrpCntrNum")
+				.is(rtngGrpCntrNum);
 		ADFCriteria groupCriteria25 = adfCriteria4.and(adfCriteria3)
 				.and(adfCriteria2).and(adfCriteria1);
 

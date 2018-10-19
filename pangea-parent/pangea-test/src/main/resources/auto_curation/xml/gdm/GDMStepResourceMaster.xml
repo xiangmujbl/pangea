@@ -3,7 +3,7 @@
     <regions>
         <region mainRegion="true" path="/edm/matl_mfg_rtng">
             <columns>
-                srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To,prdtnVersNum
+                rtngGrpCntrNum,rtngGrpCd,srcSysCd,matlNum,plntCd,rtngTypCd,rntgGrpCd,rntgGrpCntrNbr,rntgAddtnlCntrNbr,matlRtngVrsnCntrNbr,valFromDt,chgNum,delInd,crtDttm,chgDttm,matlRtngValid_To,prdtnVersNum
             </columns>
             <relations>
                 <region path="/plan/cns_plan_parameter">
@@ -58,30 +58,41 @@
                 <region path="/edm/capy_hdr" isPrimaryKey="false" lucene="true">
                     <columns>srcSysCd,capyNum,capyNbr,strtTm,endTm,fctryCalCd,capyCatCd,plntCd,capyNm
                     </columns>
-                    <expression></expression>
+                    <expression>
+                        srcSysCd=/wrk_ctr_capy/srcSysCd,
+                        capyNum=/wrk_ctr_capy/capyNum
+                    </expression>
                 </region>
                 <region path="/edm/mfg_rtg_parm" isPrimaryKey="false" lucene="true">
                     <columns>
                         srcSysCd,rtgTypeCd,rtgGrpCd,rtgNodeNum,intrnlSubCalcNum,intrnlPrcsInstrNum,intrnlPrcsInstrCharValNum,mfgParmVersCntrNbr,vldFromDt,delInd,chgNum,crtDttm,chgDttm,charCd,charVal
                     </columns>
                     <filter>(*:* -delInd:X)</filter>
-                    <expression></expression>
-                </region>
-                <region path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true">
-                    <columns>
-                        sourceSystem,localPlant,localPlantName,localPlanningRelevant,locationAttribute1Desc,locationAttribute1Value,locationAttribute2Desc,locationAttribute2Value,planLocTypeDesc,planLocTypeId,plant,plantType
-                    </columns>
                     <expression>
+                        srcSysCd   =  /matl_mfg_rtng/srcSysCd,
+                        rtgTypeCd  =  /matl_prod_versn/rtngTypCd,
+                        rtgGrpCd   =  /matl_prod_versn/rntgGrpCd,
+                        rtgNodeNum =   /mfg_rtng_itm/rtngItmNum
                     </expression>
                 </region>
+                <!--<region path="/plan/cns_plant_attr" isPrimaryKey="false" lucene="true">-->
+                    <!--<columns>-->
+                        <!--sourceSystem,localPlant,localPlantName,localPlanningRelevant,locationAttribute1Desc,locationAttribute1Value,locationAttribute2Desc,locationAttribute2Value,planLocTypeDesc,planLocTypeId,plant,plantType-->
+                    <!--</columns>-->
+                    <!--&lt;!&ndash;<expression></expression>&ndash;&gt;-->
+                <!--</region>-->
                 <region path="/edm/wrk_ctr_capy" isPrimaryKey="false" lucene="true">
                     <columns>srcSysCd,wrkCtrTypeCd,wrkCtrNum,capyAllcNbr,capyNum</columns>
                     <expression>
+                        srcSysCd =    /wrk_ctr/srcSysCd,
+                        wrkCtrTypeCd  =    /wrk_ctr/wrkCtrTypeCd,
+                        wrkCtrNum  =       /wrk_ctr/wrkCtrNum
                     </expression>
                 </region>
                 <region path="/project_one/t430" isPrimaryKey="false" lucene="true">
                     <columns>mandt,steus,term</columns>
                     <expression>
+                        steus=   /mfg_rtng_itm/operCd
                     </expression>
                 </region>
             </relations>
@@ -92,8 +103,8 @@
             <parameters>
                 <parameter name="plntCd" value="plntCd" relationship="and" var="hhh"></parameter>
                 <parameter name="rtngTypCd" value="rtngTypCd" relationship="and"></parameter>
-                <parameter name="rntgGrpCd" value="rntgGrpCd" relationship="and"></parameter>
-                <parameter name="rntgGrpCntrNbr" value="rntgGrpCntrNbr"></parameter>
+                <parameter name="rtngGrpCd" value="rtngGrpCd" relationship="and"></parameter>
+                <parameter name="rtngGrpCntrNum" value="rtngGrpCntrNum"></parameter>
             </parameters>
         </method>
         <method name="X2" resultType="List" path="/edm/mfg_rtng_itm_nde">
@@ -161,9 +172,10 @@
             <var name="srcSysCd" value="srcSysCd"/>
             <var name="matlNum" value="matlNum"/>
             <var name="plntCd" value="plntCd"/>
-            <var name="rtngTypCd" value="rtngTypCd"/>
             <var name="rntgGrpCd" value="rntgGrpCd"/>
-            <var name="rntgGrpCntrNbr" value="rntgGrpCntrNbr"/>
+            <var name="rtngGrpCd" value="rtngGrpCd"/>
+             <var name="rntgGrpCntrNbr" value="rntgGrpCntrNbr"/>
+            <var name="rtngGrpCntrNum" value="rtngGrpCntrNum"/>
             <var name="rntgAddtnlCntrNbr" value="rntgAddtnlCntrNbr"/>
             <var name="matlRtngVrsnCntrNbr" value="matlRtngVrsnCntrNbr"/>
             <var name="valFromDt" value="valFromDt"/>
@@ -172,12 +184,12 @@
             <var name="crtDttm" value="crtDttm"/>
             <var name="chgDttm" value="chgDttm"/>
             <var name="matlRtngValid_To" value="matlRtngValid_To"/>
-            <!--<var name="steus"/>-->
-            <!--<var name="charVal"/>-->
-            <var name="rtngGrpCntrNum"/>
             <var name="prdntVrsnNum" value="prdntVrsnNum"/>
-            <var name="rntgGrpCd" value="rntgGrpCd"/>
-            <var name="rtngTypeCd" value="rtngTypeCd"/>
+<var name="rtngTypCd" value="rtngTypCd"/>
+
+
+            <!--plntCd, rtngTypeCd, rtngGrpCd, rtngGrpCntrNum-->
+
         </vars>
         <columns>
             <column name="minQuantity" var="charVal">

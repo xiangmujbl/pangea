@@ -1,5 +1,6 @@
 package com.jnj.pangea.sentence;
 
+import com.jnj.adf.TestLocal;
 import com.jnj.adf.curation.ComputeClient;
 import com.jnj.adf.grid.support.system.ADFConfigHelper;
 import com.jnj.adf.grid.utils.Util;
@@ -40,7 +41,12 @@ public class PangeaSteps extends CommonSteps {
 
         When("^I submit task with xml file \"([^\"]*)\" and execute file \"([^\"]*)\"$", (String xml, String executeFile) -> {
 
-            submitComputeTask(xml, executeFile);
+            if (TestLocal.DEBUG_LOCAL) {
+                new TestLocal().testLocal(xml);
+            } else {
+                submitComputeTask(xml, executeFile);
+            }
+
         });
 
         When("^I submit aggregation task with xml file \"([^\"]*)\"", (String xml) -> {
